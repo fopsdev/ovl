@@ -1,0 +1,52 @@
+
+
+ideas:
+having tables on forms which have row in dirty edit mode should avoid the screen to navigateback
+solution:
+add a state property called canNavigate to the screens state
+if this prop is there and its string is not empty display the error msg and do not navigateback
+more exact impl:
+have a state: canNavigato with the above behaviour and one maybe named infoNavigate which just diplays the snack but navigates away and puts the screen on a "modified" list
+this modified list can then be highlighted by a message bubble count thing in the header and if pressed the user will be able to select any of the modified screens and continue his work
+
+idea: if the form gets a focus leave event check its dirty status and move that over to the screen canNavigate state....
+
+
+
+todos:
+
+
+
+- offline: if  a post (all xhr calls are in the same post action) fails (try catch?) then the payload of that post action will be saved and the app will be flagged as offline
+  its important to save those post payloads into a list sorted by execution time (also hand over that execution time then on execution. it can be used as the eg. Docdate when creating documents)
+  added rows should get a key like ovl_offline+uuid and related childs added can be tracked because of next feature
+- offline consequence. its complex to track all situations. so make a parent child relation on the tabledef (a function that gets the child tabledef). so when batched post operations will be execited they keys can be fixed as well in the child
+
+- BeforeNavigate Action to setup some state or eg. do a formsvalidate
+- if a value is succesfully in formstate and the list popup clicked all items should be displayed
+
+todos ios safari:
+make font-size 16px to get rid off zooming
+the scrollIntoView() doesn't work on safari
+
+- Create Base Ovl Project with screen, table, forms, translations and components. Structure it nicely and the use it in kaltag
+
+
+- Harmonize Screen navigateTo should call Screen action which can do refresh
+- Harmonize rfereshbutton to also use action on Screen
+- Make MobileTimeEntry as well a form.
+
+
+- introduce a DateTime datatype which renders as two boxes (one for date, one for time)
+- calculated columns which injects a TemplateResult (Maybe ColumnType "custom")
+- use case calculated: use a datetime value and diplay the date in one column and the time in another
+  -> can be difficult. what should be calculated when in edit mode?
+- batch post requests in offline mode and resend them when syncing
+
+
+- long poll which can be configured with tablenames to track
+  the result of the long poll will be pushed back to a state object
+  now components interested in server changes just need to track this state
+
+- getListValues function
+- getCellStyle function

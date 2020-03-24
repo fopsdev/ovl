@@ -1,0 +1,461 @@
+/* some overwritten fundamental styles
+#############################################################
+*/
+.fd-alert {
+  z-index: 1005;
+}
+.fd-table__header .fd-table__cell {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.fd-table__cell {
+  padding-left: 8px;
+  padding-left: var(--fd-table-cell-spacing, 8px);
+  padding-right: 8px;
+  padding-right: var(--fd-table-cell-spacing, 8px);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.fd-table__cell:first-child {
+  padding-left: 8px;
+  padding-left: var(--fd-width-gutter, 8px);
+}
+.fd-table__cell:last-child {
+  padding-right: 8px;
+  padding-right: var(--fd-width-gutter, 8px);
+}
+
+.fd-popover__body {
+  width: 100%;
+}
+
+.fd-form-message {
+  padding: 0;
+  white-space: normal !important;
+}
+
+/* custom styles 
+#############################################################
+*/
+
+/* date input on chrome */
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+  color: red;
+}
+input[type="date"]::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* clears the 'X' from Chrome */
+input[type="date"]::-webkit-search-decoration,
+input[type="date"]::-webkit-search-cancel-button,
+input[type="date"]::-webkit-search-results-button,
+input[type="date"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+.menuDisabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+.stickyTableHeader {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+  z-index: 5;
+  background: #fff;
+}
+
+ovl-trg {
+  display: table-row-group;
+}
+
+ovl-trow {
+  display: table-row;
+}
+
+ovl-trowform {
+  display: table-row;
+}
+
+ovl-trowcontrol {
+  display: table-row;
+}
+
+ovl-trowsc {
+  display: table-row;
+}
+
+ovl-tableheadermenu {
+  display: table-row;
+}
+
+ovl-table {
+  display: table;
+  table-layout: fixed;
+  --fd-width-gutter: 8px;
+}
+
+.scrollableOverlay {
+  overflow-y: auto;
+  height: calc(100vh - 80px);
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollableMobile {
+  overflow-y: auto;
+  height: calc(100vh - 50px);
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollable {
+  overflow-y: auto;
+  height: calc(100vh - 47px);
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overscroll-behavior: none;
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+}
+
+/* td {
+  word-wrap: break-word;
+}
+th {
+  word-wrap: break-word;
+} */
+
+.uifdllink {
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.nopointerevents {
+  pointer-events: none;
+}
+
+.cols2 {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-gap: 10px;
+  grid-template-rows: auto;
+}
+
+.tables2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  grid-template-rows: auto;
+}
+
+@media (orientation: landscape) {
+  .ovldialogcentered {
+    width: 400px;
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1007;
+  }
+
+  .ovlsnackbar {
+    width: 30vw;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .chartwidth {
+    width: 94vw;
+  }
+}
+
+@media (orientation: portrait) {
+  .ovldialogcentered {
+    width: 300px;
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 7;
+  }
+
+  .ovlsnackbar {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .chartwidth {
+    width: 93vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .timelinenextarrow {
+  }
+  .timelinenextarrowdown {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAVFBMVEVHcEzn5/zm5vzj4//n5/zm5vzp6f/o6Pvm5v3n5/zk5P/o6Pz////n5/zn5/zn5/z////o6P/n5/zk5P/n5/zn5/ro6P/p6fvn5/zn5/zn5/vn5/w6apjbAAAAG3RSTlMA/VMJysUij3DpE00D9/zdAhbsJrM1Czqs9Nnog9ijAAAA3UlEQVRo3u3VRxLCQAxE0SHOkHP0/e/J3jioNWLF7wPoF9ivnBJjzLimYwQIECBAgAABAgQIECBAgAABAgT+JZAb17I5cHx67l+39p8wW+j353flT1q/1fuHk/YYlivt/vmiPujbS7m/e+iv0mZvvz+Zel7WYg+UH3PITm9WDgoADwcNgM5BBaBy0AFoHDwAFA4+AAKHEvGxyfEArBz8AGwcagBYONQBGOdQC2CMQz2AYQ4RAAY5lBS+HA+gn0MUgD4OcQC6OUQC6OIQC+CbQzSANod4AC0OJTHG1H0Aez/DkbfNSeMAAAAASUVORK5CYII=");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-bottom: -4%;
+  }
+}
+
+@media (min-width: 600px) {
+  .timelinenextarrow {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAe1BMVEVHcEzl5/3l6Pzl6Pzp6f/l5/vl6Pzl6Pzl6Pzl6fzl6Pzj4//l6Pzm5vrl6vrV1f/k6Pzl5/zm6fzk6Pzo6P/f3//m6Pzl6Pzl6Pzn5//m6fz////k5/zn5//m6P3m5v/l6PzM///l6Pzl6Pzl6Pzq6v/l6Pzm5vrl6PzvVNhEAAAAKHRSTlMAd/5OF4Dy/PPjmwnEMjEG3cNRTBYI3MeoKlABSxVvKfQFnOTFGKYz5KqByAAAAMxJREFUaN7tmFkOggAMBVGQxV1w3xBcePc/oZ5AQ3QSNW/+ySQU2r4GgTHGGGOMeZsrLTg3sECnHBao29uxAmk9gAVaRbBA2QgWKN3CgkepYYF0W8ACXSJYoGwMC5SGsEBJBxZI9QQWaDhv+UBrphtYoLiABc9LrY/Qr2CBZgdYoGUJCxTvYYGS448L6FdEF5n+TOEfjW4VdLN70a7xgfPlI5Me+vTaQi9e9OoIL7/0+k4HEDpC0SEQjrF0EKdPCfgxBD/nGGOMMcb8EXe0290rHhvFpQAAAABJRU5ErkJggg==");
+    background-repeat: no-repeat;
+    background-position-x: 110%;
+    background-size: 50% 100%;
+  }
+  .timelinenextarrowdown {
+    display: none;
+  }
+
+  .chartwidth {
+    width: 95vw;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+@-webkit-keyframes fadeOutSnack {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOutSnack {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOutSnack {
+  -webkit-animation-name: fadeOutSnack;
+  animation-name: fadeOutSnack;
+  -webkit-animation-duration: 500ms;
+  animation-duration: 500ms;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.fadeInSnack {
+  -webkit-animation-name: fadeInSnack;
+  animation-name: fadeInSnack;
+  -webkit-animation-duration: 500ms;
+  animation-duration: 500ms;
+}
+
+@-webkit-keyframes fadeInSnack {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInSnack {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeInDisabled {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.44;
+  }
+}
+
+@keyframes fadeInDisabled {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.44;
+  }
+}
+
+@keyframes fadeOutDisabled {
+  from {
+    opacity: 0.44;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeOutDisabled {
+  from {
+    opacity: 0.44;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeInDisabled {
+  -webkit-animation-name: fadeInDisabled;
+  animation-name: fadeInDisabled;
+}
+
+.fadeOutDisabled {
+  -webkit-animation-name: fadeOutDisabled;
+  animation-name: fadeOutDisabled;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.animated.delay-1s {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.animated.delay-2s {
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+}
+
+.animated.delay-3s {
+  -webkit-animation-delay: 3s;
+  animation-delay: 3s;
+}
+
+.animated.delay-4s {
+  -webkit-animation-delay: 4s;
+  animation-delay: 4s;
+}
+
+.animated.delay-5s {
+  -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+}
+
+.animated.fast {
+  -webkit-animation-duration: 800ms;
+  animation-duration: 800ms;
+}
+
+.animated.faster {
+  -webkit-animation-duration: 500ms;
+  animation-duration: 500ms;
+}
+
+.animated.slow {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+}
+
+.animated.slower {
+  -webkit-animation-duration: 3s;
+  animation-duration: 3s;
+}
+
+@media (print), (prefers-reduced-motion) {
+  .animated {
+    -webkit-animation: unset !important;
+    animation: unset !important;
+    -webkit-transition: none !important;
+    transition: none !important;
+  }
+}
+.hide {
+  display: none !important;
+}

@@ -1,0 +1,552 @@
+import { Action, AsyncAction } from "overmind"
+import {
+  HasOfflineMode,
+  overmind,
+  OvlDataVersion,
+  PersistStateId,
+  Screen
+} from "../index"
+import { DialogResult } from "../library/actions"
+import {
+  FormState,
+  GetFormValidationErrors,
+  InitForm
+} from "../library/forms/actions"
+import { FormFields } from "../library/forms/OvlFormElement"
+import {
+  FileInfoStore,
+  fileStore,
+  FileStore,
+  fileStoreInfo,
+  stateStore
+} from "../offlineStorage"
+import { api, logout, ResetT, saveState, ShowFile, T } from "./globals"
+
+function isTouch() {
+  return "ontouchstart" in window
+}
+
+export const NavigateTo: AsyncAction<Screen> = async (
+  { state, actions },
+  value
+) => {
+  if (state.ovl.screens.nav.currentScreen !== value) {
+    state.ovl.screens.nav.nextScreen = value
+    if (value === "Login") {
+      state.ovl.user.token = ""
+    }
+    // make sure that a screen is only once in the history
+    // elsewise we need to handle different state (involves serializing and and and and...) as well
+    let foundIndex = -1
+    for (let z = 0; z < state.ovl.screens.nav.screensHistory.length; z++) {
+      if (state.ovl.screens.nav.screensHistory[z] === value) {
+        foundIndex = z
+        break
+      }
+    }
+    if (foundIndex !== -1) {
+      state.ovl.screens.nav.screensHistory.splice(foundIndex, 1)
+    }
+    state.ovl.screens.nav.screensHistory.push(value)
+    document.getElementById("app").focus()
+    SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
+  }
+}
+
+export const NavigateBack: AsyncAction = async ({ state, actions }) => {
+  if (state.ovl.screens.nav.screensHistory.length > 1) {
+    state.ovl.screens.nav.screensHistory.pop()
+    let screen =
+      state.ovl.screens.nav.screensHistory[
+        state.ovl.screens.nav.screensHistory.length - 1
+      ]
+    if (screen) {
+      state.ovl.screens.nav.nextScreen = screen
+      SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
+    }
+  }
+}
+
+const SetClosingScreen = (
+  actions: any,
+  state: typeof overmind.state,
+  value: Screen
+) => {
+  if (value !== undefined) {
+    let o = state.ovl.screens.screenState[value]
+    if (o === undefined) {
+      o = state.ovl.screens.screenState[value] = {}
+    } else {
+      if (!state.ovl.uiState.hasOSReducedMotion) {
+        o.closing = true
+      } else {
+        actions.global.SetVisibleFalse(value)
+      }
+    }
+  }
+}
+
+const SetVisibleScreen = async (
+  state: typeof overmind.state,
+  value: Screen
+) => {
+  let o = state.ovl.screens.screenState[value]
+  if (o === undefined) {
+    state.ovl.screens.screenState[value] = { visible: true, closing: false }
+  } else {
+    o.visible = true
+    o.closing = false
+  }
+}
+
+export const SetVisibleFalse: Action<Screen> = ({ state, actions }, value) => {
+  let o = state.ovl.screens.screenState[value]
+  if (o === undefined) {
+    o = state.ovl.screens.screenState[value] = {}
+    //console.log(state.ovl.screens.screenState[value])
+  }
+  o.visible = false
+  o.closing = false
+  state.ovl.screens.nav.currentScreen = state.ovl.screens.nav.nextScreen
+  // check if there is a form to reset
+  if (state.ovl.screens.nav.formTypeToReset) {
+    actions.ovl.form.ResetForm(
+      state.ovl.forms[state.ovl.screens.nav.formTypeToReset][
+        state.ovl.screens.nav.formIdToReset
+      ]
+    )
+    state.ovl.screens.nav.formTypeToReset = undefined
+  }
+  SetVisibleScreen(state, state.ovl.screens.nav.currentScreen)
+
+  // state.ovl.uiState.stateSavedFrom = "screen"
+
+  // saveState()
+}
+
+export const ToggleLanguage: AsyncAction = async (
+  { state, effects },
+  value
+) => {
+  let lang = ""
+  if (state.ovl.language.language === "FR") {
+    lang = "DE"
+  } else {
+    lang = "FR"
+  }
+  let res = await effects.postRequest("translation", { language: lang })
+  ResetT()
+  state.ovl.language.translations = res.data.translations
+  state.ovl.language.language = res.data.lang
+  // state.portal.pics.salesContact = res.data.salesPic
+  // state.portal.pics.technicalContact = res.data.technicianPic
+  // state.portal.partner.technicalContact = res.data.technician
+  // state.portal.partner.salesContact = res.data.sales
+  localStorage.setItem("PortalLanguage", res.data.lang)
+}
+
+export const RefreshData: AsyncAction = async ({ state, actions, effects }) => {
+  let res = await effects.postRequest("getdata", {
+    features: state.ovl.user.features,
+    language: state.ovl.language.language
+  })
+  if (!res.data) {
+    return
+  }
+
+  // state.portal.partner.attachments = res.data.attachments
+
+  // state.portal.chartData = res.data.chartData
+  // state.portal.quotationDetail = {
+  //   quotations: res.data.quotationDetail
+  // }
+  // state.portal.orderDetail = { orders: res.data.orderDetail }
+  // state.portal.invoiceDetail = { invoices: res.data.invoiceDetail }
+  // state.portal.dpInvoiceDetail = {
+  //   dpInvoices: res.data.dpInvoiceDetail
+  // }
+  actions.ovl.snack.AddSnack({
+    durationMs: 3000,
+    text: "Daten aufgefrischt",
+    type: "Success"
+  })
+}
+
+export const ForgotPw: AsyncAction<FormState> = async (
+  { state, actions, effects },
+  value
+) => {
+  actions.ovl.dialog.OkCancelDialog({
+    text: T("AppLoginForgotPasswordConfirm"),
+    default: 2
+  })
+  switch (await DialogResult()) {
+    case 1:
+      let user = value.fields["user"].value
+      let res = await effects.user.requestresetpw({
+        user,
+        language: state.ovl.language.language
+      })
+      if (res.status !== 200) {
+        return
+      }
+      actions.ovl.snack.AddSnack({
+        text: T("AppLoginForgotPasswordMsg"),
+        durationMs: 20000,
+        type: "Information"
+      })
+      break
+  }
+}
+
+export const Login: AsyncAction<FormState> = async (
+  { state, actions, effects },
+  value
+) => {
+  actions.ovl.form.ValidateForm(value)
+  if (value.valid) {
+    let user = value.fields["user"].value
+    let pw = value.fields["pw"].value
+    let res = await effects.user.authenticate({
+      email: user,
+      password: pw,
+      language: state.ovl.language.language
+    })
+    if (!res.data) {
+      return
+    }
+    //console.log(res.data)
+    state.ovl.user = res.data.partner.user
+    state.portal.partner = res.data.partner
+    state.portal.partner.attachments = res.data.data.attachments
+
+    state.portal.chartData = res.data.data.chartData
+    state.portal.quotationDetail = {
+      quotations: res.data.data.quotationDetail
+    }
+    state.portal.orderDetail = { orders: res.data.data.orderDetail }
+    state.portal.invoiceDetail = { invoices: res.data.data.invoiceDetail }
+    state.portal.dpInvoiceDetail = {
+      dpInvoices: res.data.data.dpInvoiceDetail
+    }
+    state.portal.chartData = res.data.data.chartData
+
+    actions.ovl.snack.AddSnack({
+      durationMs: 3000,
+      text: T("AppLoginSuccessful"),
+      type: "Success"
+    })
+    if (state.ovl.screens.nav.screensHistory.length > 1) {
+      actions.global.NavigateBack()
+    } else {
+      // see if we have a target url and move directly to that screen
+      // also possible to move to detail providing "o" = docnum param
+
+      let url = new URL(window.location.href)
+      let screen = <Screen>url.searchParams.get("s")
+      let orderNum = url.searchParams.get("o")
+
+      let command: Screen = "Dashboard"
+      if (screen) {
+        command = screen
+      }
+      if (orderNum) {
+        state.ovl.screens.screens.Orderdetail.selectedOrder = orderNum
+      }
+      actions.global.NavigateTo(command)
+    }
+    actions.ovl.form.ResetFormAfterAnimation(value)
+  } else {
+    actions.ovl.snack.AddSnack({
+      durationMs: 3000,
+      text: GetFormValidationErrors(value).join("\n"),
+      type: "Error"
+    })
+  }
+  // post back
+}
+export const Logout: AsyncAction = async ({ state, actions }) => {
+  actions.ovl.dialog.OkCancelDialog({
+    text: "Wollen Sie sich wirklich abmelden?",
+    default: 1
+  })
+  switch (await DialogResult()) {
+    case 1:
+      state.ovl.user.token = ""
+      logout()
+      break
+    case 2:
+      break
+  }
+}
+
+export const OpenLanguageTable: Action = ({ state, actions }, value) => {
+  let tabledata = state.ovl.language.tables.translations.data
+  Object.keys(state.ovl.language.translations).forEach(k => {
+    if (!tabledata[k]) {
+      tabledata[k] = { ID: k, Translation: state.ovl.language.translations[k] }
+    } else {
+      tabledata[k].ID = k
+      tabledata[k].Translation = state.ovl.language.translations[k]
+    }
+  })
+  actions.ovl.internal.TableRefresh({
+    def: state.ovl.language.tables.translations.tableDef.translation,
+    data: state.ovl.language.tables.translations,
+    init: true
+  })
+  actions.global.NavigateTo("Translation")
+}
+
+export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
+  state.ovl.uiState.isReady = false
+  state.ovl.libState.indicator.refCounter = 0
+
+  // most of the following code is necessary because we still have some component state which is not handled by overmind
+  // lession learned: use overmind.state wherever possible...
+  if (state.ovl.libState.overlay2.open) {
+    await actions.global.CloseOverlay2()
+  }
+  if (state.ovl.libState.overlay.open) {
+    await actions.global.CloseOverlay()
+  }
+
+  state.ovl.libState.snacks = {}
+  // set current screen visible, others false, just to be sure we are not in the middle of an animation
+  let screenToGo = state.ovl.screens.nav.nextScreen
+  if (!screenToGo) {
+    screenToGo = state.ovl.screens.nav.currentScreen
+  }
+  let screenState = state.ovl.screens.screenState
+  if (!screenState[screenToGo]) {
+    screenState[screenToGo] = { visible: true, closing: false }
+  }
+  Object.keys(screenState).forEach(k => {
+    let screen = screenState[k]
+    if (k === screenToGo) {
+      screen.visible = true
+      screen.closing = false
+    } else {
+      screen.visible = false
+      screen.closing = false
+    }
+  })
+  state.ovl.screens.nav.currentScreen = screenToGo
+  state.ovl.screens.nav.nextScreen = undefined
+  //actions.global.NavigateTo(screenToGo)
+}
+
+export const GetFile: AsyncAction<{
+  fileName: string
+  fileType: FileType
+  docNum: string
+}> = async ({ actions, state, effects }, value) => {
+  let docNum = value.docNum
+  if (!docNum) {
+    docNum = ""
+  }
+  let fileType = value.fileType
+  let fileName = value.fileName
+  let id = docNum + fileType + fileName
+  if (state.ovl.uiState.isIOS === true) {
+    // saving state here fixes a ios handling issue when file gets opened and navigated back the page on ios safari (in standalone) reloads
+    // that way it reloads to current state...
+    saveState(true, "GetFile")
+  }
+  let res = await effects.postRequest(
+    state.ovl.apiUrl + "attachment/getfile",
+    {
+      fileName,
+      fileType,
+      docNum
+    },
+    true
+  )
+
+  if (res.status === 200) {
+    let mimeType = res.headers["content-type"]
+    let fo: FileStore = { id, mimeType, content: res.data, fileName }
+    fileStore.set(fo)
+    let dt = new Date()
+    let foinfo: FileInfoStore = { id, lastAccess: dt, refreshed: dt }
+    fileStoreInfo.set(foinfo)
+    ShowFile(res.data, mimeType, fileName)
+  } else if (res.status === 449) {
+    //get file from store
+    let fo: FileStore = await fileStore.get(id)
+    if (fo) {
+      if (state.ovl.uiState.isIOS === true) {
+        ShowFile(fo.content, fo.mimeType, fileName)
+      } else {
+        let blob = new Blob([fo.content], { type: fo.mimeType })
+        ShowFile(blob, fo.mimeType, fileName)
+      }
+      let foinfo: FileInfoStore = await fileStoreInfo.get(id)
+      foinfo.lastAccess = new Date()
+      fileStoreInfo.set(foinfo)
+    } else {
+      actions.ovl.snack.AddSnack({
+        durationMs: 3000,
+        text: "File not cached",
+        type: "Information"
+      })
+    }
+  }
+}
+
+export const RehydrateAndUpdateApp: AsyncAction = async ({
+  actions,
+  state,
+  effects
+}) => {
+  if (HasOfflineMode) {
+    try {
+      let persistedState = await stateStore.get(PersistStateId)
+      if (!persistedState) {
+        // clear also maybe old versions lingering around...
+        stateStore.clear()
+      } else {
+        state.app = persistedState.app
+        state.portal = persistedState.portal
+        state.tables = persistedState.tables
+        //state.ovl.language = JSON.parse(JSON.stringify(state.ovl.language))
+        //await rehydrate(state, persistedState)
+        await actions.global.PrepareApp()
+        api.url = state.ovl.apiUrl
+        state.ovl.uiState.isReady = true
+        let updateCheck = await effects.getRequest(
+          "./updatecheck/ovldataversion" + OvlDataVersion + ".js"
+        )
+        if (updateCheck.status === 404) {
+          // we need an update
+          actions.ovl.dialog.OkDialog({
+            text: "Update erforderlich!\n Bitte neu anmelden!"
+          })
+          await DialogResult()
+          logout()
+        }
+        return
+      }
+    } catch (e) {
+      console.log("Persisted Offlinedata could not be restored: ")
+      console.log(e)
+    }
+  }
+}
+
+export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
+  //alert("init started")
+  // rehydrate state from indexeddb/check if update is needed
+  await actions.global.RehydrateAndUpdateApp()
+  state.ovl.libState.indicator.open = false
+  state.ovl.libState.indicator.refCounter = 0
+
+  // @ts-ignore
+  state.ovl.uiState.isMobile = window.isMobile.phone
+  state.ovl.uiState.isTouch = isTouch()
+  state.ovl.uiState.isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+  if (window.location.hostname.toLowerCase().startsWith("test")) {
+    state.ovl.uiState.isDemo = true
+    state.ovl.apiUrl = "https://testapi-portal.kaltag.ch/api/"
+  } else if (
+    window.location.hostname.toLowerCase().indexOf("kundenportal.kaltag.ch") >
+    -1
+  ) {
+    state.ovl.apiUrl = "https://api-portal.kaltag.ch/api/"
+  } else if (window.location.hostname.toLowerCase().indexOf("itflies") > -1) {
+    state.ovl.apiUrl = "https://itflies2.ddns.net/api/"
+  } else {
+    state.ovl.uiState.isDemo = true
+    state.ovl.apiUrl = "http://192.168.1.117:1233/api/"
+    //state.ovl.apiUrl = "http://192.168.15.18:10443/api/"
+  }
+
+  api.url = state.ovl.apiUrl
+
+  //if (!state.ovl.uiState.isDemo) {
+
+  //}
+
+  // prepare login form
+  let fields: { [key: string]: FormFields } = {
+    pw: { value: "" },
+    user: { value: "" }
+  }
+  let initForm: InitForm = {
+    validationActionName: "LoginValidateField",
+    namespace: "internal",
+    instanceId: "loginform",
+    formType: "Login",
+    fields
+  }
+  actions.ovl.form.InitForm(initForm)
+
+  const query = "(prefers-reduced-motion: reduce)"
+  state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
+  let lang = localStorage.getItem("PortalLanguage")
+
+  let res = await effects.global.getTranslations({ language: lang })
+
+  if (!res || !res.data) {
+    return
+  }
+  state.ovl.language.language = res.data.lang
+  localStorage.setItem("PortalLanguage", res.data.lang)
+  state.ovl.language.translations = res.data.translations
+  state.portal.pics.salesContact = res.data.salesPic
+  state.portal.pics.technicalContact = res.data.technicianPic
+
+  //init lookup values
+  res = await effects.postRequest(state.ovl.apiUrl + "lookup", {
+    lang: state.ovl.language.language,
+    lookupType: "initial"
+  })
+  state.tables.lookups.U_ItemCode = res.data.item
+  state.tables.lookups.ItmsGrpCod = res.data.itemGroup
+
+  state.tables.lookups.AbsenceTypeId = res.data.timeAbsences
+  state.tables.lookups.ProjectTypeId = res.data.timeProjects
+
+  state.ovl.uiState.isReady = true
+
+  // let dt = new Date()
+  // let dateSelected = dt.toISOString().substring(0, 10)
+
+  // await actions.mobiletimerecording.SetMobileTimeEntrySelectedDate({
+  //   def: state.tables.timeentries.tableDef.mobiletimerecording1,
+  //   selected: dateSelected
+  // })
+  // actions.global.NavigateTo("MobileTimeEntry")
+
+  // //init tables
+  // await actions.ovl.internal.TableRefresh({
+  //   def: state.tables.tableTesting.tableDef.tab1,
+  //   data: state.tables.tableTesting,
+  //   init: true
+  // })
+
+  // await actions.ovl.internal.TableRefresh({
+  //   def: state.tables.tableTesting.tableDef.tab2,
+  //   data: state.tables.tableTesting,
+  //   init: true,
+  //   forceFreshServerData: -1
+  // })
+
+  // await actions.ovl.internal.TableRefresh({
+  //   def: state.tables.tableTesting.tableDef.tab3,
+  //   data: state.tables.tableTesting,
+  //   init: true,
+  //   forceFreshServerData: -1
+  // })
+
+  // await actions.ovl.internal.TableRefresh({
+  //   def: state.tables.tableTesting.tableDef.tab4,
+  //   data: state.tables.tableTesting,
+  //   init: true
+  // })
+
+  // actions.global.NavigateTo("TableTesting")
+
+  //actions.global.NavigateTo("Login")
+}
