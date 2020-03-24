@@ -5,7 +5,7 @@ import { T } from "../../global/globals"
 export class OvlBackButton extends OvlBaseElement {
   getUI() {
     const handleBack = (e: Event) => {
-      this.actions.ovl.global.NavigateBack()
+      this.actions.ovl.navigation.NavigateBack()
     }
 
     if (

@@ -3,8 +3,7 @@ import {
   HasOfflineMode,
   overmind,
   OvlDataVersion,
-  PersistStateId,
-  Screen
+  PersistStateId
 } from "../index"
 import { DialogResult } from "../library/actions"
 import {
@@ -26,7 +25,7 @@ function isTouch() {
   return "ontouchstart" in window
 }
 
-export const NavigateTo: AsyncAction<Screen> = async (
+export const NavigateTo: AsyncAction<string> = async (
   { state, actions },
   value
 ) => {
@@ -70,7 +69,7 @@ export const NavigateBack: AsyncAction = async ({ state, actions }) => {
 const SetClosingScreen = (
   actions: any,
   state: typeof overmind.state,
-  value: Screen
+  value: string
 ) => {
   if (value !== undefined) {
     let o = state.ovl.screens.screenState[value]
@@ -88,7 +87,7 @@ const SetClosingScreen = (
 
 const SetVisibleScreen = async (
   state: typeof overmind.state,
-  value: Screen
+  value: string
 ) => {
   let o = state.ovl.screens.screenState[value]
   if (o === undefined) {
@@ -99,7 +98,7 @@ const SetVisibleScreen = async (
   }
 }
 
-export const SetVisibleFalse: Action<Screen> = ({ state, actions }, value) => {
+export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
   let o = state.ovl.screens.screenState[value]
   if (o === undefined) {
     o = state.ovl.screens.screenState[value] = {}
@@ -432,6 +431,11 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
 }
 
 export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
+  history.pushState(null, null, document.URL)
+  window.addEventListener("popstate", function() {
+    overmind.actions.ovl.navigation.NavigateBack()
+    history.pushState(null, null, document.URL)
+  })
   //alert("init started")
   // rehydrate state from indexeddb/check if update is needed
   await actions.ovl.internal.RehydrateAndUpdateApp()

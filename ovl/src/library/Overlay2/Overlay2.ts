@@ -30,7 +30,7 @@ export class OvlOverlay2 extends OvlBaseElement {
       this.state.ovl.libState.overlay2.closing &&
       e.animationName === "fadeOut"
     ) {
-      this.actions.ovl.global.CloseOverlay2()
+      this.actions.ovl.internal.CloseOverlay2()
     }
   }
 
@@ -40,7 +40,7 @@ export class OvlOverlay2 extends OvlBaseElement {
     if (overlay2ToRender.overlayDismissedCallback) {
       overlay2ToRender.overlayDismissedCallback()
     } else {
-      this.actions.ovl.global.StartCloseOverlay2()
+      this.actions.ovl.internal.StartCloseOverlay2()
     }
   }
 

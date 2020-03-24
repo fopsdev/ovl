@@ -1,5 +1,4 @@
 import { TableDef } from "../Table/Table"
-import { defaultTimestampFormat } from "../../global/globals"
 
 export let tblAudit: TableDef = {
   id: "audit",

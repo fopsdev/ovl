@@ -16,7 +16,7 @@ export class TableNavControl extends OvlBaseElement {
   handleFilterClearClick = (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    this.actions.ovl.internal.TableClearFilter(this.nav.tableData)
+    this.actions.ovl.table.TableClearFilter(this.nav.tableData)
   }
 
   handleSetPageClick = (e: Event, page: number) => {
@@ -44,13 +44,13 @@ export class TableNavControl extends OvlBaseElement {
   handleAddRowClick = (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    this.actions.ovl.internal.TableAddRow(this.nav.tableData)
+    this.actions.ovl.table.TableAddRow(this.nav.tableData)
   }
 
   handleRefreshClick = (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    this.actions.ovl.internal.TableViewRefresh(this.nav.tableData)
+    this.actions.ovl.table.TableViewRefresh(this.nav.tableData)
   }
 
   init() {

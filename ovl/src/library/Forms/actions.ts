@@ -1,5 +1,5 @@
 import { Action } from "overmind"
-import { actions as allActions } from "../../index"
+import { actions as allActions } from "../../init"
 import { DataType, FieldFormat, Schema, FormFields } from "./OvlFormElement"
 import { getDecimalValue, getDateValue } from "../../global/globals"
 import { FillListControl } from "./Controls/actions"
@@ -336,9 +336,9 @@ export const ValidateForm: Action<FormState> = ({ actions }, value) => {
     field.validationResult.valid = true
     field.validationResult.validationMsg = ""
     field.validationResult.validations = {}
-    actions.ovl.form.TouchField({ fieldId: k, formState: value })
+    actions.ovl.internal.TouchField({ fieldId: k, formState: value })
 
-    actions.ovl.form.ValidateDataType({
+    actions.ovl.internal.ValidateDataType({
       fieldId: k,
       oldVal: val,
       newVal: val,
@@ -347,7 +347,7 @@ export const ValidateForm: Action<FormState> = ({ actions }, value) => {
     } as ValidateField)
 
     if (field.validationResult.valid) {
-      actions.ovl.form.ValidateSchema({
+      actions.ovl.internal.ValidateSchema({
         fieldId: k,
         oldVal: val,
         newVal: val,
@@ -357,7 +357,7 @@ export const ValidateForm: Action<FormState> = ({ actions }, value) => {
 
       if (field.validationResult.valid) {
         if (field.list) {
-          actions.ovl.form.ValidateList({
+          actions.ovl.internal.ValidateList({
             fieldId: k,
             oldVal: val,
             newVal: val,
@@ -399,7 +399,7 @@ export const ValidateForm: Action<FormState> = ({ actions }, value) => {
       }
     }
   })
-  actions.ovl.form.SetFormValid(value)
+  actions.ovl.internal.SetFormValid(value)
 }
 
 export const InitForm: Action<InitForm> = ({ state, actions }, value) => {
@@ -441,7 +441,7 @@ export const InitForm: Action<InitForm> = ({ state, actions }, value) => {
       let newVal = fieldValue.value
       let oldVal = fieldValue.value
       let oldConvertedVal = fieldValue.convertedValue
-      actions.ovl.form.ValidateDataType({
+      actions.ovl.internal.ValidateDataType({
         fieldId: k,
         oldVal: oldVal,
         newVal: newVal,
@@ -449,7 +449,7 @@ export const InitForm: Action<InitForm> = ({ state, actions }, value) => {
         validationResult: fieldValue.validationResult
       } as ValidateField)
       if (fieldValue.validationResult.valid) {
-        actions.ovl.form.ValidateSchema({
+        actions.ovl.internal.ValidateSchema({
           fieldId: k,
           oldVal: oldVal,
           newVal: newVal,
@@ -458,7 +458,7 @@ export const InitForm: Action<InitForm> = ({ state, actions }, value) => {
         } as ValidateField)
         if (fieldValue.validationResult.valid) {
           if (fieldValue.list) {
-            actions.ovl.form.ValidateList({
+            actions.ovl.internal.ValidateList({
               fieldId: k,
               oldVal: oldVal,
               newVal: newVal,
@@ -484,7 +484,7 @@ export const InitForm: Action<InitForm> = ({ state, actions }, value) => {
         }
       }
     })
-    actions.ovl.form.SetFormValid(formState)
+    actions.ovl.internal.SetFormValid(formState)
     // save a copy of validationresults (as well of fields, see json(..) above)
     // because when resetting the form, this should be inital state and there will be no re-initing
     formState.initFields = JSON.parse(JSON.stringify(fields))
@@ -542,7 +542,7 @@ export const SetField: Action<ChangeField> = ({ actions }, value) => {
   let field = value.formState.fields[value.fieldId]
   field.dirty = false
   value.isInit = true
-  actions.ovl.form.ChangeField(value)
+  actions.ovl.internal.ChangeField(value)
 }
 
 export const ChangeField: Action<ChangeField> = ({ actions }, value) => {
@@ -555,7 +555,7 @@ export const ChangeField: Action<ChangeField> = ({ actions }, value) => {
   field.watched = !value.isInit
   let newVal = value.value
   let namespace = value.formState.namespace
-  actions.ovl.form.ValidateDataType({
+  actions.ovl.internal.ValidateDataType({
     fieldId: value.fieldId,
     oldVal: oldConvertedVal,
     newVal: newVal,
@@ -564,7 +564,7 @@ export const ChangeField: Action<ChangeField> = ({ actions }, value) => {
   } as ValidateField)
 
   if (field.validationResult.valid) {
-    actions.ovl.form.ValidateSchema({
+    actions.ovl.internal.ValidateSchema({
       fieldId: value.fieldId,
       oldVal: oldConvertedVal,
       newVal: newVal,
@@ -574,7 +574,7 @@ export const ChangeField: Action<ChangeField> = ({ actions }, value) => {
 
     if (field.validationResult.valid) {
       if (field.list) {
-        actions.ovl.form.ValidateList({
+        actions.ovl.internal.ValidateList({
           fieldId: value.fieldId,
           oldVal: oldConvertedVal,
           newVal: newVal,
@@ -629,7 +629,7 @@ export const ChangeField: Action<ChangeField> = ({ actions }, value) => {
     }
   }
 
-  actions.ovl.form.SetFormValid(value.formState)
+  actions.ovl.internal.SetFormValid(value.formState)
 }
 
 export const SetFormValid: Action<FormState> = ({ actions }, value) => {

@@ -42,14 +42,16 @@ let shellbar = {
 import {
   NavigateBack,
   NavigateTo,
-  //ForgotPw,
+  ForgotPw,
   Logout,
+  Login,
   InitApp,
   RehydrateAndUpdateApp,
   GetFile,
   PrepareApp,
   RefreshData,
   ToggleLanguage,
+  SetVisibleFalse,
   OpenLanguageTable
 } from "./global/actions"
 
@@ -163,6 +165,7 @@ let internal = {
   PrepareApp,
   RefreshData,
   ToggleLanguage,
+  SetVisibleFalse,
   OpenLanguageTable,
   ChangeField,
   SetField,
@@ -177,7 +180,7 @@ let internal = {
 
 import * as translation from "./screens/Translation/actions"
 
-let user = { Logout }
+let user = { ForgotPw, Logout, Login }
 
 export let ovl = {
   indicator,

@@ -72,7 +72,7 @@ export class OvlListControl extends OvlBaseElement {
 
     // only reach out to server if endpoint is maintained
     if (this.controlState.list.serverEndpoint) {
-      await this.actions.ovl.form.FillListControl({
+      await this.actions.ovl.internal.FillListControl({
         list: this.controlState.list,
         listData,
         filterValue,
@@ -126,7 +126,7 @@ export class OvlListControl extends OvlBaseElement {
       </div>
     `
     await this.resetLocalList()
-    this.actions.ovl.global.OpenOverlay2({
+    this.actions.ovl.overlay.OpenOverlay2({
       templateResult: list,
       elementToFocusAfterClose: this.searchElement
     })

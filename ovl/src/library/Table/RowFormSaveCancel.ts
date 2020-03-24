@@ -53,7 +53,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
             })
           }
           this.actions.ovl.form.ResetForm(this.formState)
-          this.actions.ovl.internal.TableEditClose({
+          this.actions.ovl.table.TableEditClose({
             key: this.rowData.key,
             tableDef: this.rowData.tableDef,
             data: this.rowData.data

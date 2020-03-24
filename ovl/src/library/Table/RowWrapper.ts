@@ -59,7 +59,7 @@ export class TableRowWrapper extends OvlBaseElement {
       key: k,
       data: this.row.data
     }
-    this.actions.ovl.internal.TableSelectRow(val)
+    this.actions.ovl.table.TableSelectRow(val)
   }
 
   handleKeyDown = (e: KeyboardEvent) => {
@@ -102,7 +102,7 @@ export class TableRowWrapper extends OvlBaseElement {
           key,
           data: toSelectElement.row.TableData
         }
-        this.actions.ovl.internal.TableSelectRow(val)
+        this.actions.ovl.table.TableSelectRow(val)
       }
     }
   }
@@ -161,7 +161,7 @@ export class TableRowWrapper extends OvlBaseElement {
           ${editRowSC}
         `)
       } else if (def.options.edit.editType === "big") {
-        this.actions.ovl.global.OpenOverlay({
+        this.actions.ovl.overlay.OpenOverlay({
           templateResult: html`
             <ovl-trowformb
               class="fd-table__row"

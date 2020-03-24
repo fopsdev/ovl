@@ -30,7 +30,7 @@ export class OvlOverlay extends OvlBaseElement {
       this.state.ovl.libState.overlay.closing &&
       e.animationName === "fadeOut"
     ) {
-      this.actions.ovl.global.CloseOverlay()
+      this.actions.ovl.internal.CloseOverlay()
     }
   }
 
@@ -40,7 +40,7 @@ export class OvlOverlay extends OvlBaseElement {
     if (overlayToRender.overlayDismissedCallback) {
       overlayToRender.overlayDismissedCallback()
     } else {
-      this.actions.ovl.global.StartCloseOverlay()
+      this.actions.ovl.internal.StartCloseOverlay()
     }
   }
 
@@ -69,7 +69,7 @@ export class OvlOverlay extends OvlBaseElement {
         if (overlayToRender.overlayDismissedCallback) {
           overlayToRender.overlayDismissedCallback()
         } else {
-          this.actions.ovl.global.StartCloseOverlay()
+          this.actions.ovl.internal.StartCloseOverlay()
         }
       }
     }

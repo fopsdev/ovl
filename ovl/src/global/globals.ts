@@ -152,7 +152,7 @@ export const visibilityChange = async event => {
       document.visibilityState === "visible"
     ) {
       // rehydrate state here on ios. eg. switching from standalone app to a downloaded doc and back needs to rehydrate on ios (not on android,chrome)
-      await overmind.actions.ovl.global.RehydrateAndUpdateApp()
+      await overmind.actions.ovl.internal.RehydrateAndUpdateApp()
     }
   }
 }
@@ -192,7 +192,7 @@ let gotoFileFlag = false
 
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
-  overmind.actions.ovl.internal.SetIndicatorOpen()
+  overmind.actions.ovl.indicator.SetIndicatorOpen()
   if (HasOfflineMode) {
     window.removeEventListener("beforeunload", e => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))

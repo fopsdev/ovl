@@ -1,14 +1,14 @@
-import { overmind, Screen } from "../index"
+import { overmind } from "../index"
 import { FormType } from "./forms/actions"
 import { EventType } from "overmind"
 import { render, TemplateResult } from "lit-html"
 import { ITrackStateTree } from "proxy-state-tree"
 
-type ScreensHistory = Screen[]
+type ScreensHistory = string[]
 
 export type ScreensState = {
-  nextScreen: Screen
-  currentScreen: Screen
+  nextScreen: string
+  currentScreen: string
   screensHistory: ScreensHistory
   formTypeToReset: FormType
   formIdToReset: string
@@ -22,7 +22,7 @@ export class OvlBaseElement extends HTMLElement {
   actions: typeof overmind.actions
   name: string
   trackedTree: ITrackStateTree<object>
-  screen: Screen
+  screen: string
   animatedClass: string
 
   static _counter: number = 0
@@ -77,7 +77,7 @@ export class OvlBaseElement extends HTMLElement {
 
   handleAnimationEnd = e => {
     if (e.animationName === "fadeOut") {
-      this.actions.ovl.internal.OvlSetVisibleFalse(this.screen)
+      this.actions.ovl.internal.SetVisibleFalse(this.screen)
     }
   }
 

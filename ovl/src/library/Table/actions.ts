@@ -1,7 +1,7 @@
 import { Action, AsyncAction } from "overmind"
 import { postRequest } from "../../effects"
 import { api, ovltemp, uuidv4 } from "../../global/globals"
-import { actions as allActions, overmind } from "../../index"
+import { actions as allActions } from "../../init"
 import * as functions from "../../tableFunctions"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
@@ -33,6 +33,7 @@ import {
   TableDataAndDef,
   TableDef
 } from "./Table"
+import { overmind } from "../.."
 
 const minimumFilterChars = 3
 

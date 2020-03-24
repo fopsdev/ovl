@@ -41,7 +41,7 @@ export class CompLoginForm extends OvlFormElement {
     let handleForgotPw = (e: Event) => {
       e.preventDefault()
       e.stopPropagation()
-      this.actions.ovl.global.ForgotPw(this.formState)
+      this.actions.ovl.user.ForgotPw(this.formState)
     }
 
     let fields = this.formState.fields

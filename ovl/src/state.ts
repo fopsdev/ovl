@@ -32,7 +32,7 @@ let dialog: DialogState = {
   default: 1
 }
 
-type Role = "User" | "Admin"
+type BaseRole = "User" | "Admin"
 type Language = "DE" | "FR"
 let availableLanguages: string[] = []
 let translations: Translation = {}
@@ -52,7 +52,7 @@ type User = {
   firstName: string
   lastName: string
   token: string
-  role: Role
+  role: BaseRole
   features: any
   userCode: number
 }

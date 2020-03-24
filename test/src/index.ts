@@ -22,28 +22,24 @@ export const HasOfflineMode = !!window.indexedDB && !!OvlOfflineMode
 
 // #####################################################################################################################################
 
-import { html, render } from "lit-html"
+import { html, render } from "../../ovl/node_modules/lit-html"
+import { createOvermind } from "../../ovl/node_modules/overmind"
+import { config as ovlconfig } from "../../ovl/src/init"
 
-import { createOvermind } from "overmind"
-import { config } from "./init"
-
-export const overmind = createOvermind(config, {
+export const overmind = createOvermind(ovlconfig, {
   devtools: true,
   logProxies: true,
   delimiter: " "
 })
 
-// window.scrollTo(0, 1)
+window.scrollTo(0, 1)
 
-// // just allow "back" functionality
-// // this gives us consistency across devices as well
+overmind.actions.ovl.internal.InitApp()
 
-// overmind.actions.ovl.internal.InitApp()
-
-// render(
-//   html`
-//     <comp-shellbar></comp-shellbar>
-//     <ovl-snack> </ovl-snack>
-//   `,
-//   document.getElementById("app")
-// )
+render(
+  html`
+    <comp-shellbar></comp-shellbar>
+    <ovl-snack> </ovl-snack>
+  `,
+  document.getElementById("app")
+)

@@ -20,7 +20,7 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
   let snackMessage = ""
   let snackMessageType: SnackType = "Information"
   try {
-    overmind.actions.ovl.internal.SetIndicatorOpen()
+    overmind.actions.ovl.indicator.SetIndicatorOpen()
     // Create request to api service
     let isPost = !!data
     let headers = {}
@@ -43,7 +43,7 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
     if (req.status === 401) {
       // unauthorised
       snackMessage = T("AppPleaseRelogin")
-      overmind.actions.ovl.global.NavigateTo("Login")
+      overmind.actions.ovl.navigation.NavigateTo("Login")
       return
     } else if (req.status === 404) {
       snackMessage = "File not found"
@@ -114,7 +114,7 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
       type: ""
     }
   } finally {
-    overmind.actions.ovl.internal.SetIndicatorClose()
+    overmind.actions.ovl.indicator.SetIndicatorClose()
     if (snackMessage) {
       overmind.actions.ovl.snack.AddSnack({
         durationMs: 5000,

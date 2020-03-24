@@ -40,7 +40,7 @@ export class OvlFormElement extends OvlBaseElement {
   handleOvlFocusOut = async e => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
-      this.actions.ovl.form.TouchField({
+      this.actions.ovl.internal.TouchField({
         formState: this.formState,
         fieldId: id
       })
@@ -51,7 +51,7 @@ export class OvlFormElement extends OvlBaseElement {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
       // change the field in state
-      this.actions.ovl.form.ChangeField({
+      this.actions.ovl.internal.ChangeField({
         fieldId: id,
         formState: this.formState,
         value: e.detail.val,
