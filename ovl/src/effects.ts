@@ -30,7 +30,8 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
       let contentType = "application/json"
       headers["Content-Type"] = contentType
     }
-    if (overmind.state.ovl.user.token) {
+    let user = overmind.state.ovl.user
+    if (user && user.token) {
       headers["Authorization"] = "Bearer " + overmind.state.ovl.user.token
     }
     const req = await fetch(url, {

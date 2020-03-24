@@ -247,8 +247,8 @@ export const TableRefreshDataFromServer: AsyncAction<{
           listValueFound = false
         }
         if (!listValueFound) {
-          console.log("lookups need refresh for")
-          console.log(value)
+          console.error("lookups need refresh for")
+          console.error(value)
           KeyValueListFromServerFn(
             state,
             lookupColumnDef.list,

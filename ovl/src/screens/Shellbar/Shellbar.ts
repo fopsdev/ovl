@@ -5,7 +5,6 @@ import langpic_de from "../../../img/de.png"
 import langpic_fr from "../../../img/fr.png"
 // @ts-ignore
 import { T } from "../../global/globals"
-import { IsDev, OvlShowSaveOrigin, OvlVersion } from "../../index"
 import { OvlBaseElement } from "../../library/OvlBaseElement"
 import { ShellButtonOrMenu } from "../../library/Refresh/Refresh"
 
@@ -26,9 +25,9 @@ export class Shellbar extends OvlBaseElement {
     if (this.state.ovl.uiState.isReady) {
       app = html`
         <div class="${scrollable}">
-          <comp-loginform id="loginform"></comp-loginform>
+          <ovl-loginform id="loginform"></ovl-loginform>
           <ovl-audit> </ovl-audit>
-          <comp-translation> </comp-translation>
+          <ovl-translation> </ovl-translation>
         </div>
       `
     }
@@ -100,52 +99,51 @@ export class Shellbar extends OvlBaseElement {
     let hideAllMenus = ""
     let user = this.state.ovl.user
 
-    // if user not logged in hide menus
-    if (!user.token) {
-      hideAllMenus = "hide"
-    }
-
-    let langpic = langpic_de
-    let langtitle = T("AppLangDE")
-    if (this.state.ovl.language.language === "DE") {
-      langpic = langpic_fr
-      langtitle = T("AppLangFR")
-    }
-
-    let languageTableMenu
-    if (this.state.ovl.user.role === "Admin") {
-      languageTableMenu = html`
-        <li>
-          <a
-            @click=${handleLanguageTable}
-            role="button"
-            class="fd-menu__item sap-icon--table-view sap-icon--l"
-          >
-            ${T("AppTranslations")}</a
-          >
-        </li>
-      `
-    }
-
     let auditMenu
-    if (this.state.ovl.user.role === "Admin") {
-      auditMenu = html`
-        <li>
-          <a
-            @click=${handleAudit}
-            role="button"
-            class="fd-menu__item sap-icon--history sap-icon--l"
-          >
-            Audit</a
-          >
-        </li>
-      `
-    }
+    let langpic
+    let languageTableMenu
+    let langtitle
+    let userName
+    // if user not logged in then shellbar is not full ready
+    if (!user || !user.token) {
+      hideAllMenus = "hide"
+    } else {
+      userName = user.firstName + " " + user.lastName
+      langpic = langpic_de
+      langtitle = T("AppLangDE")
+      if (this.state.ovl.language.language === "DE") {
+        langpic = langpic_fr
+        langtitle = T("AppLangFR")
+      }
 
-    let version =
-      OvlVersion +
-      (IsDev ? " DEV" : "") +
-      (OvlShowSaveOrigin ? " " + this.state.ovl.uiState.stateSavedReason : "")
+      if (this.state.ovl.user.role === "Admin") {
+        languageTableMenu = html`
+          <li>
+            <a
+              @click=${handleLanguageTable}
+              role="button"
+              class="fd-menu__item sap-icon--table-view sap-icon--l"
+            >
+              ${T("AppTranslations")}</a
+            >
+          </li>
+        `
+      }
+
+      if (this.state.ovl.user.role === "Admin") {
+        auditMenu = html`
+          <li>
+            <a
+              @click=${handleAudit}
+              role="button"
+              class="fd-menu__item sap-icon--history sap-icon--l"
+            >
+              Audit</a
+            >
+          </li>
+        `
+      }
+    }
     // we have a tabindex on this first div so it can get the focus and not too many saveStates (has a focusOut handler) get called
     return html`
       <div
@@ -162,7 +160,7 @@ export class Shellbar extends OvlBaseElement {
                 ><img width="48" height="24" alt="Kalt AG"
               /></a>
               <span class="fd-shellbar__title fd-has-type-4"
-                >${T("AppShortTitle") + (IsDev ? "DEVDEVDEV" : "")}</span
+                >${T("AppShortTitle")}</span
               >
               <ovl-indicator> </ovl-indicator>
             </div>
@@ -227,9 +225,7 @@ export class Shellbar extends OvlBaseElement {
                   <div class="fd-popover__control">
                     <button
                       class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2"
-                      title=${this.state.ovl.user.firstName +
-                        " " +
-                        this.state.ovl.user.lastName}
+                      title=${userName}
                       aria-label=""
                       @click=${userMenuClick}
                       aria-controls="DD35G276"
@@ -273,7 +269,7 @@ export class Shellbar extends OvlBaseElement {
 
                         <li>
                           <a class="fd-menu__item">
-                            Version: ${version}
+                            Version:
                           </a>
                         </li>
                       </ul>

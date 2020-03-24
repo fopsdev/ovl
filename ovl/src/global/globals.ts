@@ -1,10 +1,5 @@
-import {
-  HasOfflineMode,
-  IsDev,
-  overmind,
-  PersistStateId,
-  PersistTimestampId
-} from "../index"
+import { overmind } from "../index"
+import { ovlBaseConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./disiplayFormats"
@@ -105,7 +100,7 @@ export const addGlobalPersistEventListeners = () => {
 // }
 
 export const focusOut = async event => {
-  if (HasOfflineMode) {
+  if (ovlBaseConfig.OfflineMode) {
     if (!event.relatedTarget) {
       await saveState(false, "FocusOut")
     }
@@ -114,7 +109,7 @@ export const focusOut = async event => {
 
 export const beforeUnload = async event => {
   if (
-    !IsDev &&
+    !ovlBaseConfig.IsDev &&
     //@ts-ignore
     HasOfflineMode &&
     !logoutAndClearFlag &&
@@ -137,7 +132,7 @@ export const beforeUnload = async event => {
 }
 
 export const visibilityChange = async event => {
-  if (HasOfflineMode) {
+  if (ovlBaseConfig.OfflineMode) {
     // fires when user switches tabs, apps, goes to homescreen, etc.
     //@ts-ignore
     if (
@@ -160,17 +155,17 @@ export const visibilityChange = async event => {
 //export let ovlstatetimestamp: number = 0
 let saveReason = ""
 export const saveState = async (force: boolean, reason: string) => {
-  if (HasOfflineMode && !logoutAndClearFlag) {
+  if (ovlBaseConfig.OfflineMode && !logoutAndClearFlag) {
     saveReason = reason
     if (overmind.state.ovl.screens.nav.currentScreen !== "Login") {
-      let td: Date = await stateStore.get(PersistTimestampId)
+      let td: Date = await stateStore.get(ovlBaseConfig.PersistTimestampId)
       let ts
       if (td !== undefined) {
         ts = td.getTime()
       }
       let dt = Date.now()
       if (force || ts === undefined || dt - ts > 5000) {
-        await stateStore.set(PersistTimestampId, new Date(dt))
+        await stateStore.set(ovlBaseConfig.PersistTimestampId, new Date(dt))
         OvlTimestamp = dt
         // let refstate = overmind.state
         let newObj = {}
@@ -182,7 +177,7 @@ export const saveState = async (force: boolean, reason: string) => {
         // let t = JSON.stringify(refstate)
         // dtEnd = Date.now()
         // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
-        stateStore.set(PersistStateId, newObj)
+        stateStore.set(ovlBaseConfig.PersistStateId, newObj)
       }
     }
   }
@@ -193,7 +188,7 @@ let gotoFileFlag = false
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
   overmind.actions.ovl.indicator.SetIndicatorOpen()
-  if (HasOfflineMode) {
+  if (ovlBaseConfig.OfflineMode) {
     window.removeEventListener("beforeunload", e => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))
@@ -327,7 +322,7 @@ export const T = (key: string, reps?: string[]): string => {
   let str = overmind.state.ovl.language.translations[key]
   if (str === undefined || str === null) {
     if (overmind.state.ovl.uiState.isReady) {
-      console.log("Ovl Translations: key " + key + " not found")
+      console.warn("Ovl Translations: key " + key + " not found")
     }
     return ""
   }
@@ -365,7 +360,7 @@ export const T = (key: string, reps?: string[]): string => {
     TCache.set(cacheKey, str)
     return str
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return "error in translation string: " + str
   }
 }

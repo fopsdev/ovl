@@ -19,7 +19,6 @@
     "updateCheck",
     "node_modules",
     "dist",
-    "service-worker.js",
-    "initscript.js"
+    "service-worker.js"
   ]
 }

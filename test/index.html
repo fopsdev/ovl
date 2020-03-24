@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kalt AG Kundenportal</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      //detect ie11 and redirect to browser update
+      // ######## manage global config stuff here ###################################################################################################
+      window.OvlVersion = "1.00.032204"
+      // gives a nice dev experience with offlinemode. but take care to check "update on reload" and "bypass network" in the devtools and leave them open
+      window.OvlIsDev = true
+      // configure offline-mode
+      window.OvlOfflineMode = true
+      // if the data-version changes clients will clear the persisted state (indexdb state)
+
+      window.OvlDataVersion = "49"
+      // shows a hint in version info from which event state was stored
+      window.OvlShowSaveOrigin = true
+
+      // Check that service workers are supported
+      if (window.OvlOfflineMode && "serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(registration => {
+              // A wild service worker has appeared in reg.installing and maybe in waiting!
+              const newWorker = registration.installing
+              const waitingWorker = registration.waiting
+
+              if (newWorker) {
+                if (newWorker.state === "activated" && !waitingWorker) {
+                  // reload to avoid skipWaiting and clients.claim()
+                  window.location.reload()
+                }
+                newWorker.addEventListener("statechange", e => {
+                  // newWorker.state has changed
+                  if (newWorker.state === "activated" && !waitingWorker) {
+                    // reload to avoid skipWaiting and clients.claim()
+                    window.location.reload()
+                  }
+                })
+              }
+            })
+        })
+      }
+    </script>
+
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="128x128"
+      href="./img/icon-128x128.png"
+    />
+    <link rel="icon" sizes="192x192" href="./img/logosmall.png" />
+    <link rel="stylesheet" type="text/css" href="../ovl/Chart.min.css" />
+    <link rel="stylesheet" type="text/css" href="../ovl/fundamental.css" />
+    <link rel="stylesheet" type="text/css" href="../ovl/main.css" />
+    <script src="../ovl/initscript.js"></script>
+    <script src="../ovl/Chart.min.js"></script>
+  </head>
+  <body class="body">
+    <div tabindex="0" id="app"></div>
+    <script src="src/index.ts"></script>
+  </body>
+</html>

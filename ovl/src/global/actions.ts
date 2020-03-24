@@ -1,10 +1,6 @@
 import { Action, AsyncAction } from "overmind"
-import {
-  HasOfflineMode,
-  overmind,
-  OvlDataVersion,
-  PersistStateId
-} from "../index"
+import { overmind } from "../index"
+import { ovlBaseConfig, Init } from "../init"
 import { DialogResult } from "../library/actions"
 import {
   FormState,
@@ -31,8 +27,9 @@ export const NavigateTo: AsyncAction<string> = async (
 ) => {
   if (state.ovl.screens.nav.currentScreen !== value) {
     state.ovl.screens.nav.nextScreen = value
-    if (value === "Login") {
-      state.ovl.user.token = ""
+    let user = state.ovl.user
+    if (value === "Login" && user) {
+      user.token = ""
     }
     // make sure that a screen is only once in the history
     // elsewise we need to handle different state (involves serializing and and and and...) as well
@@ -133,7 +130,9 @@ export const ToggleLanguage: AsyncAction = async (
   } else {
     lang = "FR"
   }
-  let res = await effects.postRequest("translation", { language: lang })
+  let res = await effects.postRequest(api.url + "users/translations", {
+    language: lang
+  })
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
@@ -396,9 +395,9 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
   state,
   effects
 }) => {
-  if (HasOfflineMode) {
+  if (ovlBaseConfig.OfflineMode) {
     try {
-      let persistedState = await stateStore.get(PersistStateId)
+      let persistedState = await stateStore.get(ovlBaseConfig.PersistStateId)
       if (!persistedState) {
         // clear also maybe old versions lingering around...
         stateStore.clear()
@@ -410,9 +409,11 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         await actions.ovl.internal.PrepareApp()
         api.url = state.ovl.apiUrl
         state.ovl.uiState.isReady = true
+
         let updateCheck = await effects.getRequest(
-          "./updatecheck/ovldataversion" + OvlDataVersion + ".js"
+          "./updatecheck/ovldataversion" + ovlBaseConfig.DataVersion + ".js"
         )
+
         if (updateCheck.status === 404) {
           // we need an update
           actions.ovl.dialog.OkDialog({
@@ -424,51 +425,46 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         return
       }
     } catch (e) {
-      console.log("Persisted Offlinedata could not be restored: ")
-      console.log(e)
+      console.error("Persisted Offlinedata could not be restored: ")
+      console.error(e)
     }
   }
 }
 
-export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
+export const InitApp: AsyncAction<Init> = async (
+  { actions, state, effects },
+  value
+) => {
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function() {
     overmind.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
-  //alert("init started")
+
   // rehydrate state from indexeddb/check if update is needed
   await actions.ovl.internal.RehydrateAndUpdateApp()
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
 
   // @ts-ignore
+
   state.ovl.uiState.isMobile = window.isMobile.phone
   state.ovl.uiState.isTouch = isTouch()
   state.ovl.uiState.isIOS =
     /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-  if (window.location.hostname.toLowerCase().startsWith("test")) {
+  let currentLocation = window.location.hostname.toLowerCase()
+  if (currentLocation.indexOf(value.customerTestUrlMatch) > -1) {
     state.ovl.uiState.isDemo = true
-    state.ovl.apiUrl = "https://testapi-portal.kaltag.ch/api/"
-  } else if (
-    window.location.hostname.toLowerCase().indexOf("kundenportal.kaltag.ch") >
-    -1
-  ) {
-    state.ovl.apiUrl = "https://api-portal.kaltag.ch/api/"
-  } else if (window.location.hostname.toLowerCase().indexOf("itflies") > -1) {
-    state.ovl.apiUrl = "https://itflies2.ddns.net/api/"
+    state.ovl.apiUrl = value.customerTestUrl
+  } else if (currentLocation.indexOf(value.customerRealUrlMatch) > -1) {
+    state.ovl.apiUrl = value.customerRealUrl
+  } else if (currentLocation.indexOf(value.itfliesServerUrlMatch) > -1) {
+    state.ovl.apiUrl = value.itfliesServerUrl
   } else {
     state.ovl.uiState.isDemo = true
-    state.ovl.apiUrl = "http://192.168.1.117:1233/api/"
-    //state.ovl.apiUrl = "http://192.168.15.18:10443/api/"
+    state.ovl.apiUrl = value.devServer
   }
-
   api.url = state.ovl.apiUrl
-
-  //if (!state.ovl.uiState.isDemo) {
-
-  //}
-
   // prepare login form
   let fields: { [key: string]: FormFields } = {
     pw: { value: "" },
@@ -487,7 +483,9 @@ export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
   let lang = localStorage.getItem("PortalLanguage")
 
-  let res = await effects.postRequest("translations", { language: lang })
+  let res = await effects.postRequest(api.url + "users/translations", {
+    language: lang
+  })
 
   if (!res || !res.data) {
     return
@@ -549,5 +547,5 @@ export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
 
   // actions.ovl.navigation.NavigateTo("TableTesting")
 
-  //actions.ovl.navigation.NavigateTo("Login")
+  actions.ovl.navigation.NavigateTo("Login")
 }

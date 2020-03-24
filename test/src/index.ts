@@ -1,30 +1,6 @@
-// ######## manage global config stuff here ###################################################################################################
-//@ts-ignore
-export const OvlVersion = window.OvlVersion
-// gives a nice dev experience with offlinemode. but take care to check "update on reload" and "bypass network" in the devtools and leave them open
-//@ts-ignore
-export const IsDev = window.OvlIsDev
-// configure offline-mode
-//@ts-ignore
-export const OvlOfflineMode = window.OvlOfflineMode
-// if the data-version changes clients will clear the persisted state (indexdb state)
-//@ts-ignore
-export const OvlDataVersion = window.OvlDataVersion
-// shows a hint in version info from which event state was stored
-//@ts-ignore
-export const OvlShowSaveOrigin = window.OvlShowSaveOrigin
-
-export const PersistStateId = "ovlstate" + OvlDataVersion
-//@ts-ignore
-export const PersistTimestampId = "ovltimestamp" + OvlDataVersion
-//@ts-ignore
-export const HasOfflineMode = !!window.indexedDB && !!OvlOfflineMode
-
-// #####################################################################################################################################
-
+import { config as ovlconfig, ovlBaseConfig, Init } from "../../ovl/src/init"
 import { html, render } from "../../ovl/node_modules/lit-html"
 import { createOvermind } from "../../ovl/node_modules/overmind"
-import { config as ovlconfig } from "../../ovl/src/init"
 
 export const overmind = createOvermind(ovlconfig, {
   devtools: true,
@@ -32,13 +8,23 @@ export const overmind = createOvermind(ovlconfig, {
   delimiter: " "
 })
 
-window.scrollTo(0, 1)
+let init: Init = {
+  customerRealUrlMatch: "kundenportal.kaltag.ch",
+  customerRealUrl: "https://api-portal.kaltag.ch/api/",
+  customerTestUrlMatch: "test",
+  customerTestUrl: "https://testapi-portal.kaltag.ch/api/",
+  itfliesServerUrlMatch: "itflies",
+  itfliesServerUrl: "https://itflies2.ddns.net/api/",
+  devServer: "http://192.168.1.117:1233/api/"
+}
 
-overmind.actions.ovl.internal.InitApp()
+overmind.actions.ovl.internal.InitApp(init)
+
+window.scrollTo(0, 1)
 
 render(
   html`
-    <comp-shellbar></comp-shellbar>
+    <ovl-shellbar></ovl-shellbar>
     <ovl-snack> </ovl-snack>
   `,
   document.getElementById("app")
