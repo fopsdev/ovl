@@ -1,6 +1,6 @@
-import { config as ovlconfig, ovlBaseConfig, Init } from "../../ovl/src/init"
 import { html, render } from "../../ovl/node_modules/lit-html"
 import { createOvermind } from "../../ovl/node_modules/overmind"
+import { config as ovlconfig, Init } from "../../ovl/src/init"
 
 export const overmind = createOvermind(ovlconfig, {
   devtools: true,
