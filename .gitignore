@@ -1,3 +1,6 @@
+#library index file, will be adjusted per project
+ovl/src/index.ts
+
 # Logs
 logs
 *.log
@@ -38,7 +41,6 @@ bower_components
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
-ovl/src/index.ts
 
 # Dependency directories
 node_modules
