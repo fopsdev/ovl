@@ -183,7 +183,7 @@ export const ForgotPw: AsyncAction<FormState> = async (
   switch (await DialogResult()) {
     case 1:
       let user = value.fields["user"].value
-      let res = await effects.user.requestresetpw({
+      let res = await effects.postRequest("requestresetpw", {
         user,
         language: state.ovl.language.language
       })
@@ -207,7 +207,7 @@ export const Login: AsyncAction<FormState> = async (
   if (value.valid) {
     let user = value.fields["user"].value
     let pw = value.fields["pw"].value
-    let res = await effects.user.authenticate({
+    let res = await effects.postRequest("authenticate", {
       email: user,
       password: pw,
       language: state.ovl.language.language
@@ -217,19 +217,19 @@ export const Login: AsyncAction<FormState> = async (
     }
     //console.log(res.data)
     state.ovl.user = res.data.partner.user
-    state.portal.partner = res.data.partner
-    state.portal.partner.attachments = res.data.data.attachments
+    // state.portal.partner = res.data.partner
+    // state.portal.partner.attachments = res.data.data.attachments
 
-    state.portal.chartData = res.data.data.chartData
-    state.portal.quotationDetail = {
-      quotations: res.data.data.quotationDetail
-    }
-    state.portal.orderDetail = { orders: res.data.data.orderDetail }
-    state.portal.invoiceDetail = { invoices: res.data.data.invoiceDetail }
-    state.portal.dpInvoiceDetail = {
-      dpInvoices: res.data.data.dpInvoiceDetail
-    }
-    state.portal.chartData = res.data.data.chartData
+    // state.portal.chartData = res.data.data.chartData
+    // state.portal.quotationDetail = {
+    //   quotations: res.data.data.quotationDetail
+    // }
+    // state.portal.orderDetail = { orders: res.data.data.orderDetail }
+    // state.portal.invoiceDetail = { invoices: res.data.data.invoiceDetail }
+    // state.portal.dpInvoiceDetail = {
+    //   dpInvoices: res.data.data.dpInvoiceDetail
+    // }
+    // state.portal.chartData = res.data.data.chartData
 
     actions.ovl.snack.AddSnack({
       durationMs: 3000,
@@ -237,23 +237,21 @@ export const Login: AsyncAction<FormState> = async (
       type: "Success"
     })
     if (state.ovl.screens.nav.screensHistory.length > 1) {
-      actions.global.NavigateBack()
+      actions.ovl.navigation.NavigateBack()
     } else {
       // see if we have a target url and move directly to that screen
       // also possible to move to detail providing "o" = docnum param
-
-      let url = new URL(window.location.href)
-      let screen = <Screen>url.searchParams.get("s")
-      let orderNum = url.searchParams.get("o")
-
-      let command: Screen = "Dashboard"
-      if (screen) {
-        command = screen
-      }
-      if (orderNum) {
-        state.ovl.screens.screens.Orderdetail.selectedOrder = orderNum
-      }
-      actions.global.NavigateTo(command)
+      // let url = new URL(window.location.href)
+      // let screen = <Screen>url.searchParams.get("s")
+      // let orderNum = url.searchParams.get("o")
+      // let command: Screen = "Dashboard"
+      // if (screen) {
+      //   command = screen
+      // }
+      // if (orderNum) {
+      //   state.ovl.screens.screens.Orderdetail.selectedOrder = orderNum
+      // }
+      // actions.ovl.navigation.NavigateTo(command)
     }
     actions.ovl.form.ResetFormAfterAnimation(value)
   } else {
@@ -290,12 +288,12 @@ export const OpenLanguageTable: Action = ({ state, actions }, value) => {
       tabledata[k].Translation = state.ovl.language.translations[k]
     }
   })
-  actions.ovl.internal.TableRefresh({
+  actions.ovl.table.TableRefresh({
     def: state.ovl.language.tables.translations.tableDef.translation,
     data: state.ovl.language.tables.translations,
     init: true
   })
-  actions.global.NavigateTo("Translation")
+  actions.ovl.navigation.NavigateTo("Translation")
 }
 
 export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
@@ -305,10 +303,10 @@ export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
   // most of the following code is necessary because we still have some component state which is not handled by overmind
   // lession learned: use overmind.state wherever possible...
   if (state.ovl.libState.overlay2.open) {
-    await actions.global.CloseOverlay2()
+    await actions.ovl.internal.CloseOverlay2()
   }
   if (state.ovl.libState.overlay.open) {
-    await actions.global.CloseOverlay()
+    await actions.ovl.internal.CloseOverlay()
   }
 
   state.ovl.libState.snacks = {}
@@ -333,12 +331,12 @@ export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
   })
   state.ovl.screens.nav.currentScreen = screenToGo
   state.ovl.screens.nav.nextScreen = undefined
-  //actions.global.NavigateTo(screenToGo)
+  //actions.ovl.navigation.NavigateTo(screenToGo)
 }
 
 export const GetFile: AsyncAction<{
   fileName: string
-  fileType: FileType
+  fileType: string
   docNum: string
 }> = async ({ actions, state, effects }, value) => {
   let docNum = value.docNum
@@ -406,12 +404,11 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         // clear also maybe old versions lingering around...
         stateStore.clear()
       } else {
-        state.app = persistedState.app
-        state.portal = persistedState.portal
-        state.tables = persistedState.tables
-        //state.ovl.language = JSON.parse(JSON.stringify(state.ovl.language))
-        //await rehydrate(state, persistedState)
-        await actions.global.PrepareApp()
+        // go through 1st level keys and assign them
+        Object.keys(persistedState).forEach(k => {
+          state[k] = persistedState[k]
+        })
+        await actions.ovl.internal.PrepareApp()
         api.url = state.ovl.apiUrl
         state.ovl.uiState.isReady = true
         let updateCheck = await effects.getRequest(
@@ -437,7 +434,7 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
 export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
   //alert("init started")
   // rehydrate state from indexeddb/check if update is needed
-  await actions.global.RehydrateAndUpdateApp()
+  await actions.ovl.internal.RehydrateAndUpdateApp()
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
 
@@ -486,27 +483,27 @@ export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
   let lang = localStorage.getItem("PortalLanguage")
 
-  let res = await effects.global.getTranslations({ language: lang })
+  let res = await effects.postRequest("translations", { language: lang })
 
   if (!res || !res.data) {
     return
   }
   state.ovl.language.language = res.data.lang
   localStorage.setItem("PortalLanguage", res.data.lang)
-  state.ovl.language.translations = res.data.translations
-  state.portal.pics.salesContact = res.data.salesPic
-  state.portal.pics.technicalContact = res.data.technicianPic
+  // state.ovl.language.translations = res.data.translations
+  // state.portal.pics.salesContact = res.data.salesPic
+  // state.portal.pics.technicalContact = res.data.technicianPic
 
-  //init lookup values
-  res = await effects.postRequest(state.ovl.apiUrl + "lookup", {
-    lang: state.ovl.language.language,
-    lookupType: "initial"
-  })
-  state.tables.lookups.U_ItemCode = res.data.item
-  state.tables.lookups.ItmsGrpCod = res.data.itemGroup
+  // //init lookup values
+  // res = await effects.postRequest(state.ovl.apiUrl + "lookup", {
+  //   lang: state.ovl.language.language,
+  //   lookupType: "initial"
+  // })
+  // state.tables.lookups.U_ItemCode = res.data.item
+  // state.tables.lookups.ItmsGrpCod = res.data.itemGroup
 
-  state.tables.lookups.AbsenceTypeId = res.data.timeAbsences
-  state.tables.lookups.ProjectTypeId = res.data.timeProjects
+  // state.tables.lookups.AbsenceTypeId = res.data.timeAbsences
+  // state.tables.lookups.ProjectTypeId = res.data.timeProjects
 
   state.ovl.uiState.isReady = true
 
@@ -517,36 +514,36 @@ export const InitApp: AsyncAction = async ({ actions, state, effects }) => {
   //   def: state.tables.timeentries.tableDef.mobiletimerecording1,
   //   selected: dateSelected
   // })
-  // actions.global.NavigateTo("MobileTimeEntry")
+  // actions.ovl.navigation.NavigateTo("MobileTimeEntry")
 
   // //init tables
-  // await actions.ovl.internal.TableRefresh({
+  // await actions.ovl.table.TableRefresh({
   //   def: state.tables.tableTesting.tableDef.tab1,
   //   data: state.tables.tableTesting,
   //   init: true
   // })
 
-  // await actions.ovl.internal.TableRefresh({
+  // await actions.ovl.table.TableRefresh({
   //   def: state.tables.tableTesting.tableDef.tab2,
   //   data: state.tables.tableTesting,
   //   init: true,
   //   forceFreshServerData: -1
   // })
 
-  // await actions.ovl.internal.TableRefresh({
+  // await actions.ovl.table.TableRefresh({
   //   def: state.tables.tableTesting.tableDef.tab3,
   //   data: state.tables.tableTesting,
   //   init: true,
   //   forceFreshServerData: -1
   // })
 
-  // await actions.ovl.internal.TableRefresh({
+  // await actions.ovl.table.TableRefresh({
   //   def: state.tables.tableTesting.tableDef.tab4,
   //   data: state.tables.tableTesting,
   //   init: true
   // })
 
-  // actions.global.NavigateTo("TableTesting")
+  // actions.ovl.navigation.NavigateTo("TableTesting")
 
-  //actions.global.NavigateTo("Login")
+  //actions.ovl.navigation.NavigateTo("Login")
 }

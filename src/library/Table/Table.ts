@@ -301,7 +301,7 @@ export class TableHeader extends OvlBaseElement {
     this.async = true
     this.tabledata = this.props(this.state)
     // this prepares the table on first use
-    //this.actions.ovl.internal.TableRefresh(this.tabledata)
+    //this.actions.ovl.table.TableRefresh(this.tabledata)
   }
   async getUIAsync() {
     let def = this.tabledata.def

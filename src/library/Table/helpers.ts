@@ -1,24 +1,21 @@
-import * as functions from "../../tableFunctions"
+import { overmind } from "../.."
 import {
   getDateValue,
   getDecimalValue,
   ovltemp,
   uuidv4
 } from "../../global/globals"
-import {
-  ColumnDef,
-  TableDef,
-  TableDataAndDef,
-  TableData,
-  ListFnReturnValue,
-  ColumnDisplayDef,
-  ColumnsDef
-} from "./Table"
-import { overmind } from "../.."
 import { state } from "../../state"
+import * as functions from "../../tableFunctions"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
-import { Overmind } from "overmind"
-import { FormFields, DataType } from "../forms/OvlFormElement"
+import { DataType, FormFields } from "../forms/OvlFormElement"
+import {
+  ColumnDisplayDef,
+  ListFnReturnValue,
+  TableData,
+  TableDataAndDef,
+  TableDef
+} from "./Table"
 
 export const getTextSort = (valA: string, valB: string): number => {
   if (valA === null) {
@@ -187,7 +184,7 @@ export const setTableRow = (
     destRow[k] = newData[k]
   })
   if (isAdd && !isSwitcher) {
-    actions.ovl.internal.TableEditRow({ key: newId, def, data: data })
+    actions.ovl.table.TableEditRow({ key: newId, def, data: data })
   }
 }
 // same applies to this method...use it from your customdeleters
@@ -544,7 +541,7 @@ export const initTableState = async (
         data.timestamp + forceFreshServerData * 1000 < Date.now())
     ) {
       // now if there is no data do a get request
-      await actions.ovl.internal.RefreshDataFromServer({
+      await actions.ovl.table.TableRefreshDataFromServer({
         def: tableDef.def,
         data: tableDef.data
       })

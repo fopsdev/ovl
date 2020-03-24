@@ -56,7 +56,7 @@ export const TableClearFilter: Action<TableDataAndDef> = (
     def.options.filter.value = ""
   }
   def.uiState.headerSelected = ""
-  actions.ovl.internal.TableRefresh({ def: value.def, data: value.data })
+  actions.ovl.table.TableRefresh({ def: value.def, data: value.data })
 }
 
 export const TableFilterSelected: Action<TableDataAndDef> = (
@@ -69,7 +69,7 @@ export const TableFilterSelected: Action<TableDataAndDef> = (
     paging: value.def.options.paging,
     page: 0
   })
-  actions.ovl.internal.TableRefresh(value)
+  actions.ovl.table.TableRefresh(value)
 }
 
 export const TableSelectHeader: Action<HeaderClick> = (
@@ -78,12 +78,12 @@ export const TableSelectHeader: Action<HeaderClick> = (
 ) => {
   if (!state.ovl.libState.overlay.closing) {
     if (def.key !== "") {
-      actions.global.OpenOverlay({
+      actions.ovl.overlay.OpenOverlay({
         templateResult: null,
         elementToFocusAfterClose: document.activeElement
       })
     } else {
-      actions.global.StartCloseOverlay()
+      actions.ovl.internal.StartCloseOverlay()
     }
     def.def.uiState.headerSelected = def.key
   }
@@ -98,7 +98,7 @@ export const TableSort: Action<SortClick> = ({ actions }, value) => {
     def.options.sort.direction = "desc"
   }
   def.options.sortCustom.selected = ""
-  actions.ovl.internal.TableRefresh({ def: value.def, data: value.data })
+  actions.ovl.table.TableRefresh({ def: value.def, data: value.data })
 }
 
 export const TableFilter: Action<FilterClick> = ({ actions }, value) => {
@@ -113,7 +113,7 @@ export const TableFilter: Action<FilterClick> = ({ actions }, value) => {
     })
   }
 
-  actions.ovl.internal.TableRefresh({ def: value.def, data: value.data })
+  actions.ovl.table.TableRefresh({ def: value.def, data: value.data })
 }
 
 export const TableSelectAll: Action<{
@@ -151,7 +151,7 @@ export const TableViewRefresh: Action<TableDataAndDef> = (
   { actions },
   value
 ) => {
-  actions.ovl.internal.TableRefresh({
+  actions.ovl.table.TableRefresh({
     def: value.def,
     data: value.data,
     forceFreshServerData:
@@ -602,9 +602,9 @@ const TableEditSaveRowHelper = async (
       }
     }
     if (hasFormState) {
-      actions.ovl.form.SetFormUndirty(formState)
+      actions.ovl.internal.SetFormUndirty(formState)
     }
-    actions.ovl.internal.TableEditClose({
+    actions.ovl.table.TableEditClose({
       key,
       tableDef: def,
       data
@@ -689,7 +689,7 @@ export const TableEditClose: Action<{
     editRow[value.key].selected = false
   }
   if (value.tableDef.options.edit.editType === "big") {
-    actions.global.StartCloseOverlay()
+    actions.ovl.internal.StartCloseOverlay()
   }
 }
 
@@ -718,7 +718,7 @@ export const TableEditRow: Action<{
   actions.ovl.form.InitForm(initForm)
   let editRow = value.def.uiState.editRow
   // if (def.options.edit.editType === "big") {
-  //   actions.global.OpenOverlay(null)
+  //   actions.ovl.overlay.OpenOverlay(null)
   // }
 
   editRow[value.key].selected = true
@@ -1179,7 +1179,7 @@ export const TableMultipleEditRow: AsyncAction<{
   if (!cancel) {
     wait = Promise.all(
       selectedObjects.map(async k => {
-        await actions.ovl.internal.TableEditRow({
+        await actions.ovl.table.TableEditRow({
           key: k,
           def: def,
           data: value.data

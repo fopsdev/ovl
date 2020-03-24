@@ -23,7 +23,7 @@ export class TableHeaderMenu extends OvlBaseElement {
   filterDropDownHidden: boolean
   focusSet: boolean
   handleSortClick = (e: Event, key: string, ascending: boolean) => {
-    this.actions.ovl.internal.TableSort({
+    this.actions.ovl.table.TableSort({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
       key: key,
@@ -35,7 +35,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     //@ts-ignore
     let val = e.target.previousElementSibling.value
 
-    this.actions.ovl.internal.TableFilter({
+    this.actions.ovl.table.TableFilter({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
       value: val
@@ -51,7 +51,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     if (e.key === "Enter") {
       // @ts-ignore
       let val = e.target.value
-      this.actions.ovl.internal.TableFilter({
+      this.actions.ovl.table.TableFilter({
         def: this.headerMenu.def.def,
         data: this.headerMenu.def.data,
         value: val
@@ -73,7 +73,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       key: ""
     })
     overlayToRender.overlayClosedCallback = () => {
-      this.actions.ovl.internal.TableAddRow(this.headerMenu.def)
+      this.actions.ovl.table.TableAddRow(this.headerMenu.def)
     }
   }
 
@@ -136,7 +136,7 @@ export class TableHeaderMenu extends OvlBaseElement {
   handleRefreshTableClick = (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    this.actions.ovl.internal.TableViewRefresh(this.headerMenu.def)
+    this.actions.ovl.table.TableViewRefresh(this.headerMenu.def)
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -159,7 +159,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       id,
       def
     })
-    this.actions.ovl.internal.TableRefresh(this.headerMenu.def)
+    this.actions.ovl.table.TableRefresh(this.headerMenu.def)
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -214,7 +214,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       filter: this.filterDef.filterValues
     })
 
-    this.actions.ovl.internal.TableRefresh(this.headerMenu.def)
+    this.actions.ovl.table.TableRefresh(this.headerMenu.def)
   }
 
   handleCustomFilterClick = (e: Event) => {
@@ -228,7 +228,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       id,
       def
     })
-    this.actions.ovl.internal.TableRefresh(this.headerMenu.def)
+    this.actions.ovl.table.TableRefresh(this.headerMenu.def)
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,

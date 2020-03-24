@@ -71,7 +71,7 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleLogout = (e: Event) => {
-      this.actions.ovl.global.Logout()
+      this.actions.ovl.user.Logout()
     }
 
     const handleUserMenuLevelClick = (e: Event) => {
@@ -80,30 +80,29 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleLanguage = async (e: Event) => {
-      await this.actions.ovl.global.ToggleLanguage()
+      await this.actions.ovl.internal.ToggleLanguage()
       if (this.state.ovl.screens.nav.currentScreen === "Translation") {
-        this.actions.ovl.global.OpenLanguageTable()
+        this.actions.ovl.internal.OpenLanguageTable()
       }
     }
 
     const handleLanguageTable = (e: Event) => {
-      this.actions.ovl.global.OpenLanguageTable()
+      this.actions.ovl.internal.OpenLanguageTable()
     }
 
     const handleAudit = async (e: Event) => {
-      await this.actions.ovl.internal.TableRefresh({
+      await this.actions.ovl.table.TableRefresh({
         def: this.state.ovl.audit.tables.audit.tableDef.audit,
         data: this.state.ovl.audit.tables.audit,
         init: true,
         forceFreshServerData: 0
       })
-      this.actions.ovl.global.NavigateTo("Audit")
+      this.actions.ovl.navigation.NavigateTo("Audit")
     }
 
     // hide a few things as long as not logged in
     let hideAllMenus = ""
     let user = this.state.ovl.user
-    let portal = this.state.portal
     // if user not logged in or a form is dirty hide menus
     if (!user.token) {
       hideAllMenus = "hide"

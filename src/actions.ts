@@ -43,6 +43,7 @@ import {
   NavigateBack,
   NavigateTo,
   //ForgotPw,
+  Logout,
   InitApp,
   RehydrateAndUpdateApp,
   GetFile,
@@ -176,6 +177,8 @@ let internal = {
 
 import * as translation from "./screens/Translation/actions"
 
+let user = { Logout }
+
 export let ovl = {
   indicator,
   navigation,
@@ -186,5 +189,6 @@ export let ovl = {
   shellbar,
   form,
   table,
-  translation
+  translation,
+  user
 }
