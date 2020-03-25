@@ -1,5 +1,4 @@
 import { Action } from "overmind"
-import { actions as allActions } from "../../init"
 import { DataType, FieldFormat, Schema, FormFields } from "./OvlFormElement"
 import {
   getDecimalValue,
@@ -351,7 +350,7 @@ export const ValidateForm: Action<FormState> = ({ actions }, value) => {
       validationResult: field.validationResult
     } as ValidateField)
 
-    let fn = resolvePath(allActions, namespace)
+    let fn = resolvePath(actions, namespace)
 
     if (field.validationResult.valid) {
       actions.ovl.internal.ValidateSchema({
@@ -560,7 +559,8 @@ export const ChangeField: Action<ChangeField> = ({ actions }, value) => {
     formState: value.formState,
     validationResult: field.validationResult
   } as ValidateField)
-  let fn = resolvePath(allActions, namespace)
+
+  let fn = resolvePath(actions, namespace)
   if (field.validationResult.valid) {
     actions.ovl.internal.ValidateSchema({
       fieldId: value.fieldId,

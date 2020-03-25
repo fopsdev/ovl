@@ -70,7 +70,6 @@ export const Login: AsyncAction<FormState> = async (
 }
 
 export const LoginValidateField: Action<ValidateField> = (_, value) => {
-  debugger
   let field = value.formState.fields[value.fieldId]
   if (field.watched) {
     switch (<FieldId>value.fieldId) {

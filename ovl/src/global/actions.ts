@@ -410,7 +410,7 @@ export const InitApp: AsyncAction<Init> = async (
   }
   let namespace
   let parray = OvlConfig.requiredActions.loginActionPath.split(".")
-  debugger
+
   if (parray.length > 0) {
     parray.splice(parray.length - 1)
     namespace = parray.join(".")

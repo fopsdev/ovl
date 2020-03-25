@@ -24,7 +24,6 @@ export class LoginForm extends OvlFormElement {
     }
     let login = async () => {
       try {
-        debugger
         let a = resolvePath(
           this.actions,
           OvlConfig.requiredActions.loginActionPath
