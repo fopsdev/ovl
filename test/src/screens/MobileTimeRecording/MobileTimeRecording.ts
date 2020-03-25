@@ -1,10 +1,10 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
-import { TableDataAndDef } from "../../library/Table/Table"
-import { ovltemp, GetWeekNr, N } from "../../global/globals"
-import { getFormFieldsFromColumns } from "../../library/Table/helpers"
-import { InitForm, FormState } from "../../library/forms/actions"
-import { GetListDisplayValue } from "../../library/forms/Controls/helpers"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { TableDataAndDef } from "../../../../ovl/src/library/Table/Table"
+import { getFormFieldsFromColumns } from "../../../../ovl/src/library/Table/helpers"
+import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
+import { ovltemp, N } from "../../../../ovl/src/global/globals"
+import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
 import { U_TypeIdGetListFn } from "./functions"
 export class CompMobileTimeEntry extends OvlBaseElement {
   dateInputElement: any
@@ -34,7 +34,7 @@ export class CompMobileTimeEntry extends OvlBaseElement {
       if (rowKey === undefined) {
         forceOverwrite = true
       }
-      await this.actions.internal.TableAddRow(tableDataAndDef)
+      await this.actions.ovl.internal.TableAddRow(tableDataAndDef)
       rowKey = def.uiState.currentlyAddingKey
     }
     let formFields = getFormFieldsFromColumns(def, data.data[rowKey])
@@ -48,8 +48,8 @@ export class CompMobileTimeEntry extends OvlBaseElement {
       changedActionName: "RowChanged",
       forceOverwrite
     }
-    this.actions.forms.InitForm(initForm)
-    this.actions.global.NavigateTo("MobileTimeEntryForm")
+    this.actions.ovl.form.InitForm(initForm)
+    this.actions.ovl.navigation.NavigateTo("MobileTimeEntryForm")
   }
 
   async handleChange(e: Event) {
@@ -69,15 +69,17 @@ export class CompMobileTimeEntry extends OvlBaseElement {
     }
     let def = this.state.tables.timeentries.tableDef.mobiletimerecording1
     // only add row if there is not already one in addmode
-    await this.actions.mobiletimerecording.SetMobileTimeEntrySelectedDate({
-      def,
-      selected: val
-    })
+    await this.actions.portal.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+      {
+        def,
+        selected: val
+      }
+    )
     let formState: FormState
     if (this.state.ovl.forms.MobileTimeEntry) {
       formState = this.state.ovl.forms.MobileTimeEntry["mobiletimerecording1"]
       if (formState) {
-        this.actions.forms.ValidateForm(formState)
+        this.actions.ovl.form.ValidateForm(formState)
       }
     }
   }
@@ -85,14 +87,14 @@ export class CompMobileTimeEntry extends OvlBaseElement {
   async handleDelete(e: Event, key: string) {
     let def = this.state.tables.timeentries.tableDef.mobiletimerecording1
     let data = this.state.tables.timeentries
-    await this.actions.internal.TableDeleteRow({ key, def, data })
+    await this.actions.ovl.internal.TableDeleteRow({ key, def, data })
     let formState: FormState
     if (this.state.ovl.forms.MobileTimeEntry) {
       formState = this.state.ovl.forms.MobileTimeEntry["mobiletimerecording1"]
       if (formState) {
         // we have some range validations which checks existing tie entries.
         // thats why we need to kick the validation again when an entry got deleted
-        this.actions.forms.ValidateForm(formState)
+        this.actions.ovl.form.ValidateForm(formState)
       }
     }
   }

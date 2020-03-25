@@ -1,5 +1,6 @@
-import { Action } from "overmind"
-import { T } from "../../global/globals"
+import { Action } from "../../../../ovl/node_modules/overmind"
+import { T } from "../../../../ovl/src/global/globals"
+
 type OrderFeedbackState = {
   message: string
 }

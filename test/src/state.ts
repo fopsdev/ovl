@@ -1,3 +1,8 @@
+import { tblTableTesting, tblTableTesting2 } from "./shared/TableTesting/state"
+import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/state"
+import { TableData, ListFnReturnValue } from "../../ovl/src/library/Table/Table"
+import { File } from "./components/FileList/FileList"
+
 export type FileList = {
   files: File[]
 }
@@ -123,3 +128,40 @@ type Portal = {
 }
 
 export let portal: Portal
+export let tables = {
+  tableTesting: <TableData>{
+    data: {},
+    schema: {},
+    tableDef: {
+      tab1: tblTableTesting,
+      tab2: tblTableTesting2
+    },
+    lookupTypes: { U_Alpha: "text" }
+  },
+  timeentries: <TableData>{
+    data: {},
+    schema: {},
+    tableDef: {
+      mobiletimerecording1: tblMobileTimeRecording
+    }
+  },
+  lookups: {
+    U_ItemCode: <ListFnReturnValue>{
+      data: undefined,
+      lookupTypes: undefined
+    },
+
+    ItmsGrpCod: <ListFnReturnValue>{
+      data: undefined,
+      lookupTypes: undefined
+    },
+    ProjectTypeId: <ListFnReturnValue>{
+      data: undefined,
+      lookupTypes: undefined
+    },
+    AbsenceTypeId: <ListFnReturnValue>{
+      data: undefined,
+      lookupTypes: undefined
+    }
+  }
+}

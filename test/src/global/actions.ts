@@ -1,9 +1,13 @@
+import { Action, AsyncAction } from "../../../ovl/node_modules/overmind"
+import { api, T } from "../../../ovl/src/global/globals"
 import {
+  FormState,
   GetFormValidationErrors,
-  FormState
+  ValidateField
 } from "../../../ovl/src/library/forms/actions"
-import { T, api } from "../../../ovl/src/global/globals"
-import { AsyncAction, Action } from "../../../ovl/node_modules/overmind"
+import { Email, Mandatory } from "../../../ovl/src/library/forms/validators"
+import { FieldId } from "../../../ovl/src/screens/Login/LoginForm"
+import { TogglePDFPopupState } from "../components/FileList/FileList"
 
 export const Login: AsyncAction<FormState> = async (
   { state, actions, effects },
@@ -65,11 +69,8 @@ export const Login: AsyncAction<FormState> = async (
   }
 }
 
-import { FieldId } from "../../../ovl/src/screens/Login/LoginForm"
-import { ValidateField } from "../../../ovl/src/library/forms/actions"
-import { Mandatory, Email } from "../../../ovl/src/library/forms/validators"
-
 export const LoginValidateField: Action<ValidateField> = (_, value) => {
+  debugger
   let field = value.formState.fields[value.fieldId]
   if (field.watched) {
     switch (<FieldId>value.fieldId) {
@@ -80,5 +81,13 @@ export const LoginValidateField: Action<ValidateField> = (_, value) => {
         Email(T("AppLoginUser"), value.newVal, value.validationResult)
         break
     }
+  }
+}
+
+export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
+  if (value.obj.activeFilePopup === value.key) {
+    value.obj.activeFilePopup = ""
+  } else {
+    value.obj.activeFilePopup = value.key
   }
 }

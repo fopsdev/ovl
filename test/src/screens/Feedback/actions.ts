@@ -1,12 +1,12 @@
-import { Action, AsyncAction } from "overmind"
+import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
+import { T, api } from "../../../../ovl/src/global/globals"
 import {
-  ValidateField,
   FormState,
-  GetFormValidationErrors
-} from "../../library/forms/actions"
+  GetFormValidationErrors,
+  ValidateField
+} from "../../../../ovl/src/library/forms/actions"
+import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { FieldId } from "./FeedbackForm"
-import { Mandatory } from "../../library/forms/validators"
-import { T } from "../../global/globals"
 
 export const FeedbackValidateField: Action<ValidateField> = (_, value) => {
   switch (<FieldId>value.fieldId) {
@@ -24,9 +24,9 @@ export const SaveFeedback: AsyncAction<FormState> = async (
   { state, actions, effects },
   value
 ) => {
-  actions.forms.ValidateForm(value)
+  actions.ovl.form.ValidateForm(value)
   if (value.valid) {
-    let res = await effects.global.saveFeedback({
+    let res = await effects.postRequest(api.url + "data/savefeedback", {
       language: state.ovl.language.language,
       message: value.fields["msg"].value,
       orderDate: state.ovl.screens.screens.Feedback.orderDate,
@@ -39,17 +39,17 @@ export const SaveFeedback: AsyncAction<FormState> = async (
     if (res.status !== 200) {
       return
     }
-    actions.snack.AddSnack({
+    actions.ovl.snack.AddSnack({
       durationMs: 3000,
       text: T("AppFeedbackSaved"),
       type: "Success"
     })
     if (state.ovl.screens.nav.currentScreen === "Feedback") {
-      actions.global.NavigateBack()
+      actions.ovl.navigation.NavigateBack()
     }
-    actions.forms.ResetFormAfterAnimation(value) // post back
+    actions.ovl.form.ResetFormAfterAnimation(value) // post back
   } else {
-    actions.snack.AddSnack({
+    actions.ovl.snack.AddSnack({
       durationMs: 3000,
       text: GetFormValidationErrors(value).join("\n"),
       type: "Error"

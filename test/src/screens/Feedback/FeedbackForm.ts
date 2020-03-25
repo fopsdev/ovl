@@ -1,11 +1,8 @@
-import {
-  OvlFormElement,
-  FormFields
-} from "../../../../ovl/src/library/forms/OvlFormElement"
-import { TextAreaControlState } from "../../../../ovl/src/library/Forms/Controls/TextArea"
 import { html } from "../../../../ovl/node_modules/lit-html"
-import { T, D } from "../../../../ovl/src/global/globals"
+import { D, T } from "../../../../ovl/src/global/globals"
 import { DialogResult } from "../../../../ovl/src/library/actions"
+import { TextAreaControlState } from "../../../../ovl/src/library/Forms/Controls/TextArea"
+import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 
 export type FeedbackType = "OrderPositive" | "OrderNegative" | "DeliveryDate"
 
@@ -37,14 +34,14 @@ export class CompFeedbackForm extends OvlFormElement {
 
     let handleOk = () => {
       if (!this.state.ovl.libState.indicator.open) {
-        this.actions.feedback.SaveFeedback(this.formState)
+        this.actions.portal.feedback.SaveFeedback(this.formState)
       }
     }
     let handleCancel = async () => {
       if (!this.state.ovl.libState.indicator.open) {
         let cancel: boolean = true
         if (this.formState.dirty) {
-          this.actions.dialog.OkCancelDialog({
+          this.actions.ovl.dialog.OkCancelDialog({
             text: T("AppCancelForm"),
             default: 1
           })
@@ -57,8 +54,8 @@ export class CompFeedbackForm extends OvlFormElement {
           }
         }
         if (cancel) {
-          this.actions.forms.ResetFormAfterAnimation(this.formState)
-          this.actions.global.NavigateBack()
+          this.actions.ovl.form.ResetFormAfterAnimation(this.formState)
+          this.actions.ovl.navigation.NavigateBack()
         }
       }
     }

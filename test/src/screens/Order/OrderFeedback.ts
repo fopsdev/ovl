@@ -1,8 +1,8 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
-import { T } from "../../global/globals"
-import { FormFields } from "../../library/forms/OvlFormElement"
-import { InitForm } from "../../library/forms/actions"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
+import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
+import { InitForm } from "../../../../ovl/src/library/forms/actions"
+import { T } from "../../../../ovl/src/global/globals"
+import { html } from "../../../../ovl/node_modules/lit-html"
 
 export class CompOrderFeedback extends OvlBaseElement {
   initFeedback() {
@@ -16,32 +16,32 @@ export class CompOrderFeedback extends OvlBaseElement {
       formType: "Feedback",
       fields
     }
-    this.actions.forms.InitForm(initForm)
+    this.actions.ovl.form.InitForm(initForm)
   }
   getUI() {
     const handlePositiveFeedback = (e: Event) => {
-      this.actions.order.PreparePositiveFeedback({
+      this.actions.portal.order.PreparePositiveFeedback({
         message: T("AppFeedbackDefaultPositive")
       })
 
       this.initFeedback()
-      this.actions.global.NavigateTo("Feedback")
+      this.actions.ovl.navigation.NavigateTo("Feedback")
     }
 
     const handleNegativeFeedback = (e: Event) => {
-      this.actions.order.PrepareNegativeFeedback({
+      this.actions.portal.order.PrepareNegativeFeedback({
         message: T("AppFeedbackDefaultNegative")
       })
       this.initFeedback()
-      this.actions.global.NavigateTo("Feedback")
+      this.actions.ovl.navigation.NavigateTo("Feedback")
     }
 
     const handleDeliveryDateFeedback = (e: Event) => {
-      this.actions.order.PrepareDeliveryDateFeedback({
+      this.actions.portal.order.PrepareDeliveryDateFeedback({
         message: T("AppFeedbackDefaultDeliveryMsg")
       })
       this.initFeedback()
-      this.actions.global.NavigateTo("Feedback")
+      this.actions.ovl.navigation.NavigateTo("Feedback")
     }
 
     return html`

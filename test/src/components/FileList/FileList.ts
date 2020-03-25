@@ -1,6 +1,6 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
-import { T } from "../../global/globals"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { T } from "../../../../ovl/src/global/globals"
 
 export type FileType =
   | "MainAttachment"
@@ -16,13 +16,21 @@ export type FileType =
   | "DPInvoice"
   | "Test"
 
-type File = {
+export type File = {
   type: FileType
   fileName: string
 }
 
 export type FileList = {
   files: File[]
+}
+
+type PopupState = {
+  activeFilePopup: string
+}
+export type TogglePDFPopupState = {
+  key: string
+  obj: PopupState
 }
 
 export class CompFileList extends OvlBaseElement {
@@ -34,7 +42,7 @@ export class CompFileList extends OvlBaseElement {
     e.preventDefault()
     e.stopPropagation()
     let docNum = this.state.ovl.screens.screens.Orderdetail.selectedOrder
-    this.actions.global.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
   }
 
   getUI() {

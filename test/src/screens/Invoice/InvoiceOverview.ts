@@ -1,6 +1,6 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
-import { T, D } from "../../global/globals"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { D, T } from "../../../../ovl/src/global/globals"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { FileType } from "../../components/FileList/FileList"
 
 export type InvoiceOverviewState = {
@@ -14,7 +14,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
 
   handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
     e.preventDefault()
-    this.actions.global.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
   }
 
   getUI() {
@@ -25,7 +25,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
         if (this.state.ovl.screens.screens.Invoice.activeFilePopup === id) {
           id = ""
         }
-        this.actions.global.TogglePDFPopup({
+        this.actions.portal.global.TogglePDFPopup({
           key: id,
           obj: this.state.ovl.screens.screens.Invoice
         })
@@ -33,7 +33,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
     }
 
     const handleRemoveAllPDFPopup = e => {
-      this.actions.global.TogglePDFPopup({
+      this.actions.portal.global.TogglePDFPopup({
         key: "",
         obj: this.state.ovl.screens.screens.Invoice
       })

@@ -1,11 +1,11 @@
-import { OvlFormElement } from "../../library/forms/OvlFormElement"
-import { html } from "lit-html"
-import { T, getDecimalValue, N } from "../../global/globals"
-import { DialogResult } from "../../library/actions"
-import { OptionControlState } from "../../library/Forms/Controls/Option"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { N, T } from "../../../../ovl/src/global/globals"
+import { DialogResult } from "../../../../ovl/src/library/actions"
+import { ListControlState } from "../../../../ovl/src/library/forms/Controls/ListControl"
+import { OptionControlState } from "../../../../ovl/src/library/Forms/Controls/Option"
+import { TimeControlState } from "../../../../ovl/src/library/Forms/Controls/Time"
+import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import * as functions from "../../tableFunctions"
-import { ListControlState } from "../../library/forms/Controls/ListControl"
-import { TimeControlState } from "../../library/Forms/Controls/Time"
 
 export type MobileTimeEntryFormState = {
   rowKey: string
@@ -22,7 +22,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
   async handleSave(e) {
     let def = this.state.tables.timeentries.tableDef.mobiletimerecording1
     if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
-      await this.actions.internal.TableEditSaveRow({
+      await this.actions.ovl.internal.TableEditSaveRow({
         key: def.uiState.currentlyAddingKey,
         def,
         data: this.state.tables.timeentries,
@@ -31,14 +31,14 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
     }
     if (def.uiState.currentlyAddingKey === undefined) {
       // this means it was succesfully saved
-      this.actions.global.NavigateBack()
+      this.actions.ovl.navigation.NavigateBack()
     }
   }
   async handleCancel(e) {
     if (!this.state.ovl.libState.indicator.open) {
       let cancel: boolean = true
       if (this.formState.dirty) {
-        this.actions.dialog.OkCancelDialog({
+        this.actions.ovl.dialog.OkCancelDialog({
           text: T("AppCancelForm"),
           default: 1
         })
@@ -51,8 +51,8 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         }
       }
       if (cancel) {
-        this.actions.forms.ResetFormAfterAnimation(this.formState)
-        this.actions.global.NavigateBack()
+        this.actions.ovl.form.ResetFormAfterAnimation(this.formState)
+        this.actions.ovl.navigation.NavigateBack()
       }
     }
   }

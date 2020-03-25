@@ -1,11 +1,15 @@
-import { Action, AsyncAction } from "overmind"
-import { T } from "../../global/globals"
-import { Mandatory, MinLength } from "../../library/forms/validators"
+import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
 import {
-  FormState,
   ValidateField,
+  FormState,
   GetFormValidationErrors
-} from "../../library/forms/actions"
+} from "../../../../ovl/src/library/forms/actions"
+import {
+  Mandatory,
+  MinLength
+} from "../../../../ovl/src/library/forms/validators"
+import { T, api } from "../../../../ovl/src/global/globals"
+import { postRequest } from "../../../../ovl/src/effects"
 export const SettingsValidateField: Action<ValidateField> = (_, value) => {
   let field = value.formState.fields[value.fieldId]
   switch (value.fieldId) {
@@ -43,11 +47,11 @@ export const SaveSettings: AsyncAction<FormState> = async (
   { state, actions, effects },
   value
 ) => {
-  actions.forms.ValidateForm(value)
+  actions.ovl.form.ValidateForm(value)
   if (value.valid) {
     let pw = value.fields["pw"].value
     let pw1 = value.fields["pw1"].value
-    let res = await effects.user.changePw({
+    let res = await postRequest(api.url + "users/changepw", {
       password: pw,
       passwordNew: pw1,
       language: state.ovl.language.language
@@ -60,16 +64,15 @@ export const SaveSettings: AsyncAction<FormState> = async (
       value.fields["pw"].validationResult.validationMsg = res.message
       return
     }
-    actions.snack.AddSnack({
+    actions.ovl.snack.AddSnack({
       durationMs: 5000,
       text: T("AppPasswordChangedSuccess"),
       type: "Success"
     })
-
-    actions.forms.ResetFormAfterAnimation(value)
-    actions.global.NavigateBack()
+    actions.ovl.form.ResetFormAfterAnimation(value)
+    actions.ovl.navigation.NavigateBack()
   } else {
-    actions.snack.AddSnack({
+    actions.ovl.snack.AddSnack({
       durationMs: 3000,
       text: GetFormValidationErrors(value).join("\n"),
       type: "Error"

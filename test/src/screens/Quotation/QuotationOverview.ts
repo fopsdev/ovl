@@ -1,7 +1,7 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
-import { T, D } from "../../global/globals"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { FileType } from "../../components/FileList/FileList"
+import { html } from "lit-html"
+import { T, D } from "../../../../ovl/src/global/globals"
 
 export type QuotationOverviewState = {
   activeFilePopup: string
@@ -14,7 +14,7 @@ export class CompQuotationOverview extends OvlBaseElement {
   handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
     e.preventDefault()
 
-    this.actions.global.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
   }
 
   getUI() {
@@ -25,7 +25,7 @@ export class CompQuotationOverview extends OvlBaseElement {
         if (this.state.ovl.screens.screens.Quotation.activeFilePopup === id) {
           id = ""
         }
-        this.actions.global.TogglePDFPopup({
+        this.actions.portal.global.TogglePDFPopup({
           key: id,
           obj: this.state.ovl.screens.screens.Quotation
         })
@@ -33,7 +33,7 @@ export class CompQuotationOverview extends OvlBaseElement {
     }
 
     const handleRemoveAllPDFPopup = e => {
-      this.actions.global.TogglePDFPopup({
+      this.actions.portal.global.TogglePDFPopup({
         key: "",
         obj: this.state.ovl.screens.screens.Quotation
       })

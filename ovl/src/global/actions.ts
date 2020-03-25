@@ -76,7 +76,7 @@ const SetClosingScreen = (
       if (!state.ovl.uiState.hasOSReducedMotion) {
         o.closing = true
       } else {
-        actions.global.SetVisibleFalse(value)
+        actions.portal.global.SetVisibleFalse(value)
       }
     }
   }
@@ -408,12 +408,12 @@ export const InitApp: AsyncAction<Init> = async (
     pw: { value: "" },
     user: { value: "" }
   }
-
-  debugger
   let namespace
   let parray = OvlConfig.requiredActions.loginActionPath.split(".")
+  debugger
   if (parray.length > 0) {
-    namespace = parray.splice(parray.length - 1).join(".")
+    parray.splice(parray.length - 1)
+    namespace = parray.join(".")
   } else {
     console.error(
       "ovl requiredActions.loginActionPath needs to be a path to a action!"
@@ -463,7 +463,7 @@ export const InitApp: AsyncAction<Init> = async (
   // let dt = new Date()
   // let dateSelected = dt.toISOString().substring(0, 10)
 
-  // await actions.mobiletimerecording.SetMobileTimeEntrySelectedDate({
+  // await actions.portal.mobiletimerecording.SetMobileTimeEntrySelectedDate({
   //   def: state.tables.timeentries.tableDef.mobiletimerecording1,
   //   selected: dateSelected
   // })

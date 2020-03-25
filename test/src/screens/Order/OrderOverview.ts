@@ -1,7 +1,7 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
-import { T, D } from "../../global/globals"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { FileType } from "../../components/FileList/FileList"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { T, D } from "../../../../ovl/src/global/globals"
 
 export type OrderOverviewState = {
   activeFilePopup: string
@@ -13,7 +13,7 @@ export class CompOrderOverview extends OvlBaseElement {
   }
   handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
     e.preventDefault()
-    this.actions.global.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
   }
   handleDetail(e: Event, key: string) {
     //@ts-ignore
@@ -24,8 +24,8 @@ export class CompOrderOverview extends OvlBaseElement {
       //@ts-ignore
       e.target.localName === "button"
     ) {
-      this.actions.order.SelectOrder(key)
-      this.actions.global.NavigateTo("Orderdetail")
+      this.actions.portal.order.SelectOrder(key)
+      this.actions.ovl.navigation.NavigateTo("Orderdetail")
       e.stopPropagation()
     }
   }
@@ -40,7 +40,7 @@ export class CompOrderOverview extends OvlBaseElement {
         if (this.state.ovl.screens.screens.Order.activeFilePopup === id) {
           id = ""
         }
-        this.actions.global.TogglePDFPopup({
+        this.actions.portal.global.TogglePDFPopup({
           key: id,
           obj: this.state.ovl.screens.screens.Order
         })
@@ -48,7 +48,7 @@ export class CompOrderOverview extends OvlBaseElement {
     }
 
     const handleRemoveAllPDFPopup = e => {
-      this.actions.global.TogglePDFPopup({
+      this.actions.portal.global.TogglePDFPopup({
         key: "",
         obj: this.state.ovl.screens.screens.Order
       })

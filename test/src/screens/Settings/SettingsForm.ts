@@ -1,8 +1,8 @@
-import { OvlFormElement, FormFields } from "../../library/forms/OvlFormElement"
-import { TextBoxControlState } from "../../library/Forms/Controls/TextBox"
-import { html } from "lit-html"
-import { T } from "../../global/globals"
-import { DialogResult } from "../../library/actions"
+import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
+import { T } from "../../../../ovl/src/global/globals"
+import { DialogResult } from "../../../../ovl/src/library/actions"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
 
 export type SettingsFormState = {}
 
@@ -16,7 +16,7 @@ export class CompSettingsForm extends OvlFormElement {
   getUI() {
     let handleSave = () => {
       if (!this.state.ovl.libState.indicator.open) {
-        this.actions.settings.SaveSettings(this.formState)
+        this.actions.portal.settings.SaveSettings(this.formState)
       }
     }
 
@@ -24,7 +24,7 @@ export class CompSettingsForm extends OvlFormElement {
       if (!this.state.ovl.libState.indicator.open) {
         let cancel: boolean = true
         if (this.formState.dirty) {
-          this.actions.dialog.OkCancelDialog({
+          this.actions.ovl.dialog.OkCancelDialog({
             text: T("AppCancelForm"),
             default: 1
           })
@@ -37,8 +37,8 @@ export class CompSettingsForm extends OvlFormElement {
           }
         }
         if (cancel) {
-          this.actions.forms.ResetFormAfterAnimation(this.formState)
-          this.actions.global.NavigateBack()
+          this.actions.ovl.form.ResetFormAfterAnimation(this.formState)
+          this.actions.ovl.navigation.NavigateBack()
         }
       }
     }
