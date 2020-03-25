@@ -3,6 +3,7 @@ import { ListState } from "./ListControl"
 import { ListFnReturnValue } from "../../Table/Table"
 import { FormState } from "../actions"
 import * as functions from "../../../tableFunctions"
+import { resolvePath } from "../../../global/globals"
 
 export type LookupListPostData = {
   url: string
@@ -42,10 +43,10 @@ export const KeyValueListFromServerFn = async (
       postData.paramList[k] = paramList[k]
     }
   })
-
+  let fn = resolvePath(functions, namespace)
   let functionName = fieldId + "LookupPostDataFn"
-  if (functions[namespace] && functions[namespace][functionName]) {
-    functions[namespace][functionName](postData, row, state)
+  if (fn && fn[functionName]) {
+    fn[functionName](postData, row, state)
   }
 
   let res = await effects.postRequest(postData.url, {
@@ -86,11 +87,9 @@ export const FilterHitList = (
   let dataList = list.listFn(state, GetRowFromFormState(formState))
   if (dataList.data) {
     let res = Object.keys(dataList.data)
-    if (
-      functions[formState.namespace] &&
-      functions[formState.namespace][functionName]
-    ) {
-      res = functions[formState.namespace][functionName](dataList, formState)
+    let fn = resolvePath(functions, formState.namespace)
+    if (fn && fn[functionName]) {
+      res = fn[functionName](dataList, formState)
     }
 
     let lookupTypes = dataList.lookupTypes

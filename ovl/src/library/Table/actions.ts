@@ -1,6 +1,6 @@
 import { Action, AsyncAction } from "overmind"
 import { postRequest } from "../../effects"
-import { api, ovltemp, uuidv4 } from "../../global/globals"
+import { api, ovltemp, uuidv4, resolvePath } from "../../global/globals"
 import { actions as allActions } from "../../init"
 import * as functions from "../../tableFunctions"
 import { DialogResult } from "../actions"
@@ -319,10 +319,11 @@ export const TableRefresh: AsyncAction<{
 
   let customSortFn = undefined
   let sortCustom = def.options.sortCustom
+  let fn = resolvePath(functions, def.namespace)
   if (sortCustom.selected && sortCustom.sorts[sortCustom.selected]) {
     let functionName = sortCustom.selected + "SortFn"
-    if (functions[def.namespace] && functions[def.namespace][functionName]) {
-      customSortFn = functions[def.namespace][functionName]
+    if (fn && fn[functionName]) {
+      customSortFn = fn[functionName]
     } else {
       throw new Error(
         "ovl customSort function: " + functionName + " not found!"
@@ -484,9 +485,10 @@ const TableEditSaveRowHelper = async (
     newData = rowToSave
   }
   let res: any = {}
-  if (allActions[def.namespace] && allActions[def.namespace].customSaveRow) {
+  let fn = resolvePath(actions, def.namespace)
+  if (fn && fn.CustomSaveRow) {
     // ok there is a customSaveRow - Function
-    await actions[def.namespace].CustomSaveRow({
+    await fn.CustomSaveRow({
       key,
       tableDef: def,
       newData
@@ -506,12 +508,9 @@ const TableEditSaveRowHelper = async (
       if (isAdd) {
         mode = "add"
       }
-
-      if (
-        allActions[def.namespace] &&
-        allActions[def.namespace].BeforeSaveRow
-      ) {
-        await actions[def.namespace].BeforeSaveRow(<BeforeSaveParam>{
+      let fn = resolvePath(actions, def.namespace)
+      if (fn && fn.BeforeSaveRow) {
+        await fn.BeforeSaveRow(<BeforeSaveParam>{
           key,
           mode,
           tableDef: { def, data },
@@ -531,11 +530,9 @@ const TableEditSaveRowHelper = async (
           return
         }
         // handleError @@hook
-        if (
-          allActions[def.namespace] &&
-          allActions[def.namespace].CustomSaveRowErrorHandler
-        ) {
-          await actions[def.namespace].CustomSaveRowErrorHandler({
+        let fn = resolvePath(actions, def.namespace)
+        if (fn && fn.CustomSaveRowErrorHandler) {
+          await fn.CustomSaveRowErrorHandler({
             key,
             def,
             data,
@@ -590,11 +587,8 @@ const TableEditSaveRowHelper = async (
       }
 
       // afterSave @@hook
-      if (
-        allActions[def.namespace] &&
-        allActions[def.namespace].CustomSaveRowAfterSaveHandler
-      ) {
-        await actions[def.namespace].CustomSaveRowAfterSaveHandler({
+      if (fn && fn.CustomSaveRowAfterSaveHandler) {
+        await fn.CustomSaveRowAfterSaveHandler({
           key,
           def,
           data,
@@ -751,11 +745,9 @@ export const TableCopyRow: AsyncAction<{
     newRow[c] = null
   })
   // copyRow @@hook
-  if (
-    allActions[def.namespace] &&
-    allActions[def.namespace].CustomCopyRowHandler
-  ) {
-    await actions[def.namespace].CustomCopyRowHandler({
+  let fn = resolvePath(actions, def.namespace)
+  if (fn && fn.CustomCopyRowHandler) {
+    await fn.CustomCopyRowHandler({
       key,
       newRow,
       def: value.def,
@@ -803,11 +795,9 @@ export const TableAddRow: AsyncAction<TableDataAndDef> = async (
   }, {})
 
   // addRow (Default Values) @@hook
-  if (
-    allActions[def.namespace] &&
-    allActions[def.namespace].CustomAddRowColumnDefaultsHandler
-  ) {
-    await actions[def.namespace].CustomAddRowColumnDefaultsHandler({
+  let fn = resolvePath(actions, def.namespace)
+  if (fn && fn.CustomAddRowColumnDefaultsHandler) {
+    await fn.CustomAddRowColumnDefaultsHandler({
       newRow: newRow,
       tableDataAndDef: value
     })
@@ -867,11 +857,9 @@ export const TableDeleteRow: AsyncAction<{
     })
     if (!res.data) {
       // handleError @@hook
-      if (
-        allActions[def.namespace] &&
-        allActions[def.namespace].CustomDeleteRowErrorHandler
-      ) {
-        await actions[def.namespace].CustomDeleteRowErrorHandler({
+      let fn = resolvePath(actions, def.namespace)
+      if (fn && fn.CustomDeleteRowErrorHandler) {
+        await fn.CustomDeleteRowErrorHandler({
           key,
           tableDef: def,
           res: res.data
@@ -895,11 +883,9 @@ export const TableDeleteRow: AsyncAction<{
     }
 
     // afterDelete @@hook
-    if (
-      allActions[def.namespace] &&
-      allActions[def.namespace].CustomDeleteRowAfterDeleteHandler
-    ) {
-      await actions[def.namespace].CustomDeleteRowAfterDeleteHandler({
+    let fn = resolvePath(actions, def.namespace)
+    if (fn && fn.CustomDeleteRowAfterDeleteHandler) {
+      await fn.CustomDeleteRowAfterDeleteHandler({
         key,
         def: def,
         data: value.data,
@@ -923,8 +909,9 @@ export const TableMultipleDeleteRow: AsyncAction<{
   let selectedObjects = []
   let functionName = "DeleteDisabledFn"
   let fn = null
-  if (functions[def.namespace] && functions[def.namespace][functionName]) {
-    fn = functions[def.namespace][functionName]
+  let fnc = resolvePath(functions, def.namespace)
+  if (fnc && fnc[functionName]) {
+    fn = fnc[functionName]
   }
   let selectedRows = def.uiState.selectedRow
   let wait = Promise.all(
@@ -1023,8 +1010,9 @@ export const TableMultipleCopyRow: AsyncAction<{
   let selectedObjects = []
   let functionName = "CopyDisabledFn"
   let fn = null
-  if (functions[def.namespace] && functions[def.namespace][functionName]) {
-    fn = functions[def.namespace][functionName]
+  let fnc = resolvePath(functions, def.namespace)
+  if (fnc && fnc[functionName]) {
+    fn = fnc[functionName]
   }
 
   let selectedRows = def.uiState.selectedRow
@@ -1119,8 +1107,9 @@ export const TableMultipleEditRow: AsyncAction<{
   let selectedObjects = []
   let functionName = "EditDisabledFn"
   let fn = null
-  if (functions[def.namespace] && functions[def.namespace][functionName]) {
-    fn = functions[def.namespace][functionName]
+  let fnc = resolvePath(functions, def.namespace)
+  if (fnc && fnc[functionName]) {
+    fn = fnc[functionName]
   }
   let selectedRows = def.uiState.selectedRow
   let wait = Promise.all(

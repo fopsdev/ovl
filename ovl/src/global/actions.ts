@@ -408,9 +408,22 @@ export const InitApp: AsyncAction<Init> = async (
     pw: { value: "" },
     user: { value: "" }
   }
+
+  debugger
+  let namespace
+  let parray = OvlConfig.requiredActions.loginActionPath.split(".")
+  if (parray.length > 0) {
+    namespace = parray.splice(parray.length - 1).join(".")
+  } else {
+    console.error(
+      "ovl requiredActions.loginActionPath needs to be a path to a action!"
+    )
+    return
+  }
+
   let initForm: InitForm = {
     validationActionName: "LoginValidateField",
-    namespace: "internal",
+    namespace,
     instanceId: "loginform",
     formType: "Login",
     fields

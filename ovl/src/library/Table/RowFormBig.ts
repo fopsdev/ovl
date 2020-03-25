@@ -3,7 +3,7 @@ import { TextBoxControlState } from "../Forms/Controls/TextBox"
 import { TextAreaControlState } from "../Forms/Controls/TextArea"
 import { EditRowDef, TableDataAndDef } from "./Table"
 import { html } from "lit-html"
-import { T, ovltemp } from "../../global/globals"
+import { T, ovltemp, resolvePath } from "../../global/globals"
 import { DialogResult } from "../actions"
 import { getDisplayValue } from "./helpers"
 import * as functions from "../../tableFunctions"
@@ -132,11 +132,9 @@ export class TableRowFormBig extends OvlFormElement {
             let editable = col.editable
             // @@hook
             let functionName = k + "EditableFn"
-            if (
-              functions[def.namespace] &&
-              functions[def.namespace][functionName]
-            ) {
-              editable = functions[def.namespace][functionName](
+            let fn = resolvePath(functions, def.namespace)
+            if (fn && fn[functionName]) {
+              editable = fn[functionName](
                 this.rowData.key,
                 <TableDataAndDef>{
                   def: this.rowData.tableDef,
@@ -219,7 +217,7 @@ export class TableRowFormBig extends OvlFormElement {
                             formState: this.formState,
                             namespace: def.namespace,
                             list: {
-                              listFn: functions[def.namespace][k + "GetListFn"],
+                              listFn: fn[k + "GetListFn"],
                               displayField: col.list.displayField,
                               displayValueField: col.list.displayValueField,
                               valueField: col.list.valueField,

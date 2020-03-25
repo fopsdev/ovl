@@ -2,7 +2,7 @@ import { TableDef } from "../Table/Table"
 
 export let tblAudit: TableDef = {
   id: "audit",
-  namespace: "audit",
+  namespace: "ovl.audit",
   database: {
     dataIdField: "Code",
     dbInsertMode: "UDTAutoGUIDBoth"

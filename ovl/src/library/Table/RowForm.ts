@@ -3,7 +3,7 @@ import { TextBoxControlState } from "../../library/Forms/Controls/TextBox"
 import { TextAreaControlState } from "../../library/Forms/Controls/TextArea"
 import { EditRowDef, TableDataAndDef } from "./Table"
 import { html } from "lit-html"
-import { T } from "../../global/globals"
+import { T, resolvePath } from "../../global/globals"
 import { DialogResult } from "../../library/actions"
 import { getDisplayValue } from "./helpers"
 import * as functions from "../../tableFunctions"
@@ -78,11 +78,9 @@ export class TableRowForm extends OvlFormElement {
         let editable = col.editable
         // @@hook
         let functionName = k + "EditableFn"
-        if (
-          functions[def.namespace] &&
-          functions[def.namespace][functionName]
-        ) {
-          editable = functions[def.namespace][functionName](
+        let fn = resolvePath(functions, def.namespace)
+        if (fn && fn[functionName]) {
+          editable = fn[functionName](
             this.rowData.key,
             <TableDataAndDef>{
               def: this.rowData.tableDef,
@@ -160,14 +158,8 @@ export class TableRowForm extends OvlFormElement {
                       let functionName = k + "GetListFn"
 
                       let list
-                      if (
-                        functions[def.namespace] &&
-                        functions[def.namespace][functionName]
-                      ) {
-                        list = functions[def.namespace][functionName](
-                          this.state,
-                          this.rowData.row
-                        )
+                      if (fn && fn[functionName]) {
+                        list = fn[functionName](this.state, this.rowData.row)
                       }
 
                       return <ListControlState>{
@@ -177,7 +169,7 @@ export class TableRowForm extends OvlFormElement {
                         formState: this.formState,
                         namespace: def.namespace,
                         list: {
-                          listFn: functions[def.namespace][k + "GetListFn"],
+                          listFn: fn[k + "GetListFn"],
                           displayField: col.list.displayField,
                           valueField: col.list.valueField,
                           displayValueField: col.list.displayValueField,

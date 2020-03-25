@@ -3,7 +3,7 @@ import {
   FormState
 } from "../../../ovl/src/library/forms/actions"
 import { T, api } from "../../../ovl/src/global/globals"
-import { AsyncAction } from "../../../ovl/node_modules/overmind"
+import { AsyncAction, Action } from "../../../ovl/node_modules/overmind"
 
 export const Login: AsyncAction<FormState> = async (
   { state, actions, effects },
@@ -62,5 +62,23 @@ export const Login: AsyncAction<FormState> = async (
       text: GetFormValidationErrors(value).join("\n"),
       type: "Error"
     })
+  }
+}
+
+import { FieldId } from "../../../ovl/src/screens/Login/LoginForm"
+import { ValidateField } from "../../../ovl/src/library/forms/actions"
+import { Mandatory, Email } from "../../../ovl/src/library/forms/validators"
+
+export const LoginValidateField: Action<ValidateField> = (_, value) => {
+  let field = value.formState.fields[value.fieldId]
+  if (field.watched) {
+    switch (<FieldId>value.fieldId) {
+      case "pw":
+        Mandatory(T("AppLoginPassword"), value.newVal, value.validationResult)
+        break
+      case "user":
+        Email(T("AppLoginUser"), value.newVal, value.validationResult)
+        break
+    }
   }
 }

@@ -5,10 +5,7 @@ import { OvlConfig } from "./init"
 
 let timer: any
 let isos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-const onInitialize: OnInitialize = async (
-  { state, actions, effects },
-  overmind
-) => {
+const onInitialize: OnInitialize = async (_, overmind) => {
   if (OvlConfig._system.OfflineMode) {
     if (isos) {
       // if iOs then always persist on mutation (debounced...)

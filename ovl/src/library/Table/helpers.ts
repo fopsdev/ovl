@@ -3,7 +3,8 @@ import {
   getDateValue,
   getDecimalValue,
   ovltemp,
-  uuidv4
+  uuidv4,
+  resolvePath
 } from "../../global/globals"
 import { state } from "../../state"
 import * as functions from "../../tableFunctions"
@@ -616,8 +617,9 @@ export const TableFilterFn = (
   )
   let customFilterFn = customFilter.reduce((val, k) => {
     let functionName = k + "FilterFn"
-    if (functions[def.namespace] && functions[def.namespace][functionName]) {
-      val.push(functions[def.namespace][functionName])
+    let fn = resolvePath(functions, def.namespace)
+    if (fn && fn[functionName]) {
+      val.push(fn[functionName])
       return val
     } else {
       throw new Error(

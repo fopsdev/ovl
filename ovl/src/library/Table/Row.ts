@@ -3,6 +3,7 @@ import { html } from "lit-html"
 import { TableRowDataDef } from "./RowWrapper"
 import { getDisplayValue } from "./helpers"
 import * as functions from "../../tableFunctions"
+import { resolvePath } from "../../global/globals"
 
 export class TableRow extends OvlBaseElement {
   props: any
@@ -26,11 +27,9 @@ export class TableRow extends OvlBaseElement {
         let listdata
         if (col.list) {
           let functionName = k + "GetListFn"
-          if (
-            functions[def.namespace] &&
-            functions[def.namespace][functionName]
-          ) {
-            listdata = functions[def.namespace][functionName](this.state, row)
+          let fn = resolvePath(functions, def.namespace)
+          if (fn && fn[functionName]) {
+            listdata = fn[functionName](this.state, row)
           }
         }
         let fieldvalue = getDisplayValue(col, row, listdata)

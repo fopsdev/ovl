@@ -11,7 +11,7 @@ export type TblTranslation = {
 
 export let tblTranslation: TableDef = {
   id: "translation",
-  namespace: "translation",
+  namespace: "ovl.translation",
   database: {
     dataIdField: "ID",
     dbInsertMode: "UDTAutoNumber"

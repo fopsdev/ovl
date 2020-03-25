@@ -12,6 +12,7 @@ import {
   EditRowSaveCancelDef
 } from "./Table"
 import { overlayToRender } from "../../library/Overlay/Overlay"
+import { resolvePath } from "../../global/globals"
 export type TableRowDef = {
   data: TableData
   selected: SelectedRow
@@ -210,8 +211,9 @@ export class TableRowWrapper extends OvlBaseElement {
     }
     let rowStatus = ""
     let rowStatusMsg = ""
-    if (functions[def.namespace] && functions[def.namespace].GetRowStatus) {
-      let status = await functions[def.namespace].GetRowStatus(
+    let fn = resolvePath(functions, def.namespace)
+    if (fn && fn.GetRowStatus) {
+      let status = await fn.GetRowStatus(
         key,
         <TableDataAndDef>{ def: this.row.tableDef, data: data },
         this.state

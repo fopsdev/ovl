@@ -9,7 +9,7 @@ import { HeaderMenuDef } from "./HeaderMenu"
 import { FieldFormat } from "../Forms/OvlFormElement"
 import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
-import { ovltemp } from "../../global/globals"
+import { ovltemp, resolvePath } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
 
 export type SaveMode = "add" | "update"
@@ -330,14 +330,9 @@ export class TableHeader extends OvlBaseElement {
         }
         //@@hook
         let functionName = k + "VisibleFn"
-        if (
-          functions[def.namespace] &&
-          functions[def.namespace][functionName]
-        ) {
-          visible = functions[def.namespace][functionName](
-            this.tabledata,
-            this.state
-          )
+        let fn = resolvePath(functions, def.namespace)
+        if (fn && fn[functionName]) {
+          visible = fn[functionName](this.tabledata, this.state)
         }
 
         columnsVisible[k] = visible

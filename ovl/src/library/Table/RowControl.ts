@@ -3,7 +3,7 @@ import { html } from "lit-html"
 import { TableDef, RowControlAction, TableData, TableDataAndDef } from "./Table"
 
 import * as functions from "../../tableFunctions"
-import { ovltemp } from "../../global/globals"
+import { ovltemp, resolvePath } from "../../global/globals"
 
 export type NavProps = {
   tableDef: TableDef
@@ -43,7 +43,7 @@ export class TableRowControl extends OvlBaseElement {
     e.preventDefault()
     e.stopPropagation()
     let customActionFound = false
-    let customActions = this.actions[this.nav.tableDef.namespace]
+    let customActions = resolvePath(this.actions, this.nav.tableDef.namespace)
     if (customActions) {
       let customActionName = "Custom" + key + "Row"
       let customAction = customActions[customActionName]
@@ -89,7 +89,7 @@ export class TableRowControl extends OvlBaseElement {
     // consisting of "default" deit/copy/delete ones and the ones from state custom
 
     let rowControlActions: { [key: string]: RowControlAllAction } = {}
-
+    let fn = resolvePath(functions, def.namespace)
     // first all custom ones
     if (def.options.customRowActions) {
       let wait = Promise.all(
@@ -98,12 +98,10 @@ export class TableRowControl extends OvlBaseElement {
           let disabled = false
           let title = custom.name
           let functionName = k + "DisabledFn"
-          if (
-            functions[this.nav.tableDef.namespace] &&
-            functions[this.nav.tableDef.namespace][functionName]
-          ) {
+
+          if (fn && fn[functionName]) {
             disabled = true
-            title = await functions[def.namespace][functionName](
+            title = await fn[functionName](
               this.nav.key,
               <TableDataAndDef>{ def: def, data: this.nav.data },
               this.state
@@ -132,10 +130,9 @@ export class TableRowControl extends OvlBaseElement {
       let deleteDisabled = false
       let deleteTitle = ""
       let functionName = "DeleteDisabledFn"
-      if (functions[def.namespace] && functions[def.namespace][functionName]) {
-        deleteTitle = await functions[this.nav.tableDef.namespace][
-          functionName
-        ](
+
+      if (fn && fn[functionName]) {
+        deleteTitle = await fn[functionName](
           this.nav.key,
           <TableDataAndDef>{ def: def, data: this.nav.data },
           this.state
@@ -166,8 +163,9 @@ export class TableRowControl extends OvlBaseElement {
       let copyTitle = ""
       //@@hook
       let functionName = "CopyDisabledFn"
-      if (functions[def.namespace] && functions[def.namespace][functionName]) {
-        copyTitle = await functions[this.nav.tableDef.namespace][functionName](
+
+      if (fn && fn[functionName]) {
+        copyTitle = await fn[functionName](
           this.nav.key,
           <TableDataAndDef>{ def: def, data: this.nav.data },
           this.state
@@ -198,8 +196,8 @@ export class TableRowControl extends OvlBaseElement {
       let editTitle = ""
       //@@hook
       let functionName = "EditDisabledFn"
-      if (functions[def.namespace] && functions[def.namespace][functionName]) {
-        editTitle = await functions[def.namespace][functionName](
+      if (fn && fn[functionName]) {
+        editTitle = await fn[functionName](
           this.nav.key,
           <TableDataAndDef>{ def: def, data: this.nav.data },
           this.state
@@ -229,8 +227,8 @@ export class TableRowControl extends OvlBaseElement {
     let moreTitle = ""
     //@@hook
     let functionName = "MoreDisabledFn"
-    if (functions[def.namespace] && functions[def.namespace][functionName]) {
-      moreTitle = functions[def.namespace][functionName](
+    if (fn && fn[functionName]) {
+      moreTitle = fn[functionName](
         this.nav.key,
         <TableDataAndDef>{ def: def, data: this.nav.data },
         this.state

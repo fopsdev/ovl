@@ -18,8 +18,8 @@ export const overmind = createOvermind(config, {
   delimiter: " "
 })
 OvlConfig.requiredActions = {
-  loginActionPath: "app.user.Login",
-  forgotPwActionPath: "app.user.ForgotPw"
+  loginActionPath: "portal.user.Login",
+  forgotPwActionPath: "portal.user.ForgotPw"
 }
 
 OvlConfig.apiUrl = {
