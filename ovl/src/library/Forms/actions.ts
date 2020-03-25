@@ -403,6 +403,10 @@ export const ValidateForm: Action<FormState> = ({ actions }, value) => {
 }
 
 export const InitForm: Action<InitForm> = ({ state, actions }, value) => {
+  if (!state.ovl.forms) {
+    //@ts-ignore
+    state.ovl.forms = {}
+  }
   let formInstanceList = state.ovl.forms[value.formType]
   if (!formInstanceList) {
     state.ovl.forms[value.formType] = {}

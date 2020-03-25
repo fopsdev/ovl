@@ -57,20 +57,20 @@ let mobileTimeEntryFormState: MobileTimeEntryFormState = { rowKey: undefined }
 let mobileTimeEntry = { selectedDate: "" }
 
 export let screens = {
-  Login: login,
-  Audit: audit,
+  /* base screens */
+  Shellbar: <ShellbarState>{ userMenuExpanded: false, mainMenuExpanded: false },
+  Login: {},
+  Audit: {},
+  Translation: {},
+  /*                 */
   Settings: settings,
-  Shellbar: shellbar,
   Dashboard: dashboard,
   Quotation: quotationOverview,
   Order: orderOverview,
   Orderdetail: orderDetailFormState,
   Invoice: invoiceOverview,
   Feedback: feedback,
-  Translation: {},
   TableTesting: {},
   MobileTimeEntry: mobileTimeEntry,
   MobileTimeEntryForm: mobileTimeEntryFormState
 }
-
-export type Screen = keyof typeof screens

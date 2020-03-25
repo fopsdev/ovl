@@ -1,11 +1,11 @@
 /* uncomment when used from app */
 // replace test with the app
+
 import { overmind, config } from "../../test/src/index"
-import { screens, Screen } from "../../test/src/stateScreens"
-export { Screen }
 import { IConfig } from "overmind"
+import { Screen } from "./state"
+export { Screen }
 export { overmind }
-config.state.ovl.screens.screens = screens
 declare module "overmind" {
   // tslint:disable:interface-name
   interface Config extends IConfig<typeof config> {}

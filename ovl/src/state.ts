@@ -7,13 +7,15 @@ import { TableData } from "./library/Table/Table"
 import { tblTranslation } from "./screens/Translation/state"
 import { Translation, T } from "./global/globals"
 import { ScreensState } from "./library/OvlBaseElement"
-//import { screens } from "./state/stateScreens"
+
 import { OverlayState } from "./library/Overlay/Overlay"
 import { tblAudit } from "./library/Audit/state"
 import { SnackState } from "./library/Snack/Snack"
 
-//@ts-ignore
-let forms: FormsState = {}
+import { screens } from "../../test/src/stateScreens"
+export type Screen = keyof typeof screens
+
+let forms: FormsState = undefined
 
 let indicator: IndicatorState = {
   open: true,
@@ -108,7 +110,7 @@ export const state = {
       overlay2
     },
     screens: {
-      screens: undefined,
+      screens: screens,
       nav,
       screenState: { Login: { visible: true, closing: false } }
     },
