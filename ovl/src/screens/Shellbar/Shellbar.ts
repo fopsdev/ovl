@@ -25,6 +25,7 @@ export class Shellbar extends OvlBaseElement {
     if (this.state.ovl.uiState.isReady) {
       app = html`
         <div class="${scrollable}">
+          <ovl-app></ovl-app>
           <ovl-loginform id="loginform"></ovl-loginform>
           <ovl-audit> </ovl-audit>
           <ovl-translation> </ovl-translation>
@@ -156,9 +157,7 @@ export class Shellbar extends OvlBaseElement {
             class="fd-shellbar"
           >
             <div class="fd-shellbar__group fd-shellbar__group--product">
-              <a href="#" class="fd-shellbar__logo"
-                ><img width="48" height="24" alt="Kalt AG"
-              /></a>
+              <a href="#" class="fd-shellbar__logo"><ovl-logo></ovl-logo></a>
               <span class="fd-shellbar__title fd-has-type-4"
                 >${T("AppShortTitle")}</span
               >

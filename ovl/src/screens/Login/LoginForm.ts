@@ -2,7 +2,8 @@ import { OvlFormElement, FormFields } from "../../library/Forms/OvlFormElement"
 import { TextBoxControlState } from "../../library/Forms/Controls/TextBox"
 
 import { html } from "lit-html"
-import { T } from "../../global/globals"
+import { T, resolvePath } from "../../global/globals"
+import { OvlConfig } from "../../init"
 
 export type LoginFormState = {}
 
@@ -16,8 +17,25 @@ export class LoginForm extends OvlFormElement {
   }
   getUI() {
     let handleLogin = () => {
-      if (!this.state.ovl.user.token) {
-        //OvlCallAction("Ovl.Login.Login", this.formState)
+      let user = this.state.ovl.user
+      if (!user || !user.token) {
+        login()
+      }
+    }
+    let login = async () => {
+      try {
+        debugger
+        let a = resolvePath(
+          this.actions,
+          OvlConfig.requiredActions.loginActionPath
+        )
+        a(this.formState)
+      } catch {
+        console.error(
+          "Login Action as configured in OvlConfig: " +
+            OvlConfig.requiredActions.loginActionPath +
+            " not found!"
+        )
       }
     }
 
@@ -25,8 +43,9 @@ export class LoginForm extends OvlFormElement {
       if (e.key == "Enter") {
         e.preventDefault()
         e.stopPropagation()
-        if (!this.state.ovl.user.token) {
-          //OvlCallAction("Ovl.Login.Login", this.formState)
+        let user = this.state.ovl.user
+        if (!user || !user.token) {
+          login()
         }
       }
     }
@@ -34,7 +53,7 @@ export class LoginForm extends OvlFormElement {
     let handleForgotPw = (e: Event) => {
       e.preventDefault()
       e.stopPropagation()
-      //OvlCallAction("Ovl.Login.ForgotPw", this.formState)
+      this.actions.ovl.user.ForgotPw
     }
 
     let fields = this.formState.fields

@@ -1,25 +1,6 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
 
-type OvlConfig = {
-  Version: string
-  IsDev: boolean
-  OfflineMode: boolean
-  DataVersion: string
-  ShowSaveOrigin: boolean
-  PersistStateId: string
-  PersistTimestampId: string
-}
-
-import { state } from "./state"
-import * as actions from "./actions"
-export { actions }
-import * as effects from "./effects"
-import onInitialize from "./onInitialize"
-import { defineElements } from "./registerComponents"
-import { IConfig } from "overmind"
-defineElements()
-
 export type Init = {
   customerTestUrlMatch: string
   customerTestUrl: string
@@ -30,54 +11,90 @@ export type Init = {
   devServer: string
 }
 
-export const config = {
+export type OvlConfig = {
+  _system: {
+    Version: string
+    IsDev: boolean
+    OfflineMode: boolean
+    DataVersion: string
+    ShowSaveOrigin: boolean
+    PersistStateId: string
+    PersistTimestampId: string
+  }
+  apiUrl: Init
+  /*actions that will be used from base but needs to be defined per app*/
+  requiredActions: {
+    loginActionPath: string
+    forgotPwActionPath: string
+  }
+  /*key will be parentkey to check and value will be currentkey (saveState needs the parent key and the current key to identify ignored state)*/
+  saveStateIgnores: { [key: string]: string }
+  /* all screens which can be navigated to */
+  screens: {}
+}
+
+import { state } from "./state"
+import * as actions from "./actions"
+export { actions }
+import * as effects from "./effects"
+import onInitialize from "./onInitialize"
+import { defineElements } from "./registerComponents"
+import { IConfig } from "overmind"
+import { screens, BaseScreen } from "./state/stateScreens"
+defineElements()
+
+export const baseOvermindConfig = {
   onInitialize,
   state,
   actions,
   effects
 }
 
+export type Screen = BaseScreen
+
 let dataVersion = "1"
-export let ovlBaseConfig: OvlConfig = {
-  Version: "0.5",
-  IsDev: true,
-  OfflineMode: false,
-  DataVersion: dataVersion,
-  ShowSaveOrigin: true,
-  PersistStateId: "ovlstate" + dataVersion,
-  PersistTimestampId: "ovltimestamp" + dataVersion
+export let OvlConfig: OvlConfig = {
+  _system: {
+    Version: "0.5",
+    IsDev: true,
+    OfflineMode: false,
+    DataVersion: dataVersion,
+    ShowSaveOrigin: true,
+    PersistStateId: "ovlstate" + dataVersion,
+    PersistTimestampId: "ovltimestamp" + dataVersion
+  },
+  apiUrl: undefined,
+  requiredActions: undefined,
+  saveStateIgnores: undefined,
+  screens
 }
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
 if (window.OvlOfflineMode) {
   //@ts-ignore
-  ovlBaseConfig.OfflineMode = window.OvlOfflineMode
+  OvlConfig._system.OfflineMode = window.OvlOfflineMode
 }
 //@ts-ignore
 if (window.OvlDataVersion) {
   //@ts-ignore
-  ovlBaseConfig.DataVersion = window.OvlDataVersion
+  OvlConfig._system.DataVersion = window.OvlDataVersion
 }
 //@ts-ignore
 if (window.OvlIsDev) {
   //@ts-ignore
-  ovlBaseConfig.IsDev = window.OvlIsDev
+  OvlConfig._system.IsDev = window.OvlIsDev
 }
 //@ts-ignore
 if (window.OvlShowSaveOrigin) {
   //@ts-ignore
-  ovlBaseConfig.ShowSaveOrigin = window.OvlShowSaveOrigin
+  OvlConfig._system.ShowSaveOrigin = window.OvlShowSaveOrigin
 }
 //@ts-ignore
 if (window.OvlVersion) {
   //@ts-ignore
-  ovlBaseConfig.Version = window.OvlVersion
+  OvlConfig._system.Version = window.OvlVersion
 }
-ovlBaseConfig.PersistStateId = "ovlstate" + ovlBaseConfig.DataVersion
-ovlBaseConfig.PersistTimestampId = "ovltimestamp" + ovlBaseConfig.DataVersion
+OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.DataVersion
+OvlConfig._system.PersistTimestampId =
+  "ovltimestamp" + OvlConfig._system.DataVersion
 // #####################################################################################################################################
-
-declare module "overmind" {
-  // tslint:disable:interface-name
-  interface Config extends IConfig<typeof config> {}
-}

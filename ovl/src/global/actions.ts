@@ -1,6 +1,6 @@
 import { Action, AsyncAction } from "overmind"
 import { overmind } from "../index"
-import { ovlBaseConfig, Init } from "../init"
+import { OvlConfig, Init } from "../init"
 import { DialogResult } from "../library/actions"
 import {
   FormState,
@@ -197,70 +197,6 @@ export const ForgotPw: AsyncAction<FormState> = async (
   }
 }
 
-export const Login: AsyncAction<FormState> = async (
-  { state, actions, effects },
-  value
-) => {
-  actions.ovl.form.ValidateForm(value)
-  if (value.valid) {
-    let user = value.fields["user"].value
-    let pw = value.fields["pw"].value
-    let res = await effects.postRequest("authenticate", {
-      email: user,
-      password: pw,
-      language: state.ovl.language.language
-    })
-    if (!res.data) {
-      return
-    }
-    //console.log(res.data)
-    state.ovl.user = res.data.partner.user
-    // state.portal.partner = res.data.partner
-    // state.portal.partner.attachments = res.data.data.attachments
-
-    // state.portal.chartData = res.data.data.chartData
-    // state.portal.quotationDetail = {
-    //   quotations: res.data.data.quotationDetail
-    // }
-    // state.portal.orderDetail = { orders: res.data.data.orderDetail }
-    // state.portal.invoiceDetail = { invoices: res.data.data.invoiceDetail }
-    // state.portal.dpInvoiceDetail = {
-    //   dpInvoices: res.data.data.dpInvoiceDetail
-    // }
-    // state.portal.chartData = res.data.data.chartData
-
-    actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: T("AppLoginSuccessful"),
-      type: "Success"
-    })
-    if (state.ovl.screens.nav.screensHistory.length > 1) {
-      actions.ovl.navigation.NavigateBack()
-    } else {
-      // see if we have a target url and move directly to that screen
-      // also possible to move to detail providing "o" = docnum param
-      // let url = new URL(window.location.href)
-      // let screen = <Screen>url.searchParams.get("s")
-      // let orderNum = url.searchParams.get("o")
-      // let command: Screen = "Dashboard"
-      // if (screen) {
-      //   command = screen
-      // }
-      // if (orderNum) {
-      //   state.ovl.screens.screens.Orderdetail.selectedOrder = orderNum
-      // }
-      // actions.ovl.navigation.NavigateTo(command)
-    }
-    actions.ovl.form.ResetFormAfterAnimation(value)
-  } else {
-    actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: GetFormValidationErrors(value).join("\n"),
-      type: "Error"
-    })
-  }
-  // post back
-}
 export const Logout: AsyncAction = async ({ state, actions }) => {
   actions.ovl.dialog.OkCancelDialog({
     text: "Wollen Sie sich wirklich abmelden?",
@@ -395,9 +331,11 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
   state,
   effects
 }) => {
-  if (ovlBaseConfig.OfflineMode) {
+  if (OvlConfig._system.OfflineMode) {
     try {
-      let persistedState = await stateStore.get(ovlBaseConfig.PersistStateId)
+      let persistedState = await stateStore.get(
+        OvlConfig._system.PersistStateId
+      )
       if (!persistedState) {
         // clear also maybe old versions lingering around...
         stateStore.clear()
@@ -411,7 +349,7 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         state.ovl.uiState.isReady = true
 
         let updateCheck = await effects.getRequest(
-          "./updatecheck/ovldataversion" + ovlBaseConfig.DataVersion + ".js"
+          "./updatecheck/ovldataversion" + OvlConfig._system.DataVersion + ".js"
         )
 
         if (updateCheck.status === 404) {
@@ -492,7 +430,7 @@ export const InitApp: AsyncAction<Init> = async (
   }
   state.ovl.language.language = res.data.lang
   localStorage.setItem("PortalLanguage", res.data.lang)
-  // state.ovl.language.translations = res.data.translations
+  state.ovl.language.translations = res.data.translations
   // state.portal.pics.salesContact = res.data.salesPic
   // state.portal.pics.technicalContact = res.data.technicianPic
 

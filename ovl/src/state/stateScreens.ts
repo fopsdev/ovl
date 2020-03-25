@@ -14,3 +14,5 @@ export let screens = {
   Translation: undefined,
   Audit: undefined
 }
+
+export type BaseScreen = keyof typeof screens

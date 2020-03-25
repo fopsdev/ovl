@@ -1,0 +1,208 @@
+import { OvlBaseElement } from "../../library/OvlBaseElement"
+import { html } from "lit-html"
+import { T, D } from "../../global/globals"
+import { FileType } from "../../components/FileList/FileList"
+
+export type OrderOverviewState = {
+  activeFilePopup: string
+}
+
+export class CompOrderOverview extends OvlBaseElement {
+  init() {
+    this.screen = "Order"
+  }
+  handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
+    e.preventDefault()
+    this.actions.global.GetFile({ fileName, fileType, docNum })
+  }
+  handleDetail(e: Event, key: string) {
+    //@ts-ignore
+    if (
+      (!this.state.ovl.screens.screens.Order.activeFilePopup &&
+        //@ts-ignore
+        e.target.localName === "td") ||
+      //@ts-ignore
+      e.target.localName === "button"
+    ) {
+      this.actions.order.SelectOrder(key)
+      this.actions.global.NavigateTo("Orderdetail")
+      e.stopPropagation()
+    }
+  }
+  getUI() {
+    const handlePDFPopup = (e: Event) => {
+      e.preventDefault()
+      e.stopPropagation()
+      //@ts-ignore
+      if (!e.target.disabled) {
+        //@ts-ignore
+        let id = e.target.getAttribute("aria-controls").replace("pQqQR215", "")
+        if (this.state.ovl.screens.screens.Order.activeFilePopup === id) {
+          id = ""
+        }
+        this.actions.global.TogglePDFPopup({
+          key: id,
+          obj: this.state.ovl.screens.screens.Order
+        })
+      }
+    }
+
+    const handleRemoveAllPDFPopup = e => {
+      this.actions.global.TogglePDFPopup({
+        key: "",
+        obj: this.state.ovl.screens.screens.Order
+      })
+    }
+
+    let detailCount = Object.keys(this.state.portal.orderDetail.orders).length
+    if (detailCount === 0) {
+      return null
+    }
+    return html`
+      <div @click=${handleRemoveAllPDFPopup} class="${this.animatedClass}">
+        <div class="fd-container fd-container--fluid">
+          <div class="fd-col--12">
+            <div class="fd-panel">
+              <div class="fd-panel__header">
+                <div class="fd-panel__head">
+                  <h3
+                    class="sap-icon--sales-order sap-icon--xl fd-panel__title fd-has-type-3"
+                  >
+                    ${T("AppOrders")}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fd-container fd-container--fluid">
+          <div class="fd-col--12">
+            <div class="fd-panel">
+              <div class="fd-panel__header fd-has-padding-tiny">
+                <div class="fd-panel__head">
+                  <h3 class="fd-panel__title">
+                    ${T("AppOrderListTitle", [detailCount.toString()])}
+                  </h3>
+                </div>
+              </div>
+              <div class="fd-panel__body fd-has-padding-tiny">
+                <table class="fd-table fd-table--striped">
+                  <thead class="fd-table__header">
+                    <tr class="fd-table__row">
+                      <th class="fd-table__cell" width="2%" scope="col">
+                        ${T("AppPDF")}
+                      </th>
+                      <th class="fd-table__cell" width="4%" scope="col">
+                        ${T("AppNumber")}
+                      </th>
+                      <th class="fd-table__cell" width="38%" scope="col">
+                        ${T("AppCommission")}
+                      </th>
+                      <th class="fd-table__cell" width="26%" scope="col">
+                        ${T("AppDate")}
+                      </th>
+                      <th class="fd-table__cell" width="28%" scope="col">
+                        ${T("AppDeliveryDate")}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="fd-table__body">
+                    ${Object.keys(this.state.portal.orderDetail.orders)
+                      .sort((a, b) => parseInt(b) - parseInt(a))
+                      .map(k => {
+                        let order = this.state.portal.orderDetail.orders[k]
+                        console.log(order)
+                        let files = order.steps["step2"].attachments.files
+                        return html`
+                          <tr
+                            class="fd-table__row fd-has-padding-base fd-has-margin-base"
+                            @click=${e => this.handleDetail(e, k)}
+                          >
+                            <td class="fd-table__cell">
+                              <div class="fd-popover">
+                                <div class="fd-popover__control">
+                                  <button
+                                    ?disabled=${files.length === 0}
+                                    @click=${handlePDFPopup}
+                                    class="fd-button fd-button--compact sap-icon--pdf-attachment"
+                                    aria-controls="pQqQR215${k}"
+                                    aria-haspopup="true"
+                                    aria-expanded="${k ===
+                                      this.state.ovl.screens.screens.Order
+                                        .activeFilePopup}"
+                                    aria-label="More"
+                                  ></button>
+                                </div>
+                                <div
+                                  style="width:280px;"
+                                  class="fd-popover__body"
+                                  aria-hidden="${k !==
+                                    this.state.ovl.screens.screens.Order
+                                      .activeFilePopup ||
+                                    this.state.portal.orderDetail.orders[
+                                      k
+                                    ].steps["step2"].attachments.files.filter(
+                                      m => m.type === "Order"
+                                    ).length === 0}"
+                                  id="pQqQR215${k}"
+                                >
+                                  <nav class="fd-menu">
+                                    <ul class="fd-menu__list">
+                                      ${this.state.portal.orderDetail.orders[
+                                        k
+                                      ].attachments.files
+                                        .filter(m => m.type === "Order")
+                                        .map(f => {
+                                          return html`
+                                            <li>
+                                              <a
+                                                href=""
+                                                @click=${e =>
+                                                  this.handleFile(
+                                                    e,
+                                                    f.fileName,
+                                                    f.type,
+                                                    k
+                                                  )}
+                                                class="fd-menu__item"
+                                                >${f.fileName}</a
+                                              >
+                                            </li>
+                                          `
+                                        })}
+                                    </ul>
+                                  </nav>
+                                </div>
+                              </div>
+                            </td>
+                            <td class="fd-table__cell">
+                              <button
+                                title="${T("AppDetails")}"
+                                @click=${e => this.handleDetail(e, k)}
+                                class="fd-button fd-button--compact fd-has-font-weight-semi"
+                              >
+                                ${k}
+                              </button>
+                            </td>
+                            <td class="fd-table__cell">
+                              ${order.refNum}
+                            </td>
+                            <td class="fd-table__cell">
+                              ${D(order.docDate)}
+                            </td>
+                            <td class="fd-table__cell">
+                              ${D(order.deliveryDate)}
+                            </td>
+                          </tr>
+                        `
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  }
+}
