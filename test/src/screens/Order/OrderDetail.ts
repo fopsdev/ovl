@@ -1,6 +1,7 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
-import { T, D } from "../../global/globals"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
+import { T, D } from "../../../../ovl/src/global/globals"
+
 export class CompOrderDetail extends OvlBaseElement {
   getUI() {
     let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder

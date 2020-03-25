@@ -1,7 +1,15 @@
-import { LoginValidateField, Login, TogglePDFPopup } from "./global/actions"
+import {
+  LoginValidateField,
+  Login,
+  ForgotPw,
+  TogglePDFPopup,
+  HandleAdditionalLanguageResult
+} from "./global/actions"
 let user = {
   LoginValidateField,
-  Login
+  Login,
+  ForgotPw,
+  HandleAdditionalLanguageResult
 }
 
 let global = { TogglePDFPopup }

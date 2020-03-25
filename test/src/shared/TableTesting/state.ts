@@ -1,4 +1,4 @@
-import { TableDef } from "../../library/Table/Table"
+import { TableDef } from "../../../../ovl/src/library/Table/Table"
 
 export type TableTesting = {
   Code: string

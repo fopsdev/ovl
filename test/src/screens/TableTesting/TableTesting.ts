@@ -1,5 +1,5 @@
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html } from "lit-html"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 export class CompTableTesting extends OvlBaseElement {
   init() {
     this.screen = "TableTesting"

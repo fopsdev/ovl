@@ -1,14 +1,14 @@
-import { overmind } from "../index"
+import { overmind, Screen } from "../index"
 import { FormType } from "./forms/actions"
 import { EventType } from "overmind"
 import { render, TemplateResult } from "lit-html"
 import { ITrackStateTree } from "proxy-state-tree"
 
-type ScreensHistory = string[]
+type ScreensHistory = Screen[]
 
 export type ScreensState = {
-  nextScreen: string
-  currentScreen: string
+  nextScreen: Screen
+  currentScreen: Screen
   screensHistory: ScreensHistory
   formTypeToReset: FormType
   formIdToReset: string

@@ -15,4 +15,4 @@ export let screens = {
   Audit: undefined
 }
 
-export type BaseScreen = keyof typeof screens
+export type Screen = keyof typeof screens

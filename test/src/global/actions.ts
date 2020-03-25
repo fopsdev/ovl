@@ -1,4 +1,5 @@
 import { Action, AsyncAction } from "../../../ovl/node_modules/overmind"
+import { Screen } from "../../../ovl/src/index"
 import { api, T } from "../../../ovl/src/global/globals"
 import {
   FormState,
@@ -8,6 +9,7 @@ import {
 import { Email, Mandatory } from "../../../ovl/src/library/forms/validators"
 import { FieldId } from "../../../ovl/src/screens/Login/LoginForm"
 import { TogglePDFPopupState } from "../components/FileList/FileList"
+import { DialogResult } from "../../../ovl/src/library/actions"
 
 export const Login: AsyncAction<FormState> = async (
   { state, actions, effects },
@@ -27,13 +29,19 @@ export const Login: AsyncAction<FormState> = async (
     }
     //console.log(res.data)
     state.ovl.user = res.data.partner.user
-    state.portal = {
-      partner: res.data.partner,
-      orderDetail: { orders: res.data.data.orderDetail },
-      quotationDetail: { quotations: res.data.data.quotationDetail },
-      invoiceDetail: { invoices: res.data.data.invoiceDetail },
-      dpInvoiceDetail: { dpInvoices: res.data.data.dpInvoiceDetail },
-      chartData: res.data.data.chartData
+    state.portal.chartData = res.data.data.chartData
+    state.portal.partner = res.data.partner
+    state.portal.orderDetail = {
+      orders: res.data.data.orderDetail
+    }
+    state.portal.quotationDetail = {
+      quotations: res.data.data.quotationDetail
+    }
+    state.portal.invoiceDetail = {
+      invoices: res.data.data.invoiceDetail
+    }
+    state.portal.dpInvoiceDetail = {
+      dpInvoices: res.data.data.dpInvoiceDetail
     }
     state.portal.partner.attachments = res.data.data.attachments
 
@@ -81,6 +89,41 @@ export const LoginValidateField: Action<ValidateField> = (_, value) => {
         break
     }
   }
+}
+
+export const ForgotPw: AsyncAction<FormState> = async (
+  { state, actions, effects },
+  value
+) => {
+  actions.ovl.dialog.OkCancelDialog({
+    text: T("AppLoginForgotPasswordConfirm"),
+    default: 2
+  })
+  switch (await DialogResult()) {
+    case 1:
+      let user = value.fields["user"].value
+      let res = await effects.postRequest("requestresetpw", {
+        user,
+        language: state.ovl.language.language
+      })
+      if (res.status !== 200) {
+        return
+      }
+      actions.ovl.snack.AddSnack({
+        text: T("AppLoginForgotPasswordMsg"),
+        durationMs: 20000,
+        type: "Information"
+      })
+      break
+  }
+}
+
+export const HandleAdditionalLanguageResult: Action<any> = (
+  { state },
+  value
+) => {
+  state.portal.pics.salesContact = value.salesPic
+  state.portal.pics.technicalContact = value.technicianPic
 }
 
 export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {

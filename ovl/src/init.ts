@@ -26,11 +26,10 @@ export type OvlConfig = {
   requiredActions: {
     loginActionPath: string
     forgotPwActionPath: string
+    handleAdditionalTranslationResultActionPath: string
   }
   /*key will be parentkey to check and value will be currentkey (saveState needs the parent key and the current key to identify ignored state)*/
   saveStateIgnores: { [key: string]: string }
-  /* all screens which can be navigated to */
-  screens: {}
 }
 
 import { state } from "./state"
@@ -40,7 +39,7 @@ import * as effects from "./effects"
 import onInitialize from "./onInitialize"
 import { defineElements } from "./registerComponents"
 import { IConfig } from "overmind"
-import { screens, BaseScreen } from "./state/stateScreens"
+
 defineElements()
 
 export const baseOvermindConfig = {
@@ -49,8 +48,6 @@ export const baseOvermindConfig = {
   actions,
   effects
 }
-
-export type Screen = BaseScreen
 
 let dataVersion = "1"
 export let OvlConfig: OvlConfig = {
@@ -65,8 +62,7 @@ export let OvlConfig: OvlConfig = {
   },
   apiUrl: undefined,
   requiredActions: undefined,
-  saveStateIgnores: undefined,
-  screens
+  saveStateIgnores: undefined
 }
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore

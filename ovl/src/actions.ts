@@ -42,7 +42,6 @@ let shellbar = {
 import {
   NavigateBack,
   NavigateTo,
-  ForgotPw,
   Logout,
   //Login,
   InitApp,
@@ -183,7 +182,7 @@ let internal = {
 
 import * as translation from "./screens/Translation/actions"
 
-let user = { ForgotPw, Logout } //Login }
+let user = { Logout }
 
 export let ovl = {
   indicator,

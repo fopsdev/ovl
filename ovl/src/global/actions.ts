@@ -1,5 +1,5 @@
 import { Action, AsyncAction } from "overmind"
-import { overmind } from "../index"
+import { overmind, Screen } from "../index"
 import { OvlConfig, Init } from "../init"
 import { DialogResult } from "../library/actions"
 import {
@@ -15,13 +15,21 @@ import {
   fileStoreInfo,
   stateStore
 } from "../offlineStorage"
-import { api, logout, ResetT, saveState, ShowFile, T } from "./globals"
+import {
+  api,
+  logout,
+  ResetT,
+  saveState,
+  ShowFile,
+  T,
+  resolvePath
+} from "./globals"
 
 function isTouch() {
   return "ontouchstart" in window
 }
 
-export const NavigateTo: AsyncAction<string> = async (
+export const NavigateTo: AsyncAction<Screen> = async (
   { state, actions },
   value
 ) => {
@@ -168,33 +176,6 @@ export const RefreshData: AsyncAction = async ({ state, actions, effects }) => {
     text: "Daten aufgefrischt",
     type: "Success"
   })
-}
-
-export const ForgotPw: AsyncAction<FormState> = async (
-  { state, actions, effects },
-  value
-) => {
-  actions.ovl.dialog.OkCancelDialog({
-    text: T("AppLoginForgotPasswordConfirm"),
-    default: 2
-  })
-  switch (await DialogResult()) {
-    case 1:
-      let user = value.fields["user"].value
-      let res = await effects.postRequest("requestresetpw", {
-        user,
-        language: state.ovl.language.language
-      })
-      if (res.status !== 200) {
-        return
-      }
-      actions.ovl.snack.AddSnack({
-        text: T("AppLoginForgotPasswordMsg"),
-        durationMs: 20000,
-        type: "Information"
-      })
-      break
-  }
 }
 
 export const Logout: AsyncAction = async ({ state, actions }) => {
@@ -444,8 +425,20 @@ export const InitApp: AsyncAction<Init> = async (
   state.ovl.language.language = res.data.lang
   localStorage.setItem("PortalLanguage", res.data.lang)
   state.ovl.language.translations = res.data.translations
-  // state.portal.pics.salesContact = res.data.salesPic
-  // state.portal.pics.technicalContact = res.data.technicianPic
+
+  try {
+    let a = resolvePath(
+      this.actions,
+      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
+    )
+    a({ salesPic: res.data.salesPic, technicianPic: res.data.technicianPic })
+  } catch {
+    console.error(
+      "HandleAdditionalTranslationResult Action as configured in OvlConfig: " +
+        OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath +
+        " not found!"
+    )
+  }
 
   // //init lookup values
   // res = await effects.postRequest(state.ovl.apiUrl + "lookup", {

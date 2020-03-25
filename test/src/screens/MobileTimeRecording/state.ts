@@ -1,5 +1,4 @@
-import { TableDef } from "../../library/Table/Table"
-import { filter } from "overmind"
+import { TableDef } from "../../../../ovl/src/library/Table/Table"
 
 export type TableMobileTimeRecording = {
   Code?: string

@@ -1,8 +1,7 @@
-import { ListFnReturnValue } from "../../library/Table/Table"
 import { overmind } from "../.."
 import { TableMobileTimeRecording } from "./state"
-import { LookupListPostData } from "../../library/forms/Controls/helpers"
-import { FormState } from "../../library/forms/actions"
+import { ListFnReturnValue } from "../../../../ovl/src/library/Table/Table"
+import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
 
 export const U_TypeGetListFn = (
   state: typeof overmind.state,

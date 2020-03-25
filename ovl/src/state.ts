@@ -7,7 +7,7 @@ import { TableData } from "./library/Table/Table"
 import { tblTranslation } from "./screens/Translation/state"
 import { Translation, T } from "./global/globals"
 import { ScreensState } from "./library/OvlBaseElement"
-import { screens } from "./state/stateScreens"
+//import { screens } from "./state/stateScreens"
 import { OverlayState } from "./library/Overlay/Overlay"
 import { tblAudit } from "./library/Audit/state"
 import { SnackState } from "./library/Snack/Snack"
@@ -108,7 +108,7 @@ export const state = {
       overlay2
     },
     screens: {
-      screens,
+      screens: undefined,
       nav,
       screenState: { Login: { visible: true, closing: false } }
     },

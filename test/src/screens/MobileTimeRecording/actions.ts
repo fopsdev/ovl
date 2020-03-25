@@ -178,7 +178,7 @@ export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   let data = state.tables.timeentries
   let def = state.tables.timeentries.tableDef.mobiletimerecording1
 
-  await actions.ovl.internal.TableRefresh({
+  await actions.ovl.table.TableRefresh({
     def,
     data,
     init: true,

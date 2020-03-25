@@ -125,9 +125,18 @@ type Portal = {
   dpInvoiceDetail: DPInvoiceDetailState
   chartData: DoubleBarChartState
   partner: PartnerState
+  pics: PicsState
 }
 
-export let portal: Portal
+export let portal: Portal = {
+  orderDetail: undefined,
+  chartData: undefined,
+  dpInvoiceDetail: undefined,
+  invoiceDetail: undefined,
+  partner: undefined,
+  pics: undefined,
+  quotationDetail: undefined
+}
 export let tables = {
   tableTesting: <TableData>{
     data: {},

@@ -52,7 +52,19 @@ export class LoginForm extends OvlFormElement {
     let handleForgotPw = (e: Event) => {
       e.preventDefault()
       e.stopPropagation()
-      this.actions.ovl.user.ForgotPw
+      try {
+        let a = resolvePath(
+          this.actions,
+          OvlConfig.requiredActions.forgotPwActionPath
+        )
+        a(this.formState)
+      } catch {
+        console.error(
+          "ForgotPw Action as configured in OvlConfig: " +
+            OvlConfig.requiredActions.forgotPwActionPath +
+            " not found!"
+        )
+      }
     }
 
     let fields = this.formState.fields

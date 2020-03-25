@@ -1,7 +1,7 @@
 import { html, render } from "../../ovl/node_modules/lit-html"
 import { createOvermind } from "../../ovl/node_modules/overmind"
 import { merge } from "../../ovl/node_modules/overmind/config"
-import { Init, baseOvermindConfig, OvlConfig } from "../../ovl/src/init"
+import { baseOvermindConfig, OvlConfig } from "../../ovl/src/init"
 import { defineElements } from "./registerComponents"
 import * as actions from "./actions"
 import * as state from "./state"
@@ -19,7 +19,9 @@ export const overmind = createOvermind(config, {
 })
 OvlConfig.requiredActions = {
   loginActionPath: "portal.user.Login",
-  forgotPwActionPath: "portal.user.ForgotPw"
+  forgotPwActionPath: "portal.user.ForgotPw",
+  handleAdditionalTranslationResultActionPath:
+    "portal.user.HandleAdditionalTranslationResult"
 }
 
 OvlConfig.apiUrl = {
