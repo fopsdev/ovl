@@ -1,5 +1,5 @@
-#library index file, will be adjusted per project
-**ovl/src/**/index.ts
+
+ovl/src/index.ts*
 
 # Logs
 logs
