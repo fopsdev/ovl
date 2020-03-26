@@ -1,4 +1,4 @@
-import { html } from "lit-html"
+import { html } from "../../../../ovl/node_modules/lit-html"
 // @ts-ignore
 import langpic_de from "../../../img/de.png"
 // @ts-ignore
@@ -33,7 +33,7 @@ export class CompShellbar extends OvlBaseElement {
       `
     }
 
-    let app = null
+    let app
 
     let scrollable = "scrollable"
     if (this.state.ovl.uiState.isMobile) {
@@ -209,12 +209,12 @@ export class CompShellbar extends OvlBaseElement {
     let portal = this.state.portal
     let partner = this.state.portal.partner
     // if user not logged in or a form is dirty hide menus
-    let quotationMainMenu = null
-    let quotationListMenu = null
-    let orderMainMenu = null
-    let orderListMenu = null
-    let invoiceMainMenu = null
-    let invoiceListMenu = null
+    let quotationMainMenu
+    let quotationListMenu
+    let orderMainMenu
+    let orderListMenu
+    let invoiceMainMenu
+    let invoiceListMenu
     let languageTableMenu
     let langpic = langpic_de
     let langtitle = T("AppLangDE")
@@ -396,7 +396,7 @@ export class CompShellbar extends OvlBaseElement {
         ? " " + this.state.ovl.uiState.stateSavedReason
         : "")
     // we have a tabindex on this first div so it can get the focus and not too many saveStates (has a focusOut handler) get called
-    return html`
+    let resHtml = html`
       <div
         class="fd-shell fd-shell--fundamentals fd-has-background-color-neutral-2"
         @click=${handleTopLevelClick}
@@ -581,5 +581,7 @@ export class CompShellbar extends OvlBaseElement {
       <ovl-overlay2> </ovl-overlay2>
       <ovl-dialog></ovl-dialog>
     `
+
+    return resHtml
   }
 }

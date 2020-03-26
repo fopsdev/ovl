@@ -103,7 +103,10 @@ export class OvlDialog extends OvlBaseElement {
   }
 
   getUI() {
-    if (!this.state.ovl.libState.dialog.visible) {
+    if (
+      !this.state.ovl.libState.dialog ||
+      !this.state.ovl.libState.dialog.visible
+    ) {
       return null
     }
 
@@ -181,7 +184,11 @@ export class OvlDialog extends OvlBaseElement {
   afterRender() {
     // set focus to default element
     // workaround because autofocus attribute only works 1st time
-    if (this.state.ovl.libState.dialog.visible && !this.focusSet) {
+    if (
+      this.state.ovl.libState.dialog &&
+      this.state.ovl.libState.dialog.visible &&
+      !this.focusSet
+    ) {
       let id = "ovldialogcancel"
       if (this.state.ovl.libState.dialog.default == 1) {
         id = "ovldialogok"

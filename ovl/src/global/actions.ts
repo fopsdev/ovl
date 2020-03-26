@@ -53,7 +53,12 @@ export const NavigateTo: AsyncAction<Screen> = async (
     }
     state.ovl.screens.nav.screensHistory.push(value)
     document.getElementById("app").focus()
-    SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
+    if (!state.ovl.screens.nav.currentScreen) {
+      state.ovl.screens.nav.currentScreen = "Login"
+      SetVisibleScreen(state, value)
+    } else {
+      SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
+    }
   }
 }
 
@@ -94,6 +99,9 @@ const SetVisibleScreen = async (
   state: typeof overmind.state,
   value: string
 ) => {
+  if (!state.ovl.screens.screenState) {
+    state.ovl.screens.screenState = {}
+  }
   let o = state.ovl.screens.screenState[value]
   if (o === undefined) {
     state.ovl.screens.screenState[value] = { visible: true, closing: false }

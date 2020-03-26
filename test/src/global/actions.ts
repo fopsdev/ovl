@@ -195,6 +195,7 @@ export const CustomInit: Action = ({ actions }, _) => {
     formType: "Login",
     fields
   }
+  debugger
   actions.ovl.form.InitForm(loginForm)
   actions.ovl.navigation.NavigateTo("Login")
 }
