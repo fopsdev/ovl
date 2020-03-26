@@ -1,6 +1,6 @@
 import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { FileType } from "../../components/FileList/FileList"
-import { html } from "lit-html"
+import { html } from "../../../../ovl/node_modules/lit-html"
 import { T, D } from "../../../../ovl/src/global/globals"
 
 export type QuotationOverviewState = {

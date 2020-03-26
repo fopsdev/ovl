@@ -223,6 +223,7 @@ export class CompShellbar extends OvlBaseElement {
     let createMobileTimentries
     let auditMenu
     let userName
+
     if (!user.token) {
       hideAllMenus = "hide"
     } else {

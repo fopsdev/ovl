@@ -30,7 +30,7 @@ export const Login: AsyncAction<FormState> = async (
     if (!res.data) {
       return
     }
-    //console.log(res.data)
+    state.ovl.user.token = res.data.partner.user.token
     state.portal.user = res.data.partner.user
     state.portal.chartData = res.data.data.chartData
     state.portal.partner = res.data.partner
@@ -195,7 +195,7 @@ export const CustomInit: Action = ({ actions }, _) => {
     formType: "Login",
     fields
   }
-  debugger
+
   actions.ovl.form.InitForm(loginForm)
   actions.ovl.navigation.NavigateTo("Login")
 }
