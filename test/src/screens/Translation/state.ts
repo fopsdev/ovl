@@ -1,4 +1,4 @@
-import { TableDef } from "../../library/Table/Table"
+import { TableDef } from "../../../../ovl/src/library/Table/Table"
 
 export type Translation = {
   ID: string
@@ -11,7 +11,7 @@ export type TblTranslation = {
 
 export let tblTranslation: TableDef = {
   id: "translation",
-  namespace: "ovl.translation",
+  namespace: "portal.system.translation",
   database: {
     dataIdField: "ID",
     dbInsertMode: "UDTAutoNumber"

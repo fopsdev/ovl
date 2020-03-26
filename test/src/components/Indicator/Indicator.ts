@@ -1,10 +1,5 @@
-import { html } from "lit-html"
-import { OvlBaseElement } from "../../library/OvlBaseElement"
-
-export type IndicatorState = {
-  open: boolean
-  refCounter: number
-}
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 
 export class OvlIndicator extends OvlBaseElement {
   getUI() {

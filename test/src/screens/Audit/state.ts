@@ -1,8 +1,8 @@
-import { TableDef } from "../Table/Table"
+import { TableDef } from "../../../../ovl/src/library/Table/Table"
 
 export let tblAudit: TableDef = {
   id: "audit",
-  namespace: "ovl.audit",
+  namespace: "portal.system.audit",
   database: {
     dataIdField: "Code",
     dbInsertMode: "UDTAutoGUIDBoth"

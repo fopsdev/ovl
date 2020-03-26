@@ -1,6 +1,6 @@
-import { OvlBaseElement } from "../OvlBaseElement"
-import { html } from "lit-html"
-import { T } from "../../global/globals"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
+import { T } from "../../../../ovl/src/global/globals"
 
 export type ShellButtonOrMenu = "button" | "menu"
 

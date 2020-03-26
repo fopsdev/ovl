@@ -1,11 +1,11 @@
-import { OvlBaseElement } from "../OvlBaseElement"
-import { html } from "lit-html"
+import { html } from "../../../../ovl/node_modules/lit-html"
 import { overmind } from "../.."
-import { T } from "../../global/globals"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
+import { T } from "../../../../ovl/src/global/globals"
 
-export class OvlAudit extends OvlBaseElement {
+export class CompTranslation extends OvlBaseElement {
   init() {
-    this.screen = "Audit"
+    this.screen = "Translation"
   }
   getUI() {
     return html`
@@ -13,7 +13,7 @@ export class OvlAudit extends OvlBaseElement {
         <div class="fd-panel__header">
           <div class="fd-panel__head">
             <h3 class="fd-panel__title">
-              ${T("AppAudit")}
+              ${T("AppTranslations")}
             </h3>
           </div>
         </div>
@@ -23,8 +23,8 @@ export class OvlAudit extends OvlBaseElement {
             class="fd-table"
             .props=${(state: typeof overmind.state) => {
               return {
-                def: state.ovl.audit.tables.audit.tableDef.audit,
-                data: state.ovl.audit.tables.audit
+                def: state.portal.tables.translations.tableDef.translation,
+                data: state.portal.tables.translations
               }
             }}
           >

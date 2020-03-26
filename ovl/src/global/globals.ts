@@ -2,7 +2,7 @@ import { overmind } from "../index"
 import { OvlConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { stateStore } from "../offlineStorage"
-import { displayFormats } from "./disiplayFormats"
+import { displayFormats } from "./displayFormats"
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
@@ -365,8 +365,9 @@ export const T = (key: string, reps?: string[]): string => {
   }
 }
 
-export const resolvePath = (object, path, defaultValue?) =>
-  path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object)
+export const resolvePath = (object, path, defaultValue?) => {
+  return path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object)
+}
 
 type Translations = {
   t: Translation

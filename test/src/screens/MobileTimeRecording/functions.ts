@@ -20,9 +20,9 @@ export const U_TypeIdGetListFn = (
   row: TableMobileTimeRecording
 ): ListFnReturnValue => {
   if (row.U_Type === "PROJECT") {
-    return state.tables.lookups.ProjectTypeId
+    return state.testtables.lookups.ProjectTypeId
   } else {
-    return state.tables.lookups.AbsenceTypeId
+    return state.testtables.lookups.AbsenceTypeId
   }
 }
 

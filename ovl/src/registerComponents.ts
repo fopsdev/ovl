@@ -1,14 +1,8 @@
-import { LoginForm } from "./screens/Login/LoginForm"
 import { OvlDialog } from "./library/Dialog/Dialog"
-import { Shellbar } from "./screens/Shellbar/Shellbar"
-
 import { OvlSnack } from "./library/Snack/Snack"
-import { OvlIndicator } from "./library/Indicator/Indicator"
-import { OvlBackButton } from "./library/BackButton/BackButton"
-import { OvlRefresh } from "./library/Refresh/Refresh"
 import { OvlOverlay } from "./library/Overlay/Overlay"
 import { OvlOverlay2 } from "./library/Overlay2/Overlay2"
-import { OvlAudit } from "./library/Audit/Audit"
+
 import { OvlTextbox } from "./library/Forms/Controls/TextBox"
 import { OvlListControl } from "./library/Forms/Controls/ListControl"
 import { OvlHitList } from "./library/Forms/Controls/Parts/HitList"
@@ -25,7 +19,6 @@ import { TableRowSaveCancel } from "./library/Table/RowFormSaveCancel"
 import { TableRowControl } from "./library/Table/RowControl"
 import { TableNavControl } from "./library/Table/NavControl"
 import { TableHeaderMenu } from "./library/Table/HeaderMenu"
-import { Translation } from "./screens/Translation/Translation"
 export const defineElements = () => {
   customElements.define("ovl-trowcontrol", TableRowControl)
   customElements.define("ovl-tnavcontrol", TableNavControl)
@@ -45,13 +38,7 @@ export const defineElements = () => {
   customElements.define("ovl-datebox", OvlDate)
   customElements.define("ovl-dialog", OvlDialog)
   customElements.define("ovl-snack", OvlSnack)
-  customElements.define("ovl-indicator", OvlIndicator)
-  customElements.define("ovl-backbutton", OvlBackButton)
-  customElements.define("ovl-refresh", OvlRefresh)
+
   customElements.define("ovl-overlay", OvlOverlay)
   customElements.define("ovl-overlay2", OvlOverlay2)
-  customElements.define("ovl-audit", OvlAudit)
-  customElements.define("ovl-translation", Translation)
-  customElements.define("ovl-shellbar", Shellbar)
-  customElements.define("ovl-loginform", LoginForm)
 }

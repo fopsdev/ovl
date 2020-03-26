@@ -1,15 +1,13 @@
-import { OvlFormElement, FormFields } from "../../library/Forms/OvlFormElement"
-import { TextBoxControlState } from "../../library/Forms/Controls/TextBox"
-
-import { html } from "lit-html"
-import { T, resolvePath } from "../../global/globals"
-import { OvlConfig } from "../../init"
+import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
+import { html } from "../../../../ovl/node_modules/lit-html"
+import { T } from "../../../../ovl/src/global/globals"
+import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
 
 export type LoginFormState = {}
 
 export type FieldId = "pw" | "user"
 
-export class LoginForm extends OvlFormElement {
+export class CompLoginForm extends OvlFormElement {
   init() {
     this.screen = "Login"
     this.formType = "Login"
@@ -17,24 +15,8 @@ export class LoginForm extends OvlFormElement {
   }
   getUI() {
     let handleLogin = () => {
-      let user = this.state.ovl.user
-      if (!user || !user.token) {
-        login()
-      }
-    }
-    let login = async () => {
-      try {
-        let a = resolvePath(
-          this.actions,
-          OvlConfig.requiredActions.loginActionPath
-        )
-        a(this.formState)
-      } catch {
-        console.error(
-          "Login Action as configured in OvlConfig: " +
-            OvlConfig.requiredActions.loginActionPath +
-            " not found!"
-        )
+      if (!this.state.ovl.user.token) {
+        this.actions.portal.system.user.Login(this.formState)
       }
     }
 
@@ -42,9 +24,8 @@ export class LoginForm extends OvlFormElement {
       if (e.key == "Enter") {
         e.preventDefault()
         e.stopPropagation()
-        let user = this.state.ovl.user
-        if (!user || !user.token) {
-          login()
+        if (!this.state.ovl.user.token) {
+          this.actions.portal.system.user.Login(this.formState)
         }
       }
     }
@@ -52,19 +33,7 @@ export class LoginForm extends OvlFormElement {
     let handleForgotPw = (e: Event) => {
       e.preventDefault()
       e.stopPropagation()
-      try {
-        let a = resolvePath(
-          this.actions,
-          OvlConfig.requiredActions.forgotPwActionPath
-        )
-        a(this.formState)
-      } catch {
-        console.error(
-          "ForgotPw Action as configured in OvlConfig: " +
-            OvlConfig.requiredActions.forgotPwActionPath +
-            " not found!"
-        )
-      }
+      this.actions.portal.system.user.ForgotPw(this.formState)
     }
 
     let fields = this.formState.fields

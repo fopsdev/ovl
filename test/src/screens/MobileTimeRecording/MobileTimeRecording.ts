@@ -21,8 +21,8 @@ export class CompMobileTimeEntry extends OvlBaseElement {
   handleAddRowClick = async (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    let def = this.state.tables.timeentries.tableDef.mobiletimerecording1
-    let data = this.state.tables.timeentries
+    let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
+    let data = this.state.testtables.timeentries
     let tableDataAndDef: TableDataAndDef = {
       data,
       def
@@ -67,7 +67,7 @@ export class CompMobileTimeEntry extends OvlBaseElement {
       val = dt.toISOString().substring(0, 10)
       this.dateInputElement.value = val
     }
-    let def = this.state.tables.timeentries.tableDef.mobiletimerecording1
+    let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
     // only add row if there is not already one in addmode
     await this.actions.portal.mobiletimerecording.SetMobileTimeEntrySelectedDate(
       {
@@ -85,8 +85,8 @@ export class CompMobileTimeEntry extends OvlBaseElement {
   }
 
   async handleDelete(e: Event, key: string) {
-    let def = this.state.tables.timeentries.tableDef.mobiletimerecording1
-    let data = this.state.tables.timeentries
+    let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
+    let data = this.state.testtables.timeentries
     await this.actions.ovl.internal.TableDeleteRow({ key, def, data })
     let formState: FormState
     if (this.state.ovl.forms.MobileTimeEntry) {
@@ -101,11 +101,11 @@ export class CompMobileTimeEntry extends OvlBaseElement {
   getUI() {
     let dateSelected = this.state.ovl.screens.screens.MobileTimeEntry
       .selectedDate
-    let def = this.state.tables.timeentries.tableDef.mobiletimerecording1
+    let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
     let dataKeys = def.uiState.dataFilteredAndSorted.filter(
       k => k.indexOf(ovltemp) === -1
     )
-    let data = this.state.tables.timeentries.data
+    let data = this.state.testtables.timeentries.data
     return html`
       <div class="fd-panel ${this.animatedClass}">
         <div class="fd-input-group" style="height:10vh;">

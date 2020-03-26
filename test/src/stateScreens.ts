@@ -7,8 +7,8 @@ import { OrderDetailFormState } from "./screens/Order/OrderDetailLayout"
 import { FeedbackFormState } from "./screens/Feedback/FeedbackForm"
 import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTimeRecordingForm"
 import { DashboardState } from "./screens/Dashboard/Dashboard"
-import { ShellbarState } from "../../ovl/src/screens/Shellbar/Shellbar"
-import { LoginFormState } from "../../ovl/src/screens/Login/LoginForm"
+import { ShellbarState } from "./screens/Shellbar/Shellbar"
+import { LoginFormState } from "./screens/Login/LoginForm"
 
 let shellbar: ShellbarState = {
   mainMenuExpanded: false,
@@ -20,17 +20,7 @@ let audit = {}
 
 let settings: SettingsFormState = {}
 
-let feedback: FeedbackFormState = {
-  cardCode: "C20000",
-  message: "Der Auftrag wurde zu meiner vollsten Zufriedenheit ausgeführt",
-  orderDate: "01.12.2019",
-  orderDeliveryDate: "01.12.2019",
-  orderNum: "10002",
-  title: "Positives Feedback erfassen",
-  type: "OrderPositive",
-  refNum: "Kommission 1",
-  dirty: false
-}
+let feedback: FeedbackFormState = undefined
 
 let dashboard: DashboardState = {}
 
@@ -58,11 +48,10 @@ let mobileTimeEntry = { selectedDate: "" }
 
 export let screens = {
   /* base screens */
-  Shellbar: <ShellbarState>{ userMenuExpanded: false, mainMenuExpanded: false },
+  Shellbar: shellbar,
   Login: {},
   Audit: {},
   Translation: {},
-  /*                 */
   Settings: settings,
   Dashboard: dashboard,
   Quotation: quotationOverview,
@@ -74,3 +63,5 @@ export let screens = {
   MobileTimeEntry: mobileTimeEntry,
   MobileTimeEntryForm: mobileTimeEntryFormState
 }
+
+export type Screen = keyof typeof screens

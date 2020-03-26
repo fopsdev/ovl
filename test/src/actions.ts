@@ -3,21 +3,38 @@ import {
   Login,
   ForgotPw,
   TogglePDFPopup,
-  HandleAdditionalLanguageResult
+  HandleAdditionalLanguageResult,
+  OpenLanguageTable,
+  CustomInit,
+  RefreshData
 } from "./global/actions"
 let user = {
   LoginValidateField,
   Login,
   ForgotPw,
-  HandleAdditionalLanguageResult
+  HandleAdditionalLanguageResult,
+  CustomInit
 }
 
-let global = { TogglePDFPopup }
+let global = { TogglePDFPopup, RefreshData }
 
 import { SaveSettings, SettingsValidateField } from "./screens/Settings/actions"
 let settings = {
   SaveSettings,
   SettingsValidateField
+}
+
+import {
+  CloseMainMenu,
+  OpenMainMenu,
+  OpenUserMenu,
+  CloseUserMenu
+} from "./screens/Shellbar/actions"
+let shellbar = {
+  CloseMainMenu,
+  OpenMainMenu,
+  OpenUserMenu,
+  CloseUserMenu
 }
 
 import {
@@ -43,8 +60,8 @@ import * as tabletesting from "./shared/TableTesting/actions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 
 export const portal = {
+  system: { shellbar, translations: { OpenLanguageTable }, user },
   global,
-  user,
   settings,
   order,
   feedback,

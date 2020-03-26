@@ -169,7 +169,7 @@ export const U_ItemCodeGetListFn = (
   state: typeof overmind.state,
   row: { [key: string]: {} }
 ): ListFnReturnValue => {
-  return state.tables.lookups.U_ItemCode
+  return state.testtables.lookups.U_ItemCode
 }
 
 export const U_ItemCodeLookupPostDataFn = (
@@ -185,14 +185,14 @@ export const ItmsGrpCodGetListFn = (
   state: typeof overmind.state,
   row: { [key: string]: {} }
 ): ListFnReturnValue => {
-  return state.tables.lookups.ItmsGrpCod
+  return state.testtables.lookups.ItmsGrpCod
 }
 
 export const ParentCodeGetListFn = (
   state: typeof overmind.state,
   row: { [key: string]: {} }
 ): ListFnReturnValue => {
-  return state.tables.tableTesting
+  return state.testtables.tableTesting
 }
 
 export const U_ItemCodeGetFilteredListFn = (
