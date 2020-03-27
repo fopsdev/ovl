@@ -3,7 +3,7 @@ import { html } from "lit-html"
 import { repeat } from "lit-html/directives/repeat"
 import { TableRowDef } from "./RowWrapper"
 import { DataType, Schema } from "../Forms/OvlFormElement"
-import * as functions from "../../tableFunctions"
+import { functions } from "../../index"
 
 import { HeaderMenuDef } from "./HeaderMenu"
 import { FieldFormat } from "../Forms/OvlFormElement"

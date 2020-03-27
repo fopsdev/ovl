@@ -1,8 +1,8 @@
 import { OvlBaseElement } from "../OvlBaseElement"
-import { html, Template } from "lit-html"
+import { html } from "lit-html"
 import { TableData, TableDataAndDef } from "./Table"
 import { NavProps } from "./RowControl"
-import * as functions from "../../tableFunctions"
+import { functions } from "../../index"
 import {
   TableDef,
   SelectedRow,
@@ -11,7 +11,7 @@ import {
   SelectRowDef,
   EditRowSaveCancelDef
 } from "./Table"
-import { overlayToRender } from "../../library/Overlay/Overlay"
+
 import { resolvePath } from "../../global/globals"
 export type TableRowDef = {
   data: TableData

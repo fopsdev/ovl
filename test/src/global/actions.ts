@@ -48,6 +48,17 @@ export const Login: AsyncAction<FormState> = async (
     }
     state.portal.partner.attachments = res.data.data.attachments
 
+    //init lookup values
+    res = await effects.postRequest(api.url + "lookup", {
+      lang: state.ovl.language.language,
+      lookupType: "initial"
+    })
+    state.testtables.lookups.U_ItemCode = res.data.item
+    state.testtables.lookups.ItmsGrpCod = res.data.itemGroup
+
+    state.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
+    state.testtables.lookups.ProjectTypeId = res.data.timeProjects
+
     actions.ovl.snack.AddSnack({
       durationMs: 3000,
       text: T("AppLoginSuccessful"),
@@ -79,7 +90,6 @@ export const Login: AsyncAction<FormState> = async (
     })
   }
 }
-
 export const LoginValidateField: Action<ValidateField> = (_, value) => {
   let field = value.formState.fields[value.fieldId]
   if (field.watched) {
@@ -139,8 +149,13 @@ export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
   }
 }
 
-export const RefreshData: AsyncAction = async ({ state, actions, effects }) => {
-  let res = await effects.postRequest("getdata", {
+export const HandleRefresh: AsyncAction = async ({
+  state,
+  actions,
+  effects
+}) => {
+  // 1st get global data to be refreshed
+  let res = await effects.postRequest(api.url + "data/getdata", {
     features: state.portal.user.features,
     language: state.ovl.language.language
   })
@@ -159,6 +174,18 @@ export const RefreshData: AsyncAction = async ({ state, actions, effects }) => {
   state.portal.dpInvoiceDetail = {
     dpInvoices: res.data.dpInvoiceDetail
   }
+
+  //now call the screens refresh action if any
+  let screen = state.ovl.screens.nav.currentScreen
+  let screensActions = actions.portal["screens"]
+  if (screensActions) {
+    if (screensActions[screen]) {
+      if (screensActions[screen]["HandleRefresh"]) {
+        screensActions[screen]["HandleRefresh"]()
+      }
+    }
+  }
+
   actions.ovl.snack.AddSnack({
     durationMs: 3000,
     text: "Daten aufgefrischt",

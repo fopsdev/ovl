@@ -1,7 +1,7 @@
 import { Action, AsyncAction } from "overmind"
 import { postRequest } from "../../effects"
 import { api, ovltemp, uuidv4, resolvePath } from "../../global/globals"
-import * as functions from "../../tableFunctions"
+import { functions } from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
@@ -236,9 +236,16 @@ export const TableRefreshDataFromServer: AsyncAction<{
         let lookupDefKey = dataFieldsToLookups[c]
         let lookupColumnDef = def.columns[lookupDefKey]
         let functionName = lookupDefKey + "GetListFn"
-        let listdata: ListFnReturnValue = functions[def.namespace][
-          functionName
-        ](state, serverData[k])
+        let fn = resolvePath(functions, def.namespace)
+        if (!fn || !fn[functionName]) {
+          console.error(
+            "ovl needs a function: " +
+              functionName +
+              " to be defined in functions at: " +
+              def.namespace
+          )
+        }
+        let listdata: ListFnReturnValue = fn[functionName](state, serverData[k])
 
         let value = localData[k][c]
         let listValueFound = true

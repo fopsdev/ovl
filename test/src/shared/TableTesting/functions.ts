@@ -177,7 +177,6 @@ export const U_ItemCodeLookupPostDataFn = (
   row: {},
   state: typeof overmind.state
 ) => {
-  console.log(lookupData)
   lookupData.paramList.ItmsGrpCod = row["U_ItmsGrpCod"]
 }
 

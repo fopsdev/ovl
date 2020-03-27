@@ -3,6 +3,8 @@
 import { overmind, config } from "../../test/src/index"
 import { screens } from "../../test/src/stateScreens"
 import { Screen } from "../../test/src/stateScreens"
+import * as functions from "../../test/src/functions"
+export { functions }
 import { IConfig } from "overmind"
 export { overmind }
 declare module "overmind" {
@@ -16,6 +18,9 @@ declare module "overmind" {
 // import { createOvermind, IConfig } from "overmind"
 // import { screens } from "./stateScreens"
 // import { Screen } from "./stateScreens"
+// import * as functions from "./functions"
+// export { functions }
+
 // export const overmind = createOvermind(baseOvermindConfig, {
 //   devtools: true,
 //   logProxies: true,

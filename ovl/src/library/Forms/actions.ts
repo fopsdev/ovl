@@ -7,7 +7,7 @@ import {
 } from "../../global/globals"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
-import * as functions from "../../tableFunctions"
+import * as functions from "../../functions"
 import { ListFnReturnValue } from "../Table/Table"
 import { getFormFields, ValidationAddError } from "./helper"
 export { FillListControl }

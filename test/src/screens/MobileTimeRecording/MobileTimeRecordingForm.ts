@@ -1,11 +1,11 @@
 import { html } from "../../../../ovl/node_modules/lit-html"
-import { N, T } from "../../../../ovl/src/global/globals"
+import { N, T, resolvePath } from "../../../../ovl/src/global/globals"
 import { DialogResult } from "../../../../ovl/src/library/actions"
 import { ListControlState } from "../../../../ovl/src/library/forms/Controls/ListControl"
 import { OptionControlState } from "../../../../ovl/src/library/Forms/Controls/Option"
 import { TimeControlState } from "../../../../ovl/src/library/Forms/Controls/Time"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
-import * as functions from "../../tableFunctions"
+import * as functions from "../../functions"
 
 export type MobileTimeEntryFormState = {
   rowKey: string
@@ -92,7 +92,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
                 formState: this.formState,
                 namespace: def.namespace,
                 list: {
-                  listFn: functions[def.namespace].U_TypeGetListFn,
+                  listFn: resolvePath(functions, def.namespace).U_TypeGetListFn,
                   displayField: col.list.displayField,
                   valueField: col.list.valueField
                 },
@@ -114,7 +114,8 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
                 formState: this.formState,
                 namespace: def.namespace,
                 list: {
-                  listFn: functions[def.namespace].U_TypeIdGetListFn,
+                  listFn: resolvePath(functions, def.namespace)
+                    .U_TypeIdGetListFn,
                   displayField: col.list.displayField,
                   displayValueField: col.list.displayValueField,
                   valueField: col.list.valueField,

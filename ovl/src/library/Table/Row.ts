@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { TableRowDataDef } from "./RowWrapper"
 import { getDisplayValue } from "./helpers"
-import * as functions from "../../tableFunctions"
+import { functions } from "../../index"
 import { resolvePath } from "../../global/globals"
 
 export class TableRow extends OvlBaseElement {

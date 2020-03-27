@@ -69,7 +69,7 @@ export class CompMobileTimeEntry extends OvlBaseElement {
     }
     let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
     // only add row if there is not already one in addmode
-    await this.actions.portal.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+    await this.actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
       {
         def,
         selected: val

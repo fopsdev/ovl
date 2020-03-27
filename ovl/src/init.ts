@@ -27,6 +27,7 @@ export type OvlConfig = {
     customInitActionPath: string
     customPrepareActionPath: string
     handleAdditionalTranslationResultActionPath: string
+    handleGlobalRefreshActionPath: string
   }
   /*key will be parentkey to check and value will be currentkey (saveState needs the parent key and the current key to identify ignored state)*/
   saveStateIgnores: { [key: string]: string }
@@ -38,7 +39,6 @@ export { actions }
 import * as effects from "./effects"
 import onInitialize from "./onInitialize"
 import { defineElements } from "./registerComponents"
-import { IConfig } from "overmind"
 
 defineElements()
 

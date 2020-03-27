@@ -7,6 +7,10 @@ export const DialogOpen: AsyncAction<OpenDialogState> = async (
   { state },
   value
 ) => {
+  if (!state.ovl.libState.dialog) {
+    //@ts-ignore
+    state.ovl.libState.dialog = {}
+  }
   dialogAfterClose.elementToFocus = document.activeElement
   state.ovl.libState.dialog.default = value.default
   if (value.cancel !== "NoButton") {

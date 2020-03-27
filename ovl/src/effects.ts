@@ -1,6 +1,7 @@
 import { api, T } from "./global/globals"
 import { overmind } from "./index"
 import { SnackType } from "./library/Snack/Snack"
+import { OvlConfig } from "./init"
 
 export let lastOfflineMsg
 
@@ -88,7 +89,11 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
         let dt: number = Date.now()
         if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
           lastOfflineMsg = dt
-          snackMessage = "Offline Mode"
+          if (OvlConfig._system.OfflineMode) {
+            snackMessage = "Offline Mode"
+          } else {
+            snackMessage = "Server Error. Server offline?"
+          }
         }
         return {
           headers: req.headers,
@@ -105,7 +110,11 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
     let dt: number = Date.now()
     if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
       lastOfflineMsg = dt
-      snackMessage = "Offline Mode"
+      if (OvlConfig._system.OfflineMode) {
+        snackMessage = "Offline Mode"
+      } else {
+        snackMessage = "Server Error. Server offline?"
+      }
     }
     return {
       headers: undefined,

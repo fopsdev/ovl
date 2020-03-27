@@ -6,7 +6,7 @@ import {
   HandleAdditionalLanguageResult,
   OpenLanguageTable,
   CustomInit,
-  RefreshData
+  HandleRefresh
 } from "./global/actions"
 let user = {
   LoginValidateField,
@@ -16,7 +16,7 @@ let user = {
   CustomInit
 }
 
-let global = { TogglePDFPopup, RefreshData }
+let global = { TogglePDFPopup, HandleRefresh }
 
 import { SaveSettings, SettingsValidateField } from "./screens/Settings/actions"
 let settings = {
@@ -64,7 +64,7 @@ export const portal = {
   global,
   settings,
   order,
-  feedback,
-  tabletesting,
-  mobiletimerecording
+  feedback
 }
+
+export const testtables = { tabletesting, mobiletimerecording }

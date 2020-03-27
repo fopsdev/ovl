@@ -21,7 +21,8 @@ OvlConfig.requiredActions = {
   customPrepareActionPath: "",
   customInitActionPath: "portal.system.user.CustomInit",
   handleAdditionalTranslationResultActionPath:
-    "portal.system.user.HandleAdditionalLanguageResult"
+    "portal.system.user.HandleAdditionalLanguageResult",
+  handleGlobalRefreshActionPath: "portal.system.global.HandleGlobalRefresh"
 }
 
 OvlConfig.apiUrl = {

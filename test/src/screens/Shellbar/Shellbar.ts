@@ -172,7 +172,7 @@ export class CompShellbar extends OvlBaseElement {
         let dt = new Date()
         let dateSelected = dt.toISOString().substring(0, 10)
 
-        await this.actions.portal.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+        await this.actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
           {
             def: this.state.testtables.timeentries.tableDef
               .mobiletimerecording1,
@@ -184,7 +184,7 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleCreateTestEntries = async (e: Event) => {
-      this.actions.portal.mobiletimerecording.CreateTestEntries()
+      this.actions.testtables.mobiletimerecording.CreateTestEntries()
     }
 
     const handleTestTable = async (e: Event) => {
