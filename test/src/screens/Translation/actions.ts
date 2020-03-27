@@ -1,9 +1,27 @@
-import { AsyncAction } from "../../../../ovl/node_modules/overmind"
+import { AsyncAction, Action } from "../../../../ovl/node_modules/overmind"
 import { Translation } from "./state"
 import { ValidateField } from "../../../../ovl/src/library/forms/actions"
 import { TableDef, TableData } from "../../../../ovl/src/library/Table/Table"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { ResetT } from "../../../../ovl/src/global/globals"
+
+export const OpenLanguageTable: Action = ({ state, actions }, value) => {
+  let tabledata = state.portal.tables.translations.data
+  Object.keys(state.ovl.language.translations).forEach(k => {
+    if (!tabledata[k]) {
+      tabledata[k] = { ID: k, Translation: state.ovl.language.translations[k] }
+    } else {
+      tabledata[k].ID = k
+      tabledata[k].Translation = state.ovl.language.translations[k]
+    }
+  })
+  actions.ovl.table.TableRefresh({
+    def: state.portal.tables.translations.tableDef.translation,
+    data: state.portal.tables.translations,
+    init: true
+  })
+  actions.ovl.navigation.NavigateTo("Translation")
+}
 
 export const RowValidate: AsyncAction<ValidateField> = async (
   { state },

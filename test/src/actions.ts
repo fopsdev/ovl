@@ -4,7 +4,6 @@ import {
   ForgotPw,
   TogglePDFPopup,
   HandleAdditionalLanguageResult,
-  OpenLanguageTable,
   CustomInit,
   HandleRefresh
 } from "./global/actions"
@@ -59,7 +58,6 @@ let feedback = {
 import * as tabletesting from "./shared/TableTesting/actions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 import * as translations from "./screens/Translation/actions"
-translations["OpenLanguageTable"] = OpenLanguageTable
 
 export const portal = {
   system: { shellbar, translations, user },
