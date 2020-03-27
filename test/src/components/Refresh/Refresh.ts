@@ -9,7 +9,7 @@ export class OvlRefresh extends OvlBaseElement {
   getUI() {
     const handleRefresh = async (e: Event) => {
       if (!this.state.ovl.libState.indicator.open) {
-        //@todo screens refresh logic
+        this.actions.portal.global.HandleRefresh()
       }
     }
 

@@ -58,9 +58,11 @@ let feedback = {
 
 import * as tabletesting from "./shared/TableTesting/actions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
+import * as translations from "./screens/Translation/actions"
+translations["OpenLanguageTable"] = OpenLanguageTable
 
 export const portal = {
-  system: { shellbar, translations: { OpenLanguageTable }, user },
+  system: { shellbar, translations, user },
   global,
   settings,
   order,

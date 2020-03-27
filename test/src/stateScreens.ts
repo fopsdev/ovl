@@ -20,7 +20,17 @@ let audit = {}
 
 let settings: SettingsFormState = {}
 
-let feedback: FeedbackFormState = undefined
+let feedback: FeedbackFormState = {
+  cardCode: undefined,
+  dirty: undefined,
+  message: undefined,
+  orderDate: undefined,
+  orderDeliveryDate: undefined,
+  orderNum: undefined,
+  refNum: undefined,
+  title: undefined,
+  type: undefined
+}
 
 let dashboard: DashboardState = {}
 
@@ -33,9 +43,6 @@ let quotationOverview: QuotationOverviewState = {
 }
 
 let invoiceOverview: InvoiceOverviewState = {
-  activeFilePopup: ""
-}
-let dpInvoiceOverview: DPInvoiceOverviewState = {
   activeFilePopup: ""
 }
 

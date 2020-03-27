@@ -11,7 +11,7 @@ export type TblTranslation = {
 
 export let tblTranslation: TableDef = {
   id: "translation",
-  namespace: "portal.system.translation",
+  namespace: "portal.system.translations",
   database: {
     dataIdField: "ID",
     dbInsertMode: "UDTAutoNumber"

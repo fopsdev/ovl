@@ -174,7 +174,6 @@ export const HandleRefresh: AsyncAction = async ({
   state.portal.dpInvoiceDetail = {
     dpInvoices: res.data.dpInvoiceDetail
   }
-
   //now call the screens refresh action if any
   let screen = state.ovl.screens.nav.currentScreen
   let screensActions = actions.portal["screens"]
