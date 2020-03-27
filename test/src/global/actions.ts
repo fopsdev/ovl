@@ -186,8 +186,8 @@ export const HandleRefresh: AsyncAction = async ({
   let screensActions = actions.portal["screens"]
   if (screensActions) {
     if (screensActions[screen]) {
-      if (screensActions[screen]["HandleRefresh"]) {
-        screensActions[screen]["HandleRefresh"]()
+      if (screensActions[screen]["HandleScreenRefresh"]) {
+        screensActions[screen]["HandleScreenRefresh"]()
       }
     }
   }

@@ -4,6 +4,7 @@ import { ValidateField } from "../../../../ovl/src/library/forms/actions"
 import { TableDef, TableData } from "../../../../ovl/src/library/Table/Table"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { ResetT } from "../../../../ovl/src/global/globals"
+import { actions } from "../../../../ovl/src/init"
 
 export const OpenLanguageTable: Action = ({ state, actions }, value) => {
   let tabledata = state.portal.tables.translations.data
