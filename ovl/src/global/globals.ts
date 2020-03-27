@@ -218,6 +218,13 @@ export const stateCleaner = (
   newObj,
   parentKey: string
 ) => {
+  let cb
+  let hasCb = false
+  if (OvlConfig.saveStateCallback) {
+    cb = OvlConfig.saveStateCallback
+    hasCb = true
+  }
+
   Object.keys(state).forEach(key => {
     // Get this value and its type
     let value = state[key]
@@ -241,6 +248,9 @@ export const stateCleaner = (
         return
       } else if (parentKey === "uiState" && key === "stateSavedReason") {
         newObj[key] = saveReason
+        return
+      } else if (hasCb === true) {
+        cb(parentKey, key, newObj)
         return
       }
     }

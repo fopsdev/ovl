@@ -29,8 +29,8 @@ export type OvlConfig = {
     handleAdditionalTranslationResultActionPath: string
     handleGlobalRefreshActionPath: string
   }
-  /*key will be parentkey to check and value will be currentkey (saveState needs the parent key and the current key to identify ignored state)*/
-  saveStateIgnores: { [key: string]: string }
+  /*check stateCleaner in ovl global to see the possibilities of this fn*/
+  saveStateCallback: (parentKey: string, key: string, obj: any) => {}
 }
 
 import { state } from "./state"
@@ -62,7 +62,7 @@ export let OvlConfig: OvlConfig = {
   },
   apiUrl: undefined,
   requiredActions: undefined,
-  saveStateIgnores: undefined
+  saveStateCallback: undefined
 }
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
