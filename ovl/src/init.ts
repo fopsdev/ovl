@@ -50,10 +50,10 @@ export const baseOvermindConfig = {
 }
 
 let dataVersion = "1"
-export let OvlConfig: OvlConfig = {
+let OvlConfig: OvlConfig = {
   _system: {
     Version: "0.5",
-    IsDev: true,
+    IsDev: false,
     OfflineMode: false,
     DataVersion: dataVersion,
     ShowSaveOrigin: true,
@@ -94,3 +94,4 @@ OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.DataVersion
 OvlConfig._system.PersistTimestampId =
   "ovltimestamp" + OvlConfig._system.DataVersion
 // #####################################################################################################################################
+export { OvlConfig }
