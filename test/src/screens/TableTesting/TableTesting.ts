@@ -6,8 +6,8 @@ export class CompTableTesting extends OvlBaseElement {
   }
   getUI() {
     return html`
-      <div class="${this.animatedClass}">
-        <div>
+      <div class="${this.animatedClass} fd-page">
+        <div class="fd-panel">
           <ovl-table
             class="fd-table"
             .props=${state => {
@@ -19,8 +19,10 @@ export class CompTableTesting extends OvlBaseElement {
           >
           </ovl-table>
         </div>
-
-        <div>
+        <br />
+        <br />
+        <br />
+        <div class="fd-panel">
           <ovl-table
             class="fd-table"
             .props=${state => {
