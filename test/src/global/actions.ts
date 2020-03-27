@@ -28,6 +28,11 @@ export const Login: AsyncAction<FormState> = async (
       language: state.ovl.language.language
     })
     if (!res.data) {
+      actions.ovl.snack.AddSnack({
+        durationMs: 3000,
+        text: T("AppLoginValidationInvalidPassword"),
+        type: "Error"
+      })
       return
     }
     state.ovl.user.token = res.data.partner.user.token
@@ -139,6 +144,8 @@ export const HandleAdditionalLanguageResult: Action<any> = (
     salesContact: value.salesPic,
     technicalContact: value.technicianPic
   }
+  state.portal.partner.technicalContact = value.technician
+  state.portal.partner.salesContact = value.sales
 }
 
 export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
@@ -190,23 +197,6 @@ export const HandleRefresh: AsyncAction = async ({
     text: "Daten aufgefrischt",
     type: "Success"
   })
-}
-export const OpenLanguageTable: Action = ({ state, actions }, value) => {
-  let tabledata = state.portal.tables.translations.data
-  Object.keys(state.ovl.language.translations).forEach(k => {
-    if (!tabledata[k]) {
-      tabledata[k] = { ID: k, Translation: state.ovl.language.translations[k] }
-    } else {
-      tabledata[k].ID = k
-      tabledata[k].Translation = state.ovl.language.translations[k]
-    }
-  })
-  actions.ovl.table.TableRefresh({
-    def: state.portal.tables.translations.tableDef.translation,
-    data: state.portal.tables.translations,
-    init: true
-  })
-  actions.ovl.navigation.NavigateTo("Translation")
 }
 
 export const CustomInit: Action = ({ actions }, _) => {

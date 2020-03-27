@@ -1,4 +1,4 @@
-import { api, T } from "./global/globals"
+import { T } from "./global/globals"
 import { overmind } from "./index"
 import { SnackType } from "./library/Snack/Snack"
 import { OvlConfig } from "./init"

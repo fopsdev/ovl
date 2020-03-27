@@ -7,7 +7,8 @@ import {
   TableDataAndDef,
   TableDef,
   TableData,
-  ListFnReturnValue
+  ListFnReturnValue,
+  RowStatus
 } from "../../../../ovl/src/library/Table/Table"
 import { getTextSort } from "../../../../ovl/src/library/Table/helpers"
 import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
@@ -19,30 +20,26 @@ import { FormState } from "../../../../ovl/src/library/forms/actions"
 // // then key + VisisbleFn()
 // // those functions need to be imported into tableFunctions.ts
 
-// export const GetRowStatus = async (
-//   key: string,
-//   tableDefAndData: TableDataAndDef,
-//   state: typeof overmind.state
-// ): Promise<RowStatus> => {
-//   let row = <TableTesting>tableDefAndData.data.data[key]
-//   //  if (row.U_Alpha.toLowerCase().indexOf("app") > -1) {
-//   let wait = Math.random() * 10000
-//   let p: Promise<RowStatus> = new Promise(r => {
-//     setTimeout(() => {
-//       if (row.U_Alpha.toLowerCase().indexOf("app") > -1) {
-//         r({
-//           status: "warning",
-//           msg: "U_Alpha hat App (this is a validation test)"
-//         })
-//       } else {
-//         r(null)
-//       }
-//     }, wait)
-//   })
-//   return p
-
-//   //  }
-// }
+export const GetRowStatus = async (
+  key: string,
+  tableDefAndData: TableDataAndDef,
+  state: typeof overmind.state
+): Promise<RowStatus> => {
+  let row = <TableTesting>tableDefAndData.data.data[key]
+  let res: RowStatus
+  if (row.U_Alpha.toLowerCase().indexOf("test") > -1) {
+    res = {
+      status: "warning",
+      msg: 'Text enthält "Test"'
+    }
+  } else if (row.U_Alpha.toLowerCase().indexOf("fehler") > -1) {
+    res = {
+      status: "error",
+      msg: 'Text enthält "Fehler"'
+    }
+  }
+  return Promise.resolve(res)
+}
 
 // /*
 // use functionNameDisabledFn for functions that need to control its buttons disabled prop
@@ -59,7 +56,7 @@ export const EditDisabledFn = async (
   let row = <TableTesting>tableDefAndData.data.data[rowKey]
   return Promise.resolve(
     row.U_Alpha && row.U_Alpha.indexOf("noedit") > -1
-      ? "Ändern nicht möglich da U_Alpha 'noedit' enthält!"
+      ? "Ändern nicht möglich da Text 'noedit' enthält!"
       : ""
   )
 }
@@ -72,7 +69,7 @@ export const DeleteDisabledFn = async (
   let row = <TableTesting>tableDefAndData.data.data[rowKey]
   return Promise.resolve(
     row.U_Alpha && row.U_Alpha.indexOf("nodelete") > -1
-      ? 'Löschen nicht möglich da U_Alpha "nodelete" enthält!'
+      ? 'Löschen nicht möglich da Text "nodelete" enthält!'
       : ""
   )
 }
@@ -108,13 +105,13 @@ export const memoThenAlphaSortFn = (
   return res
 }
 
-export const onlyJrishSortFn = (
+export const onlyTestSortFn = (
   a: string,
   b: string,
   data: TblTableTesting
 ): number => {
   let rowA = data[a]
-  if (rowA.U_Alpha.indexOf("Jrish") > -1) {
+  if (rowA.U_Alpha.toLocaleLowerCase().indexOf("test") > -1) {
     return -1
   } else {
     return 1
@@ -143,24 +140,24 @@ export const alphaStartsWithBFilterFn = (
   return row.U_Alpha.startsWith("B")
 }
 
-export const memoContainsJrishFilterFn = (
+export const memoContainsTestFilterFn = (
   def: TableDef,
   data: TableData,
   key: string,
   state: typeof overmind.state
 ): boolean => {
   let row: TableTesting = data.data[key]
-  return row.U_Memo.indexOf("Jrish") > -1
+  return row.U_Memo.toLowerCase().indexOf("test") > -1
 }
 
-export const memoContainsFopsFilterFn = (
+export const memoContainsTextFilterFn = (
   def: TableDef,
   data: TableData,
   key: string,
   state: typeof overmind.state
 ): boolean => {
   let row: TableTesting = data.data[key]
-  return row.U_Memo.indexOf("Fops") > -1
+  return row.U_Memo.toLowerCase().indexOf("text") > -1
 }
 
 // some list functions

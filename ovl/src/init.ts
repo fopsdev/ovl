@@ -11,7 +11,7 @@ export type Init = {
   devServer: string
 }
 
-export type OvlConfig = {
+type OvlConfig = {
   _system: {
     Version: string
     IsDev: boolean

@@ -40,14 +40,14 @@ export let tblTableTesting: TableDef = {
   },
   columns: {
     U_Alpha: {
-      caption: "Alpha",
+      caption: "Text",
       datafield: "U_Alpha",
       sortable: true,
       editable: true,
       width: 1
     },
     U_Memo: {
-      caption: "U_Memo",
+      caption: "Memo",
       datafield: "U_Memo",
       sortable: true,
       editable: true,
@@ -56,7 +56,7 @@ export let tblTableTesting: TableDef = {
     },
     ItmsGrpCod: {
       editable: true,
-      caption: "Itemgroup",
+      caption: "Produktgruppe",
       datafield: "U_ItmsGrpCod",
       sortable: true,
       control: "list",
@@ -72,7 +72,7 @@ export let tblTableTesting: TableDef = {
     },
     U_ItemCode: {
       editable: true,
-      caption: "ItemCode",
+      caption: "Produkt",
       datafield: "U_ItemCode",
       sortable: true,
       control: "list",
@@ -88,21 +88,21 @@ export let tblTableTesting: TableDef = {
 
     U_Date: {
       editable: true,
-      caption: "U_Date",
+      caption: "Datum",
       datafield: "U_Date",
       sortable: true,
       width: 2
     },
     U_Int: {
       editable: true,
-      caption: "U_Int",
+      caption: "Zahl",
       datafield: "U_Int",
       sortable: true,
       width: 1
     },
     U_Decimal: {
       editable: true,
-      caption: "U_Decimal",
+      caption: "Wert",
       datafield: "U_Decimal",
       sortable: true,
 
@@ -126,15 +126,15 @@ export let tblTableTesting2: TableDef = {
     sortCustom: {
       sorts: {
         alphaThenMemo: {
-          description: "U_Alpha dann U_Memo",
+          description: "Text dann Memo",
           showInTitle: true
         },
         memoThenAlpha: {
-          description: "U_Memo dann U_Alpha",
+          description: "Memo dann Text",
           showInTitle: true
         },
-        onlyJrish: {
-          description: "Enthält Jrish",
+        onlyTest: {
+          description: "Enthält Test",
           showInTitle: true
         }
       },
@@ -143,25 +143,25 @@ export let tblTableTesting2: TableDef = {
     filterCustom: {
       alphaStartsWithA: {
         active: false,
-        description: "u_alpha starts with A",
+        description: 'Text beginnt mit "A"',
         type: "single",
         showInTitle: true
       },
       alphaStartsWithB: {
         active: false,
-        description: "u_alpha starts with B",
+        description: 'Text beginnt mit "B"',
         type: "single",
         showInTitle: true
       },
-      memoContainsJrish: {
+      memoContainsTest: {
         active: false,
-        description: "u_memo contains Jrish",
+        description: 'Memo enthält "test"',
         type: "multi",
         showInTitle: true
       },
-      memoContainsFops: {
+      memoContainsText: {
         active: false,
-        description: "u_memo contains Fops",
+        description: 'Memo enthält "text"',
         type: "multi",
         showInTitle: true
       }
@@ -180,14 +180,14 @@ export let tblTableTesting2: TableDef = {
   },
   columns: {
     U_Alpha: {
-      caption: "U_Alpha",
+      caption: "Text",
       datafield: "U_Alpha",
       sortable: true,
       editable: true,
       filter: { top: 3 }
     },
     U_Memo: {
-      caption: "U_Memo",
+      caption: "Memo",
       datafield: "U_Memo",
       sortable: true,
       control: "textarea",
@@ -195,14 +195,14 @@ export let tblTableTesting2: TableDef = {
     },
     U_Date: {
       editable: true,
-      caption: "U_Date",
+      caption: "Datum",
       datafield: "U_Date",
       sortable: true
     },
 
     ItmsGrpCod: {
       editable: true,
-      caption: "Itemgroup",
+      caption: "Produktgruppe",
       datafield: "U_ItmsGrpCod",
       sortable: true,
       control: "list",
@@ -218,7 +218,7 @@ export let tblTableTesting2: TableDef = {
 
     U_ItemCode: {
       editable: true,
-      caption: "ItemCode",
+      caption: "Produkt",
       datafield: "U_ItemCode",
       sortable: true,
       control: "list",
@@ -233,7 +233,7 @@ export let tblTableTesting2: TableDef = {
 
     ParentCode: {
       editable: true,
-      caption: "Parent Code",
+      caption: "Referenz",
       datafield: "U_ParentCode",
       sortable: true,
       control: "list",
@@ -246,14 +246,14 @@ export let tblTableTesting2: TableDef = {
 
     U_Int: {
       editable: true,
-      caption: "U_Int",
+      caption: "Zahl",
       datafield: "U_Int",
       sortable: true,
       filter: { top: 3 }
     },
     U_Decimal: {
       editable: true,
-      caption: "U_Decimal",
+      caption: "Wert",
       datafield: "U_Decimal",
       sortable: true,
       format: "4digits"

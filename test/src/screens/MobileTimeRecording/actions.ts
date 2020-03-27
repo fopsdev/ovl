@@ -196,7 +196,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
     key: snackKey
   })
   let dt = new Date()
-  for (let d = 0; d < 100; d++) {
+  for (let d = 0; d < 10; d++) {
     for (let z = 0; z < 10; z++) {
       let testEntry: TableMobileTimeRecording = {
         U_Type: "PROJECT",
@@ -220,7 +220,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
 
   actions.ovl.snack.AddSnack({
     durationMs: 2000,
-    text: "Datensätze fertig hinzugefügt...",
+    text: "100 Testeinträge erzeugt...",
     type: "Success"
   })
 }

@@ -137,7 +137,7 @@ export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
 }
 
 export const ToggleLanguage: AsyncAction = async (
-  { state, effects },
+  { state, actions, effects },
   value
 ) => {
   let lang = ""
@@ -152,10 +152,21 @@ export const ToggleLanguage: AsyncAction = async (
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
-  // state.portal.pics.salesContact = res.data.salesPic
-  // state.portal.pics.technicalContact = res.data.technicianPic
-  // state.portal.partner.technicalContact = res.data.technician
-  // state.portal.partner.salesContact = res.data.sales
+
+  try {
+    let a = resolvePath(
+      actions,
+      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
+    )
+    a(res.data)
+  } catch {
+    console.error(
+      "HandleAdditionalTranslationResult Action as configured in OvlConfig: " +
+        OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath +
+        " not found!"
+    )
+  }
+
   localStorage.setItem("PortalLanguage", res.data.lang)
 }
 

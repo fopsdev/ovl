@@ -2,10 +2,10 @@ import {
   LoginValidateField,
   Login,
   ForgotPw,
-  TogglePDFPopup,
   HandleAdditionalLanguageResult,
   CustomInit,
-  HandleRefresh
+  HandleRefresh,
+  TogglePDFPopup
 } from "./global/actions"
 let user = {
   LoginValidateField,
@@ -15,7 +15,7 @@ let user = {
   CustomInit
 }
 
-let global = { TogglePDFPopup, HandleRefresh }
+let global = { HandleRefresh, TogglePDFPopup }
 
 import { SaveSettings, SettingsValidateField } from "./screens/Settings/actions"
 let settings = {
@@ -59,12 +59,17 @@ import * as tabletesting from "./shared/TableTesting/actions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 import * as translations from "./screens/Translation/actions"
 
+import * as TableTesting from "./screens/TableTesting/actions"
+
+let screens = { TableTesting }
+
 export const portal = {
   system: { shellbar, translations, user },
   global,
   settings,
   order,
-  feedback
+  feedback,
+  screens
 }
 
 export const testtables = { tabletesting, mobiletimerecording }
