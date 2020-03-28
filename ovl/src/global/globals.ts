@@ -194,19 +194,20 @@ export const logout = async () => {
     // window.removeEventListener("unload", e => pageHide(e))
     document.removeEventListener("visibilitychange", visibilityChange)
     document.removeEventListener("focusout", e => focusOut(e))
+
+    try {
+      // 1. unregister sw
+      let regs = await navigator.serviceWorker.getRegistrations()
+      if (regs) {
+        await Promise.all(regs.map(async reg => reg.unregister()))
+      }
+      // 2. get rid of any indexeddb state
+      await stateStore.clear()
+      // 3. get rid of any cached static assets
+      let cacheKeys = await caches.keys()
+      await Promise.all(cacheKeys.map(cacheName => caches.delete(cacheName)))
+    } catch (e) {}
   }
-  try {
-    // 1. unregister sw
-    let regs = await navigator.serviceWorker.getRegistrations()
-    if (regs) {
-      await Promise.all(regs.map(async reg => reg.unregister()))
-    }
-    // 2. get rid of any indexeddb state
-    await stateStore.clear()
-    // 3. get rid of any cached static assets
-    let cacheKeys = await caches.keys()
-    await Promise.all(cacheKeys.map(cacheName => caches.delete(cacheName)))
-  } catch (e) {}
 
   logoutAndClearFlag = true
   //@ts-ignore

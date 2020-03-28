@@ -1,3 +1,8 @@
+if (window.navigator.userAgent.indexOf("Edge") > -1) {
+  window.location.href =
+    "https://support.microsoft.com/de-ch/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
+}
+
 if (
   (!!window.MSInputMethodContext && !!document.documentMode) ||
   navigator.appVersion.indexOf("MSIE 10") !== -1
