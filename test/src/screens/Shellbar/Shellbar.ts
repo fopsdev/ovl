@@ -4,7 +4,7 @@ import langpic_de from "../../../img/de.png"
 // @ts-ignore
 import langpic_fr from "../../../img/fr.png"
 // @ts-ignore
-import logo from "../../../img/logo.png"
+import logo from "../../../img/icon-192x192.png"
 import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"

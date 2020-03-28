@@ -70,7 +70,7 @@ export const CustomAddRowColumnDefaultsHandler: AsyncAction<{
   newRow: TableTesting
   tableDef: TableDataAndDef
 }> = async (_, value) => {
-  value.newRow.U_Memo = "Hey ich bin neu!"
+  value.newRow.U_Memo = "Defaulttext Memo"
 }
 export const CustomSelectRow: AsyncAction = async ({ actions }, value) => {
   actions.ovl.snack.AddSnack({

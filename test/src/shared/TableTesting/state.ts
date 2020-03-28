@@ -16,7 +16,7 @@ export type TblTableTesting = {
 
 export let tblTableTesting: TableDef = {
   id: "tab1",
-  title: "Test Tabelle mit Paging",
+  title: "Test Tabelle mit Paging und Inline-Editierfunktion",
   namespace: "testtables.tabletesting",
   server: {
     endpoint: "tabletesting"
@@ -112,7 +112,7 @@ export let tblTableTesting: TableDef = {
 }
 export let tblTableTesting2: TableDef = {
   id: "tab2",
-  title: "Umsätze",
+  title: "Testtabelle aus SAP",
   namespace: "testtables.tabletesting",
   server: {
     endpoint: "tabletesting"
