@@ -42,13 +42,16 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
       body: JSON.stringify(data)
     })
     // with fetch we will have the repsonse status here on req object
+
     if (req.status === 401) {
       // unauthorised
+
       snackMessage = T("AppPleaseRelogin")
       overmind.actions.ovl.navigation.NavigateTo("Login")
+
       return
     } else if (req.status === 404) {
-      snackMessage = "File not found"
+      snackMessage = "Not found"
       return {
         headers: req.headers,
         data: undefined,
@@ -67,7 +70,9 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
         let type = res.type
         if (!type) {
           type = ""
+          snackMessage = req.statusText
         }
+
         return {
           headers: req.headers,
           data: undefined,
