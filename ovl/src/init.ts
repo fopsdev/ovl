@@ -24,10 +24,10 @@ type OvlConfig = {
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
-    customInitActionPath: string
-    customPrepareActionPath: string
-    handleAdditionalTranslationResultActionPath: string
-    handleGlobalRefreshActionPath: string
+    customInitActionPath: AsyncAction
+    customPrepareActionPath: AsyncAction
+    handleAdditionalTranslationResultActionPath: AsyncAction
+    handleGlobalRefreshActionPath: AsyncAction
   }
   /*check stateCleaner in ovl global to see the possibilities of this fn*/
   saveStateCallback: (parentKey: string, key: string, obj: any) => {}
@@ -39,6 +39,7 @@ export { actions }
 import * as effects from "./effects"
 import onInitialize from "./onInitialize"
 import { defineElements } from "./registerComponents"
+import { AsyncAction } from "overmind"
 
 defineElements()
 

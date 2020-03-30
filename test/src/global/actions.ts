@@ -124,13 +124,17 @@ export const ForgotPw: AsyncAction<FormState> = async (
   }
 }
 
-export const HandleAdditionalLanguageResult: Action<any> = (
+export const HandleAdditionalLanguageResult: AsyncAction<any> = async (
   { state },
   value
 ) => {
   state.portal.pics = {
     salesContact: value.salesPic,
     technicalContact: value.technicianPic
+  }
+  if (!state.portal.partner) {
+    //@ts-ignore
+    state.portal.partner = {}
   }
   state.portal.partner.technicalContact = value.technician
   state.portal.partner.salesContact = value.sales
@@ -183,7 +187,7 @@ export const HandleRefresh: AsyncAction = async ({
   SnackAdd("Daten aufgefrischt", "Success")
 }
 
-export const CustomInit: Action = ({ actions }, _) => {
+export const CustomInit: AsyncAction = async ({ actions }, _) => {
   let fields: { [key: string]: FormFields } = {
     pw: { value: "" },
     user: { value: "" }

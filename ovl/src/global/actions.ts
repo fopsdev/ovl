@@ -152,18 +152,10 @@ export const ToggleLanguage: AsyncAction = async (
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
-
-  try {
-    let a = resolvePath(
-      actions,
-      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
-    )
-    a(res.data)
-  } catch {
-    console.error(
-      "HandleAdditionalTranslationResult Action as configured in OvlConfig: " +
-        OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath +
-        " not found!"
+  debugger
+  if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
+    OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
+      res.data
     )
   }
 
@@ -214,19 +206,7 @@ export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
   state.ovl.screens.nav.nextScreen = undefined
   //actions.ovl.navigation.NavigateTo(screenToGo)
   if (OvlConfig.requiredActions.customPrepareActionPath) {
-    try {
-      let a = resolvePath(
-        actions,
-        OvlConfig.requiredActions.customPrepareActionPath
-      )
-      a()
-    } catch {
-      console.error(
-        "customPrepareActionPath Action as configured in OvlConfig: " +
-          OvlConfig.requiredActions.customPrepareActionPath +
-          " not found!"
-      )
-    }
+    OvlConfig.requiredActions.customPrepareActionPath(undefined)
   }
 }
 
@@ -373,29 +353,13 @@ export const InitApp: AsyncAction<Init> = async (
   localStorage.setItem("PortalLanguage", res.data.lang)
   state.ovl.language.translations = res.data.translations
 
-  try {
-    let a = resolvePath(
-      actions,
-      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
-    )
-    a(res.data)
-  } catch {
-    console.error(
-      "HandleAdditionalTranslationResult Action as configured in OvlConfig: " +
-        OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath +
-        " not found!"
+  if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
+    OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
+      res.data
     )
   }
   state.ovl.uiState.isReady = true
-
-  try {
-    let a = resolvePath(actions, OvlConfig.requiredActions.customInitActionPath)
-    a(res.data)
-  } catch {
-    console.error(
-      "customInitActionPath Action as configured in OvlConfig: " +
-        OvlConfig.requiredActions.customInitActionPath +
-        " not found!"
-    )
+  if (OvlConfig.requiredActions.customInitActionPath) {
+    OvlConfig.requiredActions.customInitActionPath(res.data)
   }
 }

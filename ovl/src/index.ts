@@ -3,14 +3,14 @@
 
 import { IConfig } from "overmind"
 
-// import { overmind, config } from "../../../kaltag/src/index"
-// import { screens } from "../../../kaltag/src/stateScreens"
-// import * as functions from "../../../kaltag/src/functions"
+import { overmind, config } from "../../../kaltag/src/index"
+import { screens } from "../../../kaltag/src/stateScreens"
+import * as functions from "../../../kaltag/src/functions"
 
-//#################### ovl test prj ######################################
-import { overmind, config } from "../..//test/src/index"
-import { screens } from "../../test/src/stateScreens"
-import * as functions from "../../test/src/functions"
+// //#################### ovl test prj ######################################
+// import { overmind, config } from "../..//test/src/index"
+// import { screens } from "../../test/src/stateScreens"
+// import * as functions from "../../test/src/functions"
 
 //#################### ovl lib Standalone ######################################
 /* uncomment when used standalone for base dev 

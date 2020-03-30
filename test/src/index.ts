@@ -18,11 +18,11 @@ export const overmind = createOvermind(config, {
   delimiter: " "
 })
 OvlConfig.requiredActions = {
-  customPrepareActionPath: "",
-  customInitActionPath: "portal.system.user.CustomInit",
+  customPrepareActionPath: undefined,
+  customInitActionPath: overmind.actions.portal.system.user.CustomInit,
   handleAdditionalTranslationResultActionPath:
-    "portal.system.user.HandleAdditionalLanguageResult",
-  handleGlobalRefreshActionPath: "portal.system.global.HandleGlobalRefresh"
+    overmind.actions.portal.system.user.HandleAdditionalLanguageResult,
+  handleGlobalRefreshActionPath: overmind.actions.portal.global.HandleRefresh
 }
 
 OvlConfig.apiUrl = {
