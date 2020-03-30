@@ -2,7 +2,7 @@ import { overmind } from "../../.."
 import { ListState } from "./ListControl"
 import { ListFnReturnValue } from "../../Table/Table"
 import { FormState } from "../actions"
-import * as functions from "../../../tableFunctions"
+import { functions } from "../../../index"
 import { resolvePath } from "../../../global/globals"
 
 export type LookupListPostData = {

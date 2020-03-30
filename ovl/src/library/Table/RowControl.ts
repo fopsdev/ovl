@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { TableDef, RowControlAction, TableData, TableDataAndDef } from "./Table"
 
-import * as functions from "../../tableFunctions"
+import { functions } from "../../index"
 import { ovltemp, resolvePath } from "../../global/globals"
 
 export type NavProps = {

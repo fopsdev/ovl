@@ -57,11 +57,11 @@ const CheckExistingTimeRange = (
   state: typeof overmind.state,
   value: ValidateField
 ) => {
-  let def = state.tables.timeentries.tableDef.mobiletimerecording1
+  let def = state.testtables.timeentries.tableDef.mobiletimerecording1
   let keysToCheck = def.uiState.dataFilteredAndSorted.filter(
     k => k.indexOf(ovltemp) < 0
   )
-  let data = state.tables.timeentries.data
+  let data = state.testtables.timeentries.data
   keysToCheck.some(k => {
     if (value.newVal > data[k].U_FromTime && value.newVal < data[k].U_ToTime) {
       ValidationAddError(
@@ -150,7 +150,7 @@ export const BeforeSaveRow: AsyncAction<BeforeSaveParam> = async (
   let newRow = <TableMobileTimeRecording>value.row
   let dt = new Date(newRow.U_Date)
   newRow.U_WeekNr = GetWeekNr(dt)
-  newRow.U_User = state.ovl.user.userName
+  newRow.U_User = state.portal.user.userName
 }
 
 export const CustomAddRowColumnDefaultsHandler: AsyncAction<{
@@ -175,8 +175,8 @@ export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   value.def.options.filter.static.U_Date = value.selected + "T00:00:00"
   state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
 
-  let data = state.tables.timeentries
-  let def = state.tables.timeentries.tableDef.mobiletimerecording1
+  let data = state.testtables.timeentries
+  let def = state.testtables.timeentries.tableDef.mobiletimerecording1
 
   await actions.ovl.table.TableRefresh({
     def,
@@ -196,7 +196,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
     key: snackKey
   })
   let dt = new Date()
-  for (let d = 0; d < 100; d++) {
+  for (let d = 0; d < 10; d++) {
     for (let z = 0; z < 10; z++) {
       let testEntry: TableMobileTimeRecording = {
         U_Type: "PROJECT",
@@ -208,8 +208,8 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
       }
       testEntry.Code = undefined
       await actions.ovl.internal.TableDirectSaveRow({
-        data: state.tables.timeentries,
-        def: state.tables.timeentries.tableDef.mobiletimerecording1,
+        data: state.testtables.timeentries,
+        def: state.testtables.timeentries.tableDef.mobiletimerecording1,
         rowToSave: testEntry,
         noSnack: true
       })
@@ -220,7 +220,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
 
   actions.ovl.snack.AddSnack({
     durationMs: 2000,
-    text: "Datensätze fertig hinzugefügt...",
+    text: "100 Testeinträge erzeugt...",
     type: "Success"
   })
 }

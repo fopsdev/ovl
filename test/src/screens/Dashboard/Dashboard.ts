@@ -22,8 +22,8 @@ export class CompDashboard extends OvlBaseElement {
               <div class="fd-panel__head">
                 <p class="fd-panel__title fd-has-type-2">
                 ${T("AppWelcome", [
-                  this.state.ovl.user.firstName,
-                  this.state.ovl.user.lastName,
+                  this.state.portal.user.firstName,
+                  this.state.portal.user.lastName,
                   partner.cardName
                 ])} 
                 </p>

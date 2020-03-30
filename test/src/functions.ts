@@ -5,4 +5,5 @@
 
 import * as tabletesting from "./shared/TableTesting/functions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/functions"
-export { tabletesting, mobiletimerecording }
+
+export let testtables = { tabletesting, mobiletimerecording }

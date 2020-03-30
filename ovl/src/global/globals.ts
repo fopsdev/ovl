@@ -2,7 +2,7 @@ import { overmind } from "../index"
 import { OvlConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { stateStore } from "../offlineStorage"
-import { displayFormats } from "./disiplayFormats"
+import { displayFormats } from "./displayFormats"
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
@@ -194,19 +194,20 @@ export const logout = async () => {
     // window.removeEventListener("unload", e => pageHide(e))
     document.removeEventListener("visibilitychange", visibilityChange)
     document.removeEventListener("focusout", e => focusOut(e))
+
+    try {
+      // 1. unregister sw
+      let regs = await navigator.serviceWorker.getRegistrations()
+      if (regs) {
+        await Promise.all(regs.map(async reg => reg.unregister()))
+      }
+      // 2. get rid of any indexeddb state
+      await stateStore.clear()
+      // 3. get rid of any cached static assets
+      let cacheKeys = await caches.keys()
+      await Promise.all(cacheKeys.map(cacheName => caches.delete(cacheName)))
+    } catch (e) {}
   }
-  try {
-    // 1. unregister sw
-    let regs = await navigator.serviceWorker.getRegistrations()
-    if (regs) {
-      await Promise.all(regs.map(async reg => reg.unregister()))
-    }
-    // 2. get rid of any indexeddb state
-    await stateStore.clear()
-    // 3. get rid of any cached static assets
-    let cacheKeys = await caches.keys()
-    await Promise.all(cacheKeys.map(cacheName => caches.delete(cacheName)))
-  } catch (e) {}
 
   logoutAndClearFlag = true
   //@ts-ignore
@@ -218,6 +219,13 @@ export const stateCleaner = (
   newObj,
   parentKey: string
 ) => {
+  let cb
+  let hasCb = false
+  if (OvlConfig.saveStateCallback) {
+    cb = OvlConfig.saveStateCallback
+    hasCb = true
+  }
+
   Object.keys(state).forEach(key => {
     // Get this value and its type
     let value = state[key]
@@ -241,6 +249,9 @@ export const stateCleaner = (
         return
       } else if (parentKey === "uiState" && key === "stateSavedReason") {
         newObj[key] = saveReason
+        return
+      } else if (hasCb === true) {
+        cb(parentKey, key, newObj)
         return
       }
     }
@@ -365,8 +376,9 @@ export const T = (key: string, reps?: string[]): string => {
   }
 }
 
-export const resolvePath = (object, path, defaultValue?) =>
-  path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object)
+export const resolvePath = (object, path, defaultValue?) => {
+  return path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object)
+}
 
 type Translations = {
   t: Translation

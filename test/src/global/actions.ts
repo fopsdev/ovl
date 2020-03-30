@@ -4,12 +4,15 @@ import { api, T } from "../../../ovl/src/global/globals"
 import {
   FormState,
   GetFormValidationErrors,
-  ValidateField
+  ValidateField,
+  InitForm
 } from "../../../ovl/src/library/forms/actions"
 import { Email, Mandatory } from "../../../ovl/src/library/forms/validators"
-import { FieldId } from "../../../ovl/src/screens/Login/LoginForm"
+
 import { TogglePDFPopupState } from "../components/FileList/FileList"
 import { DialogResult } from "../../../ovl/src/library/actions"
+import { FieldId } from "../screens/Login/LoginForm"
+import { FormFields } from "../../../ovl/src/library/forms/OvlFormElement"
 
 export const Login: AsyncAction<FormState> = async (
   { state, actions, effects },
@@ -25,10 +28,15 @@ export const Login: AsyncAction<FormState> = async (
       language: state.ovl.language.language
     })
     if (!res.data) {
+      actions.ovl.snack.AddSnack({
+        durationMs: 3000,
+        text: T("AppLoginValidationInvalidPassword"),
+        type: "Error"
+      })
       return
     }
-    //console.log(res.data)
-    state.ovl.user = res.data.partner.user
+    state.ovl.user.token = res.data.partner.user.token
+    state.portal.user = res.data.partner.user
     state.portal.chartData = res.data.data.chartData
     state.portal.partner = res.data.partner
     state.portal.orderDetail = {
@@ -44,6 +52,17 @@ export const Login: AsyncAction<FormState> = async (
       dpInvoices: res.data.data.dpInvoiceDetail
     }
     state.portal.partner.attachments = res.data.data.attachments
+
+    //init lookup values
+    res = await effects.postRequest(api.url + "lookup", {
+      lang: state.ovl.language.language,
+      lookupType: "initial"
+    })
+    state.testtables.lookups.U_ItemCode = res.data.item
+    state.testtables.lookups.ItmsGrpCod = res.data.itemGroup
+
+    state.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
+    state.testtables.lookups.ProjectTypeId = res.data.timeProjects
 
     actions.ovl.snack.AddSnack({
       durationMs: 3000,
@@ -76,7 +95,6 @@ export const Login: AsyncAction<FormState> = async (
     })
   }
 }
-
 export const LoginValidateField: Action<ValidateField> = (_, value) => {
   let field = value.formState.fields[value.fieldId]
   if (field.watched) {
@@ -122,8 +140,12 @@ export const HandleAdditionalLanguageResult: Action<any> = (
   { state },
   value
 ) => {
-  state.portal.pics.salesContact = value.salesPic
-  state.portal.pics.technicalContact = value.technicianPic
+  state.portal.pics = {
+    salesContact: value.salesPic,
+    technicalContact: value.technicianPic
+  }
+  state.portal.partner.technicalContact = value.technician
+  state.portal.partner.salesContact = value.sales
 }
 
 export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
@@ -132,4 +154,64 @@ export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
   } else {
     value.obj.activeFilePopup = value.key
   }
+}
+
+export const HandleRefresh: AsyncAction = async ({
+  state,
+  actions,
+  effects
+}) => {
+  // 1st get global data to be refreshed
+  let res = await effects.postRequest(api.url + "data/getdata", {
+    features: state.portal.user.features,
+    language: state.ovl.language.language
+  })
+  if (!res.data) {
+    return
+  }
+
+  state.portal.partner.attachments = res.data.attachments
+
+  state.portal.chartData = res.data.chartData
+  state.portal.quotationDetail = {
+    quotations: res.data.quotationDetail
+  }
+  state.portal.orderDetail = { orders: res.data.orderDetail }
+  state.portal.invoiceDetail = { invoices: res.data.invoiceDetail }
+  state.portal.dpInvoiceDetail = {
+    dpInvoices: res.data.dpInvoiceDetail
+  }
+  //now call the screens refresh action if any
+  let screen = state.ovl.screens.nav.currentScreen
+  let screensActions = actions.portal["screens"]
+  if (screensActions) {
+    if (screensActions[screen]) {
+      if (screensActions[screen]["HandleScreenRefresh"]) {
+        screensActions[screen]["HandleScreenRefresh"]()
+      }
+    }
+  }
+
+  actions.ovl.snack.AddSnack({
+    durationMs: 3000,
+    text: "Daten aufgefrischt",
+    type: "Success"
+  })
+}
+
+export const CustomInit: Action = ({ actions }, _) => {
+  let fields: { [key: string]: FormFields } = {
+    pw: { value: "" },
+    user: { value: "" }
+  }
+  let loginForm: InitForm = {
+    validationActionName: "LoginValidateField",
+    namespace: "portal.system.user",
+    instanceId: "loginform",
+    formType: "Login",
+    fields
+  }
+
+  actions.ovl.form.InitForm(loginForm)
+  actions.ovl.navigation.NavigateTo("Login")
 }

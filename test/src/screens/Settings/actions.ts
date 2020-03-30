@@ -10,8 +10,8 @@ import {
 } from "../../../../ovl/src/library/forms/validators"
 import { T, api } from "../../../../ovl/src/global/globals"
 import { postRequest } from "../../../../ovl/src/effects"
+
 export const SettingsValidateField: Action<ValidateField> = (_, value) => {
-  let field = value.formState.fields[value.fieldId]
   switch (value.fieldId) {
     case "pw":
       Mandatory(T("AppLoginPassword"), value.newVal, value.validationResult)

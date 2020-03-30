@@ -1,6 +1,7 @@
-import { api, T } from "./global/globals"
+import { T } from "./global/globals"
 import { overmind } from "./index"
 import { SnackType } from "./library/Snack/Snack"
+import { OvlConfig } from "./init"
 
 export let lastOfflineMsg
 
@@ -41,13 +42,16 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
       body: JSON.stringify(data)
     })
     // with fetch we will have the repsonse status here on req object
+
     if (req.status === 401) {
       // unauthorised
+
       snackMessage = T("AppPleaseRelogin")
       overmind.actions.ovl.navigation.NavigateTo("Login")
+
       return
     } else if (req.status === 404) {
-      snackMessage = "File not found"
+      snackMessage = "Not found"
       return {
         headers: req.headers,
         data: undefined,
@@ -66,7 +70,9 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
         let type = res.type
         if (!type) {
           type = ""
+          snackMessage = req.statusText
         }
+
         return {
           headers: req.headers,
           data: undefined,
@@ -88,7 +94,11 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
         let dt: number = Date.now()
         if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
           lastOfflineMsg = dt
-          snackMessage = "Offline Mode"
+          if (OvlConfig._system.OfflineMode) {
+            snackMessage = "Offline Mode"
+          } else {
+            snackMessage = "Server Error. Server offline?"
+          }
         }
         return {
           headers: req.headers,
@@ -105,7 +115,11 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
     let dt: number = Date.now()
     if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
       lastOfflineMsg = dt
-      snackMessage = "Offline Mode"
+      if (OvlConfig._system.OfflineMode) {
+        snackMessage = "Offline Mode"
+      } else {
+        snackMessage = "Server Error. Server offline?"
+      }
     }
     return {
       headers: undefined,

@@ -2,6 +2,8 @@ import { tblTableTesting, tblTableTesting2 } from "./shared/TableTesting/state"
 import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/state"
 import { TableData, ListFnReturnValue } from "../../ovl/src/library/Table/Table"
 import { File } from "./components/FileList/FileList"
+import { tblTranslation } from "./screens/Translation/state"
+import { tblAudit } from "./screens/Audit/state"
 
 export type FileList = {
   files: File[]
@@ -118,7 +120,28 @@ let pics: PicsState = {
   technicalContact: ""
 }
 
+type Role = "User" | "Admin"
+type Language = "DE" | "FR"
+export type Feature = {
+  nrOfQuotations: number
+  nrOfOrders: number
+  nrOfInvoices: number
+}
+
+type User = {
+  userName: string
+  language: Language
+  firstName: string
+  lastName: string
+  role: Role
+  features: Feature
+  userCode: number
+}
+
+type Tables = { [key: string]: TableData }
+
 type Portal = {
+  user: User
   orderDetail: OrderDetailState
   quotationDetail: QuotationDetailState
   invoiceDetail: InvoiceDetailState
@@ -126,18 +149,36 @@ type Portal = {
   chartData: DoubleBarChartState
   partner: PartnerState
   pics: PicsState
+  tables: Tables
 }
 
 export let portal: Portal = {
+  user: undefined,
   orderDetail: undefined,
   chartData: undefined,
   dpInvoiceDetail: undefined,
   invoiceDetail: undefined,
   partner: undefined,
   pics: undefined,
-  quotationDetail: undefined
+  quotationDetail: undefined,
+  tables: {
+    translations: <TableData>{
+      data: {},
+      schema: {},
+      tableDef: {
+        translation: tblTranslation
+      }
+    },
+    audit: <TableData>{
+      data: {},
+      schema: {},
+      tableDef: {
+        audit: tblAudit
+      }
+    }
+  }
 }
-export let tables = {
+export let testtables = {
   tableTesting: <TableData>{
     data: {},
     schema: {},

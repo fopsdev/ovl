@@ -2,22 +2,38 @@ import {
   LoginValidateField,
   Login,
   ForgotPw,
-  TogglePDFPopup,
-  HandleAdditionalLanguageResult
+  HandleAdditionalLanguageResult,
+  CustomInit,
+  HandleRefresh,
+  TogglePDFPopup
 } from "./global/actions"
 let user = {
   LoginValidateField,
   Login,
   ForgotPw,
-  HandleAdditionalLanguageResult
+  HandleAdditionalLanguageResult,
+  CustomInit
 }
 
-let global = { TogglePDFPopup }
+let global = { HandleRefresh, TogglePDFPopup }
 
 import { SaveSettings, SettingsValidateField } from "./screens/Settings/actions"
 let settings = {
   SaveSettings,
   SettingsValidateField
+}
+
+import {
+  CloseMainMenu,
+  OpenMainMenu,
+  OpenUserMenu,
+  CloseUserMenu
+} from "./screens/Shellbar/actions"
+let shellbar = {
+  CloseMainMenu,
+  OpenMainMenu,
+  OpenUserMenu,
+  CloseUserMenu
 }
 
 import {
@@ -41,13 +57,19 @@ let feedback = {
 
 import * as tabletesting from "./shared/TableTesting/actions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
+import * as translations from "./screens/Translation/actions"
+
+import { HandleScreenRefresh } from "./screens/TableTesting/actions"
+
+let screens = { TableTesting: { HandleScreenRefresh } }
 
 export const portal = {
+  system: { shellbar, translations, user },
   global,
-  user,
   settings,
   order,
   feedback,
-  tabletesting,
-  mobiletimerecording
+  screens
 }
+
+export const testtables = { tabletesting, mobiletimerecording }

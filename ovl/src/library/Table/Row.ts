@@ -2,9 +2,10 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { TableRowDataDef } from "./RowWrapper"
 import { getDisplayValue } from "./helpers"
-import * as functions from "../../tableFunctions"
+import { functions } from "../../index"
 import { resolvePath } from "../../global/globals"
 
+export let cachedFn: Map<string, any> = new Map<string, any>()
 export class TableRow extends OvlBaseElement {
   props: any
   row: TableRowDataDef
@@ -27,9 +28,17 @@ export class TableRow extends OvlBaseElement {
         let listdata
         if (col.list) {
           let functionName = k + "GetListFn"
-          let fn = resolvePath(functions, def.namespace)
-          if (fn && fn[functionName]) {
-            listdata = fn[functionName](this.state, row)
+          let cacheKey = functionName + def.namespace
+          let cFn = cachedFn.get(cacheKey)
+          if (cFn) {
+            listdata = cFn(this.state, row)
+          } else {
+            let fn = resolvePath(functions, def.namespace)
+            if (fn && fn[functionName]) {
+              let fnToCall = fn[functionName]
+              listdata = fnToCall(this.state, row)
+              cachedFn.set(cacheKey, fnToCall)
+            }
           }
         }
         let fieldvalue = getDisplayValue(col, row, listdata)

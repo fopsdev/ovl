@@ -11,7 +11,7 @@ export type Init = {
   devServer: string
 }
 
-export type OvlConfig = {
+type OvlConfig = {
   _system: {
     Version: string
     IsDev: boolean
@@ -24,12 +24,13 @@ export type OvlConfig = {
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
-    loginActionPath: string
-    forgotPwActionPath: string
+    customInitActionPath: string
+    customPrepareActionPath: string
     handleAdditionalTranslationResultActionPath: string
+    handleGlobalRefreshActionPath: string
   }
-  /*key will be parentkey to check and value will be currentkey (saveState needs the parent key and the current key to identify ignored state)*/
-  saveStateIgnores: { [key: string]: string }
+  /*check stateCleaner in ovl global to see the possibilities of this fn*/
+  saveStateCallback: (parentKey: string, key: string, obj: any) => {}
 }
 
 import { state } from "./state"
@@ -38,7 +39,6 @@ export { actions }
 import * as effects from "./effects"
 import onInitialize from "./onInitialize"
 import { defineElements } from "./registerComponents"
-import { IConfig } from "overmind"
 
 defineElements()
 
@@ -50,10 +50,10 @@ export const baseOvermindConfig = {
 }
 
 let dataVersion = "1"
-export let OvlConfig: OvlConfig = {
+let OvlConfig: OvlConfig = {
   _system: {
     Version: "0.5",
-    IsDev: true,
+    IsDev: false,
     OfflineMode: false,
     DataVersion: dataVersion,
     ShowSaveOrigin: true,
@@ -62,7 +62,7 @@ export let OvlConfig: OvlConfig = {
   },
   apiUrl: undefined,
   requiredActions: undefined,
-  saveStateIgnores: undefined
+  saveStateCallback: undefined
 }
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
@@ -94,3 +94,4 @@ OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.DataVersion
 OvlConfig._system.PersistTimestampId =
   "ovltimestamp" + OvlConfig._system.DataVersion
 // #####################################################################################################################################
+export { OvlConfig }

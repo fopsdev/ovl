@@ -2,12 +2,7 @@ import { Action, AsyncAction } from "overmind"
 import { overmind, Screen } from "../index"
 import { OvlConfig, Init } from "../init"
 import { DialogResult } from "../library/actions"
-import {
-  FormState,
-  GetFormValidationErrors,
-  InitForm
-} from "../library/forms/actions"
-import { FormFields } from "../library/forms/OvlFormElement"
+
 import {
   FileInfoStore,
   fileStore,
@@ -41,19 +36,26 @@ export const NavigateTo: AsyncAction<Screen> = async (
     }
     // make sure that a screen is only once in the history
     // elsewise we need to handle different state (involves serializing and and and and...) as well
-    let foundIndex = -1
-    for (let z = 0; z < state.ovl.screens.nav.screensHistory.length; z++) {
-      if (state.ovl.screens.nav.screensHistory[z] === value) {
-        foundIndex = z
-        break
+    if (value !== "Login") {
+      let foundIndex = -1
+      for (let z = 0; z < state.ovl.screens.nav.screensHistory.length; z++) {
+        if (state.ovl.screens.nav.screensHistory[z] === value) {
+          foundIndex = z
+          break
+        }
       }
+      if (foundIndex !== -1) {
+        state.ovl.screens.nav.screensHistory.splice(foundIndex, 1)
+      }
+      state.ovl.screens.nav.screensHistory.push(value)
     }
-    if (foundIndex !== -1) {
-      state.ovl.screens.nav.screensHistory.splice(foundIndex, 1)
-    }
-    state.ovl.screens.nav.screensHistory.push(value)
     document.getElementById("app").focus()
-    SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
+    if (!state.ovl.screens.nav.currentScreen) {
+      state.ovl.screens.nav.currentScreen = "Login"
+      SetVisibleScreen(state, value)
+    } else {
+      SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
+    }
   }
 }
 
@@ -94,6 +96,9 @@ const SetVisibleScreen = async (
   state: typeof overmind.state,
   value: string
 ) => {
+  if (!state.ovl.screens.screenState) {
+    state.ovl.screens.screenState = {}
+  }
   let o = state.ovl.screens.screenState[value]
   if (o === undefined) {
     state.ovl.screens.screenState[value] = { visible: true, closing: false }
@@ -104,6 +109,9 @@ const SetVisibleScreen = async (
 }
 
 export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
+  if (!state.ovl.screens.screenState) {
+    state.ovl.screens.screenState = {}
+  }
   let o = state.ovl.screens.screenState[value]
   if (o === undefined) {
     o = state.ovl.screens.screenState[value] = {}
@@ -129,7 +137,7 @@ export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
 }
 
 export const ToggleLanguage: AsyncAction = async (
-  { state, effects },
+  { state, actions, effects },
   value
 ) => {
   let lang = ""
@@ -144,38 +152,22 @@ export const ToggleLanguage: AsyncAction = async (
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
-  // state.portal.pics.salesContact = res.data.salesPic
-  // state.portal.pics.technicalContact = res.data.technicianPic
-  // state.portal.partner.technicalContact = res.data.technician
-  // state.portal.partner.salesContact = res.data.sales
-  localStorage.setItem("PortalLanguage", res.data.lang)
-}
 
-export const RefreshData: AsyncAction = async ({ state, actions, effects }) => {
-  let res = await effects.postRequest("getdata", {
-    features: state.ovl.user.features,
-    language: state.ovl.language.language
-  })
-  if (!res.data) {
-    return
+  try {
+    let a = resolvePath(
+      actions,
+      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
+    )
+    a(res.data)
+  } catch {
+    console.error(
+      "HandleAdditionalTranslationResult Action as configured in OvlConfig: " +
+        OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath +
+        " not found!"
+    )
   }
 
-  // state.portal.partner.attachments = res.data.attachments
-
-  // state.portal.chartData = res.data.chartData
-  // state.portal.quotationDetail = {
-  //   quotations: res.data.quotationDetail
-  // }
-  // state.portal.orderDetail = { orders: res.data.orderDetail }
-  // state.portal.invoiceDetail = { invoices: res.data.invoiceDetail }
-  // state.portal.dpInvoiceDetail = {
-  //   dpInvoices: res.data.dpInvoiceDetail
-  // }
-  actions.ovl.snack.AddSnack({
-    durationMs: 3000,
-    text: "Daten aufgefrischt",
-    type: "Success"
-  })
+  localStorage.setItem("PortalLanguage", res.data.lang)
 }
 
 export const Logout: AsyncAction = async ({ state, actions }) => {
@@ -191,24 +183,6 @@ export const Logout: AsyncAction = async ({ state, actions }) => {
     case 2:
       break
   }
-}
-
-export const OpenLanguageTable: Action = ({ state, actions }, value) => {
-  let tabledata = state.ovl.language.tables.translations.data
-  Object.keys(state.ovl.language.translations).forEach(k => {
-    if (!tabledata[k]) {
-      tabledata[k] = { ID: k, Translation: state.ovl.language.translations[k] }
-    } else {
-      tabledata[k].ID = k
-      tabledata[k].Translation = state.ovl.language.translations[k]
-    }
-  })
-  actions.ovl.table.TableRefresh({
-    def: state.ovl.language.tables.translations.tableDef.translation,
-    data: state.ovl.language.tables.translations,
-    init: true
-  })
-  actions.ovl.navigation.NavigateTo("Translation")
 }
 
 export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
@@ -247,6 +221,21 @@ export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
   state.ovl.screens.nav.currentScreen = screenToGo
   state.ovl.screens.nav.nextScreen = undefined
   //actions.ovl.navigation.NavigateTo(screenToGo)
+  if (OvlConfig.requiredActions.customPrepareActionPath) {
+    try {
+      let a = resolvePath(
+        actions,
+        OvlConfig.requiredActions.customPrepareActionPath
+      )
+      a()
+    } catch {
+      console.error(
+        "customPrepareActionPath Action as configured in OvlConfig: " +
+          OvlConfig.requiredActions.customPrepareActionPath +
+          " not found!"
+      )
+    }
+  }
 }
 
 export const GetFile: AsyncAction<{
@@ -385,36 +374,9 @@ export const InitApp: AsyncAction<Init> = async (
   }
   api.url = state.ovl.apiUrl
   // prepare login form
-  let fields: { [key: string]: FormFields } = {
-    pw: { value: "" },
-    user: { value: "" }
-  }
-  let namespace
-  let parray = OvlConfig.requiredActions.loginActionPath.split(".")
-
-  if (parray.length > 0) {
-    parray.splice(parray.length - 1)
-    namespace = parray.join(".")
-  } else {
-    console.error(
-      "ovl requiredActions.loginActionPath needs to be a path to a action!"
-    )
-    return
-  }
-
-  let initForm: InitForm = {
-    validationActionName: "LoginValidateField",
-    namespace,
-    instanceId: "loginform",
-    formType: "Login",
-    fields
-  }
-  actions.ovl.form.InitForm(initForm)
-
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
   let lang = localStorage.getItem("PortalLanguage")
-
   let res = await effects.postRequest(api.url + "users/translations", {
     language: lang
   })
@@ -428,10 +390,10 @@ export const InitApp: AsyncAction<Init> = async (
 
   try {
     let a = resolvePath(
-      this.actions,
+      actions,
       OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
     )
-    a({ salesPic: res.data.salesPic, technicianPic: res.data.technicianPic })
+    a(res.data)
   } catch {
     console.error(
       "HandleAdditionalTranslationResult Action as configured in OvlConfig: " +
@@ -439,57 +401,16 @@ export const InitApp: AsyncAction<Init> = async (
         " not found!"
     )
   }
-
-  // //init lookup values
-  // res = await effects.postRequest(state.ovl.apiUrl + "lookup", {
-  //   lang: state.ovl.language.language,
-  //   lookupType: "initial"
-  // })
-  // state.tables.lookups.U_ItemCode = res.data.item
-  // state.tables.lookups.ItmsGrpCod = res.data.itemGroup
-
-  // state.tables.lookups.AbsenceTypeId = res.data.timeAbsences
-  // state.tables.lookups.ProjectTypeId = res.data.timeProjects
-
   state.ovl.uiState.isReady = true
 
-  // let dt = new Date()
-  // let dateSelected = dt.toISOString().substring(0, 10)
-
-  // await actions.portal.mobiletimerecording.SetMobileTimeEntrySelectedDate({
-  //   def: state.tables.timeentries.tableDef.mobiletimerecording1,
-  //   selected: dateSelected
-  // })
-  // actions.ovl.navigation.NavigateTo("MobileTimeEntry")
-
-  // //init tables
-  // await actions.ovl.table.TableRefresh({
-  //   def: state.tables.tableTesting.tableDef.tab1,
-  //   data: state.tables.tableTesting,
-  //   init: true
-  // })
-
-  // await actions.ovl.table.TableRefresh({
-  //   def: state.tables.tableTesting.tableDef.tab2,
-  //   data: state.tables.tableTesting,
-  //   init: true,
-  //   forceFreshServerData: -1
-  // })
-
-  // await actions.ovl.table.TableRefresh({
-  //   def: state.tables.tableTesting.tableDef.tab3,
-  //   data: state.tables.tableTesting,
-  //   init: true,
-  //   forceFreshServerData: -1
-  // })
-
-  // await actions.ovl.table.TableRefresh({
-  //   def: state.tables.tableTesting.tableDef.tab4,
-  //   data: state.tables.tableTesting,
-  //   init: true
-  // })
-
-  // actions.ovl.navigation.NavigateTo("TableTesting")
-
-  actions.ovl.navigation.NavigateTo("Login")
+  try {
+    let a = resolvePath(actions, OvlConfig.requiredActions.customInitActionPath)
+    a(res.data)
+  } catch {
+    console.error(
+      "customInitActionPath Action as configured in OvlConfig: " +
+        OvlConfig.requiredActions.customInitActionPath +
+        " not found!"
+    )
+  }
 }

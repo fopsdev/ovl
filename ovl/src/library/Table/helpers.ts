@@ -7,7 +7,7 @@ import {
   resolvePath
 } from "../../global/globals"
 import { state } from "../../state"
-import * as functions from "../../tableFunctions"
+import { functions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
 import {

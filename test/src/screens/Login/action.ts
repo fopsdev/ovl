@@ -1,8 +1,8 @@
 import { Action } from "overmind"
 import { FieldId } from "./LoginForm"
-import { T } from "../../../global/globals"
-import { ValidateField } from "../../forms/actions"
-import { Mandatory, Email } from "../../forms/validators"
+import { ValidateField } from "../../../../ovl/src/library/forms/actions"
+import { Mandatory, Email } from "../../../../ovl/src/library/forms/validators"
+import { T } from "../../../../ovl/src/global/globals"
 
 export const LoginValidateField: Action<ValidateField> = (_, value) => {
   let field = value.formState.fields[value.fieldId]

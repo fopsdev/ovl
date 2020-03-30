@@ -56,10 +56,9 @@ export class CompSettingsForm extends OvlFormElement {
           <div class="fd-panel__head">
             <h3 class="fd-panel__title">
             ${T("AppSettings")}
-                ${this.state.ovl.user.firstName +
+                ${this.state.portal.user.firstName +
                   " " +
-                  this.state.ovl.user.lastName}
-
+                  this.state.portal.user.lastName}
             </h3>
           </div>
         </div>
@@ -78,7 +77,6 @@ export class CompSettingsForm extends OvlFormElement {
                   >
                   </ovl-textbox>
                 </div>
-
                 <div class="fd-form-item">
                   <ovl-textbox
                     .props=${state => {

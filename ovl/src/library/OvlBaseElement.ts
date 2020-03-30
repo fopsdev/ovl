@@ -46,7 +46,11 @@ export class OvlBaseElement extends HTMLElement {
   }
 
   screenClosing() {
-    if (this.state.ovl.screens.screenState[this.screen] !== undefined) {
+    if (
+      this.state.ovl.screens &&
+      this.state.ovl.screens.screenState &&
+      this.state.ovl.screens.screenState[this.screen] !== undefined
+    ) {
       return this.state.ovl.screens.screenState[this.screen].closing === true
     }
 
@@ -54,7 +58,11 @@ export class OvlBaseElement extends HTMLElement {
   }
 
   screenVisible() {
-    if (this.state.ovl.screens.screenState[this.screen] !== undefined) {
+    if (
+      this.state.ovl.screens &&
+      this.state.ovl.screens.screenState &&
+      this.state.ovl.screens.screenState[this.screen] !== undefined
+    ) {
       return this.state.ovl.screens.screenState[this.screen].visible === true
     }
     return false
