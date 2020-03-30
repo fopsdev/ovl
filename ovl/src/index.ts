@@ -1,35 +1,31 @@
-// uncomment when used from app
+/* uncomment when used from app */
 // replace test with the app
-import { overmind, config } from "../../test/src/index"
-import { screens } from "../../test/src/stateScreens"
-import { Screen } from "../../test/src/stateScreens"
-import * as functions from "../../test/src/functions"
-export { functions }
+
+import { overmind, config } from "../../../kaltag/src/index"
 import { IConfig } from "overmind"
-export { overmind }
+import { screens } from "../../../kaltag/src/stateScreens"
+import * as functions from "../../../kaltag/src/functions"
+export type Screen = keyof typeof screens
+export { functions, screens, overmind }
 declare module "overmind" {
   // tslint:disable:interface-name
   interface Config extends IConfig<typeof config> {}
 }
 
-// //###############################################################
-// //uncomment when used standalone for base dev
-// import { baseOvermindConfig } from "./init"
-// import { createOvermind, IConfig } from "overmind"
-// import { screens } from "./stateScreens"
-// import { Screen } from "./stateScreens"
-// import * as functions from "./functions"
-// export { functions }
-
-// export const overmind = createOvermind(baseOvermindConfig, {
-//   devtools: true,
-//   logProxies: true,
-//   delimiter: " "
-// })
-// declare module "overmind" {
-//   // tslint:disable:interface-name
-//   interface Config extends IConfig<typeof baseOvermindConfig> {}
-// }
-// //################################################################
-
-export { screens, Screen }
+//###############################################################
+/* uncomment when used standalone for base dev 
+import { baseOvermindConfig } from "./init"
+import { createOvermind, IConfig } from "overmind"
+import { screens, Screen } from "./state/stateScreens"
+export {Screen}
+baseOvermindConfig.state.ovl.screens.screens = screens
+export const overmind = createOvermind(baseOvermindConfig, {
+  devtools: true,
+  logProxies: true,
+  delimiter: " "
+})
+declare module "overmind" {
+  // tslint:disable:interface-name
+  interface Config extends IConfig<typeof baseOvermindConfig> {}
+}
+*/

@@ -2117,7 +2117,7 @@
   .fd-col--1 {
     float: left;
     margin-right: 8px;
-    margin-right: var(--fd-width-gutter,var 16px);
+    margin-right: var(--fd-width-gutter, var 16px);
     width: calc((100% - 88px) / 12 * 1);
     width: calc(
       (100% - 11 * var(--fd-width-gutter, 16px)) / 12 * 1 +
