@@ -24,6 +24,7 @@ Components are reusable in Screens. 1 Component can contain n Ovl Element(s). Th
 ## Screens
 
 Screens are a visual unit of multiple components. A Screen can be navigated into and can be refreshed individually.
+All the screen state is placed into ovl namespace to make transitions easier.
 
 ## Built in Concepts
 
@@ -33,5 +34,14 @@ Screens are a visual unit of multiple components. A Screen can be navigated into
 
 ## Structuring your app
 
-By design eve
+create a git repositiory for the new project like:
+myproject
+then git clone ovl into it ( i had to clone it into a sep folder first using tortoisegit)
+so the structure should be something like
+myproject/ovl
+(inside ovl the you will find another ovl and the test folder)
+then put a .gitignore to
+myproject/.gitignore which ignores the ovl folder (its handled separately)
+then do a npm install inside the myproject/ovl/ovl - folder
+then adjust the myproject/ovl/ovl/src/index.ts to point back to the screens and so on from myproject
 
