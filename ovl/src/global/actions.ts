@@ -1,7 +1,6 @@
 import { Action, AsyncAction } from "overmind"
 import { overmind, Screen } from "../index"
 import { OvlConfig, Init } from "../init"
-import { DialogResult } from "../library/actions"
 
 import {
   FileInfoStore,
@@ -19,7 +18,7 @@ import {
   T,
   resolvePath
 } from "./globals"
-import { SnackAdd } from "../library/helpers"
+import { SnackAdd, DialogOkCancel, DialogOk } from "../library/helpers"
 
 function isTouch() {
   return "ontouchstart" in window
@@ -172,17 +171,9 @@ export const ToggleLanguage: AsyncAction = async (
 }
 
 export const Logout: AsyncAction = async ({ state, actions }) => {
-  actions.ovl.dialog.OkCancelDialog({
-    text: "Wollen Sie sich wirklich abmelden?",
-    default: 1
-  })
-  switch (await DialogResult()) {
-    case 1:
-      state.ovl.user.token = ""
-      logout()
-      break
-    case 2:
-      break
+  if ((await DialogOkCancel("Wollen Sie sich wirklich abmelden?", 1)) === 1) {
+    state.ovl.user.token = ""
+    logout()
   }
 }
 
@@ -321,10 +312,7 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
 
         if (updateCheck.status === 404) {
           // we need an update
-          actions.ovl.dialog.OkDialog({
-            text: "Update erforderlich!\n Bitte neu anmelden!"
-          })
-          await DialogResult()
+          await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
           logout()
         }
         return

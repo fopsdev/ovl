@@ -18,7 +18,7 @@ import {
   TouchField,
   ResetForm,
   SetFormUndirty,
-  ResetFormAfterAnimation,
+  ResetFormAfterNavigation,
   ValidateForm,
   ValidateDataType,
   ValidateSchema,
@@ -55,7 +55,7 @@ let dialog = {
 let form = {
   InitForm,
   ResetForm,
-  ResetFormAfterAnimation,
+  ResetFormAfterNavigation,
   ValidateForm
 }
 

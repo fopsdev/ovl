@@ -96,7 +96,7 @@ export const SetFormUndirty: Action<FormState> = (_, value) => {
   })
 }
 
-export const ResetFormAfterAnimation: Action<FormState> = (
+export const ResetFormAfterNavigation: Action<FormState> = (
   { state },
   value
 ) => {
