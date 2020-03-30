@@ -8,6 +8,7 @@ import {
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { TableDataAndDef } from "../../../../ovl/src/library/Table/Table"
+import { SnackAdd } from "../../../../ovl/src/library/helpers"
 
 // if the following actions are present the functionality will be enabled
 // rowAdd
@@ -73,9 +74,5 @@ export const CustomAddRowColumnDefaultsHandler: AsyncAction<{
   value.newRow.U_Memo = "Defaulttext Memo"
 }
 export const CustomSelectRow: AsyncAction = async ({ actions }, value) => {
-  actions.ovl.snack.AddSnack({
-    durationMs: 3000,
-    text: "Funktion noch nicht implementiert",
-    type: "Warning"
-  })
+  SnackAdd("Funktion noch nicht implementiert", "Warning")
 }

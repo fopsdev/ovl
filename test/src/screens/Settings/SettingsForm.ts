@@ -1,8 +1,8 @@
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { T } from "../../../../ovl/src/global/globals"
-import { DialogResult } from "../../../../ovl/src/library/actions"
 import { html } from "../../../../ovl/node_modules/lit-html"
 import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
+import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
 export type SettingsFormState = {}
 
@@ -24,21 +24,10 @@ export class CompSettingsForm extends OvlFormElement {
       if (!this.state.ovl.libState.indicator.open) {
         let cancel: boolean = true
         if (this.formState.dirty) {
-          this.actions.ovl.dialog.OkCancelDialog({
-            text: T("AppCancelForm"),
-            default: 1
-          })
-          switch (await DialogResult()) {
-            case 1:
-              break
-            case 2:
-              cancel = false
-              break
+          if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 1) {
+            this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
+            this.actions.ovl.navigation.NavigateBack()
           }
-        }
-        if (cancel) {
-          this.actions.ovl.form.ResetFormAfterAnimation(this.formState)
-          this.actions.ovl.navigation.NavigateBack()
         }
       }
     }

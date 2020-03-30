@@ -19,6 +19,7 @@ import {
   T,
   resolvePath
 } from "./globals"
+import { SnackAdd } from "../library/helpers"
 
 function isTouch() {
   return "ontouchstart" in window
@@ -287,11 +288,7 @@ export const GetFile: AsyncAction<{
       foinfo.lastAccess = new Date()
       fileStoreInfo.set(foinfo)
     } else {
-      actions.ovl.snack.AddSnack({
-        durationMs: 3000,
-        text: "File not cached",
-        type: "Information"
-      })
+      SnackAdd("File not cached", "Information")
     }
   }
 }

@@ -2,6 +2,7 @@ import { T } from "./global/globals"
 import { overmind } from "./index"
 import { SnackType } from "./library/Snack/Snack"
 import { OvlConfig } from "./init"
+import { SnackAdd } from "./library/helpers"
 
 export let lastOfflineMsg
 
@@ -131,11 +132,7 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
   } finally {
     overmind.actions.ovl.indicator.SetIndicatorClose()
     if (snackMessage) {
-      overmind.actions.ovl.snack.AddSnack({
-        durationMs: 5000,
-        text: snackMessage,
-        type: snackMessageType
-      })
+      SnackAdd(snackMessage, snackMessageType)
     }
   }
 }

@@ -4,6 +4,7 @@ import { TableDef, RowControlAction, TableData, TableDataAndDef } from "./Table"
 
 import { functions } from "../../index"
 import { ovltemp, resolvePath } from "../../global/globals"
+import { SnackAdd } from "../helpers"
 
 export type NavProps = {
   tableDef: TableDef
@@ -31,11 +32,7 @@ export class TableRowControl extends OvlBaseElement {
   handleRowLongPress = (e: Event, msg: string) => {
     // fallback for touch devices which can't display tooltips (title attribute)
     if (this.state.ovl.uiState.isTouch && msg) {
-      this.actions.ovl.snack.AddSnack({
-        type: "Information",
-        durationMs: 5000,
-        text: msg
-      })
+      SnackAdd(msg, "Information")
     }
   }
 

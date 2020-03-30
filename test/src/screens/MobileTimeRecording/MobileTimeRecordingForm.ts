@@ -1,11 +1,11 @@
 import { html } from "../../../../ovl/node_modules/lit-html"
 import { N, T, resolvePath } from "../../../../ovl/src/global/globals"
-import { DialogResult } from "../../../../ovl/src/library/actions"
 import { ListControlState } from "../../../../ovl/src/library/forms/Controls/ListControl"
 import { OptionControlState } from "../../../../ovl/src/library/Forms/Controls/Option"
 import { TimeControlState } from "../../../../ovl/src/library/Forms/Controls/Time"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import * as functions from "../../functions"
+import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
 export type MobileTimeEntryFormState = {
   rowKey: string
@@ -38,21 +38,10 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
     if (!this.state.ovl.libState.indicator.open) {
       let cancel: boolean = true
       if (this.formState.dirty) {
-        this.actions.ovl.dialog.OkCancelDialog({
-          text: T("AppCancelForm"),
-          default: 1
-        })
-        switch (await DialogResult()) {
-          case 1:
-            break
-          case 2:
-            cancel = false
-            break
+        if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 2) {
+          this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
+          this.actions.ovl.navigation.NavigateBack()
         }
-      }
-      if (cancel) {
-        this.actions.ovl.form.ResetFormAfterAnimation(this.formState)
-        this.actions.ovl.navigation.NavigateBack()
       }
     }
   }

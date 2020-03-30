@@ -44,10 +44,6 @@ import {
   PlaceSnack,
   ClearSnack
 } from "./library/Snack/actions"
-let snack = {
-  AddSnack,
-  RemoveSnack
-}
 
 import { DialogOpen, OkDialog, OkCancelDialog } from "./library/Dialog/actions"
 let dialog = {
@@ -124,6 +120,8 @@ let internal = {
   StartCloseOverlay2,
   PlaceSnack,
   ClearSnack,
+  AddSnack,
+  RemoveSnack,
   DialogChanged,
   DialogClosed,
   DialogDefaultChanged,
@@ -170,7 +168,6 @@ export let ovl = {
   overlay,
   internal,
   dialog,
-  snack,
   form,
   table,
   user

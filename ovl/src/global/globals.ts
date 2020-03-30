@@ -3,6 +3,7 @@ import { OvlConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
+import { SnackAdd } from "../library/helpers"
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
@@ -123,11 +124,7 @@ export const beforeUnload = async event => {
     }
 
     await saveState(false, "unload")
-    overmind.actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: "Sie können das Fenster jetzt schliessen...",
-      type: "Information"
-    })
+    SnackAdd("Sie können das Fenster jetzt schliessen...", "Information", 3000)
   }
 }
 
@@ -301,11 +298,7 @@ export const ShowFile = (blob, type, fileName) => {
   gotoFileFlag = false
 
   if (!overmind.state.ovl.uiState.isIOS) {
-    overmind.actions.ovl.snack.AddSnack({
-      text: "File has been downloaded",
-      durationMs: 5000,
-      type: "Success"
-    })
+    SnackAdd("File has been downloaded", "Success")
   }
 }
 

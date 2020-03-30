@@ -11,6 +11,7 @@ import {
   GetRowFromFormState
 } from "./helpers"
 import { overmind } from "../../.."
+import { SnackAdd } from "../../helpers"
 
 type ListFunction = (
   state: typeof overmind.state,
@@ -89,11 +90,7 @@ export class OvlListControl extends OvlBaseElement {
       this.controlState.fieldId
     )
     if (filteredKeys.length < 1) {
-      this.actions.ovl.snack.AddSnack({
-        durationMs: 2000,
-        text: "Keine passenden Einträge gefunden",
-        type: "Warning"
-      })
+      SnackAdd("Keine passenden Einträge gefunden", "Warning", 3000)
       return
     }
     let list = html`
@@ -365,11 +362,7 @@ export class OvlListControl extends OvlBaseElement {
           this.deleteElement.classList.remove("hide")
         }
 
-        this.actions.ovl.snack.AddSnack({
-          durationMs: 2000,
-          text: "Keine passenden Einträge gefunden",
-          type: "Warning"
-        })
+        SnackAdd("Keine passenden Einträge gefunden", "Warning", 3000)
       } else {
         let wasAlreadyOpen = false
         if (this.localList !== null) {

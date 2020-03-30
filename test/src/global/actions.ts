@@ -10,9 +10,15 @@ import {
 import { Email, Mandatory } from "../../../ovl/src/library/forms/validators"
 
 import { TogglePDFPopupState } from "../components/FileList/FileList"
-import { DialogResult } from "../../../ovl/src/library/actions"
 import { FieldId } from "../screens/Login/LoginForm"
 import { FormFields } from "../../../ovl/src/library/forms/OvlFormElement"
+import {
+  DialogOkCancel,
+  SnackAdd,
+  SnackTrackedRemove,
+  SnackTrackedAdd
+} from "../../../ovl/src/library/helpers"
+import { AddSnack } from "../../../ovl/src/library/Snack/actions"
 
 export const Login: AsyncAction<FormState> = async (
   { state, actions, effects },
@@ -22,77 +28,69 @@ export const Login: AsyncAction<FormState> = async (
   if (value.valid) {
     let user = value.fields["user"].value
     let pw = value.fields["pw"].value
-    let res = await effects.postRequest(api.url + "users/authenticate", {
-      email: user,
-      password: pw,
-      language: state.ovl.language.language
-    })
-    if (!res.data) {
-      actions.ovl.snack.AddSnack({
-        durationMs: 3000,
-        text: T("AppLoginValidationInvalidPassword"),
-        type: "Error"
+    SnackTrackedAdd("Login", "Success", "AppLogin")
+    try {
+      let res = await effects.postRequest(api.url + "users/authenticate", {
+        email: user,
+        password: pw,
+        language: state.ovl.language.language
       })
-      return
-    }
-    state.ovl.user.token = res.data.partner.user.token
-    state.portal.user = res.data.partner.user
-    state.portal.chartData = res.data.data.chartData
-    state.portal.partner = res.data.partner
-    state.portal.orderDetail = {
-      orders: res.data.data.orderDetail
-    }
-    state.portal.quotationDetail = {
-      quotations: res.data.data.quotationDetail
-    }
-    state.portal.invoiceDetail = {
-      invoices: res.data.data.invoiceDetail
-    }
-    state.portal.dpInvoiceDetail = {
-      dpInvoices: res.data.data.dpInvoiceDetail
-    }
-    state.portal.partner.attachments = res.data.data.attachments
-
-    //init lookup values
-    res = await effects.postRequest(api.url + "lookup", {
-      lang: state.ovl.language.language,
-      lookupType: "initial"
-    })
-    state.testtables.lookups.U_ItemCode = res.data.item
-    state.testtables.lookups.ItmsGrpCod = res.data.itemGroup
-
-    state.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
-    state.testtables.lookups.ProjectTypeId = res.data.timeProjects
-
-    actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: T("AppLoginSuccessful"),
-      type: "Success"
-    })
-    if (state.ovl.screens.nav.screensHistory.length > 1) {
-      actions.ovl.navigation.NavigateBack()
-    } else {
-      // see if we have a target url and move directly to that screen
-      // also possible to move to detail providing "o" = docnum param
-      let url = new URL(window.location.href)
-      let screen = <Screen>url.searchParams.get("s")
-      let orderNum = url.searchParams.get("o")
-      let command: Screen = "Dashboard"
-      if (screen) {
-        command = screen
+      if (!res.data) {
+        SnackAdd(T("AppLoginValidationInvalidPassword"), "Error")
+        return
       }
-      if (orderNum) {
-        state.ovl.screens.screens.Orderdetail.selectedOrder = orderNum
+      state.ovl.user.token = res.data.partner.user.token
+      state.portal.user = res.data.partner.user
+      state.portal.chartData = res.data.data.chartData
+      state.portal.partner = res.data.partner
+      state.portal.orderDetail = {
+        orders: res.data.data.orderDetail
       }
-      actions.ovl.navigation.NavigateTo(command)
+      state.portal.quotationDetail = {
+        quotations: res.data.data.quotationDetail
+      }
+      state.portal.invoiceDetail = {
+        invoices: res.data.data.invoiceDetail
+      }
+      state.portal.dpInvoiceDetail = {
+        dpInvoices: res.data.data.dpInvoiceDetail
+      }
+      state.portal.partner.attachments = res.data.data.attachments
+
+      //init lookup values
+      res = await effects.postRequest(api.url + "lookup", {
+        lang: state.ovl.language.language,
+        lookupType: "initial"
+      })
+      state.testtables.lookups.U_ItemCode = res.data.item
+      state.testtables.lookups.ItmsGrpCod = res.data.itemGroup
+
+      state.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
+      state.testtables.lookups.ProjectTypeId = res.data.timeProjects
+
+      if (state.ovl.screens.nav.screensHistory.length > 1) {
+        actions.ovl.navigation.NavigateBack()
+      } else {
+        // see if we have a target url and move directly to that screen
+        // also possible to move to detail providing "o" = docnum param
+        let url = new URL(window.location.href)
+        let screen = <Screen>url.searchParams.get("s")
+        let orderNum = url.searchParams.get("o")
+        let command: Screen = "Dashboard"
+        if (screen) {
+          command = screen
+        }
+        if (orderNum) {
+          state.ovl.screens.screens.Orderdetail.selectedOrder = orderNum
+        }
+        actions.ovl.navigation.NavigateTo(command)
+      }
+      actions.ovl.form.ResetFormAfterNavigation(value)
+    } finally {
+      SnackTrackedRemove("AppLogin")
     }
-    actions.ovl.form.ResetFormAfterAnimation(value)
   } else {
-    actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: GetFormValidationErrors(value).join("\n"),
-      type: "Error"
-    })
+    SnackAdd(GetFormValidationErrors(value).join("\n"), "Error")
   }
 }
 export const LoginValidateField: Action<ValidateField> = (_, value) => {
@@ -113,26 +111,16 @@ export const ForgotPw: AsyncAction<FormState> = async (
   { state, actions, effects },
   value
 ) => {
-  actions.ovl.dialog.OkCancelDialog({
-    text: T("AppLoginForgotPasswordConfirm"),
-    default: 2
-  })
-  switch (await DialogResult()) {
-    case 1:
-      let user = value.fields["user"].value
-      let res = await effects.postRequest("requestresetpw", {
-        user,
-        language: state.ovl.language.language
-      })
-      if (res.status !== 200) {
-        return
-      }
-      actions.ovl.snack.AddSnack({
-        text: T("AppLoginForgotPasswordMsg"),
-        durationMs: 20000,
-        type: "Information"
-      })
-      break
+  if ((await DialogOkCancel(T("AppLoginForgotPasswordConfirm"), 2)) === 1) {
+    let user = value.fields["user"].value
+    let res = await effects.postRequest("requestresetpw", {
+      user,
+      language: state.ovl.language.language
+    })
+    if (res.status !== 200) {
+      return
+    }
+    SnackAdd(T("AppLoginForgotPasswordMsg"), "Information", 20000)
   }
 }
 
@@ -192,11 +180,7 @@ export const HandleRefresh: AsyncAction = async ({
     }
   }
 
-  actions.ovl.snack.AddSnack({
-    durationMs: 3000,
-    text: "Daten aufgefrischt",
-    type: "Success"
-  })
+  SnackAdd("Daten aufgefrischt", "Success")
 }
 
 export const CustomInit: Action = ({ actions }, _) => {

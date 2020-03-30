@@ -13,6 +13,7 @@ import {
 } from "./Table"
 
 import { resolvePath } from "../../global/globals"
+import { SnackAdd } from "../helpers"
 export type TableRowDef = {
   data: TableData
   selected: SelectedRow
@@ -45,12 +46,8 @@ export class TableRowWrapper extends OvlBaseElement {
       //@ts-ignore
       e.target.parentNode.title
     ) {
-      this.actions.ovl.snack.AddSnack({
-        type: "Information",
-        durationMs: 5000,
-        //@ts-ignore
-        text: e.target.parentNode.title
-      })
+      //@ts-ignore
+      SnackAdd(e.target.parentNode.title, "Information")
     }
   }
 

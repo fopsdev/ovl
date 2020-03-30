@@ -7,6 +7,7 @@ import {
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { FieldId } from "./FeedbackForm"
+import { SnackAdd } from "../../../../ovl/src/library/helpers"
 
 export const FeedbackValidateField: Action<ValidateField> = (_, value) => {
   switch (<FieldId>value.fieldId) {
@@ -39,20 +40,12 @@ export const SaveFeedback: AsyncAction<FormState> = async (
     if (res.status !== 200) {
       return
     }
-    actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: T("AppFeedbackSaved"),
-      type: "Success"
-    })
+    SnackAdd(T("AppFeedbackSaved"), "Success")
     if (state.ovl.screens.nav.currentScreen === "Feedback") {
       actions.ovl.navigation.NavigateBack()
     }
-    actions.ovl.form.ResetFormAfterAnimation(value) // post back
+    actions.ovl.form.ResetFormAfterNavigation(value) // post back
   } else {
-    actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: GetFormValidationErrors(value).join("\n"),
-      type: "Error"
-    })
+    SnackAdd(GetFormValidationErrors(value).join("\n"), "Error")
   }
 }

@@ -1,8 +1,9 @@
 import { html } from "../../../../ovl/node_modules/lit-html"
 import { D, T } from "../../../../ovl/src/global/globals"
-import { DialogResult } from "../../../../ovl/src/library/actions"
+
 import { TextAreaControlState } from "../../../../ovl/src/library/Forms/Controls/TextArea"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
+import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
 export type FeedbackType = "OrderPositive" | "OrderNegative" | "DeliveryDate"
 
@@ -41,21 +42,10 @@ export class CompFeedbackForm extends OvlFormElement {
       if (!this.state.ovl.libState.indicator.open) {
         let cancel: boolean = true
         if (this.formState.dirty) {
-          this.actions.ovl.dialog.OkCancelDialog({
-            text: T("AppCancelForm"),
-            default: 1
-          })
-          switch (await DialogResult()) {
-            case 1:
-              break
-            case 2:
-              cancel = false
-              break
+          if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 2) {
+            this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
+            this.actions.ovl.navigation.NavigateBack()
           }
-        }
-        if (cancel) {
-          this.actions.ovl.form.ResetFormAfterAnimation(this.formState)
-          this.actions.ovl.navigation.NavigateBack()
         }
       }
     }

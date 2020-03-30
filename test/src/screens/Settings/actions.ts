@@ -10,6 +10,7 @@ import {
 } from "../../../../ovl/src/library/forms/validators"
 import { T, api } from "../../../../ovl/src/global/globals"
 import { postRequest } from "../../../../ovl/src/effects"
+import { SnackAdd } from "../../../../ovl/src/library/helpers"
 
 export const SettingsValidateField: Action<ValidateField> = (_, value) => {
   switch (value.fieldId) {
@@ -64,18 +65,10 @@ export const SaveSettings: AsyncAction<FormState> = async (
       value.fields["pw"].validationResult.validationMsg = res.message
       return
     }
-    actions.ovl.snack.AddSnack({
-      durationMs: 5000,
-      text: T("AppPasswordChangedSuccess"),
-      type: "Success"
-    })
-    actions.ovl.form.ResetFormAfterAnimation(value)
+    SnackAdd(T("AppPasswordChangedSuccess"), "Success")
+    actions.ovl.form.ResetFormAfterNavigation(value)
     actions.ovl.navigation.NavigateBack()
   } else {
-    actions.ovl.snack.AddSnack({
-      durationMs: 3000,
-      text: GetFormValidationErrors(value).join("\n"),
-      type: "Error"
-    })
+    SnackAdd(GetFormValidationErrors(value).join("\n"), "Error")
   }
 }

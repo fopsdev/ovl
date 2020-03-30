@@ -33,6 +33,7 @@ import {
   TableDef
 } from "./Table"
 import { overmind } from "../.."
+import { SnackAdd } from "../helpers"
 
 const minimumFilterChars = 3
 
@@ -269,18 +270,16 @@ export const TableRefreshDataFromServer: AsyncAction<{
           // check if lookup was succesful
           // if not there is something fishy and report it
           if (listdata.data && value && !listdata.data[value]) {
-            overmind.actions.ovl.snack.AddSnack({
-              durationMs: 5000,
-              text:
-                "Lookup: " +
+            SnackAdd(
+              "Lookup: " +
                 value +
                 " für Spalte: " +
                 (lookupColumnDef.caption
                   ? lookupColumnDef.caption
                   : lookupColumnDef.datafield) +
                 " nicht gefunden...",
-              type: "Warning"
-            })
+              "Warning"
+            )
           }
         }
       }
@@ -401,11 +400,7 @@ export const TableRefresh: AsyncAction<{
     let dt: number = Date.now()
     if (lastRefreshMsg === undefined || dt - lastRefreshMsg > 3000) {
       lastRefreshMsg = dt
-      actions.ovl.snack.AddSnack({
-        type: "Success",
-        durationMs: 5000,
-        text: "Ansicht aktualisiert"
-      })
+      SnackAdd("Ansicht aktualisiert", "Success")
     }
   }
 }
@@ -549,11 +544,7 @@ const TableEditSaveRowHelper = async (
             formState.valid = false
           }
           if (!noSnack) {
-            actions.ovl.snack.AddSnack({
-              durationMs: 10000,
-              text: res.message,
-              type: "Error"
-            })
+            SnackAdd(res.message, "Error", 10000)
           }
           if (
             (hasFormState && res.type === "UDTNameEmpty") ||
@@ -585,11 +576,7 @@ const TableEditSaveRowHelper = async (
         setTableRow({ def, data }, key, newId, res.data, false, actions)
       }
       if (!noSnack) {
-        actions.ovl.snack.AddSnack({
-          durationMs: 5000,
-          text: "Datensatz gespeichert",
-          type: "Success"
-        })
+        SnackAdd("Datensatz gespeichert", "Success")
       }
 
       // afterSave @@hook
@@ -876,11 +863,7 @@ export const TableDeleteRow: AsyncAction<{
     deleteTableRow({ def: def, data: value.data }, key)
 
     if (!value.isMass) {
-      actions.ovl.snack.AddSnack({
-        durationMs: 5000,
-        text: "Datensatz gelöscht",
-        type: "Success"
-      })
+      SnackAdd("Datensatz gelöscht", "Success")
     }
     if (!value.isMass) {
       selectLatestRow(def, value.data)
@@ -988,11 +971,10 @@ export const TableMultipleDeleteRow: AsyncAction<{
       })
     )
     await wait
-    actions.ovl.snack.AddSnack({
-      type: "Information",
-      durationMs: 5000,
-      text: deletedCounter.toString() + " Datensätze gelöscht..."
-    })
+    SnackAdd(
+      deletedCounter.toString() + " Datensätze gelöscht...",
+      "Information"
+    )
     selectLatestRow(def, value.data)
     let rows2 = value.data.data
     setPage(def, value.data, rows2)
@@ -1088,11 +1070,7 @@ export const TableMultipleCopyRow: AsyncAction<{
       })
     )
     await wait
-    actions.ovl.snack.AddSnack({
-      type: "Information",
-      durationMs: 5000,
-      text: "Datensätze zum Duplizieren vorbereitet"
-    })
+    SnackAdd("Datensätze zum Duplizieren vorbereitet", "Information")
     actions.ovl.internal.TableSelectHeader({
       def: def,
       data: value.data,
@@ -1183,11 +1161,7 @@ export const TableMultipleEditRow: AsyncAction<{
       })
     )
     await wait
-    actions.ovl.snack.AddSnack({
-      type: "Information",
-      durationMs: 5000,
-      text: "Datensätze zum Editieren vorbereitet"
-    })
+    SnackAdd("Datensätze zum Editieren vorbereitet", "Information")
     actions.ovl.internal.TableSelectHeader({
       def: def,
       data: value.data,

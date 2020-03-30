@@ -19,6 +19,11 @@ import {
   TableDataAndDef,
   TableDef
 } from "../../../../ovl/src/library/Table/Table"
+import {
+  SnackTrackedAdd,
+  SnackTrackedRemove,
+  SnackAdd
+} from "../../../../ovl/src/library/helpers"
 
 export const RowValidate: AsyncAction<ValidateField> = async (
   { state },
@@ -188,13 +193,7 @@ export const SetMobileTimeEntrySelectedDate: AsyncAction<{
 
 export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
   let snackKey = uuidv4()
-
-  actions.ovl.snack.AddSnack({
-    durationMs: 100000,
-    text: "Datensätze werden hinzugefügt...",
-    type: "Information",
-    key: snackKey
-  })
+  SnackTrackedAdd("Datensätze werden hinzugefügt...", "Information", snackKey)
   let dt = new Date()
   for (let d = 0; d < 10; d++) {
     for (let z = 0; z < 10; z++) {
@@ -216,11 +215,6 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
     }
     dt.setDate(dt.getDate() + 1)
   }
-  actions.ovl.snack.RemoveSnack(snackKey)
-
-  actions.ovl.snack.AddSnack({
-    durationMs: 2000,
-    text: "100 Testeinträge erzeugt...",
-    type: "Success"
-  })
+  SnackTrackedRemove(snackKey)
+  SnackAdd("100 Testeinträge erzeugt...", "Success")
 }
