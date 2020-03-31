@@ -4,7 +4,7 @@ import { ListControlState } from "../../../../ovl/src/library/forms/Controls/Lis
 import { OptionControlState } from "../../../../ovl/src/library/Forms/Controls/Option"
 import { TimeControlState } from "../../../../ovl/src/library/Forms/Controls/Time"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
-import * as functions from "../../functions"
+import { customFunctions } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
 export type MobileTimeEntryFormState = {
@@ -81,7 +81,8 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
                 formState: this.formState,
                 namespace: def.namespace,
                 list: {
-                  listFn: resolvePath(functions, def.namespace).U_TypeGetListFn,
+                  listFn: resolvePath(customFunctions, def.namespace)
+                    .U_TypeGetListFn,
                   displayField: col.list.displayField,
                   valueField: col.list.valueField
                 },
@@ -103,7 +104,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
                 formState: this.formState,
                 namespace: def.namespace,
                 list: {
-                  listFn: resolvePath(functions, def.namespace)
+                  listFn: resolvePath(customFunctions, def.namespace)
                     .U_TypeIdGetListFn,
                   displayField: col.list.displayField,
                   displayValueField: col.list.displayValueField,

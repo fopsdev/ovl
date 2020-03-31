@@ -2,7 +2,7 @@ import { overmind } from "../../.."
 import { ListState } from "./ListControl"
 import { ListFnReturnValue } from "../../Table/Table"
 import { FormState } from "../actions"
-import { functions } from "../../../index"
+import { customFunctions } from "../../../index"
 import { resolvePath } from "../../../global/globals"
 
 export type LookupListPostData = {
@@ -43,10 +43,10 @@ export const KeyValueListFromServerFn = async (
       postData.paramList[k] = paramList[k]
     }
   })
-  let fn = resolvePath(functions, namespace)
+  let fn = resolvePath(customFunctions, namespace)
   let functionName = fieldId + "LookupPostDataFn"
   if (fn && fn[functionName]) {
-    fn[functionName](postData, row, state)
+    fn[functionName](postData, row, state, overmind.actions, effects)
   }
 
   let res = await effects.postRequest(postData.url, {
@@ -84,12 +84,23 @@ export const FilterHitList = (
 ) => {
   let hitLength = {}
   let functionName = fieldId + "GetFilteredListFn"
-  let dataList = list.listFn(state, GetRowFromFormState(formState))
+  let dataList = list.listFn(
+    GetRowFromFormState(formState),
+    state,
+    overmind.actions,
+    overmind.effects
+  )
   if (dataList.data) {
     let res = Object.keys(dataList.data)
-    let fn = resolvePath(functions, formState.namespace)
+    let fn = resolvePath(customFunctions, formState.namespace)
     if (fn && fn[functionName]) {
-      res = fn[functionName](dataList, formState)
+      res = fn[functionName](
+        dataList,
+        formState,
+        state,
+        overmind.actions,
+        overmind.effects
+      )
     }
 
     let lookupTypes = dataList.lookupTypes

@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { TableData, TableDataAndDef } from "./Table"
 import { NavProps } from "./RowControl"
-import { functions } from "../../index"
+import { customFunctions, overmind } from "../../index"
 import {
   TableDef,
   SelectedRow,
@@ -210,12 +210,15 @@ export class TableRowWrapper extends OvlBaseElement {
     }
     let rowStatus = ""
     let rowStatusMsg = ""
-    let fn = resolvePath(functions, def.namespace)
+    let fn = resolvePath(customFunctions, def.namespace)
     if (fn && fn.GetRowStatus) {
       let status = await fn.GetRowStatus(
         key,
-        <TableDataAndDef>{ def: this.row.tableDef, data: data },
-        this.state
+        this.row.tableDef,
+        data,
+        this.state,
+        this.actions,
+        overmind.effects
       )
       if (status) {
         rowStatus = "fd-table__row--" + status.status

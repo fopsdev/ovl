@@ -1,7 +1,7 @@
 import { Action, AsyncAction } from "overmind"
 import { postRequest } from "../../effects"
 import { api, ovltemp, uuidv4, resolvePath } from "../../global/globals"
-import { functions } from "../../index"
+import { customFunctions } from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
@@ -163,7 +163,7 @@ export const TableViewRefresh: Action<TableDataAndDef> = (
 export const TableRefreshDataFromServer: AsyncAction<{
   def: TableDef
   data: TableData
-}> = async ({ state, effects }, value) => {
+}> = async ({ state, actions, effects }, value) => {
   let def = value.def
   let data = value.data.data
   let schema = value.data.schema
@@ -237,16 +237,21 @@ export const TableRefreshDataFromServer: AsyncAction<{
         let lookupDefKey = dataFieldsToLookups[c]
         let lookupColumnDef = def.columns[lookupDefKey]
         let functionName = lookupDefKey + "GetListFn"
-        let fn = resolvePath(functions, def.namespace)
+        let fn = resolvePath(customFunctions, def.namespace)
         if (!fn || !fn[functionName]) {
           console.error(
             "ovl needs a function: " +
               functionName +
-              " to be defined in functions at: " +
+              " to be defined in customFunctions at: " +
               def.namespace
           )
         }
-        let listdata: ListFnReturnValue = fn[functionName](state, serverData[k])
+        let listdata: ListFnReturnValue = fn[functionName](
+          serverData[k],
+          state,
+          actions,
+          effects
+        )
 
         let value = localData[k][c]
         let listValueFound = true
@@ -303,7 +308,7 @@ export const TableRefresh: AsyncAction<{
   forceFreshServerData?: number
   def: TableDef
   data: TableData
-}> = async ({ actions, state }, value) => {
+}> = async ({ actions, state, effects }, value) => {
   let forceFreshServerData = value.forceFreshServerData
 
   if (forceFreshServerData === undefined) {
@@ -324,14 +329,16 @@ export const TableRefresh: AsyncAction<{
 
   let customSortFn = undefined
   let sortCustom = def.options.sortCustom
-  let fn = resolvePath(functions, def.namespace)
+  let fn = resolvePath(customFunctions, def.namespace)
   if (sortCustom.selected && sortCustom.sorts[sortCustom.selected]) {
     let functionName = sortCustom.selected + "SortFn"
     if (fn && fn[functionName]) {
       customSortFn = fn[functionName]
     } else {
       throw new Error(
-        "ovl customSort function: " + functionName + " not found!"
+        "ovl customSort function: " +
+          functionName +
+          " in customFunctions not found!"
       )
     }
   }
@@ -341,7 +348,7 @@ export const TableRefresh: AsyncAction<{
   let res: number = 0
   restable = restable.sort((a, b) => {
     if (customSortFn !== undefined) {
-      return customSortFn(a, b, data, state)
+      return customSortFn(a, b, data, state, actions, effects)
     } else {
       let valB = data[b][sortfield]
       let valA = data[a][sortfield]
@@ -486,14 +493,19 @@ const TableEditSaveRowHelper = async (
     newData = rowToSave
   }
   let res: any = {}
-  let fn = resolvePath(actions, def.namespace)
+  let fn = resolvePath(customFunctions, def.namespace)
   if (fn && fn.CustomSaveRow) {
     // ok there is a customSaveRow - Function
-    await fn.CustomSaveRow({
-      key,
-      tableDef: def,
-      newData
-    })
+    await fn.CustomSaveRow(
+      {
+        key,
+        tableDef: def,
+        newData
+      },
+      state,
+      actions,
+      overmind.effects
+    )
   } else {
     if (Object.keys(newData).length > 0) {
       if (hasFormState && def.options.filter.static) {
@@ -509,14 +521,19 @@ const TableEditSaveRowHelper = async (
       if (isAdd) {
         mode = "add"
       }
-      let fn = resolvePath(actions, def.namespace)
+      let fn = resolvePath(customFunctions, def.namespace)
       if (fn && fn.BeforeSaveRow) {
-        await fn.BeforeSaveRow(<BeforeSaveParam>{
-          key,
-          mode,
-          tableDef: { def, data },
-          row: newData
-        })
+        await fn.BeforeSaveRow(
+          <BeforeSaveParam>{
+            key,
+            mode,
+            tableDef: { def, data },
+            row: newData
+          },
+          state,
+          actions,
+          overmind.effects
+        )
       }
       res = await postRequest(api.url + def.server.endpoint + "/" + mode, {
         lang: state.ovl.language.language,
@@ -531,14 +548,19 @@ const TableEditSaveRowHelper = async (
           return
         }
         // handleError @@hook
-        let fn = resolvePath(actions, def.namespace)
+        let fn = resolvePath(customFunctions, def.namespace)
         if (fn && fn.CustomSaveRowErrorHandler) {
-          await fn.CustomSaveRowErrorHandler({
-            key,
-            def,
-            data,
-            res
-          })
+          await fn.CustomSaveRowErrorHandler(
+            {
+              key,
+              def,
+              data,
+              res
+            },
+            state,
+            actions,
+            overmind.effects
+          )
         } else {
           if (hasFormState) {
             formState.valid = false
@@ -581,12 +603,17 @@ const TableEditSaveRowHelper = async (
 
       // afterSave @@hook
       if (fn && fn.CustomSaveRowAfterSaveHandler) {
-        await fn.CustomSaveRowAfterSaveHandler({
-          key,
-          def,
-          data,
-          res: res.data
-        })
+        await fn.CustomSaveRowAfterSaveHandler(
+          {
+            key,
+            def,
+            data,
+            res: res.data
+          },
+          state,
+          actions,
+          overmind.effects
+        )
       }
     }
     if (hasFormState) {
@@ -699,8 +726,8 @@ export const TableEditRow: Action<{
     instanceId,
     namespace: def.namespace,
     schema: value.data.schema,
-    validationActionName: "RowValidate",
-    changedActionName: "RowChanged",
+    validationFnName: "RowValidate",
+    changedFnName: "RowChanged",
     forceOverwrite: true
   }
   actions.ovl.form.InitForm(initForm)
@@ -728,7 +755,7 @@ export const TableCopyRow: AsyncAction<{
   key: string
   def: TableDef
   data: TableData
-}> = async ({ actions }, value) => {
+}> = async ({ state, actions, effects }, value) => {
   let def = value.def
   let key = value.key
   let rows = value.data.data
@@ -738,14 +765,19 @@ export const TableCopyRow: AsyncAction<{
     newRow[c] = null
   })
   // copyRow @@hook
-  let fn = resolvePath(actions, def.namespace)
+  let fn = resolvePath(customFunctions, def.namespace)
   if (fn && fn.CustomCopyRowHandler) {
-    await fn.CustomCopyRowHandler({
-      key,
-      newRow,
-      def: value.def,
-      data: value.data
-    })
+    await fn.CustomCopyRowHandler(
+      {
+        key,
+        newRow,
+        def: value.def,
+        data: value.data
+      },
+      state,
+      actions,
+      effects
+    )
   }
   let insertMode = value.def.database.dbInsertMode
   if (insertMode !== "Manual") {
@@ -766,7 +798,7 @@ export const TableCopyRow: AsyncAction<{
 }
 
 export const TableAddRow: AsyncAction<TableDataAndDef> = async (
-  { actions },
+  { actions, state, effects },
   value
 ) => {
   let def = value.def
@@ -788,12 +820,15 @@ export const TableAddRow: AsyncAction<TableDataAndDef> = async (
   }, {})
 
   // addRow (Default Values) @@hook
-  let fn = resolvePath(actions, def.namespace)
+  let fn = resolvePath(customFunctions, def.namespace)
   if (fn && fn.CustomAddRowColumnDefaultsHandler) {
-    await fn.CustomAddRowColumnDefaultsHandler({
-      newRow: newRow,
-      tableDataAndDef: value
-    })
+    await fn.CustomAddRowColumnDefaultsHandler(
+      newRow,
+      value,
+      state,
+      actions,
+      effects
+    )
   }
   let insertMode = value.def.database.dbInsertMode
   if (insertMode !== "Manual") {
@@ -827,7 +862,7 @@ export const TableDeleteRow: AsyncAction<{
   def: TableDef
   data: TableData
   isMass?: boolean
-}> = async ({ actions, state }, value) => {
+}> = async ({ actions, state, effects }, value) => {
   let def = value.def
   let key = value.key
   let cancel: boolean = false
@@ -850,13 +885,18 @@ export const TableDeleteRow: AsyncAction<{
     })
     if (!res.data) {
       // handleError @@hook
-      let fn = resolvePath(actions, def.namespace)
+      let fn = resolvePath(customFunctions, def.namespace)
       if (fn && fn.CustomDeleteRowErrorHandler) {
-        await fn.CustomDeleteRowErrorHandler({
-          key,
-          tableDef: def,
-          res: res.data
-        })
+        await fn.CustomDeleteRowErrorHandler(
+          {
+            key,
+            tableDef: def,
+            res: res.data
+          },
+          state,
+          actions,
+          effects
+        )
       }
       return
     }
@@ -872,14 +912,19 @@ export const TableDeleteRow: AsyncAction<{
     }
 
     // afterDelete @@hook
-    let fn = resolvePath(actions, def.namespace)
+    let fn = resolvePath(customFunctions, def.namespace)
     if (fn && fn.CustomDeleteRowAfterDeleteHandler) {
-      await fn.CustomDeleteRowAfterDeleteHandler({
-        key,
-        def: def,
-        data: value.data,
-        res: res.data
-      })
+      await fn.CustomDeleteRowAfterDeleteHandler(
+        {
+          key,
+          def: def,
+          data: value.data,
+          res: res.data
+        },
+        state,
+        actions,
+        effects
+      )
     }
   }
 }
@@ -887,7 +932,7 @@ export const TableDeleteRow: AsyncAction<{
 export const TableMultipleDeleteRow: AsyncAction<{
   def: TableDef
   data: TableData
-}> = async ({ actions, state }, value) => {
+}> = async ({ actions, state, effects }, value) => {
   let def = value.def
   let rows = value.data.data
   let data = value.data
@@ -898,7 +943,7 @@ export const TableMultipleDeleteRow: AsyncAction<{
   let selectedObjects = []
   let functionName = "DeleteDisabledFn"
   let fn = null
-  let fnc = resolvePath(functions, def.namespace)
+  let fnc = resolvePath(customFunctions, def.namespace)
   if (fnc && fnc[functionName]) {
     fn = fnc[functionName]
   }
@@ -911,7 +956,9 @@ export const TableMultipleDeleteRow: AsyncAction<{
           let res = await fn(
             k,
             <TableDataAndDef>{ def: def, data: value.data },
-            state
+            state,
+            actions,
+            effects
           )
           if (res) {
             canNotDeleteMsg +=
@@ -989,7 +1036,7 @@ export const TableMultipleDeleteRow: AsyncAction<{
 export const TableMultipleCopyRow: AsyncAction<{
   def: TableDef
   data: TableData
-}> = async ({ actions, state }, value) => {
+}> = async ({ actions, state, effects }, value) => {
   let def = value.def
   let data = value.data
   let rows = value.data.data
@@ -998,7 +1045,7 @@ export const TableMultipleCopyRow: AsyncAction<{
   let selectedObjects = []
   let functionName = "CopyDisabledFn"
   let fn = null
-  let fnc = resolvePath(functions, def.namespace)
+  let fnc = resolvePath(customFunctions, def.namespace)
   if (fnc && fnc[functionName]) {
     fn = fnc[functionName]
   }
@@ -1012,7 +1059,9 @@ export const TableMultipleCopyRow: AsyncAction<{
           let res = await fn(
             k,
             <TableDataAndDef>{ def: def, data: value.data },
-            state
+            state,
+            actions,
+            effects
           )
           if (res) {
             canNotCopyMsg +=
@@ -1082,7 +1131,7 @@ export const TableMultipleCopyRow: AsyncAction<{
 export const TableMultipleEditRow: AsyncAction<{
   def: TableDef
   data: TableData
-}> = async ({ actions, state }, value) => {
+}> = async ({ actions, state, effects }, value) => {
   let def = value.def
   let data = value.data
   let rows = value.data.data
@@ -1091,7 +1140,7 @@ export const TableMultipleEditRow: AsyncAction<{
   let selectedObjects = []
   let functionName = "EditDisabledFn"
   let fn = null
-  let fnc = resolvePath(functions, def.namespace)
+  let fnc = resolvePath(customFunctions, def.namespace)
   if (fnc && fnc[functionName]) {
     fn = fnc[functionName]
   }
@@ -1104,7 +1153,9 @@ export const TableMultipleEditRow: AsyncAction<{
           let res = await fn(
             k,
             <TableDataAndDef>{ def: def, data: value.data },
-            state
+            state,
+            actions,
+            effects
           )
           if (res) {
             canNotEditMsg +=

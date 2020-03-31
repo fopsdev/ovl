@@ -10,7 +10,7 @@ export class CompOrderFeedback extends OvlBaseElement {
       msg: { value: this.state.ovl.screens.screens.Feedback.message }
     }
     let initForm: InitForm = {
-      validationActionName: "FeedbackValidateField",
+      validationFnName: "FeedbackValidateField",
       namespace: "feedback",
       instanceId: this.state.ovl.screens.screens.Feedback.type,
       formType: "Feedback",

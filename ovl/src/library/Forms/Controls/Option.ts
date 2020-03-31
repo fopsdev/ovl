@@ -5,6 +5,7 @@ import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ListState } from "./ListControl"
 import { GetRowFromFormState } from "./helpers"
+import { overmind } from "../../.."
 
 export type OptionControlState = {
   field: Field
@@ -52,8 +53,10 @@ export class OvlOption extends OvlBaseElement {
     let field = this.controlState.field
     let list = this.controlState.list
     let listData = list.listFn(
+      GetRowFromFormState(this.controlState.formState),
       this.state,
-      GetRowFromFormState(this.controlState.formState)
+      this.actions,
+      overmind.effects
     ).data
 
     let res = getUIValidationObject(field)

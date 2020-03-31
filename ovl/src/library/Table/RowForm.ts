@@ -4,7 +4,7 @@ import { TextAreaControlState } from "../../library/Forms/Controls/TextArea"
 import { EditRowDef, TableDataAndDef } from "./Table"
 import { html } from "lit-html"
 import { resolvePath } from "../../global/globals"
-import { functions } from "../../index"
+import { customFunctions, overmind } from "../../index"
 import { overlayToRender } from "../Overlay/Overlay"
 import { ListControlState } from "../forms/Controls/ListControl"
 
@@ -76,15 +76,15 @@ export class TableRowForm extends OvlFormElement {
         let editable = col.editable
         // @@hook
         let functionName = k + "EditableFn"
-        let fn = resolvePath(functions, def.namespace)
+        let fn = resolvePath(customFunctions, def.namespace)
         if (fn && fn[functionName]) {
           editable = fn[functionName](
             this.rowData.key,
-            <TableDataAndDef>{
-              def: this.rowData.tableDef,
-              data: this.rowData.data
-            },
-            this.state
+            this.rowData.tableDef,
+            this.rowData.data,
+            this.state,
+            this.actions,
+            overmind.effects
           )
         }
         let insertMode = this.rowData.tableDef.database.dbInsertMode
@@ -157,7 +157,12 @@ export class TableRowForm extends OvlFormElement {
 
                       let list
                       if (fn && fn[functionName]) {
-                        list = fn[functionName](this.state, this.rowData.row)
+                        list = fn[functionName](
+                          this.rowData.row,
+                          this.state,
+                          this.actions,
+                          overmind.effects
+                        )
                       }
 
                       return <ListControlState>{

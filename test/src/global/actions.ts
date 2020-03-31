@@ -196,7 +196,7 @@ export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
     user: { value: "" }
   }
   let loginForm: InitForm = {
-    validationActionName: "LoginValidateField",
+    validationFnName: "LoginValidateField",
     namespace: "portal.system.user",
     instanceId: "loginform",
     formType: "Login",

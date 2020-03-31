@@ -5,7 +5,8 @@ import { getFormFieldsFromColumns } from "../../../../ovl/src/library/Table/help
 import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
 import { ovltemp, N } from "../../../../ovl/src/global/globals"
 import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
-import { U_TypeIdGetListFn } from "./functions"
+import { U_TypeIdGetListFn } from "./customFunctions"
+import { overmind } from "../../../../ovl/src"
 export class CompMobileTimeEntry extends OvlBaseElement {
   dateInputElement: any
   dateInputId: string
@@ -44,8 +45,8 @@ export class CompMobileTimeEntry extends OvlBaseElement {
       instanceId: def.id,
       namespace: def.namespace,
       schema: data.schema,
-      validationActionName: "RowValidate",
-      changedActionName: "RowChanged",
+      validationFnName: "RowValidate",
+      changedFnName: "RowChanged",
       forceOverwrite
     }
     this.actions.ovl.form.InitForm(initForm)
@@ -133,7 +134,12 @@ export class CompMobileTimeEntry extends OvlBaseElement {
             let listValue1 = GetListDisplayValue(
               def.columns.U_TypeId.list,
               data[k].U_TypeId,
-              U_TypeIdGetListFn(this.state, data[k])
+              U_TypeIdGetListFn(
+                data[k],
+                this.state,
+                this.actions,
+                overmind.effects
+              )
             )
             let listValue2 =
               data[k].U_FromTime +

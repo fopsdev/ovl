@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { TableRowDataDef } from "./RowWrapper"
 import { getDisplayValue } from "./helpers"
-import { functions } from "../../index"
+import { customFunctions, overmind } from "../../index"
 import { resolvePath } from "../../global/globals"
 
 export let cachedFn: Map<string, any> = new Map<string, any>()
@@ -31,12 +31,17 @@ export class TableRow extends OvlBaseElement {
           let cacheKey = functionName + def.namespace
           let cFn = cachedFn.get(cacheKey)
           if (cFn) {
-            listdata = cFn(this.state, row)
+            listdata = cFn(row, this.state, this.actions, overmind.effects)
           } else {
-            let fn = resolvePath(functions, def.namespace)
+            let fn = resolvePath(customFunctions, def.namespace)
             if (fn && fn[functionName]) {
               let fnToCall = fn[functionName]
-              listdata = fnToCall(this.state, row)
+              listdata = fnToCall(
+                row,
+                this.state,
+                this.actions,
+                overmind.effects
+              )
               cachedFn.set(cacheKey, fnToCall)
             }
           }

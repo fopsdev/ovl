@@ -128,7 +128,7 @@ export class CompShellbar extends OvlBaseElement {
         pw2: { value: "" }
       }
       let initForm: InitForm = {
-        validationActionName: "SettingsValidateField",
+        validationFnName: "SettingsValidateField",
         namespace: "portal.settings",
         instanceId: "settingsform",
         formType: "Settings",

@@ -27,8 +27,8 @@ export class OvlFormElement extends OvlBaseElement {
 
   schema: { [key: string]: Schema }
   namespace: string
-  validationActionName: string
-  changedActionName: string
+  validationFnName: string
+  changedFnName: string
   formState: FormState
   handleOvlFocusOut = async e => {
     let id = e.detail.id.replace(this.formId, "")

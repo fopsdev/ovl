@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { TableDef, RowControlAction, TableData, TableDataAndDef } from "./Table"
 
-import { functions } from "../../index"
+import { customFunctions, overmind } from "../../index"
 import { ovltemp, resolvePath } from "../../global/globals"
 import { SnackAdd } from "../helpers"
 
@@ -39,30 +39,35 @@ export class TableRowControl extends OvlBaseElement {
   handleClick = async (e: Event, key: string, isCustom: boolean) => {
     e.preventDefault()
     e.stopPropagation()
-    let customActionFound = false
-    let customActions = resolvePath(this.actions, this.nav.tableDef.namespace)
-    if (customActions) {
-      let customActionName = "Custom" + key + "Row"
-      let customAction = customActions[customActionName]
+    let customFunctionFound = false
+    let customFns = resolvePath(customFunctions, this.nav.tableDef.namespace)
+    if (customFns) {
+      let customFunctionName = "Custom" + key + "Row"
+      let customFunction = customFns[customFunctionName]
 
-      if (customAction) {
-        customActionFound = true
-        await customAction({
-          key: this.nav.key,
-          def: this.nav.tableDef,
-          data: this.nav.data
-        })
+      if (customFunction) {
+        customFunctionFound = true
+        await customFunction(
+          {
+            key: this.nav.key,
+            def: this.nav.tableDef,
+            data: this.nav.data
+          },
+          this.state,
+          this.actions,
+          overmind.effects
+        )
       } else {
         if (isCustom) {
           throw Error(
             "Ovl logical error: Custom Action: " +
-              customActionName +
+              customFunctionName +
               " not found!"
           )
         }
       }
     }
-    if (!customActionFound) {
+    if (!customFunctionFound) {
       let actionName = "Table" + key + "Row"
       this.actions.ovl.internal[actionName]({
         key: this.nav.key,
@@ -86,7 +91,7 @@ export class TableRowControl extends OvlBaseElement {
     // consisting of "default" deit/copy/delete ones and the ones from state custom
 
     let rowControlActions: { [key: string]: RowControlAllAction } = {}
-    let fn = resolvePath(functions, def.namespace)
+    let fn = resolvePath(customFunctions, def.namespace)
     // first all custom ones
     if (def.options.customRowActions) {
       let wait = Promise.all(
@@ -100,8 +105,11 @@ export class TableRowControl extends OvlBaseElement {
             disabled = true
             title = await fn[functionName](
               this.nav.key,
-              <TableDataAndDef>{ def: def, data: this.nav.data },
-              this.state
+              def,
+              this.nav.data,
+              this.state,
+              this.actions,
+              overmind.effects
             )
             if (title) {
               rowControlActions[k] = {

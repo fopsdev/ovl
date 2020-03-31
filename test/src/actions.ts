@@ -55,7 +55,6 @@ let feedback = {
   FeedbackValidateField
 }
 
-import * as tabletesting from "./shared/TableTesting/actions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 import * as translations from "./screens/Translation/actions"
 
@@ -72,4 +71,4 @@ export const portal = {
   screens
 }
 
-export const testtables = { tabletesting, mobiletimerecording }
+export const testtables = { mobiletimerecording }

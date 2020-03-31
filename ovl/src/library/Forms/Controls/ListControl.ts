@@ -14,8 +14,10 @@ import { overmind } from "../../.."
 import { SnackAdd } from "../../helpers"
 
 type ListFunction = (
+  row: { [key: string]: {} },
   state: typeof overmind.state,
-  row: { [key: string]: {} }
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
 ) => any //ListFnReturnValue -> gives a ton of ts errors. not sure why. so i've put any for now
 
 export type ListState = {
@@ -64,8 +66,10 @@ export class OvlListControl extends OvlBaseElement {
     e.stopPropagation()
     e.preventDefault()
     let listData: ListFnReturnValue = this.controlState.list.listFn(
+      GetRowFromFormState(this.controlState.formState),
       this.state,
-      GetRowFromFormState(this.controlState.formState)
+      this.actions,
+      overmind.effects
     )
 
     //@ts-ignore
@@ -98,8 +102,10 @@ export class OvlListControl extends OvlBaseElement {
         <ovl-hitlist
           .props=${state => {
             let listData = this.controlState.list.listFn(
+              GetRowFromFormState(this.controlState.formState),
               state,
-              GetRowFromFormState(this.controlState.formState)
+              overmind.actions,
+              overmind.effects
             )
 
             return {
@@ -175,8 +181,10 @@ export class OvlListControl extends OvlBaseElement {
       )
       if (filteredKeys.length === 1) {
         let dataList = this.controlState.list.listFn(
+          GetRowFromFormState(this.controlState.formState),
           this.state,
-          GetRowFromFormState(this.controlState.formState)
+          this.actions,
+          overmind.effects
         )
         let singleValue =
           dataList.data[filteredKeys[0]][this.controlState.list.valueField]
@@ -260,8 +268,10 @@ export class OvlListControl extends OvlBaseElement {
         )
         if (filteredKeys.length === 1) {
           let listData = this.controlState.list.listFn(
+            GetRowFromFormState(this.controlState.formState),
             this.state,
-            GetRowFromFormState(this.controlState.formState)
+            this.actions,
+            overmind.effects
           )
           let singleValue =
             listData.data[filteredKeys[0]][this.controlState.list.valueField]
@@ -377,8 +387,10 @@ export class OvlListControl extends OvlBaseElement {
               <ovl-hitlist
                 .props=${state => {
                   let listData = this.controlState.list.listFn(
+                    GetRowFromFormState(this.controlState.formState),
                     state,
-                    GetRowFromFormState(this.controlState.formState)
+                    overmind.actions,
+                    overmind.effects
                   )
                   return {
                     fieldId: this.controlState.field.id,
@@ -433,8 +445,10 @@ export class OvlListControl extends OvlBaseElement {
         this.controlState.list,
         field.value,
         this.controlState.list.listFn(
+          GetRowFromFormState(this.controlState.formState),
           this.state,
-          GetRowFromFormState(this.controlState.formState)
+          this.actions,
+          overmind.effects
         )
       )
     }

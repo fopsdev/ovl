@@ -7,7 +7,7 @@ import {
   resolvePath
 } from "../../global/globals"
 import { state } from "../../state"
-import { functions } from "../../index"
+import { customFunctions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
 import {
@@ -617,7 +617,7 @@ export const TableFilterFn = (
   )
   let customFilterFn = customFilter.reduce((val, k) => {
     let functionName = k + "FilterFn"
-    let fn = resolvePath(functions, def.namespace)
+    let fn = resolvePath(customFunctions, def.namespace)
     if (fn && fn[functionName]) {
       val.push(fn[functionName])
       return val
@@ -686,7 +686,17 @@ export const TableFilterFn = (
   if (hasCustomFilter) {
     restable = restable.filter(
       rowKey =>
-        !customFilterFn.some(f => !f(def, tableDataAndDef.data, rowKey, state))
+        !customFilterFn.some(
+          f =>
+            !f(
+              def,
+              tableDataAndDef.data,
+              rowKey,
+              state,
+              overmind.actions,
+              overmind.effects
+            )
+        )
     )
   }
 

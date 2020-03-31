@@ -3,7 +3,7 @@ import { html } from "lit-html"
 import { repeat } from "lit-html/directives/repeat"
 import { TableRowDef } from "./RowWrapper"
 import { DataType, Schema } from "../Forms/OvlFormElement"
-import { functions } from "../../index"
+import { customFunctions, overmind } from "../../index"
 
 import { HeaderMenuDef } from "./HeaderMenu"
 import { FieldFormat } from "../Forms/OvlFormElement"
@@ -330,9 +330,14 @@ export class TableHeader extends OvlBaseElement {
         }
         //@@hook
         let functionName = k + "VisibleFn"
-        let fn = resolvePath(functions, def.namespace)
+        let fn = resolvePath(customFunctions, def.namespace)
         if (fn && fn[functionName]) {
-          visible = fn[functionName](this.tabledata, this.state)
+          visible = fn[functionName](
+            this.tabledata,
+            this.state,
+            this.actions,
+            overmind.effects
+          )
         }
 
         columnsVisible[k] = visible
