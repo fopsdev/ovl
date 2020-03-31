@@ -4,6 +4,7 @@ import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
 import { SnackAdd } from "../library/helpers"
+import { isMobile } from "./actions"
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
@@ -39,8 +40,7 @@ export const getDateValue = (value: string, format?: FieldFormat) => {
     }
   }
   if (!fmt) {
-    //@ts-ignore
-    if (window.isMobile.phone) {
+    if (isMobile()) {
       fmt = displayFormats.date._2DigitsYear
     } else {
       fmt = displayFormats.date.default

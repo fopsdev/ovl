@@ -63,44 +63,46 @@ export class TableRowWrapper extends OvlBaseElement {
   handleKeyDown = (e: KeyboardEvent) => {
     e.stopPropagation()
 
-    if (e.key === "ArrowDown") {
-      //@ts-ignore
-      let node = e.target.parentNode
-      node = node.nextElementSibling
-      if (node.tagName === "OVL-TRG") {
-        node = node.firstElementChild
-        while (node && node.tagName !== "OVL-TROW") {
-          node = node.nextElementSibling
+    if (!this.state.ovl.uiState.isMobile) {
+      if (e.key === "ArrowDown") {
+        //@ts-ignore
+        let node = e.target.parentNode
+        node = node.nextElementSibling
+        if (node.tagName === "OVL-TRG") {
+          node = node.firstElementChild
+          while (node && node.tagName !== "OVL-TROW") {
+            node = node.nextElementSibling
+          }
+          if (node) {
+            node.focus()
+          }
         }
-        if (node) {
-          node.focus()
+      } else if (e.key === "ArrowUp") {
+        //@ts-ignore
+        let node = e.target.parentNode
+        node = node.previousElementSibling
+        if (node.tagName === "OVL-TRG") {
+          node = node.firstElementChild
+          while (node && node.tagName !== "OVL-TROW") {
+            node = node.nextElementSibling
+          }
+          if (node) {
+            node.focus()
+          }
         }
-      }
-    } else if (e.key === "ArrowUp") {
-      //@ts-ignore
-      let node = e.target.parentNode
-      node = node.previousElementSibling
-      if (node.tagName === "OVL-TRG") {
-        node = node.firstElementChild
-        while (node && node.tagName !== "OVL-TROW") {
-          node = node.nextElementSibling
+      } else if (e.key === " ") {
+        e.preventDefault()
+        //@ts-ignore
+        let toSelectElement: any = e.target.parentNode
+        if (toSelectElement) {
+          let key = toSelectElement.row.key
+          let val: SelectRowDef = {
+            def: toSelectElement.row.tableDef,
+            key,
+            data: toSelectElement.row.TableData
+          }
+          this.actions.ovl.table.TableSelectRow(val)
         }
-        if (node) {
-          node.focus()
-        }
-      }
-    } else if (e.key === " ") {
-      e.preventDefault()
-      //@ts-ignore
-      let toSelectElement: any = e.target.parentNode
-      if (toSelectElement) {
-        let key = toSelectElement.row.key
-        let val: SelectRowDef = {
-          def: toSelectElement.row.tableDef,
-          key,
-          data: toSelectElement.row.TableData
-        }
-        this.actions.ovl.table.TableSelectRow(val)
       }
     }
   }

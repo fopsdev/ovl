@@ -24,7 +24,7 @@ function isTouch() {
   return "ontouchstart" in window
 }
 
-function isMobile() {
+export function isMobile() {
   var check = false
   ;(function(a) {
     if (

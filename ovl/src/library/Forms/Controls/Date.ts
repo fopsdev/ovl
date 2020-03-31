@@ -69,7 +69,7 @@ export class OvlDate extends OvlBaseElement {
         @focusout=${e => this.handleFocusOut(e)}
         style="${style} ${align}"
         autocomplete="off"
-        class="fd-input ${res.validationType}"
+        class="fd-input ${res.validationType} fd-has-type-1"
         type="date"
         required
         id="${field.id}"
