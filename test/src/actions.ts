@@ -17,10 +17,9 @@ let user = {
 
 let global = { HandleRefresh, TogglePDFPopup }
 
-import { SaveSettings, SettingsValidateField } from "./screens/Settings/actions"
+import { SaveSettings } from "./screens/Settings/actions"
 let settings = {
-  SaveSettings,
-  SettingsValidateField
+  SaveSettings
 }
 
 import {
