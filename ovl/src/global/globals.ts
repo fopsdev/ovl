@@ -94,9 +94,9 @@ export const addGlobalPersistEventListeners = () => {
 }
 
 // export const pageHide = async event => {
-//   if (HasOfflineMode) {
-//     overmind.actions.ovl.internal.SetStateSaveRemark("pageHide")
-//     await saveState()§
+//   event.preventDefault()
+//   if (OvlConfig._system.OfflineMode) {
+//     await saveState(false, "pageHide")
 //   }
 // }
 
@@ -109,24 +109,18 @@ export const focusOut = async event => {
 }
 
 export const beforeUnload = async event => {
-  console.log("uuuunlooooadd")
   if (
     !OvlConfig._system.IsDev &&
-    //@ts-ignore
-    HasOfflineMode &&
+    OvlConfig._system.OfflineMode &&
     !logoutAndClearFlag &&
     !gotoFileFlag
   ) {
     event.preventDefault()
     let dt = Date.now()
     let st: number = OvlTimestamp
-    console.log("uuuunlooooadd2")
     if (dt - st > 5000) {
-      console.log("uuuunlooooadd3")
-      console.log(translations.t.AppQuitMessage)
       event.returnValue = translations.t.AppQuitMessage
     }
-
     await saveState(false, "unload")
     SnackAdd("Sie können das Fenster jetzt schliessen...", "Information", 3000)
   }
@@ -134,6 +128,7 @@ export const beforeUnload = async event => {
 
 export const visibilityChange = async event => {
   if (OvlConfig._system.OfflineMode) {
+    // console.log(document.visibilityState)
     // fires when user switches tabs, apps, goes to homescreen, etc.
     //@ts-ignore
     if (
@@ -141,7 +136,11 @@ export const visibilityChange = async event => {
       //@ts-ignore
       document.visibilityState === "unloaded"
     ) {
-      saveState(false, "Visibility")
+      if (overmind.state.ovl.uiState.isIOS) {
+        saveState(false, "Visibility")
+      } else {
+        await saveState(false, "Visibility")
+      }
     }
     if (
       overmind.state.ovl.uiState.isIOS &&

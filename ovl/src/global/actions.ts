@@ -169,7 +169,6 @@ export const ToggleLanguage: AsyncAction = async (
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
-  debugger
   if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
     OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
       res.data
@@ -334,7 +333,6 @@ export const InitApp: AsyncAction<Init> = async (
   await actions.ovl.internal.RehydrateAndUpdateApp()
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
-  debugger
   // @ts-ignore
   state.ovl.uiState.isMobile = isMobile()
   state.ovl.uiState.isTouch = isTouch()
