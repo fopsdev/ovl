@@ -306,7 +306,6 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         let updateCheck = await effects.getRequest(
           "./updatecheck/ovldataversion" + OvlConfig._system.DataVersion + ".js"
         )
-
         if (updateCheck.status === 404) {
           // we need an update
           await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
@@ -335,7 +334,7 @@ export const InitApp: AsyncAction<Init> = async (
   await actions.ovl.internal.RehydrateAndUpdateApp()
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
-
+  debugger
   // @ts-ignore
   state.ovl.uiState.isMobile = isMobile()
   state.ovl.uiState.isTouch = isTouch()

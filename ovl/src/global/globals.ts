@@ -109,6 +109,7 @@ export const focusOut = async event => {
 }
 
 export const beforeUnload = async event => {
+  console.log("uuuunlooooadd")
   if (
     !OvlConfig._system.IsDev &&
     //@ts-ignore
@@ -119,7 +120,10 @@ export const beforeUnload = async event => {
     event.preventDefault()
     let dt = Date.now()
     let st: number = OvlTimestamp
+    console.log("uuuunlooooadd2")
     if (dt - st > 5000) {
+      console.log("uuuunlooooadd3")
+      console.log(translations.t.AppQuitMessage)
       event.returnValue = translations.t.AppQuitMessage
     }
 

@@ -187,7 +187,10 @@ export const HandleRefresh: AsyncAction = async ({
   SnackAdd("Daten aufgefrischt", "Success")
 }
 
-export const CustomInit: AsyncAction = async ({ actions }, _) => {
+export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
+  if (state.ovl.user.token) {
+    return
+  }
   let fields: { [key: string]: FormFields } = {
     pw: { value: "" },
     user: { value: "" }
