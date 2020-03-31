@@ -125,20 +125,6 @@ body {
   z-index: 0;
 }
 
-/* td {
-  word-wrap: break-word;
-}
-th {
-  word-wrap: break-word;
-} */
-
-.uifdllink {
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -168,7 +154,7 @@ th {
 
 @media (orientation: landscape) {
   .ovldialogcentered {
-    width: 400px;
+    width: 350px;
     position: absolute;
     top: 43%;
     left: 50%;
@@ -177,7 +163,7 @@ th {
   }
 
   .ovlsnackbar {
-    width: 30vw;
+    width: 40vw;
     position: absolute;
     bottom: 0;
     right: 0;

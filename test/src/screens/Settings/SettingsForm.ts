@@ -24,10 +24,13 @@ export class CompSettingsForm extends OvlFormElement {
       if (!this.state.ovl.libState.indicator.open) {
         let cancel: boolean = true
         if (this.formState.dirty) {
-          if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 1) {
-            this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
-            this.actions.ovl.navigation.NavigateBack()
+          if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 2) {
+            cancel = false
           }
+        }
+        if (cancel) {
+          this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
+          this.actions.ovl.navigation.NavigateBack()
         }
       }
     }

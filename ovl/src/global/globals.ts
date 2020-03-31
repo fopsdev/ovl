@@ -309,7 +309,8 @@ export const ResetT = () => {
 export const T = (key: string, reps?: string[]): string => {
   // check for mobile key and use translation for mobile users to get shorter translations if applicable (key_M)
   //@ts-ignore
-  if (window.isMobile.phone) {
+  let uiState = overmind.state.ovl.uiState
+  if (uiState.isMobile) {
     let mobileKey = key + "_M"
     if (overmind.state.ovl.language.translations[mobileKey]) {
       key = mobileKey
@@ -325,7 +326,7 @@ export const T = (key: string, reps?: string[]): string => {
   }
   let str = overmind.state.ovl.language.translations[key]
   if (str === undefined || str === null) {
-    if (overmind.state.ovl.uiState.isReady) {
+    if (uiState.isReady) {
       console.warn("Ovl Translations: key " + key + " not found")
     }
     return ""

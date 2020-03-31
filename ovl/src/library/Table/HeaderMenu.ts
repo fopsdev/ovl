@@ -856,6 +856,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       `
     }
     let headerMenuwidth = "width:50vw;"
+    alert("ismbile")
     if (this.state.ovl.uiState.isMobile) {
       headerMenuwidth = "width:90vw;"
     }

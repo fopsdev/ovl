@@ -75,7 +75,7 @@ export class OvlTextArea extends OvlBaseElement {
         @change=${e => this.handleChange(e)}
         @focusout=${e => this.handleFocusOut(e)}
         style="${align}"
-        class="fd-textarea ${res.validationType}"
+        class="fd-textarea ${res.validationType} fd-has-type-1"
         id="${field.id}"
       >
 ${field.value}</textarea
