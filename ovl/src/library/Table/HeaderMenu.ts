@@ -303,6 +303,7 @@ export class TableHeaderMenu extends OvlBaseElement {
             this.headerMenu.def,
             def.uiState.headerSelected
           )
+          let selectedDataField = def.columns[selectedColumn].datafield
           let allText = "Alle..."
           let othersText = "Alle anderen..."
           let emptyText = "(leer)"
@@ -320,7 +321,7 @@ export class TableHeaderMenu extends OvlBaseElement {
             let count = 1
             if (!alreadyProcessed.has(k1)) {
               alreadyProcessed.add(k1)
-              let val = data[k1][selectedColumn]
+              let val = data[k1][selectedDataField]
               let displayVal = getDisplayValue(columnDef, data[k1])
               let keyval = val
               if (!keyval) {
@@ -330,7 +331,7 @@ export class TableHeaderMenu extends OvlBaseElement {
               for (let i = 0; i < dataKeys.length; i++) {
                 let k2 = dataKeys[i]
                 if (!alreadyProcessed.has(k2)) {
-                  let val2 = data[k2][selectedColumn]
+                  let val2 = data[k2][selectedDataField]
                   if (val === val2) {
                     alreadyProcessed.add(k2)
                     count++

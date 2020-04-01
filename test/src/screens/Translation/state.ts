@@ -1,8 +1,10 @@
 import { TableDef } from "../../../../ovl/src/library/Table/Table"
 
 export type Translation = {
-  ID: string
-  Translation: string
+  U_Code: string
+  U_Group: string
+  TranslationDE: string
+  TranslationFR: string
 }
 
 export type TblTranslation = {
@@ -13,29 +15,38 @@ export let tblTranslation: TableDef = {
   id: "translation",
   namespace: "portal.system.translations",
   database: {
-    dataIdField: "ID",
-    dbInsertMode: "UDTAutoNumber"
-  },
-  dataFetching: {
-    useSchema: false,
-    useCustomDataFetching: true
+    dataIdField: "Code",
+    dbInsertMode: "UDTAutoGUID"
   },
   server: {
     endpoint: "translation"
   },
   columns: {
-    ID: {
+    Group: {
       editable: true,
-      caption: "Id",
-      datafield: "ID",
-      width: 20,
+      caption: "Gruppe",
+      datafield: "U_Group",
+      sortable: true,
+      filter: { top: 10 }
+    },
+    TCode: {
+      editable: true,
+      caption: "Code",
+      datafield: "U_Code",
       sortable: true
     },
-    Translation: {
+
+    TranslationDE: {
       editable: true,
-      caption: "Translation",
-      datafield: "Translation",
-      width: 80,
+      caption: "Deutsch",
+      datafield: "U_DE",
+      sortable: true,
+      control: "textarea"
+    },
+    TranslationFR: {
+      editable: true,
+      caption: "Französisch",
+      datafield: "U_FR",
       sortable: true,
       control: "textarea"
     }

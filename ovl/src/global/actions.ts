@@ -153,16 +153,11 @@ export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
   // saveState()
 }
 
-export const ToggleLanguage: AsyncAction = async (
+export const GetLanguage: AsyncAction<string> = async (
   { state, actions, effects },
   value
 ) => {
-  let lang = ""
-  if (state.ovl.language.language === "FR") {
-    lang = "DE"
-  } else {
-    lang = "FR"
-  }
+  let lang = value
   let res = await effects.postRequest(api.url + "users/translations", {
     language: lang
   })
@@ -174,7 +169,6 @@ export const ToggleLanguage: AsyncAction = async (
       res.data
     )
   }
-
   localStorage.setItem("PortalLanguage", res.data.lang)
 }
 

@@ -663,20 +663,21 @@ export const TableFilterFn = (
         )
         .some(columnId => {
           let column = columns[columnId]
+          let dataField = column.datafield
           let filter = column.filter
           if (filter.isOthersSelected) {
             // match only others
             return Object.keys(filter.filterValues).some(k => {
               let selectedFilter = filter.filterValues[k]
 
-              if (selectedFilter.value === data[rowKey][columnId]) {
+              if (selectedFilter.value === data[rowKey][dataField]) {
                 return true
               }
             })
           } else {
             // match exact
             let selectedFilter = filter.filterValues[filter.selected]
-            return selectedFilter.value !== data[rowKey][columnId]
+            return selectedFilter.value !== data[rowKey][dataField]
           }
         })
     })

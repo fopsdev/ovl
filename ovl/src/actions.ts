@@ -34,7 +34,7 @@ import {
   RehydrateAndUpdateApp,
   GetFile,
   PrepareApp,
-  ToggleLanguage,
+  GetLanguage,
   SetVisibleFalse
 } from "./global/actions"
 
@@ -147,7 +147,7 @@ let internal = {
   RehydrateAndUpdateApp,
   GetFile,
   PrepareApp,
-  ToggleLanguage,
+  GetLanguage,
   SetVisibleFalse,
   ChangeField,
   SetField,

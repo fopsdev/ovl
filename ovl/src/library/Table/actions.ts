@@ -322,6 +322,7 @@ export const TableRefresh: AsyncAction<{
     forceFreshServerData,
     state.ovl.uiState.isMobile
   )
+
   let def = value.def
   let data = value.data.data
   let dataAndState = value.data
@@ -344,14 +345,15 @@ export const TableRefresh: AsyncAction<{
   }
   let restable = TableFilterFn({ def, data: dataAndState })
   const sortfield = def.options.sort.field
+  const sortDataField = def.columns[sortfield].datafield
   const ascending = def.options.sort.direction === "asc" ? 1 : -1
   let res: number = 0
   restable = restable.sort((a, b) => {
     if (customSortFn !== undefined) {
       return customSortFn(a, b, data, state, actions, effects)
     } else {
-      let valB = data[b][sortfield]
-      let valA = data[a][sortfield]
+      let valB = data[b][sortDataField]
+      let valA = data[a][sortDataField]
       let type = def.columns[sortfield].type
       if (!type) {
         type = "text"

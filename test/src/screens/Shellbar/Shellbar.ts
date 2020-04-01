@@ -144,10 +144,11 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleLanguage = async (e: Event) => {
-      await this.actions.ovl.internal.ToggleLanguage()
-      if (this.state.ovl.screens.nav.currentScreen === "Translation") {
-        this.actions.portal.system.translations.OpenLanguageTable()
+      let lang = "DE"
+      if (this.state.ovl.language.language === "DE") {
+        lang = "FR"
       }
+      await this.actions.ovl.internal.GetLanguage(lang)
     }
 
     const handleLanguageTable = (e: Event) => {
