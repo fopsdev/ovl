@@ -61,7 +61,7 @@ export class CompQuotationOverview extends OvlBaseElement {
                   <h3
                     class="sap-icon--tags sap-icon--xl fd-panel__title fd-has-type-3"
                   >
-                    ${T("AppQuotations")}
+                    ${T("PortalQuotations")}
                   </h3>
                 </div>
               </div>
@@ -74,13 +74,13 @@ export class CompQuotationOverview extends OvlBaseElement {
               <div class="fd-panel__header fd-has-padding-tiny">
                 <div class="fd-panel__head">
                   <h3 class="fd-panel__title">
-                    ${T("AppQuotationListTitle", [detailCount.toString()])}
+                    ${T("PortalQuotationListTitle", [detailCount.toString()])}
                     &nbsp;(
                     ${Object.keys(statusColors).map(
                       (k, i) =>
                         html`
                           <span class="${statusColors[k]}">
-                            ${T("AppQuotationStatus" + k)}${Object.keys(
+                            ${T("PortalQuotationStatus" + k)}${Object.keys(
                               statusColors
                             ).length -
                               1 ===
@@ -99,13 +99,13 @@ export class CompQuotationOverview extends OvlBaseElement {
                   <thead class="fd-table__header">
                     <tr class="fd-table__row">
                       <th class="fd-table__cell" width="2%" scope="col">
-                        ${T("AppPDF")}
+                        ${T("PortalPDF")}
                       </th>
                       <th class="fd-table__cell" width="20%" scope="col">
-                        ${T("AppNumber")}
+                        ${T("PortalNumber")}
                       </th>
                       <th class="fd-table__cell" width="53%" scope="col">
-                        ${T("AppCommission")}
+                        ${T("PortalCommission")}
                       </th>
                       <th class="fd-table__cell" width="25%" scope="col">
                         ${T("AppDate")}

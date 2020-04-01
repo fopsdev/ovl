@@ -21,7 +21,7 @@ export class CompOrderFeedback extends OvlBaseElement {
   getUI() {
     const handlePositiveFeedback = (e: Event) => {
       this.actions.portal.order.PreparePositiveFeedback({
-        message: T("AppFeedbackDefaultPositive")
+        message: T("PortalFeedbackDefaultPositive")
       })
 
       this.initFeedback()
@@ -30,7 +30,7 @@ export class CompOrderFeedback extends OvlBaseElement {
 
     const handleNegativeFeedback = (e: Event) => {
       this.actions.portal.order.PrepareNegativeFeedback({
-        message: T("AppFeedbackDefaultNegative")
+        message: T("PortalFeedbackDefaultNegative")
       })
       this.initFeedback()
       this.actions.ovl.navigation.NavigateTo("Feedback")
@@ -38,7 +38,7 @@ export class CompOrderFeedback extends OvlBaseElement {
 
     const handleDeliveryDateFeedback = (e: Event) => {
       this.actions.portal.order.PrepareDeliveryDateFeedback({
-        message: T("AppFeedbackDefaultDeliveryMsg")
+        message: T("PortalFeedbackDefaultDeliveryMsg")
       })
       this.initFeedback()
       this.actions.ovl.navigation.NavigateTo("Feedback")
@@ -49,7 +49,7 @@ export class CompOrderFeedback extends OvlBaseElement {
         <div class="fd-panel__header">
           <div class="fd-panel__head">
             <h3 class="fd-panel__title">
-              ${T("AppOrderFeedback")}
+              ${T("PortalOrderFeedback")}
             </h3>
           </div>
         </div>
@@ -60,7 +60,7 @@ export class CompOrderFeedback extends OvlBaseElement {
               @click=${handlePositiveFeedback}
               class="fd-button fd-button--positive sap-icon--thumb-up"
             >
-              ${T("AppPositiveFeedback")}
+              ${T("PortalPositiveFeedback")}
             </button>
           </div>
           <div>
@@ -69,7 +69,7 @@ export class CompOrderFeedback extends OvlBaseElement {
               @click=${handleNegativeFeedback}
               class="fd-button fd-button--negative sap-icon--thumb-down"
             >
-              ${T("AppNegativeFeedback")}
+              ${T("PortalNegativeFeedback")}
             </button>
           </div>
           <div>
@@ -78,7 +78,7 @@ export class CompOrderFeedback extends OvlBaseElement {
               @click=${handleDeliveryDateFeedback}
               class="fd-button sap-icon--date-time"
             >
-              ${T("AppDeliveryDateFeedback")}
+              ${T("PortalDeliveryDateFeedback")}
             </button>
           </div>
         </div>

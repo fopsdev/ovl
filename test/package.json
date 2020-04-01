@@ -32,7 +32,7 @@
     "parcel-bundler": "1.12.4",
     "parcel-plugin-compress": "1.1.0",
     "rimraf": "2.6.2",
-    "typescript": "3.7.3"
+    "typescript": "^3.7.3"
   },
   "browserslist": [
     "last 1 Chrome versions",

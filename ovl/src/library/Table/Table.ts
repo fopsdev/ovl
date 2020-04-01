@@ -9,7 +9,7 @@ import { HeaderMenuDef } from "./HeaderMenu"
 import { FieldFormat } from "../Forms/OvlFormElement"
 import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
-import { ovltemp, resolvePath } from "../../global/globals"
+import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
 
 export type SaveMode = "add" | "update"
@@ -394,7 +394,7 @@ export class TableHeader extends OvlBaseElement {
             break
         }
         columnsAlign[k] = cssAlign
-        let caption = column.caption
+        let caption = T(column.caption)
         if (!caption) {
           caption = column.datafield
         }

@@ -12,48 +12,48 @@ export class CompOrderDetail extends OvlBaseElement {
         <div class="fd-panel__header">
           <div class="fd-panel__head">
             <h3 class="fd-panel__title">
-              ${T("AppDetails")}
+              ${T("PortalDetails")}
             </h3>
           </div>
         </div>
         <div class="fd-panel__body">
           <div class="cols2">
             <div>
-              ${T("AppCardCode")}
+              ${T("PortalCardCode")}
             </div>
             <div>
               ${order.cardCode}
             </div>
             <div>
-              ${T("AppCardName")}
+              ${T("PortalCardName")}
             </div>
             <div>
               ${order.cardName}
             </div>
 
             <div>
-              ${T("AppOrderDocNum")}
+              ${T("PortalOrderDocNum")}
             </div>
             <div>
               ${key}
             </div>
 
             <div>
-              ${T("AppOrderDocDate")}
+              ${T("PortalOrderDocDate")}
             </div>
             <div>
               ${D(order.docDate)}
             </div>
 
             <div>
-              ${T("AppDeliveryDate")}
+              ${T("PortalDeliveryDate")}
             </div>
             <div>
               ${D(order.deliveryDate)}
             </div>
 
             <div>
-              ${T("AppCommission")}
+              ${T("PortalCommission")}
             </div>
             <div>
               ${order.refNum}

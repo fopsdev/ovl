@@ -15,7 +15,7 @@ export const PreparePositiveFeedback: Action<OrderFeedbackState> = (
   state.ovl.screens.screens.Feedback.refNum = order.refNum
   state.ovl.screens.screens.Feedback.message = value.message
   state.ovl.screens.screens.Feedback.title =
-    T("AppOrderFeedback") + " " + T("AppPositiveFeedback")
+    T("PortalOrderFeedback") + " " + T("PortalPositiveFeedback")
   state.ovl.screens.screens.Feedback.orderDate = order.docDate
   state.ovl.screens.screens.Feedback.orderDeliveryDate = order.deliveryDate
   state.ovl.screens.screens.Feedback.orderNum = key
@@ -33,7 +33,7 @@ export const PrepareNegativeFeedback: Action<OrderFeedbackState> = (
   state.ovl.screens.screens.Feedback.refNum = order.refNum
   state.ovl.screens.screens.Feedback.message = value.message
   state.ovl.screens.screens.Feedback.title =
-    T("AppOrderFeedback") + " " + T("AppNegativeFeedback")
+    T("PortalOrderFeedback") + " " + T("PortalNegativeFeedback")
   state.ovl.screens.screens.Feedback.orderDate = order.docDate
   state.ovl.screens.screens.Feedback.orderDeliveryDate = order.deliveryDate
   state.ovl.screens.screens.Feedback.orderNum = key
@@ -51,7 +51,7 @@ export const PrepareDeliveryDateFeedback: Action<OrderFeedbackState> = (
   state.ovl.screens.screens.Feedback.refNum = order.refNum
   state.ovl.screens.screens.Feedback.message = value.message
   state.ovl.screens.screens.Feedback.title =
-    T("AppOrderFeedback") + " " + T("AppDeliveryDateFeedback")
+    T("PortalOrderFeedback") + " " + T("PortalDeliveryDateFeedback")
   state.ovl.screens.screens.Feedback.orderDate = order.docDate
   state.ovl.screens.screens.Feedback.orderDeliveryDate = order.deliveryDate
   state.ovl.screens.screens.Feedback.orderNum = key

@@ -13,7 +13,7 @@ export const FeedbackValidateField: Action<ValidateField> = (_, value) => {
   switch (<FieldId>value.fieldId) {
     case "msg":
       Mandatory(
-        T("AppFeedbackPleaseEnterText"),
+        T("PortalFeedbackPleaseEnterText"),
         value.newVal,
         value.validationResult
       )
@@ -40,7 +40,7 @@ export const SaveFeedback: AsyncAction<FormState> = async (
     if (res.status !== 200) {
       return
     }
-    SnackAdd(T("AppFeedbackSaved"), "Success")
+    SnackAdd(T("PortalFeedbackSaved"), "Success")
     if (state.ovl.screens.nav.currentScreen === "Feedback") {
       actions.ovl.navigation.NavigateBack()
     }

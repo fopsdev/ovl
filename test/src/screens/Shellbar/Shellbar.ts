@@ -246,7 +246,7 @@ export class CompShellbar extends OvlBaseElement {
             aria-label=""
           >
             <span class="sap-icon--tags sap-icon--l fd-has-color-action-2">
-              ${T("AppQuotationTitle")}</span
+              ${T("PortalQuotationTitle")}</span
             >
           </button>
         `
@@ -257,7 +257,7 @@ export class CompShellbar extends OvlBaseElement {
               role="button"
               class="fd-menu__item sap-icon--tags sap-icon--l"
             >
-              ${T("AppQuotationTitle")}</a
+              ${T("PortalQuotationTitle")}</a
             >
           </li>
         `
@@ -273,7 +273,7 @@ export class CompShellbar extends OvlBaseElement {
             <span
               class="sap-icon--sales-order sap-icon--l fd-has-color-action-2"
             >
-              ${T("AppOrderTitle")}</span
+              ${T("PortalOrderTitle")}</span
             >
           </button>
         `
@@ -284,7 +284,7 @@ export class CompShellbar extends OvlBaseElement {
               role="button"
               class="fd-menu__item sap-icon--sales-order sap-icon--l"
             >
-              ${T("AppOrderTitle")}</a
+              ${T("PortalOrderTitle")}</a
             >
           </li>
         `
@@ -303,7 +303,7 @@ export class CompShellbar extends OvlBaseElement {
             aria-label=""
           >
             <span class="sap-icon--receipt sap-icon--l fd-has-color-action-2">
-              ${T("AppInvoiceTitle")}</span
+              ${T("PortalInvoiceTitle")}</span
             >
           </button>
         `
@@ -314,7 +314,7 @@ export class CompShellbar extends OvlBaseElement {
               role="button"
               class="fd-menu__item sap-icon--receipt sap-icon--l"
             >
-              ${T("AppInvoiceTitle")}</a
+              ${T("PortalInvoiceTitle")}</a
             >
           </li>
         `
@@ -439,7 +439,7 @@ export class CompShellbar extends OvlBaseElement {
                   <span
                     class="sap-icon--home sap-icon--l fd-has-color-action-2"
                   >
-                    ${T("AppDashboardTitle")}</span
+                    ${T("PortalDashboardTitle")}</span
                   >
                 </button>
 
@@ -487,7 +487,7 @@ export class CompShellbar extends OvlBaseElement {
                               role="button"
                               class="fd-menu__item sap-icon--home sap-icon--l"
                             >
-                              ${T("AppDashboardTitle")}</a
+                              ${T("PortalDashboardTitle")}</a
                             >
                           </li>
                           ${quotationListMenu} ${orderListMenu}

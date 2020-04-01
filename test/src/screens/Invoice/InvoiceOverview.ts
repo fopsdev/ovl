@@ -56,7 +56,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
                     <h3
                       class="sap-icon--receipt sap-icon--xl fd-panel__title fd-has-type-3"
                     >
-                      ${T("AppInvoices")}
+                      ${T("PortalInvoices")}
                     </h3>
                   </div>
                 </div>
@@ -69,7 +69,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
                 <div class="fd-panel__header fd-has-padding-tiny">
                   <div class="fd-panel__head">
                     <h3 class="fd-panel__title">
-                      ${T("AppInvoiceListTitle", [detailCount.toString()])}
+                      ${T("PortalInvoiceListTitle", [detailCount.toString()])}
                     </h3>
                   </div>
                 </div>
@@ -78,19 +78,19 @@ export class CompInvoiceOverview extends OvlBaseElement {
                     <thead class="fd-table__header">
                       <tr class="fd-table__row">
                         <th class="fd-table__cell" width="2%" scope="col">
-                          ${T("AppPDF")}
+                          ${T("PortalPDF")}
                         </th>
                         <th class="fd-table__cell" width="20%" scope="col">
-                          ${T("AppNumber")}
+                          ${T("PortalNumber")}
                         </th>
                         <th class="fd-table__cell" width="43%" scope="col">
-                          ${T("AppCommission")}
+                          ${T("PortalCommission")}
                         </th>
                         <th class="fd-table__cell" width="25%" scope="col">
                           ${T("AppDate")}
                         </th>
                         <!-- <th class="fd-table__cell" width="10%" scope="col" style="text-align: right;">
-                        ${T("AppInvoicePaidRate")}
+                        ${T("PortalInvoicePaidRate")}
                       </th> -->
                       </tr>
                     </thead>

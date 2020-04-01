@@ -27,7 +27,7 @@ export class CompSummaryChart extends OvlBaseElement {
       ),
       datasets: [
         {
-          label: T("AppCurrentYear"),
+          label: T("PortalCurrentYear"),
           data: JSON.parse(
             JSON.stringify(this.state.portal.chartData.values_1)
           ),
@@ -40,7 +40,7 @@ export class CompSummaryChart extends OvlBaseElement {
           borderWidth: 1
         },
         {
-          label: T("AppLastYear"),
+          label: T("PortalLastYear"),
           data: JSON.parse(
             JSON.stringify(this.state.portal.chartData.values_2)
           ),
@@ -93,7 +93,7 @@ export class CompSummaryChart extends OvlBaseElement {
           },
           title: {
             display: true,
-            text: T("AppChartOrderQtyTitle")
+            text: T("PortalChartOrderQtyTitle")
           }
         }
       })
@@ -101,7 +101,7 @@ export class CompSummaryChart extends OvlBaseElement {
       //this.chart.update()
     } else {
       this.chart.data = this.getData()
-      this.chart.options.title.text = T("AppChartOrderQtyTitle")
+      this.chart.options.title.text = T("PortalChartOrderQtyTitle")
       this.chart.update()
     }
   }

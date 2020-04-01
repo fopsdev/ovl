@@ -53,7 +53,7 @@ export class CompFileList extends OvlBaseElement {
         <thead class="fd-table__header">
           <tr class="fd-table__row">
             <th class="fd-table__cell " scope="col">
-              ${T("AppFileName")}
+              ${T("PortalFileName")}
             </th>
           </tr>
         </thead>

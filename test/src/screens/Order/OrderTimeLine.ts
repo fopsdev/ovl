@@ -14,10 +14,10 @@ export class CompOrderTimeLine extends OvlBaseElement {
             <div class="fd-panel__header fd-has-padding-tiny timelinenextarrow">
               <div class="fd-panel__head">
                 <h3 class="fd-panel__title">
-                  ${T("AppOrderConfirm")}
+                  ${T("PortalOrderConfirm")}
                 </h3>
                 <p class="fd-panel__description">
-                  ${order.steps.step1.date !== null ? T("AppSendDate") : ""}
+                  ${order.steps.step1.date !== null ? T("PortalSendDate") : ""}
                   <b>${D(order.steps.step1.date)}</b>
                 </p>
               </div>
@@ -37,10 +37,10 @@ export class CompOrderTimeLine extends OvlBaseElement {
             <div class="fd-panel__header fd-has-padding-tiny timelinenextarrow">
               <div class="fd-panel__head">
                 <h3 class="fd-panel__title">
-                  ${T("AppOrderPrepare")}
+                  ${T("PortalOrderPrepare")}
                 </h3>
                 <p class="fd-panel__description">
-                  ${order.steps.step2.date !== null ? T("AppSendDate") : ""}
+                  ${order.steps.step2.date !== null ? T("PortalSendDate") : ""}
                   <b>${D(order.steps.step2.date)}</b>
                 </p>
               </div>
@@ -60,7 +60,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
             <div class="fd-panel__header fd-has-padding-tiny timelinenextarrow">
               <div class="fd-panel__head">
                 <h3 class="fd-panel__title">
-                  ${T("AppOrderProduction")}
+                  ${T("PortalOrderProduction")}
                 </h3>
                 <p class="fd-panel__description">
                   &nbsp;
@@ -82,10 +82,10 @@ export class CompOrderTimeLine extends OvlBaseElement {
             <div class="fd-panel__header fd-has-padding-tiny">
               <div class="fd-panel__head">
                 <h3 class="fd-panel__title">
-                  ${T("AppOrderDelivery")}
+                  ${T("PortalOrderDelivery")}
                 </h3>
                 <p class="fd-panel__description">
-                  ${order.steps.step4.date !== null ? T("AppSendDate") : ""}
+                  ${order.steps.step4.date !== null ? T("PortalSendDate") : ""}
                   <b>${D(order.steps.step4.date)}</b>
                 </p>
               </div>

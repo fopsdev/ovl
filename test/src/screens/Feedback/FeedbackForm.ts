@@ -64,32 +64,32 @@ export class CompFeedbackForm extends OvlFormElement {
         <div class="fd-panel__body">
           <div class="cols2">
             <div>
-              ${T("AppCardCode")}
+              ${T("PortalCardCode")}
             </div>
             <div>
               ${feedback.cardCode}
             </div>
             <div>
-              ${T("AppOrderDocNum")}
+              ${T("PortalOrderDocNum")}
             </div>
             <div>
               ${feedback.orderNum}
             </div>
             <div>
-              ${T("AppCommission")}
+              ${T("PortalCommission")}
             </div>
             <div>
               ${feedback.refNum}
             </div>
 
             <div>
-              ${T("AppOrderDocDate")}
+              ${T("PortalOrderDocDate")}
             </div>
             <div>
               ${D(feedback.orderDate)}
             </div>
             <div>
-              ${T("AppDeliveryDate")}
+              ${T("PortalDeliveryDate")}
             </div>
             <div>
               ${D(feedback.orderDeliveryDate)}
@@ -103,7 +103,7 @@ export class CompFeedbackForm extends OvlFormElement {
                 .props=${state => {
                   return <TextAreaControlState>{
                     field: msgField,
-                    label: T("AppFeedbackPleaseEnterText")
+                    label: T("PortalFeedbackPleaseEnterText")
                   }
                 }}
               >
@@ -116,7 +116,7 @@ export class CompFeedbackForm extends OvlFormElement {
             @click=${handleOk}
             class="fd-button"
           >
-            ${T("AppFeedbackSend")}
+            ${T("PortalFeedbackSend")}
           </button>
           <button
             ?disabled=${this.state.ovl.libState.indicator.open ||

@@ -21,7 +21,7 @@ export class CompDashboard extends OvlBaseElement {
             <div class="fd-panel__header">
               <div class="fd-panel__head">
                 <p class="fd-panel__title fd-has-type-2">
-                ${T("AppWelcome", [
+                ${T("PortalWelcome", [
                   this.state.portal.user.firstName,
                   this.state.portal.user.lastName,
                   partner.cardName
@@ -39,7 +39,7 @@ export class CompDashboard extends OvlBaseElement {
             <div class="fd-panel__header fd-has-padding-tiny fd-has-margin-tiny">
               <div class="fd-panel__head">
                 <h3 class="fd-panel__title">
-                  ${T("AppFilesTitle")}
+                  ${T("PortalFilesTitle")}
                 </h3>
               </div>
             </div>
@@ -55,7 +55,7 @@ export class CompDashboard extends OvlBaseElement {
             <div class="fd-panel__header fd-has-padding-tiny fd-has-margin-tiny">
               <div class="fd-panel__head">
                 <h3 class="fd-panel__title">
-                  ${T("AppContactSalesTitle")}
+                  ${T("PortalContactSalesTitle")}
                 </h3>
               </div>
             </div>
@@ -82,7 +82,7 @@ export class CompDashboard extends OvlBaseElement {
             <div class="fd-panel__header fd-has-padding-tiny fd-has-margin-tiny">
               <div class="fd-panel__head">
                 <h3 class="fd-panel__title">
-                  ${T("AppContactTechnicTitle")}
+                  ${T("PortalContactTechnicTitle")}
                 </h3>
               </div>
             </div>

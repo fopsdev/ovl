@@ -21,7 +21,7 @@ export class CompOrderDetailLayout extends OvlBaseElement {
           <h3
             class="sap-icon--sales-order sap-icon--xl fd-panel__title"
           >
-            ${T("AppOrderDetail", [key])}
+            ${T("PortalOrderDetail", [key])}
           </h3>
         
       </section>
@@ -41,14 +41,14 @@ export class CompOrderDetailLayout extends OvlBaseElement {
           class="fd-section fd-has-type-1"
           style="text-align: center;"
         >
-          ${T("AppOrderTimelineTitle")}
+          ${T("PortalOrderTimelineTitle")}
         </section>
         <comp-ordertimeline></comp-ordertimeline>
         <section
           class="fd-section  fd-has-type-1"
           style="text-align: center;"
         >
-          ${T("AppOrderFilesTitle")}
+          ${T("PortalOrderFilesTitle")}
         </section>
 
         <div class="fd-container fd-container--fluid">

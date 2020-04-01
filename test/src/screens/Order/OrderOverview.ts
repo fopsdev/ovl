@@ -68,7 +68,7 @@ export class CompOrderOverview extends OvlBaseElement {
                   <h3
                     class="sap-icon--sales-order sap-icon--xl fd-panel__title fd-has-type-3"
                   >
-                    ${T("AppOrders")}
+                    ${T("PortalOrders")}
                   </h3>
                 </div>
               </div>
@@ -81,7 +81,7 @@ export class CompOrderOverview extends OvlBaseElement {
               <div class="fd-panel__header fd-has-padding-tiny">
                 <div class="fd-panel__head">
                   <h3 class="fd-panel__title">
-                    ${T("AppOrderListTitle", [detailCount.toString()])}
+                    ${T("PortalOrderListTitle", [detailCount.toString()])}
                   </h3>
                 </div>
               </div>
@@ -90,19 +90,19 @@ export class CompOrderOverview extends OvlBaseElement {
                   <thead class="fd-table__header">
                     <tr class="fd-table__row">
                       <th class="fd-table__cell" width="2%" scope="col">
-                        ${T("AppPDF")}
+                        ${T("PortalPDF")}
                       </th>
                       <th class="fd-table__cell" width="4%" scope="col">
-                        ${T("AppNumber")}
+                        ${T("PortalNumber")}
                       </th>
                       <th class="fd-table__cell" width="38%" scope="col">
-                        ${T("AppCommission")}
+                        ${T("PortalCommission")}
                       </th>
                       <th class="fd-table__cell" width="26%" scope="col">
                         ${T("AppDate")}
                       </th>
                       <th class="fd-table__cell" width="28%" scope="col">
-                        ${T("AppDeliveryDate")}
+                        ${T("PortalDeliveryDate")}
                       </th>
                     </tr>
                   </thead>
@@ -177,7 +177,7 @@ export class CompOrderOverview extends OvlBaseElement {
                             </td>
                             <td class="fd-table__cell">
                               <button
-                                title="${T("AppDetails")}"
+                                title="${T("PortalDetails")}"
                                 @click=${e => this.handleDetail(e, k)}
                                 class="fd-button fd-button--compact fd-has-font-weight-semi"
                               >

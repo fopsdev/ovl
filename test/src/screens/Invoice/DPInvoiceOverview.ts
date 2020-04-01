@@ -51,7 +51,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                   <h3
                     class="sap-icon--receipt sap-icon--xl fd-panel__title fd-has-type-3"
                   >
-                    ${T("AppDPInvoices")}
+                    ${T("PortalDPInvoices")}
                   </h3>
                 </div>
               </div>
@@ -64,9 +64,9 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
               <div class="fd-panel__header fd-has-padding-tiny">
                 <div class="fd-panel__head">
                   <h3 class="fd-panel__title">
-                    ${T("AppDPInvoiceListTitle", [detailCount.toString()])}
+                    ${T("PortalDPInvoiceListTitle", [detailCount.toString()])}
                     <!-- &nbsp;(<span class="fd-has-background-color-background-5">${T(
-                      "AppInvoiceOverdue"
+                      "PortalInvoiceOverdue"
                     )}</span>) -->
                   </h3>
                 </div>
@@ -76,19 +76,19 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                   <thead class="fd-table__header">
                     <tr class="fd-table__row">
                     <th class="fd-table__cell" width="2%" scope="col">${T(
-                      "AppPDF"
+                      "PortalPDF"
                     )}</th>
                       <th class="fd-table__cell" width="20%" scope="col">${T(
-                        "AppNumber"
+                        "PortalNumber"
                       )}</th>
                       <th class="fd-table__cell" width="53%" scope="col">${T(
-                        "AppCommission"
+                        "PortalCommission"
                       )}</th>
                       <th class="fd-table__cell" width="25%" scope="col">${T(
                         "AppDate"
                       )}</th>
                       <!-- <th class="fd-table__cell" width="10%" scope="col" style="text-align: right;">
-                        ${T("AppInvoicePaidRate")}
+                        ${T("PortalInvoicePaidRate")}
                       </th> -->
                       
                       
