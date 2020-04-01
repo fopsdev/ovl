@@ -31,6 +31,8 @@ export type TableData = {
   tableDef: { [key: string]: TableDef }
   timestamp?: number
   lookupTypes?: { [key: string]: DataType }
+  lookupTypes2?: { [key: string]: DataType }
+  lookupTypes3?: { [key: string]: DataType }
 }
 
 export type TableDataAndDef = {
@@ -244,6 +246,9 @@ export type ListFnReturnValue = {
     [key: string]: {}
   }
   lookupTypes?: { [key: string]: DataType }
+  /* use alternative lookups, maybe some selects doesn't need all the columns displayed in the select list, so here they are customizable */
+  lookupTypes2?: { [key: string]: DataType }
+  lookupTypes3?: { [key: string]: DataType }
 }
 
 export type ColumnFilter = {

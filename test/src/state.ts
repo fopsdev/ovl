@@ -186,7 +186,8 @@ export let testtables = {
       tab1: tblTableTesting,
       tab2: tblTableTesting2
     },
-    lookupTypes: { U_Alpha: "text" }
+    lookupTypes: { U_Alpha: "text" },
+    lookupTypes2: { U_Alpha: "text", U_Date: "date" }
   },
   timeentries: <TableData>{
     data: {},
