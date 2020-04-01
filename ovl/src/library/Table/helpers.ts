@@ -39,11 +39,12 @@ export const getDateSort = (valA: string, valB: string): number => {
 }
 
 export const getDisplayValue = (
+  key: string,
   col: ColumnDisplayDef,
   row: any,
   listdata?: ListFnReturnValue
 ): string => {
-  let value = row[col.datafield]
+  let value = row[key]
   if (col.list && listdata) {
     return GetListDisplayValue(col.list, value, listdata)
   }
@@ -475,14 +476,12 @@ export const initTableState = async (
     let columns = def.columns
     if (def.database.dataIdField && !def.columns[def.database.dataIdField]) {
       columns[def.database.dataIdField] = {
-        datafield: def.database.dataIdField,
         visible: false,
         sortable: true
       }
     }
     if (def.options.sort.field && !def.columns[def.options.sort.field]) {
       columns[def.options.sort.field] = {
-        datafield: def.options.sort.field,
         visible: false,
         sortable: true
       }
@@ -663,21 +662,21 @@ export const TableFilterFn = (
         )
         .some(columnId => {
           let column = columns[columnId]
-          let dataField = column.datafield
+
           let filter = column.filter
           if (filter.isOthersSelected) {
             // match only others
             return Object.keys(filter.filterValues).some(k => {
               let selectedFilter = filter.filterValues[k]
 
-              if (selectedFilter.value === data[rowKey][dataField]) {
+              if (selectedFilter.value === data[rowKey][columnId]) {
                 return true
               }
             })
           } else {
             // match exact
             let selectedFilter = filter.filterValues[filter.selected]
-            return selectedFilter.value !== data[rowKey][dataField]
+            return selectedFilter.value !== data[rowKey][columnId]
           }
         })
     })
@@ -711,7 +710,7 @@ export const TableFilterFn = (
     restable = restable.filter(rowKey => {
       return visibleColumns.some(columnId => {
         let column = columns[columnId]
-        const dispValue = getDisplayValue(column, data[rowKey])
+        const dispValue = getDisplayValue(columnId, column, data[rowKey])
         return (
           dispValue
             .toLowerCase()
@@ -729,7 +728,7 @@ export const getFormFieldsFromColumns = (def: TableDef, row) => {
   let columns = def.columns
   Object.keys(columns).map(k => {
     let col = columns[k]
-    let dispVal = getDisplayValue(col, row)
+    let dispVal = getDisplayValue(k, col, row)
     let type: DataType = undefined
     if (col.type) {
       type = col.type
@@ -738,8 +737,7 @@ export const getFormFieldsFromColumns = (def: TableDef, row) => {
       type,
       value: dispVal,
       format: col.format,
-      list: col.list,
-      datafield: col.datafield
+      list: col.list
     }
   })
   return formFields

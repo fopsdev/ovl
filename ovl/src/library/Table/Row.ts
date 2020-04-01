@@ -46,7 +46,7 @@ export class TableRow extends OvlBaseElement {
             }
           }
         }
-        let fieldvalue = getDisplayValue(col, row, listdata)
+        let fieldvalue = getDisplayValue(k, col, row, listdata)
         return html`
           <td class="fd-table__cell ${align[k]}">
             ${fieldvalue}

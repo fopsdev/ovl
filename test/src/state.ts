@@ -201,7 +201,7 @@ export let testtables = {
       lookupTypes: undefined
     },
 
-    ItmsGrpCod: <ListFnReturnValue>{
+    U_ItmsGrpCod: <ListFnReturnValue>{
       data: undefined,
       lookupTypes: undefined
     },

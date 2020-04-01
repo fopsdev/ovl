@@ -158,10 +158,7 @@ export class OvlHitList extends OvlBaseElement {
                   @keydown=${e => this.handleKeyDown(e, rowKey)}
                 >
                   ${lookupTypesKeys.map(c => {
-                    let val = getDisplayValue(
-                      { datafield: c, type: lookupTypes[c] },
-                      row
-                    )
+                    let val = getDisplayValue(c, { type: lookupTypes[c] }, row)
                     let leftPart = ""
                     let rightPart = ""
                     // mark hits

@@ -63,7 +63,7 @@ export const Login: AsyncAction<FormState> = async (
         lookupType: "initial"
       })
       state.testtables.lookups.U_ItemCode = res.data.item
-      state.testtables.lookups.ItmsGrpCod = res.data.itemGroup
+      state.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
 
       state.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
       state.testtables.lookups.ProjectTypeId = res.data.timeProjects

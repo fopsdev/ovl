@@ -220,7 +220,7 @@ export const TableRefreshDataFromServer: AsyncAction<{
   let dataFieldsToLookups: { [key: string]: string } = Object.keys(columns)
     .filter(f => columns[f].list && columns[f].list.serverEndpoint)
     .reduce((val, k) => {
-      val[columns[k].datafield] = k
+      val[k] = k
       return val
     }, {})
   // console.log("lookupinfo ")
@@ -279,9 +279,7 @@ export const TableRefreshDataFromServer: AsyncAction<{
               "Lookup: " +
                 value +
                 " für Spalte: " +
-                (lookupColumnDef.caption
-                  ? lookupColumnDef.caption
-                  : lookupColumnDef.datafield) +
+                (lookupColumnDef.caption ? lookupColumnDef.caption : k) +
                 " nicht gefunden...",
               "Warning"
             )
@@ -345,15 +343,15 @@ export const TableRefresh: AsyncAction<{
   }
   let restable = TableFilterFn({ def, data: dataAndState })
   const sortfield = def.options.sort.field
-  const sortDataField = def.columns[sortfield].datafield
+
   const ascending = def.options.sort.direction === "asc" ? 1 : -1
   let res: number = 0
   restable = restable.sort((a, b) => {
     if (customSortFn !== undefined) {
       return customSortFn(a, b, data, state, actions, effects)
     } else {
-      let valB = data[b][sortDataField]
-      let valA = data[a][sortDataField]
+      let valB = data[b][sortfield]
+      let valA = data[a][sortfield]
       let type = def.columns[sortfield].type
       if (!type) {
         type = "text"
@@ -487,8 +485,7 @@ const TableEditSaveRowHelper = async (
           isAdd
       )
       .reduce((val: {}, k, i) => {
-        let key = def.columns[k].datafield
-        val[key] = formState.fields[k].convertedValue
+        val[k] = formState.fields[k].convertedValue
         return val
       }, {})
   } else {
@@ -806,16 +803,15 @@ export const TableAddRow: AsyncAction<TableDataAndDef> = async (
   let def = value.def
   let newRow = Object.keys(def.columns).reduce((val, key) => {
     let column = def.columns[key]
-    if (column.datafield) {
+    if (column) {
       // if there is a columnfilter us that value
       if (
         column.filter.enabled &&
         column.filter.filterValues[column.filter.selected]
       ) {
-        val[column.datafield] =
-          column.filter.filterValues[column.filter.selected].value
+        val[key] = column.filter.filterValues[column.filter.selected].value
       } else {
-        val[column.datafield] = ""
+        val[key] = ""
       }
       return val
     }

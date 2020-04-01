@@ -220,7 +220,6 @@ export type DBInsertMode =
   | "Manual"
 
 export type ColumnDef = {
-  datafield: string
   control?: ControlType
   type?: DataType
   visible?: boolean
@@ -235,7 +234,6 @@ export type ColumnDef = {
 }
 
 export type ColumnDisplayDef = {
-  datafield: string
   type?: DataType
   format?: FieldFormat
   list?: ListState
@@ -396,7 +394,7 @@ export class TableHeader extends OvlBaseElement {
         columnsAlign[k] = cssAlign
         let caption = T(column.caption)
         if (!caption) {
-          caption = column.datafield
+          caption = k
         }
         return html`
           <th

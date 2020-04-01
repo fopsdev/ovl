@@ -42,23 +42,19 @@ export let tblMobileTimeRecording: TableDef = {
   },
   columns: {
     U_FromTime: {
-      datafield: "U_FromTime",
       caption: "Von Zeit",
       type: "time"
     },
     U_ToTime: {
-      datafield: "U_ToTime",
       type: "time",
       caption: "Bis Zeit"
     },
     U_Duration: {
-      datafield: "U_Duration",
       type: "decimal",
       caption: "Dauer",
       editable: false
     },
     U_Type: {
-      datafield: "U_Type",
       type: "text",
       control: "option",
       caption: "Typ",
@@ -69,7 +65,6 @@ export let tblMobileTimeRecording: TableDef = {
       }
     },
     U_TypeId: {
-      datafield: "U_TypeId",
       type: "text",
       caption: "Bezeichnung",
       list: {

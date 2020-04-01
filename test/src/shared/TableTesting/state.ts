@@ -10,6 +10,8 @@ export type TableTesting = {
   U_Decimal: number
 }
 
+export type TableTestingColumn = keyof TableTesting
+
 export type TblTableTesting = {
   [key: string]: TableTesting
 }
@@ -41,23 +43,22 @@ export let tblTableTesting: TableDef = {
   columns: {
     U_Alpha: {
       caption: "Text",
-      datafield: "U_Alpha",
+
       sortable: true,
       editable: true,
       width: 1
     },
     U_Memo: {
       caption: "Memo",
-      datafield: "U_Memo",
+
       sortable: true,
       editable: true,
       control: "textarea",
       width: 2
     },
-    ItmsGrpCod: {
+    U_ItmsGrpCod: {
       editable: true,
       caption: "Produktgruppe",
-      datafield: "U_ItmsGrpCod",
       sortable: true,
       control: "list",
       type: "int",
@@ -73,7 +74,6 @@ export let tblTableTesting: TableDef = {
     U_ItemCode: {
       editable: true,
       caption: "Produkt",
-      datafield: "U_ItemCode",
       sortable: true,
       control: "list",
       list: {
@@ -85,27 +85,22 @@ export let tblTableTesting: TableDef = {
       },
       width: 10
     },
-
     U_Date: {
       editable: true,
       caption: "Datum",
-      datafield: "U_Date",
       sortable: true,
       width: 2
     },
     U_Int: {
       editable: true,
       caption: "Zahl",
-      datafield: "U_Int",
       sortable: true,
       width: 1
     },
     U_Decimal: {
       editable: true,
       caption: "Wert",
-      datafield: "U_Decimal",
       sortable: true,
-
       width: 1
     }
   }
@@ -181,14 +176,14 @@ export let tblTableTesting2: TableDef = {
   columns: {
     U_Alpha: {
       caption: "Text",
-      datafield: "U_Alpha",
+
       sortable: true,
       editable: true,
       filter: { top: 3 }
     },
     U_Memo: {
       caption: "Memo",
-      datafield: "U_Memo",
+
       sortable: true,
       control: "textarea",
       editable: true
@@ -196,14 +191,13 @@ export let tblTableTesting2: TableDef = {
     U_Date: {
       editable: true,
       caption: "Datum",
-      datafield: "U_Date",
+
       sortable: true
     },
 
-    ItmsGrpCod: {
+    U_ItmsGrpCod: {
       editable: true,
       caption: "Produktgruppe",
-      datafield: "U_ItmsGrpCod",
       sortable: true,
       control: "list",
       type: "int",
@@ -219,7 +213,7 @@ export let tblTableTesting2: TableDef = {
     U_ItemCode: {
       editable: true,
       caption: "Produkt",
-      datafield: "U_ItemCode",
+
       sortable: true,
       control: "list",
       list: {
@@ -231,13 +225,23 @@ export let tblTableTesting2: TableDef = {
       }
     },
 
-    ParentCode: {
+    U_ParentCode: {
       editable: true,
       caption: "Referenz",
-      datafield: "U_ParentCode",
+
       sortable: true,
       control: "list",
 
+      list: {
+        valueField: "Code",
+        displayField: "U_Alpha"
+      }
+    },
+    U_ParentCode2: {
+      editable: true,
+      caption: "Referenz2",
+      sortable: true,
+      control: "list",
       list: {
         valueField: "Code",
         displayField: "U_Alpha"
@@ -247,14 +251,14 @@ export let tblTableTesting2: TableDef = {
     U_Int: {
       editable: true,
       caption: "Zahl",
-      datafield: "U_Int",
+
       sortable: true,
       filter: { top: 3 }
     },
     U_Decimal: {
       editable: true,
       caption: "Wert",
-      datafield: "U_Decimal",
+
       sortable: true,
       format: "4digits"
     }
