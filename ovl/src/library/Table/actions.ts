@@ -310,9 +310,14 @@ export const TableRefresh: AsyncAction<{
 }> = async ({ actions, state, effects }, value) => {
   let def = value.def
   let dataAndState = value.data
-
+  let ignoreRefreshedMessageSnack = value.ignoreRefreshedMessageSnack
   initTableState(def, dataAndState, state.ovl.uiState.isMobile)
-  await TableRefreshServerData(
+  if (dataAndState.timestamp === undefined) {
+    if (!ignoreRefreshedMessageSnack) {
+      ignoreRefreshedMessageSnack = true
+    }
+  }
+  let refreshedBecauseOfAge = await TableRefreshServerData(
     def,
     dataAndState,
     actions,
@@ -400,7 +405,7 @@ export const TableRefresh: AsyncAction<{
   def.uiState.dataFilteredAndSorted = restable
   def.uiState.needsRefresh = false
 
-  if (!value.ignoreRefreshedMessageSnack) {
+  if (refreshedBecauseOfAge || !ignoreRefreshedMessageSnack) {
     // let dt: number = Date.now()
     // if (lastRefreshMsg === undefined || dt - lastRefreshMsg > 3000) {
     //   lastRefreshMsg = dt

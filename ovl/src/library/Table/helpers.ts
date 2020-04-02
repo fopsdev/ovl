@@ -535,7 +535,8 @@ export const TableRefreshServerData = async (
   actions: typeof overmind.actions,
   refreshServerDataIfOlderThan?: number,
   forceServerDataRefresh?: boolean
-) => {
+): Promise<boolean> => {
+  let refreshedBecauseOfAge = false
   if (!def.dataFetching.useCustomDataFetching) {
     if (refreshServerDataIfOlderThan) {
       def.features.forceFreshServerDataIfOlderThan = refreshServerDataIfOlderThan
@@ -545,12 +546,12 @@ export const TableRefreshServerData = async (
           def.features.forceFreshServerDataIfOlderThan
       }
     }
-    if (
-      !data.timestamp ||
-      !!forceServerDataRefresh ||
-      (refreshServerDataIfOlderThan > 0 &&
-        data.timestamp + refreshServerDataIfOlderThan * 1000 < Date.now())
-    ) {
+
+    refreshedBecauseOfAge =
+      refreshServerDataIfOlderThan > 0 &&
+      data.timestamp + refreshServerDataIfOlderThan * 1000 < Date.now()
+
+    if (!data.timestamp || !!forceServerDataRefresh || refreshedBecauseOfAge) {
       // now if there is no data do a get request
       await actions.ovl.table.TableRefreshDataFromServer({
         def,
@@ -569,6 +570,7 @@ export const TableRefreshServerData = async (
       }
     }
   }
+  return Promise.resolve(refreshedBecauseOfAge)
 }
 
 export const TableFilterFn = (
