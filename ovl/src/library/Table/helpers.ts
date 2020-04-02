@@ -310,27 +310,24 @@ export const setRefresh = (
   }
 }
 
-export const initTableState = async (
-  tableDef: TableDataAndDef,
-  actions: typeof overmind.actions,
-  forceFreshServerData: number,
+export const initTableState = (
+  def: TableDef,
+  data: TableData,
   isMobile: boolean
 ) => {
-  let def = tableDef.def
-  let data = tableDef.data
-
-  if (data === undefined) {
-    throw Error("ovl state init: data object not present")
-  }
-  if (data.data === undefined) {
-    data.data = {}
-  }
-
-  if (data.schema === undefined) {
-    data.schema = {}
-  }
   if (!def.initialised) {
     // prepare state/ complete state / set sensible defaults
+
+    if (data === undefined) {
+      throw Error("ovl state init: data object not present")
+    }
+    if (data.data === undefined) {
+      data.data = {}
+    }
+
+    if (data.schema === undefined) {
+      data.schema = {}
+    }
 
     if (!def.database.dataIdField) {
       if (def.database.dbInsertMode.indexOf("UDT") > -1) {
@@ -446,10 +443,8 @@ export const initTableState = async (
       features.showRefreshButton = true
     }
 
-    if (
-      features.forceFreshServerDataOnRefreshClickedIfOlderThan === undefined
-    ) {
-      features.forceFreshServerDataOnRefreshClickedIfOlderThan = -1
+    if (features.forceFreshServerDataIfOlderThan === undefined) {
+      features.forceFreshServerDataIfOlderThan = -1
     }
 
     if (!def.dataFetching) {
@@ -532,21 +527,38 @@ export const initTableState = async (
       }
     })
   }
+}
+
+export const TableRefreshServerData = async (
+  def: TableDef,
+  data: TableData,
+  actions: typeof overmind.actions,
+  refreshServerDataIfOlderThan?: number,
+  forceServerDataRefresh?: boolean
+) => {
   if (!def.dataFetching.useCustomDataFetching) {
+    if (refreshServerDataIfOlderThan) {
+      def.features.forceFreshServerDataIfOlderThan = refreshServerDataIfOlderThan
+    } else {
+      if (def.features.forceFreshServerDataIfOlderThan) {
+        refreshServerDataIfOlderThan =
+          def.features.forceFreshServerDataIfOlderThan
+      }
+    }
     if (
       !data.timestamp ||
-      forceFreshServerData === 0 ||
-      (forceFreshServerData > 0 &&
-        data.timestamp + forceFreshServerData * 1000 < Date.now())
+      !!forceServerDataRefresh ||
+      (refreshServerDataIfOlderThan > 0 &&
+        data.timestamp + refreshServerDataIfOlderThan * 1000 < Date.now())
     ) {
       // now if there is no data do a get request
       await actions.ovl.table.TableRefreshDataFromServer({
-        def: tableDef.def,
-        data: tableDef.data
+        def,
+        data
       })
     }
     if (!def.initialised) {
-      let schema = tableDef.data.schema
+      let schema = data.schema
       if (def.dataFetching.useSchema && schema !== undefined) {
         Object.keys(def.columns).forEach(f => {
           let col = def.columns[f]
@@ -557,7 +569,6 @@ export const initTableState = async (
       }
     }
   }
-  def.initialised = true
 }
 
 export const TableFilterFn = (

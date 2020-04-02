@@ -119,7 +119,7 @@ export type TableDef = {
 
     // put a 0 if it always should be refreshed, put a -1 if never, other numbers > 0 are considered as seconds
     // this is taken into account when the refresh button is clicked
-    forceFreshServerDataOnRefreshClickedIfOlderThan?: number
+    forceFreshServerDataIfOlderThan?: number
     noButtonsAtTheBottom?: boolean
     showRefreshButton?: boolean
   }

@@ -38,8 +38,8 @@ export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   await actions.ovl.table.TableRefresh({
     def,
     data,
-    init: true,
-    forceFreshServerData: 0
+    ignoreRefreshedMessageSnack: true,
+    forceServerDataRefresh: true
   })
 }
 

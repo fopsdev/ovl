@@ -14,7 +14,8 @@ import {
   selectLatestRow,
   setPage,
   setRefresh,
-  TableFilterFn
+  TableFilterFn,
+  TableRefreshServerData
 } from "../Table/helpers"
 import { deleteTableRow, setTableRow } from "./Helpers"
 import {
@@ -154,9 +155,7 @@ export const TableViewRefresh: Action<TableDataAndDef> = (
 ) => {
   actions.ovl.table.TableRefresh({
     def: value.def,
-    data: value.data,
-    forceFreshServerData:
-      value.def.features.forceFreshServerDataOnRefreshClickedIfOlderThan
+    data: value.data
   })
 }
 
@@ -303,28 +302,25 @@ export const TableRefreshDataFromServer: AsyncAction<{
 }
 let lastRefreshMsg: number = 0
 export const TableRefresh: AsyncAction<{
-  init?: boolean
-  forceFreshServerData?: number
+  ignoreRefreshedMessageSnack?: boolean
+  refreshServerDataIfOlderThan?: number
+  forceServerDataRefresh?: boolean
   def: TableDef
   data: TableData
 }> = async ({ actions, state, effects }, value) => {
-  let forceFreshServerData = value.forceFreshServerData
-
-  if (forceFreshServerData === undefined) {
-    // -1 means server doesn't get contacted
-    // which should be the default when calling TablRefresh without this param
-    forceFreshServerData = -1
-  }
-  await initTableState(
-    { def: value.def, data: value.data },
-    actions,
-    forceFreshServerData,
-    state.ovl.uiState.isMobile
-  )
-
   let def = value.def
-  let data = value.data.data
   let dataAndState = value.data
+
+  initTableState(def, dataAndState, state.ovl.uiState.isMobile)
+  await TableRefreshServerData(
+    def,
+    dataAndState,
+    actions,
+    value.refreshServerDataIfOlderThan,
+    value.forceServerDataRefresh
+  )
+  def.initialised = true
+  let data = value.data.data
   let columns = def.columns
 
   let customSortFn = undefined
@@ -404,12 +400,12 @@ export const TableRefresh: AsyncAction<{
   def.uiState.dataFilteredAndSorted = restable
   def.uiState.needsRefresh = false
 
-  if (!value.init) {
-    let dt: number = Date.now()
-    if (lastRefreshMsg === undefined || dt - lastRefreshMsg > 3000) {
-      lastRefreshMsg = dt
-      SnackAdd("Ansicht aktualisiert", "Success")
-    }
+  if (!value.ignoreRefreshedMessageSnack) {
+    // let dt: number = Date.now()
+    // if (lastRefreshMsg === undefined || dt - lastRefreshMsg > 3000) {
+    //   lastRefreshMsg = dt
+    SnackAdd("Ansicht aktualisiert", "Success")
+    //}
   }
 }
 export const TableDirectSaveRow: AsyncAction<{
@@ -423,7 +419,7 @@ export const TableDirectSaveRow: AsyncAction<{
   let rowToSave = value.rowToSave
   let key = rowToSave[def.database.dataIdField]
   if (!def.initialised) {
-    initTableState({ def, data }, actions, -1, state.ovl.uiState.isMobile)
+    initTableState(def, data, state.ovl.uiState.isMobile)
   }
   if (key === undefined) {
     key = ovltemp + uuidv4()

@@ -174,11 +174,12 @@ export const HandleRefresh: AsyncAction = async ({
   state.portal.dpInvoiceDetail = {
     dpInvoices: res.data.dpInvoiceDetail
   }
+
   //now call the screens refresh action if any
-  if (customFunctions.portal) {
-    let screen = state.ovl.screens.nav.currentScreen
-    let screensFunctions = customFunctions.portal["screens"]
+  if (customFunctions) {
+    let screensFunctions = customFunctions["screens"]
     if (screensFunctions) {
+      let screen = state.ovl.screens.nav.currentScreen
       if (screensFunctions[screen]) {
         if (screensFunctions[screen]["ScreenRefresh"]) {
           screensFunctions[screen]["ScreenRefresh"](state, actions, effects)

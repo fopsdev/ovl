@@ -38,7 +38,7 @@ export let tblTableTesting: TableDef = {
     page: true,
     add: true,
     noButtonsAtTheBottom: false,
-    forceFreshServerDataOnRefreshClickedIfOlderThan: 0
+    forceFreshServerDataIfOlderThan: 0
   },
   columns: {
     U_Alpha: {
@@ -171,7 +171,7 @@ export let tblTableTesting2: TableDef = {
     page: false,
     add: true,
     noButtonsAtTheBottom: true,
-    forceFreshServerDataOnRefreshClickedIfOlderThan: 10
+    forceFreshServerDataIfOlderThan: 10
   },
   columns: {
     U_Alpha: {
