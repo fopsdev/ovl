@@ -18,7 +18,7 @@
 
 Ƭ **DPInvoiceOverviewState**: *object*
 
-*Defined in [test/src/screens/Invoice/DPInvoiceOverview.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Invoice/DPInvoiceOverview.ts#L6)*
+*Defined in [test/src/screens/Invoice/DPInvoiceOverview.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Invoice/DPInvoiceOverview.ts#L6)*
 
 #### Type declaration:
 

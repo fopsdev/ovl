@@ -17,7 +17,7 @@
 
 ▸ **AddSnack**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Snack/actions.ts:76](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/actions.ts#L76)*
+*Defined in [ovl/src/library/Snack/actions.ts:76](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/actions.ts#L76)*
 
 **Parameters:**
 
@@ -45,7 +45,7 @@ ___
 
 ▸ **ClearSnack**(`__namedParameters`: object, `value`: string): *Promise‹void›*
 
-*Defined in [ovl/src/library/Snack/actions.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/actions.ts#L13)*
+*Defined in [ovl/src/library/Snack/actions.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/actions.ts#L13)*
 
 **Parameters:**
 
@@ -66,7 +66,7 @@ ___
 
 ▸ **PlaceSnack**(`__namedParameters`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Snack/actions.ts:39](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/actions.ts#L39)*
+*Defined in [ovl/src/library/Snack/actions.ts:39](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/actions.ts#L39)*
 
 **Parameters:**
 
@@ -84,7 +84,7 @@ ___
 
 ▸ **RemoveSnack**(`_`: object, `value`: string): *Promise‹void›*
 
-*Defined in [ovl/src/library/Snack/actions.ts:8](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/actions.ts#L8)*
+*Defined in [ovl/src/library/Snack/actions.ts:8](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/actions.ts#L8)*
 
 **Parameters:**
 

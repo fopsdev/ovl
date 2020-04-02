@@ -24,7 +24,7 @@
 
 ▸ **TableFilterFn**(`tableDataAndDef`: [TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef), `calledFromColumnFilterId?`: string): *string[]*
 
-*Defined in [ovl/src/library/Table/helpers.ts:563](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L563)*
+*Defined in [ovl/src/library/Table/helpers.ts:563](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L563)*
 
 **Parameters:**
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **deleteTableRow**(`tableDataAndDef`: [TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef), `key`: string): *void*
 
-*Defined in [ovl/src/library/Table/helpers.ts:193](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L193)*
+*Defined in [ovl/src/library/Table/helpers.ts:193](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L193)*
 
 **Parameters:**
 
@@ -58,7 +58,7 @@ ___
 
 ▸ **getDateSort**(`valA`: string, `valB`: string): *number*
 
-*Defined in [ovl/src/library/Table/helpers.ts:35](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L35)*
+*Defined in [ovl/src/library/Table/helpers.ts:35](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L35)*
 
 **Parameters:**
 
@@ -75,7 +75,7 @@ ___
 
 ▸ **getDisplayValue**(`key`: string, `col`: [ColumnDisplayDef](_ovl_src_library_table_table_.md#columndisplaydef), `row`: any, `listdata?`: [ListFnReturnValue](_ovl_src_library_table_table_.md#listfnreturnvalue)): *string*
 
-*Defined in [ovl/src/library/Table/helpers.ts:41](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L41)*
+*Defined in [ovl/src/library/Table/helpers.ts:41](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L41)*
 
 **Parameters:**
 
@@ -94,7 +94,7 @@ ___
 
 ▸ **getFormFieldsFromColumns**(`def`: [TableDef](_ovl_src_library_table_table_.md#tabledef), `row`: any): *object*
 
-*Defined in [ovl/src/library/Table/helpers.ts:698](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L698)*
+*Defined in [ovl/src/library/Table/helpers.ts:698](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L698)*
 
 **Parameters:**
 
@@ -113,7 +113,7 @@ ___
 
 ▸ **getTextSort**(`valA`: string, `valB`: string): *number*
 
-*Defined in [ovl/src/library/Table/helpers.ts:21](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L21)*
+*Defined in [ovl/src/library/Table/helpers.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L21)*
 
 **Parameters:**
 
@@ -130,7 +130,7 @@ ___
 
 ▸ **initTableState**(`tableDef`: [TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef), `actions`: typeof actions, `forceFreshServerData`: number, `isMobile`: boolean): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/helpers.ts:313](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L313)*
+*Defined in [ovl/src/library/Table/helpers.ts:313](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L313)*
 
 **Parameters:**
 
@@ -149,7 +149,7 @@ ___
 
 ▸ **selectLatestRow**(`def`: [TableDef](_ovl_src_library_table_table_.md#tabledef), `data`: [TableData](_ovl_src_library_table_table_.md#tabledata)): *void*
 
-*Defined in [ovl/src/library/Table/helpers.ts:212](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L212)*
+*Defined in [ovl/src/library/Table/helpers.ts:212](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L212)*
 
 **Parameters:**
 
@@ -166,7 +166,7 @@ ___
 
 ▸ **setPage**(`def`: [TableDef](_ovl_src_library_table_table_.md#tabledef), `data`: [TableData](_ovl_src_library_table_table_.md#tabledata), `rows`: object): *void*
 
-*Defined in [ovl/src/library/Table/helpers.ts:228](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L228)*
+*Defined in [ovl/src/library/Table/helpers.ts:228](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L228)*
 
 **Parameters:**
 
@@ -184,7 +184,7 @@ ___
 
 ▸ **setRefresh**(`def`: [TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef), `isAdd`: boolean, `updatedData`: object, `key`: string, `serverRefresh`: string): *void*
 
-*Defined in [ovl/src/library/Table/helpers.ts:250](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L250)*
+*Defined in [ovl/src/library/Table/helpers.ts:250](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L250)*
 
 **Parameters:**
 
@@ -204,7 +204,7 @@ ___
 
 ▸ **setTableRow**(`tableDataAndDef`: [TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef), `tempId`: string, `newId`: string, `newData`: any, `editMode`: boolean, `actions`: typeof actions): *void*
 
-*Defined in [ovl/src/library/Table/helpers.ts:75](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/helpers.ts#L75)*
+*Defined in [ovl/src/library/Table/helpers.ts:75](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/helpers.ts#L75)*
 
 **Parameters:**
 

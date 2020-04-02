@@ -22,7 +22,7 @@
 
 Ƭ **File**: *object*
 
-*Defined in [test/src/components/FileList/FileList.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/components/FileList/FileList.ts#L19)*
+*Defined in [test/src/components/FileList/FileList.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/components/FileList/FileList.ts#L19)*
 
 #### Type declaration:
 
@@ -36,7 +36,7 @@ ___
 
 Ƭ **FileList**: *object*
 
-*Defined in [test/src/components/FileList/FileList.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/components/FileList/FileList.ts#L24)*
+*Defined in [test/src/components/FileList/FileList.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/components/FileList/FileList.ts#L24)*
 
 #### Type declaration:
 
@@ -48,7 +48,7 @@ ___
 
 Ƭ **FileType**: *"MainAttachment" | "PartnerAttachment" | "Order" | "OrderAttachment" | "StepConfirmation" | "StepAVOR" | "StepProduction" | "StepDelivery" | "Quotation" | "Invoice" | "DPInvoice" | "Test"*
 
-*Defined in [test/src/components/FileList/FileList.ts:5](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/components/FileList/FileList.ts#L5)*
+*Defined in [test/src/components/FileList/FileList.ts:5](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/components/FileList/FileList.ts#L5)*
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 Ƭ **PopupState**: *object*
 
-*Defined in [test/src/components/FileList/FileList.ts:28](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/components/FileList/FileList.ts#L28)*
+*Defined in [test/src/components/FileList/FileList.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/components/FileList/FileList.ts#L28)*
 
 #### Type declaration:
 
@@ -68,7 +68,7 @@ ___
 
 Ƭ **TogglePDFPopupState**: *object*
 
-*Defined in [test/src/components/FileList/FileList.ts:31](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/components/FileList/FileList.ts#L31)*
+*Defined in [test/src/components/FileList/FileList.ts:31](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/components/FileList/FileList.ts#L31)*
 
 #### Type declaration:
 

@@ -18,7 +18,7 @@
 
 ▸ **DialogOk**(`text`: string): *Promise‹unknown›*
 
-Defined in ovl/src/library/helpers.ts:17
+*Defined in [ovl/src/library/helpers.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/helpers.ts#L17)*
 
 **Parameters:**
 
@@ -34,7 +34,7 @@ ___
 
 ▸ **DialogOkCancel**(`text`: string, `defaultButton`: [ResultType](_ovl_src_library_dialog_dialog_.md#resulttype)): *Promise‹unknown›*
 
-Defined in ovl/src/library/helpers.ts:6
+*Defined in [ovl/src/library/helpers.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/helpers.ts#L6)*
 
 **Parameters:**
 
@@ -51,7 +51,7 @@ ___
 
 ▸ **SnackAdd**(`text`: string, `type`: [SnackType](_ovl_src_library_snack_snack_.md#snacktype), `durationMs`: number): *Promise‹void›*
 
-Defined in ovl/src/library/helpers.ts:24
+*Defined in [ovl/src/library/helpers.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/helpers.ts#L24)*
 
 **Parameters:**
 
@@ -69,7 +69,7 @@ ___
 
 ▸ **SnackTrackedAdd**(`text`: string, `type`: [SnackType](_ovl_src_library_snack_snack_.md#snacktype), `key`: string): *Promise‹void›*
 
-Defined in ovl/src/library/helpers.ts:31
+*Defined in [ovl/src/library/helpers.ts:31](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/helpers.ts#L31)*
 
 **Parameters:**
 
@@ -87,7 +87,7 @@ ___
 
 ▸ **SnackTrackedRemove**(`key`: string): *Promise‹void›*
 
-Defined in ovl/src/library/helpers.ts:43
+*Defined in [ovl/src/library/helpers.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/helpers.ts#L43)*
 
 **Parameters:**
 

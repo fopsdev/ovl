@@ -45,7 +45,7 @@
 
 • **lastRefreshMsg**: *number* = 0
 
-*Defined in [ovl/src/library/Table/actions.ts:304](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L304)*
+*Defined in [ovl/src/library/Table/actions.ts:304](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L304)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 • **minimumFilterChars**: *3* = 3
 
-*Defined in [ovl/src/library/Table/actions.ts:38](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L38)*
+*Defined in [ovl/src/library/Table/actions.ts:38](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L38)*
 
 ## Functions
 
@@ -61,7 +61,7 @@ ___
 
 ▸ **TableAddRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:800](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L800)*
+*Defined in [ovl/src/library/Table/actions.ts:800](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L800)*
 
 **Parameters:**
 
@@ -88,7 +88,7 @@ ___
 
 ▸ **TableClearFilter**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:49](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L49)*
+*Defined in [ovl/src/library/Table/actions.ts:49](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L49)*
 
 **Parameters:**
 
@@ -113,7 +113,7 @@ ___
 
 ▸ **TableCopyRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:758](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L758)*
+*Defined in [ovl/src/library/Table/actions.ts:758](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L758)*
 
 **Parameters:**
 
@@ -141,7 +141,7 @@ ___
 
 ▸ **TableDeleteRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:864](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L864)*
+*Defined in [ovl/src/library/Table/actions.ts:864](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L864)*
 
 **Parameters:**
 
@@ -170,7 +170,7 @@ ___
 
 ▸ **TableDeleteRowFromData**(`_`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:1226](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L1226)*
+*Defined in [ovl/src/library/Table/actions.ts:1226](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L1226)*
 
 **Parameters:**
 
@@ -199,7 +199,7 @@ ___
 
 ▸ **TableDirectSaveRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:420](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L420)*
+*Defined in [ovl/src/library/Table/actions.ts:420](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L420)*
 
 **Parameters:**
 
@@ -227,7 +227,7 @@ ___
 
 ▸ **TableEditClose**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:701](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L701)*
+*Defined in [ovl/src/library/Table/actions.ts:701](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L701)*
 
 **Parameters:**
 
@@ -253,7 +253,7 @@ ___
 
 ▸ **TableEditRow**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:715](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L715)*
+*Defined in [ovl/src/library/Table/actions.ts:715](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L715)*
 
 **Parameters:**
 
@@ -279,7 +279,7 @@ ___
 
 ▸ **TableEditSaveRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:452](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L452)*
+*Defined in [ovl/src/library/Table/actions.ts:452](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L452)*
 
 **Parameters:**
 
@@ -307,7 +307,7 @@ ___
 
 ▸ **TableEditSaveRowHelper**(`key`: string, `def`: [TableDef](_ovl_src_library_table_table_.md#tabledef), `data`: [TableData](_ovl_src_library_table_table_.md#tabledata), `formState`: [FormState](_ovl_src_library_forms_actions_.md#formstate) | null, `state`: typeof state, `actions`: typeof actions, `rowToSave?`: object, `noSnack?`: boolean): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:463](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L463)*
+*Defined in [ovl/src/library/Table/actions.ts:463](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L463)*
 
 **Parameters:**
 
@@ -330,7 +330,7 @@ ___
 
 ▸ **TableFilter**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:105](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L105)*
+*Defined in [ovl/src/library/Table/actions.ts:105](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L105)*
 
 **Parameters:**
 
@@ -356,7 +356,7 @@ ___
 
 ▸ **TableFilterSelected**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:63](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L63)*
+*Defined in [ovl/src/library/Table/actions.ts:63](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L63)*
 
 **Parameters:**
 
@@ -381,7 +381,7 @@ ___
 
 ▸ **TableMoreRow**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:746](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L746)*
+*Defined in [ovl/src/library/Table/actions.ts:746](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L746)*
 
 **Parameters:**
 
@@ -407,7 +407,7 @@ ___
 
 ▸ **TableMultipleCopyRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:1038](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L1038)*
+*Defined in [ovl/src/library/Table/actions.ts:1038](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L1038)*
 
 **Parameters:**
 
@@ -434,7 +434,7 @@ ___
 
 ▸ **TableMultipleDeleteRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:934](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L934)*
+*Defined in [ovl/src/library/Table/actions.ts:934](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L934)*
 
 **Parameters:**
 
@@ -461,7 +461,7 @@ ___
 
 ▸ **TableMultipleEditRow**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:1133](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L1133)*
+*Defined in [ovl/src/library/Table/actions.ts:1133](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L1133)*
 
 **Parameters:**
 
@@ -488,7 +488,7 @@ ___
 
 ▸ **TableRefresh**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:310](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L310)*
+*Defined in [ovl/src/library/Table/actions.ts:310](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L310)*
 
 **Parameters:**
 
@@ -517,7 +517,7 @@ ___
 
 ▸ **TableRefreshDataFromServer**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/actions.ts:166](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L166)*
+*Defined in [ovl/src/library/Table/actions.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L166)*
 
 **Parameters:**
 
@@ -544,7 +544,7 @@ ___
 
 ▸ **TableSelectAll**(`__namedParameters`: object, `def`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:124](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L124)*
+*Defined in [ovl/src/library/Table/actions.ts:124](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L124)*
 
 **Parameters:**
 
@@ -570,7 +570,7 @@ ___
 
 ▸ **TableSelectColumnFilter**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:647](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L647)*
+*Defined in [ovl/src/library/Table/actions.ts:647](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L647)*
 
 **Parameters:**
 
@@ -598,7 +598,7 @@ ___
 
 ▸ **TableSelectCustomFilter**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:676](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L676)*
+*Defined in [ovl/src/library/Table/actions.ts:676](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L676)*
 
 **Parameters:**
 
@@ -623,7 +623,7 @@ ___
 
 ▸ **TableSelectCustomSort**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:633](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L633)*
+*Defined in [ovl/src/library/Table/actions.ts:633](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L633)*
 
 **Parameters:**
 
@@ -648,7 +648,7 @@ ___
 
 ▸ **TableSelectHeader**(`__namedParameters`: object, `def`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:76](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L76)*
+*Defined in [ovl/src/library/Table/actions.ts:76](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L76)*
 
 **Parameters:**
 
@@ -675,7 +675,7 @@ ___
 
 ▸ **TableSelectRow**(`_`: object, `selectRow`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:137](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L137)*
+*Defined in [ovl/src/library/Table/actions.ts:137](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L137)*
 
 **Parameters:**
 
@@ -704,7 +704,7 @@ ___
 
 ▸ **TableSetPage**(`_`: object, `pageDef`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:40](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L40)*
+*Defined in [ovl/src/library/Table/actions.ts:40](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L40)*
 
 **Parameters:**
 
@@ -732,7 +732,7 @@ ___
 
 ▸ **TableSort**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:93](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L93)*
+*Defined in [ovl/src/library/Table/actions.ts:93](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L93)*
 
 **Parameters:**
 
@@ -759,7 +759,7 @@ ___
 
 ▸ **TableViewRefresh**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/Table/actions.ts:151](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/actions.ts#L151)*
+*Defined in [ovl/src/library/Table/actions.ts:151](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/actions.ts#L151)*
 
 **Parameters:**
 

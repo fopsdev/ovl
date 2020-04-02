@@ -14,7 +14,7 @@
 
 ▸ **SaveSettings**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [test/src/screens/Settings/actions.ts:15](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Settings/actions.ts#L15)*
+*Defined in [test/src/screens/Settings/actions.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Settings/actions.ts#L15)*
 
 **Parameters:**
 

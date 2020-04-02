@@ -16,7 +16,7 @@
 
 ▸ **CloseOverlay2**(`__namedParameters`: object, `_`: void): *Promise‹void›*
 
-*Defined in [ovl/src/library/Overlay2/actions.ts:42](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Overlay2/actions.ts#L42)*
+*Defined in [ovl/src/library/Overlay2/actions.ts:42](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Overlay2/actions.ts#L42)*
 
 **Parameters:**
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **OpenOverlay2**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Overlay2/actions.ts:8](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Overlay2/actions.ts#L8)*
+*Defined in [ovl/src/library/Overlay2/actions.ts:8](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Overlay2/actions.ts#L8)*
 
 **Parameters:**
 
@@ -61,7 +61,7 @@ ___
 
 ▸ **StartCloseOverlay2**(`__namedParameters`: object, `_`: void): *Promise‹void›*
 
-*Defined in [ovl/src/library/Overlay2/actions.ts:30](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Overlay2/actions.ts#L30)*
+*Defined in [ovl/src/library/Overlay2/actions.ts:30](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Overlay2/actions.ts#L30)*
 
 **Parameters:**
 

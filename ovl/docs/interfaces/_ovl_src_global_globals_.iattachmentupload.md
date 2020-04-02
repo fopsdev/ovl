@@ -19,7 +19,7 @@
 
 • **DocEntry**: *number*
 
-*Defined in [ovl/src/global/globals.ts:397](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L397)*
+*Defined in [ovl/src/global/globals.ts:397](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L397)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **FileType**: *string*
 
-*Defined in [ovl/src/global/globals.ts:398](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L398)*
+*Defined in [ovl/src/global/globals.ts:398](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L398)*

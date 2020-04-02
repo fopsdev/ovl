@@ -19,7 +19,7 @@
 
 Ƭ **TextBoxControlState**: *object*
 
-*Defined in [ovl/src/library/Forms/Controls/TextBox.ts:8](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Forms/Controls/TextBox.ts#L8)*
+*Defined in [ovl/src/library/Forms/Controls/TextBox.ts:8](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/TextBox.ts#L8)*
 
 #### Type declaration:
 
@@ -37,4 +37,4 @@ ___
 
 Ƭ **TextBoxType**: *"text" | "password" | "text-security"*
 
-*Defined in [ovl/src/library/Forms/Controls/TextBox.ts:7](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Forms/Controls/TextBox.ts#L7)*
+*Defined in [ovl/src/library/Forms/Controls/TextBox.ts:7](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/TextBox.ts#L7)*

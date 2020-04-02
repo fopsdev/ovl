@@ -28,7 +28,7 @@
 
 Ƭ **FileInfoStore**: *object*
 
-*Defined in [ovl/src/offlineStorage.ts:18](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L18)*
+*Defined in [ovl/src/offlineStorage.ts:18](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L18)*
 
 #### Type declaration:
 
@@ -44,7 +44,7 @@ ___
 
 Ƭ **FileStore**: *object*
 
-*Defined in [ovl/src/offlineStorage.ts:12](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L12)*
+*Defined in [ovl/src/offlineStorage.ts:12](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L12)*
 
 #### Type declaration:
 
@@ -68,7 +68,7 @@ ___
   }
 })
 
-*Defined in [ovl/src/offlineStorage.ts:5](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L5)*
+*Defined in [ovl/src/offlineStorage.ts:5](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L5)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **ovlFileStoreInfoName**: *"ovlfileinfo"* = "ovlfileinfo"
 
-*Defined in [ovl/src/offlineStorage.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L4)*
+*Defined in [ovl/src/offlineStorage.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L4)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 • **ovlFileStoreName**: *"ovlfile"* = "ovlfile"
 
-*Defined in [ovl/src/offlineStorage.ts:3](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L3)*
+*Defined in [ovl/src/offlineStorage.ts:3](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L3)*
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 • **ovlStateStoreName**: *"ovlstate"* = "ovlstate"
 
-*Defined in [ovl/src/offlineStorage.ts:2](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L2)*
+*Defined in [ovl/src/offlineStorage.ts:2](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L2)*
 
 ## Object literals
 
@@ -100,13 +100,13 @@ ___
 
 ### ▪ **fileStore**: *object*
 
-*Defined in [ovl/src/offlineStorage.ts:36](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L36)*
+*Defined in [ovl/src/offlineStorage.ts:36](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L36)*
 
 ###  clear
 
 ▸ **clear**(): *Promise‹void›*
 
-*Defined in [ovl/src/offlineStorage.ts:43](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L43)*
+*Defined in [ovl/src/offlineStorage.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L43)*
 
 **Returns:** *Promise‹void›*
 
@@ -114,7 +114,7 @@ ___
 
 ▸ **get**(`key`: string): *Promise‹any›*
 
-*Defined in [ovl/src/offlineStorage.ts:37](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L37)*
+*Defined in [ovl/src/offlineStorage.ts:37](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L37)*
 
 **Parameters:**
 
@@ -128,7 +128,7 @@ Name | Type |
 
 ▸ **set**(`val`: [FileStore](_ovl_src_offlinestorage_.md#filestore)): *Promise‹string | number | Date | ArrayBufferView | ArrayBuffer | IDBArrayKey‹››*
 
-*Defined in [ovl/src/offlineStorage.ts:40](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L40)*
+*Defined in [ovl/src/offlineStorage.ts:40](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L40)*
 
 **Parameters:**
 
@@ -144,13 +144,13 @@ ___
 
 ### ▪ **fileStoreInfo**: *object*
 
-*Defined in [ovl/src/offlineStorage.ts:48](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L48)*
+*Defined in [ovl/src/offlineStorage.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L48)*
 
 ###  clear
 
 ▸ **clear**(): *Promise‹void›*
 
-*Defined in [ovl/src/offlineStorage.ts:55](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L55)*
+*Defined in [ovl/src/offlineStorage.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L55)*
 
 **Returns:** *Promise‹void›*
 
@@ -158,7 +158,7 @@ ___
 
 ▸ **get**(`key`: string): *Promise‹any›*
 
-*Defined in [ovl/src/offlineStorage.ts:49](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L49)*
+*Defined in [ovl/src/offlineStorage.ts:49](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L49)*
 
 **Parameters:**
 
@@ -172,7 +172,7 @@ Name | Type |
 
 ▸ **set**(`val`: [FileInfoStore](_ovl_src_offlinestorage_.md#fileinfostore)): *Promise‹string | number | Date | ArrayBufferView | ArrayBuffer | IDBArrayKey‹››*
 
-*Defined in [ovl/src/offlineStorage.ts:52](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L52)*
+*Defined in [ovl/src/offlineStorage.ts:52](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L52)*
 
 **Parameters:**
 
@@ -188,13 +188,13 @@ ___
 
 ### ▪ **stateStore**: *object*
 
-*Defined in [ovl/src/offlineStorage.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L24)*
+*Defined in [ovl/src/offlineStorage.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L24)*
 
 ###  clear
 
 ▸ **clear**(): *Promise‹void›*
 
-*Defined in [ovl/src/offlineStorage.ts:31](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L31)*
+*Defined in [ovl/src/offlineStorage.ts:31](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L31)*
 
 **Returns:** *Promise‹void›*
 
@@ -202,7 +202,7 @@ ___
 
 ▸ **get**(`key`: string): *Promise‹any›*
 
-*Defined in [ovl/src/offlineStorage.ts:25](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L25)*
+*Defined in [ovl/src/offlineStorage.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L25)*
 
 **Parameters:**
 
@@ -216,7 +216,7 @@ Name | Type |
 
 ▸ **set**(`key`: string, `val`: any): *Promise‹string | number | Date | ArrayBufferView | ArrayBuffer | IDBArrayKey‹››*
 
-*Defined in [ovl/src/offlineStorage.ts:28](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/offlineStorage.ts#L28)*
+*Defined in [ovl/src/offlineStorage.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/offlineStorage.ts#L28)*
 
 **Parameters:**
 

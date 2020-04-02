@@ -18,4 +18,4 @@
 
 Ƭ **ShellButtonOrMenu**: *"button" | "menu"*
 
-*Defined in [test/src/components/Refresh/Refresh.ts:5](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/components/Refresh/Refresh.ts#L5)*
+*Defined in [test/src/components/Refresh/Refresh.ts:5](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/components/Refresh/Refresh.ts#L5)*

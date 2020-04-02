@@ -21,7 +21,7 @@
 
 Ƭ **TableTesting**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:3](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L3)*
+*Defined in [test/src/shared/TableTesting/state.ts:3](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L3)*
 
 #### Type declaration:
 
@@ -45,7 +45,7 @@ ___
 
 Ƭ **TableTestingColumn**: *keyof TableTesting*
 
-*Defined in [test/src/shared/TableTesting/state.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L13)*
+*Defined in [test/src/shared/TableTesting/state.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L13)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 Ƭ **TblTableTesting**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:15](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L15)*
+*Defined in [test/src/shared/TableTesting/state.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L15)*
 
 #### Type declaration:
 
@@ -65,29 +65,29 @@ ___
 
 ### ▪ **tblTableTesting**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L19)*
+*Defined in [test/src/shared/TableTesting/state.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L19)*
 
 ###  id
 
 • **id**: *"tab1"* = "tab1"
 
-*Defined in [test/src/shared/TableTesting/state.ts:20](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L20)*
+*Defined in [test/src/shared/TableTesting/state.ts:20](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L20)*
 
 ###  namespace
 
 • **namespace**: *string* = "testtables.tabletesting"
 
-*Defined in [test/src/shared/TableTesting/state.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L22)*
+*Defined in [test/src/shared/TableTesting/state.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L22)*
 
 ###  title
 
 • **title**: *string* = "Test Tabelle mit Paging und Inline-Editierfunktion"
 
-*Defined in [test/src/shared/TableTesting/state.ts:21](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L21)*
+*Defined in [test/src/shared/TableTesting/state.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L21)*
 
 ▪ **columns**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:43](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L43)*
+*Defined in [test/src/shared/TableTesting/state.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L43)*
 
 * **U_Alpha**: *object*
 
@@ -193,7 +193,7 @@ ___
 
 ▪ **database**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:33](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L33)*
+*Defined in [test/src/shared/TableTesting/state.ts:33](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L33)*
 
 * **dataIdField**: *string* = "Code"
 
@@ -201,7 +201,7 @@ ___
 
 ▪ **features**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:37](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L37)*
+*Defined in [test/src/shared/TableTesting/state.ts:37](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L37)*
 
 * **add**: *true* = true
 
@@ -213,7 +213,7 @@ ___
 
 ▪ **options**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L26)*
+*Defined in [test/src/shared/TableTesting/state.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L26)*
 
 * **customRowActions**: *object*
 
@@ -237,7 +237,7 @@ ___
 
 ▪ **server**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:23](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L23)*
+*Defined in [test/src/shared/TableTesting/state.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L23)*
 
 * **endpoint**: *string* = "tabletesting"
 
@@ -247,29 +247,29 @@ ___
 
 ### ▪ **tblTableTesting2**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:108](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L108)*
+*Defined in [test/src/shared/TableTesting/state.ts:108](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L108)*
 
 ###  id
 
 • **id**: *"tab2"* = "tab2"
 
-*Defined in [test/src/shared/TableTesting/state.ts:109](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L109)*
+*Defined in [test/src/shared/TableTesting/state.ts:109](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L109)*
 
 ###  namespace
 
 • **namespace**: *string* = "testtables.tabletesting"
 
-*Defined in [test/src/shared/TableTesting/state.ts:111](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L111)*
+*Defined in [test/src/shared/TableTesting/state.ts:111](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L111)*
 
 ###  title
 
 • **title**: *string* = "Testtabelle aus SAP"
 
-*Defined in [test/src/shared/TableTesting/state.ts:110](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L110)*
+*Defined in [test/src/shared/TableTesting/state.ts:110](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L110)*
 
 ▪ **columns**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:176](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L176)*
+*Defined in [test/src/shared/TableTesting/state.ts:176](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L176)*
 
 * **U_Alpha**: *object*
 
@@ -403,7 +403,7 @@ ___
 
 ▪ **database**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:165](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L165)*
+*Defined in [test/src/shared/TableTesting/state.ts:165](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L165)*
 
 * **dataIdField**: *string* = "Code"
 
@@ -411,7 +411,7 @@ ___
 
 ▪ **features**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:169](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L169)*
+*Defined in [test/src/shared/TableTesting/state.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L169)*
 
 * **add**: *true* = true
 
@@ -425,7 +425,7 @@ ___
 
 ▪ **options**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:115](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L115)*
+*Defined in [test/src/shared/TableTesting/state.ts:115](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L115)*
 
 * **customRowActions**: *object*
 
@@ -515,6 +515,6 @@ ___
 
 ▪ **server**: *object*
 
-*Defined in [test/src/shared/TableTesting/state.ts:112](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/shared/TableTesting/state.ts#L112)*
+*Defined in [test/src/shared/TableTesting/state.ts:112](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/shared/TableTesting/state.ts#L112)*
 
 * **endpoint**: *string* = "tabletesting"

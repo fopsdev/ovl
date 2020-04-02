@@ -18,7 +18,7 @@
 
 Ƭ **OrderDetailFormState**: *object*
 
-*Defined in [test/src/screens/Order/OrderDetailLayout.ts:5](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Order/OrderDetailLayout.ts#L5)*
+*Defined in [test/src/screens/Order/OrderDetailLayout.ts:5](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Order/OrderDetailLayout.ts#L5)*
 
 #### Type declaration:
 

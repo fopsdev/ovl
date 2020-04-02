@@ -19,7 +19,7 @@
 
 Ƭ **NavProps**: *object*
 
-*Defined in [ovl/src/library/Table/RowControl.ts:9](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/RowControl.ts#L9)*
+*Defined in [ovl/src/library/Table/RowControl.ts:9](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/RowControl.ts#L9)*
 
 #### Type declaration:
 
@@ -37,7 +37,7 @@ ___
 
 Ƭ **RowControlAllAction**: *object*
 
-*Defined in [ovl/src/library/Table/RowControl.ts:16](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/RowControl.ts#L16)*
+*Defined in [ovl/src/library/Table/RowControl.ts:16](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/RowControl.ts#L16)*
 
 #### Type declaration:
 

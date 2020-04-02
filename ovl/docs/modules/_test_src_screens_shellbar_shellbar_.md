@@ -18,7 +18,7 @@
 
 Ƭ **ShellbarState**: *object*
 
-*Defined in [test/src/screens/Shellbar/Shellbar.ts:15](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Shellbar/Shellbar.ts#L15)*
+*Defined in [test/src/screens/Shellbar/Shellbar.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Shellbar/Shellbar.ts#L15)*
 
 #### Type declaration:
 

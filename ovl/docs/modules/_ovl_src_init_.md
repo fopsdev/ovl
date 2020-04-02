@@ -24,7 +24,7 @@
 
 Ƭ **Init**: *object*
 
-*Defined in [ovl/src/init.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L4)*
+*Defined in [ovl/src/init.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L4)*
 
 #### Type declaration:
 
@@ -48,7 +48,7 @@ ___
 
 Ƭ **OvlConfig**: *object*
 
-*Defined in [ovl/src/init.ts:14](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L14)*
+*Defined in [ovl/src/init.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L14)*
 
 #### Type declaration:
 
@@ -90,7 +90,7 @@ ___
 
 • **dataVersion**: *string* = "1"
 
-*Defined in [ovl/src/init.ts:53](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L53)*
+*Defined in [ovl/src/init.ts:53](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L53)*
 
 ## Object literals
 
@@ -98,29 +98,29 @@ ___
 
 ### ▪ **OvlConfig**: *object*
 
-*Defined in [ovl/src/init.ts:54](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L54)*
+*Defined in [ovl/src/init.ts:54](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L54)*
 
 ###  apiUrl
 
 • **apiUrl**: *undefined* = undefined
 
-*Defined in [ovl/src/init.ts:64](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L64)*
+*Defined in [ovl/src/init.ts:64](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L64)*
 
 ###  requiredActions
 
 • **requiredActions**: *undefined* = undefined
 
-*Defined in [ovl/src/init.ts:65](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L65)*
+*Defined in [ovl/src/init.ts:65](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L65)*
 
 ###  saveStateCallback
 
 • **saveStateCallback**: *undefined* = undefined
 
-*Defined in [ovl/src/init.ts:66](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L66)*
+*Defined in [ovl/src/init.ts:66](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L66)*
 
 ▪ **_system**: *object*
 
-*Defined in [ovl/src/init.ts:55](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L55)*
+*Defined in [ovl/src/init.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L55)*
 
 * **DataVersion**: *string* = dataVersion
 
@@ -142,31 +142,31 @@ ___
 
 ### ▪ **baseOvermindConfig**: *object*
 
-*Defined in [ovl/src/init.ts:46](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L46)*
+*Defined in [ovl/src/init.ts:46](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L46)*
 
 ###  actions
 
 • **actions**: *["ovl/src/actions"](_ovl_src_actions_.md)*
 
-*Defined in [ovl/src/init.ts:49](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L49)*
+*Defined in [ovl/src/init.ts:49](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L49)*
 
 ###  effects
 
 • **effects**: *["ovl/src/effects"](_ovl_src_effects_.md)*
 
-*Defined in [ovl/src/init.ts:50](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L50)*
+*Defined in [ovl/src/init.ts:50](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L50)*
 
 ###  onInitialize
 
 • **onInitialize**: *OnInitialize‹›*
 
-*Defined in [ovl/src/init.ts:47](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L47)*
+*Defined in [ovl/src/init.ts:47](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L47)*
 
 ###  state
 
 • **state**: *object*
 
-*Defined in [ovl/src/init.ts:48](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/init.ts#L48)*
+*Defined in [ovl/src/init.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L48)*
 
 #### Type declaration:
 

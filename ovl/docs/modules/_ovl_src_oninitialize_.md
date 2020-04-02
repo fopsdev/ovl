@@ -19,7 +19,7 @@
 
 • **isos**: *boolean* = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
 
-*Defined in [ovl/src/onInitialize.ts:7](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/onInitialize.ts#L7)*
+*Defined in [ovl/src/onInitialize.ts:7](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/onInitialize.ts#L7)*
 
 ___
 
@@ -27,7 +27,7 @@ ___
 
 • **timer**: *any*
 
-*Defined in [ovl/src/onInitialize.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/onInitialize.ts#L6)*
+*Defined in [ovl/src/onInitialize.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/onInitialize.ts#L6)*
 
 ## Functions
 
@@ -35,7 +35,7 @@ ___
 
 ▸ **onInitialize**(`_`: object, `overmind`: Overmind‹[Config](_ovl_src_index_.md#config)‹››): *Promise‹void›*
 
-*Defined in [ovl/src/onInitialize.ts:8](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/onInitialize.ts#L8)*
+*Defined in [ovl/src/onInitialize.ts:8](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/onInitialize.ts#L8)*
 
 **Parameters:**
 

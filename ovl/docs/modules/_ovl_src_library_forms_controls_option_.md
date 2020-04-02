@@ -18,7 +18,7 @@
 
 Ƭ **OptionControlState**: *object*
 
-*Defined in [ovl/src/library/Forms/Controls/Option.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Forms/Controls/Option.ts#L10)*
+*Defined in [ovl/src/library/Forms/Controls/Option.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Option.ts#L10)*
 
 #### Type declaration:
 

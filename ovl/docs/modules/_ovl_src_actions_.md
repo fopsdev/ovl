@@ -22,25 +22,25 @@
 
 ### ▪ **dialog**: *object*
 
-*Defined in [ovl/src/actions.ts:49](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L49)*
+*Defined in [ovl/src/actions.ts:49](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L49)*
 
 ###  DialogOpen
 
 • **DialogOpen**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:50](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L50)*
+*Defined in [ovl/src/actions.ts:50](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L50)*
 
 ###  OkCancelDialog
 
 • **OkCancelDialog**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:52](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L52)*
+*Defined in [ovl/src/actions.ts:52](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L52)*
 
 ###  OkDialog
 
 • **OkDialog**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:51](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L51)*
+*Defined in [ovl/src/actions.ts:51](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L51)*
 
 ___
 
@@ -48,31 +48,31 @@ ___
 
 ### ▪ **form**: *object*
 
-*Defined in [ovl/src/actions.ts:55](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L55)*
+*Defined in [ovl/src/actions.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L55)*
 
 ###  InitForm
 
 • **InitForm**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:56](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L56)*
+*Defined in [ovl/src/actions.ts:56](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L56)*
 
 ###  ResetForm
 
 • **ResetForm**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:57](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L57)*
+*Defined in [ovl/src/actions.ts:57](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L57)*
 
 ###  ResetFormAfterNavigation
 
 • **ResetFormAfterNavigation**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:58](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L58)*
+*Defined in [ovl/src/actions.ts:58](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L58)*
 
 ###  ValidateForm
 
 • **ValidateForm**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:59](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L59)*
+*Defined in [ovl/src/actions.ts:59](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L59)*
 
 ___
 
@@ -80,19 +80,19 @@ ___
 
 ### ▪ **indicator**: *object*
 
-*Defined in [ovl/src/actions.ts:100](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L100)*
+*Defined in [ovl/src/actions.ts:100](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L100)*
 
 ###  SetIndicatorClose
 
 • **SetIndicatorClose**: *Action‹void, void›*
 
-*Defined in [ovl/src/actions.ts:100](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L100)*
+*Defined in [ovl/src/actions.ts:100](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L100)*
 
 ###  SetIndicatorOpen
 
 • **SetIndicatorOpen**: *Action‹void, void›*
 
-*Defined in [ovl/src/actions.ts:100](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L100)*
+*Defined in [ovl/src/actions.ts:100](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L100)*
 
 ___
 
@@ -100,271 +100,271 @@ ___
 
 ### ▪ **internal**: *object*
 
-*Defined in [ovl/src/actions.ts:116](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L116)*
+*Defined in [ovl/src/actions.ts:116](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L116)*
 
 ###  AddSnack
 
 • **AddSnack**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:123](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L123)*
+*Defined in [ovl/src/actions.ts:123](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L123)*
 
 ###  ChangeField
 
 • **ChangeField**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:152](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L152)*
+*Defined in [ovl/src/actions.ts:152](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L152)*
 
 ###  ClearSnack
 
 • **ClearSnack**: *AsyncAction‹string, void›*
 
-*Defined in [ovl/src/actions.ts:122](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L122)*
+*Defined in [ovl/src/actions.ts:122](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L122)*
 
 ###  CloseOverlay
 
 • **CloseOverlay**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:117](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L117)*
+*Defined in [ovl/src/actions.ts:117](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L117)*
 
 ###  CloseOverlay2
 
 • **CloseOverlay2**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:119](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L119)*
+*Defined in [ovl/src/actions.ts:119](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L119)*
 
 ###  DialogChanged
 
 • **DialogChanged**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:125](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L125)*
+*Defined in [ovl/src/actions.ts:125](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L125)*
 
 ###  DialogClosed
 
 • **DialogClosed**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:126](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L126)*
+*Defined in [ovl/src/actions.ts:126](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L126)*
 
 ###  DialogDefaultChanged
 
 • **DialogDefaultChanged**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:127](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L127)*
+*Defined in [ovl/src/actions.ts:127](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L127)*
 
 ###  FillListControl
 
 • **FillListControl**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:160](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L160)*
+*Defined in [ovl/src/actions.ts:160](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L160)*
 
 ###  GetFile
 
 • **GetFile**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:148](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L148)*
+*Defined in [ovl/src/actions.ts:148](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L148)*
 
 ###  InitApp
 
 • **InitApp**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:146](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L146)*
+*Defined in [ovl/src/actions.ts:146](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L146)*
 
 ###  PlaceSnack
 
 • **PlaceSnack**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:121](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L121)*
+*Defined in [ovl/src/actions.ts:121](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L121)*
 
 ###  PrepareApp
 
 • **PrepareApp**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:149](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L149)*
+*Defined in [ovl/src/actions.ts:149](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L149)*
 
 ###  RehydrateAndUpdateApp
 
 • **RehydrateAndUpdateApp**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:147](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L147)*
+*Defined in [ovl/src/actions.ts:147](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L147)*
 
 ###  RemoveSnack
 
 • **RemoveSnack**: *AsyncAction‹string, void›*
 
-*Defined in [ovl/src/actions.ts:124](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L124)*
+*Defined in [ovl/src/actions.ts:124](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L124)*
 
 ###  SetField
 
 • **SetField**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:153](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L153)*
+*Defined in [ovl/src/actions.ts:153](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L153)*
 
 ###  SetFormUndirty
 
 • **SetFormUndirty**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:157](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L157)*
+*Defined in [ovl/src/actions.ts:157](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L157)*
 
 ###  SetFormValid
 
 • **SetFormValid**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:155](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L155)*
+*Defined in [ovl/src/actions.ts:155](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L155)*
 
 ###  SetLanguage
 
 • **SetLanguage**: *AsyncAction‹string, void›*
 
-*Defined in [ovl/src/actions.ts:150](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L150)*
+*Defined in [ovl/src/actions.ts:150](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L150)*
 
 ###  SetVisibleFalse
 
 • **SetVisibleFalse**: *Action‹string, void›*
 
-*Defined in [ovl/src/actions.ts:151](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L151)*
+*Defined in [ovl/src/actions.ts:151](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L151)*
 
 ###  StartCloseOverlay
 
 • **StartCloseOverlay**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:118](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L118)*
+*Defined in [ovl/src/actions.ts:118](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L118)*
 
 ###  StartCloseOverlay2
 
 • **StartCloseOverlay2**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:120](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L120)*
+*Defined in [ovl/src/actions.ts:120](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L120)*
 
 ###  TableAddRow
 
 • **TableAddRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:133](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L133)*
+*Defined in [ovl/src/actions.ts:133](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L133)*
 
 ###  TableCopyRow
 
 • **TableCopyRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:131](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L131)*
+*Defined in [ovl/src/actions.ts:131](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L131)*
 
 ###  TableDeleteRow
 
 • **TableDeleteRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:132](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L132)*
+*Defined in [ovl/src/actions.ts:132](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L132)*
 
 ###  TableDeleteRowFromData
 
 • **TableDeleteRowFromData**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:139](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L139)*
+*Defined in [ovl/src/actions.ts:139](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L139)*
 
 ###  TableDirectSaveRow
 
 • **TableDirectSaveRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:137](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L137)*
+*Defined in [ovl/src/actions.ts:137](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L137)*
 
 ###  TableEditRow
 
 • **TableEditRow**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:134](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L134)*
+*Defined in [ovl/src/actions.ts:134](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L134)*
 
 ###  TableEditSaveRow
 
 • **TableEditSaveRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:136](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L136)*
+*Defined in [ovl/src/actions.ts:136](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L136)*
 
 ###  TableFilterSelected
 
 • **TableFilterSelected**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:129](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L129)*
+*Defined in [ovl/src/actions.ts:129](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L129)*
 
 ###  TableMoreRow
 
 • **TableMoreRow**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:138](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L138)*
+*Defined in [ovl/src/actions.ts:138](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L138)*
 
 ###  TableMultipleCopyRow
 
 • **TableMultipleCopyRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:141](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L141)*
+*Defined in [ovl/src/actions.ts:141](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L141)*
 
 ###  TableMultipleDeleteRow
 
 • **TableMultipleDeleteRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:140](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L140)*
+*Defined in [ovl/src/actions.ts:140](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L140)*
 
 ###  TableMultipleEditRow
 
 • **TableMultipleEditRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:142](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L142)*
+*Defined in [ovl/src/actions.ts:142](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L142)*
 
 ###  TableSelectAll
 
 • **TableSelectAll**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:135](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L135)*
+*Defined in [ovl/src/actions.ts:135](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L135)*
 
 ###  TableSelectColumnFilter
 
 • **TableSelectColumnFilter**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:145](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L145)*
+*Defined in [ovl/src/actions.ts:145](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L145)*
 
 ###  TableSelectCustomFilter
 
 • **TableSelectCustomFilter**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:144](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L144)*
+*Defined in [ovl/src/actions.ts:144](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L144)*
 
 ###  TableSelectCustomSort
 
 • **TableSelectCustomSort**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:143](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L143)*
+*Defined in [ovl/src/actions.ts:143](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L143)*
 
 ###  TableSelectHeader
 
 • **TableSelectHeader**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:128](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L128)*
+*Defined in [ovl/src/actions.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L128)*
 
 ###  TableSetPage
 
 • **TableSetPage**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:130](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L130)*
+*Defined in [ovl/src/actions.ts:130](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L130)*
 
 ###  TouchField
 
 • **TouchField**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:154](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L154)*
+*Defined in [ovl/src/actions.ts:154](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L154)*
 
 ###  ValidateDataType
 
 • **ValidateDataType**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:156](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L156)*
+*Defined in [ovl/src/actions.ts:156](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L156)*
 
 ###  ValidateList
 
 • **ValidateList**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:159](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L159)*
+*Defined in [ovl/src/actions.ts:159](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L159)*
 
 ###  ValidateSchema
 
 • **ValidateSchema**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:158](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L158)*
+*Defined in [ovl/src/actions.ts:158](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L158)*
 
 ___
 
@@ -372,19 +372,19 @@ ___
 
 ### ▪ **navigation**: *object*
 
-*Defined in [ovl/src/actions.ts:96](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L96)*
+*Defined in [ovl/src/actions.ts:96](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L96)*
 
 ###  NavigateBack
 
 • **NavigateBack**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:96](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L96)*
+*Defined in [ovl/src/actions.ts:96](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L96)*
 
 ###  NavigateTo
 
 • **NavigateTo**: *AsyncAction‹"Feedback" | "Settings" | "Login" | "MobileTimeEntry" | "Shellbar" | "Audit" | "Translation" | "Dashboard" | "Quotation" | "Order" | "Orderdetail" | "Invoice" | "TableTesting" | "MobileTimeEntryForm", void›*
 
-*Defined in [ovl/src/actions.ts:96](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L96)*
+*Defined in [ovl/src/actions.ts:96](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L96)*
 
 ___
 
@@ -392,19 +392,19 @@ ___
 
 ### ▪ **overlay**: *object*
 
-*Defined in [ovl/src/actions.ts:98](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L98)*
+*Defined in [ovl/src/actions.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L98)*
 
 ###  OpenOverlay
 
 • **OpenOverlay**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:98](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L98)*
+*Defined in [ovl/src/actions.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L98)*
 
 ###  OpenOverlay2
 
 • **OpenOverlay2**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:98](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L98)*
+*Defined in [ovl/src/actions.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L98)*
 
 ___
 
@@ -412,13 +412,13 @@ ___
 
 ### ▪ **ovl**: *object*
 
-*Defined in [ovl/src/actions.ts:165](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L165)*
+*Defined in [ovl/src/actions.ts:165](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L165)*
 
 ###  dialog
 
 • **dialog**: *object*
 
-*Defined in [ovl/src/actions.ts:170](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L170)*
+*Defined in [ovl/src/actions.ts:170](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L170)*
 
 #### Type declaration:
 
@@ -432,7 +432,7 @@ ___
 
 • **form**: *object*
 
-*Defined in [ovl/src/actions.ts:171](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L171)*
+*Defined in [ovl/src/actions.ts:171](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L171)*
 
 #### Type declaration:
 
@@ -448,7 +448,7 @@ ___
 
 • **indicator**: *object*
 
-*Defined in [ovl/src/actions.ts:166](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L166)*
+*Defined in [ovl/src/actions.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L166)*
 
 #### Type declaration:
 
@@ -460,7 +460,7 @@ ___
 
 • **internal**: *object*
 
-*Defined in [ovl/src/actions.ts:169](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L169)*
+*Defined in [ovl/src/actions.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L169)*
 
 #### Type declaration:
 
@@ -556,7 +556,7 @@ ___
 
 • **navigation**: *object*
 
-*Defined in [ovl/src/actions.ts:167](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L167)*
+*Defined in [ovl/src/actions.ts:167](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L167)*
 
 #### Type declaration:
 
@@ -568,7 +568,7 @@ ___
 
 • **overlay**: *object*
 
-*Defined in [ovl/src/actions.ts:168](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L168)*
+*Defined in [ovl/src/actions.ts:168](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L168)*
 
 #### Type declaration:
 
@@ -580,7 +580,7 @@ ___
 
 • **table**: *object*
 
-*Defined in [ovl/src/actions.ts:172](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L172)*
+*Defined in [ovl/src/actions.ts:172](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L172)*
 
 #### Type declaration:
 
@@ -610,7 +610,7 @@ ___
 
 • **user**: *object*
 
-*Defined in [ovl/src/actions.ts:173](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L173)*
+*Defined in [ovl/src/actions.ts:173](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L173)*
 
 #### Type declaration:
 
@@ -622,73 +622,73 @@ ___
 
 ### ▪ **table**: *object*
 
-*Defined in [ovl/src/actions.ts:102](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L102)*
+*Defined in [ovl/src/actions.ts:102](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L102)*
 
 ###  TableAddRow
 
 • **TableAddRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:113](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L113)*
+*Defined in [ovl/src/actions.ts:113](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L113)*
 
 ###  TableClearFilter
 
 • **TableClearFilter**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:112](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L112)*
+*Defined in [ovl/src/actions.ts:112](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L112)*
 
 ###  TableDeleteRow
 
 • **TableDeleteRow**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:106](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L106)*
+*Defined in [ovl/src/actions.ts:106](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L106)*
 
 ###  TableEditClose
 
 • **TableEditClose**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:107](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L107)*
+*Defined in [ovl/src/actions.ts:107](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L107)*
 
 ###  TableEditRow
 
 • **TableEditRow**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:105](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L105)*
+*Defined in [ovl/src/actions.ts:105](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L105)*
 
 ###  TableFilter
 
 • **TableFilter**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:111](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L111)*
+*Defined in [ovl/src/actions.ts:111](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L111)*
 
 ###  TableRefresh
 
 • **TableRefresh**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:103](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L103)*
+*Defined in [ovl/src/actions.ts:103](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L103)*
 
 ###  TableRefreshDataFromServer
 
 • **TableRefreshDataFromServer**: *AsyncAction‹object, void›*
 
-*Defined in [ovl/src/actions.ts:109](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L109)*
+*Defined in [ovl/src/actions.ts:109](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L109)*
 
 ###  TableSelectRow
 
 • **TableSelectRow**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:104](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L104)*
+*Defined in [ovl/src/actions.ts:104](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L104)*
 
 ###  TableSort
 
 • **TableSort**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:110](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L110)*
+*Defined in [ovl/src/actions.ts:110](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L110)*
 
 ###  TableViewRefresh
 
 • **TableViewRefresh**: *Action‹object, void›*
 
-*Defined in [ovl/src/actions.ts:108](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L108)*
+*Defined in [ovl/src/actions.ts:108](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L108)*
 
 ___
 
@@ -696,10 +696,10 @@ ___
 
 ### ▪ **user**: *object*
 
-*Defined in [ovl/src/actions.ts:163](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L163)*
+*Defined in [ovl/src/actions.ts:163](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L163)*
 
 ###  Logout
 
 • **Logout**: *AsyncAction‹void, void›*
 
-*Defined in [ovl/src/actions.ts:163](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/actions.ts#L163)*
+*Defined in [ovl/src/actions.ts:163](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L163)*

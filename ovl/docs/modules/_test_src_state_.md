@@ -38,7 +38,7 @@
 
 Ƭ **DPInvoiceDetail**: *object*
 
-*Defined in [test/src/state.ts:45](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L45)*
+*Defined in [test/src/state.ts:45](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L45)*
 
 #### Type declaration:
 
@@ -62,7 +62,7 @@ ___
 
 Ƭ **DPInvoiceDetailState**: *object*
 
-*Defined in [test/src/state.ts:90](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L90)*
+*Defined in [test/src/state.ts:90](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L90)*
 
 #### Type declaration:
 
@@ -74,7 +74,7 @@ ___
 
 Ƭ **DoubleBarChartState**: *object*
 
-*Defined in [test/src/state.ts:17](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L17)*
+*Defined in [test/src/state.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L17)*
 
 #### Type declaration:
 
@@ -92,7 +92,7 @@ ___
 
 Ƭ **Feature**: *object*
 
-*Defined in [test/src/state.ts:130](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L130)*
+*Defined in [test/src/state.ts:130](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L130)*
 
 #### Type declaration:
 
@@ -108,7 +108,7 @@ ___
 
 Ƭ **FileList**: *object*
 
-*Defined in [test/src/state.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L13)*
+*Defined in [test/src/state.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L13)*
 
 #### Type declaration:
 
@@ -120,7 +120,7 @@ ___
 
 Ƭ **InvoiceDetail**: *object*
 
-*Defined in [test/src/state.ts:35](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L35)*
+*Defined in [test/src/state.ts:35](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L35)*
 
 #### Type declaration:
 
@@ -144,7 +144,7 @@ ___
 
 Ƭ **InvoiceDetailState**: *object*
 
-*Defined in [test/src/state.ts:86](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L86)*
+*Defined in [test/src/state.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L86)*
 
 #### Type declaration:
 
@@ -156,7 +156,7 @@ ___
 
 Ƭ **Language**: *"DE" | "FR"*
 
-*Defined in [test/src/state.ts:129](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L129)*
+*Defined in [test/src/state.ts:129](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L129)*
 
 ___
 
@@ -164,7 +164,7 @@ ___
 
 Ƭ **OrderDetail**: *object*
 
-*Defined in [test/src/state.ts:55](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L55)*
+*Defined in [test/src/state.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L55)*
 
 #### Type declaration:
 
@@ -212,7 +212,7 @@ ___
 
 Ƭ **OrderDetailState**: *object*
 
-*Defined in [test/src/state.ts:94](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L94)*
+*Defined in [test/src/state.ts:94](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L94)*
 
 #### Type declaration:
 
@@ -224,7 +224,7 @@ ___
 
 Ƭ **PartnerState**: *object*
 
-*Defined in [test/src/state.ts:103](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L103)*
+*Defined in [test/src/state.ts:103](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L103)*
 
 #### Type declaration:
 
@@ -264,7 +264,7 @@ ___
 
 Ƭ **PicsState**: *object*
 
-*Defined in [test/src/state.ts:98](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L98)*
+*Defined in [test/src/state.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L98)*
 
 #### Type declaration:
 
@@ -278,7 +278,7 @@ ___
 
 Ƭ **Portal**: *object*
 
-*Defined in [test/src/state.ts:146](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L146)*
+*Defined in [test/src/state.ts:146](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L146)*
 
 #### Type declaration:
 
@@ -310,7 +310,7 @@ ___
 
 Ƭ **QuotationDetail**: *object*
 
-*Defined in [test/src/state.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L26)*
+*Defined in [test/src/state.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L26)*
 
 #### Type declaration:
 
@@ -332,7 +332,7 @@ ___
 
 Ƭ **QuotationDetailState**: *object*
 
-*Defined in [test/src/state.ts:82](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L82)*
+*Defined in [test/src/state.ts:82](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L82)*
 
 #### Type declaration:
 
@@ -344,7 +344,7 @@ ___
 
 Ƭ **QuotationStatus**: *"Open" | "Closed" | "Canceled"*
 
-*Defined in [test/src/state.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L24)*
+*Defined in [test/src/state.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L24)*
 
 ___
 
@@ -352,7 +352,7 @@ ___
 
 Ƭ **Role**: *"User" | "Admin"*
 
-*Defined in [test/src/state.ts:128](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L128)*
+*Defined in [test/src/state.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L128)*
 
 ___
 
@@ -360,7 +360,7 @@ ___
 
 Ƭ **TableDefIds**: *"translation" | "audit" | "tab1" | "tab2" | "mobiletimerecording1"*
 
-*Defined in [test/src/state.ts:158](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L158)*
+*Defined in [test/src/state.ts:158](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L158)*
 
 ___
 
@@ -368,7 +368,7 @@ ___
 
 Ƭ **User**: *object*
 
-*Defined in [test/src/state.ts:136](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L136)*
+*Defined in [test/src/state.ts:136](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L136)*
 
 #### Type declaration:
 
@@ -392,19 +392,19 @@ ___
 
 ### ▪ **pics**: *object*
 
-*Defined in [test/src/state.ts:123](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L123)*
+*Defined in [test/src/state.ts:123](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L123)*
 
 ###  salesContact
 
 • **salesContact**: *string* = ""
 
-*Defined in [test/src/state.ts:124](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L124)*
+*Defined in [test/src/state.ts:124](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L124)*
 
 ###  technicalContact
 
 • **technicalContact**: *string* = ""
 
-*Defined in [test/src/state.ts:125](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L125)*
+*Defined in [test/src/state.ts:125](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L125)*
 
 ___
 
@@ -412,59 +412,59 @@ ___
 
 ### ▪ **portal**: *object*
 
-*Defined in [test/src/state.ts:165](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L165)*
+*Defined in [test/src/state.ts:165](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L165)*
 
 ###  chartData
 
 • **chartData**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:168](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L168)*
+*Defined in [test/src/state.ts:168](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L168)*
 
 ###  dpInvoiceDetail
 
 • **dpInvoiceDetail**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:169](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L169)*
+*Defined in [test/src/state.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L169)*
 
 ###  invoiceDetail
 
 • **invoiceDetail**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:170](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L170)*
+*Defined in [test/src/state.ts:170](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L170)*
 
 ###  orderDetail
 
 • **orderDetail**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:167](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L167)*
+*Defined in [test/src/state.ts:167](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L167)*
 
 ###  partner
 
 • **partner**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:171](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L171)*
+*Defined in [test/src/state.ts:171](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L171)*
 
 ###  pics
 
 • **pics**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:172](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L172)*
+*Defined in [test/src/state.ts:172](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L172)*
 
 ###  quotationDetail
 
 • **quotationDetail**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:173](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L173)*
+*Defined in [test/src/state.ts:173](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L173)*
 
 ###  user
 
 • **user**: *undefined* = undefined
 
-*Defined in [test/src/state.ts:166](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L166)*
+*Defined in [test/src/state.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L166)*
 
 ▪ **tables**: *object*
 
-*Defined in [test/src/state.ts:174](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L174)*
+*Defined in [test/src/state.ts:174](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L174)*
 
 * **audit**: *object*
 
@@ -688,7 +688,7 @@ ___
 
 ### ▪ **testtables**: *object*
 
-*Defined in [test/src/state.ts:192](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L192)*
+*Defined in [test/src/state.ts:192](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L192)*
 
 ###  tableTesting
 
@@ -700,7 +700,7 @@ ___
     lookupTypes2: { U_Alpha: "text", U_Date: "date" }
   }
 
-*Defined in [test/src/state.ts:193](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L193)*
+*Defined in [test/src/state.ts:193](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L193)*
 
 #### Type declaration:
 
@@ -728,7 +728,7 @@ ___
     }
   }
 
-*Defined in [test/src/state.ts:200](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L200)*
+*Defined in [test/src/state.ts:200](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L200)*
 
 #### Type declaration:
 
@@ -748,7 +748,7 @@ ___
 
 ▪ **lookups**: *object*
 
-*Defined in [test/src/state.ts:207](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/state.ts#L207)*
+*Defined in [test/src/state.ts:207](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L207)*
 
 * **AbsenceTypeId**(): *object*
 

@@ -19,7 +19,7 @@
 
 Ƭ **TableMobileTimeRecording**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:3](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L3)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:3](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L3)*
 
 #### Type declaration:
 
@@ -49,7 +49,7 @@ ___
 
 Ƭ **tblMobileTimeRecording**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:25](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L25)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L25)*
 
 #### Type declaration:
 
@@ -61,23 +61,23 @@ ___
 
 ### ▪ **tblMobileTimeRecording**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:29](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L29)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:29](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L29)*
 
 ###  id
 
 • **id**: *"mobiletimerecording1"* = "mobiletimerecording1"
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:30](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L30)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:30](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L30)*
 
 ###  namespace
 
 • **namespace**: *string* = "testtables.mobiletimerecording"
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:31](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L31)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:31](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L31)*
 
 ▪ **columns**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:43](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L43)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L43)*
 
 * **U_Duration**: *object*
 
@@ -137,7 +137,7 @@ ___
 
 ▪ **database**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:35](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L35)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:35](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L35)*
 
 * **dataIdField**: *string* = "Code"
 
@@ -145,7 +145,7 @@ ___
 
 ▪ **options**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:39](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L39)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:39](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L39)*
 
 * **filter**: *object*
 
@@ -165,6 +165,6 @@ ___
 
 ▪ **server**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/state.ts:32](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/state.ts#L32)*
+*Defined in [test/src/screens/MobileTimeRecording/state.ts:32](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/state.ts#L32)*
 
 * **endpoint**: *string* = "timeentries"

@@ -18,7 +18,7 @@
 
 Ƭ **MobileTimeEntryFormState**: *object*
 
-*Defined in [test/src/screens/MobileTimeRecording/MobileTimeRecordingForm.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/MobileTimeRecordingForm.ts#L10)*
+*Defined in [test/src/screens/MobileTimeRecording/MobileTimeRecordingForm.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/MobileTimeRecordingForm.ts#L10)*
 
 #### Type declaration:
 

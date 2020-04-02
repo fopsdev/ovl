@@ -314,7 +314,7 @@
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[constructor](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#constructor)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:90](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L90)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:90](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L90)*
 
 **Returns:** *[TableHeaderMenu](_ovl_src_library_table_headermenu_.tableheadermenu.md)*
 
@@ -532,7 +532,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[_flushId](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#_flushid)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:20](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L20)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:20](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L20)*
 
 ___
 
@@ -542,7 +542,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[_id](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#_id)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L19)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L19)*
 
 ___
 
@@ -572,7 +572,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[actions](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#actions)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L22)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L22)*
 
 ___
 
@@ -582,7 +582,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[animatedClass](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#animatedclass)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L26)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L26)*
 
 ___
 
@@ -604,7 +604,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[async](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#async)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:18](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L18)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:18](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L18)*
 
 ___
 
@@ -792,7 +792,7 @@ ___
 
 • **filterDef**: *[ColumnFilter](../modules/_ovl_src_library_table_table_.md#columnfilter)*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L22)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L22)*
 
 ___
 
@@ -800,7 +800,7 @@ ___
 
 • **filterDropDownHidden**: *boolean*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:23](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L23)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L23)*
 
 ___
 
@@ -832,7 +832,7 @@ ___
 
 • **focusSet**: *boolean*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L24)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L24)*
 
 ___
 
@@ -840,7 +840,7 @@ ___
 
 • **headerMenu**: *[HeaderMenuDef](../modules/_ovl_src_library_table_headermenu_.md#headermenudef)*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:20](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L20)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:20](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L20)*
 
 ___
 
@@ -956,7 +956,7 @@ ___
 
 • **lastTemplateResult**: *TemplateResult*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:21](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L21)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L21)*
 
 ___
 
@@ -978,7 +978,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[name](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#name)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:23](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L23)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L23)*
 
 ___
 
@@ -2280,7 +2280,7 @@ ___
 
 • **props**: *any*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L19)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L19)*
 
 ___
 
@@ -2290,7 +2290,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screen](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screen)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:25](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L25)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L25)*
 
 ___
 
@@ -2374,7 +2374,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[state](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#state)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:21](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L21)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L21)*
 
 ___
 
@@ -2436,7 +2436,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[trackedTree](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#trackedtree)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L24)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L24)*
 
 ___
 
@@ -2456,7 +2456,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[_counter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-_counter)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:28](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L28)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L28)*
 
 ## Methods
 
@@ -2541,7 +2541,7 @@ ___
 
 *Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[afterRender](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#afterrender)*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:890](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L890)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:890](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L890)*
 
 **Returns:** *void*
 
@@ -2782,7 +2782,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[connectedCallback](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#connectedcallback)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:205](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L205)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:205](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L205)*
 
 **Returns:** *void*
 
@@ -2814,7 +2814,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[disconnectedCallback](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#disconnectedcallback)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:216](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L216)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:216](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L216)*
 
 **Returns:** *void*
 
@@ -2846,7 +2846,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[doRender](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dorender)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:104](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L104)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:104](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L104)*
 
 **Returns:** *Promise‹void›*
 
@@ -3147,7 +3147,7 @@ ___
 
 *Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getUI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getui)*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:251](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L251)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:251](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L251)*
 
 **Returns:** *TemplateResult‹›*
 
@@ -3159,7 +3159,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getUIAsync](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getuiasync)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:32](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L32)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:32](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L32)*
 
 **Returns:** *Promise‹TemplateResult›*
 
@@ -3169,7 +3169,7 @@ ___
 
 ▸ **handleAddRowClick**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:67](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L67)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:67](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L67)*
 
 **Parameters:**
 
@@ -3187,7 +3187,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[handleAnimationEnd](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#handleanimationend)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:86](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L86)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L86)*
 
 **Parameters:**
 
@@ -3203,7 +3203,7 @@ ___
 
 ▸ **handleCloseHeaderMenu**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:98](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L98)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L98)*
 
 **Parameters:**
 
@@ -3219,7 +3219,7 @@ ___
 
 ▸ **handleCopy**(`e`: Event): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:118](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L118)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:118](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L118)*
 
 **Parameters:**
 
@@ -3235,7 +3235,7 @@ ___
 
 ▸ **handleCustomFilterClick**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:220](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L220)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:220](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L220)*
 
 **Parameters:**
 
@@ -3251,7 +3251,7 @@ ___
 
 ▸ **handleCustomSortClick**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:148](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L148)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:148](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L148)*
 
 **Parameters:**
 
@@ -3267,7 +3267,7 @@ ___
 
 ▸ **handleDelete**(`e`: Event): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:109](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L109)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:109](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L109)*
 
 **Parameters:**
 
@@ -3283,7 +3283,7 @@ ___
 
 ▸ **handleEdit**(`e`: Event): *Promise‹void›*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:127](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L127)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:127](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L127)*
 
 **Parameters:**
 
@@ -3299,7 +3299,7 @@ ___
 
 ▸ **handleFilterDropDown**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:170](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L170)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:170](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L170)*
 
 **Parameters:**
 
@@ -3315,7 +3315,7 @@ ___
 
 ▸ **handleFilterDropDownValue**(`e`: Event, `key`: [ColumnFilterTypes](../modules/_ovl_src_library_table_table_.md#columnfiltertypes)): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:178](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L178)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:178](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L178)*
 
 **Parameters:**
 
@@ -3332,7 +3332,7 @@ ___
 
 ▸ **handleFilterSelectedClick**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:45](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L45)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:45](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L45)*
 
 **Parameters:**
 
@@ -3348,7 +3348,7 @@ ___
 
 ▸ **handleFilterSetClick**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:34](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L34)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:34](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L34)*
 
 **Parameters:**
 
@@ -3364,7 +3364,7 @@ ___
 
 ▸ **handleFilterTextEnter**(`e`: KeyboardEvent): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:49](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L49)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:49](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L49)*
 
 **Parameters:**
 
@@ -3380,7 +3380,7 @@ ___
 
 ▸ **handleRefreshTableClick**(`e`: Event): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:136](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L136)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:136](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L136)*
 
 **Parameters:**
 
@@ -3396,7 +3396,7 @@ ___
 
 ▸ **handleSelectAllClick**(`e`: Event, `select`: boolean): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:80](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L80)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:80](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L80)*
 
 **Parameters:**
 
@@ -3413,7 +3413,7 @@ ___
 
 ▸ **handleSortClick**(`e`: Event, `key`: string, `ascending`: boolean): *void*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:25](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L25)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L25)*
 
 **Parameters:**
 
@@ -3520,7 +3520,7 @@ ___
 
 *Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[init](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#init)*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:239](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L239)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:239](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L239)*
 
 **Returns:** *void*
 
@@ -3750,7 +3750,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onUpdate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onupdate)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:190](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L190)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:190](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L190)*
 
 **Parameters:**
 
@@ -4078,7 +4078,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removePathsFromTracking](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removepathsfromtracking)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:180](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L180)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:180](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L180)*
 
 **Parameters:**
 
@@ -4175,7 +4175,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screenClosing](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screenclosing)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:48](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L48)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L48)*
 
 **Returns:** *boolean*
 
@@ -4187,7 +4187,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screenVisible](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screenvisible)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:60](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L60)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:60](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L60)*
 
 **Returns:** *boolean*
 
@@ -4413,7 +4413,7 @@ ___
 
 *Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setUI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setui)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:41](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L41)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:41](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L41)*
 
 **Returns:** *void*
 

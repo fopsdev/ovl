@@ -21,7 +21,7 @@
 
 Ƭ **OrderFeedbackState**: *object*
 
-*Defined in [test/src/screens/Order/actions.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Order/actions.ts#L4)*
+*Defined in [test/src/screens/Order/actions.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Order/actions.ts#L4)*
 
 #### Type declaration:
 
@@ -33,7 +33,7 @@
 
 ▸ **PrepareDeliveryDateFeedback**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [test/src/screens/Order/actions.ts:43](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Order/actions.ts#L43)*
+*Defined in [test/src/screens/Order/actions.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Order/actions.ts#L43)*
 
 **Parameters:**
 
@@ -57,7 +57,7 @@ ___
 
 ▸ **PrepareNegativeFeedback**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [test/src/screens/Order/actions.ts:25](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Order/actions.ts#L25)*
+*Defined in [test/src/screens/Order/actions.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Order/actions.ts#L25)*
 
 **Parameters:**
 
@@ -81,7 +81,7 @@ ___
 
 ▸ **PreparePositiveFeedback**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [test/src/screens/Order/actions.ts:7](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Order/actions.ts#L7)*
+*Defined in [test/src/screens/Order/actions.ts:7](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Order/actions.ts#L7)*
 
 **Parameters:**
 
@@ -105,7 +105,7 @@ ___
 
 ▸ **SelectOrder**(`__namedParameters`: object, `value`: string): *void*
 
-*Defined in [test/src/screens/Order/actions.ts:61](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Order/actions.ts#L61)*
+*Defined in [test/src/screens/Order/actions.ts:61](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Order/actions.ts#L61)*
 
 **Parameters:**
 

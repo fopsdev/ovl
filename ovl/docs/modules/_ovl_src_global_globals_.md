@@ -57,7 +57,7 @@
 
 Ƭ **Translation**: *object*
 
-*Defined in [ovl/src/global/globals.ts:388](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L388)*
+*Defined in [ovl/src/global/globals.ts:388](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L388)*
 
 #### Type declaration:
 
@@ -69,7 +69,7 @@ ___
 
 Ƭ **Translations**: *object*
 
-*Defined in [ovl/src/global/globals.ts:380](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L380)*
+*Defined in [ovl/src/global/globals.ts:380](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L380)*
 
 #### Type declaration:
 
@@ -81,7 +81,7 @@ ___
 
 Ƭ **Variable**: *object*
 
-*Defined in [ovl/src/global/globals.ts:384](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L384)*
+*Defined in [ovl/src/global/globals.ts:384](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L384)*
 
 #### Type declaration:
 
@@ -93,7 +93,7 @@ ___
 
 • **OvlTimestamp**: *number* = 0
 
-*Defined in [ovl/src/global/globals.ts:14](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L14)*
+*Defined in [ovl/src/global/globals.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L14)*
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 • **TCache**: *Map‹any, any›* = new Map()
 
-*Defined in [ovl/src/global/globals.ts:308](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L308)*
+*Defined in [ovl/src/global/globals.ts:308](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L308)*
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 • **gotoFileFlag**: *boolean* = false
 
-*Defined in [ovl/src/global/globals.ts:186](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L186)*
+*Defined in [ovl/src/global/globals.ts:186](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L186)*
 
 ___
 
@@ -117,7 +117,7 @@ ___
 
 • **logoutAndClearFlag**: *boolean* = false
 
-*Defined in [ovl/src/global/globals.ts:185](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L185)*
+*Defined in [ovl/src/global/globals.ts:185](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L185)*
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 • **ovltemp**: *"_ovltmp"* = "_ovltmp"
 
-*Defined in [ovl/src/global/globals.ts:12](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L12)*
+*Defined in [ovl/src/global/globals.ts:12](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L12)*
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 • **saveReason**: *string* = ""
 
-*Defined in [ovl/src/global/globals.ts:156](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L156)*
+*Defined in [ovl/src/global/globals.ts:156](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L156)*
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 • **translationData**: *object*
 
-*Defined in [ovl/src/global/globals.ts:11](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L11)*
+*Defined in [ovl/src/global/globals.ts:11](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L11)*
 
 #### Type declaration:
 
@@ -151,7 +151,7 @@ ___
 
 ▸ **D**(`date`: string): *any*
 
-*Defined in [ovl/src/global/globals.ts:60](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L60)*
+*Defined in [ovl/src/global/globals.ts:60](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L60)*
 
 **Parameters:**
 
@@ -167,7 +167,7 @@ ___
 
 ▸ **GetWeekNr**(`dt`: Date): *number*
 
-*Defined in [ovl/src/global/globals.ts:73](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L73)*
+*Defined in [ovl/src/global/globals.ts:73](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L73)*
 
 **Parameters:**
 
@@ -183,7 +183,7 @@ ___
 
 ▸ **N**(`decimal`: number): *string*
 
-*Defined in [ovl/src/global/globals.ts:64](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L64)*
+*Defined in [ovl/src/global/globals.ts:64](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L64)*
 
 **Parameters:**
 
@@ -199,7 +199,7 @@ ___
 
 ▸ **N4**(`decimal`: number): *string*
 
-*Defined in [ovl/src/global/globals.ts:68](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L68)*
+*Defined in [ovl/src/global/globals.ts:68](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L68)*
 
 **Parameters:**
 
@@ -215,7 +215,7 @@ ___
 
 ▸ **ResetT**(): *void*
 
-*Defined in [ovl/src/global/globals.ts:309](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L309)*
+*Defined in [ovl/src/global/globals.ts:309](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L309)*
 
 **Returns:** *void*
 
@@ -225,7 +225,7 @@ ___
 
 ▸ **ShowFile**(`blob`: any, `type`: any, `fileName`: any): *void*
 
-*Defined in [ovl/src/global/globals.ts:282](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L282)*
+*Defined in [ovl/src/global/globals.ts:282](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L282)*
 
 **Parameters:**
 
@@ -243,7 +243,7 @@ ___
 
 ▸ **T**(`key`: string, `reps?`: string[]): *string*
 
-*Defined in [ovl/src/global/globals.ts:312](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L312)*
+*Defined in [ovl/src/global/globals.ts:312](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L312)*
 
 **Parameters:**
 
@@ -260,7 +260,7 @@ ___
 
 ▸ **addGlobalPersistEventListeners**(): *void*
 
-*Defined in [ovl/src/global/globals.ts:86](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L86)*
+*Defined in [ovl/src/global/globals.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L86)*
 
 **Returns:** *void*
 
@@ -270,7 +270,7 @@ ___
 
 ▸ **beforeUnload**(`event`: any): *Promise‹void›*
 
-*Defined in [ovl/src/global/globals.ts:111](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L111)*
+*Defined in [ovl/src/global/globals.ts:111](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L111)*
 
 **Parameters:**
 
@@ -286,7 +286,7 @@ ___
 
 ▸ **focusOut**(`event`: any): *Promise‹void›*
 
-*Defined in [ovl/src/global/globals.ts:103](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L103)*
+*Defined in [ovl/src/global/globals.ts:103](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L103)*
 
 **Parameters:**
 
@@ -302,7 +302,7 @@ ___
 
 ▸ **getDateValue**(`value`: string, `format?`: [FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)): *any*
 
-*Defined in [ovl/src/global/globals.ts:27](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L27)*
+*Defined in [ovl/src/global/globals.ts:27](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L27)*
 
 **Parameters:**
 
@@ -319,7 +319,7 @@ ___
 
 ▸ **getDecimalValue**(`value`: number, `format?`: [FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)): *string*
 
-*Defined in [ovl/src/global/globals.ts:51](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L51)*
+*Defined in [ovl/src/global/globals.ts:51](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L51)*
 
 **Parameters:**
 
@@ -336,7 +336,7 @@ ___
 
 ▸ **logout**(): *Promise‹void›*
 
-*Defined in [ovl/src/global/globals.ts:188](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L188)*
+*Defined in [ovl/src/global/globals.ts:188](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L188)*
 
 **Returns:** *Promise‹void›*
 
@@ -346,7 +346,7 @@ ___
 
 ▸ **resolvePath**(`object`: any, `path`: any, `defaultValue?`: any): *any*
 
-*Defined in [ovl/src/global/globals.ts:376](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L376)*
+*Defined in [ovl/src/global/globals.ts:376](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L376)*
 
 **Parameters:**
 
@@ -364,7 +364,7 @@ ___
 
 ▸ **saveState**(`force`: boolean, `reason`: string): *Promise‹void›*
 
-*Defined in [ovl/src/global/globals.ts:157](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L157)*
+*Defined in [ovl/src/global/globals.ts:157](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L157)*
 
 **Parameters:**
 
@@ -381,7 +381,7 @@ ___
 
 ▸ **stateCleaner**(`state`: typeof state, `newObj`: any, `parentKey`: string): *void*
 
-*Defined in [ovl/src/global/globals.ts:217](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L217)*
+*Defined in [ovl/src/global/globals.ts:217](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L217)*
 
 **Parameters:**
 
@@ -399,7 +399,7 @@ ___
 
 ▸ **uuidv4**(): *string*
 
-*Defined in [ovl/src/global/globals.ts:15](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L15)*
+*Defined in [ovl/src/global/globals.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L15)*
 
 **Returns:** *string*
 
@@ -409,7 +409,7 @@ ___
 
 ▸ **visibilityChange**(`event`: any): *Promise‹void›*
 
-*Defined in [ovl/src/global/globals.ts:129](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L129)*
+*Defined in [ovl/src/global/globals.ts:129](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L129)*
 
 **Parameters:**
 
@@ -425,13 +425,13 @@ Name | Type |
 
 ### ▪ **api**: *object*
 
-*Defined in [ovl/src/global/globals.ts:9](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L9)*
+*Defined in [ovl/src/global/globals.ts:9](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L9)*
 
 ###  url
 
 • **url**: *string* = ""
 
-*Defined in [ovl/src/global/globals.ts:9](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L9)*
+*Defined in [ovl/src/global/globals.ts:9](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L9)*
 
 ___
 
@@ -439,12 +439,12 @@ ___
 
 ### ▪ **translations**: *object*
 
-*Defined in [ovl/src/global/globals.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L10)*
+*Defined in [ovl/src/global/globals.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L10)*
 
 ###  t
 
 • **t**: *object*
 
-*Defined in [ovl/src/global/globals.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/globals.ts#L10)*
+*Defined in [ovl/src/global/globals.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/globals.ts#L10)*
 
 #### Type declaration:

@@ -18,13 +18,13 @@
 
 • **"overmind"**:
 
-*Defined in [ovl/src/index.ts:27](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/index.ts#L27)*
+*Defined in [ovl/src/index.ts:27](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/index.ts#L27)*
 
 ###  Config
 
 • **Config**:
 
-*Defined in [ovl/src/index.ts:29](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/index.ts#L29)*
+*Defined in [ovl/src/index.ts:29](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/index.ts#L29)*
 
 ###  actions
 
@@ -56,4 +56,4 @@ Defined in ovl/node_modules/overmind/lib/types.d.ts:17
 
 Ƭ **Screen**: *keyof typeof __type*
 
-*Defined in [ovl/src/index.ts:33](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/index.ts#L33)*
+*Defined in [ovl/src/index.ts:33](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/index.ts#L33)*

@@ -19,7 +19,7 @@
 
 Ƭ **ScreensHistory**: *[Screen](_test_src_statescreens_.md#screen)[]*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:7](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L7)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:7](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L7)*
 
 ___
 
@@ -27,7 +27,7 @@ ___
 
 Ƭ **ScreensState**: *object*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:9](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L9)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:9](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L9)*
 
 #### Type declaration:
 

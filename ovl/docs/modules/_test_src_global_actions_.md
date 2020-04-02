@@ -20,7 +20,7 @@
 
 ▸ **CustomInit**(`__namedParameters`: object, `_`: void): *Promise‹void›*
 
-*Defined in [test/src/global/actions.ts:192](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/global/actions.ts#L192)*
+*Defined in [test/src/global/actions.ts:192](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/global/actions.ts#L192)*
 
 **Parameters:**
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **ForgotPw**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [test/src/global/actions.ts:111](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/global/actions.ts#L111)*
+*Defined in [test/src/global/actions.ts:111](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/global/actions.ts#L111)*
 
 **Parameters:**
 
@@ -76,7 +76,7 @@ ___
 
 ▸ **HandleAdditionalLanguageResult**(`__namedParameters`: object, `value`: any): *Promise‹void›*
 
-*Defined in [test/src/global/actions.ts:128](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/global/actions.ts#L128)*
+*Defined in [test/src/global/actions.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/global/actions.ts#L128)*
 
 **Parameters:**
 
@@ -96,7 +96,7 @@ ___
 
 ▸ **HandleRefresh**(`__namedParameters`: object): *Promise‹void›*
 
-*Defined in [test/src/global/actions.ts:152](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/global/actions.ts#L152)*
+*Defined in [test/src/global/actions.ts:152](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/global/actions.ts#L152)*
 
 **Parameters:**
 
@@ -116,7 +116,7 @@ ___
 
 ▸ **Login**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [test/src/global/actions.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/global/actions.ts#L24)*
+*Defined in [test/src/global/actions.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/global/actions.ts#L24)*
 
 **Parameters:**
 
@@ -151,7 +151,7 @@ ___
 
 ▸ **LoginValidateField**(`_`: object, `value`: object): *void*
 
-*Defined in [test/src/global/actions.ts:97](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/global/actions.ts#L97)*
+*Defined in [test/src/global/actions.ts:97](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/global/actions.ts#L97)*
 
 **Parameters:**
 
@@ -182,7 +182,7 @@ ___
 
 ▸ **TogglePDFPopup**(`_`: object, `value`: object): *void*
 
-*Defined in [test/src/global/actions.ts:144](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/global/actions.ts#L144)*
+*Defined in [test/src/global/actions.ts:144](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/global/actions.ts#L144)*
 
 **Parameters:**
 

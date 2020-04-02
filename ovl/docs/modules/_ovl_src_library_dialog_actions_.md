@@ -24,7 +24,7 @@
 
 Ƭ **OkCancelDialog**: *object*
 
-*Defined in [ovl/src/library/Dialog/actions.ts:39](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/actions.ts#L39)*
+*Defined in [ovl/src/library/Dialog/actions.ts:39](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/actions.ts#L39)*
 
 #### Type declaration:
 
@@ -38,7 +38,7 @@
 
 ▸ **DialogOpen**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Dialog/actions.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/actions.ts#L6)*
+*Defined in [ovl/src/library/Dialog/actions.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/actions.ts#L6)*
 
 **Parameters:**
 
@@ -65,7 +65,7 @@ ___
 
 ▸ **OkCancelDialog**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Dialog/actions.ts:43](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/actions.ts#L43)*
+*Defined in [ovl/src/library/Dialog/actions.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/actions.ts#L43)*
 
 **Parameters:**
 
@@ -90,7 +90,7 @@ ___
 
 ▸ **OkDialog**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/Dialog/actions.ts:54](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/actions.ts#L54)*
+*Defined in [ovl/src/library/Dialog/actions.ts:54](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/actions.ts#L54)*
 
 **Parameters:**
 
@@ -114,10 +114,10 @@ Name | Type |
 
 ### ▪ **dialogAfterClose**: *object*
 
-*Defined in [ovl/src/library/Dialog/actions.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/actions.ts#L4)*
+*Defined in [ovl/src/library/Dialog/actions.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/actions.ts#L4)*
 
 ###  elementToFocus
 
 • **elementToFocus**: *undefined* = undefined
 
-*Defined in [ovl/src/library/Dialog/actions.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/actions.ts#L4)*
+*Defined in [ovl/src/library/Dialog/actions.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/actions.ts#L4)*

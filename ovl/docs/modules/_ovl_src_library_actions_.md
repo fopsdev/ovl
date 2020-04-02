@@ -28,7 +28,7 @@
 
 Ƭ **DialogChangedParam**: *object*
 
-*Defined in [ovl/src/library/actions.ts:61](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L61)*
+*Defined in [ovl/src/library/actions.ts:61](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L61)*
 
 #### Type declaration:
 
@@ -42,7 +42,7 @@ ___
 
 Ƭ **DialogState**: *object*
 
-*Defined in [ovl/src/library/actions.ts:66](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L66)*
+*Defined in [ovl/src/library/actions.ts:66](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L66)*
 
 #### Type declaration:
 
@@ -66,7 +66,7 @@ ___
 
 • **dialogResolver**: *function*
 
-*Defined in [ovl/src/library/actions.ts:110](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L110)*
+*Defined in [ovl/src/library/actions.ts:110](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L110)*
 
 #### Type declaration:
 
@@ -84,7 +84,7 @@ Name | Type |
 
 ▸ **DialogChanged**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/actions.ts:76](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L76)*
+*Defined in [ovl/src/library/actions.ts:76](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L76)*
 
 **Parameters:**
 
@@ -110,7 +110,7 @@ ___
 
 ▸ **DialogClosed**(`__namedParameters`: object): *Promise‹void›*
 
-*Defined in [ovl/src/library/actions.ts:98](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L98)*
+*Defined in [ovl/src/library/actions.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L98)*
 
 **Parameters:**
 
@@ -128,7 +128,7 @@ ___
 
 ▸ **DialogDefaultChanged**(`__namedParameters`: object, `value`: object): *void*
 
-*Defined in [ovl/src/library/actions.ts:91](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L91)*
+*Defined in [ovl/src/library/actions.ts:91](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L91)*
 
 **Parameters:**
 
@@ -152,7 +152,7 @@ ___
 
 ▸ **DialogResult**(): *Promise‹unknown›*
 
-*Defined in [ovl/src/library/actions.ts:111](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L111)*
+*Defined in [ovl/src/library/actions.ts:111](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L111)*
 
 **Returns:** *Promise‹unknown›*
 
@@ -162,7 +162,7 @@ ___
 
 ▸ **SetIndicatorClose**(`__namedParameters`: object): *void*
 
-*Defined in [ovl/src/library/actions.ts:122](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L122)*
+*Defined in [ovl/src/library/actions.ts:122](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L122)*
 
 **Parameters:**
 
@@ -180,7 +180,7 @@ ___
 
 ▸ **SetIndicatorOpen**(`__namedParameters`: object): *void*
 
-*Defined in [ovl/src/library/actions.ts:117](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/actions.ts#L117)*
+*Defined in [ovl/src/library/actions.ts:117](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/actions.ts#L117)*
 
 **Parameters:**
 

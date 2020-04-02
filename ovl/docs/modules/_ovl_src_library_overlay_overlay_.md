@@ -22,7 +22,7 @@
 
 Ƭ **OverlayState**: *object*
 
-*Defined in [ovl/src/library/Overlay/Overlay.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Overlay/Overlay.ts#L22)*
+*Defined in [ovl/src/library/Overlay/Overlay.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Overlay/Overlay.ts#L22)*
 
 #### Type declaration:
 
@@ -36,7 +36,7 @@
 
 • **overlayToRender**: *object*
 
-*Defined in [ovl/src/library/Overlay/Overlay.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Overlay/Overlay.ts#L4)*
+*Defined in [ovl/src/library/Overlay/Overlay.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Overlay/Overlay.ts#L4)*
 
 #### Type declaration:
 

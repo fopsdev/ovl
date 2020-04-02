@@ -26,7 +26,7 @@
 
 ▸ **GetFile**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:303](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L303)*
+*Defined in [ovl/src/global/actions.ts:303](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L303)*
 
 **Parameters:**
 
@@ -54,7 +54,7 @@ ___
 
 ▸ **InitApp**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:392](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L392)*
+*Defined in [ovl/src/global/actions.ts:392](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L392)*
 
 **Parameters:**
 
@@ -86,7 +86,7 @@ ___
 
 ▸ **Logout**(`__namedParameters`: object): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:251](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L251)*
+*Defined in [ovl/src/global/actions.ts:251](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L251)*
 
 **Parameters:**
 
@@ -105,7 +105,7 @@ ___
 
 ▸ **NavigateBack**(`__namedParameters`: object): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:112](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L112)*
+*Defined in [ovl/src/global/actions.ts:112](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L112)*
 
 **Parameters:**
 
@@ -125,7 +125,7 @@ ___
 
 ▸ **NavigateTo**(`__namedParameters`: object, `value`: "Feedback" | "Settings" | "Login" | "MobileTimeEntry" | "Shellbar" | "Audit" | "Translation" | "Dashboard" | "Quotation" | "Order" | "Orderdetail" | "Invoice" | "TableTesting" | "MobileTimeEntryForm"): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:44](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L44)*
+*Defined in [ovl/src/global/actions.ts:44](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L44)*
 
 **Parameters:**
 
@@ -147,7 +147,7 @@ ___
 
 ▸ **PrepareApp**(`__namedParameters`: object): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:258](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L258)*
+*Defined in [ovl/src/global/actions.ts:258](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L258)*
 
 **Parameters:**
 
@@ -167,7 +167,7 @@ ___
 
 ▸ **RehydrateAndUpdateApp**(`__namedParameters`: object): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:353](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L353)*
+*Defined in [ovl/src/global/actions.ts:353](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L353)*
 
 **Parameters:**
 
@@ -187,7 +187,7 @@ ___
 
 ▸ **SetClosingScreen**(`actions`: any, `state`: typeof state, `value`: string): *void*
 
-*Defined in [ovl/src/global/actions.ts:169](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L169)*
+*Defined in [ovl/src/global/actions.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L169)*
 
 **Parameters:**
 
@@ -205,7 +205,7 @@ ___
 
 ▸ **SetLanguage**(`__namedParameters`: object, `value`: string): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:232](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L232)*
+*Defined in [ovl/src/global/actions.ts:232](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L232)*
 
 **Parameters:**
 
@@ -227,7 +227,7 @@ ___
 
 ▸ **SetVisibleFalse**(`__namedParameters`: object, `value`: string): *void*
 
-*Defined in [ovl/src/global/actions.ts:204](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L204)*
+*Defined in [ovl/src/global/actions.ts:204](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L204)*
 
 **Parameters:**
 
@@ -248,7 +248,7 @@ ___
 
 ▸ **SetVisibleScreen**(`state`: typeof state, `value`: string): *Promise‹void›*
 
-*Defined in [ovl/src/global/actions.ts:188](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L188)*
+*Defined in [ovl/src/global/actions.ts:188](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L188)*
 
 **Parameters:**
 
@@ -265,7 +265,7 @@ ___
 
 ▸ **isMobile**(): *boolean*
 
-*Defined in [ovl/src/global/actions.ts:27](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L27)*
+*Defined in [ovl/src/global/actions.ts:27](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L27)*
 
 **Returns:** *boolean*
 
@@ -275,6 +275,6 @@ ___
 
 ▸ **isTouch**(): *boolean*
 
-*Defined in [ovl/src/global/actions.ts:23](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/actions.ts#L23)*
+*Defined in [ovl/src/global/actions.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L23)*
 
 **Returns:** *boolean*

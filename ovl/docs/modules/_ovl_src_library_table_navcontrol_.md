@@ -19,7 +19,7 @@
 
 Ƭ **NavDef**: *object*
 
-*Defined in [ovl/src/library/Table/NavControl.ts:7](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/NavControl.ts#L7)*
+*Defined in [ovl/src/library/Table/NavControl.ts:7](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/NavControl.ts#L7)*
 
 #### Type declaration:
 
@@ -33,4 +33,4 @@ ___
 
 Ƭ **NavType**: *"header" | "row"*
 
-*Defined in [ovl/src/library/Table/NavControl.ts:5](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/NavControl.ts#L5)*
+*Defined in [ovl/src/library/Table/NavControl.ts:5](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/NavControl.ts#L5)*

@@ -19,7 +19,7 @@
 
 • **config**: *object & object* = merge(baseOvermindConfig, appOvermindConfig)
 
-*Defined in [test/src/index.ts:15](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/index.ts#L15)*
+*Defined in [test/src/index.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/index.ts#L15)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
   delimiter: " "
 })
 
-*Defined in [test/src/index.ts:17](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/index.ts#L17)*
+*Defined in [test/src/index.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/index.ts#L17)*
 
 ## Object literals
 
@@ -39,16 +39,16 @@ ___
 
 ### ▪ **appOvermindConfig**: *object*
 
-*Defined in [test/src/index.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/index.ts#L13)*
+*Defined in [test/src/index.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/index.ts#L13)*
 
 ###  actions
 
 • **actions**: *["test/src/actions"](_test_src_actions_.md)*
 
-*Defined in [test/src/index.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/index.ts#L13)*
+*Defined in [test/src/index.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/index.ts#L13)*
 
 ###  state
 
 • **state**: *["test/src/state"](_test_src_state_.md)*
 
-*Defined in [test/src/index.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/index.ts#L13)*
+*Defined in [test/src/index.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/index.ts#L13)*

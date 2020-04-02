@@ -20,7 +20,7 @@
 
 Ƭ **TblTranslation**: *object*
 
-*Defined in [test/src/screens/Translation/state.ts:12](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L12)*
+*Defined in [test/src/screens/Translation/state.ts:12](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L12)*
 
 #### Type declaration:
 
@@ -32,7 +32,7 @@ ___
 
 Ƭ **TblTranslationColumn**: *keyof Translation*
 
-*Defined in [test/src/screens/Translation/state.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L10)*
+*Defined in [test/src/screens/Translation/state.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L10)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 Ƭ **Translation**: *object*
 
-*Defined in [test/src/screens/Translation/state.ts:3](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L3)*
+*Defined in [test/src/screens/Translation/state.ts:3](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L3)*
 
 #### Type declaration:
 
@@ -58,23 +58,23 @@ ___
 
 ### ▪ **tblTranslation**: *object*
 
-*Defined in [test/src/screens/Translation/state.ts:16](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L16)*
+*Defined in [test/src/screens/Translation/state.ts:16](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L16)*
 
 ###  id
 
 • **id**: *"translation"* = "translation"
 
-*Defined in [test/src/screens/Translation/state.ts:17](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L17)*
+*Defined in [test/src/screens/Translation/state.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L17)*
 
 ###  namespace
 
 • **namespace**: *string* = "portal.system.translations"
 
-*Defined in [test/src/screens/Translation/state.ts:18](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L18)*
+*Defined in [test/src/screens/Translation/state.ts:18](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L18)*
 
 ▪ **columns**: *object*
 
-*Defined in [test/src/screens/Translation/state.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L26)*
+*Defined in [test/src/screens/Translation/state.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L26)*
 
 * **U_Code**: *object*
 
@@ -118,7 +118,7 @@ ___
 
 ▪ **database**: *object*
 
-*Defined in [test/src/screens/Translation/state.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L19)*
+*Defined in [test/src/screens/Translation/state.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L19)*
 
 * **dataIdField**: *string* = "Code"
 
@@ -126,6 +126,6 @@ ___
 
 ▪ **server**: *object*
 
-*Defined in [test/src/screens/Translation/state.ts:23](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Translation/state.ts#L23)*
+*Defined in [test/src/screens/Translation/state.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Translation/state.ts#L23)*
 
 * **endpoint**: *string* = "translation"

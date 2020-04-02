@@ -18,7 +18,7 @@
 
 Ƭ **InvoiceOverviewState**: *object*
 
-*Defined in [test/src/screens/Invoice/InvoiceOverview.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Invoice/InvoiceOverview.ts#L6)*
+*Defined in [test/src/screens/Invoice/InvoiceOverview.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Invoice/InvoiceOverview.ts#L6)*
 
 #### Type declaration:
 

@@ -14,6 +14,6 @@
 
 ▸ **defineElements**(): *void*
 
-*Defined in [ovl/src/registerComponents.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/registerComponents.ts#L22)*
+*Defined in [ovl/src/registerComponents.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/registerComponents.ts#L22)*
 
 **Returns:** *void*

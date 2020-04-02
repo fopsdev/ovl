@@ -32,7 +32,7 @@
 
 Ƭ **SnackAddState**: *object*
 
-*Defined in [ovl/src/library/Snack/Snack.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/Snack.ts#L19)*
+*Defined in [ovl/src/library/Snack/Snack.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/Snack.ts#L19)*
 
 #### Type declaration:
 
@@ -50,7 +50,7 @@ ___
 
 Ƭ **SnackState**: *object*
 
-*Defined in [ovl/src/library/Snack/Snack.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/Snack.ts#L10)*
+*Defined in [ovl/src/library/Snack/Snack.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/Snack.ts#L10)*
 
 #### Type declaration:
 
@@ -72,7 +72,7 @@ ___
 
 Ƭ **SnackType**: *"Information" | "Warning" | "Success" | "Error"*
 
-*Defined in [ovl/src/library/Snack/Snack.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/Snack.ts#L4)*
+*Defined in [ovl/src/library/Snack/Snack.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/Snack.ts#L4)*
 
 ## Variables
 
@@ -80,7 +80,7 @@ ___
 
 • **nrOfSnacks**: *3* = 3
 
-*Defined in [ovl/src/library/Snack/Snack.ts:8](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/Snack.ts#L8)*
+*Defined in [ovl/src/library/Snack/Snack.ts:8](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/Snack.ts#L8)*
 
 ## Functions
 
@@ -88,7 +88,7 @@ ___
 
 ▸ **RemoveSnack**(`div`: any): *Promise‹void›*
 
-*Defined in [ovl/src/library/Snack/Snack.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/Snack.ts#L26)*
+*Defined in [ovl/src/library/Snack/Snack.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/Snack.ts#L26)*
 
 **Parameters:**
 
@@ -104,10 +104,10 @@ Name | Type |
 
 ### ▪ **SnackId**: *object*
 
-*Defined in [ovl/src/library/Snack/Snack.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/Snack.ts#L6)*
+*Defined in [ovl/src/library/Snack/Snack.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/Snack.ts#L6)*
 
 ###  id
 
 • **id**: *number* = 0
 
-*Defined in [ovl/src/library/Snack/Snack.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Snack/Snack.ts#L6)*
+*Defined in [ovl/src/library/Snack/Snack.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Snack/Snack.ts#L6)*

@@ -19,7 +19,7 @@
 
 Ƭ **TableRowDataDef**: *object*
 
-*Defined in [ovl/src/library/Table/RowWrapper.ts:28](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/RowWrapper.ts#L28)*
+*Defined in [ovl/src/library/Table/RowWrapper.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/RowWrapper.ts#L28)*
 
 #### Type declaration:
 
@@ -39,7 +39,7 @@ ___
 
 Ƭ **TableRowDef**: *object*
 
-*Defined in [ovl/src/library/Table/RowWrapper.ts:17](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/RowWrapper.ts#L17)*
+*Defined in [ovl/src/library/Table/RowWrapper.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/RowWrapper.ts#L17)*
 
 #### Type declaration:
 

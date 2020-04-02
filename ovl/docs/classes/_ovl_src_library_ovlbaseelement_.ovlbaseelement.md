@@ -368,7 +368,7 @@
 
 \+ **new OvlBaseElement**(): *[OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md)*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:90](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L90)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:90](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L90)*
 
 **Returns:** *[OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md)*
 
@@ -584,7 +584,7 @@ ___
 
 • **_flushId**: *number*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:20](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L20)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:20](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L20)*
 
 ___
 
@@ -592,7 +592,7 @@ ___
 
 • **_id**: *number*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L19)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L19)*
 
 ___
 
@@ -620,7 +620,7 @@ ___
 
 • **actions**: *typeof actions*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L22)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L22)*
 
 ___
 
@@ -628,7 +628,7 @@ ___
 
 • **animatedClass**: *string*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L26)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L26)*
 
 ___
 
@@ -648,7 +648,7 @@ ___
 
 • **async**: *boolean*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:18](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L18)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:18](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L18)*
 
 ___
 
@@ -980,7 +980,7 @@ ___
 
 • **name**: *string*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:23](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L23)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L23)*
 
 ___
 
@@ -2282,7 +2282,7 @@ ___
 
 • **screen**: *string*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:25](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L25)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L25)*
 
 ___
 
@@ -2364,7 +2364,7 @@ ___
 
 • **state**: *typeof state*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:21](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L21)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L21)*
 
 ___
 
@@ -2424,7 +2424,7 @@ ___
 
 • **trackedTree**: *ITrackStateTree‹object›*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L24)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L24)*
 
 ___
 
@@ -2456,7 +2456,7 @@ ___
 
 ▪ **_counter**: *number* = 0
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:28](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L28)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L28)*
 
 ## Methods
 
@@ -2539,7 +2539,7 @@ ___
 
 ▸ **afterRender**(): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:82](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L82)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:82](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L82)*
 
 **Returns:** *void*
 
@@ -2778,7 +2778,7 @@ ___
 
 ▸ **connectedCallback**(): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:205](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L205)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:205](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L205)*
 
 **Returns:** *void*
 
@@ -2808,7 +2808,7 @@ ___
 
 ▸ **disconnectedCallback**(): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:216](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L216)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:216](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L216)*
 
 **Returns:** *void*
 
@@ -2838,7 +2838,7 @@ ___
 
 ▸ **doRender**(): *Promise‹void›*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:104](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L104)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:104](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L104)*
 
 **Returns:** *Promise‹void›*
 
@@ -3137,7 +3137,7 @@ ___
 
 ▸ **getUI**(): *TemplateResult*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:36](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L36)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:36](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L36)*
 
 **Returns:** *TemplateResult*
 
@@ -3147,7 +3147,7 @@ ___
 
 ▸ **getUIAsync**(): *Promise‹TemplateResult›*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:32](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L32)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:32](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L32)*
 
 **Returns:** *Promise‹TemplateResult›*
 
@@ -3157,7 +3157,7 @@ ___
 
 ▸ **handleAnimationEnd**(`e`: any): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:86](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L86)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L86)*
 
 **Parameters:**
 
@@ -3260,7 +3260,7 @@ ___
 
 ▸ **init**(): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:44](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L44)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:44](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L44)*
 
 **Returns:** *void*
 
@@ -3488,7 +3488,7 @@ ___
 
 ▸ **onUpdate**(`mutations`: any, `paths`: any, `flushId`: any): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:190](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L190)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:190](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L190)*
 
 **Parameters:**
 
@@ -3814,7 +3814,7 @@ ___
 
 ▸ **removePathsFromTracking**(`path`: string): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:180](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L180)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:180](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L180)*
 
 **Parameters:**
 
@@ -3909,7 +3909,7 @@ ___
 
 ▸ **screenClosing**(): *boolean*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:48](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L48)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L48)*
 
 **Returns:** *boolean*
 
@@ -3919,7 +3919,7 @@ ___
 
 ▸ **screenVisible**(): *boolean*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:60](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L60)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:60](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L60)*
 
 **Returns:** *boolean*
 
@@ -4143,7 +4143,7 @@ ___
 
 ▸ **setUI**(): *void*
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:41](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/OvlBaseElement.ts#L41)*
+*Defined in [ovl/src/library/OvlBaseElement.ts:41](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L41)*
 
 **Returns:** *void*
 

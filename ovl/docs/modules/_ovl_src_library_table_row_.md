@@ -18,4 +18,4 @@
 
 • **cachedFn**: *Map‹string, any›* = new Map<string, any>()
 
-*Defined in [ovl/src/library/Table/Row.ts:8](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Row.ts#L8)*
+*Defined in [ovl/src/library/Table/Row.ts:8](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Row.ts#L8)*

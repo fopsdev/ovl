@@ -51,7 +51,7 @@
 
 Ƭ **BeforeSaveParam**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:17](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L17)*
+*Defined in [ovl/src/library/Table/Table.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L17)*
 
 #### Type declaration:
 
@@ -69,7 +69,7 @@ ___
 
 Ƭ **ColumnAlign**: *"left" | "center" | "right"*
 
-*Defined in [ovl/src/library/Table/Table.ts:160](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L160)*
+*Defined in [ovl/src/library/Table/Table.ts:160](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L160)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 Ƭ **ColumnDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:224](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L224)*
+*Defined in [ovl/src/library/Table/Table.ts:224](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L224)*
 
 #### Type declaration:
 
@@ -109,7 +109,7 @@ ___
 
 Ƭ **ColumnDisplayDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:238](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L238)*
+*Defined in [ovl/src/library/Table/Table.ts:238](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L238)*
 
 #### Type declaration:
 
@@ -125,7 +125,7 @@ ___
 
 Ƭ **ColumnFilter**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:254](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L254)*
+*Defined in [ovl/src/library/Table/Table.ts:254](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L254)*
 
 #### Type declaration:
 
@@ -149,7 +149,7 @@ ___
 
 Ƭ **ColumnFilterTypes**: *"@@ovl_all" | "@@ovl_others"*
 
-*Defined in [ovl/src/library/Table/Table.ts:270](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L270)*
+*Defined in [ovl/src/library/Table/Table.ts:270](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L270)*
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 Ƭ **ColumnFilterValue**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:264](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L264)*
+*Defined in [ovl/src/library/Table/Table.ts:264](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L264)*
 
 #### Type declaration:
 
@@ -173,7 +173,7 @@ ___
 
 Ƭ **ColumnsDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:162](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L162)*
+*Defined in [ovl/src/library/Table/Table.ts:162](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L162)*
 
 #### Type declaration:
 
@@ -185,7 +185,7 @@ ___
 
 Ƭ **ControlType**: *"text" | "textarea" | "list" | "bool" | "option" | "select" | "date" | "time"*
 
-*Defined in [ovl/src/library/Table/Table.ts:151](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L151)*
+*Defined in [ovl/src/library/Table/Table.ts:151](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L151)*
 
 ___
 
@@ -193,7 +193,7 @@ ___
 
 Ƭ **CustomFilter**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:184](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L184)*
+*Defined in [ovl/src/library/Table/Table.ts:184](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L184)*
 
 #### Type declaration:
 
@@ -211,7 +211,7 @@ ___
 
 Ƭ **CustomFilterType**: *"single" | "multi"*
 
-*Defined in [ovl/src/library/Table/Table.ts:182](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L182)*
+*Defined in [ovl/src/library/Table/Table.ts:182](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L182)*
 
 ___
 
@@ -219,7 +219,7 @@ ___
 
 Ƭ **CustomSort**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:171](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L171)*
+*Defined in [ovl/src/library/Table/Table.ts:171](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L171)*
 
 #### Type declaration:
 
@@ -233,7 +233,7 @@ ___
 
 Ƭ **DBInsertMode**: *"UDTAutoNumber" | "UDTAutoGUID" | "UDTAutoNumberBoth" | "UDTAutoGUIDBoth" | "AutoIdentity" | "AutoGUID" | "Manual"*
 
-*Defined in [ovl/src/library/Table/Table.ts:215](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L215)*
+*Defined in [ovl/src/library/Table/Table.ts:215](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L215)*
 
 ___
 
@@ -241,7 +241,7 @@ ___
 
 Ƭ **EditRowDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:128](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L128)*
+*Defined in [ovl/src/library/Table/Table.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L128)*
 
 #### Type declaration:
 
@@ -263,7 +263,7 @@ ___
 
 Ƭ **EditRowSaveCancelDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:137](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L137)*
+*Defined in [ovl/src/library/Table/Table.ts:137](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L137)*
 
 #### Type declaration:
 
@@ -283,7 +283,7 @@ ___
 
 Ƭ **Filter**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:176](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L176)*
+*Defined in [ovl/src/library/Table/Table.ts:176](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L176)*
 
 #### Type declaration:
 
@@ -299,7 +299,7 @@ ___
 
 Ƭ **FilterClick**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:209](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L209)*
+*Defined in [ovl/src/library/Table/Table.ts:209](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L209)*
 
 #### Type declaration:
 
@@ -315,7 +315,7 @@ ___
 
 Ƭ **HeaderClick**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:196](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L196)*
+*Defined in [ovl/src/library/Table/Table.ts:196](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L196)*
 
 #### Type declaration:
 
@@ -331,7 +331,7 @@ ___
 
 Ƭ **IDField**: *"{ObjectKey}" | string*
 
-*Defined in [ovl/src/library/Table/Table.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L26)*
+*Defined in [ovl/src/library/Table/Table.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L26)*
 
 ___
 
@@ -339,7 +339,7 @@ ___
 
 Ƭ **ListFnReturnValue**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:244](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L244)*
+*Defined in [ovl/src/library/Table/Table.ts:244](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L244)*
 
 #### Type declaration:
 
@@ -357,7 +357,7 @@ ___
 
 Ƭ **Paging**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:191](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L191)*
+*Defined in [ovl/src/library/Table/Table.ts:191](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L191)*
 
 #### Type declaration:
 
@@ -371,7 +371,7 @@ ___
 
 Ƭ **RowControlAction**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:52](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L52)*
+*Defined in [ovl/src/library/Table/Table.ts:52](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L52)*
 
 #### Type declaration:
 
@@ -385,7 +385,7 @@ ___
 
 Ƭ **RowStatus**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:43](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L43)*
+*Defined in [ovl/src/library/Table/Table.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L43)*
 
 #### Type declaration:
 
@@ -399,7 +399,7 @@ ___
 
 Ƭ **SaveMode**: *"add" | "update"*
 
-*Defined in [ovl/src/library/Table/Table.ts:15](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L15)*
+*Defined in [ovl/src/library/Table/Table.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L15)*
 
 ___
 
@@ -407,7 +407,7 @@ ___
 
 Ƭ **SelectRowDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:145](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L145)*
+*Defined in [ovl/src/library/Table/Table.ts:145](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L145)*
 
 #### Type declaration:
 
@@ -423,7 +423,7 @@ ___
 
 Ƭ **SelectedEditRow**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:63](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L63)*
+*Defined in [ovl/src/library/Table/Table.ts:63](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L63)*
 
 #### Type declaration:
 
@@ -435,7 +435,7 @@ ___
 
 Ƭ **SelectedRow**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:57](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L57)*
+*Defined in [ovl/src/library/Table/Table.ts:57](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L57)*
 
 #### Type declaration:
 
@@ -451,7 +451,7 @@ ___
 
 Ƭ **Sort**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:166](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L166)*
+*Defined in [ovl/src/library/Table/Table.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L166)*
 
 #### Type declaration:
 
@@ -465,7 +465,7 @@ ___
 
 Ƭ **SortClick**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:202](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L202)*
+*Defined in [ovl/src/library/Table/Table.ts:202](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L202)*
 
 #### Type declaration:
 
@@ -483,7 +483,7 @@ ___
 
 Ƭ **SortDirection**: *"asc" | "desc"*
 
-*Defined in [ovl/src/library/Table/Table.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L24)*
+*Defined in [ovl/src/library/Table/Table.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L24)*
 
 ___
 
@@ -491,7 +491,7 @@ ___
 
 Ƭ **StaticFilter**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:48](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L48)*
+*Defined in [ovl/src/library/Table/Table.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L48)*
 
 #### Type declaration:
 
@@ -503,7 +503,7 @@ ___
 
 Ƭ **TableData**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:28](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L28)*
+*Defined in [ovl/src/library/Table/Table.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L28)*
 
 #### Type declaration:
 
@@ -527,7 +527,7 @@ ___
 
 Ƭ **TableDataAndDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:38](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L38)*
+*Defined in [ovl/src/library/Table/Table.ts:38](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L38)*
 
 #### Type declaration:
 
@@ -541,7 +541,7 @@ ___
 
 Ƭ **TableDef**: *object*
 
-*Defined in [ovl/src/library/Table/Table.ts:67](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/Table.ts#L67)*
+*Defined in [ovl/src/library/Table/Table.ts:67](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L67)*
 
 #### Type declaration:
 

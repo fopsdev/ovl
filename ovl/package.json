@@ -6,6 +6,7 @@
   "scripts": {
     "tsc": "tsc --noEmit",
     "cleandist": "rimraf dist",
+    "cleandoc": "rimraf docs",
     "parcelstart": "parcel index.html --open",
     "parcelbuild": "parcel build index.html",
     "start1": "run-s  cleandist",
@@ -16,7 +17,8 @@
     "debug": "remotedebug_ios_webkit_adapter --port=9222",
     "start": "parcel index.html --no-cache",
     "debugstart": "run-p debug start",
-    "build": "npm run cleandist && parcel build \"./src/index.ts\""
+    "build": "npm run cleandist && parcel build \"./src/index.ts\"",
+    "doc": "npm run cleandoc && npx typedoc --theme markdown --out docs src/index.ts"
   },
   "dependencies": {
     "idb": "5.0.1",

@@ -14,23 +14,23 @@
 
 ### ▪ **tblAudit**: *object*
 
-*Defined in [test/src/screens/Audit/state.ts:3](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L3)*
+*Defined in [test/src/screens/Audit/state.ts:3](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L3)*
 
 ###  id
 
 • **id**: *"audit"* = "audit"
 
-*Defined in [test/src/screens/Audit/state.ts:4](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L4)*
+*Defined in [test/src/screens/Audit/state.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L4)*
 
 ###  namespace
 
 • **namespace**: *string* = "portal.system.audit"
 
-*Defined in [test/src/screens/Audit/state.ts:5](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L5)*
+*Defined in [test/src/screens/Audit/state.ts:5](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L5)*
 
 ▪ **columns**: *object*
 
-*Defined in [test/src/screens/Audit/state.ts:24](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L24)*
+*Defined in [test/src/screens/Audit/state.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L24)*
 
 * **U_IDField**: *object*
 
@@ -108,7 +108,7 @@
 
 ▪ **database**: *object*
 
-*Defined in [test/src/screens/Audit/state.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L6)*
+*Defined in [test/src/screens/Audit/state.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L6)*
 
 * **dataIdField**: *string* = "Code"
 
@@ -116,7 +116,7 @@
 
 ▪ **features**: *object*
 
-*Defined in [test/src/screens/Audit/state.ts:17](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L17)*
+*Defined in [test/src/screens/Audit/state.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L17)*
 
 * **add**: *false* = false
 
@@ -130,7 +130,7 @@
 
 ▪ **options**: *object*
 
-*Defined in [test/src/screens/Audit/state.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L13)*
+*Defined in [test/src/screens/Audit/state.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L13)*
 
 * **paging**: *object*
 
@@ -146,6 +146,6 @@
 
 ▪ **server**: *object*
 
-*Defined in [test/src/screens/Audit/state.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Audit/state.ts#L10)*
+*Defined in [test/src/screens/Audit/state.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Audit/state.ts#L10)*
 
 * **endpoint**: *string* = "audit"

@@ -14,11 +14,11 @@
 
 ### ▪ **displayFormats**: *object*
 
-*Defined in [ovl/src/global/displayFormats.ts:1](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/displayFormats.ts#L1)*
+*Defined in [ovl/src/global/displayFormats.ts:1](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/displayFormats.ts#L1)*
 
 ▪ **date**: *object*
 
-*Defined in [ovl/src/global/displayFormats.ts:12](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/displayFormats.ts#L12)*
+*Defined in [ovl/src/global/displayFormats.ts:12](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/displayFormats.ts#L12)*
 
 * **_2DigitsYear**: *DateTimeFormat* = new Intl.DateTimeFormat("de-ch", {
       day: "2-digit",
@@ -44,7 +44,7 @@
 
 ▪ **decimal**: *object*
 
-*Defined in [ovl/src/global/displayFormats.ts:2](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/global/displayFormats.ts#L2)*
+*Defined in [ovl/src/global/displayFormats.ts:2](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/displayFormats.ts#L2)*
 
 * **_4Digits**: *NumberFormat* = new Intl.NumberFormat("de-ch", {
       minimumFractionDigits: 4,

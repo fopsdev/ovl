@@ -20,7 +20,7 @@
 
 Ƭ **FeedbackFormState**: *object*
 
-*Defined in [test/src/screens/Feedback/FeedbackForm.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Feedback/FeedbackForm.ts#L10)*
+*Defined in [test/src/screens/Feedback/FeedbackForm.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Feedback/FeedbackForm.ts#L10)*
 
 #### Type declaration:
 
@@ -48,7 +48,7 @@ ___
 
 Ƭ **FeedbackType**: *"OrderPositive" | "OrderNegative" | "DeliveryDate"*
 
-*Defined in [test/src/screens/Feedback/FeedbackForm.ts:8](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Feedback/FeedbackForm.ts#L8)*
+*Defined in [test/src/screens/Feedback/FeedbackForm.ts:8](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Feedback/FeedbackForm.ts#L8)*
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 Ƭ **FieldId**: *"msg"*
 
-*Defined in [test/src/screens/Feedback/FeedbackForm.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Feedback/FeedbackForm.ts#L22)*
+*Defined in [test/src/screens/Feedback/FeedbackForm.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Feedback/FeedbackForm.ts#L22)*

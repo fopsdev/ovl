@@ -18,7 +18,7 @@
 
 Ƭ **HeaderMenuDef**: *object*
 
-*Defined in [ovl/src/library/Table/HeaderMenu.ts:14](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Table/HeaderMenu.ts#L14)*
+*Defined in [ovl/src/library/Table/HeaderMenu.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/HeaderMenu.ts#L14)*
 
 #### Type declaration:
 

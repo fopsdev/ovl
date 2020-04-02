@@ -18,7 +18,7 @@
 
 Ƭ **TextAreaControlState**: *object*
 
-*Defined in [ovl/src/library/Forms/Controls/TextArea.ts:7](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Forms/Controls/TextArea.ts#L7)*
+*Defined in [ovl/src/library/Forms/Controls/TextArea.ts:7](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/TextArea.ts#L7)*
 
 #### Type declaration:
 

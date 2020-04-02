@@ -23,7 +23,7 @@
 
 Ƭ **CancelType**: *"AppCancel" | "AppNo" | "NoButton"*
 
-*Defined in [ovl/src/library/Dialog/Dialog.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/Dialog.ts#L10)*
+*Defined in [ovl/src/library/Dialog/Dialog.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/Dialog.ts#L10)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 Ƭ **DialogChangedParam**: *object*
 
-*Defined in [ovl/src/library/Dialog/Dialog.ts:5](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/Dialog.ts#L5)*
+*Defined in [ovl/src/library/Dialog/Dialog.ts:5](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/Dialog.ts#L5)*
 
 #### Type declaration:
 
@@ -45,7 +45,7 @@ ___
 
 Ƭ **DialogState**: *object*
 
-*Defined in [ovl/src/library/Dialog/Dialog.ts:21](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/Dialog.ts#L21)*
+*Defined in [ovl/src/library/Dialog/Dialog.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/Dialog.ts#L21)*
 
 #### Type declaration:
 
@@ -69,7 +69,7 @@ ___
 
 Ƭ **OkType**: *"AppOk" | "AppYes" | "NoButton"*
 
-*Defined in [ovl/src/library/Dialog/Dialog.ts:9](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/Dialog.ts#L9)*
+*Defined in [ovl/src/library/Dialog/Dialog.ts:9](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/Dialog.ts#L9)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 Ƭ **OpenDialogState**: *object*
 
-*Defined in [ovl/src/library/Dialog/Dialog.ts:14](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/Dialog.ts#L14)*
+*Defined in [ovl/src/library/Dialog/Dialog.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/Dialog.ts#L14)*
 
 #### Type declaration:
 
@@ -95,4 +95,4 @@ ___
 
 Ƭ **ResultType**: *undefined | 1 | 2*
 
-*Defined in [ovl/src/library/Dialog/Dialog.ts:12](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/library/Dialog/Dialog.ts#L12)*
+*Defined in [ovl/src/library/Dialog/Dialog.ts:12](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Dialog/Dialog.ts#L12)*

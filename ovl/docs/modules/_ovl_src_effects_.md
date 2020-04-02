@@ -20,7 +20,7 @@
 
 • **lastOfflineMsg**: *any*
 
-*Defined in [ovl/src/effects.ts:7](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/effects.ts#L7)*
+*Defined in [ovl/src/effects.ts:7](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/effects.ts#L7)*
 
 ## Functions
 
@@ -28,7 +28,7 @@
 
 ▸ **getRequest**(`url`: any): *Promise‹object | object›*
 
-*Defined in [ovl/src/effects.ts:16](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/effects.ts#L16)*
+*Defined in [ovl/src/effects.ts:16](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/effects.ts#L16)*
 
 **Parameters:**
 
@@ -44,7 +44,7 @@ ___
 
 ▸ **ovlFetch**(`url`: any, `data`: any, `isBlob?`: boolean): *Promise‹object | object›*
 
-*Defined in [ovl/src/effects.ts:20](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/effects.ts#L20)*
+*Defined in [ovl/src/effects.ts:20](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/effects.ts#L20)*
 
 **Parameters:**
 
@@ -62,7 +62,7 @@ ___
 
 ▸ **postRequest**(`url`: any, `data`: any, `isBlob?`: boolean): *Promise‹object | object›*
 
-*Defined in [ovl/src/effects.ts:9](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/effects.ts#L9)*
+*Defined in [ovl/src/effects.ts:9](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/effects.ts#L9)*
 
 **Parameters:**
 

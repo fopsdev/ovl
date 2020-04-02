@@ -32,7 +32,7 @@
 
 Ƭ **User**: *object*
 
-*Defined in [ovl/src/state.ts:36](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L36)*
+*Defined in [ovl/src/state.ts:36](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L36)*
 
 #### Type declaration:
 
@@ -44,7 +44,7 @@
 
 • **apiUrl**: *string* = ""
 
-*Defined in [ovl/src/state.ts:23](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L23)*
+*Defined in [ovl/src/state.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L23)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **availableLanguages**: *string[]* = []
 
-*Defined in [ovl/src/state.ts:21](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L21)*
+*Defined in [ovl/src/state.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L21)*
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • **dialog**: *[DialogState](_ovl_src_library_dialog_dialog_.md#dialogstate)* = undefined
 
-*Defined in [ovl/src/state.ts:19](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L19)*
+*Defined in [ovl/src/state.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L19)*
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 • **forms**: *[FormsState](_ovl_src_library_forms_actions_.md#formsstate)* = undefined
 
-*Defined in [ovl/src/state.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L10)*
+*Defined in [ovl/src/state.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L10)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **snacks**: *object*
 
-*Defined in [ovl/src/state.ts:17](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L17)*
+*Defined in [ovl/src/state.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L17)*
 
 #### Type declaration:
 
@@ -88,7 +88,7 @@ ___
 
 • **translations**: *[Translation](_ovl_src_global_globals_.md#translation)*
 
-*Defined in [ovl/src/state.ts:22](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L22)*
+*Defined in [ovl/src/state.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L22)*
 
 ## Object literals
 
@@ -96,19 +96,19 @@ ___
 
 ### ▪ **indicator**: *object*
 
-*Defined in [ovl/src/state.ts:12](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L12)*
+*Defined in [ovl/src/state.ts:12](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L12)*
 
 ###  open
 
 • **open**: *boolean* = true
 
-*Defined in [ovl/src/state.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L13)*
+*Defined in [ovl/src/state.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L13)*
 
 ###  refCounter
 
 • **refCounter**: *number* = 1
 
-*Defined in [ovl/src/state.ts:14](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L14)*
+*Defined in [ovl/src/state.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L14)*
 
 ___
 
@@ -116,37 +116,37 @@ ___
 
 ### ▪ **nav**: *object*
 
-*Defined in [ovl/src/state.ts:25](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L25)*
+*Defined in [ovl/src/state.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L25)*
 
 ###  currentScreen
 
 • **currentScreen**: *undefined* = undefined
 
-*Defined in [ovl/src/state.ts:27](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L27)*
+*Defined in [ovl/src/state.ts:27](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L27)*
 
 ###  formIdToReset
 
 • **formIdToReset**: *undefined* = undefined
 
-*Defined in [ovl/src/state.ts:30](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L30)*
+*Defined in [ovl/src/state.ts:30](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L30)*
 
 ###  formTypeToReset
 
 • **formTypeToReset**: *undefined* = undefined
 
-*Defined in [ovl/src/state.ts:29](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L29)*
+*Defined in [ovl/src/state.ts:29](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L29)*
 
 ###  nextScreen
 
 • **nextScreen**: *undefined* = undefined
 
-*Defined in [ovl/src/state.ts:26](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L26)*
+*Defined in [ovl/src/state.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L26)*
 
 ###  screensHistory
 
 • **screensHistory**: *undefined[]* = []
 
-*Defined in [ovl/src/state.ts:28](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L28)*
+*Defined in [ovl/src/state.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L28)*
 
 ___
 
@@ -154,19 +154,19 @@ ___
 
 ### ▪ **overlay**: *object*
 
-*Defined in [ovl/src/state.ts:33](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L33)*
+*Defined in [ovl/src/state.ts:33](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L33)*
 
 ###  closing
 
 • **closing**: *false* = false
 
-*Defined in [ovl/src/state.ts:33](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L33)*
+*Defined in [ovl/src/state.ts:33](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L33)*
 
 ###  open
 
 • **open**: *false* = false
 
-*Defined in [ovl/src/state.ts:33](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L33)*
+*Defined in [ovl/src/state.ts:33](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L33)*
 
 ___
 
@@ -174,19 +174,19 @@ ___
 
 ### ▪ **overlay2**: *object*
 
-*Defined in [ovl/src/state.ts:34](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L34)*
+*Defined in [ovl/src/state.ts:34](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L34)*
 
 ###  closing
 
 • **closing**: *false* = false
 
-*Defined in [ovl/src/state.ts:34](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L34)*
+*Defined in [ovl/src/state.ts:34](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L34)*
 
 ###  open
 
 • **open**: *false* = false
 
-*Defined in [ovl/src/state.ts:34](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L34)*
+*Defined in [ovl/src/state.ts:34](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L34)*
 
 ___
 
@@ -194,11 +194,11 @@ ___
 
 ### ▪ **state**: *object*
 
-*Defined in [ovl/src/state.ts:42](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L42)*
+*Defined in [ovl/src/state.ts:42](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L42)*
 
 ▪ **ovl**: *object*
 
-*Defined in [ovl/src/state.ts:43](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L43)*
+*Defined in [ovl/src/state.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L43)*
 
 * **apiUrl**: *string*
 
@@ -358,10 +358,10 @@ ___
 
 ### ▪ **user**: *object*
 
-*Defined in [ovl/src/state.ts:40](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L40)*
+*Defined in [ovl/src/state.ts:40](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L40)*
 
 ###  token
 
 • **token**: *string* = ""
 
-*Defined in [ovl/src/state.ts:40](https://github.com/fopsdev/ovl/blob/d5eec59/ovl/src/state.ts#L40)*
+*Defined in [ovl/src/state.ts:40](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/state.ts#L40)*

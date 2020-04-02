@@ -17,7 +17,7 @@
 
 ▸ **CloseMainMenu**(`__namedParameters`: object): *void*
 
-*Defined in [test/src/screens/Shellbar/actions.ts:3](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Shellbar/actions.ts#L3)*
+*Defined in [test/src/screens/Shellbar/actions.ts:3](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Shellbar/actions.ts#L3)*
 
 **Parameters:**
 
@@ -35,7 +35,7 @@ ___
 
 ▸ **CloseUserMenu**(`__namedParameters`: object): *void*
 
-*Defined in [test/src/screens/Shellbar/actions.ts:10](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Shellbar/actions.ts#L10)*
+*Defined in [test/src/screens/Shellbar/actions.ts:10](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Shellbar/actions.ts#L10)*
 
 **Parameters:**
 
@@ -53,7 +53,7 @@ ___
 
 ▸ **OpenMainMenu**(`__namedParameters`: object): *void*
 
-*Defined in [test/src/screens/Shellbar/actions.ts:6](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Shellbar/actions.ts#L6)*
+*Defined in [test/src/screens/Shellbar/actions.ts:6](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Shellbar/actions.ts#L6)*
 
 **Parameters:**
 
@@ -71,7 +71,7 @@ ___
 
 ▸ **OpenUserMenu**(`__namedParameters`: object): *void*
 
-*Defined in [test/src/screens/Shellbar/actions.ts:13](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/Shellbar/actions.ts#L13)*
+*Defined in [test/src/screens/Shellbar/actions.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/Shellbar/actions.ts#L13)*
 
 **Parameters:**
 

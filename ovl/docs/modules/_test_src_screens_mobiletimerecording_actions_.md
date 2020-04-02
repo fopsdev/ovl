@@ -15,7 +15,7 @@
 
 ▸ **CreateTestEntries**(`__namedParameters`: object, `_`: void): *Promise‹void›*
 
-*Defined in [test/src/screens/MobileTimeRecording/actions.ts:46](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/actions.ts#L46)*
+*Defined in [test/src/screens/MobileTimeRecording/actions.ts:46](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/actions.ts#L46)*
 
 **Parameters:**
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **SetMobileTimeEntrySelectedDate**(`__namedParameters`: object, `value`: object): *Promise‹void›*
 
-*Defined in [test/src/screens/MobileTimeRecording/actions.ts:31](https://github.com/fopsdev/ovl/blob/d5eec59/test/src/screens/MobileTimeRecording/actions.ts#L31)*
+*Defined in [test/src/screens/MobileTimeRecording/actions.ts:31](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/screens/MobileTimeRecording/actions.ts#L31)*
 
 **Parameters:**
 
