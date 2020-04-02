@@ -21,7 +21,7 @@ import { CompOrderTimeLine } from "./screens/Order/OrderTimeLine"
 import { CompFeedbackForm } from "./screens/Feedback/FeedbackForm"
 
 import { CompTableTesting } from "./screens/TableTesting/TableTesting"
-import { CompMobileTimeEntry } from "./screens/MobileTimeRecording/MobileTimeRecording"
+import { CompMobileTimeEntry } from "./screens/MobileTimeRecording/MobileTimeRecordingMainForm"
 import { CompMobileTimeEntryForm } from "./screens/MobileTimeRecording/MobileTimeRecordingForm"
 
 export const defineElements = () => {

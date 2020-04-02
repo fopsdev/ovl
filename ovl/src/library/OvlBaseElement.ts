@@ -1,5 +1,5 @@
-import { overmind, Screen } from "../index"
-import { FormType } from "./forms/actions"
+import { overmind, Screen, FormType } from "../index"
+
 import { EventType } from "overmind"
 import { render, TemplateResult } from "lit-html"
 import { ITrackStateTree } from "proxy-state-tree"

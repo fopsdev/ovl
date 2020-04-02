@@ -7,17 +7,10 @@ import {
 } from "../../global/globals"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
-import { customFunctions } from "../../index"
+import { customFunctions, FormType } from "../../index"
 import { ListFnReturnValue } from "../Table/Table"
 import { getFormFields, ValidationAddError } from "./helper"
 export { FillListControl }
-export type FormType =
-  | "TableRowEdit"
-  | "Feedback"
-  | "Settings"
-  | "Login"
-  | "Language"
-  | "MobileTimeEntry"
 
 export type Field = {
   value: string

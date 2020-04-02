@@ -122,19 +122,6 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleSettings = (e: Event) => {
-      let fields: { [key: string]: FormFields } = {
-        pw: { value: "" },
-        pw1: { value: "" },
-        pw2: { value: "" }
-      }
-      let initForm: InitForm = {
-        validationFnName: "SettingsValidateField",
-        namespace: "portal.settings",
-        instanceId: "settingsform",
-        formType: "Settings",
-        fields
-      }
-      this.actions.ovl.form.InitForm(initForm)
       this.actions.ovl.navigation.NavigateTo("Settings")
     }
 

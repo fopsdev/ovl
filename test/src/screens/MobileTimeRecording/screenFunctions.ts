@@ -20,6 +20,20 @@ export const NavigateIn = async (
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ) => {
+  if (
+    !this.state.testtables.timeentries.tableDef.mobiletimerecording1.initialised
+  ) {
+    let dt = new Date()
+    let dateSelected = dt.toISOString().substring(0, 10)
+
+    await this.actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+      {
+        def: this.state.testtables.timeentries.tableDef.mobiletimerecording1,
+        selected: dateSelected
+      }
+    )
+  }
+
   let def = state.testtables.timeentries.tableDef.mobiletimerecording1
   let data = state.testtables.timeentries
   await actions.ovl.table.TableRefresh({

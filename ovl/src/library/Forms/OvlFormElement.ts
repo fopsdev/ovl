@@ -1,6 +1,7 @@
 import { OvlBaseElement } from "../OvlBaseElement"
-import { FormState, FormType } from "./actions"
+import { FormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
+import { FormType } from "../.."
 
 export type FieldFormat = "2digits" | "4digits" | "2digitsYear" | "timestamp"
 

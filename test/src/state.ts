@@ -155,6 +155,14 @@ type Portal = {
   tables: { translation: TableData; audit: TableData }
 }
 
+export type CustomFormType =
+  | "Feedback"
+  | "Settings"
+  | "Login"
+  | "Language"
+  | "MobileTimeEntry"
+  | "MobileTimeEntryMain"
+
 export type TableDefIds =
   | "translation"
   | "audit"
