@@ -1,5 +1,6 @@
 import { Action, AsyncAction } from "../../../ovl/node_modules/overmind"
-import { Screen } from "../../../ovl/src/index"
+import { Screen, customFunctions } from "../../../ovl/src/index"
+
 import { api, T } from "../../../ovl/src/global/globals"
 import {
   FormState,
@@ -174,16 +175,17 @@ export const HandleRefresh: AsyncAction = async ({
     dpInvoices: res.data.dpInvoiceDetail
   }
   //now call the screens refresh action if any
-  let screen = state.ovl.screens.nav.currentScreen
-  let screensActions = actions.portal["screens"]
-  if (screensActions) {
-    if (screensActions[screen]) {
-      if (screensActions[screen]["HandleScreenRefresh"]) {
-        screensActions[screen]["HandleScreenRefresh"]()
+  if (customFunctions.portal) {
+    let screen = state.ovl.screens.nav.currentScreen
+    let screensFunctions = customFunctions.portal["screens"]
+    if (screensFunctions) {
+      if (screensFunctions[screen]) {
+        if (screensFunctions[screen]["ScreenRefresh"]) {
+          screensFunctions[screen]["ScreenRefresh"](state, actions, effects)
+        }
       }
     }
   }
-
   SnackAdd("Daten aufgefrischt", "Success")
 }
 

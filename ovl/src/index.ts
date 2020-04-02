@@ -8,7 +8,7 @@ import { IConfig } from "overmind"
 // import * as customFunctions from "../../../kaltag/src/customFunctions"
 
 //#################### ovl test prj ######################################
-import { overmind, config } from "../..//test/src/index"
+import { overmind, config, TableDefIds } from "../..//test/src/index"
 import { screens } from "../../test/src/stateScreens"
 import * as customFunctions from "../../test/src/customFunctions"
 
@@ -29,5 +29,5 @@ declare module "overmind" {
   interface Config extends IConfig<typeof config> {}
 }
 
-export { customFunctions, screens, overmind }
+export { customFunctions, screens, overmind, TableDefIds }
 export type Screen = keyof typeof screens

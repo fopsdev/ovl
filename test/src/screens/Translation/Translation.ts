@@ -23,8 +23,8 @@ export class CompTranslation extends OvlBaseElement {
             class="fd-table"
             .props=${(state: typeof overmind.state) => {
               return {
-                def: state.portal.tables.translations.tableDef.translation,
-                data: state.portal.tables.translations
+                def: state.portal.tables.translation.tableDef.translation,
+                data: state.portal.tables.translation
               }
             }}
           >

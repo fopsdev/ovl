@@ -314,8 +314,7 @@ export const initTableState = async (
   tableDef: TableDataAndDef,
   actions: typeof overmind.actions,
   forceFreshServerData: number,
-  isMobile: boolean,
-  doNotGetFreshServerData?: boolean
+  isMobile: boolean
 ) => {
   let def = tableDef.def
   let data = tableDef.data
@@ -533,9 +532,9 @@ export const initTableState = async (
       }
     })
   }
-  if (!def.dataFetching.useCustomDataFetching && !doNotGetFreshServerData) {
+  if (!def.dataFetching.useCustomDataFetching) {
     if (
-      (!tableDef.data.timestamp && !def.initialised) ||
+      !data.timestamp ||
       forceFreshServerData === 0 ||
       (forceFreshServerData > 0 &&
         data.timestamp + forceFreshServerData * 1000 < Date.now())
@@ -549,33 +548,6 @@ export const initTableState = async (
     if (!def.initialised) {
       let schema = tableDef.data.schema
       if (def.dataFetching.useSchema && schema !== undefined) {
-        // extend columndef with columns from schema if they are not defined
-        let columns = def.columns
-        // let schemaKeys = Object.keys(data.schema)
-
-        // let columnKeysToAdd = schemaKeys.filter(k => {
-        //   return !Object.keys(columns).some(s => {
-        //     if (columns[s].datafield === k) {
-        //       return true
-        //     }
-        //     return false
-        //   })
-        // })
-        // columnKeysToAdd.forEach(c => {
-        //   columns[c] = {
-        //     datafield: c,
-        //     visible: false,
-        //     filter: {
-        //       enabled: false,
-        //       filterValues: {},
-        //       isOthersSelected: false,
-        //       othersCount: 0,
-        //       selected: "",
-        //       top: 10,
-        //       showFilter: false
-        //     }
-        //   }
-        // })
         Object.keys(def.columns).forEach(f => {
           let col = def.columns[f]
           if (!col.type && schema[f]) {

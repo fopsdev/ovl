@@ -1,4 +1,4 @@
-import { TableDef, ColumnDef } from "../../../../ovl/src/library/Table/Table"
+import { TableDef } from "../../../../ovl/src/library/Table/Table"
 
 export type Translation = {
   U_Code: string

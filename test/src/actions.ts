@@ -55,19 +55,13 @@ let feedback = {
 }
 
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
-import * as translations from "./screens/Translation/actions"
-
-import { HandleScreenRefresh } from "./screens/TableTesting/actions"
-
-let screens = { TableTesting: { HandleScreenRefresh } }
 
 export const portal = {
-  system: { shellbar, translations, user },
+  system: { shellbar, user },
   global,
   settings,
   order,
-  feedback,
-  screens
+  feedback
 }
 
 export const testtables = { mobiletimerecording }

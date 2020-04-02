@@ -1,5 +1,5 @@
 import { Action, AsyncAction } from "overmind"
-import { overmind, Screen } from "../index"
+import { overmind, Screen, customFunctions } from "../index"
 import { OvlConfig, Init } from "../init"
 
 import {
@@ -42,10 +42,43 @@ export function isMobile() {
 }
 
 export const NavigateTo: AsyncAction<Screen> = async (
-  { state, actions },
+  { state, actions, effects },
   value
 ) => {
   if (state.ovl.screens.nav.currentScreen !== value) {
+    let fn = customFunctions["screens"]
+    if (fn) {
+      let currentScreen = state.ovl.screens.nav.currentScreen
+      if (currentScreen) {
+        if (fn[currentScreen] && fn[currentScreen]["NavigateOut"]) {
+          let navErrorMessage = await fn[currentScreen]["NavigateOut"](
+            state,
+            actions,
+            effects
+          )
+          if (navErrorMessage) {
+            if (navErrorMessage.toLowerCase() !== "error") {
+              SnackAdd(navErrorMessage, "Error")
+            }
+            return
+          }
+        }
+      }
+      if (fn[value] && fn[value]["NavigateIn"]) {
+        let navErrorMessage = await fn[value]["NavigateIn"](
+          state,
+          actions,
+          effects
+        )
+        if (navErrorMessage) {
+          if (navErrorMessage.toLowerCase() !== "error") {
+            SnackAdd(navErrorMessage, "Error")
+          }
+          return
+        }
+      }
+    }
+
     state.ovl.screens.nav.nextScreen = value
     let user = state.ovl.user
     if (value === "Login" && user) {
@@ -76,8 +109,51 @@ export const NavigateTo: AsyncAction<Screen> = async (
   }
 }
 
-export const NavigateBack: AsyncAction = async ({ state, actions }) => {
+export const NavigateBack: AsyncAction = async ({
+  state,
+  actions,
+  effects
+}) => {
   if (state.ovl.screens.nav.screensHistory.length > 1) {
+    let fn = customFunctions["screens"]
+    if (fn) {
+      let currentScreen = state.ovl.screens.nav.currentScreen
+      if (currentScreen) {
+        if (fn[currentScreen] && fn[currentScreen]["NavigateOut"]) {
+          let navErrorMessage = await fn[currentScreen]["NavigateOut"](
+            state,
+            actions,
+            effects
+          )
+          if (navErrorMessage) {
+            if (navErrorMessage.toLowerCase() !== "error") {
+              SnackAdd(navErrorMessage, "Error")
+            }
+            return
+          }
+        }
+      }
+      let nextScreen =
+        state.ovl.screens.nav.screensHistory[
+          state.ovl.screens.nav.screensHistory.length - 2
+        ]
+      if (nextScreen) {
+        if (fn[nextScreen] && fn[nextScreen]["NavigateIn"]) {
+          let navErrorMessage = await fn[nextScreen]["NavigateIn"](
+            state,
+            actions,
+            effects
+          )
+          if (navErrorMessage) {
+            if (navErrorMessage.toLowerCase() !== "error") {
+              SnackAdd(navErrorMessage, "Error")
+            }
+            return
+          }
+        }
+      }
+    }
+
     state.ovl.screens.nav.screensHistory.pop()
     let screen =
       state.ovl.screens.nav.screensHistory[
@@ -153,7 +229,7 @@ export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
   // saveState()
 }
 
-export const GetLanguage: AsyncAction<string> = async (
+export const SetLanguage: AsyncAction<string> = async (
   { state, actions, effects },
   value
 ) => {

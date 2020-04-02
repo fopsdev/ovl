@@ -3,7 +3,7 @@ import { html } from "lit-html"
 import { repeat } from "lit-html/directives/repeat"
 import { TableRowDef } from "./RowWrapper"
 import { DataType, Schema } from "../Forms/OvlFormElement"
-import { customFunctions, overmind } from "../../index"
+import { customFunctions, overmind, TableDefIds } from "../../index"
 
 import { HeaderMenuDef } from "./HeaderMenu"
 import { FieldFormat } from "../Forms/OvlFormElement"
@@ -28,7 +28,7 @@ type IDField = "{ObjectKey}" | string
 export type TableData = {
   data: {}
   schema: { [key: string]: Schema }
-  tableDef: { [key: string]: TableDef }
+  tableDef: { [key in TableDefIds]?: TableDef }
   timestamp?: number
   lookupTypes?: { [key: string]: DataType }
   lookupTypes2?: { [key: string]: DataType }
@@ -66,7 +66,7 @@ export type SelectedEditRow = {
 
 export type TableDef = {
   initialised?: boolean
-  id: string
+  id: TableDefIds
   title?: string
   namespace: string
   server: {

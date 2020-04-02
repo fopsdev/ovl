@@ -298,6 +298,7 @@ export const TableRefreshDataFromServer: AsyncAction<{
   if (res.data.schema && Object.keys(res.data.schema).length > 0) {
     value.data.schema = res.data.schema
   }
+
   value.data.timestamp = Date.now()
 }
 let lastRefreshMsg: number = 0

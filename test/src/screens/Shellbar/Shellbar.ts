@@ -148,20 +148,14 @@ export class CompShellbar extends OvlBaseElement {
       if (this.state.ovl.language.language === "DE") {
         lang = "FR"
       }
-      await this.actions.ovl.internal.GetLanguage(lang)
+      await this.actions.ovl.internal.SetLanguage(lang)
     }
 
     const handleLanguageTable = (e: Event) => {
-      this.actions.portal.system.translations.OpenLanguageTable()
+      this.actions.ovl.navigation.NavigateTo("Translation")
     }
 
     const handleAudit = async (e: Event) => {
-      await this.actions.ovl.table.TableRefresh({
-        def: this.state.portal.tables.audit.tableDef.audit,
-        data: this.state.portal.tables.audit,
-        init: true,
-        forceFreshServerData: 0
-      })
       this.actions.ovl.navigation.NavigateTo("Audit")
     }
 
@@ -189,18 +183,6 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleTestTable = async (e: Event) => {
-      await this.actions.ovl.table.TableRefresh({
-        def: this.state.testtables.tableTesting.tableDef.tab1,
-        data: this.state.testtables.tableTesting,
-        init: true
-      })
-
-      await this.actions.ovl.table.TableRefresh({
-        def: this.state.testtables.tableTesting.tableDef.tab2,
-        data: this.state.testtables.tableTesting,
-        init: true
-      })
-
       this.actions.ovl.navigation.NavigateTo("TableTesting")
     }
 
