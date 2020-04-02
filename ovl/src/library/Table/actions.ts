@@ -423,7 +423,7 @@ export const TableDirectSaveRow: AsyncAction<{
   let rowToSave = value.rowToSave
   let key = rowToSave[def.database.dataIdField]
   if (!def.initialised) {
-    initTableState({ def, data }, actions, -1, state.ovl.uiState.isMobile, true)
+    initTableState({ def, data }, actions, -1, state.ovl.uiState.isMobile)
   }
   if (key === undefined) {
     key = ovltemp + uuidv4()
