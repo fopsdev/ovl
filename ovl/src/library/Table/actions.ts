@@ -1,7 +1,7 @@
 import { Action, AsyncAction } from "overmind"
 import { postRequest } from "../../effects"
 import { api, ovltemp, uuidv4, resolvePath } from "../../global/globals"
-import { customFunctions } from "../../index"
+import { customFunctions, TableDefIds } from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
@@ -58,7 +58,7 @@ export const TableClearFilter: Action<TableDataAndDef> = (
     def.options.filter.value = ""
   }
   def.uiState.headerSelected = ""
-  actions.ovl.table.TableRefresh({ def: value.def, data: value.data })
+  actions.ovl.table.TableRefresh({ defId: value.def.id, data: value.data })
 }
 
 export const TableFilterSelected: Action<TableDataAndDef> = (
@@ -71,7 +71,7 @@ export const TableFilterSelected: Action<TableDataAndDef> = (
     paging: value.def.options.paging,
     page: 0
   })
-  actions.ovl.table.TableRefresh(value)
+  actions.ovl.table.TableRefresh({ defId: def.id, data: value.data })
 }
 
 export const TableSelectHeader: Action<HeaderClick> = (
@@ -100,7 +100,7 @@ export const TableSort: Action<SortClick> = ({ actions }, value) => {
     def.options.sort.direction = "desc"
   }
   def.options.sortCustom.selected = ""
-  actions.ovl.table.TableRefresh({ def: value.def, data: value.data })
+  actions.ovl.table.TableRefresh({ defId: value.def.id, data: value.data })
 }
 
 export const TableFilter: Action<FilterClick> = ({ actions }, value) => {
@@ -115,7 +115,7 @@ export const TableFilter: Action<FilterClick> = ({ actions }, value) => {
     })
   }
 
-  actions.ovl.table.TableRefresh({ def: value.def, data: value.data })
+  actions.ovl.table.TableRefresh({ defId: value.def.id, data: value.data })
 }
 
 export const TableSelectAll: Action<{
@@ -154,7 +154,7 @@ export const TableViewRefresh: Action<TableDataAndDef> = (
   value
 ) => {
   actions.ovl.table.TableRefresh({
-    def: value.def,
+    defId: value.def.id,
     data: value.data
   })
 }
@@ -305,13 +305,13 @@ export const TableRefresh: AsyncAction<{
   ignoreRefreshedMessageSnack?: boolean
   refreshServerDataIfOlderThan?: number
   forceServerDataRefresh?: boolean
-  def: TableDef
+  defId: TableDefIds
   data: TableData
 }> = async ({ actions, state, effects }, value) => {
-  let def = value.def
   let dataAndState = value.data
+  let def = dataAndState.tableDef[value.defId]
   let ignoreRefreshedMessageSnack = value.ignoreRefreshedMessageSnack
-  initTableState(def, dataAndState, state.ovl.uiState.isMobile)
+  initTableState(def, dataAndState, value.defId, state.ovl.uiState.isMobile)
   if (dataAndState.timestamp === undefined) {
     if (!ignoreRefreshedMessageSnack) {
       ignoreRefreshedMessageSnack = true
@@ -415,16 +415,16 @@ export const TableRefresh: AsyncAction<{
 }
 export const TableDirectSaveRow: AsyncAction<{
   data: TableData
-  def: TableDef
+  defId: TableDefIds
   rowToSave: {}
   noSnack?: boolean
 }> = async ({ state, actions }, value) => {
-  let def = value.def
   let data = value.data
+  let def = data.tableDef[value.defId]
   let rowToSave = value.rowToSave
   let key = rowToSave[def.database.dataIdField]
   if (!def.initialised) {
-    initTableState(def, data, state.ovl.uiState.isMobile)
+    initTableState(def, data, value.defId, state.ovl.uiState.isMobile)
   }
   if (key === undefined) {
     key = ovltemp + uuidv4()

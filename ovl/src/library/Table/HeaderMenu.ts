@@ -159,7 +159,10 @@ export class TableHeaderMenu extends OvlBaseElement {
       id,
       def
     })
-    this.actions.ovl.table.TableRefresh(this.headerMenu.def)
+    this.actions.ovl.table.TableRefresh({
+      defId: this.headerMenu.def.def.id,
+      data: this.headerMenu.def.data
+    })
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -214,7 +217,10 @@ export class TableHeaderMenu extends OvlBaseElement {
       filter: this.filterDef.filterValues
     })
 
-    this.actions.ovl.table.TableRefresh(this.headerMenu.def)
+    this.actions.ovl.table.TableRefresh({
+      defId: this.headerMenu.def.def.id,
+      data: this.headerMenu.def.data
+    })
   }
 
   handleCustomFilterClick = (e: Event) => {
@@ -228,7 +234,10 @@ export class TableHeaderMenu extends OvlBaseElement {
       id,
       def
     })
-    this.actions.ovl.table.TableRefresh(this.headerMenu.def)
+    this.actions.ovl.table.TableRefresh({
+      defId: this.headerMenu.def.def.id,
+      data: this.headerMenu.def.data
+    })
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,

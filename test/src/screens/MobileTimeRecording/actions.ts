@@ -58,7 +58,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
       testEntry.Code = undefined
       await actions.ovl.internal.TableDirectSaveRow({
         data: state.testtables.timeentries,
-        def: state.testtables.timeentries.tableDef.mobiletimerecording1,
+        defId: "mobiletimerecording1",
         rowToSave: testEntry,
         noSnack: true
       })

@@ -1,4 +1,4 @@
-import { overmind } from "../../../../ovl/src/index"
+import { overmind, TableDefIds } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
 export const ScreenRefresh = async (
@@ -6,10 +6,10 @@ export const ScreenRefresh = async (
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ) => {
-  let def = state.testtables.timeentries.tableDef.mobiletimerecording1
+  let defId: TableDefIds = "mobiletimerecording1"
   let data = state.testtables.timeentries
   await actions.ovl.table.TableRefresh({
-    def,
+    defId,
     data,
     forceServerDataRefresh: true
   })
@@ -34,10 +34,10 @@ export const NavigateIn = async (
     )
   }
 
-  let def = state.testtables.timeentries.tableDef.mobiletimerecording1
+  let defId: TableDefIds = "mobiletimerecording1"
   let data = state.testtables.timeentries
   await actions.ovl.table.TableRefresh({
-    def,
+    defId,
     data,
     ignoreRefreshedMessageSnack: true,
     refreshServerDataIfOlderThan: 10

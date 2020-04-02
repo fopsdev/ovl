@@ -66,7 +66,7 @@ export type SelectedEditRow = {
 
 export type TableDef = {
   initialised?: boolean
-  id: TableDefIds
+  id?: TableDefIds
   title?: string
   namespace: string
   server: {

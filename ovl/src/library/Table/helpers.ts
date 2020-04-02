@@ -17,6 +17,7 @@ import {
   TableDataAndDef,
   TableDef
 } from "./Table"
+import { TableDefIds } from "../../../../test/src"
 
 export const getTextSort = (valA: string, valB: string): number => {
   if (valA === null) {
@@ -313,11 +314,13 @@ export const setRefresh = (
 export const initTableState = (
   def: TableDef,
   data: TableData,
+  defId: TableDefIds,
   isMobile: boolean
 ) => {
   if (!def.initialised) {
     // prepare state/ complete state / set sensible defaults
 
+    def.id = defId
     if (data === undefined) {
       throw Error("ovl state init: data object not present")
     }
