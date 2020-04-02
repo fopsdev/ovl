@@ -160,21 +160,6 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleMobileTimeEntry = async (e: Event) => {
-      if (
-        !this.state.testtables.timeentries.tableDef.mobiletimerecording1
-          .initialised
-      ) {
-        let dt = new Date()
-        let dateSelected = dt.toISOString().substring(0, 10)
-
-        await this.actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
-          {
-            def: this.state.testtables.timeentries.tableDef
-              .mobiletimerecording1,
-            selected: dateSelected
-          }
-        )
-      }
       this.actions.ovl.navigation.NavigateTo("MobileTimeEntry")
     }
 
