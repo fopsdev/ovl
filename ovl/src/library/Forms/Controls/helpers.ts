@@ -136,7 +136,6 @@ export const FilterHitList = (
         } else if (typ === "decimal") {
           checkVal = getDecimalValue(checkVal)
         }
-
         if (checkVal === null) {
           checkVal = ""
         }

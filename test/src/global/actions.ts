@@ -116,7 +116,7 @@ export const ForgotPw: AsyncAction<FormState> = async (
 ) => {
   if ((await DialogOkCancel(T("AppLoginForgotPasswordConfirm"), 2)) === 1) {
     let user = value.fields["user"].value
-    let res = await effects.postRequest("requestresetpw", {
+    let res = await effects.postRequest(api.url + "users/requestresetpw", {
       user,
       language: state.ovl.language.language
     })
