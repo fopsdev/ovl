@@ -43,7 +43,6 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
       body: JSON.stringify(data)
     })
     // with fetch we will have the repsonse status here on req object
-
     if (req.status === 401) {
       // unauthorised
 

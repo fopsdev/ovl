@@ -46,7 +46,8 @@ export class CompShellbar extends OvlBaseElement {
           <ovl-loginform id="loginform"></ovl-loginform>
           <comp-settingsform id="settingsform"></comp-settingsform>
           <ovl-audit> </ovl-audit>
-          <comp-mobiletimeentry> </comp-mobiletimeentry>
+          <comp-mobiletimeentry id="mobiletimerecordingmain1">
+          </comp-mobiletimeentry>
           <comp-mobiletimeentryform id="mobiletimerecording1">
           </comp-mobiletimeentryform>
 

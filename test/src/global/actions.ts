@@ -37,7 +37,9 @@ export const Login: AsyncAction<FormState> = async (
         language: state.ovl.language.language
       })
       if (!res.data) {
-        SnackAdd(T("AppLoginValidationInvalidPassword"), "Error")
+        if (res.type === "InvalidCredentials") {
+          SnackAdd(T("AppLoginValidationInvalidPassword"), "Error")
+        }
         return
       }
       state.ovl.user.token = res.data.partner.user.token
