@@ -287,7 +287,6 @@ export class OvlListControl extends OvlBaseElement {
             }
             return false
           })
-
           if (
             singleValue !==
             this.controlState.formState.fields[foundId].convertedValue
@@ -299,6 +298,15 @@ export class OvlListControl extends OvlBaseElement {
             })
             await this.inputElement.dispatchEvent(event)
           }
+        }
+        // if it allow non list values also send a change
+        else if (!this.controlState.list.acceptOnlyListValues) {
+          this.writeBackValue = val
+          let event = new CustomEvent("ovlchange", {
+            bubbles: true,
+            detail: { val, id: this.controlState.field.id }
+          })
+          await this.inputElement.dispatchEvent(event)
         }
       } else {
         this.writeBackValue = ""
