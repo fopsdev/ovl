@@ -266,6 +266,7 @@ export class OvlListControl extends OvlBaseElement {
           this.controlState.fieldId,
           10
         )
+        let singleValue
         if (filteredKeys.length === 1) {
           let listData = this.controlState.list.listFn(
             GetRowFromFormState(this.controlState.formState),
@@ -273,10 +274,16 @@ export class OvlListControl extends OvlBaseElement {
             this.actions,
             overmind.effects
           )
-          let singleValue =
+          singleValue =
             listData.data[filteredKeys[0]][this.controlState.list.valueField]
           val =
             listData.data[filteredKeys[0]][this.controlState.list.displayField]
+        }
+        // if it allow non list values also send a change
+        else if (!this.controlState.list.acceptOnlyListValues) {
+          singleValue = val
+        }
+        if (singleValue) {
           let formState = this.controlState.formState
           let fields = formState.fields
           let foundId
@@ -298,15 +305,6 @@ export class OvlListControl extends OvlBaseElement {
             })
             await this.inputElement.dispatchEvent(event)
           }
-        }
-        // if it allow non list values also send a change
-        else if (!this.controlState.list.acceptOnlyListValues) {
-          this.writeBackValue = val
-          let event = new CustomEvent("ovlchange", {
-            bubbles: true,
-            detail: { val, id: this.controlState.field.id }
-          })
-          await this.inputElement.dispatchEvent(event)
         }
       } else {
         this.writeBackValue = ""
