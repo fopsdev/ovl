@@ -1,4 +1,12 @@
 let mostPreferedLanguage = globalThis.navigator.languages[0]
+if (
+  mostPreferedLanguage === "de" &&
+  navigator.userAgent.toLowerCase().indexOf("firefox") > -1
+) {
+  if ((1.1).toString().indexOf(".") > -1) {
+    mostPreferedLanguage = "de-ch"
+  }
+}
 export let displayFormats = {
   decimal: {
     default: new Intl.NumberFormat(mostPreferedLanguage, {
