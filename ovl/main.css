@@ -138,16 +138,22 @@ body {
   pointer-events: none;
 }
 
-.cols2 {
+.evenCols2 {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   grid-template-rows: auto;
 }
 
-.tables2 {
+.evenCols3 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  grid-template-rows: auto;
+}
+.evenCols4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 10px;
   grid-template-rows: auto;
 }

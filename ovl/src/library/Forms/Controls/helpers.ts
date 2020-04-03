@@ -86,7 +86,6 @@ export const FilterHitList = (
   fieldId: string,
   top?: number
 ) => {
-  debugger
   let hitLength = {}
   let functionName = fieldId + "GetFilteredListFn"
   let dataList = list.listFn(

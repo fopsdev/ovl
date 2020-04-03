@@ -1,6 +1,6 @@
 import { AsyncAction, Action } from "overmind"
 import { TableMobileTimeRecording, tblMobileTimeRecording } from "./state"
-import { overmind } from "../.."
+import { overmind, TableDefIds } from "../.."
 import {
   ValidateField,
   FormState,
@@ -26,19 +26,18 @@ import {
 } from "../../../../ovl/src/library/helpers"
 
 export const SetMobileTimeEntrySelectedDate: AsyncAction<{
-  def: TableDef
   selected: string
 }> = async ({ state, actions }, value) => {
-  // value.def.options.filter.static.U_Date = value.selected + "T00:00:00"
+  // value.def.options.filter.static.U_Date = value.selected
   // state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
-  // let data = state.testtables.timeentries
-  // let def = state.testtables.timeentries.tableDef.mobiletimerecording1
-  // await actions.ovl.table.TableRefresh({
-  //   def,
-  //   data,
-  //   ignoreRefreshedMessageSnack: true,
-  //   forceServerDataRefresh: true
-  // })
+  let data = state.testtables.timeentries
+  let def = state.testtables.timeentries.tableDef.mobiletimerecording1
+  def.options.filter.static.U_Date = value.selected
+  await actions.ovl.table.TableRefresh({
+    defId: "mobiletimerecording1",
+    data,
+    forceServerDataRefresh: true
+  })
 }
 
 export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {

@@ -105,7 +105,6 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
   let val = value.newVal
   let res = value.validationResult
   field.autoCorrectedValue = ""
-
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
 
@@ -348,7 +347,6 @@ export const ValidateForm: Action<FormState> = (
       formState: value,
       validationResult: field.validationResult
     } as ValidateField)
-
     let fn = resolvePath(customFunctions, namespace)
 
     if (field.validationResult.valid) {

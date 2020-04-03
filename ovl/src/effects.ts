@@ -64,7 +64,6 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
       if (isBlob) {
         res = await req.blob()
       } else {
-        debugger
         const contentType = req.headers.get("content-type")
         if (contentType && contentType.indexOf("application/json") !== -1) {
           res = await req.json()
