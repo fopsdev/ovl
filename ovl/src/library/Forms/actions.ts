@@ -193,7 +193,7 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
           ValidationAddError(validatorId, "invalid date format", res)
         } else {
           field.convertedValue = newDate
-          field.autoCorrectedValue = getDateValue(newDate)
+          field.autoCorrectedValue = getDateValue(newDate, field.format)
         }
       } else {
         field.convertedValue = null

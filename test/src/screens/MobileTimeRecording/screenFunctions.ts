@@ -27,12 +27,17 @@ export const NavigateIn = async (
     let dt = new Date()
     let convDate = dt.toISOString().substring(0, 10) + "T00:00:00"
     let fields: { [key: string]: FormFields } = {
-      date: { value: getDateValue(convDate), type: "date" }
+      date: {
+        value: getDateValue(convDate),
+        type: "date",
+        format: "2digitsYear"
+      }
     }
+    let mainFormInstanceId = "mobiletimerecordingmain1"
     let initForm: InitForm = {
       changedFnName: "MobileTimeRecordingMainChangeField",
       namespace: "testtables.mobiletimerecording",
-      instanceId: "mobiletimerecordingmain1",
+      instanceId: mainFormInstanceId,
       formType: "MobileTimeEntryMain",
       fields
     }

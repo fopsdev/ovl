@@ -3,7 +3,12 @@ import { FormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
 import { FormType } from "../.."
 
-export type FieldFormat = "2digits" | "4digits" | "2digitsYear" | "timestamp"
+export type FieldFormat =
+  | "2digits"
+  | "4digits"
+  | "2digitsYear"
+  | "4digitsYear"
+  | "timestamp"
 
 export type Schema = {
   type: DataType

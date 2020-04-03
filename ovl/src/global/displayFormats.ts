@@ -8,6 +8,7 @@ if (
   }
 }
 export let displayFormats = {
+  mostPreferedLanguage,
   decimal: {
     default: new Intl.NumberFormat(mostPreferedLanguage, {
       minimumFractionDigits: 2,
@@ -28,6 +29,11 @@ export let displayFormats = {
       day: "2-digit",
       month: "2-digit",
       year: "2-digit"
+    }),
+    _4DigitsYear: new Intl.DateTimeFormat(mostPreferedLanguage, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
     }),
     defaultTimestamp: new Intl.DateTimeFormat(mostPreferedLanguage, {
       day: "2-digit",
