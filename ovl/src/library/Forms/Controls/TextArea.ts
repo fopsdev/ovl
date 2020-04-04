@@ -49,7 +49,7 @@ export class OvlTextArea extends OvlBaseElement {
 
   getUI() {
     let field = this.controlState.field
-    field.autoCorrectedValue
+
     let res = getUIValidationObject(field)
 
     let label

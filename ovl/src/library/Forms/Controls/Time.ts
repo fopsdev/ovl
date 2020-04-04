@@ -44,7 +44,7 @@ export class OvlTime extends OvlBaseElement {
   }
   getUI() {
     let field = this.controlState.field
-    field.autoCorrectedValue
+
     let res = getUIValidationObject(field)
     let style = ""
     let label

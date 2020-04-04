@@ -159,7 +159,7 @@ export class OvlListControl extends OvlBaseElement {
         detail: { val: selectedKey, id: this.controlState.field.id }
       })
       this.inputElement.dispatchEvent(event)
-      this.writeBackValue = undefined
+      //this.writeBackValue = undefined
 
       this.localList = null
 
@@ -255,7 +255,10 @@ export class OvlListControl extends OvlBaseElement {
     }
 
     if (idToCheck === "search" + fieldId || idToCheck === "delete" + fieldId) {
-      let val = this.inputElement.value
+      let val = this.writeBackValue
+      if (val === undefined) {
+        val = this.inputElement.value
+      }
       if (val) {
         //if (this.localList !== null) {
         let filteredKeys = FilterHitList(
@@ -427,7 +430,7 @@ export class OvlListControl extends OvlBaseElement {
   }
   getUI() {
     let field = this.controlState.field
-    field.autoCorrectedValue
+
     let res = getUIValidationObject(field)
 
     let label
