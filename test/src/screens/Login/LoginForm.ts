@@ -54,7 +54,7 @@ export class CompLoginForm extends OvlFormElement {
         class="ovldialogcentered ${this.animatedClass}"
         @keydown=${handleKey}
       >
-        <div class="fd-modal" style="z-index:1003;">
+        <div class="fd-modal" tabindex="0" style="z-index:1003;">
           <div class="fd-modal__content" role="document">
             <div
               class="fd-modal__header fd-has-padding-tiny fd-has-margin-tiny"
@@ -113,5 +113,8 @@ export class CompLoginForm extends OvlFormElement {
         </div>
       </div>
     `
+  }
+  afterRender() {
+    document.getElementById("loginformuser").focus()
   }
 }
