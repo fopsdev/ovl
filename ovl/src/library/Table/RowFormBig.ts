@@ -37,7 +37,7 @@ export class TableRowFormBig extends OvlFormElement {
       if (this.formState.dirty) {
         this.actions.ovl.dialog.OkCancelDialog({
           text: T("AppCancelForm"),
-          default: 1
+          default: 1,
         })
         if ((await DialogResult()) === 2) {
           cancel = false
@@ -50,7 +50,7 @@ export class TableRowFormBig extends OvlFormElement {
           this.actions.ovl.internal.TableDeleteRowFromData({
             key: this.rowData.key,
             def: this.rowData.tableDef,
-            data: this.rowData.data
+            data: this.rowData.data,
           })
         }
         if (cancel) {
@@ -58,7 +58,7 @@ export class TableRowFormBig extends OvlFormElement {
           this.actions.ovl.table.TableEditClose({
             key: this.rowData.key,
             tableDef: this.rowData.tableDef,
-            data: this.rowData.data
+            data: this.rowData.data,
           })
         }
       }
@@ -77,7 +77,7 @@ export class TableRowFormBig extends OvlFormElement {
           key: this.rowData.key,
           def: this.rowData.tableDef,
           data: this.rowData.data,
-          formState: this.formState
+          formState: this.formState,
         })
         if (!def.uiState.editRow[this.rowData.key].selected) {
           this.actions.ovl.internal.StartCloseOverlay()
@@ -111,7 +111,7 @@ export class TableRowFormBig extends OvlFormElement {
         @click=${handleMainClick}
       >
         <div class="scrollableOverlay">
-          ${Object.keys(columns).map(k => {
+          ${Object.keys(columns).map((k) => {
             let col = columns[k]
             let columnsVisible = this.rowData.columnsVisible
             if (!columnsVisible[k]) {
@@ -173,12 +173,12 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-textbox
                       id="${id}"
                       class="fd-form__item "
-                      .props=${state => {
+                      .props=${(state) => {
                         return <TextBoxControlState>{
                           field: fields[k],
                           label: col.caption,
                           type: "text",
-                          align: "left"
+                          align: "left",
                         }
                       }}
                     >
@@ -190,11 +190,11 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-textarea
                       id="${id}"
                       class="fd-form__item "
-                      .props=${state => {
+                      .props=${(state) => {
                         return <TextAreaControlState>{
                           field: fields[k],
                           label: col.caption,
-                          align: "left"
+                          align: "left",
                         }
                       }}
                     >
@@ -220,9 +220,9 @@ export class TableRowFormBig extends OvlFormElement {
                               displayField: col.list.displayField,
                               displayValueField: col.list.displayValueField,
                               valueField: col.list.valueField,
-                              serverEndpoint: col.list.serverEndpoint
+                              serverEndpoint: col.list.serverEndpoint,
                             },
-                            fieldId: k
+                            fieldId: k,
                           }
                         }}"
                       >
