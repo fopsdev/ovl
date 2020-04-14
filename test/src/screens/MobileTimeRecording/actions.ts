@@ -1,4 +1,4 @@
-import { AsyncAction } from "overmind"
+import { AsyncAction, Action } from "overmind"
 import { uuidv4 } from "../../../../ovl/src/global/globals"
 import {
   SnackAdd,
@@ -6,6 +6,14 @@ import {
   SnackTrackedRemove,
 } from "../../../../ovl/src/library/helpers"
 import { TableMobileTimeRecording } from "./state"
+
+export const MarkAsSynced: Action<string[]> = ({ state, actions }, value) => {
+  let data = state.testtables.timeentries
+  let nd = new Date()
+  value.forEach((f) => {
+    data.data[f].U_Synced = nd.toUTCString()
+  })
+}
 
 export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   selected: string

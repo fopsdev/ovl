@@ -9,6 +9,8 @@ import { overmind } from "../../../../ovl/src"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
 import { displayFormats } from "../../../../ovl/src/global/displayFormats"
+import { SnackAdd } from "../../../../ovl/src/library/helpers"
+import { tblMobileTimeRecording, TableMobileTimeRecording } from "./state"
 export class CompMobileTimeEntry extends OvlFormElement {
   init() {
     this.screen = "MobileTimeEntry"
@@ -16,19 +18,31 @@ export class CompMobileTimeEntry extends OvlFormElement {
     super.init()
   }
 
-  handleAddToSAPClick = (e: Event) => {
-    e.stopPropagation()
-    e.preventDefault()
+  getKeysToSync = () => {
     let data = this.state.testtables.timeentries
     let def = data.tableDef.mobiletimerecording1
     //let rowKeys = Object.keys(data.data)
-    let rowKeys = def.uiState.dataFilteredAndSorted.filter(
-      (k) => k.indexOf(ovltemp) < 0
-    )
+    return def.uiState.dataFilteredAndSorted.filter((k) => {
+      return (
+        !(<TableMobileTimeRecording>data.data[k]).U_Synced &&
+        k.indexOf(ovltemp) < 0
+      )
+    })
+  }
+
+  handleAddToSAPClick = async (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
+    let data = this.state.testtables.timeentries
+    let rowKeys = this.getKeysToSync()
     let guids = rowKeys.map((m) => {
       return { timeentry_id: data.data[m].Code }
     })
-    overmind.effects.postRequest(api.url + "job/addworktime", guids)
+    await overmind.effects.postRequest(api.url + "job/addworktime", guids)
+    // tag data as synched
+    this.actions.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
+
+    SnackAdd("Zeit(en) erfolgreich übermittelt. Abgleich ins SAP läuft")
   }
   handleAddRowClick = async (e: Event) => {
     e.stopPropagation()
@@ -159,6 +173,15 @@ export class CompMobileTimeEntry extends OvlFormElement {
         <hr />
         <ul class="fd-list">
           ${dataKeys.map((k) => {
+            let declineButton
+            if (!data[k].U_Synced) {
+              declineButton = html`
+                <span
+                  @click=${(e) => this.handleDelete(e, k)}
+                  class="fd-list__icon sap-icon--decline"
+                ></span>
+              `
+            }
             let listValue1 = GetListDisplayValue(
               def.columns.U_TypeId.list,
               data[k].U_TypeId,
@@ -187,10 +210,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
                   >${listValue1} <br />
                   ${listValue2}</span
                 >
-                <span
-                  @click=${(e) => this.handleDelete(e, k)}
-                  class="fd-list__icon sap-icon--decline"
-                ></span>
+                ${declineButton}
               </li>
             `
           })}
@@ -199,6 +219,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
         <div class="fd-tile">
           <div class="fd-tile__content fd-has-type-2">
             <button
+              ?disabled=${this.getKeysToSync().length === 0}
               @click=${(e) => this.handleAddToSAPClick(e)}
               class="fd-button--emphasized sap-icon--add"
               title="Zeiten ins SAP übertragen..."
