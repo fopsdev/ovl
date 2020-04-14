@@ -51,7 +51,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
         U_TypeId: "00000010",
         U_Date: dt.toISOString().substring(0, 10) + "T00:00:00",
         U_FromTime: "01:" + ("0" + z).slice(-2),
-        U_ToTime: "01:" + ("0" + z).slice(-2),
+        U_ToTime: "02:" + ("0" + z).slice(-2),
         U_Duration: 1,
       }
       testEntry.Code = undefined
