@@ -20,7 +20,6 @@ export const NavigateIn = async (
   await actions.ovl.table.TableRefresh({
     defId,
     data,
-    ignoreRefreshedMessageSnack: true,
     forceServerDataRefresh: true,
   })
 }

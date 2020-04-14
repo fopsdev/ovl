@@ -1,12 +1,12 @@
 import { Action, AsyncAction } from "../../../ovl/node_modules/overmind"
 import { Screen, customFunctions } from "../../../ovl/src/index"
 
-import { api, T } from "../../../ovl/src/global/globals"
+import { api, T, uuidv4 } from "../../../ovl/src/global/globals"
 import {
   FormState,
   GetFormValidationErrors,
   ValidateField,
-  InitForm
+  InitForm,
 } from "../../../ovl/src/library/forms/actions"
 import { Email, Mandatory } from "../../../ovl/src/library/forms/validators"
 
@@ -17,7 +17,7 @@ import {
   DialogOkCancel,
   SnackAdd,
   SnackTrackedRemove,
-  SnackTrackedAdd
+  SnackTrackedAdd,
 } from "../../../ovl/src/library/helpers"
 import { AddSnack } from "../../../ovl/src/library/Snack/actions"
 
@@ -34,7 +34,7 @@ export const Login: AsyncAction<FormState> = async (
       let res = await effects.postRequest(api.url + "users/authenticate", {
         email: user,
         password: pw,
-        language: state.ovl.language.language
+        language: state.ovl.language.language,
       })
       if (!res.data) {
         if (res.type === "InvalidCredentials") {
@@ -47,23 +47,23 @@ export const Login: AsyncAction<FormState> = async (
       state.portal.chartData = res.data.data.chartData
       state.portal.partner = res.data.partner
       state.portal.orderDetail = {
-        orders: res.data.data.orderDetail
+        orders: res.data.data.orderDetail,
       }
       state.portal.quotationDetail = {
-        quotations: res.data.data.quotationDetail
+        quotations: res.data.data.quotationDetail,
       }
       state.portal.invoiceDetail = {
-        invoices: res.data.data.invoiceDetail
+        invoices: res.data.data.invoiceDetail,
       }
       state.portal.dpInvoiceDetail = {
-        dpInvoices: res.data.data.dpInvoiceDetail
+        dpInvoices: res.data.data.dpInvoiceDetail,
       }
       state.portal.partner.attachments = res.data.data.attachments
 
       //init lookup values
       res = await effects.postRequest(api.url + "lookup", {
         lang: state.ovl.language.language,
-        lookupType: "initial"
+        lookupType: "initial",
       })
       state.testtables.lookups.U_ItemCode = res.data.item
       state.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
@@ -118,7 +118,7 @@ export const ForgotPw: AsyncAction<FormState> = async (
     let user = value.fields["user"].value
     let res = await effects.postRequest(api.url + "users/requestresetpw", {
       user,
-      language: state.ovl.language.language
+      language: state.ovl.language.language,
     })
     if (res.status !== 200) {
       return
@@ -133,7 +133,7 @@ export const HandleAdditionalLanguageResult: AsyncAction<any> = async (
 ) => {
   state.portal.pics = {
     salesContact: value.salesPic,
-    technicalContact: value.technicianPic
+    technicalContact: value.technicianPic,
   }
   if (!state.portal.partner) {
     //@ts-ignore
@@ -154,42 +154,50 @@ export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
 export const HandleRefresh: AsyncAction = async ({
   state,
   actions,
-  effects
+  effects,
 }) => {
-  // 1st get global data to be refreshed
-  let res = await effects.postRequest(api.url + "data/getdata", {
-    features: state.portal.user.features,
-    language: state.ovl.language.language
-  })
-  if (!res.data) {
-    return
-  }
+  let snackId = uuidv4()
+  SnackTrackedAdd("Daten werden aufgefrischt", "Success", snackId)
+  SnackTrackedAdd("2222222222", "Success", snackId + "2")
+  try {
+    // 1st get global data to be refreshed
+    let res = await effects.postRequest(api.url + "data/getdata", {
+      features: state.portal.user.features,
+      language: state.ovl.language.language,
+    })
+    if (!res.data) {
+      return
+    }
+    setTimeout(() => {
+      SnackTrackedRemove(snackId + "2")
+    }, 100)
+    state.portal.partner.attachments = res.data.attachments
 
-  state.portal.partner.attachments = res.data.attachments
+    state.portal.chartData = res.data.chartData
+    state.portal.quotationDetail = {
+      quotations: res.data.quotationDetail,
+    }
+    state.portal.orderDetail = { orders: res.data.orderDetail }
+    state.portal.invoiceDetail = { invoices: res.data.invoiceDetail }
+    state.portal.dpInvoiceDetail = {
+      dpInvoices: res.data.dpInvoiceDetail,
+    }
 
-  state.portal.chartData = res.data.chartData
-  state.portal.quotationDetail = {
-    quotations: res.data.quotationDetail
-  }
-  state.portal.orderDetail = { orders: res.data.orderDetail }
-  state.portal.invoiceDetail = { invoices: res.data.invoiceDetail }
-  state.portal.dpInvoiceDetail = {
-    dpInvoices: res.data.dpInvoiceDetail
-  }
-
-  //now call the screens refresh action if any
-  if (customFunctions) {
-    let screensFunctions = customFunctions["screens"]
-    if (screensFunctions) {
-      let screen = state.ovl.screens.nav.currentScreen
-      if (screensFunctions[screen]) {
-        if (screensFunctions[screen]["ScreenRefresh"]) {
-          screensFunctions[screen]["ScreenRefresh"](state, actions, effects)
+    //now call the screens refresh action if any
+    if (customFunctions) {
+      let screensFunctions = customFunctions["screens"]
+      if (screensFunctions) {
+        let screen = state.ovl.screens.nav.currentScreen
+        if (screensFunctions[screen]) {
+          if (screensFunctions[screen]["ScreenRefresh"]) {
+            screensFunctions[screen]["ScreenRefresh"](state, actions, effects)
+          }
         }
       }
     }
+  } finally {
+    SnackTrackedRemove(snackId)
   }
-  SnackAdd("Daten aufgefrischt", "Success")
 }
 
 export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
@@ -198,14 +206,14 @@ export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
   }
   let fields: { [key: string]: FormFields } = {
     pw: { value: "" },
-    user: { value: "" }
+    user: { value: "" },
   }
   let loginForm: InitForm = {
     validationFnName: "LoginValidateField",
     namespace: "portal.system.user",
     instanceId: "loginform",
     formType: "Login",
-    fields
+    fields,
   }
 
   actions.ovl.form.InitForm(loginForm)

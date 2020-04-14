@@ -9,26 +9,26 @@ export const DialogOkCancel = async (
 ) => {
   overmind.actions.ovl.dialog.OkCancelDialog({
     text,
-    default: defaultButton
+    default: defaultButton,
   })
   return await DialogResult()
 }
 
 export const DialogOk = async (text: string) => {
   this.actions.ovl.dialog.OkDialog({
-    text
+    text,
   })
   return await DialogResult()
 }
 
-export const SnackAdd = async (
+export const SnackAdd = (
   text: string,
   type: SnackType = "Success",
   durationMs: number = 4000
 ) => {
   overmind.actions.ovl.internal.AddSnack({ text, type, durationMs })
 }
-export const SnackTrackedAdd = async (
+export const SnackTrackedAdd = (
   text: string,
   type: SnackType = "Success",
   key: string
@@ -36,10 +36,10 @@ export const SnackTrackedAdd = async (
   overmind.actions.ovl.internal.AddSnack({
     text,
     type,
-    durationMs: 300000,
-    key
+    durationMs: 999999,
+    key,
   })
 }
-export const SnackTrackedRemove = async (key: string) => {
+export const SnackTrackedRemove = (key: string) => {
   setTimeout(() => overmind.actions.ovl.internal.RemoveSnack(key), 1000)
 }

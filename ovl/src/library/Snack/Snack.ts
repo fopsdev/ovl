@@ -23,7 +23,7 @@ export type SnackAddState = {
   key?: string
 }
 
-export const RemoveSnack = async div => {
+export const RemoveSnack = async (div) => {
   if (div) {
     div.classList.add("animate")
     div.classList.remove("fadeInSnack")
@@ -36,7 +36,7 @@ export class OvlSnack extends OvlBaseElement {
     this.addEventListener("animationend", this.handleAnimationEnd)
   }
 
-  handleAnimationEnd = e => {
+  handleAnimationEnd = (e) => {
     if (e.animationName === "fadeInSnack") {
       let el = document.getElementById(e.target.id)
       el.classList.remove("animate")
@@ -51,9 +51,7 @@ export class OvlSnack extends OvlBaseElement {
     // all other handling is in the ...Snack - Actions
     let res = []
     for (let z = 0; z < nrOfSnacks; z++) {
-      res.push(html`
-        <div></div>
-      `)
+      res.push(html` <div></div> `)
     }
 
     let width = ""
@@ -63,7 +61,7 @@ export class OvlSnack extends OvlBaseElement {
 
     return html`
       <div style="${width}" id="ovlsnack" class="ovlsnackbar">
-        ${res.map(m => m)}
+        ${res.map((m) => m)}
       </div>
     `
   }

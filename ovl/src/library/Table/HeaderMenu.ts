@@ -4,12 +4,13 @@ import {
   TableDef,
   TableDataAndDef,
   ColumnFilter,
-  ColumnFilterTypes
+  ColumnFilterTypes,
 } from "./Table"
 import { filter } from "overmind"
 import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
+import { SnackAdd } from "../helpers"
 
 export type HeaderMenuDef = {
   def: TableDataAndDef
@@ -27,7 +28,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
       key: key,
-      ascending
+      ascending,
     })
   }
 
@@ -38,7 +39,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     this.actions.ovl.table.TableFilter({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
-      value: val
+      value: val,
     })
   }
 
@@ -54,12 +55,12 @@ export class TableHeaderMenu extends OvlBaseElement {
       this.actions.ovl.table.TableFilter({
         def: this.headerMenu.def.def,
         data: this.headerMenu.def.data,
-        value: val
+        value: val,
       })
       this.actions.ovl.internal.TableSelectHeader({
         def: this.headerMenu.def.def,
         data: this.headerMenu.def.data,
-        key: ""
+        key: "",
       })
     }
   }
@@ -67,10 +68,11 @@ export class TableHeaderMenu extends OvlBaseElement {
   handleAddRowClick = (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
+
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
-      key: ""
+      key: "",
     })
     overlayToRender.overlayClosedCallback = () => {
       this.actions.ovl.table.TableAddRow(this.headerMenu.def)
@@ -83,14 +85,14 @@ export class TableHeaderMenu extends OvlBaseElement {
     this.actions.ovl.internal.TableSelectAll({
       tableDef: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
-      select
+      select,
     })
     if (!select) {
       this.actions.ovl.internal.TableSelectHeader({
         def: this.headerMenu.def.def,
         data: this.headerMenu.def.data,
 
-        key: ""
+        key: "",
       })
     }
   }
@@ -102,7 +104,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
 
-      key: ""
+      key: "",
     })
   }
 
@@ -111,7 +113,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     e.preventDefault()
     this.actions.ovl.internal.TableMultipleDeleteRow({
       def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data
+      data: this.headerMenu.def.data,
     })
   }
 
@@ -120,7 +122,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     e.preventDefault()
     this.actions.ovl.internal.TableMultipleCopyRow({
       def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data
+      data: this.headerMenu.def.data,
     })
   }
 
@@ -129,7 +131,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     e.preventDefault()
     this.actions.ovl.internal.TableMultipleEditRow({
       def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data
+      data: this.headerMenu.def.data,
     })
   }
 
@@ -141,7 +143,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
 
-      key: ""
+      key: "",
     })
   }
 
@@ -157,16 +159,16 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     this.actions.ovl.internal.TableSelectCustomSort({
       id,
-      def
+      def,
     })
     this.actions.ovl.table.TableRefresh({
       defId: this.headerMenu.def.def.id,
-      data: this.headerMenu.def.data
+      data: this.headerMenu.def.data,
     })
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
-      key: ""
+      key: "",
     })
   }
 
@@ -181,6 +183,7 @@ export class TableHeaderMenu extends OvlBaseElement {
   handleFilterDropDownValue = (e: Event, key: ColumnFilterTypes) => {
     e.stopPropagation()
     e.preventDefault()
+
     this.filterDropDownHidden = !this.filterDropDownHidden
     // use a  action to set all necessary state now
     let def = this.headerMenu.def.def
@@ -206,20 +209,19 @@ export class TableHeaderMenu extends OvlBaseElement {
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
-      key: ""
+      key: "",
     })
-
     this.actions.ovl.internal.TableSelectColumnFilter({
       key,
       def,
       columnId: colUid,
       othersCount: this.filterDef.othersCount,
-      filter: this.filterDef.filterValues
+      filter: this.filterDef.filterValues,
     })
 
     this.actions.ovl.table.TableRefresh({
       defId: this.headerMenu.def.def.id,
-      data: this.headerMenu.def.data
+      data: this.headerMenu.def.data,
     })
   }
 
@@ -232,16 +234,16 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     this.actions.ovl.internal.TableSelectCustomFilter({
       id,
-      def
+      def,
     })
     this.actions.ovl.table.TableRefresh({
       defId: this.headerMenu.def.def.id,
-      data: this.headerMenu.def.data
+      data: this.headerMenu.def.data,
     })
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
-      key: ""
+      key: "",
     })
   }
 
@@ -253,7 +255,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       this.actions.ovl.internal.TableSelectHeader({
         def: this.headerMenu.def.def,
         data: this.headerMenu.def.data,
-        key: ""
+        key: "",
       })
     }
   }
@@ -384,12 +386,12 @@ export class TableHeaderMenu extends OvlBaseElement {
             }
           })
           filterDef.filterValues = {}
-          result.forEach(k => {
+          result.forEach((k) => {
             count += result1[k].count
             filterDef.filterValues[k] = {
               count: result1[k].count,
               displayValue: result1[k].displayVal,
-              value: result1[k].val
+              value: result1[k].val,
             }
           })
           filterDef.othersCount = totalCount - count
@@ -414,7 +416,7 @@ export class TableHeaderMenu extends OvlBaseElement {
             }
             let all = html`
               <li
-                @click=${e => this.handleFilterDropDownValue(e, "@@ovl_all")}
+                @click=${(e) => this.handleFilterDropDownValue(e, "@@ovl_all")}
                 class="fd-list__item"
                 role="option"
               >
@@ -428,7 +430,7 @@ export class TableHeaderMenu extends OvlBaseElement {
             if (this.filterDef.othersCount > 0) {
               others = html`
                 <li
-                  @click=${e =>
+                  @click=${(e) =>
                     this.handleFilterDropDownValue(e, "@@ovl_others")}
                   class="fd-list__item"
                   role="option"
@@ -469,24 +471,20 @@ export class TableHeaderMenu extends OvlBaseElement {
                   >
                     <ul class="fd-list fd-list--no-border" role="listbox">
                       ${all}
-                      ${filterKeys.map(k => {
+                      ${filterKeys.map((k) => {
                         let displayTemplate
                         let displayVal = this.filterDef.filterValues[k]
                           .displayValue
                         if (!displayVal) {
                           displayVal = emptyText
-                          displayTemplate = html`
-                            ${displayVal}
-                          `
+                          displayTemplate = html` ${displayVal} `
                         } else {
-                          displayTemplate = html`
-                            <b>${displayVal}</b>
-                          `
+                          displayTemplate = html` <b>${displayVal}</b> `
                         }
 
                         return html`
                           <li
-                            @click=${e =>
+                            @click=${(e) =>
                               this.handleFilterDropDownValue(
                                 e,
                                 <ColumnFilterTypes>(<any>k)
@@ -497,8 +495,8 @@ export class TableHeaderMenu extends OvlBaseElement {
                             <span class="fd-list__title"
                               >${displayTemplate}
                               ${" (" +
-                                this.filterDef.filterValues[k].count +
-                                ")"}</span
+                              this.filterDef.filterValues[k].count +
+                              ")"}</span
                             >
                           </li>
                         `
@@ -516,7 +514,7 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     if (def.features.multiselect) {
       let selectRow = this.headerMenu.def.def.uiState.selectedRow
-      count = Object.keys(selectRow).filter(k => selectRow[k].selected).length
+      count = Object.keys(selectRow).filter((k) => selectRow[k].selected).length
     }
 
     if (def.features.multiselect && count > 0) {
@@ -527,7 +525,7 @@ export class TableHeaderMenu extends OvlBaseElement {
         editSelectedRows = html`
           <li>
             <a
-              @click=${e => {
+              @click=${(e) => {
                 this.handleEdit(e)
               }}
               href="#"
@@ -543,7 +541,7 @@ export class TableHeaderMenu extends OvlBaseElement {
         copySelectedRows = html`
           <li>
             <a
-              @click=${e => {
+              @click=${(e) => {
                 this.handleCopy(e)
               }}
               href="#"
@@ -559,7 +557,7 @@ export class TableHeaderMenu extends OvlBaseElement {
         deleteSelectedRows = html`
           <li>
             <a
-              @click=${e => {
+              @click=${(e) => {
                 this.handleDelete(e)
               }}
               href="#"
@@ -578,7 +576,7 @@ export class TableHeaderMenu extends OvlBaseElement {
               <a
                 href="#"
                 class="fd-menu__item sap-icon--filter"
-                @click="${e => this.handleFilterSelectedClick(e)}"
+                @click="${(e) => this.handleFilterSelectedClick(e)}"
               >
                 Filter selektierte Datensätze</a
               >
@@ -590,7 +588,7 @@ export class TableHeaderMenu extends OvlBaseElement {
               <a
                 href="#"
                 class="fd-menu__item sap-icon--clear-filter"
-                @click="${e => this.handleFilterSelectedClick(e)}"
+                @click="${(e) => this.handleFilterSelectedClick(e)}"
               >
                 Filter selektierte Datensätze entfernen</a
               >
@@ -631,7 +629,7 @@ export class TableHeaderMenu extends OvlBaseElement {
                 <a
                   href="#"
                   class="fd-menu__item sap-icon--up ${ascendingDisabled}"
-                  @click="${e =>
+                  @click="${(e) =>
                     this.handleSortClick(e, def.uiState.headerSelected, true)}"
                 >
                   Ascending</a
@@ -641,7 +639,7 @@ export class TableHeaderMenu extends OvlBaseElement {
                 <a
                   href="#"
                   class="fd-menu__item sap-icon--down ${descendingDisabled}"
-                  @click="${e =>
+                  @click="${(e) =>
                     this.handleSortClick(e, def.uiState.headerSelected, false)}"
                 >
                   Descending</a
@@ -657,7 +655,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     let sortCustom = def.options.sortCustom
     let sortCustomKeys = Object.keys(sortCustom.sorts)
     if (sortCustomKeys.length > 0) {
-      let options = sortCustomKeys.map(k => {
+      let options = sortCustomKeys.map((k) => {
         let optionText = sortCustom.sorts[k].description
 
         if (sortCustom.selected === k) {
@@ -704,7 +702,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     let filterCustom = def.options.filterCustom
     let filterCustomKeys = Object.keys(filterCustom)
     if (filterCustomKeys.length > 0) {
-      let options = filterCustomKeys.map(k => {
+      let options = filterCustomKeys.map((k) => {
         let optionText = filterCustom[k].description
 
         if (filterCustom[k].active) {
@@ -757,7 +755,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       selectionFunctions = html`
         <li>
           <a
-            @click="${e => this.handleSelectAllClick(e, true)}"
+            @click="${(e) => this.handleSelectAllClick(e, true)}"
             href="#"
             class="fd-menu__item sap-icon--multiselect-all"
           >
@@ -767,7 +765,7 @@ export class TableHeaderMenu extends OvlBaseElement {
 
         <li>
           <a
-            @click="${e => this.handleSelectAllClick(e, false)}"
+            @click="${(e) => this.handleSelectAllClick(e, false)}"
             href="#"
             class="fd-menu__item sap-icon--multiselect-none ${unselectDisabled}"
           >
@@ -792,7 +790,7 @@ export class TableHeaderMenu extends OvlBaseElement {
                 .props=${() => {
                   return {
                     tableData: this.headerMenu.def,
-                    type: "header"
+                    type: "header",
                   } as NavDef
                 }}
               ></ovl-tnavcontrol>
@@ -808,7 +806,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       addRow = html`
         <li>
           <a
-            @click="${e => this.handleAddRowClick(e)}"
+            @click="${(e) => this.handleAddRowClick(e)}"
             href="#"
             class="fd-menu__item sap-icon--add"
           >
@@ -823,7 +821,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       refresh = html`
         <li>
           <a
-            @click="${e => this.handleRefreshTableClick(e)}"
+            @click="${(e) => this.handleRefreshTableClick(e)}"
             href="#"
             class="fd-menu__item sap-icon--refresh"
           >
@@ -885,7 +883,7 @@ export class TableHeaderMenu extends OvlBaseElement {
         style="${headerMenuwidth}"
         class="fd-panel"
         @mousedown=${handleMainMouseDown}
-        @click="${e => this.handleCloseHeaderMenu(e)}"
+        @click="${(e) => this.handleCloseHeaderMenu(e)}"
         aria-hidden="false"
       >
         <nav class="fd-menu" id="">

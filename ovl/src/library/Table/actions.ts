@@ -15,7 +15,7 @@ import {
   setPage,
   setRefresh,
   TableFilterFn,
-  TableRefreshServerData
+  TableRefreshServerData,
 } from "../Table/helpers"
 import { deleteTableRow, setTableRow } from "./Helpers"
 import {
@@ -31,10 +31,10 @@ import {
   SortClick,
   TableData,
   TableDataAndDef,
-  TableDef
+  TableDef,
 } from "./Table"
 import { overmind } from "../.."
-import { SnackAdd } from "../helpers"
+import { SnackAdd, SnackTrackedAdd, SnackTrackedRemove } from "../helpers"
 
 const minimumFilterChars = 3
 
@@ -69,7 +69,7 @@ export const TableFilterSelected: Action<TableDataAndDef> = (
   def.options.filter.showSelected = !def.options.filter.showSelected
   actions.ovl.internal.TableSetPage({
     paging: value.def.options.paging,
-    page: 0
+    page: 0,
   })
   actions.ovl.table.TableRefresh({ defId: def.id, data: value.data })
 }
@@ -82,7 +82,7 @@ export const TableSelectHeader: Action<HeaderClick> = (
     if (def.key !== "") {
       actions.ovl.overlay.OpenOverlay({
         templateResult: null,
-        elementToFocusAfterClose: document.activeElement
+        elementToFocusAfterClose: document.activeElement,
       })
     } else {
       actions.ovl.internal.StartCloseOverlay()
@@ -111,7 +111,7 @@ export const TableFilter: Action<FilterClick> = ({ actions }, value) => {
   if (value.def.features.page) {
     actions.ovl.internal.TableSetPage({
       paging: value.def.options.paging,
-      page: 0
+      page: 0,
     })
   }
 
@@ -124,12 +124,12 @@ export const TableSelectAll: Action<{
   select: boolean
 }> = ({ actions }, def) => {
   let selectedRows = def.tableDef.uiState.selectedRow
-  Object.keys(selectedRows).forEach(k => {
+  Object.keys(selectedRows).forEach((k) => {
     selectedRows[k].selected = false
     selectedRows[k].showNav = false
   })
   if (def.select) {
-    def.tableDef.uiState.dataFilteredAndSorted.forEach(k => {
+    def.tableDef.uiState.dataFilteredAndSorted.forEach((k) => {
       selectedRows[k].selected = true
     })
   }
@@ -155,7 +155,7 @@ export const TableViewRefresh: Action<TableDataAndDef> = (
 ) => {
   actions.ovl.table.TableRefresh({
     defId: value.def.id,
-    data: value.data
+    data: value.data,
   })
 }
 
@@ -176,7 +176,7 @@ export const TableRefreshDataFromServer: AsyncAction<{
   let postData = {
     lang: state.ovl.language.language,
     getSchema,
-    insertMode: def.database.dbInsertMode
+    insertMode: def.database.dbInsertMode,
   }
   let res = await effects.postRequest(url, postData)
   // sync needsRefresh with eventually other tables
@@ -189,13 +189,13 @@ export const TableRefreshDataFromServer: AsyncAction<{
   let localKeys = Object.keys(localData)
   let needsRefresh = false
   // check if rows were added meanwhile
-  needsRefresh = keysFromServer.some(k => localData[k] === undefined)
+  needsRefresh = keysFromServer.some((k) => localData[k] === undefined)
 
   // delete check is not needed its handled by design
 
   // check if rows were deleted meanwhile
   let rowsDeleted = false
-  localKeys.forEach(k => {
+  localKeys.forEach((k) => {
     if (serverData[k] === undefined) {
       rowsDeleted = true
       deleteTableRow({ def: value.def, data: value.data }, k)
@@ -217,18 +217,18 @@ export const TableRefreshDataFromServer: AsyncAction<{
 
   let columns = def.columns
   let dataFieldsToLookups: { [key: string]: string } = Object.keys(columns)
-    .filter(f => columns[f].list && columns[f].list.serverEndpoint)
+    .filter((f) => columns[f].list && columns[f].list.serverEndpoint)
     .reduce((val, k) => {
       val[k] = k
       return val
     }, {})
   // console.log("lookupinfo ")
   // console.log(dataFieldsToLookups)
-  keysFromServer.forEach(k => {
+  keysFromServer.forEach((k) => {
     if (localData[k] === undefined) {
       localData[k] = {}
     }
-    Object.keys(serverData[k]).forEach(c => {
+    Object.keys(serverData[k]).forEach((c) => {
       localData[k][c] = serverData[k][c]
       // check for lookups which needs to be refreshed/reloaded
       if (dataFieldsToLookups[c]) {
@@ -310,109 +310,156 @@ export const TableRefresh: AsyncAction<{
 }> = async ({ actions, state, effects }, value) => {
   let dataAndState = value.data
   let def = dataAndState.tableDef[value.defId]
-  let ignoreRefreshedMessageSnack = value.ignoreRefreshedMessageSnack
+
   initTableState(def, dataAndState, value.defId, state.ovl.uiState.isMobile)
-  if (dataAndState.timestamp === undefined) {
-    if (!ignoreRefreshedMessageSnack) {
-      ignoreRefreshedMessageSnack = true
-    }
-  }
-  let refreshedBecauseOfAge = await TableRefreshServerData(
-    def,
-    dataAndState,
-    actions,
-    value.refreshServerDataIfOlderThan,
-    value.forceServerDataRefresh
-  )
-  def.initialised = true
-  let data = value.data.data
-  let columns = def.columns
+  // if (dataAndState.timestamp === undefined) {
+  //   if (!ignoreRefreshedMessageSnack) {
+  //     ignoreRefreshedMessageSnack = true
+  //   }
+  // }
 
-  let customSortFn = undefined
-  let sortCustom = def.options.sortCustom
-  let fn = resolvePath(customFunctions, def.namespace)
-  if (sortCustom.selected && sortCustom.sorts[sortCustom.selected]) {
-    let functionName = sortCustom.selected + "SortFn"
-    if (fn && fn[functionName]) {
-      customSortFn = fn[functionName]
-    } else {
-      throw new Error(
-        "ovl customSort function: " +
-          functionName +
-          " in customFunctions not found!"
-      )
-    }
-  }
-  let restable = TableFilterFn({ def, data: dataAndState })
-  const sortfield = def.options.sort.field
+  let ignoreRefreshedMessageSnack = value.ignoreRefreshedMessageSnack
+  let forceServerDataRefresh = value.forceServerDataRefresh
+  let refreshedBecauseOfAge = false
+  if (!forceServerDataRefresh) {
+    let refreshServerDataIfOlderThan = value.refreshServerDataIfOlderThan
+    if (!def.dataFetching.useCustomDataFetching) {
+      if (refreshServerDataIfOlderThan) {
+        def.features.forceFreshServerDataIfOlderThan = refreshServerDataIfOlderThan
+      } else {
+        if (def.features.forceFreshServerDataIfOlderThan) {
+          refreshServerDataIfOlderThan =
+            def.features.forceFreshServerDataIfOlderThan
+        }
+      }
+      refreshedBecauseOfAge =
+        refreshServerDataIfOlderThan > 0 &&
+        dataAndState.timestamp + refreshServerDataIfOlderThan * 1000 <
+          Date.now()
 
-  const ascending = def.options.sort.direction === "asc" ? 1 : -1
-  let res: number = 0
-  restable = restable.sort((a, b) => {
-    if (customSortFn !== undefined) {
-      return customSortFn(a, b, data, state, actions, effects)
-    } else {
-      let valB = data[b][sortfield]
-      let valA = data[a][sortfield]
-      let type = def.columns[sortfield].type
-      if (!type) {
-        type = "text"
-      }
-      switch (type) {
-        case "date":
-          res = getDateSort(valA, valB)
-          break
-        case "time":
-        case "text":
-          res = getTextSort(valA, valB)
-          break
-        case "decimal":
-        case "int":
-          res = valA - valB
-          break
-      }
-      return res * ascending
-    }
-  })
-  let selectedRow = def.uiState.selectedRow
-  restable.forEach(k => {
-    if (!selectedRow[k]) {
-      selectedRow[k] = {
-        selected: false,
-        showNav: false,
-        timestamp: 0
-      }
-    }
-    let editRow = def.uiState.editRow
-    if (!editRow[k]) {
-      editRow[k] = {
-        selected: false
-      }
-    }
-  })
-  def.uiState.rowsCount = restable.length
-  if (def.features.page) {
-    let paging = def.options.paging
-    let nrOfPages = Math.ceil(restable.length / paging.pageSize)
-    if (paging.page > nrOfPages - 1) {
-      paging.page = nrOfPages - 1
-      if (paging.page < 0) {
-        paging.page = 0
+      if (refreshedBecauseOfAge) {
+        forceServerDataRefresh = true
       }
     }
   }
-
-  def.uiState.dataFilteredAndSorted = restable
-  def.uiState.needsRefresh = false
+  let snackId
 
   if (refreshedBecauseOfAge || !ignoreRefreshedMessageSnack) {
-    // let dt: number = Date.now()
-    // if (lastRefreshMsg === undefined || dt - lastRefreshMsg > 3000) {
-    //   lastRefreshMsg = dt
-    SnackAdd("Ansicht aktualisiert", "Success")
-    //}
+    snackId = uuidv4()
+    SnackTrackedAdd("Ansicht wird aktualisiert...", "Success", snackId)
+  }
+  if (!def.dataFetching.useCustomDataFetching) {
+    await TableRefreshServerData(
+      def,
+      dataAndState,
+      actions,
+      forceServerDataRefresh
+    )
+  }
+  def.initialised = true
+  let data = dataAndState
+  setTimeout(() => {
+    actions.ovl.table.TableRebuild({
+      data,
+      defId: value.defId,
+      snackId,
+    })
+  }, 5)
+}
+
+export const TableRebuild: AsyncAction<{
+  snackId: string
+  defId: string
+  data: TableData
+}> = async ({ actions, state, effects }, value) => {
+  let snackId = value.snackId
+  let def = value.data.tableDef[value.defId]
+  let data = value.data.data
+
+  try {
+    let customSortFn = undefined
+    let sortCustom = def.options.sortCustom
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (sortCustom.selected && sortCustom.sorts[sortCustom.selected]) {
+      let functionName = sortCustom.selected + "SortFn"
+      if (fn && fn[functionName]) {
+        customSortFn = fn[functionName]
+      } else {
+        throw new Error(
+          "ovl customSort function: " +
+            functionName +
+            " in customFunctions not found!"
+        )
+      }
+    }
+    let restable = TableFilterFn({ def, data: value.data })
+    const sortfield = def.options.sort.field
+
+    const ascending = def.options.sort.direction === "asc" ? 1 : -1
+    let res: number = 0
+    restable = restable.sort((a, b) => {
+      if (customSortFn !== undefined) {
+        return customSortFn(a, b, data, state, actions, effects)
+      } else {
+        let valB = data[b][sortfield]
+        let valA = data[a][sortfield]
+        let type = def.columns[sortfield].type
+        if (!type) {
+          type = "text"
+        }
+        switch (type) {
+          case "date":
+            res = getDateSort(valA, valB)
+            break
+          case "time":
+          case "text":
+            res = getTextSort(valA, valB)
+            break
+          case "decimal":
+          case "int":
+            res = valA - valB
+            break
+        }
+        return res * ascending
+      }
+    })
+    let selectedRow = def.uiState.selectedRow
+    restable.forEach((k) => {
+      if (!selectedRow[k]) {
+        selectedRow[k] = {
+          selected: false,
+          showNav: false,
+          timestamp: 0,
+        }
+      }
+      let editRow = def.uiState.editRow
+      if (!editRow[k]) {
+        editRow[k] = {
+          selected: false,
+        }
+      }
+    })
+    def.uiState.rowsCount = restable.length
+    if (def.features.page) {
+      let paging = def.options.paging
+      let nrOfPages = Math.ceil(restable.length / paging.pageSize)
+      if (paging.page > nrOfPages - 1) {
+        paging.page = nrOfPages - 1
+        if (paging.page < 0) {
+          paging.page = 0
+        }
+      }
+    }
+
+    def.uiState.dataFilteredAndSorted = restable
+    def.uiState.needsRefresh = false
+  } finally {
+    if (snackId) {
+      SnackTrackedRemove(snackId)
+    }
   }
 }
+
 export const TableDirectSaveRow: AsyncAction<{
   data: TableData
   defId: TableDefIds
@@ -481,7 +528,7 @@ const TableEditSaveRowHelper = async (
   if (hasFormState) {
     newData = Object.keys(formState.fields)
       .filter(
-        k =>
+        (k) =>
           (formState.fields[k].dirty &&
             formState.fields[k].convertedValue !== row[k]) ||
           isAdd
@@ -501,7 +548,7 @@ const TableEditSaveRowHelper = async (
       {
         key,
         tableDef: def,
-        newData
+        newData,
       },
       state,
       actions,
@@ -512,7 +559,7 @@ const TableEditSaveRowHelper = async (
       if (hasFormState && def.options.filter.static) {
         let filterKeys = Object.keys(def.options.filter.static)
         if (isAdd) {
-          filterKeys.map(m => {
+          filterKeys.map((m) => {
             newData[m] = def.options.filter.static[m]
           })
         }
@@ -529,7 +576,7 @@ const TableEditSaveRowHelper = async (
             key,
             mode,
             tableDef: { def, data },
-            row: newData
+            row: newData,
           },
           state,
           actions,
@@ -541,7 +588,7 @@ const TableEditSaveRowHelper = async (
         idField: def.database.dataIdField,
         idValue: key,
         insertMode: def.database.dbInsertMode,
-        data: newData
+        data: newData,
       })
       if (!res.data) {
         // 449 means offline in our context
@@ -556,7 +603,7 @@ const TableEditSaveRowHelper = async (
               key,
               def,
               data,
-              res
+              res,
             },
             state,
             actions,
@@ -609,7 +656,7 @@ const TableEditSaveRowHelper = async (
             key,
             def,
             data,
-            res: res.data
+            res: res.data,
           },
           state,
           actions,
@@ -623,7 +670,7 @@ const TableEditSaveRowHelper = async (
     actions.ovl.table.TableEditClose({
       key,
       tableDef: def,
-      data
+      data,
     })
   }
 }
@@ -683,8 +730,8 @@ export const TableSelectCustomFilter: Action<{
     // make sure only one filter in the "single" group is active
     if (isSingle) {
       Object.keys(def.options.filterCustom)
-        .filter(k => filterCustom[k].type === "single")
-        .forEach(k => {
+        .filter((k) => filterCustom[k].type === "single")
+        .forEach((k) => {
           filterCustom[k].active = false
         })
     }
@@ -729,7 +776,7 @@ export const TableEditRow: Action<{
     schema: value.data.schema,
     validationFnName: "RowValidate",
     changedFnName: "RowChanged",
-    forceOverwrite: true
+    forceOverwrite: true,
   }
   actions.ovl.form.InitForm(initForm)
   let editRow = value.def.uiState.editRow
@@ -748,7 +795,7 @@ export const TableMoreRow: Action<{
   actions.ovl.internal.TableSelectHeader({
     def: value.def,
     data: value.data,
-    key: value.def.database.dataIdField
+    key: value.def.database.dataIdField,
   })
 }
 
@@ -762,7 +809,7 @@ export const TableCopyRow: AsyncAction<{
   let rows = value.data.data
   let row = rows[value.key]
   let newRow = JSON.parse(JSON.stringify(row))
-  Object.keys(def.options.copyColumnsIgnore).forEach(c => {
+  Object.keys(def.options.copyColumnsIgnore).forEach((c) => {
     newRow[c] = null
   })
   // copyRow @@hook
@@ -773,7 +820,7 @@ export const TableCopyRow: AsyncAction<{
         key,
         newRow,
         def: value.def,
-        data: value.data
+        data: value.data,
       },
       state,
       actions,
@@ -870,7 +917,7 @@ export const TableDeleteRow: AsyncAction<{
   if (!value.isMass) {
     actions.ovl.dialog.OkCancelDialog({
       text: "Datensatz löschen?",
-      default: 1
+      default: 1,
     })
     if ((await DialogResult()) === 2) {
       cancel = true
@@ -881,7 +928,7 @@ export const TableDeleteRow: AsyncAction<{
       lang: state.ovl.language.language,
       idField: def.database.dataIdField,
       idValue: key,
-      insertMode: def.database.dbInsertMode
+      insertMode: def.database.dbInsertMode,
     })
     if (!res.data) {
       // handleError @@hook
@@ -891,7 +938,7 @@ export const TableDeleteRow: AsyncAction<{
           {
             key,
             tableDef: def,
-            res: res.data
+            res: res.data,
           },
           state,
           actions,
@@ -919,7 +966,7 @@ export const TableDeleteRow: AsyncAction<{
           key,
           def: def,
           data: value.data,
-          res: res.data
+          res: res.data,
         },
         state,
         actions,
@@ -949,7 +996,7 @@ export const TableMultipleDeleteRow: AsyncAction<{
   }
   let selectedRows = def.uiState.selectedRow
   let wait = Promise.all(
-    Object.keys(selectedRows).map(async k => {
+    Object.keys(selectedRows).map(async (k) => {
       let selected = selectedRows[k]
       if (selected.selected) {
         if (fn) {
@@ -992,11 +1039,11 @@ export const TableMultipleDeleteRow: AsyncAction<{
   if (selectedObjects.length > 0) {
     actions.ovl.dialog.OkCancelDialog({
       text: canNotDeleteMsg,
-      default: 1
+      default: 1,
     })
   } else {
     actions.ovl.dialog.OkDialog({
-      text: canNotDeleteMsg
+      text: canNotDeleteMsg,
     })
   }
 
@@ -1005,12 +1052,12 @@ export const TableMultipleDeleteRow: AsyncAction<{
   }
   if (!cancel) {
     wait = Promise.all(
-      selectedObjects.map(async k => {
+      selectedObjects.map(async (k) => {
         await actions.ovl.internal.TableDeleteRow({
           key: k,
           def: def,
           data: value.data,
-          isMass: true
+          isMass: true,
         })
         if (!rows[k]) {
           deletedCounter++
@@ -1028,7 +1075,7 @@ export const TableMultipleDeleteRow: AsyncAction<{
     actions.ovl.internal.TableSelectHeader({
       def: value.def,
       data: value.data,
-      key: ""
+      key: "",
     })
   }
 }
@@ -1052,7 +1099,7 @@ export const TableMultipleCopyRow: AsyncAction<{
 
   let selectedRows = def.uiState.selectedRow
   let wait = Promise.all(
-    Object.keys(selectedRows).map(async k => {
+    Object.keys(selectedRows).map(async (k) => {
       let selected = selectedRows[k]
       if (selected.selected) {
         if (fn) {
@@ -1097,11 +1144,11 @@ export const TableMultipleCopyRow: AsyncAction<{
   if (selectedObjects.length > 0) {
     actions.ovl.dialog.OkCancelDialog({
       text: canNotCopyMsg,
-      default: 1
+      default: 1,
     })
   } else {
     actions.ovl.dialog.OkDialog({
-      text: canNotCopyMsg
+      text: canNotCopyMsg,
     })
   }
 
@@ -1110,11 +1157,11 @@ export const TableMultipleCopyRow: AsyncAction<{
   }
   if (!cancel) {
     wait = Promise.all(
-      selectedObjects.map(async k => {
+      selectedObjects.map(async (k) => {
         await actions.ovl.internal.TableCopyRow({
           key: k,
           def: def,
-          data: value.data
+          data: value.data,
         })
       })
     )
@@ -1123,7 +1170,7 @@ export const TableMultipleCopyRow: AsyncAction<{
     actions.ovl.internal.TableSelectHeader({
       def: def,
       data: value.data,
-      key: ""
+      key: "",
     })
   }
 }
@@ -1146,7 +1193,7 @@ export const TableMultipleEditRow: AsyncAction<{
   }
   let selectedRows = def.uiState.selectedRow
   let wait = Promise.all(
-    Object.keys(selectedRows).map(async k => {
+    Object.keys(selectedRows).map(async (k) => {
       let selected = selectedRows[k]
       if (selected.selected) {
         if (fn) {
@@ -1190,11 +1237,11 @@ export const TableMultipleEditRow: AsyncAction<{
   if (selectedObjects.length > 0) {
     actions.ovl.dialog.OkCancelDialog({
       text: canNotEditMsg,
-      default: 1
+      default: 1,
     })
   } else {
     actions.ovl.dialog.OkDialog({
-      text: canNotEditMsg
+      text: canNotEditMsg,
     })
   }
 
@@ -1203,11 +1250,11 @@ export const TableMultipleEditRow: AsyncAction<{
   }
   if (!cancel) {
     wait = Promise.all(
-      selectedObjects.map(async k => {
+      selectedObjects.map(async (k) => {
         await actions.ovl.table.TableEditRow({
           key: k,
           def: def,
-          data: value.data
+          data: value.data,
         })
       })
     )
@@ -1216,7 +1263,7 @@ export const TableMultipleEditRow: AsyncAction<{
     actions.ovl.internal.TableSelectHeader({
       def: def,
       data: value.data,
-      key: ""
+      key: "",
     })
   }
 }

@@ -2,19 +2,19 @@ import { Action, AsyncAction } from "overmind"
 import {
   SnackAddState,
   RemoveSnack as StartRemoveSnack,
-  SnackId
+  SnackId,
 } from "./Snack"
 
-export const RemoveSnack: AsyncAction<string> = async (_, value) => {
+export const RemoveSnack: Action<string> = (_, value) => {
   let el = document.getElementById("ovlsnack" + value)
   StartRemoveSnack(el)
 }
 
-export const ClearSnack: AsyncAction<string> = async (
-  { state, actions },
-  value
-) => {
+export const ClearSnack: Action<string> = ({ state, actions }, value) => {
   delete state.ovl.libState.snacks[value]
+  let mainel = document.getElementById("ovlsnack")
+  mainel.classList.add("hide")
+
   let el = document.getElementById(value)
   if (el) {
     let parent = el.parentNode
@@ -32,20 +32,23 @@ export const ClearSnack: AsyncAction<string> = async (
       parent.appendChild(parentFirstChild)
       parent = parent2
     } while (true)
+    mainel.classList.remove("hide")
     actions.ovl.internal.PlaceSnack()
   }
 }
 
-export const PlaceSnack: AsyncAction = async ({ state }) => {
+export const PlaceSnack: Action = ({ state }) => {
   let snacks = state.ovl.libState.snacks
   if (snacks) {
     let filteredAndSortedSnacks = Object.keys(snacks)
-      .filter(f => snacks[f].status === "queued")
+      .filter((f) => snacks[f].status === "queued")
       .sort((a, b) => snacks[a].id - snacks[b].id)
     if (filteredAndSortedSnacks.length > 0) {
       let snackToAdd = snacks[filteredAndSortedSnacks[0]]
+      snackToAdd.status = "running"
       // now go top down through the slots and add in the first parent that has no childs
       let ovlSnackEl = document.getElementById("ovlsnack")
+      ovlSnackEl.classList.add("hide")
       let parentEl = ovlSnackEl.lastElementChild
       do {
         let slotEl = parentEl.firstElementChild
@@ -62,21 +65,21 @@ export const PlaceSnack: AsyncAction = async ({ state }) => {
           div.classList.add("animate")
           div.classList.add("fadeInSnack")
           parentEl.appendChild(div)
-          setTimeout(e => {
-            StartRemoveSnack(div)
-          }, snackToAdd.durationMs)
-          snackToAdd.status = "running"
+          if (snackToAdd.durationMs != 999999) {
+            setTimeout((e) => {
+              StartRemoveSnack(div)
+            }, snackToAdd.durationMs)
+          }
+
           break
         }
       } while (parentEl)
+      ovlSnackEl.classList.remove("hide")
     }
   }
 }
 
-export const AddSnack: AsyncAction<SnackAddState> = async (
-  { state, actions },
-  value
-) => {
+export const AddSnack: Action<SnackAddState> = ({ state, actions }, value) => {
   let id = SnackId.id++
   let key = value.key
   if (!key) {
@@ -94,7 +97,7 @@ export const AddSnack: AsyncAction<SnackAddState> = async (
     type: value.type,
     durationMs: duration,
     status: "queued",
-    id
+    id,
   }
   actions.ovl.internal.PlaceSnack()
 }

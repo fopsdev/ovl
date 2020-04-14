@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kalt AG Kundenportal</title>
+    <title>Demo App Kundenportal</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -25,7 +25,7 @@
         window.addEventListener("load", () => {
           navigator.serviceWorker
             .register("./service-worker.js")
-            .then(registration => {
+            .then((registration) => {
               // A wild service worker has appeared in reg.installing and maybe in waiting!
               const newWorker = registration.installing
               const waitingWorker = registration.waiting
@@ -35,7 +35,7 @@
                   // reload to avoid skipWaiting and clients.claim()
                   window.location.reload()
                 }
-                newWorker.addEventListener("statechange", e => {
+                newWorker.addEventListener("statechange", (e) => {
                   // newWorker.state has changed
                   if (newWorker.state === "activated" && !waitingWorker) {
                     // reload to avoid skipWaiting and clients.claim()

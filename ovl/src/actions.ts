@@ -1,13 +1,13 @@
 import {
   CloseOverlay,
   OpenOverlay,
-  StartCloseOverlay
+  StartCloseOverlay,
 } from "./library/Overlay/actions"
 
 import {
   CloseOverlay2,
   OpenOverlay2,
-  StartCloseOverlay2
+  StartCloseOverlay2,
 } from "./library/Overlay2/actions"
 
 import {
@@ -23,7 +23,7 @@ import {
   ValidateDataType,
   ValidateSchema,
   ValidateList,
-  FillListControl
+  FillListControl,
 } from "./library/forms/actions"
 
 import {
@@ -35,28 +35,28 @@ import {
   GetFile,
   PrepareApp,
   SetLanguage,
-  SetVisibleFalse
+  SetVisibleFalse,
 } from "./global/actions"
 
 import {
   AddSnack,
   RemoveSnack,
   PlaceSnack,
-  ClearSnack
+  ClearSnack,
 } from "./library/Snack/actions"
 
 import { DialogOpen, OkDialog, OkCancelDialog } from "./library/Dialog/actions"
 let dialog = {
   DialogOpen,
   OkDialog,
-  OkCancelDialog
+  OkCancelDialog,
 }
 
 let form = {
   InitForm,
   ResetForm,
   ResetFormAfterNavigation,
-  ValidateForm
+  ValidateForm,
 }
 
 import {
@@ -66,6 +66,7 @@ import {
   SetIndicatorClose,
   SetIndicatorOpen,
   TableRefresh,
+  TableRebuild,
   TableSelectRow,
   TableClearFilter,
   TableSelectHeader,
@@ -90,7 +91,7 @@ import {
   TableRefreshDataFromServer,
   TableSelectCustomSort,
   TableSelectCustomFilter,
-  TableSelectColumnFilter
+  TableSelectColumnFilter,
 } from "./library/actions"
 
 let navigation = { NavigateBack, NavigateTo }
@@ -101,6 +102,7 @@ let indicator = { SetIndicatorOpen, SetIndicatorClose }
 
 let table = {
   TableRefresh,
+  TableRebuild,
   TableSelectRow,
   TableEditRow,
   TableDeleteRow,
@@ -110,7 +112,7 @@ let table = {
   TableSort,
   TableFilter,
   TableClearFilter,
-  TableAddRow
+  TableAddRow,
 }
 
 let internal = {
@@ -157,7 +159,7 @@ let internal = {
   SetFormUndirty,
   ValidateSchema,
   ValidateList,
-  FillListControl
+  FillListControl,
 }
 
 let user = { Logout }
@@ -170,5 +172,5 @@ export let ovl = {
   dialog,
   form,
   table,
-  user
+  user,
 }

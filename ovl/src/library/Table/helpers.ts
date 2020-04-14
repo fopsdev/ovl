@@ -4,7 +4,7 @@ import {
   getDecimalValue,
   ovltemp,
   uuidv4,
-  resolvePath
+  resolvePath,
 } from "../../global/globals"
 import { state } from "../../state"
 import { customFunctions } from "../../index"
@@ -15,7 +15,7 @@ import {
   ListFnReturnValue,
   TableData,
   TableDataAndDef,
-  TableDef
+  TableDef,
 } from "./Table"
 import { TableDefIds } from "../../../../test/src"
 
@@ -119,12 +119,12 @@ export const setTableRow = (
         def.uiState.selectedRow[newId] = {
           selected: false,
           showNav: false,
-          timestamp: 0
+          timestamp: 0,
         }
 
         def.uiState.editRow[newId] = { selected: false }
       }
-      Object.keys(tableDataAndDef.data.tableDef).forEach(k => {
+      Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
         // for the other tabledefs
         if (k !== def.id) {
           let cdef = tableDataAndDef.data.tableDef[k]
@@ -134,7 +134,7 @@ export const setTableRow = (
             selectedRow[newId] = {
               selected: false,
               showNav: false,
-              timestamp: 0
+              timestamp: 0,
             }
             editRow[newId] = { selected: false }
           }
@@ -156,7 +156,7 @@ export const setTableRow = (
       def.uiState.selectedRow[newId] = {
         selected: false,
         showNav: false,
-        timestamp: 0
+        timestamp: 0,
       }
       def.uiState.editRow[newId] = { selected: false }
       let paging = def.options.paging
@@ -183,7 +183,7 @@ export const setTableRow = (
     }
   }
   let destRow = rows[newId]
-  newKeys.forEach(k => {
+  newKeys.forEach((k) => {
     destRow[k] = newData[k]
   })
   if (isAdd && !isSwitcher) {
@@ -195,7 +195,7 @@ export const deleteTableRow = (
   tableDataAndDef: TableDataAndDef,
   key: string
 ) => {
-  Object.keys(tableDataAndDef.data.tableDef).forEach(k => {
+  Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
     let def = tableDataAndDef.data.tableDef[k]
     let editRows = def.uiState.editRow
     let selectRows = def.uiState.selectedRow
@@ -213,7 +213,7 @@ export const deleteTableRow = (
 export const selectLatestRow = (def: TableDef, data: TableData) => {
   let selRows = def.uiState.selectedRow //data.selectedRow[def.id]
   let selectedAndSortedKeys = Object.keys(selRows)
-    .filter(k => selRows[k].selected)
+    .filter((k) => selRows[k].selected)
     .sort((a, b) => selRows[b].timestamp - selRows[a].timestamp)
   if (selectedAndSortedKeys.length > 0) {
     selRows[selectedAndSortedKeys[0]].showNav = true
@@ -227,7 +227,7 @@ export const selectLatestRow = (def: TableDef, data: TableData) => {
 }
 
 export const setPage = (def: TableDef, data: TableData, rows: {}) => {
-  Object.keys(data.tableDef).forEach(k => {
+  Object.keys(data.tableDef).forEach((k) => {
     let def = data.tableDef[k]
     if (def.features.page) {
       let paging = def.options.paging
@@ -258,7 +258,7 @@ export const setRefresh = (
   let dataFilteredAndSorted = def.def.uiState.dataFilteredAndSorted
   if (dataFilteredAndSorted.length > 0) {
     // set all tables to refresh
-    Object.keys(def.data.tableDef).forEach(r => {
+    Object.keys(def.data.tableDef).forEach((r) => {
       let tableDef = def.data.tableDef[r]
       let needsRefresh = isAdd
       if (
@@ -283,12 +283,12 @@ export const setRefresh = (
       if (!needsRefresh) {
         let filterCustom = tableDef.options.filterCustom
         needsRefresh = Object.keys(filterCustom).some(
-          s => filterCustom[s].active
+          (s) => filterCustom[s].active
         )
       }
 
       if (!needsRefresh && updatedData) {
-        Object.keys(updatedData).forEach(k => {
+        Object.keys(updatedData).forEach((k) => {
           if (updatedData[k] !== def.data.data[key][k]) {
             // now check if an updated column is a sort column. this would also result in a refresh
             if (k === tableDef.options.sort.field) {
@@ -474,17 +474,17 @@ export const initTableState = (
     if (def.database.dataIdField && !def.columns[def.database.dataIdField]) {
       columns[def.database.dataIdField] = {
         visible: false,
-        sortable: true
+        sortable: true,
       }
     }
     if (def.options.sort.field && !def.columns[def.options.sort.field]) {
       columns[def.options.sort.field] = {
         visible: false,
-        sortable: true
+        sortable: true,
       }
     }
     // default controltype to textbox
-    Object.keys(def.columns).forEach(f => {
+    Object.keys(def.columns).forEach((f) => {
       let col = def.columns[f]
       if (col.control === undefined) {
         col.control = "text"
@@ -497,7 +497,7 @@ export const initTableState = (
           othersCount: 0,
           selected: "",
           top: 10,
-          showFilter: false
+          showFilter: false,
         }
       } else {
         col.filter.showFilter = true
@@ -536,44 +536,26 @@ export const TableRefreshServerData = async (
   def: TableDef,
   data: TableData,
   actions: typeof overmind.actions,
-  refreshServerDataIfOlderThan?: number,
   forceServerDataRefresh?: boolean
-): Promise<boolean> => {
-  let refreshedBecauseOfAge = false
-  if (!def.dataFetching.useCustomDataFetching) {
-    if (refreshServerDataIfOlderThan) {
-      def.features.forceFreshServerDataIfOlderThan = refreshServerDataIfOlderThan
-    } else {
-      if (def.features.forceFreshServerDataIfOlderThan) {
-        refreshServerDataIfOlderThan =
-          def.features.forceFreshServerDataIfOlderThan
-      }
-    }
-
-    refreshedBecauseOfAge =
-      refreshServerDataIfOlderThan > 0 &&
-      data.timestamp + refreshServerDataIfOlderThan * 1000 < Date.now()
-
-    if (!data.timestamp || !!forceServerDataRefresh || refreshedBecauseOfAge) {
-      // now if there is no data do a get request
-      await actions.ovl.table.TableRefreshDataFromServer({
-        def,
-        data
+) => {
+  if (!data.timestamp || !!forceServerDataRefresh) {
+    // now if there is no data do a get request
+    await actions.ovl.table.TableRefreshDataFromServer({
+      def,
+      data,
+    })
+  }
+  if (!def.initialised) {
+    let schema = data.schema
+    if (def.dataFetching.useSchema && schema !== undefined) {
+      Object.keys(def.columns).forEach((f) => {
+        let col = def.columns[f]
+        if (!col.type && schema[f]) {
+          col.type = schema[f].type
+        }
       })
     }
-    if (!def.initialised) {
-      let schema = data.schema
-      if (def.dataFetching.useSchema && schema !== undefined) {
-        Object.keys(def.columns).forEach(f => {
-          let col = def.columns[f]
-          if (!col.type && schema[f]) {
-            col.type = schema[f].type
-          }
-        })
-      }
-    }
   }
-  return Promise.resolve(refreshedBecauseOfAge)
 }
 
 export const TableFilterFn = (
@@ -584,7 +566,7 @@ export const TableFilterFn = (
   let def = tableDataAndDef.def
   let data = tableDataAndDef.data.data
   let columns = def.columns
-  let restable = Object.keys(data).filter(f => f.indexOf(ovltemp) < 0)
+  let restable = Object.keys(data).filter((f) => f.indexOf(ovltemp) < 0)
   const staticFilter = def.options.filter.static
   // make sure that
   // 1. staticFilter gets applied (for master - details scenarios)
@@ -592,15 +574,15 @@ export const TableFilterFn = (
   // 3. rows which point to null gets filtered out (eg. delete => sets em to null)
   if (staticFilter) {
     let filterKeys = Object.keys(staticFilter)
-    restable = restable.filter(v =>
-      filterKeys.some(m => {
+    restable = restable.filter((v) =>
+      filterKeys.some((m) => {
         return data[v][m] === staticFilter[m]
       })
     )
   }
   let filterCustom = def.options.filterCustom
   let customFilter = Object.keys(filterCustom).filter(
-    k => filterCustom[k].active
+    (k) => filterCustom[k].active
   )
   let customFilterFn = customFilter.reduce((val, k) => {
     let functionName = k + "FilterFn"
@@ -617,11 +599,11 @@ export const TableFilterFn = (
   let hasCustomFilter = customFilterFn.length > 0
   let selectedRow = def.uiState.selectedRow
   let hasColumnFilter = Object.keys(columns).some(
-    s => columns[s].filter.enabled
+    (s) => columns[s].filter.enabled
   )
 
   let visibleColumns = Object.keys(columns).filter(
-    f => columns[f].visible === undefined || columns[f].visible === true
+    (f) => columns[f].visible === undefined || columns[f].visible === true
   )
 
   // restable is now filtered by static filter already, thats fine and our starting point for the next 4 filters
@@ -637,24 +619,24 @@ export const TableFilterFn = (
     calledFromColumnFilterId === undefined &&
     def.options.filter.showSelected
   ) {
-    return Object.keys(selectedRow).filter(k => selectedRow[k].selected)
+    return Object.keys(selectedRow).filter((k) => selectedRow[k].selected)
   }
 
   // now do the columnfilters
   if (hasColumnFilter) {
-    restable = restable.filter(rowKey => {
+    restable = restable.filter((rowKey) => {
       // now go column by column
       return !visibleColumns
         .filter(
-          k => columns[k].filter.enabled && k !== calledFromColumnFilterId
+          (k) => columns[k].filter.enabled && k !== calledFromColumnFilterId
         )
-        .some(columnId => {
+        .some((columnId) => {
           let column = columns[columnId]
 
           let filter = column.filter
           if (filter.isOthersSelected) {
             // match only others
-            return Object.keys(filter.filterValues).some(k => {
+            return Object.keys(filter.filterValues).some((k) => {
               let selectedFilter = filter.filterValues[k]
 
               if (selectedFilter.value === data[rowKey][columnId]) {
@@ -673,9 +655,9 @@ export const TableFilterFn = (
   // now the customFilters
   if (hasCustomFilter) {
     restable = restable.filter(
-      rowKey =>
+      (rowKey) =>
         !customFilterFn.some(
-          f =>
+          (f) =>
             !f(
               def,
               tableDataAndDef.data,
@@ -695,8 +677,8 @@ export const TableFilterFn = (
   let hasTableFilter = def.options.filter.value !== ""
   //and the tableFilter which checks all the columns
   if (hasTableFilter) {
-    restable = restable.filter(rowKey => {
-      return visibleColumns.some(columnId => {
+    restable = restable.filter((rowKey) => {
+      return visibleColumns.some((columnId) => {
         let column = columns[columnId]
         const dispValue = getDisplayValue(columnId, column, data[rowKey])
         return (
@@ -714,7 +696,7 @@ export const TableFilterFn = (
 export const getFormFieldsFromColumns = (def: TableDef, row) => {
   let formFields: { [key: string]: FormFields } = {}
   let columns = def.columns
-  Object.keys(columns).map(k => {
+  Object.keys(columns).map((k) => {
     let col = columns[k]
     let dispVal = getDisplayValue(k, col, row)
     let type: DataType = undefined
@@ -725,7 +707,7 @@ export const getFormFieldsFromColumns = (def: TableDef, row) => {
       type,
       value: dispVal,
       format: col.format,
-      list: col.list
+      list: col.list,
     }
   })
   return formFields
