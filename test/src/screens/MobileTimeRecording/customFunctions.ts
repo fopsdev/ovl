@@ -171,10 +171,15 @@ export const RowChanged = async (
       let ft = formState.fields["U_FromTime"].convertedValue
       let tt = formState.fields["U_ToTime"].convertedValue
       if (ft && tt) {
+        debugger
         let fts = ft.split(":")
         let tts = tt.split(":")
-        let ftdecminutes = ((parseInt(fts[1]) / 60) * 100).toString()
-        let ttdecminutes = ((parseInt(tts[1]) / 60) * 100).toString()
+        let ftdecminutes = ((parseInt(fts[1]) / 60) * 100)
+          .toString()
+          .padStart(2, "0")
+        let ttdecminutes = ((parseInt(tts[1]) / 60) * 100)
+          .toString()
+          .padStart(2, "0")
         let duration =
           parseFloat(tts[0] + "." + ttdecminutes) -
           parseFloat(fts[0] + "." + ftdecminutes)
@@ -200,22 +205,22 @@ export const BeforeSaveRow = async (
   newRow.U_User = state.portal.user.userName
 }
 
-export const CustomAddRowColumnDefaultsHandler = async (
-  newRow: TableMobileTimeRecording,
-  tableDef: TableDataAndDef,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
-) => {
-  newRow.U_Type = "PROJECT"
-  let selectedDate = state.ovl.screens.screens.MobileTimeEntry.selectedDate
-  if (!selectedDate) {
-    let dt = new Date()
-    selectedDate = dt.toISOString()
-  }
-  newRow.U_Date = selectedDate.substring(0, 10) + "T00:00:00"
-  newRow.U_Duration = 0
-}
+// export const CustomAddRowColumnDefaultsHandler = async (
+//   newRow: TableMobileTimeRecording,
+//   tableDef: TableDataAndDef,
+//   state: typeof overmind.state,
+//   actions: typeof overmind.actions,
+//   effects: typeof overmind.effects
+// ) => {
+//   newRow.U_Type = "PROJECT"
+//   let selectedDate = state.ovl.screens.screens.MobileTimeEntry.selectedDate
+//   if (!selectedDate) {
+//     let dt = new Date()
+//     selectedDate = dt.toISOString()
+//   }
+//   newRow.U_Date = selectedDate.substring(0, 10) + "T00:00:00"
+//   newRow.U_Duration = 0
+// }
 
 export const MobileTimeRecordingMainChangeField = async (
   value: FieldChanged,

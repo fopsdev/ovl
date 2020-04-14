@@ -14,7 +14,7 @@ export const ScreenRefresh = async (
   await actions.ovl.table.TableRefresh({
     defId,
     data,
-    forceServerDataRefresh: true
+    forceServerDataRefresh: true,
   })
 }
 let initialised = false
@@ -30,8 +30,7 @@ export const NavigateIn = async (
       date: {
         value: getDateValue(convDate),
         type: "date",
-        format: "2digitsYear"
-      }
+      },
     }
     let mainFormInstanceId = "mobiletimerecordingmain1"
     let initForm: InitForm = {
@@ -39,12 +38,12 @@ export const NavigateIn = async (
       namespace: "testtables.mobiletimerecording",
       instanceId: mainFormInstanceId,
       formType: "MobileTimeEntryMain",
-      fields
+      fields,
     }
     actions.ovl.form.InitForm(initForm)
     await actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
       {
-        selected: convDate
+        selected: convDate,
       }
     )
   }

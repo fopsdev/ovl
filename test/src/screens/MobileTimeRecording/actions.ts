@@ -1,29 +1,11 @@
-import { AsyncAction, Action } from "overmind"
-import { TableMobileTimeRecording, tblMobileTimeRecording } from "./state"
-import { overmind, TableDefIds } from "../.."
+import { AsyncAction } from "overmind"
+import { uuidv4 } from "../../../../ovl/src/global/globals"
 import {
-  ValidateField,
-  FormState,
-  Field,
-  FieldChanged,
-  ChangeField,
-} from "../../../../ovl/src/library/forms/actions"
-import { Mandatory } from "../../../../ovl/src/library/forms/validators"
-import { ovltemp, GetWeekNr, uuidv4 } from "../../../../ovl/src/global/globals"
-import {
-  ValidationAddError,
-  ValidationRemoveError,
-} from "../../../../ovl/src/library/forms/helper"
-import {
-  BeforeSaveParam,
-  TableDataAndDef,
-  TableDef,
-} from "../../../../ovl/src/library/Table/Table"
-import {
+  SnackAdd,
   SnackTrackedAdd,
   SnackTrackedRemove,
-  SnackAdd,
 } from "../../../../ovl/src/library/helpers"
+import { TableMobileTimeRecording } from "./state"
 
 export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   selected: string
