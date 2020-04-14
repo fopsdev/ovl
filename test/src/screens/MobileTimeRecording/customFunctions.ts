@@ -171,7 +171,6 @@ export const RowChanged = async (
       let ft = formState.fields["U_FromTime"].convertedValue
       let tt = formState.fields["U_ToTime"].convertedValue
       if (ft && tt) {
-        debugger
         let fts = ft.split(":")
         let tts = tt.split(":")
         let ftdecminutes = ((parseInt(fts[1]) / 60) * 100)

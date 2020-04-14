@@ -113,7 +113,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
             <div class="fd-tile">
               <div class="fd-tile__content">
                 <ovl-textbox
-                  class="fd-form__item "
+                  class="fd-form-item "
                   .props="${() => {
                     return <TextBoxControlState>{
                       field: dateField,
@@ -129,7 +129,13 @@ export class CompMobileTimeEntry extends OvlFormElement {
             <div class="fd-tile">
               <div class="fd-tile__content">
                 <div class="fd-form-item fd-has-type-1 ">
-                  ${fullDate}
+                  <input
+                    class="fd-input"
+                    tabindex="9999"
+                    type="text"
+                    value="${fullDate}"
+                    readonly
+                  />
                 </div>
               </div>
             </div>
