@@ -17,9 +17,10 @@ export const NavigateIn = async (
 ) => {
   let defId: TableDefIds = "audit"
   let data = state.portal.tables.audit
-  actions.ovl.table.TableRefresh({
+  await actions.ovl.table.TableRefresh({
     defId,
     data,
-    ignoreRefreshedMessageSnack: true
+    ignoreRefreshedMessageSnack: true,
+    forceServerDataRefresh: true,
   })
 }
