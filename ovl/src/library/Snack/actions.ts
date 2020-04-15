@@ -12,9 +12,6 @@ export const RemoveSnack: Action<string> = (_, value) => {
 
 export const ClearSnack: Action<string> = ({ state, actions }, value) => {
   delete state.ovl.libState.snacks[value]
-  let mainel = document.getElementById("ovlsnack")
-  mainel.classList.add("hide")
-
   let el = document.getElementById(value)
   if (el) {
     let parent = el.parentNode
@@ -26,13 +23,17 @@ export const ClearSnack: Action<string> = ({ state, actions }, value) => {
         break
       }
       let parentFirstChild = parent2.firstElementChild
-      if (!parentFirstChild) {
+      if (
+        !parentFirstChild ||
+        parentFirstChild.classList.has("fadeOutSnack") ||
+        parentFirstChild.classList.has("fadeInSnack")
+      ) {
         break
       }
       parent.appendChild(parentFirstChild)
       parent = parent2
     } while (true)
-    mainel.classList.remove("hide")
+
     actions.ovl.internal.PlaceSnack()
   }
 }
@@ -62,7 +63,6 @@ export const PlaceSnack: Action = ({ state }) => {
           div.classList.add("fd-alert")
           let type = "fd-alert--" + snackToAdd.type.toLowerCase()
           div.classList.add(type)
-          div.classList.add("animate")
           div.classList.add("fadeInSnack")
           parentEl.appendChild(div)
           if (snackToAdd.durationMs != 999999) {

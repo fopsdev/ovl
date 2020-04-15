@@ -25,7 +25,6 @@ export type SnackAddState = {
 
 export const RemoveSnack = async (div) => {
   if (div) {
-    div.classList.add("animate")
     div.classList.remove("fadeInSnack")
     div.classList.add("fadeOutSnack")
   }
@@ -39,7 +38,6 @@ export class OvlSnack extends OvlBaseElement {
   handleAnimationEnd = (e) => {
     if (e.animationName === "fadeInSnack") {
       let el = document.getElementById(e.target.id)
-      el.classList.remove("animate")
       el.classList.remove("fadeInSnack")
     } else if (e.animationName === "fadeOutSnack") {
       this.actions.ovl.internal.ClearSnack(e.target.id)

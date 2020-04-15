@@ -254,33 +254,22 @@ body {
   animation-name: fadeOut;
 }
 
-@-webkit-keyframes fadeOutSnack {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
+.fadeOutSnack {
+  opacity: 0;
+  animation-name: fadeOutSnack;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 5s;
 }
 
 @keyframes fadeOutSnack {
-  from {
+  0% {
     opacity: 1;
   }
-
-  to {
+  100% {
     opacity: 0;
   }
 }
-
-.fadeOutSnack {
-  -webkit-animation-name: fadeOutSnack;
-  animation-name: fadeOutSnack;
-  -webkit-animation-duration: 500ms;
-  animation-duration: 500ms;
-}
-
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -307,28 +296,18 @@ body {
 }
 
 .fadeInSnack {
-  -webkit-animation-name: fadeInSnack;
+  opacity: 1;
   animation-name: fadeInSnack;
-  -webkit-animation-duration: 500ms;
-  animation-duration: 500ms;
-}
-
-@-webkit-keyframes fadeInSnack {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;
 }
 
 @keyframes fadeInSnack {
-  from {
+  0% {
     opacity: 0;
   }
-
-  to {
+  100% {
     opacity: 1;
   }
 }

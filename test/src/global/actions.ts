@@ -158,7 +158,7 @@ export const HandleRefresh: AsyncAction = async ({
 }) => {
   let snackId = uuidv4()
   SnackTrackedAdd("Daten werden aufgefrischt", "Success", snackId)
-  SnackTrackedAdd("2222222222", "Success", snackId + "2")
+
   try {
     // 1st get global data to be refreshed
     let res = await effects.postRequest(api.url + "data/getdata", {
@@ -168,9 +168,6 @@ export const HandleRefresh: AsyncAction = async ({
     if (!res.data) {
       return
     }
-    setTimeout(() => {
-      SnackTrackedRemove(snackId + "2")
-    }, 100)
     state.portal.partner.attachments = res.data.attachments
 
     state.portal.chartData = res.data.chartData
@@ -201,6 +198,17 @@ export const HandleRefresh: AsyncAction = async ({
 }
 
 export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
+  SnackTrackedAdd("111111111", "Success", "1")
+
+  SnackTrackedAdd("22222222", "Success", "2")
+  setTimeout(() => {
+    SnackTrackedRemove("1")
+  }, 1000)
+
+  setTimeout(() => {
+    SnackTrackedRemove("2")
+  }, 1300)
+
   if (state.ovl.user.token) {
     return
   }
