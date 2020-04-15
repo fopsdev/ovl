@@ -5,7 +5,7 @@ export type SnackType = "Information" | "Warning" | "Success" | "Error"
 
 export let SnackId = { id: 0 }
 
-const nrOfSnacks = 2
+const nrOfSnacks = 3
 
 export type SnackState = {
   text: string

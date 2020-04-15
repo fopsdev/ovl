@@ -198,28 +198,28 @@ export const HandleRefresh: AsyncAction = async ({
 }
 
 export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
-  SnackTrackedAdd("111111111", "Success", "1")
+  // SnackTrackedAdd("111111111", "Success", "1")
 
-  SnackTrackedAdd("22222222", "Success", "2")
+  // SnackTrackedAdd("22222222", "Success", "2")
 
-  SnackTrackedAdd("33333333", "Success", "3")
-  setTimeout(() => {
-    SnackTrackedRemove("1")
-  }, 100)
+  // SnackTrackedAdd("33333333", "Success", "3")
+  // setTimeout(() => {
+  //   SnackTrackedRemove("1")
+  // }, 2000)
 
-  setTimeout(() => {
-    SnackTrackedRemove("2")
+  // setTimeout(() => {
+  //   SnackTrackedRemove("2")
 
-    SnackTrackedAdd("44444444", "Success", "4")
-  }, 4000)
+  //   SnackTrackedAdd("44444444", "Success", "4")
+  // }, 1000)
 
-  setTimeout(() => {
-    SnackTrackedRemove("3")
-  }, 5000)
+  // setTimeout(() => {
+  //   SnackTrackedRemove("3")
+  // }, 5000)
 
-  setTimeout(() => {
-    SnackTrackedRemove("4")
-  }, 8000)
+  // setTimeout(() => {
+  //   SnackTrackedRemove("4")
+  // }, 8000)
 
   if (state.ovl.user.token) {
     return

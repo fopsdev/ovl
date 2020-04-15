@@ -47,11 +47,7 @@ export const PlaceSnack: Action = ({ state }) => {
       .sort((a, b) => snacks[a].id - snacks[b].id)
     if (filteredAndSortedSnacks.length > 0) {
       let snackToAdd = snacks[filteredAndSortedSnacks[0]]
-      console.log("add " + snackToAdd.key)
-
-      // now go top down through the slots and add in the first parent that has no childs
       let ovlSnackEl = document.getElementById("ovlsnack")
-
       let lastOccupiedSlot = 0
       let lastFreeSlot = 0
       let lastFreeSlotEl
