@@ -5,7 +5,7 @@ export type SnackType = "Information" | "Warning" | "Success" | "Error"
 
 export let SnackId = { id: 0 }
 
-const nrOfSnacks = 3
+const nrOfSnacks = 2
 
 export type SnackState = {
   text: string
@@ -36,10 +36,11 @@ export class OvlSnack extends OvlBaseElement {
   }
 
   handleAnimationEnd = (e) => {
+    let el = document.getElementById(e.target.id)
     if (e.animationName === "fadeInSnack") {
-      let el = document.getElementById(e.target.id)
       el.classList.remove("fadeInSnack")
     } else if (e.animationName === "fadeOutSnack") {
+      el.classList.remove("fadeOutSnack")
       this.actions.ovl.internal.ClearSnack(e.target.id)
     }
   }

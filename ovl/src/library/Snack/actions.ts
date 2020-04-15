@@ -13,6 +13,7 @@ export const RemoveSnack: Action<string> = (_, value) => {
 export const ClearSnack: Action<string> = ({ state, actions }, value) => {
   delete state.ovl.libState.snacks[value]
   let el = document.getElementById(value)
+  let placeFreedUp = false
   if (el) {
     let parent = el.parentNode
     parent.removeChild(el)
@@ -25,15 +26,15 @@ export const ClearSnack: Action<string> = ({ state, actions }, value) => {
       let parentFirstChild = parent2.firstElementChild
       if (
         !parentFirstChild ||
-        parentFirstChild.classList.has("fadeOutSnack") ||
-        parentFirstChild.classList.has("fadeInSnack")
+        parentFirstChild.classList.contains("fadeInSnack") ||
+        parentFirstChild.classList.contains("fadeOutSnack")
       ) {
         break
       }
+      placeFreedUp = true
       parent.appendChild(parentFirstChild)
       parent = parent2
     } while (true)
-
     actions.ovl.internal.PlaceSnack()
   }
 }
@@ -46,35 +47,51 @@ export const PlaceSnack: Action = ({ state }) => {
       .sort((a, b) => snacks[a].id - snacks[b].id)
     if (filteredAndSortedSnacks.length > 0) {
       let snackToAdd = snacks[filteredAndSortedSnacks[0]]
-      snackToAdd.status = "running"
+      console.log("add " + snackToAdd.key)
+
       // now go top down through the slots and add in the first parent that has no childs
       let ovlSnackEl = document.getElementById("ovlsnack")
-      ovlSnackEl.classList.add("hide")
+
+      let lastOccupiedSlot = 0
+      let lastFreeSlot = 0
+      let lastFreeSlotEl
+      let firstFreeSlotEl
       let parentEl = ovlSnackEl.lastElementChild
+      let z = 0
       do {
         let slotEl = parentEl.firstElementChild
         if (slotEl) {
-          parentEl = parentEl.previousElementSibling
+          lastOccupiedSlot = z
         } else {
-          let div = document.createElement("div")
-          div.id = filteredAndSortedSnacks[0]
-          div.setAttribute("role", "alert")
-          div.innerText = snackToAdd.text
-          div.classList.add("fd-alert")
-          let type = "fd-alert--" + snackToAdd.type.toLowerCase()
-          div.classList.add(type)
-          div.classList.add("fadeInSnack")
-          parentEl.appendChild(div)
-          if (snackToAdd.durationMs != 999999) {
-            setTimeout((e) => {
-              StartRemoveSnack(div)
-            }, snackToAdd.durationMs)
+          lastFreeSlot = z
+          lastFreeSlotEl = parentEl
+          if (!firstFreeSlotEl) {
+            firstFreeSlotEl = parentEl
           }
-
-          break
         }
+        parentEl = parentEl.previousElementSibling
+        z++
       } while (parentEl)
-      ovlSnackEl.classList.remove("hide")
+      if (lastOccupiedSlot === 0 || lastOccupiedSlot < lastFreeSlot) {
+        if (lastOccupiedSlot === 0) {
+          lastFreeSlotEl = firstFreeSlotEl
+        }
+        snackToAdd.status = "running"
+        let div = document.createElement("div")
+        div.id = filteredAndSortedSnacks[0]
+        div.setAttribute("role", "alert")
+        div.innerText = snackToAdd.text
+        div.classList.add("fd-alert")
+        let type = "fd-alert--" + snackToAdd.type.toLowerCase()
+        div.classList.add(type)
+        div.classList.add("fadeInSnack")
+        lastFreeSlotEl.appendChild(div)
+        if (snackToAdd.durationMs != 999999) {
+          setTimeout((e) => {
+            StartRemoveSnack(div)
+          }, snackToAdd.durationMs)
+        }
+      }
     }
   }
 }
@@ -98,6 +115,7 @@ export const AddSnack: Action<SnackAddState> = ({ state, actions }, value) => {
     durationMs: duration,
     status: "queued",
     id,
+    key,
   }
   actions.ovl.internal.PlaceSnack()
 }

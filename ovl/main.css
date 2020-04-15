@@ -259,7 +259,7 @@ body {
   animation-name: fadeOutSnack;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 5s;
+  animation-duration: 0.5s;
 }
 
 @keyframes fadeOutSnack {
@@ -300,7 +300,7 @@ body {
   animation-name: fadeInSnack;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
 }
 
 @keyframes fadeInSnack {
