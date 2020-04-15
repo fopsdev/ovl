@@ -3,7 +3,7 @@ import { html } from "lit-html"
 import { repeat } from "lit-html/directives/repeat"
 import { TableRowDef } from "./RowWrapper"
 import { DataType, Schema } from "../Forms/OvlFormElement"
-import { customFunctions, overmind } from "../../index"
+import { customFunctions, overmind, TableDefIds } from "../../index"
 
 import { HeaderMenuDef } from "./HeaderMenu"
 import { FieldFormat } from "../Forms/OvlFormElement"
@@ -28,9 +28,11 @@ type IDField = "{ObjectKey}" | string
 export type TableData = {
   data: {}
   schema: { [key: string]: Schema }
-  tableDef: { [key: string]: TableDef }
+  tableDef: { [key in TableDefIds]?: TableDef }
   timestamp?: number
   lookupTypes?: { [key: string]: DataType }
+  lookupTypes2?: { [key: string]: DataType }
+  lookupTypes3?: { [key: string]: DataType }
 }
 
 export type TableDataAndDef = {
@@ -64,7 +66,7 @@ export type SelectedEditRow = {
 
 export type TableDef = {
   initialised?: boolean
-  id: string
+  id?: TableDefIds
   title?: string
   namespace: string
   server: {
@@ -117,7 +119,7 @@ export type TableDef = {
 
     // put a 0 if it always should be refreshed, put a -1 if never, other numbers > 0 are considered as seconds
     // this is taken into account when the refresh button is clicked
-    forceFreshServerDataOnRefreshClickedIfOlderThan?: number
+    forceFreshServerDataIfOlderThan?: number
     noButtonsAtTheBottom?: boolean
     showRefreshButton?: boolean
   }
@@ -220,7 +222,6 @@ export type DBInsertMode =
   | "Manual"
 
 export type ColumnDef = {
-  datafield: string
   control?: ControlType
   type?: DataType
   visible?: boolean
@@ -235,7 +236,6 @@ export type ColumnDef = {
 }
 
 export type ColumnDisplayDef = {
-  datafield: string
   type?: DataType
   format?: FieldFormat
   list?: ListState
@@ -246,6 +246,9 @@ export type ListFnReturnValue = {
     [key: string]: {}
   }
   lookupTypes?: { [key: string]: DataType }
+  /* use alternative lookups, maybe some selects doesn't need all the columns displayed in the select list, so here they are customizable */
+  lookupTypes2?: { [key: string]: DataType }
+  lookupTypes3?: { [key: string]: DataType }
 }
 
 export type ColumnFilter = {
@@ -396,7 +399,7 @@ export class TableHeader extends OvlBaseElement {
         columnsAlign[k] = cssAlign
         let caption = T(column.caption)
         if (!caption) {
-          caption = column.datafield
+          caption = k
         }
         return html`
           <th

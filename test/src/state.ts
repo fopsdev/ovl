@@ -1,6 +1,11 @@
 import { tblTableTesting, tblTableTesting2 } from "./shared/TableTesting/state"
 import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/state"
-import { TableData, ListFnReturnValue } from "../../ovl/src/library/Table/Table"
+import {
+  TableData,
+  ListFnReturnValue,
+  TableDef,
+  TableDataAndDef
+} from "../../ovl/src/library/Table/Table"
 import { File } from "./components/FileList/FileList"
 import { tblTranslation } from "./screens/Translation/state"
 import { tblAudit } from "./screens/Audit/state"
@@ -138,8 +143,6 @@ type User = {
   userCode: number
 }
 
-type Tables = { [key: string]: TableData }
-
 type Portal = {
   user: User
   orderDetail: OrderDetailState
@@ -149,8 +152,23 @@ type Portal = {
   chartData: DoubleBarChartState
   partner: PartnerState
   pics: PicsState
-  tables: Tables
+  tables: { translation: TableData; audit: TableData }
 }
+
+export type CustomFormType =
+  | "Feedback"
+  | "Settings"
+  | "Login"
+  | "Language"
+  | "MobileTimeEntry"
+  | "MobileTimeEntryMain"
+
+export type TableDefIds =
+  | "translation"
+  | "audit"
+  | "tab1"
+  | "tab2"
+  | "mobiletimerecording1"
 
 export let portal: Portal = {
   user: undefined,
@@ -162,14 +180,14 @@ export let portal: Portal = {
   pics: undefined,
   quotationDetail: undefined,
   tables: {
-    translations: <TableData>{
+    translation: {
       data: {},
       schema: {},
       tableDef: {
         translation: tblTranslation
       }
     },
-    audit: <TableData>{
+    audit: {
       data: {},
       schema: {},
       tableDef: {
@@ -178,15 +196,14 @@ export let portal: Portal = {
     }
   }
 }
+
 export let testtables = {
   tableTesting: <TableData>{
     data: {},
     schema: {},
-    tableDef: {
-      tab1: tblTableTesting,
-      tab2: tblTableTesting2
-    },
-    lookupTypes: { U_Alpha: "text" }
+    tableDef: { tab1: tblTableTesting, tab2: tblTableTesting2 },
+    lookupTypes: { U_Alpha: "text" },
+    lookupTypes2: { U_Alpha: "text", U_Date: "date" }
   },
   timeentries: <TableData>{
     data: {},
@@ -201,7 +218,7 @@ export let testtables = {
       lookupTypes: undefined
     },
 
-    ItmsGrpCod: <ListFnReturnValue>{
+    U_ItmsGrpCod: <ListFnReturnValue>{
       data: undefined,
       lookupTypes: undefined
     },

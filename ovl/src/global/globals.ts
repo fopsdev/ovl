@@ -37,6 +37,9 @@ export const getDateValue = (value: string, format?: FieldFormat) => {
       case "2digitsYear":
         fmt = displayFormats.date._2DigitsYear
         break
+      case "4digitsYear":
+        fmt = displayFormats.date._4DigitsYear
+        break
     }
   }
   if (!fmt) {

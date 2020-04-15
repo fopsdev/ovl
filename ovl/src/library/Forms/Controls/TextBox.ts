@@ -52,7 +52,7 @@ export class OvlTextbox extends OvlBaseElement {
 
   getUI() {
     let field = this.controlState.field
-    field.autoCorrectedValue
+
     let res = getUIValidationObject(field)
     let style = ""
     let type: TextBoxType = "text"

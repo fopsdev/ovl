@@ -159,7 +159,7 @@ export class OvlListControl extends OvlBaseElement {
         detail: { val: selectedKey, id: this.controlState.field.id }
       })
       this.inputElement.dispatchEvent(event)
-      this.writeBackValue = undefined
+      //this.writeBackValue = undefined
 
       this.localList = null
 
@@ -255,7 +255,10 @@ export class OvlListControl extends OvlBaseElement {
     }
 
     if (idToCheck === "search" + fieldId || idToCheck === "delete" + fieldId) {
-      let val = this.inputElement.value
+      let val = this.writeBackValue
+      if (val === undefined) {
+        val = this.inputElement.value
+      }
       if (val) {
         //if (this.localList !== null) {
         let filteredKeys = FilterHitList(
@@ -266,6 +269,7 @@ export class OvlListControl extends OvlBaseElement {
           this.controlState.fieldId,
           10
         )
+        let singleValue
         if (filteredKeys.length === 1) {
           let listData = this.controlState.list.listFn(
             GetRowFromFormState(this.controlState.formState),
@@ -273,10 +277,16 @@ export class OvlListControl extends OvlBaseElement {
             this.actions,
             overmind.effects
           )
-          let singleValue =
+          singleValue =
             listData.data[filteredKeys[0]][this.controlState.list.valueField]
           val =
             listData.data[filteredKeys[0]][this.controlState.list.displayField]
+        }
+        // if it allow non list values also send a change
+        else if (!this.controlState.list.acceptOnlyListValues) {
+          singleValue = val
+        }
+        if (singleValue) {
           let formState = this.controlState.formState
           let fields = formState.fields
           let foundId
@@ -287,7 +297,6 @@ export class OvlListControl extends OvlBaseElement {
             }
             return false
           })
-
           if (
             singleValue !==
             this.controlState.formState.fields[foundId].convertedValue
@@ -421,7 +430,7 @@ export class OvlListControl extends OvlBaseElement {
   }
   getUI() {
     let field = this.controlState.field
-    field.autoCorrectedValue
+
     let res = getUIValidationObject(field)
 
     let label

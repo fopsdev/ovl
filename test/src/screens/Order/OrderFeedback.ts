@@ -5,26 +5,12 @@ import { T } from "../../../../ovl/src/global/globals"
 import { html } from "../../../../ovl/node_modules/lit-html"
 
 export class CompOrderFeedback extends OvlBaseElement {
-  initFeedback() {
-    let fields: { [key: string]: FormFields } = {
-      msg: { value: this.state.ovl.screens.screens.Feedback.message }
-    }
-    let initForm: InitForm = {
-      validationFnName: "FeedbackValidateField",
-      namespace: "feedback",
-      instanceId: this.state.ovl.screens.screens.Feedback.type,
-      formType: "Feedback",
-      fields
-    }
-    this.actions.ovl.form.InitForm(initForm)
-  }
   getUI() {
     const handlePositiveFeedback = (e: Event) => {
       this.actions.portal.order.PreparePositiveFeedback({
         message: T("PortalFeedbackDefaultPositive")
       })
 
-      this.initFeedback()
       this.actions.ovl.navigation.NavigateTo("Feedback")
     }
 
@@ -32,7 +18,6 @@ export class CompOrderFeedback extends OvlBaseElement {
       this.actions.portal.order.PrepareNegativeFeedback({
         message: T("PortalFeedbackDefaultNegative")
       })
-      this.initFeedback()
       this.actions.ovl.navigation.NavigateTo("Feedback")
     }
 
@@ -40,7 +25,6 @@ export class CompOrderFeedback extends OvlBaseElement {
       this.actions.portal.order.PrepareDeliveryDateFeedback({
         message: T("PortalFeedbackDefaultDeliveryMsg")
       })
-      this.initFeedback()
       this.actions.ovl.navigation.NavigateTo("Feedback")
     }
 

@@ -2,6 +2,7 @@ import { Action, AsyncAction } from "overmind"
 import { ResultType } from "./Dialog/Dialog"
 import {
   TableRefresh,
+  TableRebuild,
   TableSelectRow,
   TableClearFilter,
   TableSelectHeader,
@@ -26,11 +27,12 @@ import {
   TableSelectCustomSort,
   TableRefreshDataFromServer,
   TableSelectCustomFilter,
-  TableSelectColumnFilter
+  TableSelectColumnFilter,
 } from "./Table/actions"
 import { dialogAfterClose } from "./Dialog/actions"
 export {
   TableRefresh,
+  TableRebuild,
   TableSelectRow,
   TableClearFilter,
   TableSelectHeader,
@@ -55,7 +57,7 @@ export {
   TableRefreshDataFromServer,
   TableSelectCustomSort,
   TableSelectCustomFilter,
-  TableSelectColumnFilter
+  TableSelectColumnFilter,
 }
 
 export type DialogChangedParam = {

@@ -20,6 +20,7 @@ export type TableMobileTimeRecording = {
   // the id of the selected type (projectid, absenceid)
   // this will reference a lookup list with all the needed info in the displayvalue
   U_TypeId?: string
+  U_Synced?: string
 }
 
 export type tblMobileTimeRecording = {
@@ -30,46 +31,41 @@ export let tblMobileTimeRecording: TableDef = {
   id: "mobiletimerecording1",
   namespace: "testtables.mobiletimerecording",
   server: {
-    endpoint: "timeentries"
+    endpoint: "timeentries",
   },
   database: {
     dataIdField: "Code",
-    dbInsertMode: "UDTAutoGUIDBoth"
+    dbInsertMode: "UDTAutoGUIDBoth",
   },
   options: {
     filter: { value: "", showSelected: false, static: { U_Date: "" } },
-    sort: { direction: "desc", field: "U_FromTime" }
+    sort: { direction: "desc", field: "U_FromTime" },
   },
   columns: {
     U_FromTime: {
-      datafield: "U_FromTime",
       caption: "Von Zeit",
-      type: "time"
+      type: "time",
     },
     U_ToTime: {
-      datafield: "U_ToTime",
       type: "time",
-      caption: "Bis Zeit"
+      caption: "Bis Zeit",
     },
     U_Duration: {
-      datafield: "U_Duration",
       type: "decimal",
       caption: "Dauer",
-      editable: false
+      editable: false,
     },
     U_Type: {
-      datafield: "U_Type",
       type: "text",
       control: "option",
       caption: "Typ",
       list: {
         displayField: "Description",
         valueField: "Code",
-        acceptEmpty: false
-      }
+        acceptEmpty: false,
+      },
     },
     U_TypeId: {
-      datafield: "U_TypeId",
       type: "text",
       caption: "Bezeichnung",
       list: {
@@ -78,8 +74,8 @@ export let tblMobileTimeRecording: TableDef = {
         valueField: "Code",
         displayValueField: false,
         acceptEmpty: false,
-        acceptOnlyListValues: true
-      }
-    }
-  }
+        acceptOnlyListValues: true,
+      },
+    },
+  },
 }

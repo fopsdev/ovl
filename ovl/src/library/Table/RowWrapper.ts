@@ -9,7 +9,7 @@ import {
   SelectedEditRow,
   EditRowDef,
   SelectRowDef,
-  EditRowSaveCancelDef
+  EditRowSaveCancelDef,
 } from "./Table"
 
 import { resolvePath } from "../../global/globals"
@@ -55,7 +55,7 @@ export class TableRowWrapper extends OvlBaseElement {
     let val: SelectRowDef = {
       def: this.row.tableDef,
       key: k,
-      data: this.row.data
+      data: this.row.data,
     }
     this.actions.ovl.table.TableSelectRow(val)
   }
@@ -99,7 +99,7 @@ export class TableRowWrapper extends OvlBaseElement {
           let val: SelectRowDef = {
             def: toSelectElement.row.tableDef,
             key,
-            data: toSelectElement.row.TableData
+            data: toSelectElement.row.TableData,
           }
           this.actions.ovl.table.TableSelectRow(val)
         }
@@ -134,7 +134,7 @@ export class TableRowWrapper extends OvlBaseElement {
                 row: row,
                 data: data,
                 key: key,
-                columnsCount: this.row.columnsCount
+                columnsCount: this.row.columnsCount,
               }
             }}
           >
@@ -153,7 +153,7 @@ export class TableRowWrapper extends OvlBaseElement {
                 row: row,
                 key: key,
                 columnsAlign: this.row.columnsAlign,
-                columnsVisible: this.row.columnsVisible
+                columnsVisible: this.row.columnsVisible,
               }
             }}
           >
@@ -173,13 +173,13 @@ export class TableRowWrapper extends OvlBaseElement {
                   row: row,
                   key: key,
                   columnsAlign: this.row.columnsAlign,
-                  columnsVisible: this.row.columnsVisible
+                  columnsVisible: this.row.columnsVisible,
                 }
               }}
             >
             </ovl-trowformb>
           `,
-          elementToFocusAfterClose: document.activeElement
+          elementToFocusAfterClose: document.activeElement,
         })
       }
     }
@@ -200,7 +200,7 @@ export class TableRowWrapper extends OvlBaseElement {
                 tableDef: def,
                 data: data,
                 key: key,
-                columnsCount: this.row.columnsCount
+                columnsCount: this.row.columnsCount,
               }
             }}
           >
@@ -228,20 +228,20 @@ export class TableRowWrapper extends OvlBaseElement {
 
     return html`
       <ovl-trow
-        @keydown=${e => this.handleKeyDown(e)}
+        @keydown=${(e) => this.handleKeyDown(e)}
         tabindex="0"
         style="${selectedRowBg}"
         class="fd-table__row ${rowStatus}  animated fadeIn faster"
         title="${rowStatusMsg}"
-        @click="${e => this.handleRowClick(e, key)}"
-        @long-press="${e => this.handleRowLongPress(e)}"
+        @click="${(e) => this.handleRowClick(e, key)}"
+        @long-press="${(e) => this.handleRowLongPress(e)}"
         .props=${() => {
           return <TableRowDataDef>{
             row: row,
             key: key,
             tableDef: def,
             columnsAlign: this.row.columnsAlign,
-            columnsVisible: this.row.columnsVisible
+            columnsVisible: this.row.columnsVisible,
           }
         }}
       >

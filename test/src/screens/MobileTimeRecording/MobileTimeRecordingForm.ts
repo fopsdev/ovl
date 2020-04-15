@@ -26,7 +26,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         key: def.uiState.currentlyAddingKey,
         def,
         data: this.state.testtables.timeentries,
-        formState: this.formState
+        formState: this.formState,
       })
     }
     if (def.uiState.currentlyAddingKey === undefined) {
@@ -39,9 +39,12 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
       let cancel: boolean = true
       if (this.formState.dirty) {
         if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 2) {
-          this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
-          this.actions.ovl.navigation.NavigateBack()
+          cancel = false
         }
+      }
+      if (cancel) {
+        this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
+        this.actions.ovl.navigation.NavigateBack()
       }
     }
   }
@@ -84,9 +87,9 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
                   listFn: resolvePath(customFunctions, def.namespace)
                     .U_TypeGetListFn,
                   displayField: col.list.displayField,
-                  valueField: col.list.valueField
+                  valueField: col.list.valueField,
                 },
-                inline: true
+                inline: true,
               }
             }}"
           >
@@ -109,9 +112,9 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
                   displayField: col.list.displayField,
                   displayValueField: col.list.displayValueField,
                   valueField: col.list.valueField,
-                  serverEndpoint: col.list.serverEndpoint
+                  serverEndpoint: col.list.serverEndpoint,
                 },
-                fieldId: "U_TypeId"
+                fieldId: "U_TypeId",
               }
             }}"
           >
@@ -120,12 +123,12 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         <div class="fd-panel__body">
           <ovl-timebox
             class="fd-form__item "
-            .props=${state => {
+            .props=${(state) => {
               let col = def.columns["U_FromTime"]
               return <TimeControlState>{
                 field: fromTimeField,
                 label: col.caption,
-                align: "left"
+                align: "left",
               }
             }}
           >
@@ -135,12 +138,12 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         <div class="fd-panel__body">
           <ovl-timebox
             class="fd-form__item "
-            .props=${state => {
+            .props=${(state) => {
               let col = def.columns["U_ToTime"]
               return <TimeControlState>{
                 field: toTimeField,
                 label: col.caption,
-                align: "left"
+                align: "left",
               }
             }}
           >
@@ -154,16 +157,16 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         <div class="fd-panel__footer">
           <button
             ?disabled=${this.state.ovl.libState.indicator.open ||
-              this.screenClosing()}
-            @click=${e => this.handleSave(e)}
+            this.screenClosing()}
+            @click=${(e) => this.handleSave(e)}
             class="fd-button fd-button--positive ${acceptEnabled}"
           ></button>
           <div style="margin-left:100px;"></div>
           <button
             ?disabled=${this.state.ovl.libState.indicator.open ||
-              this.screenClosing()}
-            @mousedown=${e => this.handleCancel(e)}
-            @click=${e => this.handleCancel(e)}
+            this.screenClosing()}
+            @mousedown=${(e) => this.handleCancel(e)}
+            @click=${(e) => this.handleCancel(e)}
             class="fd-button fd-button--negative sap-icon--decline"
           ></button>
         </div>

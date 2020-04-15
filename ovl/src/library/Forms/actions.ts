@@ -7,21 +7,13 @@ import {
 } from "../../global/globals"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
-import { customFunctions } from "../../index"
+import { customFunctions, FormType } from "../../index"
 import { ListFnReturnValue } from "../Table/Table"
 import { getFormFields, ValidationAddError } from "./helper"
 export { FillListControl }
-export type FormType =
-  | "TableRowEdit"
-  | "Feedback"
-  | "Settings"
-  | "Login"
-  | "Language"
-  | "MobileTimeEntry"
 
 export type Field = {
   value: string
-  autoCorrectedValue: string
   convertedValue: any
   type: DataType
   format: FieldFormat
@@ -111,7 +103,6 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
   let format = field.format
   let val = value.newVal
   let res = value.validationResult
-  field.autoCorrectedValue = ""
 
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
@@ -151,10 +142,10 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
           ":" +
           (minutes ? minutes.toString().padStart(2, "0") : "00")
         field.convertedValue = newTime
-        field.autoCorrectedValue = newTime
+        field.value = newTime
       } else {
         field.convertedValue = null
-        field.autoCorrectedValue = ""
+        field.value = ""
         //field.value = ""
       }
       break
@@ -197,15 +188,15 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
         let resp = Date.parse(newDate)
         if (!resp) {
           field.convertedValue = ""
-          field.autoCorrectedValue = field.value
+          field.value = field.value
           ValidationAddError(validatorId, "invalid date format", res)
         } else {
           field.convertedValue = newDate
-          field.autoCorrectedValue = getDateValue(newDate)
+          field.value = getDateValue(newDate, field.format)
         }
       } else {
         field.convertedValue = null
-        field.autoCorrectedValue = ""
+        field.value = ""
         //field.value = ""
       }
       break
@@ -213,15 +204,15 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
       if (val) {
         let parsedVal = parseInt(val)
         if (parsedVal) {
-          field.autoCorrectedValue = parsedVal.toString()
-          //field.value = field.autoCorrectedValue
+          field.value = parsedVal.toString()
+
           field.convertedValue = parsedVal
         } else {
           ValidationAddError(validatorId, "invalid number format", res)
         }
       } else {
         field.convertedValue = null
-        field.autoCorrectedValue = ""
+        field.value = ""
         //field.value = ""
       }
       break
@@ -237,8 +228,7 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
           parsedVal = val
         }
         if (parsedVal || parsedVal == 0) {
-          field.autoCorrectedValue = getDecimalValue(parsedVal, format) //parsedVal.toString()
-          //field.value = field.autoCorrectedValue
+          field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
           // we need to to that so it gets transmitted for sure as decimal. elsewise it could end up as an int for the deserialzer backend
           field.convertedValue =
             Math.round(parsedVal * 1000000) / 1000000 + 0.0000001
@@ -247,7 +237,7 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
         }
       } else {
         field.convertedValue = null
-        field.autoCorrectedValue = ""
+        field.value = ""
         //field.value = ""
       }
       break
@@ -355,7 +345,6 @@ export const ValidateForm: Action<FormState> = (
       formState: value,
       validationResult: field.validationResult
     } as ValidateField)
-
     let fn = resolvePath(customFunctions, namespace)
 
     if (field.validationResult.valid) {
@@ -378,16 +367,12 @@ export const ValidateForm: Action<FormState> = (
           } as ValidateField)
         }
         if (field.validationResult.valid) {
-          if (field.autoCorrectedValue) {
-            val = field.autoCorrectedValue
-          }
-
           if (fn && fn[validationFnName]) {
             fn[validationFnName](
               {
                 fieldId: k,
                 oldVal: val,
-                newVal: val,
+                newVal: field.value,
                 formState: value,
                 validationResult: field.validationResult
               },
@@ -431,7 +416,6 @@ export const InitForm: Action<InitForm> = (
     state.ovl.forms[value.formType] = {}
     formInstanceList = state.ovl.forms[value.formType]
   }
-
   // if there is already a formstate -> do nothing (except its forceOverwrite)
   if (!formInstanceList[value.instanceId] || value.forceOverwrite === true) {
     let fields: FieldValueMap = getFormFields(
@@ -574,7 +558,7 @@ export const ChangeField: Action<ChangeField> = (
   value
 ) => {
   let field = value.formState.fields[value.fieldId]
-  //let oldVal = field.value
+
   let oldConvertedVal = field.convertedValue
   field.validationResult.valid = true
   field.validationResult.validationMsg = ""
@@ -582,6 +566,8 @@ export const ChangeField: Action<ChangeField> = (
   field.watched = !value.isInit
   let newVal = value.value
   let namespace = value.formState.namespace
+
+  field.value = newVal
   actions.ovl.internal.ValidateDataType({
     fieldId: value.fieldId,
     oldVal: oldConvertedVal,
@@ -595,7 +581,7 @@ export const ChangeField: Action<ChangeField> = (
     actions.ovl.internal.ValidateSchema({
       fieldId: value.fieldId,
       oldVal: oldConvertedVal,
-      newVal: newVal,
+      newVal: field.value,
       formState: value.formState,
       validationResult: field.validationResult
     } as ValidateField)
@@ -605,23 +591,19 @@ export const ChangeField: Action<ChangeField> = (
         actions.ovl.internal.ValidateList({
           fieldId: value.fieldId,
           oldVal: oldConvertedVal,
-          newVal: newVal,
+          newVal: field.value,
           formState: value.formState,
           validationResult: field.validationResult
         } as ValidateField)
       }
       if (field.validationResult.valid) {
-        if (field.autoCorrectedValue) {
-          newVal = field.autoCorrectedValue
-        }
-
         let validationFnName = value.formState.validationFnName
         if (fn && fn[validationFnName]) {
           fn[validationFnName](
             {
               fieldId: value.fieldId,
               oldVal: oldConvertedVal,
-              newVal: newVal,
+              newVal: field.value,
               formState: value.formState,
               validationResult: field.validationResult
             },
@@ -634,13 +616,12 @@ export const ChangeField: Action<ChangeField> = (
     }
   }
 
-  if (field.value !== newVal) {
+  if (field.convertedValue !== oldConvertedVal) {
     field.dirty = !value.isInit
     if (!value.formState.dirty) {
       value.formState.dirty = !value.isInit
     }
   }
-  field.value = newVal
 
   if (
     oldConvertedVal !== field.convertedValue &&

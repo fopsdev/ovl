@@ -1,45 +1,32 @@
 import { AsyncAction, Action } from "overmind"
-import { TableMobileTimeRecording, tblMobileTimeRecording } from "./state"
-import { overmind } from "../.."
+import { uuidv4 } from "../../../../ovl/src/global/globals"
 import {
-  ValidateField,
-  FormState,
-  Field,
-  FieldChanged,
-  ChangeField
-} from "../../../../ovl/src/library/forms/actions"
-import { Mandatory } from "../../../../ovl/src/library/forms/validators"
-import { ovltemp, GetWeekNr, uuidv4 } from "../../../../ovl/src/global/globals"
-import {
-  ValidationAddError,
-  ValidationRemoveError
-} from "../../../../ovl/src/library/forms/helper"
-import {
-  BeforeSaveParam,
-  TableDataAndDef,
-  TableDef
-} from "../../../../ovl/src/library/Table/Table"
-import {
+  SnackAdd,
   SnackTrackedAdd,
   SnackTrackedRemove,
-  SnackAdd
 } from "../../../../ovl/src/library/helpers"
+import { TableMobileTimeRecording } from "./state"
+
+export const MarkAsSynced: Action<string[]> = ({ state, actions }, value) => {
+  let data = state.testtables.timeentries
+  let nd = new Date()
+  value.forEach((f) => {
+    data.data[f].U_Synced = nd.toUTCString()
+  })
+}
 
 export const SetMobileTimeEntrySelectedDate: AsyncAction<{
-  def: TableDef
   selected: string
 }> = async ({ state, actions }, value) => {
-  value.def.options.filter.static.U_Date = value.selected + "T00:00:00"
-  state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
-
+  // value.def.options.filter.static.U_Date = value.selected
+  // state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
   let data = state.testtables.timeentries
   let def = state.testtables.timeentries.tableDef.mobiletimerecording1
-
+  def.options.filter.static.U_Date = value.selected
   await actions.ovl.table.TableRefresh({
-    def,
+    defId: "mobiletimerecording1",
     data,
-    init: true,
-    forceFreshServerData: 0
+    forceServerDataRefresh: true,
   })
 }
 
@@ -47,22 +34,22 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
   let snackKey = uuidv4()
   SnackTrackedAdd("Datensätze werden hinzugefügt...", "Information", snackKey)
   let dt = new Date()
-  for (let d = 0; d < 10; d++) {
-    for (let z = 0; z < 10; z++) {
+  for (let d = 0; d < 3; d++) {
+    for (let z = 0; z < 40; z++) {
       let testEntry: TableMobileTimeRecording = {
         U_Type: "PROJECT",
         U_TypeId: "00000010",
         U_Date: dt.toISOString().substring(0, 10) + "T00:00:00",
         U_FromTime: "01:" + ("0" + z).slice(-2),
-        U_ToTime: "01:" + ("0" + z).slice(-2),
-        U_Duration: 1
+        U_ToTime: "02:" + ("0" + z).slice(-2),
+        U_Duration: 1,
       }
       testEntry.Code = undefined
       await actions.ovl.internal.TableDirectSaveRow({
         data: state.testtables.timeentries,
-        def: state.testtables.timeentries.tableDef.mobiletimerecording1,
+        defId: "mobiletimerecording1",
         rowToSave: testEntry,
-        noSnack: true
+        noSnack: true,
       })
     }
     dt.setDate(dt.getDate() + 1)

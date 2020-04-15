@@ -46,7 +46,8 @@ export class CompShellbar extends OvlBaseElement {
           <ovl-loginform id="loginform"></ovl-loginform>
           <comp-settingsform id="settingsform"></comp-settingsform>
           <ovl-audit> </ovl-audit>
-          <comp-mobiletimeentry> </comp-mobiletimeentry>
+          <comp-mobiletimeentry id="mobiletimerecordingmain1">
+          </comp-mobiletimeentry>
           <comp-mobiletimeentryform id="mobiletimerecording1">
           </comp-mobiletimeentryform>
 
@@ -122,19 +123,6 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleSettings = (e: Event) => {
-      let fields: { [key: string]: FormFields } = {
-        pw: { value: "" },
-        pw1: { value: "" },
-        pw2: { value: "" }
-      }
-      let initForm: InitForm = {
-        validationFnName: "SettingsValidateField",
-        namespace: "portal.settings",
-        instanceId: "settingsform",
-        formType: "Settings",
-        fields
-      }
-      this.actions.ovl.form.InitForm(initForm)
       this.actions.ovl.navigation.NavigateTo("Settings")
     }
 
@@ -148,39 +136,18 @@ export class CompShellbar extends OvlBaseElement {
       if (this.state.ovl.language.language === "DE") {
         lang = "FR"
       }
-      await this.actions.ovl.internal.GetLanguage(lang)
+      await this.actions.ovl.internal.SetLanguage(lang)
     }
 
     const handleLanguageTable = (e: Event) => {
-      this.actions.portal.system.translations.OpenLanguageTable()
+      this.actions.ovl.navigation.NavigateTo("Translation")
     }
 
     const handleAudit = async (e: Event) => {
-      await this.actions.ovl.table.TableRefresh({
-        def: this.state.portal.tables.audit.tableDef.audit,
-        data: this.state.portal.tables.audit,
-        init: true,
-        forceFreshServerData: 0
-      })
       this.actions.ovl.navigation.NavigateTo("Audit")
     }
 
     const handleMobileTimeEntry = async (e: Event) => {
-      if (
-        !this.state.testtables.timeentries.tableDef.mobiletimerecording1
-          .initialised
-      ) {
-        let dt = new Date()
-        let dateSelected = dt.toISOString().substring(0, 10)
-
-        await this.actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
-          {
-            def: this.state.testtables.timeentries.tableDef
-              .mobiletimerecording1,
-            selected: dateSelected
-          }
-        )
-      }
       this.actions.ovl.navigation.NavigateTo("MobileTimeEntry")
     }
 
@@ -189,18 +156,6 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleTestTable = async (e: Event) => {
-      await this.actions.ovl.table.TableRefresh({
-        def: this.state.testtables.tableTesting.tableDef.tab1,
-        data: this.state.testtables.tableTesting,
-        init: true
-      })
-
-      await this.actions.ovl.table.TableRefresh({
-        def: this.state.testtables.tableTesting.tableDef.tab2,
-        data: this.state.testtables.tableTesting,
-        init: true
-      })
-
       this.actions.ovl.navigation.NavigateTo("TableTesting")
     }
 

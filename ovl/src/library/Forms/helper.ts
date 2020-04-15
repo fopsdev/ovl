@@ -19,7 +19,7 @@ export const getFormFields = (
     fields[k] = {
       value: formFields[k].value,
       convertedValue: undefined,
-      autoCorrectedValue: "",
+
       type: type,
       format: formFields[k].format,
       dirty: false,

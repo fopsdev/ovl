@@ -43,9 +43,13 @@ export class CompFeedbackForm extends OvlFormElement {
         let cancel: boolean = true
         if (this.formState.dirty) {
           if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 2) {
-            this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
-            this.actions.ovl.navigation.NavigateBack()
+            cancel = false
           }
+        }
+        if (cancel) {
+          this.actions.ovl.form.ResetFormAfterNavigation(this.formState)
+
+          this.actions.ovl.navigation.NavigateBack()
         }
       }
     }

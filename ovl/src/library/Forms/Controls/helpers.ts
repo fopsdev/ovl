@@ -3,7 +3,11 @@ import { ListState } from "./ListControl"
 import { ListFnReturnValue } from "../../Table/Table"
 import { FormState } from "../actions"
 import { customFunctions } from "../../../index"
-import { resolvePath } from "../../../global/globals"
+import {
+  resolvePath,
+  getDateValue,
+  getDecimalValue
+} from "../../../global/globals"
 
 export type LookupListPostData = {
   url: string
@@ -125,6 +129,12 @@ export const FilterHitList = (
       let checkRow = dataList.data[f]
       return Object.keys(lookupTypes).some(c => {
         let checkVal = checkRow[c]
+        let typ = lookupTypes[c]
+        if (typ === "date") {
+          checkVal = getDateValue(checkVal)
+        } else if (typ === "decimal") {
+          checkVal = getDecimalValue(checkVal)
+        }
         if (checkVal === null) {
           checkVal = ""
         }

@@ -5,6 +5,12 @@ import { baseOvermindConfig, OvlConfig } from "../../ovl/src/init"
 import { defineElements } from "./registerComponents"
 import * as actions from "./actions"
 import * as state from "./state"
+import { TableDefIds, CustomFormType } from "./state"
+import {
+  SnackTrackedAdd,
+  SnackTrackedRemove,
+} from "../../ovl/src/library/helpers"
+export { TableDefIds, CustomFormType }
 
 defineElements()
 
@@ -15,14 +21,14 @@ export const config = merge(baseOvermindConfig, appOvermindConfig)
 export const overmind = createOvermind(config, {
   devtools: true,
   logProxies: true,
-  delimiter: " "
+  delimiter: " ",
 })
 OvlConfig.requiredActions = {
   customPrepareActionPath: undefined,
   customInitActionPath: overmind.actions.portal.system.user.CustomInit,
   handleAdditionalTranslationResultActionPath:
     overmind.actions.portal.system.user.HandleAdditionalLanguageResult,
-  handleGlobalRefreshActionPath: overmind.actions.portal.global.HandleRefresh
+  handleGlobalRefreshActionPath: overmind.actions.portal.global.HandleRefresh,
 }
 
 OvlConfig.apiUrl = {
@@ -32,7 +38,7 @@ OvlConfig.apiUrl = {
   customerTestUrl: "https://testapi-portal.kaltag.ch/api/",
   itfliesServerUrlMatch: "itflies",
   itfliesServerUrl: "https://itflies2.ddns.net/api/",
-  devServer: "http://192.168.1.117:1233/api/"
+  devServer: "http://192.168.1.117:1233/api/",
 }
 
 overmind.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
