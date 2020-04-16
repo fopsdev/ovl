@@ -41,5 +41,7 @@ export const SnackTrackedAdd = (
   })
 }
 export const SnackTrackedRemove = (key: string) => {
-  setTimeout(() => overmind.actions.ovl.internal.RemoveSnack(key), 2000)
+  setTimeout(() => {
+    overmind.actions.ovl.internal.RemoveSnack(key)
+  }, 2000)
 }

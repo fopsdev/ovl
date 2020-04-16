@@ -42,15 +42,15 @@ export class CompOrderOverview extends OvlBaseElement {
         }
         this.actions.portal.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Order
+          obj: this.state.ovl.screens.screens.Order,
         })
       }
     }
 
-    const handleRemoveAllPDFPopup = e => {
+    const handleRemoveAllPDFPopup = (e) => {
       this.actions.portal.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Order
+        obj: this.state.ovl.screens.screens.Order,
       })
     }
 
@@ -109,14 +109,14 @@ export class CompOrderOverview extends OvlBaseElement {
                   <tbody class="fd-table__body">
                     ${Object.keys(this.state.portal.orderDetail.orders)
                       .sort((a, b) => parseInt(b) - parseInt(a))
-                      .map(k => {
+                      .map((k) => {
                         let order = this.state.portal.orderDetail.orders[k]
-                        console.log(order)
+                        //console.log(order)
                         let files = order.steps["step2"].attachments.files
                         return html`
                           <tr
                             class="fd-table__row fd-has-padding-base fd-has-margin-base"
-                            @click=${e => this.handleDetail(e, k)}
+                            @click=${(e) => this.handleDetail(e, k)}
                           >
                             <td class="fd-table__cell">
                               <div class="fd-popover">
@@ -128,8 +128,8 @@ export class CompOrderOverview extends OvlBaseElement {
                                     aria-controls="pQqQR215${k}"
                                     aria-haspopup="true"
                                     aria-expanded="${k ===
-                                      this.state.ovl.screens.screens.Order
-                                        .activeFilePopup}"
+                                    this.state.ovl.screens.screens.Order
+                                      .activeFilePopup}"
                                     aria-label="More"
                                   ></button>
                                 </div>
@@ -139,11 +139,11 @@ export class CompOrderOverview extends OvlBaseElement {
                                   aria-hidden="${k !==
                                     this.state.ovl.screens.screens.Order
                                       .activeFilePopup ||
-                                    this.state.portal.orderDetail.orders[
-                                      k
-                                    ].steps["step2"].attachments.files.filter(
-                                      m => m.type === "Order"
-                                    ).length === 0}"
+                                  this.state.portal.orderDetail.orders[k].steps[
+                                    "step2"
+                                  ].attachments.files.filter(
+                                    (m) => m.type === "Order"
+                                  ).length === 0}"
                                   id="pQqQR215${k}"
                                 >
                                   <nav class="fd-menu">
@@ -151,13 +151,13 @@ export class CompOrderOverview extends OvlBaseElement {
                                       ${this.state.portal.orderDetail.orders[
                                         k
                                       ].attachments.files
-                                        .filter(m => m.type === "Order")
-                                        .map(f => {
+                                        .filter((m) => m.type === "Order")
+                                        .map((f) => {
                                           return html`
                                             <li>
                                               <a
                                                 href=""
-                                                @click=${e =>
+                                                @click=${(e) =>
                                                   this.handleFile(
                                                     e,
                                                     f.fileName,
@@ -178,7 +178,7 @@ export class CompOrderOverview extends OvlBaseElement {
                             <td class="fd-table__cell">
                               <button
                                 title="${T("PortalDetails")}"
-                                @click=${e => this.handleDetail(e, k)}
+                                @click=${(e) => this.handleDetail(e, k)}
                                 class="fd-button fd-button--compact fd-has-font-weight-semi"
                               >
                                 ${k}

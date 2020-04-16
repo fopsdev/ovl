@@ -5,15 +5,21 @@ import {
   SnackId,
 } from "./Snack"
 
-export const RemoveSnack: Action<string> = (_, value) => {
-  let el = document.getElementById("ovlsnack" + value)
+export const RemoveSnack: Action<string> = ({ state }, value) => {
+  // if not already got added just remove from state (there are max. 3 snacks display so it could be that its not even displayed)
+  let key = "ovlsnack" + value
+  if (state.ovl.libState.snacks[key].status === "queued") {
+    delete state.ovl.libState.snacks[key]
+    return
+  }
+  let el = document.getElementById(key)
   StartRemoveSnack(el)
 }
 
 export const ClearSnack: Action<string> = ({ state, actions }, value) => {
   delete state.ovl.libState.snacks[value]
+
   let el = document.getElementById(value)
-  let placeFreedUp = false
   if (el) {
     let parent = el.parentNode
     parent.removeChild(el)
@@ -31,7 +37,7 @@ export const ClearSnack: Action<string> = ({ state, actions }, value) => {
       ) {
         break
       }
-      placeFreedUp = true
+
       parent.appendChild(parentFirstChild)
       parent = parent2
     } while (true)
