@@ -28,7 +28,6 @@ export const RemoveSnack = (div) => {
     div.classList.remove("fadeInSnack")
     div.classList.add("fadeOutSnack")
   }
-  console.dir(div)
 }
 
 export class OvlSnack extends OvlBaseElement {

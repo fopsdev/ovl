@@ -145,6 +145,13 @@ body {
   grid-template-rows: auto;
 }
 
+.dateInputCols2 {
+  display: grid;
+  grid-template-columns: 93% 7%;
+  grid-gap: 0px;
+  grid-template-rows: auto;
+}
+
 .evenCols3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

@@ -56,7 +56,7 @@ export class TableRowForm extends OvlFormElement {
     let columns = def.columns
     let firstEditable = false
     return html`
-      ${Object.keys(columns).map(k => {
+      ${Object.keys(columns).map((k) => {
         let col = columns[k]
         let columnsVisible = this.rowData.columnsVisible
         if (!columnsVisible[k]) {
@@ -118,28 +118,45 @@ export class TableRowForm extends OvlFormElement {
                 <ovl-textbox
                   id="${id}"
                   class="fd-form__item "
-                  .props=${state => {
+                  .props=${(state) => {
                     return <TextBoxControlState>{
                       field: fields[k],
                       label: "",
                       type: "text",
-                      align: controlAlign
+                      align: controlAlign,
                     }
                   }}
                 >
                 </ovl-textbox>
               `
               break
+            case "date":
+              uiItem = html`
+                <ovl-datebox
+                  id="${id}"
+                  class="fd-form__item "
+                  .props=${(state) => {
+                    return <TextBoxControlState>{
+                      field: fields[k],
+                      label: "",
+                      align: controlAlign,
+                    }
+                  }}
+                >
+                </ovl-datebox>
+              `
+              break
+
             case "textarea":
               uiItem = html`
                 <ovl-textarea
                   id="${id}"
                   class="fd-form__item "
-                  .props=${state => {
+                  .props=${(state) => {
                     return <TextAreaControlState>{
                       field: fields[k],
                       label: "",
-                      align: controlAlign
+                      align: controlAlign,
                     }
                   }}
                 >
@@ -152,7 +169,7 @@ export class TableRowForm extends OvlFormElement {
                   <ovl-listcontrol
                     id="${id}"
                     class="fd-form__item "
-                    .props="${state => {
+                    .props="${(state) => {
                       let functionName = k + "GetListFn"
 
                       let list
@@ -176,9 +193,9 @@ export class TableRowForm extends OvlFormElement {
                           displayField: col.list.displayField,
                           valueField: col.list.valueField,
                           displayValueField: col.list.displayValueField,
-                          serverEndpoint: col.list.serverEndpoint
+                          serverEndpoint: col.list.serverEndpoint,
                         },
-                        fieldId: k
+                        fieldId: k,
                       }
                     }}"
                   >

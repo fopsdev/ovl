@@ -3,7 +3,7 @@ import { DataType, FieldFormat, Schema, FormFields } from "./OvlFormElement"
 import {
   getDecimalValue,
   getDateValue,
-  resolvePath
+  resolvePath,
 } from "../../global/globals"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
@@ -82,7 +82,7 @@ export const ResetForm: Action<FormState> = (_, value) => {
 
 export const SetFormUndirty: Action<FormState> = (_, value) => {
   value.dirty = false
-  Object.keys(value.fields).forEach(e => {
+  Object.keys(value.fields).forEach((e) => {
     let field = value.fields[e]
     field.dirty = false
   })
@@ -152,6 +152,12 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
 
     case "date":
       if (val) {
+        if (val.length === 10 && val.indexOf("-") > -1) {
+          // looks like the well formed date select format
+          field.convertedValue = val + "T00:00:00"
+          field.value = getDateValue(field.convertedValue, field.format)
+          return
+        }
         let vals = val.split(".")
         // there should be 3 entries (dd,mm,yyyy) for a complete date as supported for now
         let cDate = new Date()
@@ -311,7 +317,7 @@ export const ValidateList: Action<ValidateField> = (
       listdata = fn[functionName](row, state, actions, effects)
       if (
         Object.keys(listdata.data).filter(
-          rowKey => rowKey.toString() === value.newVal.toString()
+          (rowKey) => rowKey.toString() === value.newVal.toString()
         ).length < 1
       ) {
         ValidationAddError(validatorId, "Needs to be a list entry", res)
@@ -327,7 +333,7 @@ export const ValidateForm: Action<FormState> = (
 ) => {
   // re do validations with boolean watched set to true
   value.valid = true
-  Object.keys(value.fields).map(k => {
+  Object.keys(value.fields).map((k) => {
     let field = value.fields[k]
     let oldValid = field.validationResult.valid
     let val = field.convertedValue
@@ -343,7 +349,7 @@ export const ValidateForm: Action<FormState> = (
       oldVal: val,
       newVal: val,
       formState: value,
-      validationResult: field.validationResult
+      validationResult: field.validationResult,
     } as ValidateField)
     let fn = resolvePath(customFunctions, namespace)
 
@@ -353,7 +359,7 @@ export const ValidateForm: Action<FormState> = (
         oldVal: val,
         newVal: val,
         formState: value,
-        validationResult: field.validationResult
+        validationResult: field.validationResult,
       } as ValidateField)
 
       if (field.validationResult.valid) {
@@ -363,7 +369,7 @@ export const ValidateForm: Action<FormState> = (
             oldVal: val,
             newVal: val,
             formState: value,
-            validationResult: field.validationResult
+            validationResult: field.validationResult,
           } as ValidateField)
         }
         if (field.validationResult.valid) {
@@ -374,7 +380,7 @@ export const ValidateForm: Action<FormState> = (
                 oldVal: val,
                 newVal: field.value,
                 formState: value,
-                validationResult: field.validationResult
+                validationResult: field.validationResult,
               },
               state,
               actions,
@@ -391,7 +397,7 @@ export const ValidateForm: Action<FormState> = (
             fieldId: k,
             formState: value,
             oldConvertedVal: val,
-            newConvertedVal: val
+            newConvertedVal: val,
           } as FieldChanged,
           state,
           actions,
@@ -433,18 +439,18 @@ export const InitForm: Action<InitForm> = (
       validationFnName: value.validationFnName,
       changedFnName: value.changedFnName,
       namespace: value.namespace,
-      schema: value.schema
+      schema: value.schema,
     }
     let formState = formInstanceList[value.instanceId]
 
     // initial validation of all fields
     let fn = resolvePath(customFunctions, formState.namespace)
-    Object.keys(formState.fields).forEach(k => {
+    Object.keys(formState.fields).forEach((k) => {
       let fieldValue = formState.fields[k]
       fieldValue.validationResult = {
         valid: true,
         validationMsg: "",
-        validations: {}
+        validations: {},
       }
       let newVal = fieldValue.value
       let oldVal = fieldValue.value
@@ -453,7 +459,7 @@ export const InitForm: Action<InitForm> = (
         oldVal: oldVal,
         newVal: newVal,
         formState,
-        validationResult: fieldValue.validationResult
+        validationResult: fieldValue.validationResult,
       } as ValidateField)
       if (fieldValue.validationResult.valid) {
         actions.ovl.internal.ValidateSchema({
@@ -461,7 +467,7 @@ export const InitForm: Action<InitForm> = (
           oldVal: oldVal,
           newVal: newVal,
           formState,
-          validationResult: fieldValue.validationResult
+          validationResult: fieldValue.validationResult,
         } as ValidateField)
         if (fieldValue.validationResult.valid) {
           if (fieldValue.list) {
@@ -470,7 +476,7 @@ export const InitForm: Action<InitForm> = (
               oldVal: oldVal,
               newVal: newVal,
               formState,
-              validationResult: fieldValue.validationResult
+              validationResult: fieldValue.validationResult,
             } as ValidateField)
           }
           if (fieldValue.validationResult.valid) {
@@ -481,7 +487,7 @@ export const InitForm: Action<InitForm> = (
                   formState,
                   newVal: newVal,
                   oldVal: oldVal,
-                  validationResult: fieldValue.validationResult
+                  validationResult: fieldValue.validationResult,
                 } as ValidateField,
                 state,
                 actions,
@@ -573,7 +579,7 @@ export const ChangeField: Action<ChangeField> = (
     oldVal: oldConvertedVal,
     newVal: newVal,
     formState: value.formState,
-    validationResult: field.validationResult
+    validationResult: field.validationResult,
   } as ValidateField)
 
   let fn = resolvePath(customFunctions, namespace)
@@ -583,7 +589,7 @@ export const ChangeField: Action<ChangeField> = (
       oldVal: oldConvertedVal,
       newVal: field.value,
       formState: value.formState,
-      validationResult: field.validationResult
+      validationResult: field.validationResult,
     } as ValidateField)
 
     if (field.validationResult.valid) {
@@ -593,7 +599,7 @@ export const ChangeField: Action<ChangeField> = (
           oldVal: oldConvertedVal,
           newVal: field.value,
           formState: value.formState,
-          validationResult: field.validationResult
+          validationResult: field.validationResult,
         } as ValidateField)
       }
       if (field.validationResult.valid) {
@@ -605,7 +611,7 @@ export const ChangeField: Action<ChangeField> = (
               oldVal: oldConvertedVal,
               newVal: field.value,
               formState: value.formState,
-              validationResult: field.validationResult
+              validationResult: field.validationResult,
             },
             state,
             actions,
@@ -633,7 +639,7 @@ export const ChangeField: Action<ChangeField> = (
           fieldId: value.fieldId,
           formState: value.formState,
           oldConvertedVal: oldConvertedVal,
-          newConvertedVal: value.formState.fields[value.fieldId].convertedValue
+          newConvertedVal: value.formState.fields[value.fieldId].convertedValue,
         } as FieldChanged,
         state,
         actions,
@@ -647,13 +653,13 @@ export const ChangeField: Action<ChangeField> = (
 
 export const SetFormValid: Action<FormState> = ({ actions }, value) => {
   value.valid = !Object.keys(value.fields).some(
-    k => value.fields[k].validationResult.valid === false
+    (k) => value.fields[k].validationResult.valid === false
   )
 }
 
 export const GetFormValidationErrors = (formState: FormState): string[] => {
   let res: string[] = []
-  Object.keys(formState.fields).map(k => {
+  Object.keys(formState.fields).map((k) => {
     let field = formState.fields[k]
     if (!field.validationResult.valid && field.validationResult.validationMsg) {
       res.push(field.validationResult.validationMsg)

@@ -21,24 +21,24 @@ export let tblTableTesting: TableDef = {
   title: "Test Tabelle mit Paging und Inline-Editierfunktion",
   namespace: "testtables.tabletesting",
   server: {
-    endpoint: "tabletesting"
+    endpoint: "tabletesting",
   },
   options: {
     customRowActions: {
       Select: { icon: "sap-icon--travel-expense", name: "Travel Expense" },
-      Shop: { icon: "sap-icon--cart", name: "Travel Expense" }
+      Shop: { icon: "sap-icon--cart", name: "Travel Expense" },
     },
-    paging: { page: 0, pageSize: 3 }
+    paging: { page: 0, pageSize: 3 },
   },
   database: {
     dataIdField: "Code",
-    dbInsertMode: "UDTAutoNumberBoth"
+    dbInsertMode: "UDTAutoNumberBoth",
   },
   features: {
     page: true,
     add: true,
     noButtonsAtTheBottom: false,
-    forceFreshServerDataIfOlderThan: 0
+    forceFreshServerDataIfOlderThan: 0,
   },
   columns: {
     U_Alpha: {
@@ -46,7 +46,7 @@ export let tblTableTesting: TableDef = {
 
       sortable: true,
       editable: true,
-      width: 1
+      width: 1,
     },
     U_Memo: {
       caption: "Memo",
@@ -54,7 +54,7 @@ export let tblTableTesting: TableDef = {
       sortable: true,
       editable: true,
       control: "textarea",
-      width: 2
+      width: 2,
     },
     U_ItmsGrpCod: {
       editable: true,
@@ -67,9 +67,9 @@ export let tblTableTesting: TableDef = {
         displayField: "ItmsGrpNam",
         serverEndpoint: "itemGroup",
         acceptEmpty: true,
-        acceptOnlyListValues: true
+        acceptOnlyListValues: true,
       },
-      width: 2
+      width: 2,
     },
     U_ItemCode: {
       editable: true,
@@ -81,97 +81,98 @@ export let tblTableTesting: TableDef = {
         displayField: "ItemName",
         serverEndpoint: "item",
         acceptEmpty: false,
-        acceptOnlyListValues: true
+        acceptOnlyListValues: true,
       },
-      width: 10
+      width: 10,
     },
     U_Date: {
       editable: true,
       caption: "Datum",
       sortable: true,
-      width: 2
+      control: "date",
+      width: 2,
     },
     U_Int: {
       editable: true,
       caption: "Zahl",
       sortable: true,
-      width: 1
+      width: 1,
     },
     U_Decimal: {
       editable: true,
       caption: "Wert",
       sortable: true,
-      width: 1
-    }
-  }
+      width: 1,
+    },
+  },
 }
 export let tblTableTesting2: TableDef = {
   id: "tab2",
   title: "Testtabelle aus SAP",
   namespace: "testtables.tabletesting",
   server: {
-    endpoint: "tabletesting"
+    endpoint: "tabletesting",
   },
   options: {
     maxRows: { maxRows: 100, showHint: true, showInTitle: true },
     customRowActions: {
-      Select: { icon: "sap-icon--travel-expense", name: "Travel Expense" }
+      Select: { icon: "sap-icon--travel-expense", name: "Travel Expense" },
     },
     edit: { editType: "big" },
     sortCustom: {
       sorts: {
         alphaThenMemo: {
           description: "Text dann Memo",
-          showInTitle: true
+          showInTitle: true,
         },
         memoThenAlpha: {
           description: "Memo dann Text",
-          showInTitle: true
+          showInTitle: true,
         },
         onlyTest: {
           description: "Enthält Test",
-          showInTitle: true
-        }
+          showInTitle: true,
+        },
       },
-      selected: "alphaThenMemo"
+      selected: "alphaThenMemo",
     },
     filterCustom: {
       alphaStartsWithA: {
         active: false,
         description: 'Text beginnt mit "A"',
         type: "single",
-        showInTitle: true
+        showInTitle: true,
       },
       alphaStartsWithB: {
         active: false,
         description: 'Text beginnt mit "B"',
         type: "single",
-        showInTitle: true
+        showInTitle: true,
       },
       memoContainsTest: {
         active: false,
         description: 'Memo enthält "test"',
         type: "multi",
-        showInTitle: true
+        showInTitle: true,
       },
       memoContainsText: {
         active: false,
         description: 'Memo enthält "text"',
         type: "multi",
-        showInTitle: true
-      }
-    }
+        showInTitle: true,
+      },
+    },
   },
   database: {
     dataIdField: "Code",
-    dbInsertMode: "UDTAutoNumberBoth"
+    dbInsertMode: "UDTAutoNumberBoth",
   },
   features: {
     filter: false,
     page: false,
     add: true,
     noButtonsAtTheBottom: true,
-    forceFreshServerDataIfOlderThan: 10
+    forceFreshServerDataIfOlderThan: 10,
   },
   columns: {
     U_Alpha: {
@@ -179,20 +180,20 @@ export let tblTableTesting2: TableDef = {
 
       sortable: true,
       editable: true,
-      filter: { top: 3 }
+      filter: { top: 3 },
     },
     U_Memo: {
       caption: "Memo",
 
       sortable: true,
       control: "textarea",
-      editable: true
+      editable: true,
     },
     U_Date: {
       editable: true,
       caption: "Datum",
 
-      sortable: true
+      sortable: true,
     },
 
     U_ItmsGrpCod: {
@@ -206,8 +207,8 @@ export let tblTableTesting2: TableDef = {
         displayField: "ItmsGrpNam",
         serverEndpoint: "itemGroup",
         acceptEmpty: false,
-        acceptOnlyListValues: true
-      }
+        acceptOnlyListValues: true,
+      },
     },
 
     U_ItemCode: {
@@ -221,8 +222,8 @@ export let tblTableTesting2: TableDef = {
         displayField: "ItemName",
         serverEndpoint: "item",
         acceptEmpty: false,
-        acceptOnlyListValues: true
-      }
+        acceptOnlyListValues: true,
+      },
     },
 
     U_ParentCode: {
@@ -236,8 +237,8 @@ export let tblTableTesting2: TableDef = {
         acceptEmpty: true,
         acceptOnlyListValues: false,
         valueField: "Code",
-        displayField: "U_Alpha"
-      }
+        displayField: "U_Alpha",
+      },
     },
     U_ParentCode2: {
       editable: true,
@@ -248,8 +249,8 @@ export let tblTableTesting2: TableDef = {
         acceptEmpty: true,
         acceptOnlyListValues: false,
         valueField: "Code",
-        displayField: "U_Alpha"
-      }
+        displayField: "U_Alpha",
+      },
     },
 
     U_Int: {
@@ -257,14 +258,14 @@ export let tblTableTesting2: TableDef = {
       caption: "Zahl",
 
       sortable: true,
-      filter: { top: 3 }
+      filter: { top: 3 },
     },
     U_Decimal: {
       editable: true,
       caption: "Wert",
 
       sortable: true,
-      format: "4digits"
-    }
-  }
+      format: "4digits",
+    },
+  },
 }

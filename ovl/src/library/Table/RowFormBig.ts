@@ -185,6 +185,24 @@ export class TableRowFormBig extends OvlFormElement {
                     </ovl-textbox>
                   `
                   break
+
+                case "date":
+                  uiItem = html`
+                    <ovl-datebox
+                      id="${id}"
+                      class="fd-form__item "
+                      .props=${(state) => {
+                        return <TextBoxControlState>{
+                          field: fields[k],
+                          label: col.caption,
+                          align: controlAlign,
+                        }
+                      }}
+                    >
+                    </ovl-datebox>
+                  `
+                  break
+
                 case "textarea":
                   uiItem = html`
                     <ovl-textarea
