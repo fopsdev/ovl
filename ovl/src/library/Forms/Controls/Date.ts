@@ -110,7 +110,7 @@ export class OvlDate extends OvlBaseElement {
         <input
           tabindex="9999"
           class="fd-input ${res.validationType} fd-has-type-1"
-          style="padding-right:0px;margin-right:2px;margin-left:-28px; z-index:0"
+          style="padding-right:0px;margin-right:2px;margin-left:-28px;z-index:0; outline: none;"
           autocomplete="off"
           type="date"
           id="select${field.id}"
@@ -129,14 +129,16 @@ export class OvlDate extends OvlBaseElement {
     //   "select" + this.controlState.field.id
     // )
     // if (selectEl) {
-    //   selectEl.style.paddingTop =
-    //     "-" +
-    //     (
-    //       parseInt(this.inputElement.offsetTop) +
-    //       parseInt(this.inputElement.offsetHeight)
-    //     ).toString() +
-    //     "px"
-    //   selectEl.style.marginLeft = this.inputElement.offsetLeft - 12 + "px"
+    //   debugger
+    //   selectEl.style.zIndex = this.inputElement.style.zIndex - 1
+    //   //   selectEl.style.paddingTop =
+    //   //     "-" +
+    //   //     (
+    //   //       parseInt(this.inputElement.offsetTop) +
+    //   //       parseInt(this.inputElement.offsetHeight)
+    //   //     ).toString() +
+    //   //     "px"
+    //   //   selectEl.style.marginLeft = this.inputElement.offsetLeft - 12 + "px"
     // }
   }
   disconnectedCallback() {

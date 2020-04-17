@@ -192,7 +192,7 @@ export let tblTableTesting2: TableDef = {
     U_Date: {
       editable: true,
       caption: "Datum",
-
+      control: "date",
       sortable: true,
     },
 
