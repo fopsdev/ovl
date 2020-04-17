@@ -126,16 +126,15 @@ export class CompMobileTimeEntry extends OvlFormElement {
           <div class="fd-col--4">
             <div class="fd-tile">
               <div class="fd-tile__content">
-                <ovl-textbox
+                <ovl-datebox
                   class="fd-form-item "
                   .props="${() => {
                     return <TextBoxControlState>{
                       field: dateField,
-                      type: "text",
                     }
                   }}"
                 >
-                </ovl-textbox>
+                </ovl-datebox>
               </div>
             </div>
           </div>

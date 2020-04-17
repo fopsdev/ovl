@@ -39,16 +39,6 @@
 /* custom styles 
 #############################################################
 */
-
-[type="date"] {
-  background: #fff url("./icons/calendar.png") 100% 50% no-repeat;
-}
-[type="date"]::-webkit-inner-spin-button {
-  display: none;
-}
-[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
-}
 .menuDisabled {
   pointer-events: none;
   opacity: 0.6;

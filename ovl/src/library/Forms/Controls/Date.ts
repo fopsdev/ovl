@@ -17,9 +17,9 @@ export class OvlDate extends OvlBaseElement {
   init() {
     this.controlState = this.props(this.state)
     if (this.state.ovl.uiState.isMobile) {
-      this.addEventListener("input", this.handleSelectChange)
+      this.addEventListener("input", this.handleChange)
     } else {
-      this.addEventListener("change", this.handleSelectChange)
+      this.addEventListener("change", this.handleChange)
     }
   }
 
@@ -31,22 +31,6 @@ export class OvlDate extends OvlBaseElement {
       detail: { id: this.controlState.field.id },
     })
     this.inputElement.dispatchEvent(event)
-  }
-
-  handleSelectChange(e: Event) {
-    e.stopPropagation()
-    e.preventDefault()
-    let event = new CustomEvent("ovlchange", {
-      bubbles: true,
-      detail: {
-        val:
-          //@ts-ignore
-          document.getElementById("select" + this.controlState.field.id).value,
-        id: this.controlState.field.id,
-      },
-    })
-    this.inputElement.dispatchEvent(event)
-    document.getElementById("select" + this.controlState.field.id).value = null
   }
 
   handleChange(e: Event) {
@@ -92,30 +76,22 @@ export class OvlDate extends OvlBaseElement {
     if (this.controlState.align) {
       align = this.controlState.align
     }
+    let type: "date" | "text" = "text"
+    if (this.state.ovl.uiState.isMobile) {
+      type = "date"
+    }
     return html`
       ${label}
-      <div class="dateInputCols2">
-        <input
-          @change=${(e) => this.handleChange(e)}
-          @focusout=${(e) => this.handleFocusOut(e)}
-          @keydown=${(e) => this.handleKeyDown(e)}
-          style="${align} border-right:none"
-          autocomplete="off"
-          class="fd-input ${res.validationType} fd-has-type-1"
-          type="text"
-          id="${field.id}"
-          value="${field.value}"
-        />
+      <input
+        @focusout=${(e) => this.handleFocusOut(e)}
+        @keydown=${(e) => this.handleKeyDown(e)}
+        style="${align}"
+        autocomplete="off"
+        class="fd-input ${res.validationType} fd-has-type-1"
+        type="${type}"
+        id="${field.id}"
+      />
 
-        <input
-          tabindex="9999"
-          class="fd-input ${res.validationType} fd-has-type-1"
-          style="padding-right:0px;margin-right:2px;margin-left:-28px;z-index:0; outline: none;"
-          autocomplete="off"
-          type="date"
-          id="select${field.id}"
-        />
-      </div>
       <span class="fd-form-message ${res.validationHide}">
         ${field.validationResult.validationMsg}
       </span>
@@ -124,7 +100,14 @@ export class OvlDate extends OvlBaseElement {
   afterRender() {
     // place picker under date with picker on the right just visible
     this.inputElement = document.getElementById(this.controlState.field.id)
-    this.inputElement.value = this.controlState.field.value
+    if (this.state.ovl.uiState.isMobile) {
+      this.inputElement.value = this.controlState.field.convertedValue.substring(
+        0,
+        10
+      )
+    } else {
+      this.inputElement.value = this.controlState.field.value
+    }
     // let selectEl = document.getElementById(
     //   "select" + this.controlState.field.id
     // )
@@ -143,9 +126,9 @@ export class OvlDate extends OvlBaseElement {
   }
   disconnectedCallback() {
     if (this.state.ovl.uiState.isMobile) {
-      this.removeEventListener("input", this.handleSelectChange)
+      this.removeEventListener("input", this.handleChange)
     } else {
-      this.removeEventListener("change", this.handleSelectChange)
+      this.removeEventListener("change", this.handleChange)
     }
     super.disconnectedCallback()
   }
