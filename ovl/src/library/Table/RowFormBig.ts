@@ -29,6 +29,7 @@ export class TableRowFormBig extends OvlFormElement {
       //@ts-ignore
       focusEl.firstElementChild.focus()
     }
+    super.afterRender()
   }
 
   handleCancel = async () => {
