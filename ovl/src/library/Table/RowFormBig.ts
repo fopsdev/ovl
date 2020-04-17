@@ -234,7 +234,6 @@ export class TableRowFormBig extends OvlFormElement {
                             formState: this.formState,
                             namespace: def.namespace,
                             list: {
-                              listFn: fn[k + "GetListFn"],
                               displayField: col.list.displayField,
                               displayValueField: col.list.displayValueField,
                               valueField: col.list.valueField,

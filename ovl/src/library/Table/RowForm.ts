@@ -186,16 +186,6 @@ export class TableRowForm extends OvlFormElement {
                         field: fields[k],
                         label: "",
                         align: "left",
-                        formState: this.formState,
-                        namespace: def.namespace,
-                        list: {
-                          listFn: fn[k + "GetListFn"],
-                          displayField: col.list.displayField,
-                          valueField: col.list.valueField,
-                          displayValueField: col.list.displayValueField,
-                          serverEndpoint: col.list.serverEndpoint,
-                        },
-                        fieldId: k,
                       }
                     }}"
                   >

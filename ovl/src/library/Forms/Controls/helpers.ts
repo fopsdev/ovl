@@ -88,12 +88,9 @@ export const FilterHitList = (
 ) => {
   let hitLength = {}
   let functionName = fieldId + "GetFilteredListFn"
-  let dataList = list.listFn(
-    GetRowFromFormState(formState),
-    state,
-    overmind.actions,
-    overmind.effects
-  )
+  let dataList = resolvePath(customFunctions, formState.namespace)[
+    fieldId + "GetListFn"
+  ](GetRowFromFormState(formState), state, overmind.actions, overmind.effects)
   if (dataList.data) {
     let res = Object.keys(dataList.data)
     let fn = resolvePath(customFunctions, formState.namespace)

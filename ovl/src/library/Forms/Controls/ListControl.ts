@@ -1,17 +1,18 @@
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { html, TemplateResult } from "lit-html"
-import { Field, FormState, ChangeField } from "../actions"
+import { Field } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { ColumnAlign, ListFnReturnValue, ColumnDef } from "../../Table/Table"
+import { ColumnAlign, ListFnReturnValue } from "../../Table/Table"
 
 import { overlay2ToRender } from "../../Overlay2/Overlay2"
 import {
   FilterHitList,
   GetListDisplayValue,
-  GetRowFromFormState
+  GetRowFromFormState,
 } from "./helpers"
-import { overmind } from "../../.."
+import { overmind, customFunctions } from "../../.."
 import { SnackAdd } from "../../helpers"
+import { resolvePath } from "../../../global/globals"
 
 type ListFunction = (
   row: { [key: string]: {} },
@@ -21,7 +22,6 @@ type ListFunction = (
 ) => any //ListFnReturnValue -> gives a ton of ts errors. not sure why. so i've put any for now
 
 export type ListState = {
-  listFn?: ListFunction
   serverEndpoint?: string
   displayField: string
   valueField: string
@@ -34,10 +34,6 @@ export type ListControlState = {
   field: Field
   align: ColumnAlign
   label: string
-  list: ListState
-  formState: FormState
-  fieldId: string
-  namespace: string
 }
 
 export class OvlListControl extends OvlBaseElement {
@@ -65,33 +61,38 @@ export class OvlListControl extends OvlBaseElement {
   async handleListPopup(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    let listData: ListFnReturnValue = this.controlState.list.listFn(
-      GetRowFromFormState(this.controlState.formState),
+    let field = this.controlState.field
+    let formState = this.state.ovl.forms[field.formType][field.formId]
+
+    let listData: ListFnReturnValue = resolvePath(
+      customFunctions,
+      formState.namespace
+    )[field.fieldKey + "GetListFn"](
+      GetRowFromFormState(formState),
       this.state,
       this.actions,
       overmind.effects
     )
 
     //@ts-ignore
-    let filterValue = document.getElementById(this.controlState.field.id).value
-
+    let filterValue = document.getElementById(field.id).value
     // only reach out to server if endpoint is maintained
-    if (this.controlState.list.serverEndpoint) {
+    if (field.list.serverEndpoint) {
       await this.actions.ovl.internal.FillListControl({
-        list: this.controlState.list,
+        list: field.list,
         listData,
         filterValue,
-        row: GetRowFromFormState(this.controlState.formState),
-        namespace: this.controlState.namespace,
-        fieldId: this.controlState.fieldId
+        row: GetRowFromFormState(formState),
+        namespace: formState.namespace,
+        fieldId: field.fieldKey,
       })
     }
     let filteredKeys = FilterHitList(
-      this.controlState.list,
+      field.list,
       filterValue,
-      this.controlState.formState,
+      formState,
       this.state,
-      this.controlState.fieldId
+      field.fieldKey
     )
     if (filteredKeys.length < 1) {
       SnackAdd("Keine passenden Einträge gefunden", "Warning", 3000)
@@ -100,22 +101,24 @@ export class OvlListControl extends OvlBaseElement {
     let list = html`
       <div class="fd-panel">
         <ovl-hitlist
-          .props=${state => {
-            let listData = this.controlState.list.listFn(
-              GetRowFromFormState(this.controlState.formState),
+          .props=${(state) => {
+            let listData = resolvePath(customFunctions, formState.namespace)[
+              field.fieldKey + "GetListFn"
+            ](
+              GetRowFromFormState(formState),
               state,
               overmind.actions,
               overmind.effects
             )
 
             return {
-              fieldId: this.controlState.field.id,
-              list: this.controlState.list,
+              fieldId: field.id,
+              list: field.list,
               listData,
               filterValue,
               filteredKeys,
               type: "overlay",
-              selectedCallback: this.selectedCallback
+              selectedCallback: this.selectedCallback,
             }
           }}
         ></ovl-hitlist>
@@ -131,7 +134,7 @@ export class OvlListControl extends OvlBaseElement {
     await this.resetLocalList()
     this.actions.ovl.overlay.OpenOverlay2({
       templateResult: list,
-      elementToFocusAfterClose: this.searchElement
+      elementToFocusAfterClose: this.searchElement,
     })
     // overlay2ToRender.overlayClosedCallback = () => {
     //   if (this.searchElement !== null) {
@@ -141,6 +144,8 @@ export class OvlListControl extends OvlBaseElement {
   }
 
   selectedCallback = async (selectedKey: string) => {
+    let field = this.controlState.field
+    let formState = this.state.ovl.forms[field.formType][field.formId]
     if (this.localList !== null) {
       this.inputElement.focus()
       setTimeout(() => {
@@ -153,10 +158,21 @@ export class OvlListControl extends OvlBaseElement {
       await this.resetLocalList()
     } else if (selectedKey !== "@@ovlcanceled") {
       this.writeBackValue = selectedKey
-      this.displayValue = undefined
+
+      let dataList = resolvePath(customFunctions, formState.namespace)[
+        field.fieldKey + "GetListFn"
+      ](
+        GetRowFromFormState(formState),
+        this.state,
+        this.actions,
+        overmind.effects
+      )
+
+      this.displayValue =
+        dataList.data[selectedKey][this.controlState.field.list.displayField]
       let event = new CustomEvent("ovlchange", {
         bubbles: true,
-        detail: { val: selectedKey, id: this.controlState.field.id }
+        detail: { val: selectedKey, id: this.controlState.field.id },
       })
       this.inputElement.dispatchEvent(event)
       //this.writeBackValue = undefined
@@ -170,26 +186,35 @@ export class OvlListControl extends OvlBaseElement {
   handleChange(e: Event) {
     let val = this.inputElement.value
     //if (this.localList !== null) {
+
     if (val) {
+      let field = this.controlState.field
+      let formState = this.state.ovl.forms[field.formType][field.formId]
       let filteredKeys = FilterHitList(
-        this.controlState.list,
+        field.list,
         val,
-        this.controlState.formState,
+        formState,
         this.state,
-        this.controlState.fieldId,
+        field.fieldKey,
         10
       )
       if (filteredKeys.length === 1) {
-        let dataList = this.controlState.list.listFn(
-          GetRowFromFormState(this.controlState.formState),
+        let dataList = resolvePath(customFunctions, formState.namespace)[
+          field.fieldKey + "GetListFn"
+        ](
+          GetRowFromFormState(formState),
           this.state,
           this.actions,
           overmind.effects
         )
         let singleValue =
-          dataList.data[filteredKeys[0]][this.controlState.list.valueField]
+          dataList.data[filteredKeys[0]][
+            this.controlState.field.list.valueField
+          ]
         val =
-          dataList.data[filteredKeys[0]][this.controlState.list.displayField]
+          dataList.data[filteredKeys[0]][
+            this.controlState.field.list.displayField
+          ]
 
         this.displayValue = val
         val = singleValue
@@ -201,7 +226,10 @@ export class OvlListControl extends OvlBaseElement {
   }
   // // same here
   async handleFocusOut(e: Event) {
-    let fieldId = this.controlState.field.id
+    let field = this.controlState.field
+    let formState = this.state.ovl.forms[field.formType][field.formId]
+
+    let fieldId = field.id
     //@ts-ignore
     let relatedTarget = e.relatedTarget
     // if related target is null or not one of the contain elements inside the div then the focus was moved out...
@@ -228,7 +256,7 @@ export class OvlListControl extends OvlBaseElement {
         this.displayValue = undefined
         let event = new CustomEvent("ovlchange", {
           bubbles: true,
-          detail: { val: this.writeBackValue, id: this.controlState.field.id }
+          detail: { val: this.writeBackValue, id: fieldId },
         })
         await this.inputElement.dispatchEvent(event)
         this.writeBackValue = undefined
@@ -244,7 +272,7 @@ export class OvlListControl extends OvlBaseElement {
 
         let event = new CustomEvent("ovlfocusout", {
           bubbles: true,
-          detail: { id: this.controlState.field.id }
+          detail: { id: fieldId },
         })
         await this.inputElement.dispatchEvent(event)
         this.writeBackValue = undefined
@@ -262,49 +290,56 @@ export class OvlListControl extends OvlBaseElement {
       if (val) {
         //if (this.localList !== null) {
         let filteredKeys = FilterHitList(
-          this.controlState.list,
+          field.list,
           val,
-          this.controlState.formState,
+          formState,
           this.state,
-          this.controlState.fieldId,
+          field.fieldKey,
           10
         )
         let singleValue
         if (filteredKeys.length === 1) {
-          let listData = this.controlState.list.listFn(
-            GetRowFromFormState(this.controlState.formState),
+          let listData = resolvePath(customFunctions, formState.namespace)[
+            field.fieldKey + "GetListFn"
+          ](
+            GetRowFromFormState(formState),
             this.state,
             this.actions,
             overmind.effects
           )
-          singleValue =
-            listData.data[filteredKeys[0]][this.controlState.list.valueField]
-          val =
-            listData.data[filteredKeys[0]][this.controlState.list.displayField]
+          singleValue = listData.data[filteredKeys[0]][field.list.valueField]
+          val = listData.data[filteredKeys[0]][field.list.displayField]
         }
         // if it allow non list values also send a change
-        else if (!this.controlState.list.acceptOnlyListValues) {
+        else if (!field.list.acceptOnlyListValues) {
           singleValue = val
         }
         if (singleValue) {
-          let formState = this.controlState.formState
+          debugger
           let fields = formState.fields
           let foundId
-          Object.keys(fields).some(f => {
-            if (fields[f].id === this.controlState.field.id) {
+          Object.keys(fields).some((f) => {
+            if (fields[f].id === fieldId) {
               foundId = f
               return true
             }
             return false
           })
-          if (
-            singleValue !==
-            this.controlState.formState.fields[foundId].convertedValue
-          ) {
+
+          let listData = resolvePath(customFunctions, formState.namespace)[
+            field.fieldKey + "GetListFn"
+          ](
+            GetRowFromFormState(formState),
+            this.state,
+            this.actions,
+            overmind.effects
+          )
+          val = listData.data[singleValue][field.list.displayField]
+          if (singleValue !== formState.fields[foundId].convertedValue) {
             this.writeBackValue = singleValue
             let event = new CustomEvent("ovlchange", {
               bubbles: true,
-              detail: { val: singleValue, id: this.controlState.field.id }
+              detail: { val: singleValue, id: fieldId },
             })
             await this.inputElement.dispatchEvent(event)
           }
@@ -349,6 +384,9 @@ export class OvlListControl extends OvlBaseElement {
     //   alert(e.key)
     // }
 
+    let field = this.controlState.field
+    let formState = this.state.ovl.forms[field.formType][field.formId]
+
     let filterValue = this.inputElement.value
     if (!openLocalList) {
       if (!filterValue || e.key === "Escape") {
@@ -368,11 +406,11 @@ export class OvlListControl extends OvlBaseElement {
       this.setValues(undefined, filterValue)
 
       let filteredKeys = FilterHitList(
-        this.controlState.list,
+        field.list,
         filterValue,
-        this.controlState.formState,
+        formState,
         this.state,
-        this.controlState.fieldId,
+        field.fieldKey,
         10
       )
 
@@ -394,22 +432,25 @@ export class OvlListControl extends OvlBaseElement {
           this.localList = html`
             <div class="fd-panel">
               <ovl-hitlist
-                .props=${state => {
-                  let listData = this.controlState.list.listFn(
-                    GetRowFromFormState(this.controlState.formState),
+                .props=${(state) => {
+                  let listData = resolvePath(
+                    customFunctions,
+                    formState.namespace
+                  )[field.fieldKey + "GetListFn"](
+                    GetRowFromFormState(formState),
                     state,
                     overmind.actions,
                     overmind.effects
                   )
                   return {
-                    fieldId: this.controlState.field.id,
-                    list: this.controlState.list,
+                    fieldId: field.id,
+                    list: field.list,
                     listData,
                     filterValue,
                     filteredKeys,
                     type: "inline",
                     animation: !wasAlreadyOpen,
-                    selectedCallback: this.selectedCallback
+                    selectedCallback: this.selectedCallback,
                   }
                 }}
               ></ovl-hitlist>
@@ -430,6 +471,7 @@ export class OvlListControl extends OvlBaseElement {
   }
   getUI() {
     let field = this.controlState.field
+    let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let res = getUIValidationObject(field)
 
@@ -451,10 +493,13 @@ export class OvlListControl extends OvlBaseElement {
     let displayValue = this.displayValue
     if (displayValue === undefined) {
       displayValue = GetListDisplayValue(
-        this.controlState.list,
+        field.list,
         field.value,
-        this.controlState.list.listFn(
-          GetRowFromFormState(this.controlState.formState),
+
+        resolvePath(customFunctions, formState.namespace)[
+          field.fieldKey + "GetListFn"
+        ](
+          GetRowFromFormState(formState),
           this.state,
           this.actions,
           overmind.effects
@@ -468,13 +513,13 @@ export class OvlListControl extends OvlBaseElement {
         <button
           tabindex="-9999"
           id="delete${field.id}"
-          @click=${e => this.handleDelete(e)}
+          @click=${(e) => this.handleDelete(e)}
           class="fd-input-group__button fd-button--light sap-icon--decline"
         ></button>
       `
     }
     return html`
-      <div @focusout=${e => this.handleFocusOut(e)}>
+      <div @focusout=${(e) => this.handleFocusOut(e)}>
         ${label}
 
         <div class="fd-input-group ${res.validationType}">
@@ -485,17 +530,17 @@ export class OvlListControl extends OvlBaseElement {
             type="text"
             class="fd-input fd-input-group__input fd-has-type-1"
             id="${field.id}"
-            @change=${e => this.handleChange(e)}
+            @change=${(e) => this.handleChange(e)}
             value="${displayValue}"
-            @keydown=${e => this.handleKeyDown(e)}
+            @keydown=${(e) => this.handleKeyDown(e)}
           />
 
           <div class="fd-button-group" role="group" aria-label="Group label">
             ${deleteButton}
             <button
               id="search${field.id}"
-              @click=${e => this.handleListPopup(e)}
-              @touchend=${e => this.handleListPopup(e)}
+              @click=${(e) => this.handleListPopup(e)}
+              @touchend=${(e) => this.handleListPopup(e)}
               class="fd-input-group__button fd-button--light sap-icon--search"
               +
             ></button>

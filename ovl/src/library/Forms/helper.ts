@@ -1,10 +1,12 @@
 import { FieldValueMap, ValidateFieldResult } from "./actions"
 import { Schema, FormFields } from "./OvlFormElement"
+import { getDateValue } from "../../global/globals"
 
 export const getFormFields = (
   schema: { [key: string]: Schema },
   formFields: { [key: string]: FormFields },
-  instanceId: String
+  instanceId: string,
+  formType: string
 ): FieldValueMap => {
   let fields: FieldValueMap = {}
   Object.keys(formFields).forEach((k) => {
@@ -27,6 +29,9 @@ export const getFormFields = (
       validationResult: { valid: true, validationMsg: "", validations: {} },
       id: instanceId + k,
       list: formFields[k].list,
+      formId: instanceId,
+      formType,
+      fieldKey: k,
     }
   })
   return fields

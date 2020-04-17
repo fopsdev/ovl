@@ -22,6 +22,9 @@ export type Field = {
   watched: boolean
   validationResult: ValidateFieldResult
   id: string
+  formType: string
+  formId: string
+  fieldKey: string
 }
 
 export type FieldValueMap = { [key: string]: Field }
@@ -426,7 +429,8 @@ export const InitForm: Action<InitForm> = (
     let fields: FieldValueMap = getFormFields(
       value.schema,
       value.fields,
-      value.instanceId
+      value.instanceId,
+      value.formType
     )
     formInstanceList[value.instanceId] = {
       dirty: false,

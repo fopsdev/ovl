@@ -204,22 +204,16 @@ export const BeforeSaveRow = async (
   newRow.U_User = state.portal.user.userName
 }
 
-// export const CustomAddRowColumnDefaultsHandler = async (
-//   newRow: TableMobileTimeRecording,
-//   tableDef: TableDataAndDef,
-//   state: typeof overmind.state,
-//   actions: typeof overmind.actions,
-//   effects: typeof overmind.effects
-// ) => {
-//   newRow.U_Type = "PROJECT"
-//   let selectedDate = state.ovl.screens.screens.MobileTimeEntry.selectedDate
-//   if (!selectedDate) {
-//     let dt = new Date()
-//     selectedDate = dt.toISOString()
-//   }
-//   newRow.U_Date = selectedDate.substring(0, 10) + "T00:00:00"
-//   newRow.U_Duration = 0
-// }
+export const CustomAddRowColumnDefaultsHandler = async (
+  newRow: TableMobileTimeRecording,
+  tableDef: TableDataAndDef,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  newRow.U_Type = "PROJECT"
+  newRow.U_Duration = 0
+}
 
 export const MobileTimeRecordingMainChangeField = async (
   value: FieldChanged,

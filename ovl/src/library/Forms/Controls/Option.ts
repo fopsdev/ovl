@@ -5,15 +5,14 @@ import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ListState } from "./ListControl"
 import { GetRowFromFormState } from "./helpers"
-import { overmind } from "../../.."
+import { overmind, customFunctions } from "../../.."
+import { resolvePath } from "../../../global/globals"
 
 export type OptionControlState = {
   field: Field
   label: string
   inline: boolean
   align?: ColumnAlign
-  list: ListState
-  formState: FormState
 }
 
 export class OvlOption extends OvlBaseElement {
@@ -29,7 +28,7 @@ export class OvlOption extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.controlState.field.id }
+      detail: { id: this.controlState.field.id },
     })
     document.getElementById(id).dispatchEvent(event)
   }
@@ -44,16 +43,19 @@ export class OvlOption extends OvlBaseElement {
       detail: {
         //@ts-ignore
         val: value,
-        id: this.controlState.field.id
-      }
+        id: this.controlState.field.id,
+      },
     })
     document.getElementById(id).dispatchEvent(event)
   }
   getUI() {
     let field = this.controlState.field
-    let list = this.controlState.list
-    let listData = list.listFn(
-      GetRowFromFormState(this.controlState.formState),
+    let formState = this.state.ovl.forms[field.formType][field.formId]
+    let list = this.controlState.field.list
+    let listData = resolvePath(customFunctions, formState.namespace)[
+      field.fieldKey + "GetListFn"
+    ](
+      GetRowFromFormState(formState),
       this.state,
       this.actions,
       overmind.effects
@@ -84,18 +86,18 @@ export class OvlOption extends OvlBaseElement {
     return html`
       ${label}
       <div class="fd-form-group ${inline}">
-        ${Object.keys(listData).map(rowKey => {
+        ${Object.keys(listData).map((rowKey) => {
           return html`
             <div class="fd-form-group__item fd-form-item">
               <input
-                @click=${e => e.stopPropagation()}
-                @change=${e =>
+                @click=${(e) => e.stopPropagation()}
+                @change=${(e) =>
                   this.handleChange(
                     e,
                     listData[rowKey][list.valueField],
                     field.id + rowKey
                   )}
-                @focusout=${e =>
+                @focusout=${(e) =>
                   this.handleFocusOut(
                     e,
 
@@ -106,7 +108,7 @@ export class OvlOption extends OvlBaseElement {
                 id="${field.id + rowKey}"
                 name="${list.valueField}"
                 ?checked=${field.convertedValue ===
-                  listData[rowKey][list.valueField]}
+                listData[rowKey][list.valueField]}
               />
               <label class="fd-radio__label" for="${field.id + rowKey}">
                 ${listData[rowKey][list.displayField]}

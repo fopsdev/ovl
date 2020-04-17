@@ -173,4 +173,10 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
       </div>
     `
   }
+  afterRender() {
+    if (!this.focusInit) {
+      document.getElementById("mobiletimerecording1U_TypePrj").focus()
+      this.focusInit = true
+    }
+  }
 }

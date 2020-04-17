@@ -17,13 +17,13 @@ export const ScreenRefresh = async (
     forceServerDataRefresh: true,
   })
 }
-let initialised = false
+
 export const NavigateIn = async (
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ) => {
-  if (!initialised) {
+
     let dt = new Date()
     let convDate = dt.toISOString().substring(0, 10) + "T00:00:00"
     let fields: { [key: string]: FormFields } = {
@@ -38,7 +38,8 @@ export const NavigateIn = async (
       namespace: "testtables.mobiletimerecording",
       instanceId: mainFormInstanceId,
       formType: "MobileTimeEntryMain",
-      fields,
+      fields
+      
     }
     actions.ovl.form.InitForm(initForm)
     await actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
@@ -47,7 +48,7 @@ export const NavigateIn = async (
       }
     )
   }
-  initialised = true
+  
 }
 
 export const NavigateOut = async (
