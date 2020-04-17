@@ -46,6 +46,7 @@ export class OvlDate extends OvlBaseElement {
       },
     })
     this.inputElement.dispatchEvent(event)
+    document.getElementById("select" + this.controlState.field.id).value = null
   }
 
   handleChange(e: Event) {
@@ -109,11 +110,10 @@ export class OvlDate extends OvlBaseElement {
         <input
           tabindex="9999"
           class="fd-input ${res.validationType} fd-has-type-1"
-          style="padding-right:0px;margin-right:0px;margin-left:-22px; z-index:0"
+          style="padding-right:0px;margin-right:2px;margin-left:-28px; z-index:0"
           autocomplete="off"
           type="date"
           id="select${field.id}"
-          value=""
         />
       </div>
       <span class="fd-form-message ${res.validationHide}">

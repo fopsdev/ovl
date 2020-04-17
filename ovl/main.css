@@ -40,24 +40,17 @@
 #############################################################
 */
 
-/* date input on chrome */
-input[type="date"]:hover::-webkit-calendar-picker-indicator {
-  color: red;
+[type="date"] {
+  background: #fff
+    url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)
+    97% 50% no-repeat;
 }
-input[type="date"]::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* clears the 'X' from Chrome */
-input[type="date"]::-webkit-search-decoration,
-input[type="date"]::-webkit-search-cancel-button,
-input[type="date"]::-webkit-search-results-button,
-input[type="date"]::-webkit-search-results-decoration {
+[type="date"]::-webkit-inner-spin-button {
   display: none;
 }
-
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
 .menuDisabled {
   pointer-events: none;
   opacity: 0.6;
