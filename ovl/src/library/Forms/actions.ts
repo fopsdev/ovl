@@ -22,7 +22,6 @@ export type Field = {
   watched: boolean
   validationResult: ValidateFieldResult
   id: string
-  datafield: string
 }
 
 export type FieldValueMap = { [key: string]: Field }

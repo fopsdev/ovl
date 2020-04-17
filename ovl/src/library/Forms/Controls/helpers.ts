@@ -6,7 +6,7 @@ import { customFunctions } from "../../../index"
 import {
   resolvePath,
   getDateValue,
-  getDecimalValue
+  getDecimalValue,
 } from "../../../global/globals"
 
 export type LookupListPostData = {
@@ -37,12 +37,12 @@ export const KeyValueListFromServerFn = async (
     lang: state.ovl.language.language,
     filterValue,
     lookupType: list.serverEndpoint,
-    paramList: {}
+    paramList: {},
   }
   if (!postData.paramList) {
     postData.paramList = {}
   }
-  Object.keys(paramList).forEach(k => {
+  Object.keys(paramList).forEach((k) => {
     if (!postData.paramList[k]) {
       postData.paramList[k] = paramList[k]
     }
@@ -57,7 +57,7 @@ export const KeyValueListFromServerFn = async (
     lang: postData.lang,
     filterValue: postData.filterValue,
     lookupType: postData.lookupType,
-    paramList: postData.paramList
+    paramList: postData.paramList,
   })
   // now sync the result with the local state
   if (res.data && res.data.data) {
@@ -66,11 +66,11 @@ export const KeyValueListFromServerFn = async (
     }
     let localListState = listData.data
     let serverData = res.data.data
-    Object.keys(serverData).forEach(k => {
+    Object.keys(serverData).forEach((k) => {
       if (!localListState[k]) {
         localListState[k] = {}
       }
-      Object.keys(serverData[k]).forEach(c => {
+      Object.keys(serverData[k]).forEach((c) => {
         localListState[k][c] = serverData[k][c]
       })
     })
@@ -122,12 +122,12 @@ export const FilterHitList = (
     if (filterValue === null) {
       filterValue = ""
     }
-    res = res.filter(f => {
+    res = res.filter((f) => {
       if (filterValue === "") {
         return true
       }
       let checkRow = dataList.data[f]
-      return Object.keys(lookupTypes).some(c => {
+      return Object.keys(lookupTypes).some((c) => {
         let checkVal = checkRow[c]
         let typ = lookupTypes[c]
         if (typ === "date") {
@@ -139,10 +139,8 @@ export const FilterHitList = (
           checkVal = ""
         }
         if (
-          checkVal
-            .toString()
-            .toLowerCase()
-            .indexOf(filterValue.toLowerCase()) > -1
+          checkVal.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >
+          -1
         ) {
           hitLength[f] = checkRow[c].length - filterValue.length
           return true
@@ -181,11 +179,7 @@ export const GetListDisplayValue = (
 export const GetRowFromFormState = (formState: FormState) => {
   let fields = formState.fields
   return Object.keys(fields).reduce((val, k) => {
-    let rowKey = fields[k].datafield
-    if (!rowKey) {
-      rowKey = k
-    }
-    val[rowKey] = fields[k].convertedValue
+    val[k] = fields[k].convertedValue
     return val
   }, {})
 }

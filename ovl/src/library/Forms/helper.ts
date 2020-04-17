@@ -7,7 +7,7 @@ export const getFormFields = (
   instanceId: String
 ): FieldValueMap => {
   let fields: FieldValueMap = {}
-  Object.keys(formFields).forEach(k => {
+  Object.keys(formFields).forEach((k) => {
     let type = formFields[k].type
     if (!type) {
       if (schema && schema[k]) {
@@ -27,7 +27,6 @@ export const getFormFields = (
       validationResult: { valid: true, validationMsg: "", validations: {} },
       id: instanceId + k,
       list: formFields[k].list,
-      datafield: formFields[k].datafield
     }
   })
   return fields
