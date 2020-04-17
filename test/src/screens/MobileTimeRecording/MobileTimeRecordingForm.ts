@@ -12,11 +12,10 @@ export type MobileTimeEntryFormState = {
 }
 
 export class CompMobileTimeEntryForm extends OvlFormElement {
-  focusInit: boolean
   init() {
     this.formType = "MobileTimeEntry"
     this.screen = "MobileTimeEntryForm"
-    this.focusInit = false
+
     super.init()
   }
   async handleSave(e) {
@@ -172,11 +171,5 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         </div>
       </div>
     `
-  }
-  afterRender() {
-    if (!this.focusInit) {
-      document.getElementById("mobiletimerecording1U_TypePrj").focus()
-      this.focusInit = true
-    }
   }
 }

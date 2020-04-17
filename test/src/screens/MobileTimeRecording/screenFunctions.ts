@@ -4,6 +4,17 @@ import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
 import { getDateValue } from "../../../../ovl/src/global/globals"
 
+/* this is for the mobiletimeentryform screen */
+export const ScreenShow = async (
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  //@ts-ignore
+  document.querySelector('[id$="U_TypePrj"]').focus()
+}
+
+/* main form functions */
 export const ScreenRefresh = async (
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -23,32 +34,26 @@ export const NavigateIn = async (
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ) => {
-
-    let dt = new Date()
-    let convDate = dt.toISOString().substring(0, 10) + "T00:00:00"
-    let fields: { [key: string]: FormFields } = {
-      date: {
-        value: getDateValue(convDate),
-        type: "date",
-      },
-    }
-    let mainFormInstanceId = "mobiletimerecordingmain1"
-    let initForm: InitForm = {
-      changedFnName: "MobileTimeRecordingMainChangeField",
-      namespace: "testtables.mobiletimerecording",
-      instanceId: mainFormInstanceId,
-      formType: "MobileTimeEntryMain",
-      fields
-      
-    }
-    actions.ovl.form.InitForm(initForm)
-    await actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
-      {
-        selected: convDate,
-      }
-    )
+  let dt = new Date()
+  let convDate = dt.toISOString().substring(0, 10) + "T00:00:00"
+  let fields: { [key: string]: FormFields } = {
+    date: {
+      value: getDateValue(convDate),
+      type: "date",
+    },
   }
-  
+  let mainFormInstanceId = "mobiletimerecordingmain1"
+  let initForm: InitForm = {
+    changedFnName: "MobileTimeRecordingMainChangeField",
+    namespace: "testtables.mobiletimerecording",
+    instanceId: mainFormInstanceId,
+    formType: "MobileTimeEntryMain",
+    fields,
+  }
+  actions.ovl.form.InitForm(initForm)
+  await actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate({
+    selected: convDate,
+  })
 }
 
 export const NavigateOut = async (

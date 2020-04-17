@@ -9,7 +9,13 @@ export let portal = { settings, system: { user, translations } }
 
 // screenFunctions
 
-import * as MobileTimeEntry from "./screens/MobileTimeRecording/screenFunctions"
+import {
+  NavigateIn,
+  NavigateOut,
+  ScreenRefresh,
+} from "./screens/MobileTimeRecording/screenFunctions"
+import { ScreenShow } from "./screens/MobileTimeRecording/screenFunctions"
+
 import * as Translation from "./screens/Translation/screenFunctions"
 import * as Audit from "./screens/Audit/screenFunctions"
 import * as TableTesting from "./screens/TableTesting/screenFunctions"
@@ -21,8 +27,9 @@ let screens: { [key in Screen]?: any } = {
   Translation,
   Audit,
   TableTesting,
-  MobileTimeEntry,
+  MobileTimeEntry: { NavigateIn, NavigateOut, ScreenRefresh },
+  MobileTimeEntryForm: { ScreenShow },
   Settings,
-  Feedback
+  Feedback,
 }
 export { screens }

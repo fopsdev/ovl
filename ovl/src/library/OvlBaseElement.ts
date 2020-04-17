@@ -1,4 +1,4 @@
-import { overmind, Screen, FormType } from "../index"
+import { overmind, Screen, FormType, customFunctions } from "../index"
 
 import { EventType } from "overmind"
 import { render, TemplateResult } from "lit-html"
@@ -83,9 +83,25 @@ export class OvlBaseElement extends HTMLElement {
     // use it eg. for dom manips after rendering ...
   }
 
-  handleAnimationEnd = e => {
+  handleAnimationEnd = (e) => {
     if (e.animationName === "fadeOut") {
       this.actions.ovl.internal.SetVisibleFalse(this.screen)
+      // if there is a screen show function call it
+      if (customFunctions) {
+        let screensFunctions = customFunctions["screens"]
+        if (screensFunctions) {
+          let screen = this.state.ovl.screens.nav.currentScreen
+          if (screensFunctions[screen]) {
+            if (screensFunctions[screen]["ScreenShow"]) {
+              screensFunctions[screen]["ScreenShow"](
+                this.state,
+                this.actions,
+                overmind.effects
+              )
+            }
+          }
+        }
+      }
     }
   }
 
@@ -166,7 +182,7 @@ export class OvlBaseElement extends HTMLElement {
       componentId: this.name,
       componentInstanceId: this._id,
       name: this.name,
-      paths: Array.from(this.trackedTree.pathDependencies) as any
+      paths: Array.from(this.trackedTree.pathDependencies) as any,
     }
     if (this._flushId) {
       eventObj.flushId = this._flushId
@@ -221,7 +237,7 @@ export class OvlBaseElement extends HTMLElement {
     overmind.eventHub.emitAsync(EventType.COMPONENT_REMOVE, {
       componentId: this.name,
       componentInstanceId: this._id,
-      name: this.name
+      name: this.name,
     })
     this.trackedTree.dispose()
   }
