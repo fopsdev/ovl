@@ -12,6 +12,7 @@ export class TableRowForm extends OvlFormElement {
   props: any
   rowData: EditRowDef
   focusInit: boolean
+
   init() {
     this.focusInit = false
     this.rowData = this.props()
@@ -29,8 +30,10 @@ export class TableRowForm extends OvlFormElement {
     } else {
       this.setFocus()
     }
-  }
 
+    // if there is a custom afterrender
+    super.afterRender()
+  }
   setFocus() {
     if (!this.focusInit) {
       this.focusInit = true

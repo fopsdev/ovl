@@ -1,7 +1,8 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { FormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
-import { FormType } from "../.."
+import { FormType, customFunctions, overmind } from "../.."
+import { resolvePath } from "../../global/globals"
 
 export type FieldFormat =
   | "2digits"
@@ -36,17 +37,18 @@ export class OvlFormElement extends OvlBaseElement {
   validationFnName: string
   changedFnName: string
   formState: FormState
-  handleOvlFocusOut = async e => {
+  formAfterRenderFn: any
+  handleOvlFocusOut = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
       this.actions.ovl.internal.TouchField({
         formState: this.formState,
-        fieldId: id
+        fieldId: id,
       })
     }
   }
 
-  handleOvlChange = async e => {
+  handleOvlChange = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
       // change the field in state
@@ -54,7 +56,7 @@ export class OvlFormElement extends OvlBaseElement {
         fieldId: id,
         formState: this.formState,
         value: e.detail.val,
-        isInit: false
+        isInit: false,
       })
     }
   }
@@ -98,9 +100,42 @@ export class OvlFormElement extends OvlBaseElement {
     super.doRender()
   }
 
+  afterRender() {
+    if (this.formState) {
+      if (this.formAfterRenderFn !== -1) {
+        if (this.formAfterRenderFn) {
+          this.callFormAfterRender()
+        } else {
+          if (customFunctions) {
+            let formFunctions = resolvePath(
+              customFunctions,
+              this.formState.namespace
+            )
+            if (formFunctions) {
+              if (formFunctions["FormAfterRender"]) {
+                this.formAfterRenderFn = formFunctions["FormAfterRender"]
+                this.callFormAfterRender()
+                return
+              }
+            }
+          }
+          this.formAfterRenderFn = -1
+        }
+      }
+    }
+  }
   disconnectedCallback() {
     super.disconnectedCallback()
     this.removeEventListener("ovlchange", this.handleOvlChange)
     this.removeEventListener("ovlfocusout", this.handleOvlFocusOut)
+  }
+
+  callFormAfterRender() {
+    this.formAfterRenderFn(
+      this.formState,
+      this.state,
+      this.actions,
+      overmind.effects
+    )
   }
 }

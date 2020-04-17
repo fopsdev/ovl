@@ -8,7 +8,7 @@ import {
   TableDef,
   TableData,
   ListFnReturnValue,
-  RowStatus
+  RowStatus,
 } from "../../../../ovl/src/library/Table/Table"
 import { getTextSort } from "../../../../ovl/src/library/Table/helpers"
 import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
@@ -16,10 +16,23 @@ import {
   FormState,
   ValidateField,
   FieldChanged,
-  ChangeField
+  ChangeField,
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
+
+export const FormAfterRender = async (
+  formState: FormState,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  console.log(
+    "hello from tableditformafterrender hook. setting focus to item group"
+  )
+  //@ts-ignore
+  document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()
+}
 
 export const CustomAddRowColumnDefaultsHandler = async (
   newRow: TableTesting,
@@ -59,7 +72,7 @@ export const RowChanged = async (
             let cf: ChangeField = {
               fieldId: "U_ItemCode",
               formState: value.formState,
-              value: ""
+              value: "",
             }
             actions.ovl.internal.SetField(cf)
           }
@@ -71,7 +84,7 @@ export const RowChanged = async (
         let cf: ChangeField = {
           fieldId: "U_Memo",
           formState: value.formState,
-          value: "Ebenfalls Fops"
+          value: "Ebenfalls Fops",
         }
         actions.ovl.internal.SetField(cf)
       }
@@ -104,12 +117,12 @@ export const GetRowStatus = async (
   if (row.U_Alpha.toLowerCase().indexOf("test") > -1) {
     res = {
       status: "warning",
-      msg: 'Text enthält "Test"'
+      msg: 'Text enthält "Test"',
     }
   } else if (row.U_Alpha.toLowerCase().indexOf("fehler") > -1) {
     res = {
       status: "error",
-      msg: 'Text enthält "Fehler"'
+      msg: 'Text enthält "Fehler"',
     }
   }
   return Promise.resolve(res)
@@ -301,7 +314,7 @@ export const U_ParentCode2GetListFn = (
 ): ListFnReturnValue => {
   return {
     data: state.testtables.tableTesting.data,
-    lookupTypes: state.testtables.tableTesting.lookupTypes2
+    lookupTypes: state.testtables.tableTesting.lookupTypes2,
   }
 }
 
@@ -312,7 +325,7 @@ export const U_ItemCodeGetFilteredListFn = (
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): string[] => {
-  return Object.keys(list.data).filter(f => {
+  return Object.keys(list.data).filter((f) => {
     return (
       !formState.fields.U_ItmsGrpCod.convertedValue ||
       list.data[f]["ItmsGrpCod"] ===

@@ -315,7 +315,6 @@ export class OvlListControl extends OvlBaseElement {
           singleValue = val
         }
         if (singleValue) {
-          debugger
           let fields = formState.fields
           let foundId
           Object.keys(fields).some((f) => {
@@ -577,9 +576,11 @@ export class OvlListControl extends OvlBaseElement {
         this.deleteElement.classList.remove("hide")
       }
     }
-    this.inputElement.value = this.lastDisplayValue
-    if (this.state.ovl.uiState.isMobile && this.localList) {
-      this.inputElement.scrollIntoView(true)
+    if (this.inputElement) {
+      this.inputElement.value = this.lastDisplayValue
+      if (this.state.ovl.uiState.isMobile && this.localList) {
+        this.inputElement.scrollIntoView(true)
+      }
     }
   }
   setValues(val: string, dispVal: string) {
