@@ -81,20 +81,22 @@ export class OvlDate extends OvlBaseElement {
       type = "date"
     }
     return html`
-      ${label}
-      <input
-        @focusout=${(e) => this.handleFocusOut(e)}
-        @keydown=${(e) => this.handleKeyDown(e)}
-        style="${align}"
-        autocomplete="off"
-        class="fd-input ${res.validationType} fd-has-type-1"
-        type="${type}"
-        id="${field.id}"
-      />
+      <div>
+        ${label}
+        <input
+          @focusout=${(e) => this.handleFocusOut(e)}
+          @keydown=${(e) => this.handleKeyDown(e)}
+          style="${align}"
+          autocomplete="off"
+          class="fd-input ${res.validationType} fd-has-type-1"
+          type="${type}"
+          id="${field.id}"
+        />
 
-      <span class="fd-form-message ${res.validationHide}">
-        ${field.validationResult.validationMsg}
-      </span>
+        <span class="fd-form-message ${res.validationHide}">
+          ${field.validationResult.validationMsg}
+        </span>
+      </div>
     `
   }
   afterRender() {

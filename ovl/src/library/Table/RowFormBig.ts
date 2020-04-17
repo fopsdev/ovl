@@ -87,7 +87,7 @@ export class TableRowFormBig extends OvlFormElement {
 
     const handleMainClick = (e: Event) => {
       e.stopPropagation()
-      e.preventDefault()
+      //e.preventDefault()
     }
 
     const handleMainMouseDown = (e: Event) => {
