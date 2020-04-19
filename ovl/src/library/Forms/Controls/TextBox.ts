@@ -25,7 +25,7 @@ export class OvlTextbox extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.controlState.field.id }
+      detail: { id: this.controlState.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -35,7 +35,7 @@ export class OvlTextbox extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
-      detail: { val: this.inputElement.value, id: this.controlState.field.id }
+      detail: { val: this.inputElement.value, id: this.controlState.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -44,7 +44,10 @@ export class OvlTextbox extends OvlBaseElement {
     if (e.key === "Enter") {
       let event = new CustomEvent("ovlchange", {
         bubbles: true,
-        detail: { val: this.inputElement.value, id: this.controlState.field.id }
+        detail: {
+          val: this.inputElement.value,
+          id: this.controlState.field.id,
+        },
       })
       this.inputElement.dispatchEvent(event)
     }
@@ -52,6 +55,12 @@ export class OvlTextbox extends OvlBaseElement {
 
   getUI() {
     let field = this.controlState.field
+    let inputMode: any = "text"
+    if (field.type === "decimal") {
+      inputMode = "decimal"
+    } else if (field.type === "int") {
+      inputMode = "numeric"
+    }
 
     let res = getUIValidationObject(field)
     let style = ""
@@ -79,11 +88,12 @@ export class OvlTextbox extends OvlBaseElement {
     return html`
       ${label}
       <input
-        @change=${e => this.handleChange(e)}
-        @focusout=${e => this.handleFocusOut(e)}
-        @keydown=${e => this.handleKeyDown(e)}
+        @change=${(e) => this.handleChange(e)}
+        @focusout=${(e) => this.handleFocusOut(e)}
+        @keydown=${(e) => this.handleKeyDown(e)}
         style="${style} ${align}"
         autocomplete="off"
+        inputmode="${inputMode}"
         class="fd-input ${res.validationType} fd-has-type-1"
         type="${type}"
         id="${field.id}"
