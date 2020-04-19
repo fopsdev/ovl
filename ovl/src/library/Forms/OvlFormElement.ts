@@ -1,7 +1,7 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { FormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
-import { FormType, customFunctions, overmind } from "../.."
+import { FormType, customFunctions, overmind, Screen } from "../.."
 import { resolvePath } from "../../global/globals"
 
 export type FieldFormat =
@@ -38,6 +38,8 @@ export class OvlFormElement extends OvlBaseElement {
   changedFnName: string
   formState: FormState
   formAfterRenderFn: any
+  formShowFn: any
+  lastScreen: Screen
   handleOvlFocusOut = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
@@ -101,6 +103,16 @@ export class OvlFormElement extends OvlBaseElement {
   }
 
   afterRender() {
+    this.handleAfterRenderCustomHook()
+    this.handleFormShowCustomHook()
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    this.removeEventListener("ovlchange", this.handleOvlChange)
+    this.removeEventListener("ovlfocusout", this.handleOvlFocusOut)
+  }
+
+  handleAfterRenderCustomHook() {
     if (this.formState) {
       if (this.formAfterRenderFn !== -1) {
         if (this.formAfterRenderFn) {
@@ -124,10 +136,35 @@ export class OvlFormElement extends OvlBaseElement {
       }
     }
   }
-  disconnectedCallback() {
-    super.disconnectedCallback()
-    this.removeEventListener("ovlchange", this.handleOvlChange)
-    this.removeEventListener("ovlfocusout", this.handleOvlFocusOut)
+
+  handleFormShowCustomHook() {
+    if (this.formState) {
+      if (this.state.ovl.screens.nav.currentScreen !== this.lastScreen) {
+        this.lastScreen = this.state.ovl.screens.nav.currentScreen
+        // call form Show hook
+
+        if (this.formShowFn !== -1) {
+          if (this.formShowFn) {
+            this.callFormShow()
+          } else {
+            if (customFunctions) {
+              let formFunctions = resolvePath(
+                customFunctions,
+                this.formState.namespace
+              )
+              if (formFunctions) {
+                if (formFunctions["FormShow"]) {
+                  this.formShowFn = formFunctions["FormShow"]
+                  this.callFormShow()
+                  return
+                }
+              }
+            }
+            this.formShowFn = -1
+          }
+        }
+      }
+    }
   }
 
   callFormAfterRender() {
@@ -137,5 +174,8 @@ export class OvlFormElement extends OvlBaseElement {
       this.actions,
       overmind.effects
     )
+  }
+  callFormShow() {
+    this.formShowFn(this.formState, this.state, this.actions, overmind.effects)
   }
 }

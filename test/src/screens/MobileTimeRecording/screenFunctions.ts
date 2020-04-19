@@ -10,8 +10,7 @@ export const ScreenShow = async (
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ) => {
-  //@ts-ignore
-  document.querySelector('[id$="U_TypePrj"]').focus()
+  console.log("hello from ScreenShow")
 }
 
 /* main form functions */

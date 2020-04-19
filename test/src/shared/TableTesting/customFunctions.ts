@@ -21,6 +21,17 @@ import {
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
 
+export const FormShow = async (
+  formState: FormState,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  console.log("hello from formshow hook. setting focus to item group")
+  //@ts-ignore
+  document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()
+}
+
 export const FormAfterRender = async (
   formState: FormState,
   state: typeof overmind.state,
@@ -28,7 +39,7 @@ export const FormAfterRender = async (
   effects: typeof overmind.effects
 ) => {
   console.log(
-    "hello from tableditformafterrender hook. setting focus to item group"
+    "hello from tabletesting formafterrender hook. setting focus to item group"
   )
   //@ts-ignore
   document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()

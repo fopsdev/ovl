@@ -1,8 +1,29 @@
-import { ValidateField } from "../../../../ovl/src/library/forms/actions"
+import {
+  ValidateField,
+  FormState,
+} from "../../../../ovl/src/library/forms/actions"
 import { TableDef, TableData } from "../../../../ovl/src/library/Table/Table"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { overmind } from "../.."
 import { TblTranslationColumn } from "./state"
+
+export const FormShow = async (
+  formState: FormState,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  console.log("hello from translation formshow hook")
+}
+
+export const FormAfterRender = async (
+  formState: FormState,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  console.log("hello from  translation formafterrender hook.")
+}
 
 export const RowValidate = async (
   value: ValidateField,
@@ -34,7 +55,7 @@ export const CustomSaveRowAfterSaveHandler = async (
     key,
     def,
     data,
-    res
+    res,
   }: { key: string; def: TableDef; data: TableData; res: any },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -48,7 +69,7 @@ export const CustomDeleteRowAfterDeleteHandler = async (
     key,
     def,
     data,
-    res
+    res,
   }: { key: string; def: TableDef; data: TableData; res: any },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
