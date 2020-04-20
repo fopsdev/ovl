@@ -39,7 +39,7 @@ export class OvlFormElement extends OvlBaseElement {
   formState: FormState
   formAfterRenderFn: any
   formShowFn: any
-  lastScreen: Screen
+  formShowed: boolean
   handleOvlFocusOut = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
@@ -139,8 +139,8 @@ export class OvlFormElement extends OvlBaseElement {
 
   handleFormShowCustomHook() {
     if (this.formState) {
-      if (this.state.ovl.screens.nav.currentScreen !== this.lastScreen) {
-        this.lastScreen = this.state.ovl.screens.nav.currentScreen
+      if (!this.formShowed) {
+        this.formShowed = true
         // call form Show hook
 
         if (this.formShowFn !== -1) {
@@ -163,6 +163,13 @@ export class OvlFormElement extends OvlBaseElement {
             this.formShowFn = -1
           }
         }
+      } else {
+        if (
+          this.state.ovl.screens.nav.currentScreen !==
+          this.state.ovl.screens.nav.nextScreen
+        ) {
+          this.formShowed = false
+        }
       }
     }
   }
@@ -176,6 +183,13 @@ export class OvlFormElement extends OvlBaseElement {
     )
   }
   callFormShow() {
-    this.formShowFn(this.formState, this.state, this.actions, overmind.effects)
+    setTimeout(() => {
+      this.formShowFn(
+        this.formState,
+        this.state,
+        this.actions,
+        overmind.effects
+      )
+    }, 200)
   }
 }

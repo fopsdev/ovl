@@ -57,6 +57,7 @@ export type FormState = {
   changedFnName: string
   namespace: string
   schema: { [key: string]: Schema }
+  lastTouchedField: string
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
@@ -443,6 +444,7 @@ export const InitForm: Action<InitForm> = (
       changedFnName: value.changedFnName,
       namespace: value.namespace,
       schema: value.schema,
+      lastTouchedField: "",
     }
     let formState = formInstanceList[value.instanceId]
 
@@ -552,6 +554,7 @@ export type TouchField = {
 
 export const TouchField: Action<TouchField> = (_, value) => {
   value.formState.fields[value.fieldId].watched = true
+  value.formState.lastTouchedField = value.fieldId
 }
 
 export const SetField: Action<ChangeField> = ({ actions }, value) => {

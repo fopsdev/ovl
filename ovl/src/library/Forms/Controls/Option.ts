@@ -88,7 +88,11 @@ export class OvlOption extends OvlBaseElement {
       <div class="fd-form-group ${inline}">
         ${Object.keys(listData).map((rowKey) => {
           return html`
-            <div class="fd-form-group__item fd-form-item">
+            <div
+              class="fd-form-group__item fd-form-item"
+              id="${this.controlState.field.id}"
+              tabindex="0"
+            >
               <input
                 @click=${(e) => e.stopPropagation()}
                 @change=${(e) =>

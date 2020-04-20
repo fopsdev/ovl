@@ -1,7 +1,7 @@
 import { overmind, Screen, FormType, customFunctions } from "../index"
 
 import { EventType } from "overmind"
-import { render, TemplateResult } from "lit-html"
+import { render, TemplateResult, nothing } from "lit-html"
 import { ITrackStateTree } from "proxy-state-tree"
 
 type ScreensHistory = Screen[]
@@ -147,6 +147,8 @@ export class OvlBaseElement extends HTMLElement {
       }
     }
     if (res !== undefined) {
+      console.log(this.tagName)
+      console.log(res)
       render(res, this)
     }
     this.setUI()

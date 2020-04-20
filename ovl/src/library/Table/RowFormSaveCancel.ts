@@ -24,7 +24,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
           key: this.rowData.key,
           def: this.rowData.tableDef,
           data: this.rowData.data,
-          formState: this.formState
+          formState: this.formState,
         })
       }
     }
@@ -35,13 +35,14 @@ export class TableRowSaveCancel extends OvlBaseElement {
         if (this.formState.dirty) {
           this.actions.ovl.dialog.OkCancelDialog({
             text: T("AppCancelForm"),
-            default: 1
+            default: 1,
           })
           if ((await DialogResult()) === 2) {
             cancel = false
-          } else {
-            dialogAfterClose.elementToFocus = undefined
           }
+          // } else {
+          //   dialogAfterClose.elementToFocus = undefined
+          // }
         }
         let isAdd = this.rowData.key.indexOf(ovltemp) > -1
         if (cancel || isAdd) {
@@ -49,14 +50,14 @@ export class TableRowSaveCancel extends OvlBaseElement {
             this.actions.ovl.internal.TableDeleteRowFromData({
               key: this.rowData.key,
               def: this.rowData.tableDef,
-              data: this.rowData.data
+              data: this.rowData.data,
             })
           }
           this.actions.ovl.form.ResetForm(this.formState)
           this.actions.ovl.table.TableEditClose({
             key: this.rowData.key,
             tableDef: this.rowData.tableDef,
-            data: this.rowData.data
+            data: this.rowData.data,
           })
         }
       }

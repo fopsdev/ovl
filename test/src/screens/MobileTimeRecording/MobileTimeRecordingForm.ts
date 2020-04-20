@@ -48,6 +48,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
     }
   }
   getUI() {
+    console.log("rendertimeform")
     let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
     let typeField = this.formState.fields["U_Type"]
     let typeIdField = this.formState.fields["U_TypeId"]
@@ -72,7 +73,6 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         </div>
         <div class="fd-panel__body">
           <ovl-option
-            id="${typeField.id}"
             class="fd-form__item "
             .props="${() => {
               let col = def.columns["U_Type"]

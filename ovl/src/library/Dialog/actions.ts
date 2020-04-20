@@ -1,7 +1,12 @@
 import { Action, AsyncAction } from "overmind"
 import { OpenDialogState, ResultType } from "./Dialog"
+import { Screen } from "../../index"
 
-export let dialogAfterClose = { elementToFocus: undefined }
+let currentScreen: Screen = undefined
+export let dialogAfterClose = {
+  elementToFocus: undefined,
+  currentScreen,
+}
 
 export const DialogOpen: AsyncAction<OpenDialogState> = async (
   { state },
@@ -12,6 +17,7 @@ export const DialogOpen: AsyncAction<OpenDialogState> = async (
     state.ovl.libState.dialog = {}
   }
   dialogAfterClose.elementToFocus = document.activeElement
+  dialogAfterClose.currentScreen = state.ovl.screens.nav.currentScreen
   state.ovl.libState.dialog.default = value.default
   if (value.cancel !== "NoButton") {
     state.ovl.libState.dialog.cancelText =
@@ -48,7 +54,7 @@ export const OkCancelDialog: AsyncAction<OkCancelDialog> = async (
     cancel: "AppCancel",
     ok: "AppOk",
     text: value.text,
-    default: value.default
+    default: value.default,
   })
 
 export const OkDialog: AsyncAction<{ text: string }> = async (
@@ -59,6 +65,6 @@ export const OkDialog: AsyncAction<{ text: string }> = async (
     cancel: "NoButton",
     ok: "AppOk",
     text: value.text,
-    default: 1
+    default: 1,
   })
 }

@@ -21,6 +21,21 @@ import {
   ValidationRemoveError,
 } from "../../../../ovl/src/library/Forms/helper"
 
+export const FormShow = async (
+  formState: FormState,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  console.log("hello from timeentry formshow hook")
+  let lastTouchedField = formState.fields[formState.lastTouchedField]
+  debugger
+  if (lastTouchedField) {
+    let focusEl = document.getElementById(lastTouchedField.id)
+    focusEl.focus()
+  }
+}
+
 export const U_TypeGetListFn = (
   row: { [key: string]: {} },
   state: typeof overmind.state,

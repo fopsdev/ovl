@@ -1,6 +1,6 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { T } from "../../global/globals"
-import { html } from "lit-html"
+import { html, nothing } from "lit-html"
 
 export type DialogChangedParam = {
   dialogState: DialogState
@@ -33,7 +33,7 @@ export class OvlDialog extends OvlBaseElement {
 
   focusSet: boolean
 
-  handleAnimationEnd = e => {
+  handleAnimationEnd = (e) => {
     if (e.animationName === "fadeOut") {
       this.focusSet = false
       this.actions.ovl.internal.DialogClosed()
@@ -43,21 +43,21 @@ export class OvlDialog extends OvlBaseElement {
   handleResult(result: ResultType) {
     this.actions.ovl.internal.DialogChanged({
       dialogState: this.state.ovl.libState.dialog,
-      result: result
+      result: result,
     })
   }
 
   handleOkClick = () => {
     this.actions.ovl.internal.DialogChanged({
       dialogState: this.state.ovl.libState.dialog,
-      result: 1
+      result: 1,
     })
   }
 
   handleCancelClick = () => {
     this.actions.ovl.internal.DialogChanged({
       dialogState: this.state.ovl.libState.dialog,
-      result: 2
+      result: 2,
     })
   }
 
@@ -164,12 +164,7 @@ export class OvlDialog extends OvlBaseElement {
               </h3>
             </div>
             <div class="fd-modal__body ">
-              ${lines.map(
-                e =>
-                  html`
-                    ${e}<br />
-                  `
-              )}
+              ${lines.map((e) => html` ${e}<br /> `)}
             </div>
             <footer class="fd-modal__footer ">
               <div class="fd-modal__actions">

@@ -1,5 +1,5 @@
 import { Action, AsyncAction } from "overmind"
-import { ResultType } from "./Dialog/Dialog"
+import { ResultType, DialogState } from "./Dialog/Dialog"
 import {
   TableRefresh,
   TableRebuild,
@@ -65,16 +65,6 @@ export type DialogChangedParam = {
   result: ResultType
 }
 
-export type DialogState = {
-  text: string
-  okText: string
-  cancelText: string
-  visible: boolean
-  closing: boolean
-  result: ResultType
-  default: ResultType
-}
-
 export const DialogChanged: Action<DialogChangedParam> = (
   { state, actions },
   value
@@ -102,11 +92,15 @@ export const DialogClosed: AsyncAction = async ({ state }) => {
   state.ovl.libState.dialog.visible = false
   state.ovl.libState.dialog.cancelText = "rerender force workaround"
 
-  if (dialogAfterClose.elementToFocus) {
+  if (
+    dialogAfterClose.elementToFocus &&
+    state.ovl.screens.screenState[dialogAfterClose.currentScreen].visible &&
+    !state.ovl.screens.screenState[dialogAfterClose.currentScreen].closing
+  ) {
     //@ts-ignore
     dialogAfterClose.elementToFocus.focus()
-    dialogAfterClose.elementToFocus = undefined
   }
+  dialogAfterClose.elementToFocus = undefined
 }
 
 let dialogResolver: (value?: any) => void
