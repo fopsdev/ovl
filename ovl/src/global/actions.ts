@@ -7,7 +7,7 @@ import {
   fileStore,
   FileStore,
   fileStoreInfo,
-  stateStore
+  stateStore,
 } from "../offlineStorage"
 import {
   api,
@@ -16,7 +16,7 @@ import {
   saveState,
   ShowFile,
   T,
-  resolvePath
+  resolvePath,
 } from "./globals"
 import { SnackAdd, DialogOkCancel, DialogOk } from "../library/helpers"
 
@@ -26,7 +26,7 @@ function isTouch() {
 
 export function isMobile() {
   var check = false
-  ;(function(a) {
+  ;(function (a) {
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
         a
@@ -50,6 +50,16 @@ export const NavigateTo: AsyncAction<Screen> = async (
     if (fn) {
       let currentScreen = state.ovl.screens.nav.currentScreen
       if (currentScreen) {
+        // get the first scrollable class of the doc
+        let o = state.ovl.screens.screenState[currentScreen]
+        let scrollable = document.querySelector(".scrollable")
+        // and remember the scroll pos
+        if (scrollable && scrollable.scrollTop) {
+          o.lastScrollTop = scrollable.scrollTop
+        } else {
+          o.lastScrollTop = undefined
+        }
+
         if (fn[currentScreen] && fn[currentScreen]["NavigateOut"]) {
           let navErrorMessage = await fn[currentScreen]["NavigateOut"](
             state,
@@ -112,13 +122,21 @@ export const NavigateTo: AsyncAction<Screen> = async (
 export const NavigateBack: AsyncAction = async ({
   state,
   actions,
-  effects
+  effects,
 }) => {
   if (state.ovl.screens.nav.screensHistory.length > 1) {
     let fn = customFunctions["screens"]
     if (fn) {
       let currentScreen = state.ovl.screens.nav.currentScreen
       if (currentScreen) {
+        // get the first scrollable class of the doc
+        let o = state.ovl.screens.screenState[currentScreen]
+
+        let scrollable = document.querySelector(".scrollable")
+        // and remember the scroll pos
+        if (scrollable) {
+          o.lastScrollTop = scrollable.scrollTop
+        }
         if (fn[currentScreen] && fn[currentScreen]["NavigateOut"]) {
           let navErrorMessage = await fn[currentScreen]["NavigateOut"](
             state,
@@ -235,7 +253,7 @@ export const SetLanguage: AsyncAction<string> = async (
 ) => {
   let lang = value
   let res = await effects.postRequest(api.url + "users/translations", {
-    language: lang
+    language: lang,
   })
   ResetT()
   state.ovl.language.translations = res.data.translations
@@ -278,7 +296,7 @@ export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
   if (!screenState[screenToGo]) {
     screenState[screenToGo] = { visible: true, closing: false }
   }
-  Object.keys(screenState).forEach(k => {
+  Object.keys(screenState).forEach((k) => {
     let screen = screenState[k]
     if (k === screenToGo) {
       screen.visible = true
@@ -318,7 +336,7 @@ export const GetFile: AsyncAction<{
     {
       fileName,
       fileType,
-      docNum
+      docNum,
     },
     true
   )
@@ -353,7 +371,7 @@ export const GetFile: AsyncAction<{
 export const RehydrateAndUpdateApp: AsyncAction = async ({
   actions,
   state,
-  effects
+  effects,
 }) => {
   if (OvlConfig._system.OfflineMode) {
     try {
@@ -365,7 +383,7 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         stateStore.clear()
       } else {
         // go through 1st level keys and assign them
-        Object.keys(persistedState).forEach(k => {
+        Object.keys(persistedState).forEach((k) => {
           state[k] = persistedState[k]
         })
         await actions.ovl.internal.PrepareApp()
@@ -394,7 +412,7 @@ export const InitApp: AsyncAction<Init> = async (
   value
 ) => {
   history.pushState(null, null, document.URL)
-  window.addEventListener("popstate", function() {
+  window.addEventListener("popstate", function () {
     overmind.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
@@ -426,7 +444,7 @@ export const InitApp: AsyncAction<Init> = async (
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
   let lang = localStorage.getItem("PortalLanguage")
   let res = await effects.postRequest(api.url + "users/translations", {
-    language: lang
+    language: lang,
   })
 
   if (!res || !res.data) {

@@ -141,8 +141,19 @@ export class OvlFormElement extends OvlBaseElement {
     if (this.formState) {
       if (!this.formShowed) {
         this.formShowed = true
-        // call form Show hook
+        // preserve form control focus
+        debugger
+        let lastTouchedField = this.formState.fields[
+          this.formState.lastTouchedField
+        ]
+        if (lastTouchedField) {
+          let focusEl = document.getElementById(lastTouchedField.id)
+          if (focusEl) {
+            focusEl.focus()
+          }
+        }
 
+        // call form Show hook
         if (this.formShowFn !== -1) {
           if (this.formShowFn) {
             this.callFormShow()

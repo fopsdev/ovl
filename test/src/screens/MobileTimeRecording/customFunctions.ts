@@ -28,12 +28,6 @@ export const FormShow = async (
   effects: typeof overmind.effects
 ) => {
   console.log("hello from timeentry formshow hook")
-  let lastTouchedField = formState.fields[formState.lastTouchedField]
-  debugger
-  if (lastTouchedField) {
-    let focusEl = document.getElementById(lastTouchedField.id)
-    focusEl.focus()
-  }
 }
 
 export const U_TypeGetListFn = (

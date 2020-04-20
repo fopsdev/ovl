@@ -86,11 +86,21 @@ export class OvlBaseElement extends HTMLElement {
   handleAnimationEnd = (e) => {
     if (e.animationName === "fadeOut") {
       this.actions.ovl.internal.SetVisibleFalse(this.screen)
+      let screen = this.state.ovl.screens.nav.nextScreen
+      let lastScrollTop = this.state.ovl.screens.screenState[screen]
+        .lastScrollTop
+      // set scroll to remembered pos
+      setTimeout(() => {
+        let scrollable = document.querySelector(".scrollable")
+        if (!lastScrollTop) {
+          lastScrollTop = 0
+        }
+        scrollable.scrollTop = lastScrollTop
+      }, 5)
       // if there is a screen show function call it
       if (customFunctions) {
         let screensFunctions = customFunctions["screens"]
         if (screensFunctions) {
-          let screen = this.state.ovl.screens.nav.currentScreen
           if (screensFunctions[screen]) {
             if (screensFunctions[screen]["ScreenShow"]) {
               screensFunctions[screen]["ScreenShow"](

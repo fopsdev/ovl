@@ -80,7 +80,8 @@ export type FormsState = { [key in FormType]: FormStatePerInstance }
 export const ResetForm: Action<FormState> = (_, value) => {
   value.dirty = false
   value.fields = JSON.parse(JSON.stringify(value.initFields))
-  value.valid = false
+  value.valid = true
+  value.lastTouchedField = undefined
 }
 
 export const SetFormUndirty: Action<FormState> = (_, value) => {
@@ -444,7 +445,7 @@ export const InitForm: Action<InitForm> = (
       changedFnName: value.changedFnName,
       namespace: value.namespace,
       schema: value.schema,
-      lastTouchedField: "",
+      lastTouchedField: undefined,
     }
     let formState = formInstanceList[value.instanceId]
 

@@ -230,5 +230,4 @@ export class CompMobileTimeEntry extends OvlFormElement {
       </div>
     `
   }
-  afterRender() {}
 }
