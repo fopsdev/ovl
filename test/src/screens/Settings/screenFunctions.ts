@@ -1,6 +1,7 @@
 import { overmind } from "../.."
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
+import { T } from "../../../../ovl/src/global/globals"
 
 export const NavigateIn = async (
   state: typeof overmind.state,
@@ -8,16 +9,28 @@ export const NavigateIn = async (
   effects: typeof overmind.effects
 ) => {
   let fields: { [key: string]: FormFields } = {
-    pw: { value: "" },
-    pw1: { value: "" },
-    pw2: { value: "" }
+    pw: {
+      value: "",
+      ui: { labelTranslationKey: "AppLoginPassword", isPassword: true },
+    },
+    pw1: {
+      value: "",
+      ui: { labelTranslationKey: "AppSettingsPasswordNew", isPassword: true },
+    },
+    pw2: {
+      value: "",
+      ui: {
+        labelTranslationKey: "AppSettingsPasswordNewConfirmation",
+        isPassword: true,
+      },
+    },
   }
   let initForm: InitForm = {
     validationFnName: "SettingsValidateField",
     namespace: "portal.settings",
     instanceId: "settingsform",
     formType: "Settings",
-    fields
+    fields,
   }
   actions.ovl.form.InitForm(initForm)
 }

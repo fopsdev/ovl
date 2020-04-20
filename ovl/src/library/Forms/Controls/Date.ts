@@ -3,11 +3,10 @@ import { ColumnAlign } from "../../Table/Table"
 import { html } from "lit-html"
 import { Field } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { GetLabel } from "./helpers"
 
 export type DateControlState = {
   field: Field
-  label: string
-  align?: ColumnAlign
 }
 
 export class OvlDate extends OvlBaseElement {
@@ -62,19 +61,20 @@ export class OvlDate extends OvlBaseElement {
     let res = getUIValidationObject(field)
 
     let label
-    if (this.controlState.label) {
+    let labelText = GetLabel(field)
+    if (labelText) {
       label = html`
         <label
           class="fd-form-label"
           aria-required="${res.needsAttention}"
           for="${field.id}"
-          >${this.controlState.label}</label
+          >${labelText}</label
         >
       `
     }
     let align = ""
-    if (this.controlState.align) {
-      align = this.controlState.align
+    if (field.ui && field.ui.align) {
+      align = field.ui.align
     }
     let type: "date" | "text" = "text"
     if (this.state.ovl.uiState.isMobile) {
@@ -110,21 +110,6 @@ export class OvlDate extends OvlBaseElement {
     } else {
       this.inputElement.value = this.controlState.field.value
     }
-    // let selectEl = document.getElementById(
-    //   "select" + this.controlState.field.id
-    // )
-    // if (selectEl) {
-    //   debugger
-    //   selectEl.style.zIndex = this.inputElement.style.zIndex - 1
-    //   //   selectEl.style.paddingTop =
-    //   //     "-" +
-    //   //     (
-    //   //       parseInt(this.inputElement.offsetTop) +
-    //   //       parseInt(this.inputElement.offsetHeight)
-    //   //     ).toString() +
-    //   //     "px"
-    //   //   selectEl.style.marginLeft = this.inputElement.offsetLeft - 12 + "px"
-    // }
   }
   disconnectedCallback() {
     if (this.state.ovl.uiState.isMobile) {

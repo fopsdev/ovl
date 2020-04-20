@@ -157,8 +157,6 @@ export class OvlBaseElement extends HTMLElement {
       }
     }
     if (res !== undefined) {
-      console.log(this.tagName)
-      console.log(res)
       render(res, this)
     }
     this.setUI()

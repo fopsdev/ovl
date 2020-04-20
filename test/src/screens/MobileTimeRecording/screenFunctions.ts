@@ -44,7 +44,7 @@ export const NavigateIn = async (
   let mainFormInstanceId = "mobiletimerecordingmain1"
   let initForm: InitForm = {
     changedFnName: "MobileTimeRecordingMainChangeField",
-    namespace: "testtables.mobiletimerecording",
+    namespace: "testtables.mobiletimerecordingmain",
     instanceId: mainFormInstanceId,
     formType: "MobileTimeEntryMain",
     fields,

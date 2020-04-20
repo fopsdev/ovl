@@ -1,10 +1,10 @@
 import { tblTableTesting, tblTableTesting2 } from "./shared/TableTesting/state"
-import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/state"
+import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/state"
 import {
   TableData,
   ListFnReturnValue,
   TableDef,
-  TableDataAndDef
+  TableDataAndDef,
 } from "../../ovl/src/library/Table/Table"
 import { File } from "./components/FileList/FileList"
 import { tblTranslation } from "./screens/Translation/state"
@@ -122,7 +122,7 @@ export type PartnerState = {
 
 let pics: PicsState = {
   salesContact: "",
-  technicalContact: ""
+  technicalContact: "",
 }
 
 type Role = "User" | "Admin"
@@ -184,17 +184,17 @@ export let portal: Portal = {
       data: {},
       schema: {},
       tableDef: {
-        translation: tblTranslation
-      }
+        translation: tblTranslation,
+      },
     },
     audit: {
       data: {},
       schema: {},
       tableDef: {
-        audit: tblAudit
-      }
-    }
-  }
+        audit: tblAudit,
+      },
+    },
+  },
 }
 
 export let testtables = {
@@ -203,32 +203,32 @@ export let testtables = {
     schema: {},
     tableDef: { tab1: tblTableTesting, tab2: tblTableTesting2 },
     lookupTypes: { U_Alpha: "text" },
-    lookupTypes2: { U_Alpha: "text", U_Date: "date" }
+    lookupTypes2: { U_Alpha: "text", U_Date: "date" },
   },
   timeentries: <TableData>{
     data: {},
     schema: {},
     tableDef: {
-      mobiletimerecording1: tblMobileTimeRecording
-    }
+      mobiletimerecording1: tblMobileTimeRecording,
+    },
   },
   lookups: {
     U_ItemCode: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined
+      lookupTypes: undefined,
     },
 
     U_ItmsGrpCod: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined
+      lookupTypes: undefined,
     },
     ProjectTypeId: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined
+      lookupTypes: undefined,
     },
     AbsenceTypeId: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined
-    }
-  }
+      lookupTypes: undefined,
+    },
+  },
 }

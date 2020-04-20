@@ -1,34 +1,36 @@
 // custom Functions (table, forms)
-import * as translations from "./screens/Translation/customFunctions"
+import { Screen } from "../../ovl/src"
+import * as Audit from "./screens/Audit/screenFunctions"
+import * as Feedback from "./screens/Feedback/screenFunctions"
 import * as user from "./screens/Login/customFunctions"
-import * as settings from "./screens/settings/customFunctions"
-import * as tabletesting from "./shared/TableTesting/customFunctions"
-import * as mobiletimerecording from "./screens/MobileTimeRecording/customFunctions"
-export let testtables = { tabletesting, mobiletimerecording }
-export let portal = { settings, system: { user, translations } }
-
+import * as mobiletimerecording from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/customFunctions"
+import * as mobiletimerecordingmain from "./screens/MobileTimeRecording/customFunctions"
 // screenFunctions
-
 import {
   NavigateIn,
   NavigateOut,
   ScreenRefresh,
+  ScreenShow,
 } from "./screens/MobileTimeRecording/screenFunctions"
-import { ScreenShow } from "./screens/MobileTimeRecording/screenFunctions"
-
-import * as Translation from "./screens/Translation/screenFunctions"
-import * as Audit from "./screens/Audit/screenFunctions"
-import * as TableTesting from "./screens/TableTesting/screenFunctions"
+import * as settings from "./screens/settings/customFunctions"
 import * as Settings from "./screens/settings/screenFunctions"
-import * as Feedback from "./screens/Feedback/screenFunctions"
+import * as TableTesting from "./screens/TableTesting/screenFunctions"
+import * as translations from "./screens/Translation/customFunctions"
+import * as Translation from "./screens/Translation/screenFunctions"
+import * as tabletesting from "./shared/TableTesting/customFunctions"
+export let testtables = {
+  tabletesting,
+  mobiletimerecording,
+  mobiletimerecordingmain,
+}
+export let portal = { settings, system: { user, translations } }
 
-import { Screen } from "../../ovl/src"
 let screens: { [key in Screen]?: any } = {
   Translation,
   Audit,
   TableTesting,
-  MobileTimeEntry: { NavigateIn, NavigateOut, ScreenRefresh },
-  MobileTimeEntryForm: { ScreenShow },
+  MobileTimeEntry: { NavigateIn, NavigateOut, ScreenRefresh, ScreenShow },
+  MobileTimeEntryForm: {},
   Settings,
   Feedback,
 }

@@ -5,6 +5,7 @@ import {
   ovltemp,
   uuidv4,
   resolvePath,
+  T,
 } from "../../global/globals"
 import { state } from "../../state"
 import { customFunctions } from "../../index"
@@ -486,6 +487,9 @@ export const initTableState = (
     // default controltype to textbox
     Object.keys(def.columns).forEach((f) => {
       let col = def.columns[f]
+      if (col.ui === undefined) {
+        col.ui = {}
+      }
       if (col.control === undefined) {
         col.control = "text"
       }
@@ -693,7 +697,11 @@ export const TableFilterFn = (
   return restable
 }
 
-export const getFormFieldsFromColumns = (def: TableDef, row) => {
+export const getFormFieldsFromColumns = (
+  def: TableDef,
+  row,
+  keyAsLabelIfNone?: boolean
+) => {
   let formFields: { [key: string]: FormFields } = {}
   let columns = def.columns
   Object.keys(columns).map((k) => {
@@ -706,8 +714,14 @@ export const getFormFieldsFromColumns = (def: TableDef, row) => {
     formFields[k] = {
       type,
       value: dispVal,
-      format: col.format,
       list: col.list,
+      ui: JSON.parse(JSON.stringify(col.ui)),
+    }
+    if (keyAsLabelIfNone) {
+      if (!formFields[k].ui) {
+        formFields[k].ui = {}
+      }
+      formFields[k].ui.useFieldKeyForLabel = keyAsLabelIfNone
     }
   })
   return formFields

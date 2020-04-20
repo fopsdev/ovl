@@ -11,6 +11,7 @@ import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { SnackAdd } from "../helpers"
+import { T } from "../../global/globals"
 
 export type HeaderMenuDef = {
   def: TableDataAndDef
@@ -614,7 +615,11 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     if (def.uiState.headerSelected !== "") {
       if (columns[def.uiState.headerSelected].sortable) {
-        let columncaption = columns[def.uiState.headerSelected].caption
+        let columncaption =
+          columns[def.uiState.headerSelected].ui.labelTranslationKey
+        if (columncaption) {
+          columncaption = T(columncaption)
+        }
         if (!columncaption) {
           columncaption = def.uiState.headerSelected
         }

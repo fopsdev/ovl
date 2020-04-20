@@ -2,11 +2,11 @@ import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
 import {
   ValidateField,
   FormState,
-  GetFormValidationErrors
+  GetFormValidationErrors,
 } from "../../../../ovl/src/library/forms/actions"
 import {
   Mandatory,
-  MinLength
+  MinLength,
 } from "../../../../ovl/src/library/forms/validators"
 import { T, api } from "../../../../ovl/src/global/globals"
 import { postRequest } from "../../../../ovl/src/effects"
@@ -23,7 +23,7 @@ export const SaveSettings: AsyncAction<FormState> = async (
     let res = await postRequest(api.url + "users/changepw", {
       password: pw,
       passwordNew: pw1,
-      language: state.ovl.language.language
+      language: state.ovl.language.language,
     })
     if (res.status !== 200) {
       // most probably the password is wrong

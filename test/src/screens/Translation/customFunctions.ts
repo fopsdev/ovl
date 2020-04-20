@@ -6,6 +6,7 @@ import { TableDef, TableData } from "../../../../ovl/src/library/Table/Table"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { overmind } from "../.."
 import { TblTranslationColumn } from "./state"
+import { T } from "../../../../ovl/src/global/globals"
 
 export const FormShow = async (
   formState: FormState,
@@ -35,14 +36,14 @@ export const RowValidate = async (
   switch (value.fieldId as TblTranslationColumn) {
     case "U_Group":
       Mandatory(
-        def.columns[value.fieldId].caption,
+        T(def.columns[value.fieldId].ui.labelTranslationKey),
         value.newVal,
         value.validationResult
       )
       break
     case "U_Code":
       Mandatory(
-        def.columns[value.fieldId].caption,
+        T(def.columns[value.fieldId].ui.labelTranslationKey),
         value.newVal,
         value.validationResult
       )

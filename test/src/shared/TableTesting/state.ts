@@ -42,23 +42,17 @@ export let tblTableTesting: TableDef = {
   },
   columns: {
     U_Alpha: {
-      caption: "Text",
-
       sortable: true,
-      editable: true,
+
       width: 1,
     },
     U_Memo: {
-      caption: "Memo",
-
       sortable: true,
-      editable: true,
+
       control: "textarea",
       width: 2,
     },
     U_ItmsGrpCod: {
-      editable: true,
-      caption: "Produktgruppe",
       sortable: true,
       control: "list",
       type: "int",
@@ -72,8 +66,6 @@ export let tblTableTesting: TableDef = {
       width: 2,
     },
     U_ItemCode: {
-      editable: true,
-      caption: "Produkt",
       sortable: true,
       control: "list",
       list: {
@@ -86,21 +78,15 @@ export let tblTableTesting: TableDef = {
       width: 10,
     },
     U_Date: {
-      editable: true,
-      caption: "Datum",
       sortable: true,
       control: "date",
       width: 2,
     },
     U_Int: {
-      editable: true,
-      caption: "Zahl",
       sortable: true,
       width: 1,
     },
     U_Decimal: {
-      editable: true,
-      caption: "Wert",
       sortable: true,
       width: 1,
     },
@@ -176,29 +162,20 @@ export let tblTableTesting2: TableDef = {
   },
   columns: {
     U_Alpha: {
-      caption: "Text",
-
       sortable: true,
-      editable: true,
+
       filter: { top: 3 },
     },
     U_Memo: {
-      caption: "Memo",
-
       sortable: true,
       control: "textarea",
-      editable: true,
     },
     U_Date: {
-      editable: true,
-      caption: "Datum",
       control: "date",
       sortable: true,
     },
 
     U_ItmsGrpCod: {
-      editable: true,
-      caption: "Produktgruppe",
       sortable: true,
       control: "list",
       type: "int",
@@ -212,9 +189,6 @@ export let tblTableTesting2: TableDef = {
     },
 
     U_ItemCode: {
-      editable: true,
-      caption: "Produkt",
-
       sortable: true,
       control: "list",
       list: {
@@ -227,12 +201,8 @@ export let tblTableTesting2: TableDef = {
     },
 
     U_ParentCode: {
-      editable: true,
-      caption: "Referenz",
-
       sortable: true,
       control: "list",
-
       list: {
         acceptEmpty: true,
         acceptOnlyListValues: false,
@@ -241,8 +211,6 @@ export let tblTableTesting2: TableDef = {
       },
     },
     U_ParentCode2: {
-      editable: true,
-      caption: "Referenz2",
       sortable: true,
       control: "list",
       list: {
@@ -254,18 +222,12 @@ export let tblTableTesting2: TableDef = {
     },
 
     U_Int: {
-      editable: true,
-      caption: "Zahl",
-
       sortable: true,
       filter: { top: 3 },
     },
     U_Decimal: {
-      editable: true,
-      caption: "Wert",
-
       sortable: true,
-      format: "4digits",
+      ui: { format: "4digits" },
     },
   },
 }

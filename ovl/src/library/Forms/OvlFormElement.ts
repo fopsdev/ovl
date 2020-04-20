@@ -3,6 +3,7 @@ import { FormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
 import { FormType, customFunctions, overmind, Screen } from "../.."
 import { resolvePath } from "../../global/globals"
+import { ColumnAlign } from "../Table/Table"
 
 export type FieldFormat =
   | "2digits"
@@ -20,9 +21,16 @@ export type Schema = {
 export type FormFields = {
   value: string
   type?: DataType
-  format?: FieldFormat
   list?: ListState
-  datafield?: string
+  ui?: {
+    labelTranslationKey?: string
+    useFieldKeyForLabel?: boolean
+    format?: FieldFormat
+    align?: ColumnAlign
+    inline?: boolean
+    isPassword?: boolean
+    readonly?: boolean
+  }
 }
 
 export type DataType = "text" | "date" | "decimal" | "int" | "bool" | "time"
@@ -142,7 +150,6 @@ export class OvlFormElement extends OvlBaseElement {
       if (!this.formShowed) {
         this.formShowed = true
         // preserve form control focus
-        debugger
         let lastTouchedField = this.formState.fields[
           this.formState.lastTouchedField
         ]

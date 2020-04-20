@@ -4,15 +4,12 @@ import { html } from "lit-html"
 import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ListState } from "./ListControl"
-import { GetRowFromFormState } from "./helpers"
+import { GetRowFromFormState, GetLabel } from "./helpers"
 import { overmind, customFunctions } from "../../.."
 import { resolvePath } from "../../../global/globals"
 
 export type OptionControlState = {
   field: Field
-  label: string
-  inline: boolean
-  align?: ColumnAlign
 }
 
 export class OvlOption extends OvlBaseElement {
@@ -63,23 +60,24 @@ export class OvlOption extends OvlBaseElement {
 
     let res = getUIValidationObject(field)
     let label
-    if (this.controlState.label) {
+    let labelText = GetLabel(field)
+    if (labelText) {
       label = html`
         <label
           class="fd-form-label"
           aria-required="${res.needsAttention}"
           for="${field.id}"
-          >${this.controlState.label}</label
+          >${labelText}</label
         >
       `
     }
     let align = ""
-    if (this.controlState.align) {
-      align = this.controlState.align
+    if (field.ui.align) {
+      align = field.ui.align
     }
 
     let inline
-    if (this.controlState.inline) {
+    if (field.ui && field.ui.inline) {
       inline = "fd-form-group--inline"
     }
 

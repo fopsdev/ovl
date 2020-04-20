@@ -5,14 +5,14 @@ import { InvoiceOverviewState } from "./screens/Invoice/InvoiceOverview"
 import { DPInvoiceOverviewState } from "./screens/Invoice/DPInvoiceOverview"
 import { OrderDetailFormState } from "./screens/Order/OrderDetailLayout"
 import { FeedbackFormState } from "./screens/Feedback/FeedbackForm"
-import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTimeRecordingForm"
+import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/MobileTimeRecordingForm"
 import { DashboardState } from "./screens/Dashboard/Dashboard"
 import { ShellbarState } from "./screens/Shellbar/Shellbar"
 import { LoginFormState } from "./screens/Login/LoginForm"
 
 let shellbar: ShellbarState = {
   mainMenuExpanded: false,
-  userMenuExpanded: false
+  userMenuExpanded: false,
 }
 
 let login: LoginFormState = {}
@@ -29,25 +29,25 @@ let feedback: FeedbackFormState = {
   orderNum: undefined,
   refNum: undefined,
   title: undefined,
-  type: undefined
+  type: undefined,
 }
 
 let dashboard: DashboardState = {}
 
 let orderOverview: OrderOverviewState = {
-  activeFilePopup: ""
+  activeFilePopup: "",
 }
 
 let quotationOverview: QuotationOverviewState = {
-  activeFilePopup: ""
+  activeFilePopup: "",
 }
 
 let invoiceOverview: InvoiceOverviewState = {
-  activeFilePopup: ""
+  activeFilePopup: "",
 }
 
 let orderDetailFormState: OrderDetailFormState = {
-  selectedOrder: ""
+  selectedOrder: "",
 }
 
 let mobileTimeEntryFormState: MobileTimeEntryFormState = { rowKey: undefined }
@@ -68,7 +68,7 @@ export let screens = {
   Feedback: feedback,
   TableTesting: {},
   MobileTimeEntry: mobileTimeEntry,
-  MobileTimeEntryForm: mobileTimeEntryFormState
+  MobileTimeEntryForm: mobileTimeEntryFormState,
 }
 
 export type Screen = keyof typeof screens

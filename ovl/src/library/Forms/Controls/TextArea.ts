@@ -3,11 +3,10 @@ import { html } from "lit-html"
 import { Field } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ColumnAlign } from "../../Table/Table"
+import { GetLabel } from "./helpers"
 
 export type TextAreaControlState = {
   field: Field
-  align: ColumnAlign
-  label: string
 }
 
 export class OvlTextArea extends OvlBaseElement {
@@ -21,7 +20,10 @@ export class OvlTextArea extends OvlBaseElement {
     if (e.key === "Enter") {
       let event = new CustomEvent("ovlchange", {
         bubbles: true,
-        detail: { val: this.inputElement.value, id: this.controlState.field.id }
+        detail: {
+          val: this.inputElement.value,
+          id: this.controlState.field.id,
+        },
       })
       this.inputElement.dispatchEvent(event)
     }
@@ -32,7 +34,7 @@ export class OvlTextArea extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.controlState.field.id }
+      detail: { id: this.controlState.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -42,7 +44,7 @@ export class OvlTextArea extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
-      detail: { val: this.inputElement.value, id: this.controlState.field.id }
+      detail: { val: this.inputElement.value, id: this.controlState.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -53,27 +55,28 @@ export class OvlTextArea extends OvlBaseElement {
     let res = getUIValidationObject(field)
 
     let label
-    if (this.controlState.label) {
+    let labelText = GetLabel(field)
+    if (labelText) {
       label = html`
         <label
           class="fd-form-label"
           aria-required="${res.needsAttention}"
           for="${field.id}"
-          >${this.controlState.label}${res.needsAttention ? "*" : ""}</label
+          >${labelText}${res.needsAttention ? "*" : ""}</label
         >
       `
     }
     let align = ""
-    if (this.controlState.align) {
-      align = this.controlState.align
+    if (field.ui && field.ui.align) {
+      align = field.ui.align
     }
 
     return html`
       ${label}
       <textarea
-        @keydown=${e => this.handleKeyDown(e)}
-        @change=${e => this.handleChange(e)}
-        @focusout=${e => this.handleFocusOut(e)}
+        @keydown=${(e) => this.handleKeyDown(e)}
+        @change=${(e) => this.handleChange(e)}
+        @focusout=${(e) => this.handleFocusOut(e)}
         style="${align}"
         class="fd-textarea ${res.validationType} fd-has-type-1"
         id="${field.id}"

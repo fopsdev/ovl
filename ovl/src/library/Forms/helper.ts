@@ -23,7 +23,6 @@ export const getFormFields = (
       convertedValue: undefined,
 
       type: type,
-      format: formFields[k].format,
       dirty: false,
       watched: false,
       validationResult: { valid: true, validationMsg: "", validations: {} },
@@ -32,6 +31,7 @@ export const getFormFields = (
       formId: instanceId,
       formType,
       fieldKey: k,
+      ui: formFields[k].ui,
     }
   })
   return fields

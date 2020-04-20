@@ -9,6 +9,7 @@ import {
   FilterHitList,
   GetListDisplayValue,
   GetRowFromFormState,
+  GetLabel,
 } from "./helpers"
 import { overmind, customFunctions } from "../../.."
 import { SnackAdd } from "../../helpers"
@@ -32,8 +33,6 @@ export type ListState = {
 
 export type ListControlState = {
   field: Field
-  align: ColumnAlign
-  label: string
 }
 
 export class OvlListControl extends OvlBaseElement {
@@ -475,19 +474,20 @@ export class OvlListControl extends OvlBaseElement {
     let res = getUIValidationObject(field)
 
     let label
-    if (this.controlState.label) {
+    let labelText = GetLabel(field)
+    if (labelText) {
       label = html`
         <label
           class="fd-form-label"
           aria-required="${res.needsAttention}"
           for="${field.id}"
-          >${this.controlState.label}</label
+          >${labelText}</label
         >
       `
     }
     let align = ""
-    if (this.controlState.align) {
-      align = this.controlState.align
+    if (field.ui && field.ui.align) {
+      align = field.ui.align
     }
     let displayValue = this.displayValue
     if (displayValue === undefined) {

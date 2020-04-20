@@ -3,7 +3,7 @@ import { T } from "../../../../ovl/src/global/globals"
 import { ValidateField } from "../../../../ovl/src/library/forms/actions"
 import {
   Mandatory,
-  MinLength
+  MinLength,
 } from "../../../../ovl/src/library/forms/validators"
 
 export const SettingsValidateField = (

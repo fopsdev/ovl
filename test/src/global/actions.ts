@@ -225,8 +225,11 @@ export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
     return
   }
   let fields: { [key: string]: FormFields } = {
-    pw: { value: "" },
-    user: { value: "" },
+    user: { value: "", ui: { labelTranslationKey: "AppLoginUser" } },
+    pw: {
+      value: "",
+      ui: { labelTranslationKey: "AppLoginPassword", isPassword: true },
+    },
   }
   let loginForm: InitForm = {
     validationFnName: "LoginValidateField",

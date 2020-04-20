@@ -18,38 +18,31 @@ export let tblTranslation: TableDef = {
   namespace: "portal.system.translations",
   database: {
     dataIdField: "Code",
-    dbInsertMode: "UDTAutoGUID"
+    dbInsertMode: "UDTAutoGUID",
   },
   server: {
-    endpoint: "translation"
+    endpoint: "translation",
   },
   columns: {
     U_Group: {
-      editable: true,
-      caption: "AppColTranslationGroup",
-
+      ui: { labelTranslationKey: "AppColTranslationGroup" },
       sortable: true,
-      filter: { top: 10 }
+      filter: { top: 10 },
     },
     U_Code: {
-      editable: true,
-      caption: "AppColTranslationCode",
-
-      sortable: true
+      ui: { labelTranslationKey: "AppColTranslationCode" },
+      sortable: true,
     },
 
     U_DE: {
-      editable: true,
-      caption: "AppColTranslationDE",
-
+      ui: { labelTranslationKey: "AppColTranslationDE" },
       sortable: true,
-      control: "textarea"
+      control: "textarea",
     },
     U_FR: {
-      editable: true,
-      caption: "AppColTranslationFR",
+      ui: { labelTranslationKey: "AppColTranslationFR" },
       sortable: true,
-      control: "textarea"
-    }
-  }
+      control: "textarea",
+    },
+  },
 }

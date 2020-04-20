@@ -48,9 +48,11 @@ export class CompSettingsForm extends OvlFormElement {
           <div class="fd-panel__head">
             <h3 class="fd-panel__title">
             ${T("AppSettings")}
-                ${this.state.portal.user.firstName +
+                ${
+                  this.state.portal.user.firstName +
                   " " +
-                  this.state.portal.user.lastName}
+                  this.state.portal.user.lastName
+                }
             </h3>
           </div>
         </div>
@@ -59,11 +61,9 @@ export class CompSettingsForm extends OvlFormElement {
               <div class="fd-form__group">
                 <div class="fd-form-item ">
                   <ovl-textbox
-                    .props=${state => {
+                    .props=${(state) => {
                       return <TextBoxControlState>{
                         field: pwField,
-                        label: T("AppLoginPassword"),
-                        type: "text-security"
                       }
                     }}
                   >
@@ -71,11 +71,9 @@ export class CompSettingsForm extends OvlFormElement {
                 </div>
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${state => {
+                    .props=${(state) => {
                       return <TextBoxControlState>{
                         field: pw1Field,
-                        label: T("AppSettingsPasswordNew"),
-                        type: "text-security"
                       }
                     }}
                   >
@@ -83,11 +81,9 @@ export class CompSettingsForm extends OvlFormElement {
                 </div>
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${state => {
+                    .props=${(state) => {
                       return <TextBoxControlState>{
                         field: pw2Field,
-                        label: T("AppSettingsPasswordNewConfirmation"),
-                        type: "text-security"
                       }
                     }}
                   >
@@ -100,16 +96,20 @@ export class CompSettingsForm extends OvlFormElement {
             >
               <div class="fd-panel__actions">
                 <button
-                  ?disabled=${this.state.ovl.libState.indicator.open ||
-                    this.state.ovl.screens.screenState[this.screen].closing}
+                  ?disabled=${
+                    this.state.ovl.libState.indicator.open ||
+                    this.state.ovl.screens.screenState[this.screen].closing
+                  }
                   @click=${handleSave}
                   class="fd-button"
                 >
                   ${T("AppSave")}
                 </button>
                 <button
-                  ?disabled=${this.state.ovl.libState.indicator.open ||
-                    this.screenClosing()}
+                  ?disabled=${
+                    this.state.ovl.libState.indicator.open ||
+                    this.screenClosing()
+                  }
                   @click=${handleCancel}
                   class="fd-button"
                 >

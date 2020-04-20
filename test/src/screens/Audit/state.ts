@@ -5,65 +5,55 @@ export let tblAudit: TableDef = {
   namespace: "portal.system.audit",
   database: {
     dataIdField: "Code",
-    dbInsertMode: "UDTAutoGUIDBoth"
+    dbInsertMode: "UDTAutoGUIDBoth",
   },
   server: {
-    endpoint: "audit"
+    endpoint: "audit",
   },
   options: {
     sort: { field: "U_Timestamp", direction: "desc" },
-    paging: { page: 0, pageSize: 200 }
+    paging: { page: 0, pageSize: 200 },
   },
   features: {
     page: true,
     add: false,
     delete: false,
     edit: false,
-    noButtonsAtTheBottom: true
+    noButtonsAtTheBottom: true,
   },
   columns: {
     U_Timestamp: {
-      caption: "Timestamp",
-      format: "timestamp",
-      sortable: true
+      ui: { format: "timestamp" },
+      sortable: true,
     },
     U_UserCode: {
-      caption: "UserCode",
       sortable: true,
-      filter: { top: 25 }
+      filter: { top: 25 },
     },
     U_User: {
-      caption: "User",
       sortable: true,
-      filter: { top: 25 }
+      filter: { top: 25 },
     },
     U_Role: {
-      caption: "Role",
       sortable: true,
-      filter: { top: 10 }
+      filter: { top: 10 },
     },
 
     U_Operation: {
-      caption: "Operation",
       sortable: true,
-      filter: { top: 10 }
+      filter: { top: 10 },
     },
 
     U_IDField: {
-      caption: "ID Field",
-      sortable: true
+      sortable: true,
     },
     U_IDValue: {
-      caption: "ID Value",
-      sortable: true
+      sortable: true,
     },
     U_TableName: {
-      caption: "Tablename",
       sortable: true,
-      filter: { top: 10 }
+      filter: { top: 10 },
     },
-    U_Payload: {
-      caption: "Payload"
-    }
-  }
+    U_Payload: {},
+  },
 }

@@ -4,13 +4,16 @@ import { getFormFieldsFromColumns } from "../../../../ovl/src/library/Table/help
 import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
 import { ovltemp, N, api } from "../../../../ovl/src/global/globals"
 import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
-import { U_TypeIdGetListFn } from "./customFunctions"
+import { U_TypeIdGetListFn } from "./MobileTimeRecordingDetail/customFunctions"
 import { overmind } from "../../../../ovl/src"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
 import { displayFormats } from "../../../../ovl/src/global/displayFormats"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
-import { tblMobileTimeRecording, TableMobileTimeRecording } from "./state"
+import {
+  tblMobileTimeRecording,
+  TableMobileTimeRecording,
+} from "./MobileTimeRecordingDetail/state"
 export class CompMobileTimeEntry extends OvlFormElement {
   init() {
     this.screen = "MobileTimeEntry"
@@ -63,7 +66,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
       await this.actions.ovl.internal.TableAddRow(tableDataAndDef)
       rowKey = def.uiState.currentlyAddingKey
     }
-    let formFields = getFormFieldsFromColumns(def, data.data[rowKey])
+    let formFields = getFormFieldsFromColumns(def, data.data[rowKey], true)
     let initForm: InitForm = {
       fields: formFields,
       formType: "MobileTimeEntry",

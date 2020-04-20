@@ -3,13 +3,11 @@ import { ColumnAlign } from "../../Table/Table"
 import { html } from "lit-html"
 import { Field } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { GetLabel } from "./helpers"
 
 type TextBoxType = "text" | "password" | "text-security"
 export type TextBoxControlState = {
   field: Field
-  label: string
-  type: TextBoxType
-  align?: ColumnAlign
 }
 
 export class OvlTextbox extends OvlBaseElement {
@@ -65,25 +63,24 @@ export class OvlTextbox extends OvlBaseElement {
     let res = getUIValidationObject(field)
     let style = ""
     let type: TextBoxType = "text"
-    if (this.controlState.type === "text-security") {
-      style = "-webkit-text-security: disc;"
-    } else {
-      type = this.controlState.type
+    if (field.ui && field.ui.isPassword) {
+      type = "password"
     }
     let label
-    if (this.controlState.label) {
+    let labelText = GetLabel(field)
+    if (labelText) {
       label = html`
         <label
           class="fd-form-label"
           aria-required="${res.needsAttention}"
           for="${field.id}"
-          >${this.controlState.label}</label
+          >${labelText}</label
         >
       `
     }
     let align = ""
-    if (this.controlState.align) {
-      align = this.controlState.align
+    if (field.ui && field.ui.align) {
+      align = field.ui.align
     }
     return html`
       ${label}
@@ -92,6 +89,7 @@ export class OvlTextbox extends OvlBaseElement {
         @focusout=${(e) => this.handleFocusOut(e)}
         @keydown=${(e) => this.handleKeyDown(e)}
         style="${style} ${align}"
+        ?readonly="${field.ui.readonly}"
         autocomplete="off"
         inputmode="${inputMode}"
         class="fd-input ${res.validationType} fd-has-type-1"

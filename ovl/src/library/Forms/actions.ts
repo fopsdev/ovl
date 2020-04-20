@@ -8,7 +8,7 @@ import {
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
 import { customFunctions, FormType } from "../../index"
-import { ListFnReturnValue } from "../Table/Table"
+import { ListFnReturnValue, ColumnAlign } from "../Table/Table"
 import { getFormFields, ValidationAddError } from "./helper"
 export { FillListControl }
 
@@ -16,7 +16,6 @@ export type Field = {
   value: string
   convertedValue: any
   type: DataType
-  format: FieldFormat
   list?: ListState
   dirty: boolean
   watched: boolean
@@ -25,6 +24,15 @@ export type Field = {
   formType: string
   formId: string
   fieldKey: string
+  ui?: {
+    labelTranslationKey?: string
+    useFieldKeyForLabel?: boolean
+    format?: FieldFormat
+    align?: ColumnAlign
+    inline?: boolean
+    isPassword?: boolean
+    readonly?: boolean
+  }
 }
 
 export type FieldValueMap = { [key: string]: Field }
@@ -104,7 +112,10 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
   let validatorId = "DataType"
   let field = value.formState.fields[value.fieldId]
   let type = field.type
-  let format = field.format
+  let format
+  if (field.ui && field.ui.format) {
+    format = field.ui.format
+  }
   let val = value.newVal
   let res = value.validationResult
 
@@ -159,7 +170,7 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
         if (val.length === 10 && val.indexOf("-") > -1) {
           // looks like the well formed date select format
           field.convertedValue = val + "T00:00:00"
-          field.value = getDateValue(field.convertedValue, field.format)
+          field.value = getDateValue(field.convertedValue, format)
           return
         }
         let vals = val.split(".")
@@ -202,7 +213,7 @@ export const ValidateDataType: Action<ValidateField> = (_, value) => {
           ValidationAddError(validatorId, "invalid date format", res)
         } else {
           field.convertedValue = newDate
-          field.value = getDateValue(newDate, field.format)
+          field.value = getDateValue(newDate, format)
         }
       } else {
         field.convertedValue = null

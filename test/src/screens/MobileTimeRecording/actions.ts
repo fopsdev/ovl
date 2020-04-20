@@ -5,7 +5,7 @@ import {
   SnackTrackedAdd,
   SnackTrackedRemove,
 } from "../../../../ovl/src/library/helpers"
-import { TableMobileTimeRecording } from "./state"
+import { TableMobileTimeRecording } from "./MobileTimeRecordingDetail/state"
 
 export const MarkAsSynced: Action<string[]> = ({ state, actions }, value) => {
   let data = state.testtables.timeentries

@@ -76,12 +76,12 @@ export class TableRowForm extends OvlFormElement {
             controlAlign = "text-align:center;"
           }
         }
-        let editable = col.editable
+        let readonly = col.ui.readonly
         // @@hook
-        let functionName = k + "EditableFn"
+        let functionName = k + "IsReadOnlyFn"
         let fn = resolvePath(customFunctions, def.namespace)
         if (fn && fn[functionName]) {
-          editable = fn[functionName](
+          readonly = fn[functionName](
             this.rowData.key,
             this.rowData.tableDef,
             this.rowData.data,
@@ -98,7 +98,7 @@ export class TableRowForm extends OvlFormElement {
             insertMode === "UDTAutoNumberBoth" ||
             insertMode === "UDTAutoGUIDBoth"
           ) {
-            editable = false
+            readonly = true
           }
         }
         if (k === "Name") {
@@ -106,10 +106,10 @@ export class TableRowForm extends OvlFormElement {
             insertMode === "UDTAutoNumberBoth" ||
             insertMode === "UDTAutoGUIDBoth"
           ) {
-            editable = false
+            readonly = false
           }
         }
-        if (editable) {
+        if (!readonly) {
           if (!firstEditable) {
             id = this.rowData.key + "ovlRFNFocus_focus"
             firstEditable = true

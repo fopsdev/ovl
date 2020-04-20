@@ -225,14 +225,18 @@ export type ColumnDef = {
   control?: ControlType
   type?: DataType
   visible?: boolean
-  editable?: boolean
-  caption?: string
   width?: number
   list?: ListState
-  align?: ColumnAlign
-  format?: FieldFormat
   sortable?: boolean
   filter?: ColumnFilter
+  ui?: {
+    align?: ColumnAlign
+    labelTranslationKey?: string
+    format?: FieldFormat
+    isPassword?: boolean
+    inline?: boolean
+    readonly?: boolean
+  }
 }
 
 export type ColumnDisplayDef = {
@@ -294,7 +298,7 @@ export class TableHeader extends OvlBaseElement {
           def: this.tabledata.def,
           data: this.tabledata.data,
 
-          key: key
+          key: key,
         })
       }
     }
@@ -311,20 +315,18 @@ export class TableHeader extends OvlBaseElement {
     let dataAndSchema = this.tabledata.data
     let columns = def.columns
     let colWidths = Object.keys(columns)
-      .filter(k => columns[k].width)
-      .map(k => {
+      .filter((k) => columns[k].width)
+      .map((k) => {
         let column = columns[k]
 
-        return html`
-          <col style="width:${column.width}%" />
-        `
+        return html` <col style="width:${column.width}%" /> `
       })
 
     let columnsAlign = {}
     let columnsVisible = {}
     let columnsCount = 0
     let headerRows = html`
-      ${Object.keys(columns).map(k => {
+      ${Object.keys(columns).map((k) => {
         let column = columns[k]
 
         let visible = true
@@ -375,8 +377,8 @@ export class TableHeader extends OvlBaseElement {
         }
         columnsCount++
         let align: ColumnAlign = "left"
-        if (column.align) {
-          align = column.align
+        if (column.ui.align) {
+          align = column.ui.align
         } else {
           if (
             column.type &&
@@ -397,14 +399,17 @@ export class TableHeader extends OvlBaseElement {
             break
         }
         columnsAlign[k] = cssAlign
-        let caption = T(column.caption)
+        let caption
+        if (column.ui.labelTranslationKey) {
+          caption = T(column.ui.labelTranslationKey)
+        }
         if (!caption) {
           caption = k
         }
         return html`
           <th
             style="${cellBgColor}"
-            @click="${e => this.handleHeaderColumnClick(e, k)}"
+            @click="${(e) => this.handleHeaderColumnClick(e, k)}"
             class="ovltablecolumnheader ${sortdirection} fd-table__cell stickyTableHeader ${cssAlign} "
             scope="col"
           >
@@ -449,14 +454,14 @@ export class TableHeader extends OvlBaseElement {
       !def.features.page &&
       def.options.maxRows.maxRows !== -1 &&
       def.options.maxRows.maxRows <
-        dataRows.filter(f => {
+        dataRows.filter((f) => {
           return f.indexOf(ovltemp) < 0
         }).length
     ) {
       dataRows = dataRows
-        .filter(f => f.indexOf(ovltemp) < 0)
+        .filter((f) => f.indexOf(ovltemp) < 0)
         .slice(0, def.options.maxRows.maxRows)
-        .concat(dataRows.filter(f => f.indexOf(ovltemp) > -1))
+        .concat(dataRows.filter((f) => f.indexOf(ovltemp) > -1))
       if (def.options.maxRows.showHint) {
         showMaxSizeHint = true
       }
@@ -479,7 +484,7 @@ export class TableHeader extends OvlBaseElement {
         <ovl-tableheadermenu
           .props=${() => {
             return <HeaderMenuDef>{
-              def: this.tabledata
+              def: this.tabledata,
             }
           }}
         ></ovl-tableheadermenu>
@@ -523,7 +528,7 @@ export class TableHeader extends OvlBaseElement {
     let rows = repeat(
       dataAndAddRows,
       (k: string) => k,
-      k => {
+      (k) => {
         if (alreadyRendered[k]) {
           return null
         }
@@ -540,15 +545,13 @@ export class TableHeader extends OvlBaseElement {
                 columnsVisible,
                 columnsCount: columnsCount,
                 selected: def.uiState.selectedRow[k],
-                editSelected: def.uiState.editRow[k]
+                editSelected: def.uiState.editRow[k],
               }
             }}
           >
           </ovl-trg>
         `
-        return html`
-          ${row}
-        `
+        return html` ${row} `
       }
     )
 
@@ -556,7 +559,7 @@ export class TableHeader extends OvlBaseElement {
     if (showMaxSizeHint) {
       maxSizeHint = html`
         <tr
-          @click=${e =>
+          @click=${(e) =>
             this.handleHeaderColumnClick(
               e,
               this.tabledata.def.database.dataIdField
@@ -592,8 +595,8 @@ export class TableHeader extends OvlBaseElement {
     }
     let filterText = ""
     Object.keys(filterCustom)
-      .filter(f => filterCustom[f].active && filterCustom[f].showInTitle)
-      .map(m => {
+      .filter((f) => filterCustom[f].active && filterCustom[f].showInTitle)
+      .map((m) => {
         filterText = filterText + filterCustom[m].description + ", "
       })
     // if (filterText) {

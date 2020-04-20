@@ -1,12 +1,13 @@
 import { overmind } from "../../.."
 import { ListState } from "./ListControl"
 import { ListFnReturnValue } from "../../Table/Table"
-import { FormState } from "../actions"
+import { FormState, Field } from "../actions"
 import { customFunctions } from "../../../index"
 import {
   resolvePath,
   getDateValue,
   getDecimalValue,
+  T,
 } from "../../../global/globals"
 
 export type LookupListPostData = {
@@ -179,4 +180,16 @@ export const GetRowFromFormState = (formState: FormState) => {
     val[k] = fields[k].convertedValue
     return val
   }, {})
+}
+
+export const GetLabel = (field: Field): string => {
+  let caption = ""
+  if (field.ui) {
+    if (field.ui.labelTranslationKey) {
+      caption = T(field.ui.labelTranslationKey)
+    } else if (field.ui.useFieldKeyForLabel) {
+      caption = field.fieldKey
+    }
+  }
+  return caption
 }

@@ -129,12 +129,12 @@ export class TableRowFormBig extends OvlFormElement {
                 controlAlign = "text-align:center;"
               }
             }
-            let editable = col.editable
+            let readonly = col.ui.readonly
             // @@hook
-            let functionName = k + "EditableFn"
+            let functionName = k + "IsReadOnlyFn"
             let fn = resolvePath(customFunctions, def.namespace)
             if (fn && fn[functionName]) {
-              editable = fn[functionName](
+              readonly = fn[functionName](
                 this.rowData.key,
                 this.rowData.tableDef,
                 this.rowData.data,
@@ -151,7 +151,7 @@ export class TableRowFormBig extends OvlFormElement {
                 insertMode === "UDTAutoNumberBoth" ||
                 insertMode === "UDTAutoGUIDBoth"
               ) {
-                editable = false
+                readonly = true
               }
             }
             if (k === "Name") {
@@ -159,10 +159,10 @@ export class TableRowFormBig extends OvlFormElement {
                 insertMode === "UDTAutoNumberBoth" ||
                 insertMode === "UDTAutoGUIDBoth"
               ) {
-                editable = false
+                readonly = true
               }
             }
-            if (editable) {
+            if (!readonly) {
               if (!firstEditable) {
                 id = "ovlRFNFocus_focus"
                 firstEditable = true
@@ -177,9 +177,6 @@ export class TableRowFormBig extends OvlFormElement {
                       .props=${(state) => {
                         return <TextBoxControlState>{
                           field: fields[k],
-                          label: col.caption,
-                          type: "text",
-                          align: "left",
                         }
                       }}
                     >
@@ -195,8 +192,6 @@ export class TableRowFormBig extends OvlFormElement {
                       .props=${(state) => {
                         return <TextBoxControlState>{
                           field: fields[k],
-                          label: col.caption,
-                          align: controlAlign,
                         }
                       }}
                     >
@@ -212,8 +207,6 @@ export class TableRowFormBig extends OvlFormElement {
                       .props=${(state) => {
                         return <TextAreaControlState>{
                           field: fields[k],
-                          label: col.caption,
-                          align: "left",
                         }
                       }}
                     >
@@ -230,17 +223,6 @@ export class TableRowFormBig extends OvlFormElement {
                         .props="${() => {
                           return <ListControlState>{
                             field: fields[k],
-                            label: col.caption,
-                            align: "left",
-                            formState: this.formState,
-                            namespace: def.namespace,
-                            list: {
-                              displayField: col.list.displayField,
-                              displayValueField: col.list.displayValueField,
-                              valueField: col.list.valueField,
-                              serverEndpoint: col.list.serverEndpoint,
-                            },
-                            fieldId: k,
                           }
                         }}"
                       >

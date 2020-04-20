@@ -65,11 +65,9 @@ export class CompLoginForm extends OvlFormElement {
               <div class="fd-form__group">
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${state => {
+                    .props=${(state) => {
                       return <TextBoxControlState>{
                         field: userField,
-                        label: T("AppLoginUser"),
-                        type: "text"
                       }
                     }}
                   >
@@ -77,11 +75,9 @@ export class CompLoginForm extends OvlFormElement {
                 </div>
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${state => {
+                    .props=${(state) => {
                       return <TextBoxControlState>{
                         field: pwField,
-                        label: T("AppLoginPassword"),
-                        type: "password"
                       }
                     }}
                   >
@@ -96,7 +92,7 @@ export class CompLoginForm extends OvlFormElement {
                 <button
                   @click=${handleLogin}
                   ?disabled="${this.state.ovl.libState.indicator.open ||
-                    this.screenClosing()}"
+                  this.screenClosing()}"
                   class="fd-button"
                 >
                   ${T("AppLogin")}
@@ -115,11 +111,9 @@ export class CompLoginForm extends OvlFormElement {
     `
   }
   afterRender() {
-   let focusEl = document.getElementById("loginformuser")
-   if (focusEl) {
-     focusEl.focus()
-   }
-
+    let focusEl = document.getElementById("loginformuser")
+    if (focusEl) {
+      focusEl.focus()
+    }
   }
-
 }

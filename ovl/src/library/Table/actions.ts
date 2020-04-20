@@ -1,6 +1,6 @@
 import { Action, AsyncAction } from "overmind"
 import { postRequest } from "../../effects"
-import { api, ovltemp, uuidv4, resolvePath } from "../../global/globals"
+import { api, ovltemp, uuidv4, resolvePath, T } from "../../global/globals"
 import { customFunctions, TableDefIds } from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
@@ -278,7 +278,9 @@ export const TableRefreshDataFromServer: AsyncAction<{
               "Lookup: " +
                 value +
                 " für Spalte: " +
-                (lookupColumnDef.caption ? lookupColumnDef.caption : k) +
+                (lookupColumnDef.ui.labelTranslationKey
+                  ? T(lookupColumnDef.ui.labelTranslationKey)
+                  : k) +
                 " nicht gefunden...",
               "Warning"
             )

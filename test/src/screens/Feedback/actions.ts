@@ -3,7 +3,7 @@ import { T, api } from "../../../../ovl/src/global/globals"
 import {
   FormState,
   GetFormValidationErrors,
-  ValidateField
+  ValidateField,
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { FieldId } from "./FeedbackForm"
@@ -34,7 +34,7 @@ export const SaveFeedback: AsyncAction<FormState> = async (
       orderNum: state.ovl.screens.screens.Feedback.orderNum,
       refNum: state.ovl.screens.screens.Feedback.refNum,
       assignedTo: state.portal.partner.salesContact.id,
-      feedbackType: state.ovl.screens.screens.Feedback.type
+      feedbackType: state.ovl.screens.screens.Feedback.type,
     })
 
     if (res.status !== 200) {
