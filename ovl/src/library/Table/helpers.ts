@@ -19,6 +19,7 @@ import {
   TableDef,
 } from "./Table"
 import { TableDefIds } from "../../../../test/src"
+import { FormCustomFilter } from "../../global/hooks"
 
 export const getTextSort = (valA: string, valB: string): number => {
   if (valA === null) {
@@ -589,7 +590,7 @@ export const TableFilterFn = (
     (k) => filterCustom[k].active
   )
   let customFilterFn = customFilter.reduce((val, k) => {
-    let functionName = k + "FilterFn"
+    let functionName = FormCustomFilter.replace("%", k)
     let fn = resolvePath(customFunctions, def.namespace)
     if (fn && fn[functionName]) {
       val.push(fn[functionName])

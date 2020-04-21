@@ -1,24 +1,8 @@
 import { overmind } from "../.."
-import { TableMobileTimeRecording } from "./MobileTimeRecordingDetail/state"
 import {
-  ListFnReturnValue,
-  BeforeSaveParam,
-  TableDataAndDef,
-} from "../../../../ovl/src/library/Table/Table"
-import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
-import {
-  ValidateFieldType,
-  FormState,
-  Field,
   FieldChanged,
-  ChangeField,
+  FormState,
 } from "../../../../ovl/src/library/forms/actions"
-import { Mandatory } from "../../../../ovl/src/library/forms/validators"
-import { ovltemp, GetWeekNr } from "../../../../ovl/src/global/globals"
-import {
-  ValidationAddError,
-  ValidationRemoveError,
-} from "../../../../ovl/src/library/Forms/helper"
 
 export const FormShow = async (
   formState: FormState,

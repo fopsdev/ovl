@@ -10,6 +10,7 @@ import { ListState } from "./Controls/ListControl"
 import { customFunctions, FormType } from "../../index"
 import { ListFnReturnValue, ColumnAlign } from "../Table/Table"
 import { getFormFields, ValidationAddError } from "./helper"
+import { FormValidate, FormChanged } from "../../global/hooks"
 export { FillListControl }
 
 export type Field = {
@@ -348,7 +349,7 @@ export const ValidateForm: Action<FormState> = (
     let field = value.fields[k]
     let oldValid = field.validationResult.valid
     let val = field.convertedValue
-    let validationFnName = "FormValidate"
+    let validationFnName = FormValidate
     let namespace = value.namespace
     field.validationResult.valid = true
     field.validationResult.validationMsg = ""
@@ -402,8 +403,8 @@ export const ValidateForm: Action<FormState> = (
       }
     }
     if (!oldValid && field.validationResult.valid) {
-      if (fn && fn["FormChanged"]) {
-        fn["FormChanged"](
+      if (fn && fn[FormChanged]) {
+        fn[FormChanged](
           {
             fieldId: k,
             formState: value,
@@ -491,8 +492,8 @@ export const InitForm: Action<InitForm> = (
             } as ValidateFieldType)
           }
           if (fieldValue.validationResult.valid) {
-            if (fn && fn["FormValidate"]) {
-              fn["FormValidate"](
+            if (fn && fn[FormValidate]) {
+              fn[FormValidate](
                 {
                   fieldId: k,
                   formState,
@@ -645,8 +646,8 @@ export const ChangeField: Action<ChangeField> = (
     oldConvertedVal !== field.convertedValue &&
     field.validationResult.valid
   ) {
-    if (fn && fn["FormChanged"]) {
-      fn["FormChanged"](
+    if (fn && fn[FormChanged]) {
+      fn[FormChanged](
         {
           fieldId: value.fieldId,
           formState: value.formState,

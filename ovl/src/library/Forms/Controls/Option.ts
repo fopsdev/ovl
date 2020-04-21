@@ -7,6 +7,7 @@ import { ListState } from "./ListControl"
 import { GetRowFromFormState, GetLabel } from "./helpers"
 import { overmind, customFunctions } from "../../.."
 import { resolvePath } from "../../../global/globals"
+import { FieldGetList } from "../../../global/hooks"
 
 export type OptionControlState = {
   field: Field
@@ -49,9 +50,8 @@ export class OvlOption extends OvlBaseElement {
     let field = this.controlState.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
     let list = this.controlState.field.list
-    let listData = resolvePath(customFunctions, formState.namespace)[
-      field.fieldKey + "GetListFn"
-    ](
+    let listFn = FieldGetList.replace("%", field.fieldKey)
+    let listData = resolvePath(customFunctions, formState.namespace)[listFn](
       GetRowFromFormState(formState),
       this.state,
       this.actions,

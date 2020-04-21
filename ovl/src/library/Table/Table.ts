@@ -11,7 +11,7 @@ import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
-
+import { FieldIsVisible } from "../../global/hooks"
 export type SaveMode = "add" | "update"
 
 export type BeforeSaveParam = {
@@ -312,6 +312,13 @@ export class TableHeader extends OvlBaseElement {
   }
   async getUIAsync() {
     let def = this.tabledata.def
+    if (!def.initialised) {
+      throw new Error(
+        "ovl tabledef: " +
+          def.id +
+          " is not initialised. Make sure to call TableRefresh at least once before uisng it"
+      )
+    }
     let dataAndSchema = this.tabledata.data
     let columns = def.columns
     let colWidths = Object.keys(columns)
@@ -334,7 +341,7 @@ export class TableHeader extends OvlBaseElement {
           visible = column.visible
         }
         //@@hook
-        let functionName = k + "VisibleFn"
+        let functionName = FieldIsVisible.replace("%", k)
         let fn = resolvePath(customFunctions, def.namespace)
         if (fn && fn[functionName]) {
           visible = fn[functionName](

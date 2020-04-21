@@ -9,6 +9,11 @@ import {
   getDecimalValue,
   T,
 } from "../../../global/globals"
+import {
+  FieldLookupPostData,
+  FieldGetList,
+  FieldGetFilteredList,
+} from "../../../global/hooks"
 
 export type LookupListPostData = {
   url: string
@@ -49,7 +54,7 @@ export const KeyValueListFromServerFn = async (
     }
   })
   let fn = resolvePath(customFunctions, namespace)
-  let functionName = fieldId + "LookupPostDataFn"
+  let functionName = FieldLookupPostData.replace("%", fieldId)
   if (fn && fn[functionName]) {
     fn[functionName](postData, row, state, overmind.actions, effects)
   }
@@ -88,9 +93,9 @@ export const FilterHitList = (
   top?: number
 ) => {
   let hitLength = {}
-  let functionName = fieldId + "GetFilteredListFn"
+  let functionName = FieldGetFilteredList.replace("%", fieldId)
   let dataList = resolvePath(customFunctions, formState.namespace)[
-    fieldId + "GetListFn"
+    FieldGetList.replace("%", fieldId)
   ](GetRowFromFormState(formState), state, overmind.actions, overmind.effects)
   if (dataList.data) {
     let res = Object.keys(dataList.data)

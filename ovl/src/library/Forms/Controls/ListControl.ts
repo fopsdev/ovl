@@ -14,6 +14,7 @@ import {
 import { overmind, customFunctions } from "../../.."
 import { SnackAdd } from "../../helpers"
 import { resolvePath } from "../../../global/globals"
+import { FieldGetList } from "../../../global/hooks"
 
 type ListFunction = (
   row: { [key: string]: {} },
@@ -66,7 +67,7 @@ export class OvlListControl extends OvlBaseElement {
     let listData: ListFnReturnValue = resolvePath(
       customFunctions,
       formState.namespace
-    )[field.fieldKey + "GetListFn"](
+    )[FieldGetList.replace("%", field.fieldKey)](
       GetRowFromFormState(formState),
       this.state,
       this.actions,
@@ -102,7 +103,7 @@ export class OvlListControl extends OvlBaseElement {
         <ovl-hitlist
           .props=${(state) => {
             let listData = resolvePath(customFunctions, formState.namespace)[
-              field.fieldKey + "GetListFn"
+              FieldGetList.replace("%", field.fieldKey)
             ](
               GetRowFromFormState(formState),
               state,
@@ -159,7 +160,7 @@ export class OvlListControl extends OvlBaseElement {
       this.writeBackValue = selectedKey
 
       let dataList = resolvePath(customFunctions, formState.namespace)[
-        field.fieldKey + "GetListFn"
+        FieldGetList.replace("%", field.fieldKey)
       ](
         GetRowFromFormState(formState),
         this.state,
@@ -199,7 +200,7 @@ export class OvlListControl extends OvlBaseElement {
       )
       if (filteredKeys.length === 1) {
         let dataList = resolvePath(customFunctions, formState.namespace)[
-          field.fieldKey + "GetListFn"
+          FieldGetList.replace("%", field.fieldKey)
         ](
           GetRowFromFormState(formState),
           this.state,
@@ -299,7 +300,7 @@ export class OvlListControl extends OvlBaseElement {
         let singleValue
         if (filteredKeys.length === 1) {
           let listData = resolvePath(customFunctions, formState.namespace)[
-            field.fieldKey + "GetListFn"
+            FieldGetList.replace("%", field.fieldKey)
           ](
             GetRowFromFormState(formState),
             this.state,
@@ -325,7 +326,7 @@ export class OvlListControl extends OvlBaseElement {
           })
 
           let listData = resolvePath(customFunctions, formState.namespace)[
-            field.fieldKey + "GetListFn"
+            FieldGetList.replace("%", field.fieldKey)
           ](
             GetRowFromFormState(formState),
             this.state,
@@ -434,7 +435,7 @@ export class OvlListControl extends OvlBaseElement {
                   let listData = resolvePath(
                     customFunctions,
                     formState.namespace
-                  )[field.fieldKey + "GetListFn"](
+                  )[FieldGetList.replace("%", field.fieldKey)](
                     GetRowFromFormState(formState),
                     state,
                     overmind.actions,
@@ -490,14 +491,13 @@ export class OvlListControl extends OvlBaseElement {
       align = field.ui.align
     }
     let displayValue = this.displayValue
+
     if (displayValue === undefined) {
+      let getListFnName = FieldGetList.replace("%", field.fieldKey)
       displayValue = GetListDisplayValue(
         field.list,
         field.value,
-
-        resolvePath(customFunctions, formState.namespace)[
-          field.fieldKey + "GetListFn"
-        ](
+        resolvePath(customFunctions, formState.namespace)[getListFnName](
           GetRowFromFormState(formState),
           this.state,
           this.actions,

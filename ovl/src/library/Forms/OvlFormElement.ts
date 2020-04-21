@@ -4,6 +4,7 @@ import { ListState } from "./Controls/ListControl"
 import { FormType, customFunctions, overmind, Screen } from "../.."
 import { resolvePath } from "../../global/globals"
 import { ColumnAlign } from "../Table/Table"
+import { FormAfterRender, FormShow } from "../../global/hooks"
 
 export type FieldFormat =
   | "2digits"
@@ -130,8 +131,8 @@ export class OvlFormElement extends OvlBaseElement {
               this.formState.namespace
             )
             if (formFunctions) {
-              if (formFunctions["FormAfterRender"]) {
-                this.formAfterRenderFn = formFunctions["FormAfterRender"]
+              if (formFunctions[FormAfterRender]) {
+                this.formAfterRenderFn = formFunctions[FormAfterRender]
                 this.callFormAfterRender()
                 return
               }
@@ -169,8 +170,8 @@ export class OvlFormElement extends OvlBaseElement {
                 this.formState.namespace
               )
               if (formFunctions) {
-                if (formFunctions["FormShow"]) {
-                  this.formShowFn = formFunctions["FormShow"]
+                if (formFunctions[FormShow]) {
+                  this.formShowFn = formFunctions[FormShow]
                   this.callFormShow()
                   return
                 }

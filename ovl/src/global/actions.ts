@@ -19,6 +19,7 @@ import {
   resolvePath,
 } from "./globals"
 import { SnackAdd, DialogOkCancel, DialogOk } from "../library/helpers"
+import { ScreenNavigateOut, ScreenNavigateIn } from "./hooks"
 
 function isTouch() {
   return "ontouchstart" in window
@@ -60,8 +61,8 @@ export const NavigateTo: AsyncAction<Screen> = async (
           o.lastScrollTop = undefined
         }
 
-        if (fn[currentScreen] && fn[currentScreen]["NavigateOut"]) {
-          let navErrorMessage = await fn[currentScreen]["NavigateOut"](
+        if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
+          let navErrorMessage = await fn[currentScreen][ScreenNavigateOut](
             state,
             actions,
             effects
@@ -74,8 +75,8 @@ export const NavigateTo: AsyncAction<Screen> = async (
           }
         }
       }
-      if (fn[value] && fn[value]["NavigateIn"]) {
-        let navErrorMessage = await fn[value]["NavigateIn"](
+      if (fn[value] && fn[value][ScreenNavigateIn]) {
+        let navErrorMessage = await fn[value][ScreenNavigateIn](
           state,
           actions,
           effects
@@ -137,8 +138,8 @@ export const NavigateBack: AsyncAction = async ({
         if (scrollable) {
           o.lastScrollTop = scrollable.scrollTop
         }
-        if (fn[currentScreen] && fn[currentScreen]["NavigateOut"]) {
-          let navErrorMessage = await fn[currentScreen]["NavigateOut"](
+        if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
+          let navErrorMessage = await fn[currentScreen][ScreenNavigateOut](
             state,
             actions,
             effects
@@ -156,8 +157,8 @@ export const NavigateBack: AsyncAction = async ({
           state.ovl.screens.nav.screensHistory.length - 2
         ]
       if (nextScreen) {
-        if (fn[nextScreen] && fn[nextScreen]["NavigateIn"]) {
-          let navErrorMessage = await fn[nextScreen]["NavigateIn"](
+        if (fn[nextScreen] && fn[nextScreen][ScreenNavigateIn]) {
+          let navErrorMessage = await fn[nextScreen][ScreenNavigateIn](
             state,
             actions,
             effects

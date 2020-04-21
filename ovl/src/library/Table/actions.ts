@@ -35,6 +35,21 @@ import {
 } from "./Table"
 import { overmind } from "../.."
 import { SnackAdd, SnackTrackedAdd, SnackTrackedRemove } from "../helpers"
+import {
+  FieldGetList,
+  FormCustomSort,
+  FormCustomSave,
+  FormBeforeSave,
+  FormSaveError,
+  FormAfterSave,
+  FormCopy,
+  FormAdd,
+  FormDeleteError,
+  FormAfterDelete,
+  FormCanDelete,
+  FormCanCopy,
+  FormCanEdit,
+} from "../../global/hooks"
 
 const minimumFilterChars = 3
 
@@ -235,7 +250,7 @@ export const TableRefreshDataFromServer: AsyncAction<{
         // its a lookup column, also check if lookup description is available
         let lookupDefKey = dataFieldsToLookups[c]
         let lookupColumnDef = def.columns[lookupDefKey]
-        let functionName = lookupDefKey + "GetListFn"
+        let functionName = FieldGetList.replace("%", lookupDefKey)
         let fn = resolvePath(customFunctions, def.namespace)
         if (!fn || !fn[functionName]) {
           console.error(
@@ -383,7 +398,7 @@ export const TableRebuild: AsyncAction<{
     let sortCustom = def.options.sortCustom
     let fn = resolvePath(customFunctions, def.namespace)
     if (sortCustom.selected && sortCustom.sorts[sortCustom.selected]) {
-      let functionName = sortCustom.selected + "SortFn"
+      let functionName = FormCustomSort.replace("%", sortCustom.selected)
       if (fn && fn[functionName]) {
         customSortFn = fn[functionName]
       } else {
@@ -544,9 +559,10 @@ const TableEditSaveRowHelper = async (
   }
   let res: any = {}
   let fn = resolvePath(customFunctions, def.namespace)
-  if (fn && fn.CustomSaveRow) {
+  let saveRowFnName = FormCustomSave
+  if (fn && fn[saveRowFnName]) {
     // ok there is a customSaveRow - Function
-    await fn.CustomSaveRow(
+    await fn[saveRowFnName](
       {
         key,
         tableDef: def,
@@ -571,9 +587,10 @@ const TableEditSaveRowHelper = async (
       if (isAdd) {
         mode = "add"
       }
+      let beforeSaveRowFnName = FormBeforeSave
       let fn = resolvePath(customFunctions, def.namespace)
-      if (fn && fn.BeforeSaveRow) {
-        await fn.BeforeSaveRow(
+      if (fn && fn[beforeSaveRowFnName]) {
+        await fn[beforeSaveRowFnName](
           <BeforeSaveParam>{
             key,
             mode,
@@ -597,10 +614,11 @@ const TableEditSaveRowHelper = async (
         if (res.status === 449) {
           return
         }
+        let saveErrorFnName = FormSaveError
         // handleError @@hook
         let fn = resolvePath(customFunctions, def.namespace)
-        if (fn && fn.CustomSaveRowErrorHandler) {
-          await fn.CustomSaveRowErrorHandler(
+        if (fn && fn[saveErrorFnName]) {
+          await fn[saveErrorFnName](
             {
               key,
               def,
@@ -652,8 +670,9 @@ const TableEditSaveRowHelper = async (
       }
 
       // afterSave @@hook
-      if (fn && fn.CustomSaveRowAfterSaveHandler) {
-        await fn.CustomSaveRowAfterSaveHandler(
+      let afterSaveFnName = FormAfterSave
+      if (fn && fn[afterSaveFnName]) {
+        await fn[afterSaveFnName](
           {
             key,
             def,
@@ -768,7 +787,11 @@ export const TableEditRow: Action<{
   let instanceId = "trow" + def.id + value.key
   let columns = def.columns
 
-  let formFields = getFormFieldsFromColumns(def, value.data.data[value.key])
+  let formFields = getFormFieldsFromColumns(
+    def,
+    value.data.data[value.key],
+    def.options.edit.editType === "big"
+  )
 
   let initForm: InitForm = {
     fields: formFields,
@@ -809,9 +832,10 @@ export const TableCopyRow: AsyncAction<{
     newRow[c] = null
   })
   // copyRow @@hook
+  let copyFnName = FormCopy
   let fn = resolvePath(customFunctions, def.namespace)
-  if (fn && fn.CustomCopyRowHandler) {
-    await fn.CustomCopyRowHandler(
+  if (fn && fn[copyFnName]) {
+    await fn[copyFnName](
       {
         key,
         newRow,
@@ -864,14 +888,9 @@ export const TableAddRow: AsyncAction<TableDataAndDef> = async (
 
   // addRow (Default Values) @@hook
   let fn = resolvePath(customFunctions, def.namespace)
-  if (fn && fn.CustomAddRowColumnDefaultsHandler) {
-    await fn.CustomAddRowColumnDefaultsHandler(
-      newRow,
-      value,
-      state,
-      actions,
-      effects
-    )
+  let addFnName = FormAdd
+  if (fn && fn[addFnName]) {
+    await fn[addFnName](newRow, value, state, actions, effects)
   }
   let insertMode = value.def.database.dbInsertMode
   if (insertMode !== "Manual") {
@@ -929,8 +948,9 @@ export const TableDeleteRow: AsyncAction<{
     if (!res.data) {
       // handleError @@hook
       let fn = resolvePath(customFunctions, def.namespace)
-      if (fn && fn.CustomDeleteRowErrorHandler) {
-        await fn.CustomDeleteRowErrorHandler(
+      let deleteErrorFnName = FormDeleteError
+      if (fn && fn[deleteErrorFnName]) {
+        await fn[deleteErrorFnName](
           {
             key,
             tableDef: def,
@@ -956,8 +976,9 @@ export const TableDeleteRow: AsyncAction<{
 
     // afterDelete @@hook
     let fn = resolvePath(customFunctions, def.namespace)
-    if (fn && fn.CustomDeleteRowAfterDeleteHandler) {
-      await fn.CustomDeleteRowAfterDeleteHandler(
+    let afterDeleteFnName = FormAfterDelete
+    if (fn && fn[afterDeleteFnName]) {
+      await fn[afterDeleteFnName](
         {
           key,
           def: def,
@@ -984,7 +1005,7 @@ export const TableMultipleDeleteRow: AsyncAction<{
 
   let canNotDeleteMsg = ""
   let selectedObjects = []
-  let functionName = "DeleteDisabledFn"
+  let functionName = FormCanDelete
   let fn = null
   let fnc = resolvePath(customFunctions, def.namespace)
   if (fnc && fnc[functionName]) {
@@ -1086,7 +1107,7 @@ export const TableMultipleCopyRow: AsyncAction<{
   let cancel: boolean = false
   let canNotCopyMsg = ""
   let selectedObjects = []
-  let functionName = "CopyDisabledFn"
+  let functionName = FormCanCopy
   let fn = null
   let fnc = resolvePath(customFunctions, def.namespace)
   if (fnc && fnc[functionName]) {
@@ -1181,7 +1202,7 @@ export const TableMultipleEditRow: AsyncAction<{
   let cancel: boolean = false
   let canNotEditMsg = ""
   let selectedObjects = []
-  let functionName = "EditDisabledFn"
+  let functionName = FormCanEdit
   let fn = null
   let fnc = resolvePath(customFunctions, def.namespace)
   if (fnc && fnc[functionName]) {

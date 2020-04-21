@@ -14,6 +14,7 @@ import {
 
 import { resolvePath } from "../../global/globals"
 import { SnackAdd } from "../helpers"
+import { FormStatus } from "../../global/hooks"
 export type TableRowDef = {
   data: TableData
   selected: SelectedRow
@@ -211,8 +212,9 @@ export class TableRowWrapper extends OvlBaseElement {
     let rowStatus = ""
     let rowStatusMsg = ""
     let fn = resolvePath(customFunctions, def.namespace)
-    if (fn && fn.GetRowStatus) {
-      let status = await fn.GetRowStatus(
+    let fnName = FormStatus
+    if (fn && fn[fnName]) {
+      let status = await fn[fnName](
         key,
         this.row.tableDef,
         data,

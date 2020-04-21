@@ -8,6 +8,7 @@ import { DialogResult } from "../actions"
 import { customFunctions, overmind } from "../../index"
 import { overlayToRender } from "../Overlay/Overlay"
 import { ListControlState } from "../Forms/Controls/ListControl"
+import { FieldIsReadOnly } from "../../global/hooks"
 
 export class TableRowFormBig extends OvlFormElement {
   props: any
@@ -131,7 +132,7 @@ export class TableRowFormBig extends OvlFormElement {
             }
             let readonly = col.ui.readonly
             // @@hook
-            let functionName = k + "IsReadOnlyFn"
+            let functionName = FieldIsReadOnly.replace("%", k)
             let fn = resolvePath(customFunctions, def.namespace)
             if (fn && fn[functionName]) {
               readonly = fn[functionName](

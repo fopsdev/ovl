@@ -10,7 +10,7 @@ export const ScreenRefresh = async (
   actions.ovl.table.TableRefresh({ defId, data, forceServerDataRefresh: true })
 }
 
-export const NavigateIn = async (
+export const ScreenNavigateIn = async (
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects

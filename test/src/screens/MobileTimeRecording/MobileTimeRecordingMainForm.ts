@@ -4,7 +4,7 @@ import { getFormFieldsFromColumns } from "../../../../ovl/src/library/Table/help
 import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
 import { ovltemp, N, api } from "../../../../ovl/src/global/globals"
 import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
-import { U_TypeIdGetListFn } from "./MobileTimeRecordingDetail/customFunctions"
+import { Field_U_TypeId_GetList } from "./MobileTimeRecordingDetail/customFunctions"
 import { overmind } from "../../../../ovl/src"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
@@ -185,7 +185,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
             let listValue1 = GetListDisplayValue(
               def.columns.U_TypeId.list,
               data[k].U_TypeId,
-              U_TypeIdGetListFn(
+              Field_U_TypeId_GetList(
                 data[k],
                 this.state,
                 this.actions,

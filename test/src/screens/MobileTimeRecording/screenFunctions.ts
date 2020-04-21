@@ -28,7 +28,7 @@ export const ScreenRefresh = async (
   })
 }
 
-export const NavigateIn = async (
+export const ScreenNavigateIn = async (
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -54,7 +54,7 @@ export const NavigateIn = async (
   })
 }
 
-export const NavigateOut = async (
+export const ScreenNavigateOut = async (
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects

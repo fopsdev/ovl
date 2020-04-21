@@ -6,12 +6,7 @@ import * as user from "./screens/Login/customFunctions"
 import * as mobiletimerecording from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/customFunctions"
 import * as mobiletimerecordingmain from "./screens/MobileTimeRecording/customFunctions"
 // screenFunctions
-import {
-  NavigateIn,
-  NavigateOut,
-  ScreenRefresh,
-  ScreenShow,
-} from "./screens/MobileTimeRecording/screenFunctions"
+import * as MobileTimeEntry from "./screens/MobileTimeRecording/screenFunctions"
 import * as settings from "./screens/settings/customFunctions"
 import * as Settings from "./screens/settings/screenFunctions"
 import * as TableTesting from "./screens/TableTesting/screenFunctions"
@@ -30,7 +25,7 @@ let screens: { [key in Screen]?: any } = {
   Translation,
   Audit,
   TableTesting,
-  MobileTimeEntry: { NavigateIn, NavigateOut, ScreenRefresh, ScreenShow },
+  MobileTimeEntry,
   MobileTimeEntryForm: {},
   Settings,
   Feedback,

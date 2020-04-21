@@ -11,17 +11,17 @@ export const ScreenRefresh = async (
   await actions.ovl.table.TableRefresh({
     defId,
     data,
-    forceServerDataRefresh: true
+    forceServerDataRefresh: true,
   })
   defId = "tab2"
   actions.ovl.table.TableRefresh({
     defId,
     data,
-    ignoreRefreshedMessageSnack: true
+    ignoreRefreshedMessageSnack: true,
   })
 }
 
-export const NavigateIn = async (
+export const ScreenNavigateIn = async (
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -32,17 +32,17 @@ export const NavigateIn = async (
     defId,
     data,
     ignoreRefreshedMessageSnack: true,
-    refreshServerDataIfOlderThan: 10
+    refreshServerDataIfOlderThan: 10,
   })
   defId = "tab2"
   actions.ovl.table.TableRefresh({
     defId,
     data,
-    ignoreRefreshedMessageSnack: true
+    ignoreRefreshedMessageSnack: true,
   })
 }
 
-export const NavigateOut = async (
+export const ScreenNavigateOut = async (
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects

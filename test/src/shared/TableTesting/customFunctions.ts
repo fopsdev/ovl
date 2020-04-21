@@ -45,7 +45,7 @@ export const FormAfterRender = async (
   document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()
 }
 
-export const CustomAddRowColumnDefaultsHandler = async (
+export const FormAdd = async (
   newRow: TableTesting,
   tableDef: TableDataAndDef,
   state: typeof overmind.state,
@@ -54,7 +54,7 @@ export const CustomAddRowColumnDefaultsHandler = async (
 ) => {
   newRow.U_Memo = "Defaulttext Memo"
 }
-export const CustomSelectRow = async (
+export const FormSelectRow = async (
   row: { [key: string]: {} },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -73,9 +73,13 @@ export const FormChanged = async (
     case "U_ItmsGrpCod":
       // check if the entry is still in the list
       if (value.newConvertedVal) {
-        let listdata = U_ItemCodeGetListFn(value.row, state, actions, effects)
+        let listdata = Field_U_ItemCode_GetList(
+          value.row,
+          state,
+          actions,
+          effects
+        )
         let itemCode = value.formState.fields["U_ItemCode"].value
-
         if (itemCode) {
           let itemGroup = listdata.data[itemCode]["ItmsGrpCod"]
 
@@ -115,7 +119,7 @@ export const FormValidate = async (
   }
 }
 
-export const GetRowStatus = async (
+export const FormStatus = async (
   key: string,
   tableDef: TableDef,
   data: TableData,
@@ -146,7 +150,7 @@ export const GetRowStatus = async (
 // if it should be disabled please provide a text (will be the tooltip) if it should be enabled just return empty string
 // */
 
-export const EditDisabledFn = async (
+export const FormCanEdit = async (
   rowKey: string,
   tableDefAndData: TableDataAndDef,
   state: typeof overmind.state,
@@ -161,7 +165,7 @@ export const EditDisabledFn = async (
   )
 }
 
-export const DeleteDisabledFn = async (
+export const FormCanDelete = async (
   rowKey: string,
   tableDefAndData: TableDataAndDef,
   state: typeof overmind.state,
@@ -176,7 +180,7 @@ export const DeleteDisabledFn = async (
   )
 }
 
-export const alphaThenMemoSortFn = (
+export const Form_alphaThenMemo_Sort = (
   a: string,
   b: string,
   data: TblTableTesting,
@@ -194,7 +198,7 @@ export const alphaThenMemoSortFn = (
   return res
 }
 
-export const memoThenAlphaSortFn = (
+export const Form_memoThenAlpha_Sort = (
   a: string,
   b: string,
   data: TblTableTesting,
@@ -212,7 +216,7 @@ export const memoThenAlphaSortFn = (
   return res
 }
 
-export const onlyTestSortFn = (
+export const Form_onlyTest_Sort = (
   a: string,
   b: string,
   data: TblTableTesting,
@@ -228,7 +232,7 @@ export const onlyTestSortFn = (
   }
 }
 
-export const alphaStartsWithAFilterFn = (
+export const Form_alphaStartsWithA_Filter = (
   def: TableDef,
   data: TableData,
   key: string,
@@ -241,7 +245,7 @@ export const alphaStartsWithAFilterFn = (
   return row.U_Alpha.startsWith("A")
 }
 
-export const alphaStartsWithBFilterFn = (
+export const Form_alphaStartsWithB_Filter = (
   def: TableDef,
   data: TableData,
   key: string,
@@ -254,7 +258,7 @@ export const alphaStartsWithBFilterFn = (
   return row.U_Alpha.startsWith("B")
 }
 
-export const memoContainsTestFilterFn = (
+export const Form_memoContainsTest_Filter = (
   def: TableDef,
   data: TableData,
   key: string,
@@ -266,7 +270,7 @@ export const memoContainsTestFilterFn = (
   return row.U_Memo.toLowerCase().indexOf("test") > -1
 }
 
-export const memoContainsTextFilterFn = (
+export const Form_memoContainsText_Filter = (
   def: TableDef,
   data: TableData,
   key: string,
@@ -280,7 +284,7 @@ export const memoContainsTextFilterFn = (
 
 // some list functions
 
-export const U_ItemCodeGetListFn = (
+export const Field_U_ItemCode_GetList = (
   row: { [key: string]: {} },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -289,7 +293,7 @@ export const U_ItemCodeGetListFn = (
   return state.testtables.lookups.U_ItemCode
 }
 
-export const U_ItemCodeLookupPostDataFn = (
+export const Field_U_ItemCode_LookupPostData = (
   lookupData: LookupListPostData,
   row: {},
   state: typeof overmind.state,
@@ -299,7 +303,7 @@ export const U_ItemCodeLookupPostDataFn = (
   lookupData.paramList.U_ItmsGrpCod = row["U_ItmsGrpCod"]
 }
 
-export const U_ItmsGrpCodGetListFn = (
+export const Field_U_ItmsGrpCod_GetList = (
   row: { [key: string]: {} },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -308,7 +312,7 @@ export const U_ItmsGrpCodGetListFn = (
   return state.testtables.lookups.U_ItmsGrpCod
 }
 
-export const U_ParentCodeGetListFn = (
+export const Field_U_ParentCode_GetList = (
   row: { [key: string]: {} },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -317,7 +321,7 @@ export const U_ParentCodeGetListFn = (
   return state.testtables.tableTesting
 }
 
-export const U_ParentCode2GetListFn = (
+export const Field_U_ParentCode2_GetList = (
   row: { [key: string]: {} },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -329,7 +333,7 @@ export const U_ParentCode2GetListFn = (
   }
 }
 
-export const U_ItemCodeGetFilteredListFn = (
+export const Field_U_ItemCode_GetFilteredList = (
   list: ListFnReturnValue,
   formState: FormState,
   state: typeof overmind.state,

@@ -4,6 +4,8 @@ import { TableRowDataDef } from "./RowWrapper"
 import { getDisplayValue } from "./helpers"
 import { customFunctions, overmind } from "../../index"
 import { resolvePath } from "../../global/globals"
+import { GetLabel } from "../forms/Controls/helpers"
+import { FieldGetList } from "../../global/hooks"
 
 export let cachedFn: Map<string, any> = new Map<string, any>()
 export class TableRow extends OvlBaseElement {
@@ -20,14 +22,14 @@ export class TableRow extends OvlBaseElement {
     let align = this.row.columnsAlign
     let columnsVisible = this.row.columnsVisible
     return html`
-      ${Object.keys(columns).map(k => {
+      ${Object.keys(columns).map((k) => {
         let col = columns[k]
         if (!columnsVisible[k]) {
           return null
         }
         let listdata
         if (col.list) {
-          let functionName = k + "GetListFn"
+          let functionName = FieldGetList.replace("%", k)
           let cacheKey = functionName + def.namespace
           let cFn = cachedFn.get(cacheKey)
           if (cFn) {

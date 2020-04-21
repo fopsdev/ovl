@@ -5,6 +5,13 @@ import { TableDef, RowControlAction, TableData, TableDataAndDef } from "./Table"
 import { customFunctions, overmind } from "../../index"
 import { ovltemp, resolvePath } from "../../global/globals"
 import { SnackAdd } from "../helpers"
+import {
+  FormCanCustom,
+  FormCanDelete,
+  FormCanCopy,
+  FormCanEdit,
+  FormCanMore,
+} from "../../global/hooks"
 
 export type NavProps = {
   tableDef: TableDef
@@ -42,7 +49,7 @@ export class TableRowControl extends OvlBaseElement {
     let customFunctionFound = false
     let customFns = resolvePath(customFunctions, this.nav.tableDef.namespace)
     if (customFns) {
-      let customFunctionName = "Custom" + key + "Row"
+      let customFunctionName = "Form" + key
       let customFunction = customFns[customFunctionName]
 
       if (customFunction) {
@@ -51,7 +58,7 @@ export class TableRowControl extends OvlBaseElement {
           {
             key: this.nav.key,
             def: this.nav.tableDef,
-            data: this.nav.data
+            data: this.nav.data,
           },
           this.state,
           this.actions,
@@ -72,7 +79,7 @@ export class TableRowControl extends OvlBaseElement {
       this.actions.ovl.internal[actionName]({
         key: this.nav.key,
         def: this.nav.tableDef,
-        data: this.nav.data
+        data: this.nav.data,
       })
     }
   }
@@ -95,11 +102,11 @@ export class TableRowControl extends OvlBaseElement {
     // first all custom ones
     if (def.options.customRowActions) {
       let wait = Promise.all(
-        Object.keys(def.options.customRowActions).map(async k => {
+        Object.keys(def.options.customRowActions).map(async (k) => {
           let custom = def.options.customRowActions[k]
           let disabled = false
           let title = custom.name
-          let functionName = k + "DisabledFn"
+          let functionName = FormCanCustom.replace("%", k)
 
           if (fn && fn[functionName]) {
             disabled = true
@@ -116,7 +123,7 @@ export class TableRowControl extends OvlBaseElement {
                 disabled: disabled,
                 icon: custom.icon,
                 custom: true,
-                name: title
+                name: title,
               }
             }
           } else {
@@ -134,7 +141,7 @@ export class TableRowControl extends OvlBaseElement {
     if (def.features.delete) {
       let deleteDisabled = false
       let deleteTitle = ""
-      let functionName = "DeleteDisabledFn"
+      let functionName = FormCanDelete
 
       if (fn && fn[functionName]) {
         deleteTitle = await fn[functionName](
@@ -148,7 +155,7 @@ export class TableRowControl extends OvlBaseElement {
             disabled: deleteDisabled,
             icon: "sap-icon--delete",
             custom: false,
-            name: deleteTitle
+            name: deleteTitle,
           }
         }
       }
@@ -157,7 +164,7 @@ export class TableRowControl extends OvlBaseElement {
           disabled: false,
           icon: "sap-icon--delete",
           custom: false,
-          name: "Datensatz löschen"
+          name: "Datensatz löschen",
         }
       }
     }
@@ -167,7 +174,7 @@ export class TableRowControl extends OvlBaseElement {
       let copyDisabled = false
       let copyTitle = ""
       //@@hook
-      let functionName = "CopyDisabledFn"
+      let functionName = FormCanCopy
 
       if (fn && fn[functionName]) {
         copyTitle = await fn[functionName](
@@ -181,7 +188,7 @@ export class TableRowControl extends OvlBaseElement {
             disabled: copyDisabled,
             icon: "sap-icon--copy",
             custom: false,
-            name: copyTitle
+            name: copyTitle,
           }
         }
       }
@@ -190,7 +197,7 @@ export class TableRowControl extends OvlBaseElement {
           disabled: false,
           icon: "sap-icon--copy",
           custom: false,
-          name: "Datensatz duplizieren"
+          name: "Datensatz duplizieren",
         }
       }
     }
@@ -200,7 +207,7 @@ export class TableRowControl extends OvlBaseElement {
       let editDisabled = false
       let editTitle = ""
       //@@hook
-      let functionName = "EditDisabledFn"
+      let functionName = FormCanEdit
       if (fn && fn[functionName]) {
         editTitle = await fn[functionName](
           this.nav.key,
@@ -213,7 +220,7 @@ export class TableRowControl extends OvlBaseElement {
             disabled: editDisabled,
             icon: "sap-icon--edit",
             custom: false,
-            name: editTitle
+            name: editTitle,
           }
         }
       }
@@ -222,7 +229,7 @@ export class TableRowControl extends OvlBaseElement {
           disabled: false,
           icon: "sap-icon--edit",
           custom: false,
-          name: "Datensatz ändern"
+          name: "Datensatz ändern",
         }
       }
     }
@@ -231,7 +238,7 @@ export class TableRowControl extends OvlBaseElement {
     let moreDisabled = false
     let moreTitle = ""
     //@@hook
-    let functionName = "MoreDisabledFn"
+    let functionName = FormCanMore
     if (fn && fn[functionName]) {
       moreTitle = fn[functionName](
         this.nav.key,
@@ -244,7 +251,7 @@ export class TableRowControl extends OvlBaseElement {
           disabled: moreDisabled,
           icon: "sap-icon--overflow",
           custom: false,
-          name: moreTitle
+          name: moreTitle,
         }
       }
     }
@@ -253,7 +260,7 @@ export class TableRowControl extends OvlBaseElement {
         disabled: false,
         icon: "sap-icon--overflow",
         custom: false,
-        name: "Tabellenfunktionen"
+        name: "Tabellenfunktionen",
       }
     }
 
@@ -274,8 +281,8 @@ export class TableRowControl extends OvlBaseElement {
       }
       return html`
         <button
-          @long-press="${e => this.handleRowLongPress(e, button.name)}"
-          @click="${e => this.handleClick(e, k, button.custom)}"
+          @long-press="${(e) => this.handleRowLongPress(e, button.name)}"
+          @click="${(e) => this.handleClick(e, k, button.custom)}"
           ?disabled=${button.disabled}
           id="${k + this.nav.key}"
           title="${button.name}"

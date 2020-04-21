@@ -89,7 +89,6 @@ export class OvlTextbox extends OvlBaseElement {
         @focusout=${(e) => this.handleFocusOut(e)}
         @keydown=${(e) => this.handleKeyDown(e)}
         style="${style} ${align}"
-        ?readonly="${field.ui.readonly}"
         autocomplete="off"
         inputmode="${inputMode}"
         class="fd-input ${res.validationType} fd-has-type-1"
