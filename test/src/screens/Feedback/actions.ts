@@ -3,23 +3,11 @@ import { T, api } from "../../../../ovl/src/global/globals"
 import {
   FormState,
   GetFormValidationErrors,
-  ValidateField,
+  ValidateFieldType,
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { FieldId } from "./FeedbackForm"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
-
-export const FeedbackValidateField: Action<ValidateField> = (_, value) => {
-  switch (<FieldId>value.fieldId) {
-    case "msg":
-      Mandatory(
-        T("PortalFeedbackPleaseEnterText"),
-        value.newVal,
-        value.validationResult
-      )
-      break
-  }
-}
 
 export const SaveFeedback: AsyncAction<FormState> = async (
   { state, actions, effects },

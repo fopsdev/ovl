@@ -73,8 +73,6 @@ export class CompMobileTimeEntry extends OvlFormElement {
       instanceId: def.id,
       namespace: def.namespace,
       schema: data.schema,
-      validationFnName: "RowValidate",
-      changedFnName: "RowChanged",
       forceOverwrite,
     }
     this.actions.ovl.form.InitForm(initForm)

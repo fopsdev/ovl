@@ -7,7 +7,7 @@ import {
 } from "../../../../ovl/src/library/Table/Table"
 import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
 import {
-  ValidateField,
+  ValidateFieldType,
   FormState,
   Field,
   FieldChanged,
@@ -30,7 +30,7 @@ export const FormShow = async (
   console.log(formState)
 }
 
-export const MobileTimeRecordingMainChangeField = async (
+export const FormChanged = async (
   value: FieldChanged,
   state: typeof overmind.state,
   actions: typeof overmind.actions,

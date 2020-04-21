@@ -14,7 +14,7 @@ import { getTextSort } from "../../../../ovl/src/library/Table/helpers"
 import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
 import {
   FormState,
-  ValidateField,
+  ValidateFieldType,
   FieldChanged,
   ChangeField,
 } from "../../../../ovl/src/library/forms/actions"
@@ -63,7 +63,7 @@ export const CustomSelectRow = async (
   SnackAdd("Funktion noch nicht implementiert", "Warning")
 }
 
-export const RowChanged = async (
+export const FormChanged = async (
   value: FieldChanged,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -102,8 +102,8 @@ export const RowChanged = async (
   }
 }
 
-export const RowValidate = async (
-  value: ValidateField,
+export const FormValidate = async (
+  value: ValidateFieldType,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects

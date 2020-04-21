@@ -16,6 +16,7 @@ import * as settings from "./screens/settings/customFunctions"
 import * as Settings from "./screens/settings/screenFunctions"
 import * as TableTesting from "./screens/TableTesting/screenFunctions"
 import * as translations from "./screens/Translation/customFunctions"
+import * as feedback from "./screens/Feedback/customFunctions"
 import * as Translation from "./screens/Translation/screenFunctions"
 import * as tabletesting from "./shared/TableTesting/customFunctions"
 export let testtables = {
@@ -23,7 +24,7 @@ export let testtables = {
   mobiletimerecording,
   mobiletimerecordingmain,
 }
-export let portal = { settings, system: { user, translations } }
+export let portal = { settings, system: { user, translations }, feedback }
 
 let screens: { [key in Screen]?: any } = {
   Translation,

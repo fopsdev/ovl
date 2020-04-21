@@ -1,6 +1,6 @@
 import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
 import {
-  ValidateField,
+  ValidateFieldType,
   FormState,
   GetFormValidationErrors,
 } from "../../../../ovl/src/library/forms/actions"

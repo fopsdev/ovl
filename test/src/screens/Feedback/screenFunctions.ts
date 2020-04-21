@@ -15,8 +15,7 @@ export const NavigateIn = async (
     },
   }
   let initForm: InitForm = {
-    validationFnName: "FeedbackValidateField",
-    namespace: "feedback",
+    namespace: "portal.feedback",
     instanceId: state.ovl.screens.screens.Feedback.type,
     formType: "Feedback",
     fields,

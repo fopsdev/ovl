@@ -26,7 +26,6 @@ export const NavigateIn = async (
     },
   }
   let initForm: InitForm = {
-    validationFnName: "SettingsValidateField",
     namespace: "portal.settings",
     instanceId: "settingsform",
     formType: "Settings",

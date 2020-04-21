@@ -42,8 +42,6 @@ export class OvlFormElement extends OvlBaseElement {
 
   schema: { [key: string]: Schema }
   namespace: string
-  validationFnName: string
-  changedFnName: string
   formState: FormState
   formAfterRenderFn: any
   formShowFn: any

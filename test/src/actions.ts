@@ -5,54 +5,50 @@ import {
   HandleAdditionalLanguageResult,
   CustomInit,
   HandleRefresh,
-  TogglePDFPopup
+  TogglePDFPopup,
 } from "./global/actions"
 let user = {
   LoginValidateField,
   Login,
   ForgotPw,
   HandleAdditionalLanguageResult,
-  CustomInit
+  CustomInit,
 }
 
 let global = { HandleRefresh, TogglePDFPopup }
 
 import { SaveSettings } from "./screens/Settings/actions"
 let settings = {
-  SaveSettings
+  SaveSettings,
 }
 
 import {
   CloseMainMenu,
   OpenMainMenu,
   OpenUserMenu,
-  CloseUserMenu
+  CloseUserMenu,
 } from "./screens/Shellbar/actions"
 let shellbar = {
   CloseMainMenu,
   OpenMainMenu,
   OpenUserMenu,
-  CloseUserMenu
+  CloseUserMenu,
 }
 
 import {
   PreparePositiveFeedback,
   PrepareNegativeFeedback,
   PrepareDeliveryDateFeedback,
-  SelectOrder
+  SelectOrder,
 } from "./screens/Order/actions"
 let order = {
   PreparePositiveFeedback,
   PrepareNegativeFeedback,
   PrepareDeliveryDateFeedback,
-  SelectOrder
+  SelectOrder,
 }
 
-import { SaveFeedback, FeedbackValidateField } from "./screens/Feedback/actions"
-let feedback = {
-  SaveFeedback,
-  FeedbackValidateField
-}
+import * as feedback from "./screens/Feedback/actions"
 
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 
@@ -61,7 +57,7 @@ export const portal = {
   global,
   settings,
   order,
-  feedback
+  feedback,
 }
 
 export const testtables = { mobiletimerecording }

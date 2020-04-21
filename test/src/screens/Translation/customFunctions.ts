@@ -1,5 +1,5 @@
 import {
-  ValidateField,
+  ValidateFieldType,
   FormState,
 } from "../../../../ovl/src/library/forms/actions"
 import { TableDef, TableData } from "../../../../ovl/src/library/Table/Table"
@@ -26,8 +26,8 @@ export const FormAfterRender = async (
   console.log("hello from  translation formafterrender hook.")
 }
 
-export const RowValidate = async (
-  value: ValidateField,
+export const FormValidate = async (
+  value: ValidateFieldType,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects

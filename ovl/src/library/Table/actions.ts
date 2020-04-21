@@ -776,16 +776,10 @@ export const TableEditRow: Action<{
     instanceId,
     namespace: def.namespace,
     schema: value.data.schema,
-    validationFnName: "RowValidate",
-    changedFnName: "RowChanged",
     forceOverwrite: true,
   }
   actions.ovl.form.InitForm(initForm)
   let editRow = value.def.uiState.editRow
-  // if (def.options.edit.editType === "big") {
-  //   actions.ovl.overlay.OpenOverlay(null)
-  // }
-
   editRow[value.key].selected = true
 }
 

@@ -1,13 +1,13 @@
 import { overmind } from "../.."
 import { T } from "../../../../ovl/src/global/globals"
-import { ValidateField } from "../../../../ovl/src/library/forms/actions"
+import { ValidateFieldType } from "../../../../ovl/src/library/forms/actions"
 import {
   Mandatory,
   MinLength,
 } from "../../../../ovl/src/library/forms/validators"
 
-export const SettingsValidateField = (
-  value: ValidateField,
+export const FormValidate = (
+  value: ValidateFieldType,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
