@@ -66,7 +66,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
       await this.actions.ovl.internal.TableAddRow(tableDataAndDef)
       rowKey = def.uiState.currentlyAddingKey
     }
-    let formFields = getFormFieldsFromColumns(def, data.data[rowKey], true)
+    let formFields = getFormFieldsFromColumns(def, data.data[rowKey])
     let initForm: InitForm = {
       fields: formFields,
       formType: "MobileTimeEntry",

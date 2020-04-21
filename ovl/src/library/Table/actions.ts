@@ -790,7 +790,7 @@ export const TableEditRow: Action<{
   let formFields = getFormFieldsFromColumns(
     def,
     value.data.data[value.key],
-    def.options.edit.editType === "big"
+    def.options.edit.editType !== "big"
   )
 
   let initForm: InitForm = {

@@ -701,7 +701,7 @@ export const TableFilterFn = (
 export const getFormFieldsFromColumns = (
   def: TableDef,
   row,
-  keyAsLabelIfNone?: boolean
+  noLabel?: boolean
 ) => {
   let formFields: { [key: string]: FormFields } = {}
   let columns = def.columns
@@ -718,12 +718,10 @@ export const getFormFieldsFromColumns = (
       list: col.list,
       ui: JSON.parse(JSON.stringify(col.ui)),
     }
-    if (keyAsLabelIfNone) {
-      if (!formFields[k].ui) {
-        formFields[k].ui = {}
-      }
-      formFields[k].ui.useFieldKeyForLabel = keyAsLabelIfNone
+    if (!formFields[k].ui) {
+      formFields[k].ui = {}
     }
+    formFields[k].ui.noLabel = !!noLabel
   })
   return formFields
 }

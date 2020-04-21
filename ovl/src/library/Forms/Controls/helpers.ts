@@ -189,10 +189,15 @@ export const GetRowFromFormState = (formState: FormState) => {
 
 export const GetLabel = (field: Field): string => {
   let caption = ""
+
   if (field.ui) {
+    if (field.ui.noLabel) {
+      return ""
+    }
+
     if (field.ui.labelTranslationKey) {
       caption = T(field.ui.labelTranslationKey)
-    } else if (field.ui.useFieldKeyForLabel) {
+    } else {
       caption = field.fieldKey
     }
   }

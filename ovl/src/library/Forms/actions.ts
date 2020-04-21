@@ -27,7 +27,7 @@ export type Field = {
   fieldKey: string
   ui?: {
     labelTranslationKey?: string
-    useFieldKeyForLabel?: boolean
+    noLabel?: boolean
     format?: FieldFormat
     align?: ColumnAlign
     inline?: boolean
