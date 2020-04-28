@@ -41,6 +41,14 @@ OvlConfig.apiUrl = {
   devServer: "http://192.168.1.117:1233/api/",
 }
 
+OvlConfig.stickyHeaderEnabled = (state: typeof overmind.state) => {
+  return (
+    !state.ovl.uiState.isIOS &&
+    !state.ovl.screens.screens.Shellbar.mainMenuExpanded &&
+    !state.ovl.screens.screens.Shellbar.userMenuExpanded
+  )
+}
+
 overmind.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
 
 window.scrollTo(0, 1)

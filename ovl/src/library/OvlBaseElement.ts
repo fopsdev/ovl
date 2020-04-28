@@ -80,23 +80,37 @@ export class OvlBaseElement extends HTMLElement {
   // }
 
   afterRender() {
-    // use it eg. for dom manips after rendering ...
+    // use it eg. for dom manips after rendering which doesn't need to be visible yet
   }
 
-  handleAnimationEnd = (e) => {
-    if (e.animationName === "fadeOut") {
-      this.actions.ovl.internal.SetVisibleFalse(this.screen)
-      let screen = this.state.ovl.screens.nav.nextScreen
+  updated() {
+    // use it eg. for dom manips after rerendering/displaying. use it eg. to set focus
+  }
+
+  handleAnimationStart = (e) => {
+    if (e.animationName === "fadeInScreen") {
+      let screen = this.state.ovl.screens.nav.currentScreen
       let lastScrollTop = this.state.ovl.screens.screenState[screen]
         .lastScrollTop
       // set scroll to remembered pos
-      setTimeout(() => {
-        let scrollable = document.querySelector(".scrollable")
+      let scrollable
+      if (this.state.ovl.uiState.isMobile) {
+        scrollable = document.querySelector(".scrollableMobile")
+      } else {
+        scrollable = document.querySelector(".scrollable")
+      }
+      //console.log(scrollable)
+      if (scrollable) {
         if (!lastScrollTop) {
           lastScrollTop = 0
         }
-        scrollable.scrollTop = lastScrollTop
-      }, 5)
+        scrollable.scrollTo({
+          top: lastScrollTop,
+          left: 0,
+          behavior: "smooth",
+        })
+      }
+
       // if there is a screen show function call it
       if (customFunctions) {
         let screensFunctions = customFunctions["screens"]
@@ -112,6 +126,12 @@ export class OvlBaseElement extends HTMLElement {
           }
         }
       }
+    }
+  }
+
+  handleAnimationEnd = (e) => {
+    if (e.animationName === "fadeOutScreen") {
+      this.actions.ovl.internal.SetVisibleFalse(this.screen)
     }
   }
 
@@ -132,17 +152,17 @@ export class OvlBaseElement extends HTMLElement {
     // from here now this.state.xy will be tracked
     if (this.screen) {
       if (!this.screenClosing()) {
-        this.animatedClass = " animated fadeIn faster"
+        this.animatedClass = " fadeInScreen"
       } else {
         // no complete rerender is necessary
         // just set the animation class accordingly
         //this.animatedClass = " animated fadeOut faster nopointerevents"
-        let els = this.getElementsByClassName("animated fadeIn faster")
+        let els = this.getElementsByClassName("fadeInScreen")
         if (els.length > 0) {
           let el = els[0]
-          el.classList.add("fadeOut")
+          el.classList.add("fadeOutScreen")
           el.classList.add("nopointerevents")
-          el.classList.remove("fadeIn")
+          el.classList.remove("fadeInScreen")
           return
         }
       }
@@ -160,7 +180,12 @@ export class OvlBaseElement extends HTMLElement {
       render(res, this)
     }
     this.setUI()
+
     this.afterRender()
+    setTimeout(() => {
+      this.updated()
+    }, 50)
+
     //console.log(this.trackedTree.pathDependencies)
 
     // always track translations
@@ -236,6 +261,7 @@ export class OvlBaseElement extends HTMLElement {
     }, this.onUpdate)
     if (this.screen) {
       this.addEventListener("animationend", this.handleAnimationEnd, true)
+      this.addEventListener("animationstart", this.handleAnimationStart, true)
     }
   }
 
@@ -243,6 +269,7 @@ export class OvlBaseElement extends HTMLElement {
     //console.log(this.name + " disconnect")
     if (this.screen) {
       this.removeEventListener("animationend", this.handleAnimationEnd)
+      this.removeEventListener("animationstart", this.handleAnimationStart)
     }
     overmind.eventHub.emitAsync(EventType.COMPONENT_REMOVE, {
       componentId: this.name,

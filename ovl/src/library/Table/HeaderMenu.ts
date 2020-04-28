@@ -337,7 +337,8 @@ export class TableHeaderMenu extends OvlBaseElement {
               let displayVal = getDisplayValue(
                 selectedColumn,
                 columnDef,
-                data[k1]
+                data[k1],
+                def.namespace
               )
               let keyval = val
               if (!keyval) {
@@ -779,29 +780,20 @@ export class TableHeaderMenu extends OvlBaseElement {
         </li>
       `
     }
-    let tableNavigation
-    let paging = this.headerMenu.def.def.options.paging
 
+    let paging = this.headerMenu.def.def.options.paging
+    let navcontrol
     if (def.features.page && dataFilteredAndSorted.length > paging.pageSize) {
-      tableNavigation = html`
-        <div class="fd-menu__group">
-          <h4 class="fd-menu__title">
-            Navigation Tabelle
-          </h4>
-          <ul class="fd-menu__list">
-            <li>
-              <ovl-tnavcontrol
-                style="margin-left:24px;"
-                .props=${() => {
-                  return {
-                    tableData: this.headerMenu.def,
-                    type: "header",
-                  } as NavDef
-                }}
-              ></ovl-tnavcontrol>
-            </li>
-          </ul>
-        </div>
+      navcontrol = html`
+        <ovl-tnavcontrol
+          style="margin-left:24px;"
+          .props=${() => {
+            return {
+              tableData: this.headerMenu.def,
+              type: "header",
+            } as NavDef
+          }}
+        ></ovl-tnavcontrol>
       `
     }
 
@@ -882,30 +874,44 @@ export class TableHeaderMenu extends OvlBaseElement {
     }
 
     this.lastTemplateResult = html`
-      <div
-        tabindex="0"
-        id="ovl_headerMenu"
-        style="${headerMenuwidth}"
-        class="fd-panel"
-        @mousedown=${handleMainMouseDown}
-        @click="${(e) => this.handleCloseHeaderMenu(e)}"
-        aria-hidden="false"
-      >
-        <nav class="fd-menu" id="">
-          ${columnFunctions} ${customSort} ${customFilter} ${selectedFunctions}
-          ${tableFunctions} ${tableNavigation}
-        </nav>
+      <div>
+        <div
+          tabindex="0"
+          id="ovl_headerMenu"
+          style="${headerMenuwidth}"
+          class="fd-panel"
+          @mousedown=${handleMainMouseDown}
+          @click="${(e) => this.handleCloseHeaderMenu(e)}"
+          aria-hidden="false"
+        >
+          <nav class="fd-menu" id="ovl_headerMenuScroll">
+            ${columnFunctions} ${customSort} ${customFilter}
+            ${selectedFunctions} ${tableFunctions}
+          </nav>
+
+          <div class="fd-panel__footer" style="margin:2px; padding:2px;">
+            <div style="margin-left: -20px;">
+              ${navcontrol}
+            </div>
+            <div style="margin-left:12px;"></div>
+            <button
+              title="Abbrechen"
+              class="fd-button--negative sap-icon--decline"
+            ></button>
+          </div>
+        </div>
       </div>
     `
     return this.lastTemplateResult
   }
-  afterRender() {
+  updated() {
     //only set scrollable if bigger than windowheight
-    let target = this.firstElementChild
-    if (!this.focusSet) {
-      document.getElementById("ovl_headerMenu").focus()
+    let target = document.getElementById("ovl_headerMenu")
+    if (target && !this.focusSet) {
+      target.focus()
       this.focusSet = true
     }
+    target = document.getElementById("ovl_headerMenuScroll")
     var rect = target.getBoundingClientRect()
     if (rect.height > window.innerHeight) {
       target.classList.add("scrollableOverlay")
@@ -919,5 +925,6 @@ export class TableHeaderMenu extends OvlBaseElement {
           rect.height - popoverRect.top + rect.top - 32 + "px"
       }
     }
+    super.updated()
   }
 }

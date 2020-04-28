@@ -11,7 +11,9 @@ import {
   FormCanCopy,
   FormCanEdit,
   FormCanMore,
+  FormCanDetail,
 } from "../../global/hooks"
+import { createDynamicRowFunctions, rowControlActionsHandler } from "./helpers"
 
 export type NavProps = {
   tableDef: TableDef
@@ -20,7 +22,7 @@ export type NavProps = {
   columnsCount: number
 }
 
-type RowControlAllAction = {
+export type RowControlAllAction = {
   name: string
   icon: string
   disabled: boolean
@@ -46,42 +48,14 @@ export class TableRowControl extends OvlBaseElement {
   handleClick = async (e: Event, key: string, isCustom: boolean) => {
     e.preventDefault()
     e.stopPropagation()
-    let customFunctionFound = false
-    let customFns = resolvePath(customFunctions, this.nav.tableDef.namespace)
-    if (customFns) {
-      let customFunctionName = "Form" + key
-      let customFunction = customFns[customFunctionName]
-
-      if (customFunction) {
-        customFunctionFound = true
-        await customFunction(
-          {
-            key: this.nav.key,
-            def: this.nav.tableDef,
-            data: this.nav.data,
-          },
-          this.state,
-          this.actions,
-          overmind.effects
-        )
-      } else {
-        if (isCustom) {
-          throw Error(
-            "Ovl logical error: Custom Action: " +
-              customFunctionName +
-              " not found!"
-          )
-        }
-      }
-    }
-    if (!customFunctionFound) {
-      let actionName = "Table" + key + "Row"
-      this.actions.ovl.internal[actionName]({
-        key: this.nav.key,
-        def: this.nav.tableDef,
-        data: this.nav.data,
-      })
-    }
+    rowControlActionsHandler(
+      isCustom,
+      key,
+      this.nav.tableDef,
+      this.nav.data,
+      this.nav.key,
+      false
+    )
   }
 
   async getUIAsync() {
@@ -97,173 +71,9 @@ export class TableRowControl extends OvlBaseElement {
     // put together a dynamic list of actions
     // consisting of "default" deit/copy/delete ones and the ones from state custom
 
-    let rowControlActions: { [key: string]: RowControlAllAction } = {}
-    let fn = resolvePath(customFunctions, def.namespace)
-    // first all custom ones
-    if (def.options.customRowActions) {
-      let wait = Promise.all(
-        Object.keys(def.options.customRowActions).map(async (k) => {
-          let custom = def.options.customRowActions[k]
-          let disabled = false
-          let title = custom.name
-          let functionName = FormCanCustom.replace("%", k)
-
-          if (fn && fn[functionName]) {
-            disabled = true
-            title = await fn[functionName](
-              this.nav.key,
-              def,
-              this.nav.data,
-              this.state,
-              this.actions,
-              overmind.effects
-            )
-            if (title) {
-              rowControlActions[k] = {
-                disabled: disabled,
-                icon: custom.icon,
-                custom: true,
-                name: title,
-              }
-            }
-          } else {
-            rowControlActions[k] = JSON.parse(JSON.stringify(custom))
-            rowControlActions[k].disabled = false
-            rowControlActions[k].custom = true
-          }
-        })
-      )
-      await wait
-    }
-
-    // then add the default ones
-    // delete
-    if (def.features.delete) {
-      let deleteDisabled = false
-      let deleteTitle = ""
-      let functionName = FormCanDelete
-
-      if (fn && fn[functionName]) {
-        deleteTitle = await fn[functionName](
-          this.nav.key,
-          <TableDataAndDef>{ def: def, data: this.nav.data },
-          this.state
-        )
-        deleteDisabled = true
-        if (deleteTitle) {
-          rowControlActions["Delete"] = {
-            disabled: deleteDisabled,
-            icon: "sap-icon--delete",
-            custom: false,
-            name: deleteTitle,
-          }
-        }
-      }
-      if (!rowControlActions["Delete"]) {
-        rowControlActions["Delete"] = {
-          disabled: false,
-          icon: "sap-icon--delete",
-          custom: false,
-          name: "Datensatz löschen",
-        }
-      }
-    }
-
-    // copy
-    if (def.features.add) {
-      let copyDisabled = false
-      let copyTitle = ""
-      //@@hook
-      let functionName = FormCanCopy
-
-      if (fn && fn[functionName]) {
-        copyTitle = await fn[functionName](
-          this.nav.key,
-          <TableDataAndDef>{ def: def, data: this.nav.data },
-          this.state
-        )
-        copyDisabled = true
-        if (copyTitle) {
-          rowControlActions["Copy"] = {
-            disabled: copyDisabled,
-            icon: "sap-icon--copy",
-            custom: false,
-            name: copyTitle,
-          }
-        }
-      }
-      if (!rowControlActions["Copy"]) {
-        rowControlActions["Copy"] = {
-          disabled: false,
-          icon: "sap-icon--copy",
-          custom: false,
-          name: "Datensatz duplizieren",
-        }
-      }
-    }
-
-    if (def.features.edit) {
-      // edit
-      let editDisabled = false
-      let editTitle = ""
-      //@@hook
-      let functionName = FormCanEdit
-      if (fn && fn[functionName]) {
-        editTitle = await fn[functionName](
-          this.nav.key,
-          <TableDataAndDef>{ def: def, data: this.nav.data },
-          this.state
-        )
-        editDisabled = true
-        if (editTitle) {
-          rowControlActions["Edit"] = {
-            disabled: editDisabled,
-            icon: "sap-icon--edit",
-            custom: false,
-            name: editTitle,
-          }
-        }
-      }
-      if (!rowControlActions["Edit"]) {
-        rowControlActions["Edit"] = {
-          disabled: false,
-          icon: "sap-icon--edit",
-          custom: false,
-          name: "Datensatz ändern",
-        }
-      }
-    }
-
-    // edit
-    let moreDisabled = false
-    let moreTitle = ""
-    //@@hook
-    let functionName = FormCanMore
-    if (fn && fn[functionName]) {
-      moreTitle = fn[functionName](
-        this.nav.key,
-        <TableDataAndDef>{ def: def, data: this.nav.data },
-        this.state
-      )
-      moreDisabled = true
-      if (moreTitle) {
-        rowControlActions["More"] = {
-          disabled: moreDisabled,
-          icon: "sap-icon--overflow",
-          custom: false,
-          name: moreTitle,
-        }
-      }
-    }
-    if (!rowControlActions["More"]) {
-      rowControlActions["More"] = {
-        disabled: false,
-        icon: "sap-icon--overflow",
-        custom: false,
-        name: "Tabellenfunktionen",
-      }
-    }
-
+    let rowControlActions: {
+      [key: string]: RowControlAllAction
+    } = await createDynamicRowFunctions(def, this.nav.data, key, false)
     let rowControlButtons
 
     let firstBorder = "border-top:none;border-top-left-radius:0px;"

@@ -369,7 +369,7 @@ export class CompShellbar extends OvlBaseElement {
               /></a>
               <span class="fd-shellbar__title fd-has-type-4"
                 >${T("AppShortTitle") +
-                  (OvlConfig._system.IsDev ? "DEVDEVDEV" : "")}</span
+                (OvlConfig._system.IsDev ? "DEVDEVDEV" : "")}</span
               >
               <ovl-indicator> </ovl-indicator>
             </div>

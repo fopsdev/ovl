@@ -11,7 +11,7 @@ let forms: FormsState = undefined
 
 let indicator = {
   open: true,
-  refCounter: 1
+  refCounter: 1,
 }
 
 let snacks: { [key: string]: SnackState } = {}
@@ -27,7 +27,7 @@ let nav: ScreensState = {
   currentScreen: undefined,
   screensHistory: [],
   formTypeToReset: undefined,
-  formIdToReset: undefined
+  formIdToReset: undefined,
 }
 
 let overlay: OverlayState = { open: false, closing: false }
@@ -47,7 +47,7 @@ export const state = {
       availableLanguages,
       translations,
 
-      showTranslationKeys: false
+      showTranslationKeys: false,
     },
     uiState: {
       hasOSReducedMotion: false,
@@ -56,7 +56,7 @@ export const state = {
       isTouch: false,
       isIOS: false,
       isReady: false,
-      stateSavedReason: ""
+      stateSavedReason: "",
     },
     apiUrl,
     libState: {
@@ -64,13 +64,13 @@ export const state = {
       snacks,
       indicator,
       overlay,
-      overlay2
+      overlay2,
     },
     screens: {
       screens: screens,
       nav,
-      screenState: undefined
+      screenState: undefined,
     },
-    forms
-  }
+    forms,
+  },
 }

@@ -1,12 +1,11 @@
 import { OvlFormElement, DataType } from "../../library/forms/OvlFormElement"
-import { TextBoxControlState } from "../../library/Forms/Controls/TextBox"
-import { TextAreaControlState } from "../../library/Forms/Controls/TextArea"
+
 import { EditRowDef, TableDataAndDef } from "./Table"
 import { html } from "lit-html"
 import { resolvePath } from "../../global/globals"
 import { customFunctions, overmind } from "../../index"
 import { overlayToRender } from "../Overlay/Overlay"
-import { ListControlState } from "../forms/Controls/ListControl"
+
 import { FieldIsReadOnly } from "../../global/hooks"
 
 export class TableRowForm extends OvlFormElement {
@@ -22,8 +21,7 @@ export class TableRowForm extends OvlFormElement {
     super.init()
     // </form init>
   }
-  afterRender() {
-    let time = 0
+  updated() {
     if (this.state.ovl.libState.overlay.closing) {
       overlayToRender.overlayClosedCallback = () => {
         this.setFocus()
@@ -33,10 +31,13 @@ export class TableRowForm extends OvlFormElement {
     }
 
     // if there is a custom afterrender
-    super.afterRender()
+    super.updated()
   }
   setFocus() {
-    if (!this.focusInit) {
+    if (
+      this.rowData.tableDef.features.focusToFirstEditableField &&
+      !this.focusInit
+    ) {
       this.focusInit = true
       let focusEl = document.getElementById(
         this.rowData.key + "ovlRFNFocus_focus"
@@ -63,7 +64,7 @@ export class TableRowForm extends OvlFormElement {
       ${Object.keys(columns).map((k) => {
         let col = columns[k]
         let columnsVisible = this.rowData.columnsVisible
-        if (!columnsVisible[k]) {
+        if (columnsVisible[k].indexOf("Edit") < 0) {
           return null
         }
         let uiItem
@@ -122,14 +123,7 @@ export class TableRowForm extends OvlFormElement {
                 <ovl-textbox
                   id="${id}"
                   class="fd-form__item "
-                  .props=${(state) => {
-                    return <TextBoxControlState>{
-                      field: fields[k],
-                      label: "",
-                      type: "text",
-                      align: controlAlign,
-                    }
-                  }}
+                  .props="${() => fields[k]}"
                 >
                 </ovl-textbox>
               `
@@ -139,13 +133,7 @@ export class TableRowForm extends OvlFormElement {
                 <ovl-datebox
                   id="${id}"
                   class="fd-form__item "
-                  .props=${(state) => {
-                    return <TextBoxControlState>{
-                      field: fields[k],
-                      label: "",
-                      align: controlAlign,
-                    }
-                  }}
+                  .props=${() => fields[k]}
                 >
                 </ovl-datebox>
               `
@@ -156,13 +144,7 @@ export class TableRowForm extends OvlFormElement {
                 <ovl-textarea
                   id="${id}"
                   class="fd-form__item "
-                  .props=${(state) => {
-                    return <TextAreaControlState>{
-                      field: fields[k],
-                      label: "",
-                      align: controlAlign,
-                    }
-                  }}
+                  .props=${() => fields[k]}
                 >
                 </ovl-textarea>
               `
@@ -173,25 +155,7 @@ export class TableRowForm extends OvlFormElement {
                   <ovl-listcontrol
                     id="${id}"
                     class="fd-form__item "
-                    .props="${(state) => {
-                      let functionName = k + "GetListFn"
-
-                      let list
-                      if (fn && fn[functionName]) {
-                        list = fn[functionName](
-                          this.rowData.row,
-                          this.state,
-                          this.actions,
-                          overmind.effects
-                        )
-                      }
-
-                      return <ListControlState>{
-                        field: fields[k],
-                        label: "",
-                        align: "left",
-                      }
-                    }}"
+                    .props="${() => fields[k]}"
                   >
                   </ovl-listcontrol>
                 `

@@ -1,6 +1,6 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
-import { TableData, TableDataAndDef } from "./Table"
+import { TableData, TableDataAndDef, SelectedViewRow } from "./Table"
 import { NavProps } from "./RowControl"
 import { customFunctions, overmind } from "../../index"
 import {
@@ -19,6 +19,7 @@ export type TableRowDef = {
   data: TableData
   selected: SelectedRow
   editSelected: SelectedEditRow
+  viewRow: SelectedViewRow
   tableDef: TableDef
   columnsAlign: {}
   columnsVisible: {}
@@ -115,6 +116,7 @@ export class TableRowWrapper extends OvlBaseElement {
 
   async getUIAsync() {
     let editSelected = this.row.editSelected
+    let viewRow = this.row.viewRow
     let def = this.row.tableDef
     let key = this.row.key
     let data = this.row.data
@@ -123,6 +125,29 @@ export class TableRowWrapper extends OvlBaseElement {
     if (!row) {
       return null
     }
+
+    if (viewRow.selected) {
+      this.actions.ovl.overlay.OpenOverlay({
+        templateResult: html`
+          <ovl-trowdetailview
+            id=${"trow" + def.id + key}
+            .props=${() => {
+              return <EditRowDef>{
+                tableDef: def,
+                data: data,
+                row: row,
+                key: key,
+                columnsAlign: this.row.columnsAlign,
+                columnsVisible: this.row.columnsVisible,
+              }
+            }}
+          >
+          </ovl-trowdetailview>
+        `,
+        elementToFocusAfterClose: document.activeElement,
+      })
+    }
+
     if (editSelected && editSelected.selected) {
       if (def.options.edit.editType === "inline") {
         let editRowSC = html`
@@ -165,7 +190,6 @@ export class TableRowWrapper extends OvlBaseElement {
         this.actions.ovl.overlay.OpenOverlay({
           templateResult: html`
             <ovl-trowformb
-              class="fd-table__row"
               id=${"trow" + def.id + key}
               .props=${() => {
                 return <EditRowDef>{

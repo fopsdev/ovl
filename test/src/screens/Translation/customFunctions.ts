@@ -51,7 +51,7 @@ export const FormValidate = async (
   }
 }
 
-export const CustomSaveRowAfterSaveHandler = async (
+export const FormAfterSave = async (
   {
     key,
     def,
@@ -65,7 +65,7 @@ export const CustomSaveRowAfterSaveHandler = async (
   await actions.ovl.internal.SetLanguage(state.ovl.language.language)
 }
 
-export const CustomDeleteRowAfterDeleteHandler = async (
+export const FormAfterDelete = async (
   {
     key,
     def,

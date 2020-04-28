@@ -12,7 +12,7 @@ import {
   overmind,
   config,
   TableDefIds,
-  CustomFormType
+  CustomFormType,
 } from "../..//test/src/index"
 import { screens } from "../../test/src/stateScreens"
 import * as customFunctions from "../../test/src/customFunctions"

@@ -1,7 +1,5 @@
 import { html } from "../../../../ovl/node_modules/lit-html"
 import { D, T } from "../../../../ovl/src/global/globals"
-
-import { TextAreaControlState } from "../../../../ovl/src/library/Forms/Controls/TextArea"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
@@ -104,10 +102,8 @@ export class CompFeedbackForm extends OvlFormElement {
           <div class="fd-form__set">
             <div class="fd-form__item">
               <ovl-textarea
-                .props=${(state) => {
-                  return <TextAreaControlState>{
-                    field: msgField,
-                  }
+                .props=${() => {
+                  return msgField
                 }}
               >
               </ovl-textarea>

@@ -5,16 +5,12 @@ import { getUIValidationObject } from "./uiValidationHelper"
 import { ColumnAlign } from "../../Table/Table"
 import { GetLabel } from "./helpers"
 
-export type TextAreaControlState = {
-  field: Field
-}
-
 export class OvlTextArea extends OvlBaseElement {
   props: any
-  controlState: TextAreaControlState
+  field: Field
   inputElement: any
   init() {
-    this.controlState = this.props(this.state)
+    this.field = this.props(this.state)
   }
   handleKeyDown(e: KeyboardEvent) {
     if (e.key === "Enter") {
@@ -22,7 +18,7 @@ export class OvlTextArea extends OvlBaseElement {
         bubbles: true,
         detail: {
           val: this.inputElement.value,
-          id: this.controlState.field.id,
+          id: this.field.id,
         },
       })
       this.inputElement.dispatchEvent(event)
@@ -34,7 +30,7 @@ export class OvlTextArea extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.controlState.field.id },
+      detail: { id: this.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -44,13 +40,13 @@ export class OvlTextArea extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
-      detail: { val: this.inputElement.value, id: this.controlState.field.id },
+      detail: { val: this.inputElement.value, id: this.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
 
   getUI() {
-    let field = this.controlState.field
+    let field = this.field
 
     let res = getUIValidationObject(field)
 
@@ -59,7 +55,7 @@ export class OvlTextArea extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label"
+          class="fd-form-label fd-has-type-1"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}${res.needsAttention ? "*" : ""}</label
@@ -77,7 +73,7 @@ export class OvlTextArea extends OvlBaseElement {
         @keydown=${(e) => this.handleKeyDown(e)}
         @change=${(e) => this.handleChange(e)}
         @focusout=${(e) => this.handleFocusOut(e)}
-        style="${align}"
+        style="${align} height:70px;"
         class="fd-textarea ${res.validationType} fd-has-type-1"
         id="${field.id}"
       >
@@ -91,7 +87,7 @@ ${field.value}</textarea
     `
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.controlState.field.id)
-    this.inputElement.value = this.controlState.field.value
+    this.inputElement = document.getElementById(this.field.id)
+    this.inputElement.value = this.field.value
   }
 }

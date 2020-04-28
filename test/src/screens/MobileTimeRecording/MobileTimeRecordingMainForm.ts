@@ -7,9 +7,12 @@ import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/
 import { Field_U_TypeId_GetList } from "./MobileTimeRecordingDetail/customFunctions"
 import { overmind } from "../../../../ovl/src"
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
-import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
 import { displayFormats } from "../../../../ovl/src/global/displayFormats"
-import { SnackAdd } from "../../../../ovl/src/library/helpers"
+import {
+  SnackAdd,
+  SnackTrackedAdd,
+  SnackTrackedRemove,
+} from "../../../../ovl/src/library/helpers"
 import {
   tblMobileTimeRecording,
   TableMobileTimeRecording,
@@ -41,11 +44,17 @@ export class CompMobileTimeEntry extends OvlFormElement {
     let guids = rowKeys.map((m) => {
       return { timeentry_id: data.data[m].Code }
     })
+    SnackTrackedAdd(
+      "Zeit(en) werden übermittelt...",
+      "Information",
+      "ovltimesadd"
+    )
     await overmind.effects.postRequest(api.url + "job/addworktime", guids)
     // tag data as synched
     this.actions.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
 
-    SnackAdd("Zeit(en) erfolgreich übermittelt. Abgleich ins SAP läuft")
+    SnackTrackedRemove("ovltimesadd")
+    SnackAdd("Zeit(en) erfolgreich übermittelt.")
   }
   handleAddRowClick = async (e: Event) => {
     e.stopPropagation()
@@ -130,9 +139,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
                 <ovl-datebox
                   class="fd-form-item "
                   .props="${() => {
-                    return <TextBoxControlState>{
-                      field: dateField,
-                    }
+                    return dateField
                   }}"
                 >
                 </ovl-datebox>

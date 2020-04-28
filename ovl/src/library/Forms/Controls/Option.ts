@@ -9,16 +9,12 @@ import { overmind, customFunctions } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
 
-export type OptionControlState = {
-  field: Field
-}
-
 export class OvlOption extends OvlBaseElement {
   props: any
-  controlState: OptionControlState
+  field: Field
 
   init() {
-    this.controlState = this.props(this.state)
+    this.field = this.props(this.state)
   }
 
   handleFocusOut(e: Event, id: string) {
@@ -26,7 +22,7 @@ export class OvlOption extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.controlState.field.id },
+      detail: { id: this.field.id },
     })
     document.getElementById(id).dispatchEvent(event)
   }
@@ -41,15 +37,15 @@ export class OvlOption extends OvlBaseElement {
       detail: {
         //@ts-ignore
         val: value,
-        id: this.controlState.field.id,
+        id: this.field.id,
       },
     })
     document.getElementById(id).dispatchEvent(event)
   }
   getUI() {
-    let field = this.controlState.field
+    let field = this.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
-    let list = this.controlState.field.list
+    let list = this.field.list
     let listFn = FieldGetList.replace("%", field.fieldKey)
     let listData = resolvePath(customFunctions, formState.namespace)[listFn](
       GetRowFromFormState(formState),
@@ -64,7 +60,7 @@ export class OvlOption extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label"
+          class="fd-form-label fd-has-type-1"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -88,7 +84,7 @@ export class OvlOption extends OvlBaseElement {
           return html`
             <div
               class="fd-form-group__item fd-form-item"
-              id="${this.controlState.field.id}"
+              id="${this.field.id}"
               tabindex="0"
             >
               <input

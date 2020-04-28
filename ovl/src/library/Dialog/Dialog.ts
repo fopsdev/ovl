@@ -176,7 +176,7 @@ export class OvlDialog extends OvlBaseElement {
       </div>
     `
   }
-  afterRender() {
+  updated() {
     // set focus to default element
     // workaround because autofocus attribute only works 1st time
     if (

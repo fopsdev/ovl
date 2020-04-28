@@ -9,6 +9,7 @@ import {
 import { File } from "./components/FileList/FileList"
 import { tblTranslation } from "./screens/Translation/state"
 import { tblAudit } from "./screens/Audit/state"
+import { LookupDef } from "../../ovl/src/library/forms/OvlFormElement"
 
 export type FileList = {
   files: File[]
@@ -202,8 +203,11 @@ export let testtables = {
     data: {},
     schema: {},
     tableDef: { tab1: tblTableTesting, tab2: tblTableTesting2 },
-    lookupTypes: { U_Alpha: "text" },
-    lookupTypes2: { U_Alpha: "text", U_Date: "date" },
+    lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
+    lookupDef2: <{ [key: string]: LookupDef }>{
+      U_Alpha: { type: "text" },
+      U_Date: { type: "date" },
+    },
   },
   timeentries: <TableData>{
     data: {},
@@ -215,20 +219,20 @@ export let testtables = {
   lookups: {
     U_ItemCode: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined,
+      lookupDef: undefined,
     },
 
     U_ItmsGrpCod: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined,
+      lookupDef: undefined,
     },
     ProjectTypeId: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined,
+      lookupDef: undefined,
     },
     AbsenceTypeId: <ListFnReturnValue>{
       data: undefined,
-      lookupTypes: undefined,
+      lookupDef: undefined,
     },
   },
 }

@@ -23,6 +23,7 @@ export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   let data = state.testtables.timeentries
   let def = state.testtables.timeentries.tableDef.mobiletimerecording1
   def.options.filter.static.U_Date = value.selected
+  debugger
   await actions.ovl.table.TableRefresh({
     defId: "mobiletimerecording1",
     data,
@@ -45,7 +46,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
         U_Duration: 1,
       }
       testEntry.Code = undefined
-      await actions.ovl.internal.TableDirectSaveRow({
+      await actions.ovl.table.TableDirectSaveRow({
         data: state.testtables.timeentries,
         defId: "mobiletimerecording1",
         rowToSave: testEntry,

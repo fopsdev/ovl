@@ -1,4 +1,4 @@
-import { Action, AsyncAction } from "overmind"
+import { Action, AsyncAction, json } from "overmind"
 import { postRequest } from "../../effects"
 import { api, ovltemp, uuidv4, resolvePath, T } from "../../global/globals"
 import { customFunctions, TableDefIds } from "../../index"
@@ -100,7 +100,7 @@ export const TableSelectHeader: Action<HeaderClick> = (
         elementToFocusAfterClose: document.activeElement,
       })
     } else {
-      actions.ovl.internal.StartCloseOverlay()
+      actions.ovl.overlay.CloseOverlay()
     }
     def.def.uiState.headerSelected = def.key
   }
@@ -390,7 +390,7 @@ export const TableRebuild: AsyncAction<{
   data: TableData
 }> = async ({ actions, state, effects }, value) => {
   let snackId = value.snackId
-  let def = value.data.tableDef[value.defId]
+  let def = <TableDef>value.data.tableDef[value.defId]
   let data = value.data.data
 
   try {
@@ -454,6 +454,10 @@ export const TableRebuild: AsyncAction<{
         editRow[k] = {
           selected: false,
         }
+      }
+      let viewRow = def.uiState.viewRow
+      if (!viewRow[k]) {
+        viewRow[k] = { selected: false }
       }
     })
     def.uiState.rowsCount = restable.length
@@ -773,7 +777,7 @@ export const TableEditClose: Action<{
     editRow[value.key].selected = false
   }
   if (value.tableDef.options.edit.editType === "big") {
-    actions.ovl.internal.StartCloseOverlay()
+    actions.ovl.overlay.CloseOverlay()
   }
 }
 
@@ -818,6 +822,22 @@ export const TableMoreRow: Action<{
   })
 }
 
+export const TableViewRow: Action<{
+  key: string
+  def: TableDef
+  data: TableData
+}> = (_, value) => {
+  let def = value.def
+  def.uiState.viewRow[value.key].selected = true
+}
+export const TableCloseViewRow: Action<{
+  key: string
+  def: TableDef
+}> = (_, value) => {
+  let def = value.def
+  def.uiState.viewRow[value.key].selected = false
+}
+
 export const TableCopyRow: AsyncAction<{
   key: string
   def: TableDef
@@ -832,13 +852,16 @@ export const TableCopyRow: AsyncAction<{
     newRow[c] = null
   })
   // copyRow @@hook
+
   let copyFnName = FormCopy
+
   let fn = resolvePath(customFunctions, def.namespace)
+
   if (fn && fn[copyFnName]) {
     await fn[copyFnName](
+      key,
+      newRow,
       {
-        key,
-        newRow,
         def: value.def,
         data: value.data,
       },
@@ -928,7 +951,7 @@ export const TableDeleteRow: AsyncAction<{
   let def = value.def
   let key = value.key
   let cancel: boolean = false
-
+  debugger
   if (!value.isMass) {
     actions.ovl.dialog.OkCancelDialog({
       text: "Datensatz löschen?",
@@ -1297,4 +1320,5 @@ export const TableDeleteRowFromData: Action<{
   def.uiState.dataFilteredAndSorted.splice(i, 1)
   delete def.uiState.selectedRow[key]
   delete def.uiState.editRow[key]
+  delete def.uiState.viewRow[key]
 }

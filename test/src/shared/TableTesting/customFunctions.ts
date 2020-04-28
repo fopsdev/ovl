@@ -20,6 +20,7 @@ import {
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
+import { json } from "overmind"
 
 export const FormShow = async (
   formState: FormState,
@@ -39,10 +40,19 @@ export const FormAfterRender = async (
   effects: typeof overmind.effects
 ) => {
   console.log(
-    "hello from tabletesting formafterrender hook. setting focus to item group"
+    "hello from tabletesting formafterrender hook. you may do some crazy stuff in here"
   )
-  //@ts-ignore
-  document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()
+}
+
+export const FormCopy = async (
+  key: string,
+  newRow: TableTesting,
+  tableDef: TableDataAndDef,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  newRow.U_Memo = newRow.U_Memo + " Copy!"
 }
 
 export const FormAdd = async (
@@ -54,7 +64,7 @@ export const FormAdd = async (
 ) => {
   newRow.U_Memo = "Defaulttext Memo"
 }
-export const FormSelectRow = async (
+export const FormSelect = async (
   row: { [key: string]: {} },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
@@ -154,7 +164,6 @@ export const FormCanEdit = async (
   rowKey: string,
   tableDefAndData: TableDataAndDef,
   state: typeof overmind.state,
-  actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): Promise<string> => {
   let row = <TableTesting>tableDefAndData.data.data[rowKey]
@@ -169,7 +178,6 @@ export const FormCanDelete = async (
   rowKey: string,
   tableDefAndData: TableDataAndDef,
   state: typeof overmind.state,
-  actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): Promise<string> => {
   let row = <TableTesting>tableDefAndData.data.data[rowKey]
@@ -329,7 +337,7 @@ export const Field_U_ParentCode2_GetList = (
 ): ListFnReturnValue => {
   return {
     data: state.testtables.tableTesting.data,
-    lookupTypes: state.testtables.tableTesting.lookupTypes2,
+    lookupDef: state.testtables.tableTesting.lookupDef2,
   }
 }
 

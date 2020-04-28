@@ -3,6 +3,7 @@ import { html } from "lit-html"
 import { getDisplayValue } from "../../../Table/helpers"
 import { ListFnReturnValue } from "../../../Table/Table"
 import { ListState } from "../ListControl"
+import { T } from "../../../../global/globals"
 
 export type HitListState = {
   fieldId: string
@@ -90,15 +91,14 @@ export class OvlHitList extends OvlBaseElement {
     if (this.controlState.type === "overlay") {
       scrollable = "scrollableOverlay"
     }
-
-    let lookupTypes = listData.lookupTypes
+    let lookupTypes = listData.lookupDef
 
     if (!lookupTypes) {
       // get the types from the data and assume its text
       let keys = Object.keys(listData.data)
       if (keys.length > 0) {
         lookupTypes = Object.keys(listData.data[keys[0]]).reduce((val, k) => {
-          val[k] = "text"
+          val[k] = { type: "text" }
           return val
         }, {})
       }
@@ -116,14 +116,22 @@ export class OvlHitList extends OvlBaseElement {
     let lookupTypesKeys = Object.keys(lookupTypes)
 
     let thead
+
     if (lookupTypesKeys.length > 1 || this.controlState.type === "overlay") {
       thead = html`
         <thead class="fd-table__header">
           <tr class="fd-table__row">
-            ${lookupTypesKeys.map(k => {
+            ${lookupTypesKeys.map((k) => {
+              let caption = ""
+              if (lookupTypes[k].translationKey) {
+                caption = T(lookupTypes[k].translationKey)
+              } else {
+                caption = k
+              }
+
               return html`
                 <th class="fd-table__cell stickyTableHeader" scope="col">
-                  ${k}
+                  ${caption}
                 </th>
               `
             })}
@@ -134,8 +142,9 @@ export class OvlHitList extends OvlBaseElement {
 
     return html`
       <div
+        id="ovlhitlist"
         style="padding-right:2px;"
-        @keydown=${e => this.handleMainKeyDown(e)}
+        @keydown=${(e) => this.handleMainKeyDown(e)}
         class="${scrollable} localList"
       >
         <table
@@ -144,21 +153,26 @@ export class OvlHitList extends OvlBaseElement {
         >
           ${thead}
           <tbody class="fd-table__body">
-            ${filteredKeys.map(rowKey => {
+            ${filteredKeys.map((rowKey) => {
               let row = listData.data[rowKey]
               rowNr++
               this.maxRow = rowNr
               return html`
                 <tr
-                  @click=${e => this.handleClick(e, rowKey)}
+                  @click=${(e) => this.handleClick(e, rowKey)}
                   id="${this.controlState.fieldId}${this.controlState
                     .type}ovlhl_${rowNr}"
                   tabindex="0"
                   class="fd-table__row "
-                  @keydown=${e => this.handleKeyDown(e, rowKey)}
+                  @keydown=${(e) => this.handleKeyDown(e, rowKey)}
                 >
-                  ${lookupTypesKeys.map(c => {
-                    let val = getDisplayValue(c, { type: lookupTypes[c] }, row)
+                  ${lookupTypesKeys.map((c) => {
+                    let val = getDisplayValue(
+                      c,
+                      { type: lookupTypes[c].type },
+                      row,
+                      ""
+                    )
                     let leftPart = ""
                     let rightPart = ""
                     // mark hits
@@ -200,13 +214,15 @@ export class OvlHitList extends OvlBaseElement {
     //only set scrollable if bigger than windowheight
     if (!this.focusSet && this.controlState.type === "overlay") {
       this.focusSet = true
-      //@@workaround because the control was no reacting to line-select-clicks because it was resizing on first click
-      this.style.width = this.clientWidth + "px;"
-      document
-        .getElementById(
-          this.controlState.fieldId + this.controlState.type + "ovlhl_1"
-        )
-        .focus()
+      //@@workaround
+      let el = document.getElementById(
+        this.controlState.fieldId + this.controlState.type + "ovlhl_1"
+        //console.log(el.offsetWidth)
+      )
+      let el2 = document.getElementById("ovlhitlist")
+      el.focus()
+      // somehow it renders too small (maybe scrollbar issue). consider this as a workaround
+      el2.style.width = (el2.offsetWidth + 16).toString() + "px"
     }
   }
 }

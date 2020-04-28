@@ -1,7 +1,6 @@
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { html } from "../../../../ovl/node_modules/lit-html"
 import { T } from "../../../../ovl/src/global/globals"
-import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
 
 export type LoginFormState = {}
 
@@ -66,9 +65,7 @@ export class CompLoginForm extends OvlFormElement {
                 <div class="fd-form-item">
                   <ovl-textbox
                     .props=${(state) => {
-                      return <TextBoxControlState>{
-                        field: userField,
-                      }
+                      return userField
                     }}
                   >
                   </ovl-textbox>
@@ -76,9 +73,7 @@ export class CompLoginForm extends OvlFormElement {
                 <div class="fd-form-item">
                   <ovl-textbox
                     .props=${(state) => {
-                      return <TextBoxControlState>{
-                        field: pwField,
-                      }
+                      return pwField
                     }}
                   >
                   </ovl-textbox>
@@ -110,10 +105,11 @@ export class CompLoginForm extends OvlFormElement {
       </div>
     `
   }
-  afterRender() {
+  updated() {
     let focusEl = document.getElementById("loginformuser")
     if (focusEl) {
       focusEl.focus()
     }
+    super.updated()
   }
 }

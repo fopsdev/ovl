@@ -80,7 +80,7 @@ export const KeyValueListFromServerFn = async (
         localListState[k][c] = serverData[k][c]
       })
     })
-    listData.lookupTypes = res.data.types
+    listData.lookupDef = res.data.lookupDef
   }
 }
 

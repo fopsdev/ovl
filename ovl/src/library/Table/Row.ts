@@ -6,6 +6,7 @@ import { customFunctions, overmind } from "../../index"
 import { resolvePath } from "../../global/globals"
 import { GetLabel } from "../forms/Controls/helpers"
 import { FieldGetList } from "../../global/hooks"
+import { FieldVisibility } from "./Table"
 
 export let cachedFn: Map<string, any> = new Map<string, any>()
 export class TableRow extends OvlBaseElement {
@@ -21,10 +22,15 @@ export class TableRow extends OvlBaseElement {
     let columns = def.columns
     let align = this.row.columnsAlign
     let columnsVisible = this.row.columnsVisible
+    let isMobile = this.state.ovl.uiState.isMobile
     return html`
       ${Object.keys(columns).map((k) => {
         let col = columns[k]
-        if (!columnsVisible[k]) {
+        let visible = columnsVisible[k]
+        if (
+          visible.indexOf("Table") < 0 ||
+          (isMobile && visible.indexOf("TableNotMobile") > -1)
+        ) {
           return null
         }
         let listdata
@@ -48,7 +54,7 @@ export class TableRow extends OvlBaseElement {
             }
           }
         }
-        let fieldvalue = getDisplayValue(k, col, row, listdata)
+        let fieldvalue = getDisplayValue(k, col, row, def.namespace)
         return html`
           <td class="fd-table__cell ${align[k]}">
             ${fieldvalue}

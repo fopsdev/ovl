@@ -13,10 +13,10 @@ overlay2ToRender = {
   overlayDismissedCallback: undefined,
   overlayClosedCallback: undefined,
   getTemplate: async () => {
-    return new Promise(r => {
+    return new Promise((r) => {
       overlay2ToRender.resolve = r
     })
-  }
+  },
 }
 
 export type OverlayState = {
@@ -35,12 +35,15 @@ export class OvlOverlay2 extends OvlBaseElement {
   }
 
   handleDismissed = (e: Event) => {
-    e.stopPropagation()
-    e.preventDefault()
-    if (overlay2ToRender.overlayDismissedCallback) {
-      overlay2ToRender.overlayDismissedCallback()
-    } else {
-      this.actions.ovl.internal.StartCloseOverlay2()
+    //@ts-ignore
+    if (e.srcElement.id === "ovloverlay2") {
+      e.stopPropagation()
+      e.preventDefault()
+      if (overlay2ToRender.overlayDismissedCallback) {
+        overlay2ToRender.overlayDismissedCallback()
+      } else {
+        this.actions.ovl.overlay.CloseOverlay2()
+      }
     }
   }
 
@@ -50,6 +53,17 @@ export class OvlOverlay2 extends OvlBaseElement {
   }
 
   async getUIAsync() {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      e.stopPropagation()
+      if (e.key === "Escape") {
+        if (overlay2ToRender.overlayDismissedCallback) {
+          overlay2ToRender.overlayDismissedCallback()
+        } else {
+          this.actions.ovl.overlay.CloseOverlay2()
+        }
+      }
+    }
+
     if (!this.state.ovl.libState.overlay2.open) {
       return null
     }
@@ -66,13 +80,24 @@ export class OvlOverlay2 extends OvlBaseElement {
 
     return Promise.resolve(html`
       <div
-        @click=${this.handleDismissed}
+        id="ovloverlay2"
+        tabindex="0"
+        @keydown=${(e) => handleKeyDown(e)}
+        @mousedown=${this.handleDismissed}
+        id="ovloverlay2"
         class="fd-shell__overlay fd-overlay fd-overlay--modal ${animation}"
         aria-hidden="false"
       >
         ${overlay2ToRender.template}
       </div>
     `)
+  }
+  updated() {
+    let el = document.getElementById("ovloverlay2")
+    if (el) {
+      el.focus()
+    }
+    super.updated()
   }
 
   connectedCallback() {

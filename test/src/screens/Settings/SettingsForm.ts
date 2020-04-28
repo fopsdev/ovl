@@ -1,7 +1,6 @@
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { T } from "../../../../ovl/src/global/globals"
 import { html } from "../../../../ovl/node_modules/lit-html"
-import { TextBoxControlState } from "../../../../ovl/src/library/Forms/Controls/TextBox"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
 export type SettingsFormState = {}
@@ -61,30 +60,24 @@ export class CompSettingsForm extends OvlFormElement {
               <div class="fd-form__group">
                 <div class="fd-form-item ">
                   <ovl-textbox
-                    .props=${(state) => {
-                      return <TextBoxControlState>{
-                        field: pwField,
-                      }
+                    .props=${() => {
+                      return pwField
                     }}
                   >
                   </ovl-textbox>
                 </div>
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${(state) => {
-                      return <TextBoxControlState>{
-                        field: pw1Field,
-                      }
+                    .props=${() => {
+                      return pw1Field
                     }}
                   >
                   </ovl-textbox>
                 </div>
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${(state) => {
-                      return <TextBoxControlState>{
-                        field: pw2Field,
-                      }
+                    .props=${() => {
+                      return pw2Field
                     }}
                   >
                   </ovl-textbox>

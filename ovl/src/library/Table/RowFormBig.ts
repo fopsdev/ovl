@@ -1,13 +1,12 @@
 import { OvlFormElement, DataType } from "../forms/OvlFormElement"
-import { TextBoxControlState } from "../Forms/Controls/TextBox"
-import { TextAreaControlState } from "../Forms/Controls/TextArea"
+
 import { EditRowDef, TableDataAndDef } from "./Table"
 import { html } from "lit-html"
 import { T, ovltemp, resolvePath } from "../../global/globals"
 import { DialogResult } from "../actions"
 import { customFunctions, overmind } from "../../index"
 import { overlayToRender } from "../Overlay/Overlay"
-import { ListControlState } from "../Forms/Controls/ListControl"
+
 import { FieldIsReadOnly } from "../../global/hooks"
 
 export class TableRowFormBig extends OvlFormElement {
@@ -23,14 +22,17 @@ export class TableRowFormBig extends OvlFormElement {
     }
     super.init()
   }
-  afterRender() {
-    if (!this.focusInit) {
+  updated() {
+    if (
+      this.rowData.tableDef.features.focusToFirstEditableField &&
+      !this.focusInit
+    ) {
       this.focusInit = true
       let focusEl = document.getElementById("ovlRFNFocus_focus")
       //@ts-ignore
       focusEl.firstElementChild.focus()
     }
-    super.afterRender()
+    super.updated()
   }
 
   handleCancel = async () => {
@@ -62,6 +64,7 @@ export class TableRowFormBig extends OvlFormElement {
             tableDef: this.rowData.tableDef,
             data: this.rowData.data,
           })
+          //this.actions.ovl.overlay.CloseOverlay()
         }
       }
     }
@@ -82,54 +85,45 @@ export class TableRowFormBig extends OvlFormElement {
           formState: this.formState,
         })
         if (!def.uiState.editRow[this.rowData.key].selected) {
-          this.actions.ovl.internal.StartCloseOverlay()
+          this.actions.ovl.overlay.CloseOverlay()
         }
       }
     }
 
-    const handleMainClick = (e: Event) => {
-      e.stopPropagation()
-      //e.preventDefault()
-    }
-
-    const handleMainMouseDown = (e: Event) => {
-      e.stopPropagation()
-    }
+    // const handleMainClick = (e: Event) => {
+    //   e.stopPropagation()
+    //   //e.preventDefault()
+    // }
 
     let acceptEnabled = "fd-button--positive sap-icon--accept"
 
     if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
       acceptEnabled = "fd-button nopointerevents"
     }
-    let width = "50vw;"
+    let width = def.options.edit.editScreenWidth.toString() + "vw;"
     if (this.state.ovl.uiState.isMobile) {
       width = "99vw;"
     }
     return html`
-      <div
-        style="width:${width}"
-        class="fd-panel"
-        @mousedown=${handleMainMouseDown}
-        @click=${handleMainClick}
-      >
+      <div style="width:${width}" class="fd-panel">
         <div class="scrollableOverlay">
           ${Object.keys(columns).map((k) => {
             let col = columns[k]
             let columnsVisible = this.rowData.columnsVisible
-            if (!columnsVisible[k]) {
+            if (columnsVisible[k].indexOf("Edit") < 0) {
               return null
             }
             let uiItem
             let id = "ovlRFNFocus_" + k
-            let controlAlign = ""
-            if (this.rowData.columnsAlign[k]) {
-              let align: string = this.rowData.columnsAlign[k]
-              if (align.indexOf("right") > -1) {
-                controlAlign = "text-align:right;"
-              } else if (align.indexOf("center") > -1) {
-                controlAlign = "text-align:center;"
-              }
-            }
+            // let controlAlign = ""
+            // if (this.rowData.columnsAlign[k]) {
+            //   let align: string = this.rowData.columnsAlign[k]
+            //   if (align.indexOf("right") > -1) {
+            //     controlAlign = "text-align:right;"
+            //   } else if (align.indexOf("center") > -1) {
+            //     controlAlign = "text-align:center;"
+            //   }
+            // }
             let readonly = col.ui.readonly
             // @@hook
             let functionName = FieldIsReadOnly.replace("%", k)
@@ -164,7 +158,7 @@ export class TableRowFormBig extends OvlFormElement {
               }
             }
             if (!readonly) {
-              if (!firstEditable) {
+              if (def.features.focusToFirstEditableField && !firstEditable) {
                 id = "ovlRFNFocus_focus"
                 firstEditable = true
               }
@@ -175,11 +169,7 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-textbox
                       id="${id}"
                       class="fd-form__item "
-                      .props=${(state) => {
-                        return <TextBoxControlState>{
-                          field: fields[k],
-                        }
-                      }}
+                      .props=${() => fields[k]}
                     >
                     </ovl-textbox>
                   `
@@ -190,11 +180,7 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-datebox
                       id="${id}"
                       class="fd-form__item "
-                      .props=${(state) => {
-                        return <TextBoxControlState>{
-                          field: fields[k],
-                        }
-                      }}
+                      .props=${() => fields[k]}
                     >
                     </ovl-datebox>
                   `
@@ -205,11 +191,7 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-textarea
                       id="${id}"
                       class="fd-form__item "
-                      .props=${(state) => {
-                        return <TextAreaControlState>{
-                          field: fields[k],
-                        }
-                      }}
+                      .props=${() => fields[k]}
                     >
                     </ovl-textarea>
                   `
@@ -221,11 +203,7 @@ export class TableRowFormBig extends OvlFormElement {
                       <ovl-listcontrol
                         id="${id}"
                         class="fd-form__item "
-                        .props="${() => {
-                          return <ListControlState>{
-                            field: fields[k],
-                          }
-                        }}"
+                        .props="${() => fields[k]}"
                       >
                       </ovl-listcontrol>
                     `
@@ -251,7 +229,6 @@ export class TableRowFormBig extends OvlFormElement {
           ></button>
           <div style="margin-left:100px;"></div>
           <button
-            @mousedown=${this.handleCancel}
             @click=${this.handleCancel}
             title="Abbrechen"
             class="fd-button--negative sap-icon--decline"

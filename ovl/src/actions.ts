@@ -82,6 +82,8 @@ import {
   TableDirectSaveRow,
   TableEditClose,
   TableMoreRow,
+  TableViewRow,
+  TableCloseViewRow,
   TableAddRow,
   TableDeleteRowFromData,
   TableMultipleDeleteRow,
@@ -96,7 +98,12 @@ import {
 
 let navigation = { NavigateBack, NavigateTo }
 
-let overlay = { OpenOverlay, OpenOverlay2 }
+let overlay = {
+  OpenOverlay,
+  OpenOverlay2,
+  CloseOverlay: StartCloseOverlay,
+  CloseOverlay2: StartCloseOverlay2,
+}
 
 let indicator = { SetIndicatorOpen, SetIndicatorClose }
 
@@ -113,13 +120,14 @@ let table = {
   TableFilter,
   TableClearFilter,
   TableAddRow,
+  TableDirectSaveRow,
 }
 
 let internal = {
   CloseOverlay,
-  StartCloseOverlay,
+
   CloseOverlay2,
-  StartCloseOverlay2,
+
   PlaceSnack,
   ClearSnack,
   AddSnack,
@@ -138,6 +146,8 @@ let internal = {
   TableEditSaveRow,
   TableDirectSaveRow,
   TableMoreRow,
+  TableViewRow,
+  TableCloseViewRow,
   TableDeleteRowFromData,
   TableMultipleDeleteRow,
   TableMultipleCopyRow,

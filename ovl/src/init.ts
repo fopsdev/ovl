@@ -31,6 +31,10 @@ type OvlConfig = {
   }
   /*check stateCleaner in ovl global to see the possibilities of this fn*/
   saveStateCallback: (parentKey: string, key: string, obj: any) => {}
+  /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
+     thats why we have a check function to check if they should be enabled
+  */
+  stickyHeaderEnabled: (state: typeof overmind.state) => {}
 }
 
 import { state } from "./state"
@@ -39,7 +43,8 @@ export { actions }
 import * as effects from "./effects"
 import onInitialize from "./onInitialize"
 import { defineElements } from "./registerComponents"
-import { AsyncAction } from "overmind"
+import { AsyncAction, Overmind } from "overmind"
+import { overmind } from "."
 
 defineElements()
 
@@ -47,7 +52,7 @@ export const baseOvermindConfig = {
   onInitialize,
   state,
   actions,
-  effects
+  effects,
 }
 
 let dataVersion = "1"
@@ -59,11 +64,12 @@ let OvlConfig: OvlConfig = {
     DataVersion: dataVersion,
     ShowSaveOrigin: true,
     PersistStateId: "ovlstate" + dataVersion,
-    PersistTimestampId: "ovltimestamp" + dataVersion
+    PersistTimestampId: "ovltimestamp" + dataVersion,
   },
   apiUrl: undefined,
   requiredActions: undefined,
-  saveStateCallback: undefined
+  saveStateCallback: undefined,
+  stickyHeaderEnabled: () => false,
 }
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore

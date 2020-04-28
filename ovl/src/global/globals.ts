@@ -14,7 +14,7 @@ export const ovltemp = "_ovltmp"
 export let OvlTimestamp = 0
 export const uuidv4 = () => {
   let dt = new Date().getTime()
-  let uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
+  let uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (
     c
   ) {
     var r = (dt + Math.random() * 16) % 16 | 0
@@ -53,6 +53,7 @@ export const getDateValue = (value: string, format?: FieldFormat) => {
 }
 export const getDecimalValue = (value: number, format?: FieldFormat) => {
   let fmt = displayFormats.decimal.default
+
   if (format && format === "4digits") {
     fmt = displayFormats.decimal._4Digits
   }
@@ -89,11 +90,11 @@ export const GetWeekNr = (dt: Date) => {
 export const addGlobalPersistEventListeners = () => {
   // its all about saving state to restore it when needed
   // ...
-  window.addEventListener("beforeunload", e => beforeUnload(e))
+  window.addEventListener("beforeunload", (e) => beforeUnload(e))
   // window.addEventListener("pagehide", e => pageHide(e))
   // window.addEventListener("unload", e => pageHide(e))
   document.addEventListener("visibilitychange", visibilityChange)
-  document.addEventListener("focusout", e => focusOut(e))
+  document.addEventListener("focusout", (e) => focusOut(e))
 }
 
 // export const pageHide = async event => {
@@ -103,7 +104,7 @@ export const addGlobalPersistEventListeners = () => {
 //   }
 // }
 
-export const focusOut = async event => {
+export const focusOut = async (event) => {
   if (OvlConfig._system.OfflineMode) {
     if (!event.relatedTarget) {
       await saveState(false, "FocusOut")
@@ -111,7 +112,7 @@ export const focusOut = async event => {
   }
 }
 
-export const beforeUnload = async event => {
+export const beforeUnload = async (event) => {
   if (
     !OvlConfig._system.IsDev &&
     OvlConfig._system.OfflineMode &&
@@ -129,7 +130,7 @@ export const beforeUnload = async event => {
   }
 }
 
-export const visibilityChange = async event => {
+export const visibilityChange = async (event) => {
   if (OvlConfig._system.OfflineMode) {
     // console.log(document.visibilityState)
     // fires when user switches tabs, apps, goes to homescreen, etc.
@@ -192,23 +193,23 @@ export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
   overmind.actions.ovl.indicator.SetIndicatorOpen()
   if (OvlConfig._system.OfflineMode) {
-    window.removeEventListener("beforeunload", e => beforeUnload(e))
+    window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))
     document.removeEventListener("visibilitychange", visibilityChange)
-    document.removeEventListener("focusout", e => focusOut(e))
+    document.removeEventListener("focusout", (e) => focusOut(e))
 
     try {
       // 1. unregister sw
       let regs = await navigator.serviceWorker.getRegistrations()
       if (regs) {
-        await Promise.all(regs.map(async reg => reg.unregister()))
+        await Promise.all(regs.map(async (reg) => reg.unregister()))
       }
       // 2. get rid of any indexeddb state
       await stateStore.clear()
       // 3. get rid of any cached static assets
       let cacheKeys = await caches.keys()
-      await Promise.all(cacheKeys.map(cacheName => caches.delete(cacheName)))
+      await Promise.all(cacheKeys.map((cacheName) => caches.delete(cacheName)))
     } catch (e) {}
   }
 
@@ -229,7 +230,7 @@ export const stateCleaner = (
     hasCb = true
   }
 
-  Object.keys(state).forEach(key => {
+  Object.keys(state).forEach((key) => {
     // Get this value and its type
     let value = state[key]
     let valuetype = typeof value
@@ -241,7 +242,7 @@ export const stateCleaner = (
           data: {},
           schema: {},
           // do stringify here because it also strips out symbols..
-          tableDef: JSON.parse(JSON.stringify(value.tableDef))
+          tableDef: JSON.parse(JSON.stringify(value.tableDef)),
         }
         return
       } else if (parentKey === "uiState" && key === "isReady") {
@@ -344,9 +345,9 @@ export const T = (key: string, reps?: string[]): string => {
   try {
     str
       .split("{")
-      .filter(f => f.indexOf("}") > -1)
-      .map(m => m.substring(0, m.indexOf("}")))
-      .forEach(s => {
+      .filter((f) => f.indexOf("}") > -1)
+      .map((m) => m.substring(0, m.indexOf("}")))
+      .forEach((s) => {
         hashRes.add(s)
       })
     hashRes.forEach((s: string) => {

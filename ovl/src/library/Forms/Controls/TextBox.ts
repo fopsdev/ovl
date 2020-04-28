@@ -6,16 +6,13 @@ import { getUIValidationObject } from "./uiValidationHelper"
 import { GetLabel } from "./helpers"
 
 type TextBoxType = "text" | "password" | "text-security"
-export type TextBoxControlState = {
-  field: Field
-}
 
 export class OvlTextbox extends OvlBaseElement {
   props: any
-  controlState: TextBoxControlState
+  field: Field
   inputElement: any
   init() {
-    this.controlState = this.props(this.state)
+    this.field = this.props(this.state)
   }
 
   handleFocusOut(e: Event) {
@@ -23,7 +20,7 @@ export class OvlTextbox extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.controlState.field.id },
+      detail: { id: this.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -33,7 +30,7 @@ export class OvlTextbox extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
-      detail: { val: this.inputElement.value, id: this.controlState.field.id },
+      detail: { val: this.inputElement.value, id: this.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -44,7 +41,7 @@ export class OvlTextbox extends OvlBaseElement {
         bubbles: true,
         detail: {
           val: this.inputElement.value,
-          id: this.controlState.field.id,
+          id: this.field.id,
         },
       })
       this.inputElement.dispatchEvent(event)
@@ -52,7 +49,7 @@ export class OvlTextbox extends OvlBaseElement {
   }
 
   getUI() {
-    let field = this.controlState.field
+    let field = this.field
     let inputMode: any = "text"
     if (field.type === "decimal") {
       inputMode = "decimal"
@@ -71,7 +68,7 @@ export class OvlTextbox extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label"
+          class="fd-form-label fd-has-type-1"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -102,7 +99,7 @@ export class OvlTextbox extends OvlBaseElement {
     `
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.controlState.field.id)
-    this.inputElement.value = this.controlState.field.value
+    this.inputElement = document.getElementById(this.field.id)
+    this.inputElement.value = this.field.value
   }
 }

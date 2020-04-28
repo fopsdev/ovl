@@ -53,7 +53,13 @@ export const NavigateTo: AsyncAction<Screen> = async (
       if (currentScreen) {
         // get the first scrollable class of the doc
         let o = state.ovl.screens.screenState[currentScreen]
-        let scrollable = document.querySelector(".scrollable")
+        let scrollable
+        if (state.ovl.uiState.isMobile) {
+          scrollable = document.querySelector(".scrollableMobile")
+        } else {
+          scrollable = document.querySelector(".scrollable")
+        }
+
         // and remember the scroll pos
         if (scrollable && scrollable.scrollTop) {
           o.lastScrollTop = scrollable.scrollTop
@@ -133,7 +139,14 @@ export const NavigateBack: AsyncAction = async ({
         // get the first scrollable class of the doc
         let o = state.ovl.screens.screenState[currentScreen]
 
-        let scrollable = document.querySelector(".scrollable")
+        let scrollable
+
+        if (state.ovl.uiState.isMobile) {
+          scrollable = document.querySelector(".scrollableMobile")
+        } else {
+          scrollable = document.querySelector(".scrollable")
+        }
+
         // and remember the scroll pos
         if (scrollable) {
           o.lastScrollTop = scrollable.scrollTop
@@ -234,11 +247,13 @@ export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
   state.ovl.screens.nav.currentScreen = state.ovl.screens.nav.nextScreen
   // check if there is a form to reset
   if (state.ovl.screens.nav.formTypeToReset) {
-    actions.ovl.form.ResetForm(
-      state.ovl.forms[state.ovl.screens.nav.formTypeToReset][
-        state.ovl.screens.nav.formIdToReset
-      ]
-    )
+    let formTypeToReset = state.ovl.screens.nav.formTypeToReset
+    let formIdToReset = state.ovl.screens.nav.formIdToReset
+    setTimeout(() => {
+      actions.ovl.form.ResetForm(
+        state.ovl.forms[formTypeToReset][formIdToReset]
+      )
+    }, 10)
     state.ovl.screens.nav.formTypeToReset = undefined
   }
   SetVisibleScreen(state, state.ovl.screens.nav.currentScreen)

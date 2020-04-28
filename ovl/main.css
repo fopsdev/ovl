@@ -29,6 +29,7 @@
 
 .fd-popover__body {
   width: 100%;
+  z-index: 1000 !important;
 }
 
 .fd-form-message {
@@ -117,6 +118,16 @@ body {
 
 .nopointerevents {
   pointer-events: none;
+}
+
+.cols2080 {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(100px, 1fr) minmax(200px, 2fr)
+  );
+  grid-template-rows: auto;
 }
 
 .evenCols2 {
@@ -258,6 +269,24 @@ body {
     opacity: 0;
   }
 }
+
+.fadeOutScreen {
+  opacity: 0;
+  animation-name: fadeOutScreen;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeOutScreen {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -292,6 +321,23 @@ body {
 }
 
 @keyframes fadeInSnack {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeInScreen {
+  opacity: 1;
+  animation-name: fadeInScreen;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.3s;
+}
+
+@keyframes fadeInScreen {
   0% {
     opacity: 0;
   }

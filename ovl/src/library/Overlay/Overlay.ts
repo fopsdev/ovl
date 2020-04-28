@@ -13,10 +13,10 @@ overlayToRender = {
   overlayDismissedCallback: undefined,
   overlayClosedCallback: undefined,
   getTemplate: async () => {
-    return new Promise(r => {
+    return new Promise((r) => {
       overlayToRender.resolve = r
     })
-  }
+  },
 }
 
 export type OverlayState = {
@@ -35,12 +35,15 @@ export class OvlOverlay extends OvlBaseElement {
   }
 
   handleDismissed = (e: Event) => {
-    e.stopPropagation()
-    e.preventDefault()
-    if (overlayToRender.overlayDismissedCallback) {
-      overlayToRender.overlayDismissedCallback()
-    } else {
-      this.actions.ovl.internal.StartCloseOverlay()
+    //@ts-ignore
+    if (e.srcElement.id === "ovloverlay") {
+      e.stopPropagation()
+      e.preventDefault()
+      if (overlayToRender.overlayDismissedCallback) {
+        overlayToRender.overlayDismissedCallback()
+      } else {
+        this.actions.ovl.overlay.CloseOverlay()
+      }
     }
   }
 
@@ -69,14 +72,16 @@ export class OvlOverlay extends OvlBaseElement {
         if (overlayToRender.overlayDismissedCallback) {
           overlayToRender.overlayDismissedCallback()
         } else {
-          this.actions.ovl.internal.StartCloseOverlay()
+          this.actions.ovl.overlay.CloseOverlay()
         }
       }
     }
 
     return Promise.resolve(html`
       <div
-        @keydown=${e => handleKeyDown(e)}
+        tabindex="0"
+        id="ovloverlay"
+        @keydown=${(e) => handleKeyDown(e)}
         @mousedown=${this.handleDismissed}
         class="fd-shell__overlay fd-overlay fd-overlay--modal ${animation}"
         aria-hidden="false"
@@ -85,7 +90,13 @@ export class OvlOverlay extends OvlBaseElement {
       </div>
     `)
   }
-
+  updated() {
+    let el = document.getElementById("ovloverlay")
+    if (el) {
+      el.focus()
+    }
+    super.updated()
+  }
   connectedCallback() {
     this.addEventListener("animationend", this.handleAnimationEnd, true)
     super.connectedCallback()

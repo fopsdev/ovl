@@ -39,6 +39,7 @@ export let tblTableTesting: TableDef = {
     add: true,
     noButtonsAtTheBottom: false,
     forceFreshServerDataIfOlderThan: 0,
+    focusToFirstEditableField: false,
   },
   columns: {
     U_Alpha: {
@@ -154,6 +155,7 @@ export let tblTableTesting2: TableDef = {
     dbInsertMode: "UDTAutoNumberBoth",
   },
   features: {
+    detailView: "Enabled",
     filter: false,
     page: false,
     add: true,
@@ -186,6 +188,7 @@ export let tblTableTesting2: TableDef = {
         acceptEmpty: false,
         acceptOnlyListValues: true,
       },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
 
     U_ItemCode: {
@@ -209,6 +212,7 @@ export let tblTableTesting2: TableDef = {
         valueField: "Code",
         displayField: "U_Alpha",
       },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
     U_ParentCode2: {
       sortable: true,
@@ -219,11 +223,13 @@ export let tblTableTesting2: TableDef = {
         valueField: "Code",
         displayField: "U_Alpha",
       },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
 
     U_Int: {
       sortable: true,
       filter: { top: 3 },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
     U_Decimal: {
       sortable: true,

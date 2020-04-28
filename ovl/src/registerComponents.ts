@@ -15,6 +15,7 @@ import { TableRow } from "./library/Table/Row"
 import { TableRowWrapper } from "./library/Table/RowWrapper"
 import { TableRowForm } from "./library/Table/RowForm"
 import { TableRowFormBig } from "./library/Table/RowFormBig"
+import { TableRowDetailView } from "./library/Table/RowDetailView"
 import { TableRowSaveCancel } from "./library/Table/RowFormSaveCancel"
 import { TableRowControl } from "./library/Table/RowControl"
 import { TableNavControl } from "./library/Table/NavControl"
@@ -28,6 +29,7 @@ export const defineElements = () => {
   customElements.define("ovl-trg", TableRowWrapper)
   customElements.define("ovl-trowform", TableRowForm)
   customElements.define("ovl-trowformb", TableRowFormBig)
+  customElements.define("ovl-trowdetailview", TableRowDetailView)
   customElements.define("ovl-trowsc", TableRowSaveCancel)
   customElements.define("ovl-textarea", OvlTextArea)
   customElements.define("ovl-textbox", OvlTextbox)

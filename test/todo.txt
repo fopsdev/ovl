@@ -1,4 +1,0 @@
-form field type set to 2digit date format (mobiletimeentry)
-but still 4
-maybe consider save value where field.autocorrected gets written as well
-maybe get rid of autocorrected value at all?

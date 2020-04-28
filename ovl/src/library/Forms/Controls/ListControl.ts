@@ -32,13 +32,9 @@ export type ListState = {
   acceptOnlyListValues?: boolean
 }
 
-export type ListControlState = {
-  field: Field
-}
-
 export class OvlListControl extends OvlBaseElement {
   props: any
-  controlState: ListControlState
+  field: Field
   inputElement: any
   searchElement: any
   deleteElement: any
@@ -49,19 +45,17 @@ export class OvlListControl extends OvlBaseElement {
   lastDisplayValue: any
   timer: any
   init() {
-    this.controlState = this.props(this.state)
+    this.field = this.props(this.state)
   }
-
-  handleCancel(e: Event) {
-    this.click()
-  }
-
   // handleClearFilter(e: Event) {}
+  handleCancel = () => {
+    this.actions.ovl.overlay.CloseOverlay2()
+  }
 
   async handleListPopup(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    let field = this.controlState.field
+    let field = this.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let listData: ListFnReturnValue = resolvePath(
@@ -136,15 +130,11 @@ export class OvlListControl extends OvlBaseElement {
       templateResult: list,
       elementToFocusAfterClose: this.searchElement,
     })
-    // overlay2ToRender.overlayClosedCallback = () => {
-    //   if (this.searchElement !== null) {
-    //     this.searchElement.focus()
-    //   }
-    // }
   }
 
   selectedCallback = async (selectedKey: string) => {
-    let field = this.controlState.field
+    this.actions.ovl.overlay.CloseOverlay2()
+    let field = this.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
     if (this.localList !== null) {
       this.inputElement.focus()
@@ -158,7 +148,6 @@ export class OvlListControl extends OvlBaseElement {
       await this.resetLocalList()
     } else if (selectedKey !== "@@ovlcanceled") {
       this.writeBackValue = selectedKey
-
       let dataList = resolvePath(customFunctions, formState.namespace)[
         FieldGetList.replace("%", field.fieldKey)
       ](
@@ -169,17 +158,19 @@ export class OvlListControl extends OvlBaseElement {
       )
 
       this.displayValue =
-        dataList.data[selectedKey][this.controlState.field.list.displayField]
+        dataList.data[selectedKey][this.field.list.displayField]
       let event = new CustomEvent("ovlchange", {
         bubbles: true,
-        detail: { val: selectedKey, id: this.controlState.field.id },
+        detail: { val: selectedKey, id: this.field.id },
       })
       this.inputElement.dispatchEvent(event)
       //this.writeBackValue = undefined
 
       this.localList = null
-
       await this.resetLocalList()
+      if (this.deleteElement) {
+        this.deleteElement.classList.remove("hide")
+      }
     }
   }
 
@@ -188,7 +179,7 @@ export class OvlListControl extends OvlBaseElement {
     //if (this.localList !== null) {
 
     if (val) {
-      let field = this.controlState.field
+      let field = this.field
       let formState = this.state.ovl.forms[field.formType][field.formId]
       let filteredKeys = FilterHitList(
         field.list,
@@ -208,13 +199,8 @@ export class OvlListControl extends OvlBaseElement {
           overmind.effects
         )
         let singleValue =
-          dataList.data[filteredKeys[0]][
-            this.controlState.field.list.valueField
-          ]
-        val =
-          dataList.data[filteredKeys[0]][
-            this.controlState.field.list.displayField
-          ]
+          dataList.data[filteredKeys[0]][this.field.list.valueField]
+        val = dataList.data[filteredKeys[0]][this.field.list.displayField]
 
         this.displayValue = val
         val = singleValue
@@ -226,7 +212,7 @@ export class OvlListControl extends OvlBaseElement {
   }
   // // same here
   async handleFocusOut(e: Event) {
-    let field = this.controlState.field
+    let field = this.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let fieldId = field.id
@@ -333,7 +319,9 @@ export class OvlListControl extends OvlBaseElement {
             this.actions,
             overmind.effects
           )
-          val = listData.data[singleValue][field.list.displayField]
+          if (listData.data[singleValue]) {
+            val = listData.data[singleValue][field.list.displayField]
+          }
           if (singleValue !== formState.fields[foundId].convertedValue) {
             this.writeBackValue = singleValue
             let event = new CustomEvent("ovlchange", {
@@ -383,7 +371,7 @@ export class OvlListControl extends OvlBaseElement {
     //   alert(e.key)
     // }
 
-    let field = this.controlState.field
+    let field = this.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let filterValue = this.inputElement.value
@@ -458,9 +446,7 @@ export class OvlListControl extends OvlBaseElement {
           await this.doRender()
         }
         if (openLocalList) {
-          let focusEl = document.getElementById(
-            this.controlState.field.id + "inlineovlhl_1"
-          )
+          let focusEl = document.getElementById(this.field.id + "inlineovlhl_1")
           if (focusEl) {
             focusEl.focus()
           }
@@ -469,7 +455,7 @@ export class OvlListControl extends OvlBaseElement {
     }, waitTime)
   }
   getUI() {
-    let field = this.controlState.field
+    let field = this.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let res = getUIValidationObject(field)
@@ -479,7 +465,7 @@ export class OvlListControl extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label"
+          class="fd-form-label fd-has-type-1"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -507,16 +493,16 @@ export class OvlListControl extends OvlBaseElement {
     }
     this.lastDisplayValue = displayValue
     let deleteButton
-    if (this.state.ovl.uiState.isMobile) {
-      deleteButton = html`
-        <button
-          tabindex="-9999"
-          id="delete${field.id}"
-          @click=${(e) => this.handleDelete(e)}
-          class="fd-input-group__button fd-button--light sap-icon--decline"
-        ></button>
-      `
-    }
+    //if (this.state.ovl.uiState.isMobile) {
+    deleteButton = html`
+      <button
+        tabindex="-9999"
+        id="delete${field.id}"
+        @click=${(e) => this.handleDelete(e)}
+        class="fd-input-group__button fd-button--light sap-icon--decline"
+      ></button>
+    `
+    //}
     return html`
       <div @focusout=${(e) => this.handleFocusOut(e)}>
         ${label}
@@ -559,15 +545,11 @@ export class OvlListControl extends OvlBaseElement {
     `
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.controlState.field.id)
+    this.inputElement = document.getElementById(this.field.id)
 
-    this.searchElement = document.getElementById(
-      "search" + this.controlState.field.id
-    )
+    this.searchElement = document.getElementById("search" + this.field.id)
 
-    this.deleteElement = document.getElementById(
-      "delete" + this.controlState.field.id
-    )
+    this.deleteElement = document.getElementById("delete" + this.field.id)
 
     if (this.deleteElement) {
       if (!this.inputElement.value) {

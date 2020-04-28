@@ -36,6 +36,11 @@ export type FormFields = {
 
 export type DataType = "text" | "date" | "decimal" | "int" | "bool" | "time"
 
+export type LookupDef = {
+  type: DataType
+  translationKey?: string
+}
+
 export class OvlFormElement extends OvlBaseElement {
   formType: FormType
   formFields: { [key: string]: FormFields }
@@ -111,6 +116,8 @@ export class OvlFormElement extends OvlBaseElement {
 
   afterRender() {
     this.handleAfterRenderCustomHook()
+  }
+  updated() {
     this.handleFormShowCustomHook()
   }
   disconnectedCallback() {
@@ -146,7 +153,18 @@ export class OvlFormElement extends OvlBaseElement {
 
   handleFormShowCustomHook() {
     if (this.formState) {
-      if (!this.formShowed) {
+      if (
+        this.screen !== undefined &&
+        this.state.ovl.screens.nav.currentScreen !== this.screen
+      ) {
+        this.formShowed = false
+      }
+
+      if (
+        !this.formShowed &&
+        (this.state.ovl.screens.nav.currentScreen === this.screen ||
+          this.screen === undefined)
+      ) {
         this.formShowed = true
         // preserve form control focus
         let lastTouchedField = this.formState.fields[
@@ -179,13 +197,6 @@ export class OvlFormElement extends OvlBaseElement {
             }
             this.formShowFn = -1
           }
-        }
-      } else {
-        if (
-          this.state.ovl.screens.nav.currentScreen !==
-          this.state.ovl.screens.nav.nextScreen
-        ) {
-          this.formShowed = false
         }
       }
     }

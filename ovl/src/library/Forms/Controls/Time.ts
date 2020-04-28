@@ -5,16 +5,12 @@ import { Field } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { GetLabel } from "./helpers"
 
-export type TimeControlState = {
-  field: Field
-}
-
 export class OvlTime extends OvlBaseElement {
   props: any
-  controlState: TimeControlState
+  field: Field
   inputElement: any
   init() {
-    this.controlState = this.props(this.state)
+    this.field = this.props(this.state)
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
     } else {
@@ -27,7 +23,7 @@ export class OvlTime extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.controlState.field.id },
+      detail: { id: this.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -37,12 +33,12 @@ export class OvlTime extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
-      detail: { val: this.inputElement.value, id: this.controlState.field.id },
+      detail: { val: this.inputElement.value, id: this.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
   getUI() {
-    let field = this.controlState.field
+    let field = this.field
 
     let res = getUIValidationObject(field)
     let style = ""
@@ -51,7 +47,7 @@ export class OvlTime extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label"
+          class="fd-form-label fd-has-type-1"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -85,8 +81,8 @@ export class OvlTime extends OvlBaseElement {
     `
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.controlState.field.id)
-    this.inputElement.value = this.controlState.field.value
+    this.inputElement = document.getElementById(this.field.id)
+    this.inputElement.value = this.field.value
   }
   disconnectedCallback() {
     if (this.state.ovl.uiState.isMobile) {

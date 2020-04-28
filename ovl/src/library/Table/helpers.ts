@@ -19,7 +19,18 @@ import {
   TableDef,
 } from "./Table"
 import { TableDefIds } from "../../../../test/src"
-import { FormCustomFilter } from "../../global/hooks"
+import {
+  FormCustomFilter,
+  FieldGetList,
+  FormCanCustom,
+  FormCanDelete,
+  FormCanCopy,
+  FormCanEdit,
+  FormCanDetail,
+  FormCanMore,
+} from "../../global/hooks"
+import { RowControlAllAction } from "./RowControl"
+import { overlayToRender } from "../Overlay/Overlay"
 
 export const getTextSort = (valA: string, valB: string): number => {
   if (valA === null) {
@@ -45,24 +56,32 @@ export const getDisplayValue = (
   key: string,
   col: ColumnDisplayDef,
   row: any,
-  listdata?: ListFnReturnValue
+  namespace: string
 ): string => {
   let value = row[key]
-  if (col.list && listdata) {
+
+  if (col.list && namespace) {
+    let listdata
+    listdata = resolvePath(customFunctions, namespace)[
+      FieldGetList.replace("%", key)
+    ](row, overmind.state, overmind.actions, overmind.effects)
     return GetListDisplayValue(col.list, value, listdata)
   }
-
+  let format
+  if (col.ui) {
+    format = col.ui.format
+  }
   switch (col.type) {
     case "date":
       if (!value) {
         return ""
       }
-      return getDateValue(value, col.format)
+      return getDateValue(value, format)
     case "decimal":
       if ((!value && value != 0) || value === "") {
         return ""
       }
-      return getDecimalValue(value, col.format)
+      return getDecimalValue(value, format)
     default:
       if (!value) {
         value = ""
@@ -117,14 +136,15 @@ export const setTableRow = (
       def.uiState.currentlyAddingKey = undefined
       delete def.uiState.selectedRow[tempId]
       delete def.uiState.editRow[tempId]
+      delete def.uiState.viewRow[tempId]
       if (!def.uiState.selectedRow[newId]) {
         def.uiState.selectedRow[newId] = {
           selected: false,
           showNav: false,
           timestamp: 0,
         }
-
         def.uiState.editRow[newId] = { selected: false }
+        def.uiState.viewRow[newId] = { selected: false }
       }
       Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
         // for the other tabledefs
@@ -161,6 +181,7 @@ export const setTableRow = (
         timestamp: 0,
       }
       def.uiState.editRow[newId] = { selected: false }
+      def.uiState.viewRow[newId] = { selected: false }
       let paging = def.options.paging
       let rowsCount = def.uiState.dataFilteredAndSorted.length
       if (def.options.addedRowsPosition === "bottom") {
@@ -347,6 +368,20 @@ export const initTableState = (
       def.options = {}
     }
     let options = def.options
+    if (options.view === undefined) {
+      options.view = { viewType: "default", viewScreenWidth: 70 }
+    }
+    if (options.view.viewScreenWidth === undefined) {
+      options.view.viewScreenWidth = 70
+    }
+
+    // if (def.translationGroup === undefined) {
+    //   // assume tranlsation group is the same as namespace first group if not defined
+    //   let firstGroup = def.namespace.split(".")[0]
+    //   def.translationGroup =
+    //     firstGroup.charAt(0).toUpperCase() + firstGroup.slice(1)
+    // }
+
     if (options.addedRowsPosition === undefined) {
       options.addedRowsPosition = "bottom"
     }
@@ -375,7 +410,10 @@ export const initTableState = (
     }
 
     if (options.edit === undefined) {
-      options.edit = { editType: "inline" }
+      options.edit = { editType: "inline", editScreenWidth: 50 }
+    }
+    if (options.edit.editScreenWidth === undefined) {
+      options.edit.editScreenWidth = 50
     }
 
     if (options.sortCustom === undefined) {
@@ -390,6 +428,10 @@ export const initTableState = (
       def.uiState = {}
     }
     let uiState = def.uiState
+
+    if (uiState.viewRow === undefined) {
+      uiState.viewRow = {}
+    }
 
     if (uiState.headerSelected === undefined) {
       uiState.headerSelected = ""
@@ -423,6 +465,15 @@ export const initTableState = (
       def.features = {}
     }
     let features = def.features
+
+    if (features.focusToFirstEditableField === undefined) {
+      features.focusToFirstEditableField = true
+    }
+
+    if (features.detailView === undefined) {
+      features.detailView = "None"
+    }
+
     if (features.add === undefined) {
       features.add = true
     }
@@ -475,13 +526,13 @@ export const initTableState = (
     let columns = def.columns
     if (def.database.dataIdField && !def.columns[def.database.dataIdField]) {
       columns[def.database.dataIdField] = {
-        visible: false,
+        ui: { visibility: "none" },
         sortable: true,
       }
     }
     if (def.options.sort.field && !def.columns[def.options.sort.field]) {
       columns[def.options.sort.field] = {
-        visible: false,
+        ui: { visibility: "none" },
         sortable: true,
       }
     }
@@ -490,6 +541,9 @@ export const initTableState = (
       let col = def.columns[f]
       if (col.ui === undefined) {
         col.ui = {}
+      }
+      if (col.ui.visibility === undefined) {
+        col.ui.visibility = "Table_Edit_View"
       }
       if (col.control === undefined) {
         col.control = "text"
@@ -529,9 +583,6 @@ export const initTableState = (
       }
       if (col.filter.selected === undefined) {
         col.filter.selected = ""
-      }
-      if (col.visible === undefined) {
-        col.visible = true
       }
     })
   }
@@ -608,7 +659,7 @@ export const TableFilterFn = (
   )
 
   let visibleColumns = Object.keys(columns).filter(
-    (f) => columns[f].visible === undefined || columns[f].visible === true
+    (f) => columns[f].ui.visibility === "Table_Edit_View"
   )
 
   // restable is now filtered by static filter already, thats fine and our starting point for the next 4 filters
@@ -685,7 +736,12 @@ export const TableFilterFn = (
     restable = restable.filter((rowKey) => {
       return visibleColumns.some((columnId) => {
         let column = columns[columnId]
-        const dispValue = getDisplayValue(columnId, column, data[rowKey])
+        const dispValue = getDisplayValue(
+          columnId,
+          column,
+          data[rowKey],
+          def.namespace
+        )
         return (
           dispValue
             .toLowerCase()
@@ -707,7 +763,7 @@ export const getFormFieldsFromColumns = (
   let columns = def.columns
   Object.keys(columns).map((k) => {
     let col = columns[k]
-    let dispVal = getDisplayValue(k, col, row)
+    let dispVal = getDisplayValue(k, col, row, "")
     let type: DataType = undefined
     if (col.type) {
       type = col.type
@@ -724,4 +780,303 @@ export const getFormFieldsFromColumns = (
     formFields[k].ui.noLabel = !!noLabel
   })
   return formFields
+}
+
+export const createDynamicRowFunctions = async (
+  def: TableDef,
+  data: TableData,
+  key: string,
+  isDetailView: boolean
+) => {
+  let rowControlActions: { [key: string]: RowControlAllAction } = {}
+  let fn = resolvePath(customFunctions, def.namespace)
+  // first all custom ones
+  if (def.options.customRowActions) {
+    let wait = Promise.all(
+      Object.keys(def.options.customRowActions).map(async (k) => {
+        let custom = def.options.customRowActions[k]
+        let disabled = false
+        let title = custom.name
+        let functionName = FormCanCustom.replace("%", k)
+
+        if (fn && fn[functionName]) {
+          disabled = true
+          title = await fn[functionName](
+            key,
+            <TableDataAndDef>{ def, data },
+            overmind.state,
+            overmind.effects
+          )
+          if (title) {
+            rowControlActions[k] = {
+              disabled: disabled,
+              icon: custom.icon,
+              custom: true,
+              name: title,
+            }
+          }
+        } else {
+          rowControlActions[k] = JSON.parse(JSON.stringify(custom))
+          rowControlActions[k].disabled = false
+          rowControlActions[k].custom = true
+        }
+      })
+    )
+    await wait
+  }
+
+  // then add the default ones
+  // delete
+  if (def.features.delete) {
+    let deleteDisabled = false
+    let deleteTitle = ""
+    let functionName = FormCanDelete
+
+    if (fn && fn[functionName]) {
+      deleteTitle = await fn[functionName](
+        key,
+        <TableDataAndDef>{ def, data },
+        overmind.state,
+
+        overmind.effects
+      )
+      deleteDisabled = true
+      if (deleteTitle) {
+        rowControlActions["Delete"] = {
+          disabled: deleteDisabled,
+          icon: "sap-icon--delete",
+          custom: false,
+          name: deleteTitle,
+        }
+      }
+    }
+    if (!rowControlActions["Delete"]) {
+      rowControlActions["Delete"] = {
+        disabled: false,
+        icon: "sap-icon--delete",
+        custom: false,
+        name: "Datensatz löschen",
+      }
+    }
+  }
+
+  // copy
+  if (def.features.add) {
+    let copyDisabled = false
+    let copyTitle = ""
+    //@@hook
+    let functionName = FormCanCopy
+
+    if (fn && fn[functionName]) {
+      copyTitle = await fn[functionName](
+        key,
+        <TableDataAndDef>{ def, data },
+        overmind.state,
+
+        overmind.effects
+      )
+      copyDisabled = true
+      if (copyTitle) {
+        rowControlActions["Copy"] = {
+          disabled: copyDisabled,
+          icon: "sap-icon--copy",
+          custom: false,
+          name: copyTitle,
+        }
+      }
+    }
+    if (!rowControlActions["Copy"]) {
+      rowControlActions["Copy"] = {
+        disabled: false,
+        icon: "sap-icon--copy",
+        custom: false,
+        name: "Datensatz duplizieren",
+      }
+    }
+  }
+
+  if (def.features.edit) {
+    // edit
+    let editDisabled = false
+    let editTitle = ""
+    //@@hook
+    let functionName = FormCanEdit
+    if (fn && fn[functionName]) {
+      editTitle = await fn[functionName](
+        key,
+        <TableDataAndDef>{ def, data },
+        overmind.state,
+        overmind.effects
+      )
+      editDisabled = true
+      if (editTitle) {
+        rowControlActions["Edit"] = {
+          disabled: editDisabled,
+          icon: "sap-icon--edit",
+          custom: false,
+          name: editTitle,
+        }
+      }
+    }
+    if (!rowControlActions["Edit"]) {
+      rowControlActions["Edit"] = {
+        disabled: false,
+        icon: "sap-icon--edit",
+        custom: false,
+        name: "Datensatz ändern",
+      }
+    }
+  }
+  // detailview
+  if (!isDetailView) {
+    if (
+      def.features.detailView === "Enabled" ||
+      (overmind.state.ovl.uiState.isMobile &&
+        def.features.detailView === "EnabledOnlyMobile")
+    ) {
+      let detailDisabled = false
+      let detailTitle = ""
+      //@@hook
+      let functionName = FormCanDetail
+      if (fn && fn[functionName]) {
+        detailTitle = await fn[functionName](
+          key,
+          <TableDataAndDef>{ def, data },
+          overmind.state,
+
+          overmind.effects
+        )
+        detailDisabled = true
+        if (detailTitle) {
+          rowControlActions["View"] = {
+            disabled: detailDisabled,
+            icon: "sap-icon--detail-view",
+            custom: false,
+            name: detailTitle,
+          }
+        }
+      }
+      if (!rowControlActions["View"]) {
+        rowControlActions["View"] = {
+          disabled: false,
+          icon: "sap-icon--detail-view",
+          custom: false,
+          name: "Detailansicht",
+        }
+      }
+    }
+  }
+  if (!isDetailView) {
+    // more
+    let moreDisabled = false
+    let moreTitle = ""
+    //@@hook
+    let functionName = FormCanMore
+    if (fn && fn[functionName]) {
+      moreTitle = fn[functionName](
+        key,
+        <TableDataAndDef>{ def, data },
+        overmind.state,
+
+        overmind.effects
+      )
+      moreDisabled = true
+      if (moreTitle) {
+        rowControlActions["More"] = {
+          disabled: moreDisabled,
+          icon: "sap-icon--overflow",
+          custom: false,
+          name: moreTitle,
+        }
+      }
+    }
+    if (!rowControlActions["More"]) {
+      rowControlActions["More"] = {
+        disabled: false,
+        icon: "sap-icon--overflow",
+        custom: false,
+        name: "Tabellenfunktionen",
+      }
+    }
+  }
+  return rowControlActions
+}
+export const rowControlActionsHandler = async (
+  isCustom: boolean,
+
+  key: string,
+  def: TableDef,
+  data: TableData,
+  rowKey: string,
+  isDetailView: boolean
+) => {
+  if (isCustom) {
+    let customFns = resolvePath(customFunctions, def.namespace)
+    if (customFns) {
+      let customFunctionName = "Form" + key
+      let customFunction = customFns[customFunctionName]
+
+      if (customFunction) {
+        if (isDetailView) {
+          overlayToRender.overlayClosedCallback = async () => {
+            overmind.actions.ovl.internal.TableCloseViewRow({
+              key: rowKey,
+              def,
+            })
+            await customFunction(
+              key,
+              {
+                def,
+                data,
+              },
+              overmind.state,
+              overmind.actions,
+              overmind.effects
+            )
+          }
+          overmind.actions.ovl.overlay.CloseOverlay()
+        } else {
+          await customFunction(
+            key,
+            {
+              def,
+              data,
+            },
+            overmind.state,
+            overmind.actions,
+            overmind.effects
+          )
+        }
+      } else {
+        throw Error(
+          "Ovl logical error: Custom Action: " +
+            customFunctionName +
+            " not found!"
+        )
+      }
+    }
+  } else {
+    let actionName = "Table" + key + "Row"
+    if (isDetailView) {
+      overlayToRender.overlayClosedCallback = async () => {
+        overmind.actions.ovl.internal.TableCloseViewRow({
+          key: rowKey,
+          def,
+        })
+
+        await overmind.actions.ovl.internal[actionName]({
+          key: rowKey,
+          def,
+          data,
+        })
+      }
+      overmind.actions.ovl.overlay.CloseOverlay()
+    } else {
+      await overmind.actions.ovl.internal[actionName]({
+        key: rowKey,
+        def,
+        data,
+      })
+    }
+  }
 }

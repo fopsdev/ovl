@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { repeat } from "lit-html/directives/repeat"
 import { TableRowDef } from "./RowWrapper"
-import { DataType, Schema } from "../Forms/OvlFormElement"
+import { DataType, Schema, LookupDef } from "../Forms/OvlFormElement"
 import { customFunctions, overmind, TableDefIds } from "../../index"
 
 import { HeaderMenuDef } from "./HeaderMenu"
@@ -12,6 +12,7 @@ import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
 import { FieldIsVisible } from "../../global/hooks"
+import { OvlConfig } from "../../init"
 export type SaveMode = "add" | "update"
 
 export type BeforeSaveParam = {
@@ -30,9 +31,9 @@ export type TableData = {
   schema: { [key: string]: Schema }
   tableDef: { [key in TableDefIds]?: TableDef }
   timestamp?: number
-  lookupTypes?: { [key: string]: DataType }
-  lookupTypes2?: { [key: string]: DataType }
-  lookupTypes3?: { [key: string]: DataType }
+  lookupDef?: { [key: string]: LookupDef }
+  lookupDef2?: { [key: string]: LookupDef }
+  lookupDef3?: { [key: string]: LookupDef }
 }
 
 export type TableDataAndDef = {
@@ -64,11 +65,18 @@ export type SelectedEditRow = {
   selected: boolean
 }
 
+export type SelectedViewRow = {
+  selected: boolean
+}
+
+export type DetailViewMode = "None" | "Enabled" | "EnabledOnlyMobile"
+
 export type TableDef = {
   initialised?: boolean
   id?: TableDefIds
   title?: string
   namespace: string
+  //translationGroup?: string
   server: {
     endpoint: string
   }
@@ -88,16 +96,17 @@ export type TableDef = {
     rowsCount?: number
     selectedRow?: { [key: string]: SelectedRow }
     editRow?: { [key: string]: SelectedEditRow }
+    viewRow?: { [key: string]: SelectedViewRow }
     currentlyAddingKey?: string
   }
   options?: {
     addedRowsPosition?: "bottom" /* | "top" */
     copyColumnsIgnore?: { [key: string]: string }
     customRowActions?: {
-      // dynamically displays button when a row is selected
+      // dynamically displays button when a row is selected or the detailview is called
       // key will be the action name that will be executed when custom button is pressed
-      // key + _VisibleFn can be a fn name in imported functions.ts which receives state and current row and should return a boolean which
-      // makes the custom action button visible or not
+      // check hooks.ts for the required fn names
+
       [key: string]: RowControlAction
     }
     navType?: "top/bottom" | "top" | "bottom"
@@ -107,9 +116,19 @@ export type TableDef = {
     paging?: Paging
     filter?: Filter
     filterCustom?: { [key: string]: CustomFilter }
-    edit?: { editType: "inline" | "big" | "custom" }
+    edit?: {
+      editType: "inline" | "big" | "custom"
+      editScreenWidth?: number
+      customTemplateId?: string
+    }
+    view?: {
+      viewType: "default" | "custom"
+      viewScreenWidth?: number
+      customTemplateId?: string
+    }
   }
   features?: {
+    detailView?: DetailViewMode
     page?: boolean
     multiselect?: boolean
     edit?: boolean
@@ -122,6 +141,7 @@ export type TableDef = {
     forceFreshServerDataIfOlderThan?: number
     noButtonsAtTheBottom?: boolean
     showRefreshButton?: boolean
+    focusToFirstEditableField?: boolean
   }
 }
 
@@ -221,10 +241,16 @@ export type DBInsertMode =
   | "AutoGUID"
   | "Manual"
 
+export type FieldVisibility =
+  | "TableNotMobile_Edit_View"
+  | "Table_Edit_View"
+  | "Edit_View"
+  | "View"
+  | "none"
+
 export type ColumnDef = {
   control?: ControlType
   type?: DataType
-  visible?: boolean
   width?: number
   list?: ListState
   sortable?: boolean
@@ -236,12 +262,13 @@ export type ColumnDef = {
     isPassword?: boolean
     inline?: boolean
     readonly?: boolean
+    visibility?: FieldVisibility
   }
 }
 
 export type ColumnDisplayDef = {
   type?: DataType
-  format?: FieldFormat
+  ui?: { format?: FieldFormat }
   list?: ListState
 }
 
@@ -249,10 +276,10 @@ export type ListFnReturnValue = {
   data?: {
     [key: string]: {}
   }
-  lookupTypes?: { [key: string]: DataType }
+  lookupDef?: { [key: string]: LookupDef }
   /* use alternative lookups, maybe some selects doesn't need all the columns displayed in the select list, so here they are customizable */
-  lookupTypes2?: { [key: string]: DataType }
-  lookupTypes3?: { [key: string]: DataType }
+  lookupDef2?: { [key: string]: LookupDef }
+  lookupDef3?: { [key: string]: LookupDef }
 }
 
 export type ColumnFilter = {
@@ -311,6 +338,7 @@ export class TableHeader extends OvlBaseElement {
     //this.actions.ovl.table.TableRefresh(this.tabledata)
   }
   async getUIAsync() {
+    this.state.ovl.language.language
     let def = this.tabledata.def
     if (!def.initialised) {
       throw new Error(
@@ -332,13 +360,14 @@ export class TableHeader extends OvlBaseElement {
     let columnsAlign = {}
     let columnsVisible = {}
     let columnsCount = 0
+    let isMobile = this.state.ovl.uiState.isMobile
     let headerRows = html`
       ${Object.keys(columns).map((k) => {
         let column = columns[k]
 
-        let visible = true
-        if (column.visible !== undefined) {
-          visible = column.visible
+        let visible: FieldVisibility = "Table_Edit_View"
+        if (column.ui.visibility !== undefined) {
+          visible = column.ui.visibility
         }
         //@@hook
         let functionName = FieldIsVisible.replace("%", k)
@@ -353,7 +382,10 @@ export class TableHeader extends OvlBaseElement {
         }
 
         columnsVisible[k] = visible
-        if (!visible) {
+        if (
+          visible.indexOf("Table") < 0 ||
+          (isMobile && visible.indexOf("TableNotMobile") > -1)
+        ) {
           return null
         }
 
@@ -413,11 +445,17 @@ export class TableHeader extends OvlBaseElement {
         if (!caption) {
           caption = k
         }
+
+        let stickyTableHeader
+        if (OvlConfig.stickyHeaderEnabled(this.state)) {
+          stickyTableHeader = "stickyTableHeader"
+        }
+
         return html`
           <th
             style="${cellBgColor}"
             @click="${(e) => this.handleHeaderColumnClick(e, k)}"
-            class="ovltablecolumnheader ${sortdirection} fd-table__cell stickyTableHeader ${cssAlign} "
+            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} "
             scope="col"
           >
             ${caption}
@@ -552,6 +590,7 @@ export class TableHeader extends OvlBaseElement {
                 columnsVisible,
                 columnsCount: columnsCount,
                 selected: def.uiState.selectedRow[k],
+                viewRow: def.uiState.viewRow[k],
                 editSelected: def.uiState.editRow[k],
               }
             }}
