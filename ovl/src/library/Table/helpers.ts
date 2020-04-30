@@ -51,7 +51,7 @@ export const getDateSort = (valA: string, valB: string): number => {
   const bDate = new Date(valB).getTime()
   return aDate - bDate
 }
-
+export let cachedListFn: Map<string, any> = new Map<string, any>()
 export const getDisplayValue = (
   key: string,
   col: ColumnDisplayDef,
@@ -61,10 +61,20 @@ export const getDisplayValue = (
   let value = row[key]
 
   if (col.list && namespace) {
-    let listdata
-    listdata = resolvePath(customFunctions, namespace)[
-      FieldGetList.replace("%", key)
-    ](row, overmind.state, overmind.actions, overmind.effects)
+    let cachedListKey = namespace + key
+    let listFn = cachedListFn.get(cachedListKey)
+    if (!listFn) {
+      listFn = resolvePath(customFunctions, namespace)[
+        FieldGetList.replace("%", key)
+      ]
+      cachedListFn.set(cachedListKey, listFn)
+    }
+    let listdata = listFn(
+      row,
+      overmind.state,
+      overmind.actions,
+      overmind.effects
+    )
     return GetListDisplayValue(col.list, value, listdata)
   }
   let format
@@ -690,19 +700,20 @@ export const TableFilterFn = (
           let column = columns[columnId]
 
           let filter = column.filter
+          let row = data[rowKey]
           if (filter.isOthersSelected) {
             // match only others
             return Object.keys(filter.filterValues).some((k) => {
               let selectedFilter = filter.filterValues[k]
 
-              if (selectedFilter.value === data[rowKey][columnId]) {
+              if (selectedFilter.value === row[columnId]) {
                 return true
               }
             })
           } else {
             // match exact
             let selectedFilter = filter.filterValues[filter.selected]
-            return selectedFilter.value !== data[rowKey][columnId]
+            return selectedFilter.value !== row[columnId]
           }
         })
     })
@@ -710,20 +721,13 @@ export const TableFilterFn = (
 
   // now the customFilters
   if (hasCustomFilter) {
-    restable = restable.filter(
-      (rowKey) =>
-        !customFilterFn.some(
-          (f) =>
-            !f(
-              def,
-              tableDataAndDef.data,
-              rowKey,
-              state,
-              overmind.actions,
-              overmind.effects
-            )
-        )
-    )
+    restable = restable.filter((rowKey) => {
+      let data = tableDataAndDef.data
+      let row = data.data[rowKey]
+      return !customFilterFn.some(
+        (f) => !f(def, data, row, state, overmind.actions, overmind.effects)
+      )
+    })
   }
 
   // if tablefiltering is switched off thats it, just return

@@ -8,6 +8,10 @@ export type TableTesting = {
   U_Date: Date
   U_Int: number
   U_Decimal: number
+  U_ItemCode: string
+  U_ItmsGrpCod: string
+  U_ParentCode: string
+  U_ParentCode2: string
 }
 
 export type TableTestingColumn = keyof TableTesting
@@ -171,18 +175,25 @@ export let tblTableTesting2: TableDef = {
     forceFreshServerDataIfOlderThan: 10,
   },
   columns: {
+    MobileSummary: {
+      sortable: true,
+      ui: { visibility: "TableOnlyMobile" },
+    },
     U_Alpha: {
       sortable: true,
 
       filter: { top: 3 },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
     U_Memo: {
       sortable: true,
       control: "textarea",
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
     U_Date: {
       control: "date",
       sortable: true,
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
 
     U_ItmsGrpCod: {
@@ -209,6 +220,7 @@ export let tblTableTesting2: TableDef = {
         acceptEmpty: false,
         acceptOnlyListValues: true,
       },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
 
     U_ParentCode: {

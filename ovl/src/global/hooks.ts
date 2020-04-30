@@ -57,6 +57,8 @@ export const FieldLookupPostData = "Field_%_LookupPostData"
 export const FieldIsReadOnly = "Field_%_IsReadOnly"
 // if a field should not be displayed. Make sure to return a FieldVisibilty - Type
 export const FieldIsVisible = "Field_%_IsVisible"
+// if you would like to do the rendering of a column on your own
+export const FieldGetTableRowRender = "Field_%_GetTableRowRender"
 
 //Form Save/Delete/Postback Functions ####################################
 // provide your complete form postback to server logic here if you don't wanna use the default

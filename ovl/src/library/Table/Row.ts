@@ -5,10 +5,17 @@ import { getDisplayValue } from "./helpers"
 import { customFunctions, overmind } from "../../index"
 import { resolvePath } from "../../global/globals"
 import { GetLabel } from "../forms/Controls/helpers"
-import { FieldGetList } from "../../global/hooks"
+import { FieldGetList, FieldGetTableRowRender } from "../../global/hooks"
 import { FieldVisibility } from "./Table"
 
-export let cachedFn: Map<string, any> = new Map<string, any>()
+type CachedRendererData = {
+  hasRenderer: boolean
+  fn: any
+}
+export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
 export class TableRow extends OvlBaseElement {
   props: any
   row: TableRowDataDef
@@ -27,39 +34,51 @@ export class TableRow extends OvlBaseElement {
       ${Object.keys(columns).map((k) => {
         let col = columns[k]
         let visible = columnsVisible[k]
-        if (
-          visible.indexOf("Table") < 0 ||
-          (isMobile && visible.indexOf("TableNotMobile") > -1)
-        ) {
-          return null
-        }
-        let listdata
-        if (col.list) {
-          let functionName = FieldGetList.replace("%", k)
-          let cacheKey = functionName + def.namespace
-          let cFn = cachedFn.get(cacheKey)
-          if (cFn) {
-            listdata = cFn(row, this.state, this.actions, overmind.effects)
-          } else {
-            let fn = resolvePath(customFunctions, def.namespace)
-            if (fn && fn[functionName]) {
-              let fnToCall = fn[functionName]
-              listdata = fnToCall(
-                row,
-                this.state,
-                this.actions,
-                overmind.effects
-              )
-              cachedFn.set(cacheKey, fnToCall)
-            }
+        if (isMobile) {
+          if (visible.indexOf("TableNotMobile") > -1) {
+            return null
+          }
+        } else {
+          if (visible.indexOf("TableOnlyMobile") > -1) {
+            return null
           }
         }
-        let fieldvalue = getDisplayValue(k, col, row, def.namespace)
-        return html`
-          <td class="fd-table__cell ${align[k]}">
-            ${fieldvalue}
-          </td>
-        `
+        if (visible.indexOf("Table") < 0) {
+          return null
+        }
+
+        // check for custom renderer
+        let cachedRendererKey = def.namespace + k
+        let cachedRenderer = cachedRendererFn.get(cachedRendererKey)
+        let rendererFn
+        if (!cachedRenderer) {
+          let functionName = FieldGetTableRowRender.replace("%", k)
+          let fn = resolvePath(customFunctions, def.namespace)
+          if (fn && fn[functionName]) {
+            rendererFn = fn[functionName]
+            cachedRendererFn.set(cachedRendererKey, {
+              fn: rendererFn,
+              hasRenderer: true,
+            })
+          } else {
+            cachedRendererFn.set(cachedRendererKey, {
+              fn: undefined,
+              hasRenderer: false,
+            })
+          }
+        } else if (cachedRenderer.hasRenderer) {
+          rendererFn = cachedRenderer.fn
+        }
+        if (!rendererFn) {
+          let displayValue = getDisplayValue(k, col, row, def.namespace)
+          return html`
+            <td class="fd-table__cell ${align[k]}">
+              ${displayValue}
+            </td>
+          `
+        } else {
+          return rendererFn(k, row, def, align[k], this.state)
+        }
       })}
     `
   }

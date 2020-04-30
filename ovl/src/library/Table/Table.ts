@@ -254,6 +254,7 @@ export type DBInsertMode =
 
 export type FieldVisibility =
   | "TableNotMobile_Edit_View"
+  | "TableOnlyMobile"
   | "Table_Edit_View"
   | "Edit_View"
   | "View"
@@ -393,10 +394,16 @@ export class TableHeader extends OvlBaseElement {
         }
 
         columnsVisible[k] = visible
-        if (
-          visible.indexOf("Table") < 0 ||
-          (isMobile && visible.indexOf("TableNotMobile") > -1)
-        ) {
+        if (isMobile) {
+          if (visible.indexOf("TableNotMobile") > -1) {
+            return null
+          }
+        } else {
+          if (visible.indexOf("TableOnlyMobile") > -1) {
+            return null
+          }
+        }
+        if (visible.indexOf("Table") < 0) {
           return null
         }
 

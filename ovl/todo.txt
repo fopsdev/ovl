@@ -1,13 +1,9 @@
 Todos:
 
-Custom Functions for Multiple Selected Rows
+X Custom Functions for Multiple Selected Rows
 
 Configuration:
-- A "TableOnlyMobile" - visibility (Can be used to display aggregated data of a table only on mobile. Details are then visible as usual in detail view)
-
-Field Hooks:
-- Maybe just use a Field_XX Hook instead of using the Field Key as well
-- Could simplify styling Hooks which sould be applied for all Columns(Fields)
+X - A "TableOnlyMobile" - visibility (Can be used to display aggregated data of a table only on mobile. Details are then visible as usual in detail view)
 
 Hooks:
 - Hook FormEditLabelStyle (Provides all the fields of a row analogous to validateField)

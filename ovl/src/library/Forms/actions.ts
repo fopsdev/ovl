@@ -551,7 +551,7 @@ export type FieldChanged = {
   fieldId: string
   newConvertedVal: string
   oldConvertedVal: string
-  row: { [key: string]: {} }
+  row: any
 }
 
 export type TouchField = {

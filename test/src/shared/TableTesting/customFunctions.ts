@@ -1,7 +1,5 @@
 import { TableTesting, TblTableTesting, TableTestingColumn } from "./state"
-
-// import { RowStatus, TableDef } from "../../library/Table/Table"
-// import { Translation } from "./state"
+import { html, TemplateResult } from "../../../../ovl/node_modules/lit-html"
 import { overmind } from "../.."
 import {
   TableDataAndDef,
@@ -11,7 +9,10 @@ import {
   RowStatus,
   SelectedCustomFunctionResult,
 } from "../../../../ovl/src/library/Table/Table"
-import { getTextSort } from "../../../../ovl/src/library/Table/helpers"
+import {
+  getTextSort,
+  getDisplayValue,
+} from "../../../../ovl/src/library/Table/helpers"
 import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
 import {
   FormState,
@@ -75,6 +76,7 @@ export const FormSelect = async (
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ) => {
+  // this sample shows how to deal with msg and succss when also used from headerform (multiple rows selected))
   let msg = ""
   if (isLastOrOnlyOne) {
     msg = "Funktion noch nicht implementiert!"
@@ -257,57 +259,50 @@ export const Form_onlyTest_Sort = (
 export const Form_alphaStartsWithA_Filter = (
   def: TableDef,
   data: TableData,
-  key: string,
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): boolean => {
-  let row: TableTesting = data.data[key]
-
   return row.U_Alpha.startsWith("A")
 }
 
 export const Form_alphaStartsWithB_Filter = (
   def: TableDef,
   data: TableData,
-  key: string,
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): boolean => {
-  let row: TableTesting = data.data[key]
-
   return row.U_Alpha.startsWith("B")
 }
 
 export const Form_memoContainsTest_Filter = (
   def: TableDef,
   data: TableData,
-  key: string,
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): boolean => {
-  let row: TableTesting = data.data[key]
   return row.U_Memo.toLowerCase().indexOf("test") > -1
 }
 
 export const Form_memoContainsText_Filter = (
   def: TableDef,
   data: TableData,
-  key: string,
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): boolean => {
-  let row: TableTesting = data.data[key]
   return row.U_Memo.toLowerCase().indexOf("text") > -1
 }
 
 // some list functions
-
 export const Field_U_ItemCode_GetList = (
-  row: { [key: string]: {} },
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -317,7 +312,7 @@ export const Field_U_ItemCode_GetList = (
 
 export const Field_U_ItemCode_LookupPostData = (
   lookupData: LookupListPostData,
-  row: {},
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -326,7 +321,7 @@ export const Field_U_ItemCode_LookupPostData = (
 }
 
 export const Field_U_ItmsGrpCod_GetList = (
-  row: { [key: string]: {} },
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -335,7 +330,7 @@ export const Field_U_ItmsGrpCod_GetList = (
 }
 
 export const Field_U_ParentCode_GetList = (
-  row: { [key: string]: {} },
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -344,7 +339,7 @@ export const Field_U_ParentCode_GetList = (
 }
 
 export const Field_U_ParentCode2_GetList = (
-  row: { [key: string]: {} },
+  row: TableTesting,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -369,4 +364,38 @@ export const Field_U_ItemCode_GetFilteredList = (
         formState.fields.U_ItmsGrpCod.convertedValue
     )
   })
+}
+
+export const Field_MobileSummary_GetTableRowRender = (
+  columnKey: string,
+  row: TableTesting,
+  def: TableDef,
+  align: string,
+  state: typeof overmind.state
+): TemplateResult => {
+  let u_AlphaValue = getDisplayValue(
+    "U_Alpha",
+    def.columns["U_Alpha"],
+    row,
+    def.namespace
+  )
+  let u_ItemCodeValue = getDisplayValue(
+    "U_ItemCode",
+    def.columns["U_ItemCode"],
+    row,
+    def.namespace
+  )
+
+  let u_DateValue = getDisplayValue(
+    "U_Date",
+    def.columns["U_Date"],
+    row,
+    def.namespace
+  )
+
+  return html`
+    <td class="fd-table__cell ${align}">
+      <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue}
+    </td>
+  `
 }
