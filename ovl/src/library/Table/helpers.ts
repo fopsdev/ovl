@@ -1027,29 +1027,27 @@ export const rowControlActionsHandler = async (
               def,
             })
             await customFunction(
-              key,
-              {
-                def,
-                data,
-              },
+              rowKey,
+              def,
+              data,
+              true,
+              null,
               overmind.state,
               overmind.actions,
-              overmind.effects,
-              false
+              overmind.effects
             )
           }
           overmind.actions.ovl.overlay.CloseOverlay()
         } else {
           await customFunction(
-            key,
-            {
-              def,
-              data,
-            },
+            rowKey,
+            def,
+            data,
+            true,
+            null,
             overmind.state,
             overmind.actions,
-            overmind.effects,
-            false
+            overmind.effects
           )
         }
       } else {

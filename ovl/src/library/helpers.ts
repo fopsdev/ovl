@@ -15,7 +15,7 @@ export const DialogOkCancel = async (
 }
 
 export const DialogOk = async (text: string) => {
-  this.actions.ovl.dialog.OkDialog({
+  overmind.actions.ovl.dialog.OkDialog({
     text,
   })
   return await DialogResult()

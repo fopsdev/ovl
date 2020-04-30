@@ -9,12 +9,15 @@ export let dialogAfterClose = {
 }
 
 export const DialogOpen: AsyncAction<OpenDialogState> = async (
-  { state },
+  { state, actions },
   value
 ) => {
   if (!state.ovl.libState.dialog) {
     //@ts-ignore
     state.ovl.libState.dialog = {}
+  }
+  if (state.ovl.libState.dialog.closing) {
+    await actions.ovl.internal.DialogClosed()
   }
   dialogAfterClose.elementToFocus = document.activeElement
   dialogAfterClose.currentScreen = state.ovl.screens.nav.currentScreen

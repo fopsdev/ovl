@@ -32,9 +32,15 @@ import {
   TableData,
   TableDataAndDef,
   TableDef,
+  SelectedCustomFunctionResult,
 } from "./Table"
 import { overmind } from "../.."
-import { SnackAdd, SnackTrackedAdd, SnackTrackedRemove } from "../helpers"
+import {
+  SnackAdd,
+  SnackTrackedAdd,
+  SnackTrackedRemove,
+  DialogOk,
+} from "../helpers"
 import {
   FieldGetList,
   FormCustomSort,
@@ -51,6 +57,7 @@ import {
   FormCanEdit,
   FormCanCustom,
 } from "../../global/hooks"
+import { OkDialog } from "../Dialog/actions"
 
 const minimumFilterChars = 3
 
@@ -952,7 +959,7 @@ export const TableDeleteRow: AsyncAction<{
   let def = value.def
   let key = value.key
   let cancel: boolean = false
-  debugger
+
   if (!value.isMass) {
     actions.ovl.dialog.OkCancelDialog({
       text: "Datensatz löschen?",
@@ -1395,31 +1402,61 @@ export const TableMultipleCustomFunction: AsyncAction<{
     let customFns = resolvePath(customFunctions, def.namespace)
     let customFunctionName = "Form" + value.customFnId
     let customFunction = customFns[customFunctionName]
-
+    let result = ""
+    let errCount = 0
     if (customFunction) {
       wait = Promise.all(
-        selectedObjects.map(async (k) => {
+        selectedObjects.map(async (k, i) => {
+          let fnResult: SelectedCustomFunctionResult = {
+            msg: "",
+            success: true,
+          }
+          let isLast = i === selectedObjects.length - 1
           await customFunction(
             k,
-            {
-              def,
-              data,
-            },
+            def,
+            data,
+            isLast,
+            fnResult,
             state,
             actions,
-            effects,
-            true
+            effects
           )
+          if (fnResult.msg) {
+            result = result + fnResult.msg + "\n"
+          }
+          if (!fnResult.success) {
+            errCount++
+          }
         })
       )
       await wait
     }
-    SnackAdd("Funktion " + fnMultipleName + " fertig ausgeführt", "Information")
-    actions.ovl.internal.TableSelectHeader({
-      def: def,
-      data: value.data,
-      key: "",
-    })
+    if (errCount < selectedObjects.length) {
+      if (errCount === 0) {
+        SnackAdd(
+          "Funktion " + fnMultipleName + " erfolgreich ausgeführt",
+          "Information"
+        )
+      } else {
+        SnackAdd(
+          "Funktion " +
+            fnMultipleName +
+            " teilweise erfolgreich ausgeführt (" +
+            errCount +
+            " von " +
+            selectedObjects.length +
+            " Datensätze hatten Fehler.",
+          "Information"
+        )
+      }
+    } else {
+      SnackAdd("Funktion " + fnMultipleName + " war fehlerhaft.", "Error")
+    }
+
+    if (result) {
+      await DialogOk(result)
+    }
   }
 }
 

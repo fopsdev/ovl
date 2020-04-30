@@ -9,6 +9,7 @@ import {
   TableData,
   ListFnReturnValue,
   RowStatus,
+  SelectedCustomFunctionResult,
 } from "../../../../ovl/src/library/Table/Table"
 import { getTextSort } from "../../../../ovl/src/library/Table/helpers"
 import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
@@ -65,13 +66,25 @@ export const FormAdd = async (
   newRow.U_Memo = "Defaulttext Memo"
 }
 export const FormSelect = async (
-  row: { [key: string]: {} },
+  rowKey: string,
+  def: TableDef,
+  data: TableData,
+  isLastOrOnlyOne: boolean,
+  startedFromSelectedResult: SelectedCustomFunctionResult,
   state: typeof overmind.state,
   actions: typeof overmind.actions,
-  effects: typeof overmind.effects,
-  isMass: boolean
+  effects: typeof overmind.effects
 ) => {
-  SnackAdd("Funktion noch nicht implementiert", "Warning")
+  let msg = ""
+  if (isLastOrOnlyOne) {
+    msg = "Funktion noch nicht implementiert!"
+  }
+  if (startedFromSelectedResult) {
+    startedFromSelectedResult.msg = msg
+    startedFromSelectedResult.success = false
+    return
+  }
+  SnackAdd(msg, "Warning")
 }
 
 export const FormChanged = async (

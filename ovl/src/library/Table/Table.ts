@@ -15,6 +15,12 @@ import { FieldIsVisible } from "../../global/hooks"
 import { OvlConfig } from "../../init"
 export type SaveMode = "add" | "update"
 
+export type SelectedCustomFunctionResult = {
+  // this msg will be concancenated in the result output
+  msg: string
+  success: boolean
+}
+
 export type BeforeSaveParam = {
   key: string
   mode: SaveMode

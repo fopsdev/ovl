@@ -23,7 +23,7 @@ export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   let data = state.testtables.timeentries
   let def = state.testtables.timeentries.tableDef.mobiletimerecording1
   def.options.filter.static.U_Date = value.selected
-  debugger
+
   await actions.ovl.table.TableRefresh({
     defId: "mobiletimerecording1",
     data,
