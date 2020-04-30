@@ -49,6 +49,7 @@ import {
   FormCanDelete,
   FormCanCopy,
   FormCanEdit,
+  FormCanCustom,
 } from "../../global/hooks"
 
 const minimumFilterChars = 3
@@ -1307,6 +1308,121 @@ export const TableMultipleEditRow: AsyncAction<{
     })
   }
 }
+
+export const TableMultipleCustomFunction: AsyncAction<{
+  def: TableDef
+  data: TableData
+  customFnId: string
+  customFnName: string
+}> = async ({ actions, state, effects }, value) => {
+  let def = value.def
+  let data = value.data
+  let rows = value.data.data
+  let fnMultipleName = value.customFnName
+  let cancel: boolean = false
+  let canNotEditMsg = ""
+  let selectedObjects = []
+  let functionName = FormCanCustom.replace("%", value.customFnId)
+  let fn = null
+  let fnc = resolvePath(customFunctions, def.namespace)
+  if (fnc && fnc[functionName]) {
+    fn = fnc[functionName]
+  }
+  let selectedRows = def.uiState.selectedRow
+  let wait = Promise.all(
+    Object.keys(selectedRows).map(async (k) => {
+      let selected = selectedRows[k]
+      if (selected.selected) {
+        if (fn) {
+          let res = await fn(
+            k,
+            <TableDataAndDef>{ def: def, data: value.data },
+            state,
+            actions,
+            effects
+          )
+          if (res) {
+            canNotEditMsg +=
+              "\n" + res + "\n(Id:" + rows[k][def.database.dataIdField] + ")"
+          } else {
+            selectedObjects.push(k)
+          }
+        } else {
+          selectedObjects.push(k)
+        }
+      }
+    })
+  )
+  await wait
+  let customFn = def.options.customRowActions[value.customFnId].selected
+
+  let doMsg =
+    "Funktion '" +
+    fnMultipleName +
+    "' für " +
+    selectedObjects.length.toString() +
+    " Datensätze ausführen?"
+
+  if (canNotEditMsg) {
+    if (selectedObjects.length > 0) {
+      canNotEditMsg =
+        "Die Funktion kann nicht für alle Datensätze ausgeführt werden:" +
+        canNotEditMsg +
+        "\n" +
+        doMsg
+    } else {
+      canNotEditMsg = "Keine gültigen Datensätze gefunden:" + canNotEditMsg
+    }
+  } else {
+    canNotEditMsg = doMsg
+  }
+
+  if (selectedObjects.length > 0) {
+    actions.ovl.dialog.OkCancelDialog({
+      text: canNotEditMsg,
+      default: 1,
+    })
+  } else {
+    actions.ovl.dialog.OkDialog({
+      text: canNotEditMsg,
+    })
+  }
+
+  if ((await DialogResult()) === 2 || selectedObjects.length === 0) {
+    cancel = true
+  }
+  if (!cancel) {
+    let customFns = resolvePath(customFunctions, def.namespace)
+    let customFunctionName = "Form" + value.customFnId
+    let customFunction = customFns[customFunctionName]
+
+    if (customFunction) {
+      wait = Promise.all(
+        selectedObjects.map(async (k) => {
+          await customFunction(
+            k,
+            {
+              def,
+              data,
+            },
+            state,
+            actions,
+            effects,
+            true
+          )
+        })
+      )
+      await wait
+    }
+    SnackAdd("Funktion " + fnMultipleName + " fertig ausgeführt", "Information")
+    actions.ovl.internal.TableSelectHeader({
+      def: def,
+      data: value.data,
+      key: "",
+    })
+  }
+}
+
 export const TableDeleteRowFromData: Action<{
   key: string
   def: TableDef

@@ -68,7 +68,8 @@ export const FormSelect = async (
   row: { [key: string]: {} },
   state: typeof overmind.state,
   actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  effects: typeof overmind.effects,
+  isMass: boolean
 ) => {
   SnackAdd("Funktion noch nicht implementiert", "Warning")
 }

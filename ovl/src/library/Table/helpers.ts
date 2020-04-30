@@ -797,6 +797,9 @@ export const createDynamicRowFunctions = async (
         let custom = def.options.customRowActions[k]
         let disabled = false
         let title = custom.name
+        if (custom.translationKey) {
+          title = T(custom.translationKey)
+        }
         let functionName = FormCanCustom.replace("%", k)
 
         if (fn && fn[functionName]) {
@@ -1031,7 +1034,8 @@ export const rowControlActionsHandler = async (
               },
               overmind.state,
               overmind.actions,
-              overmind.effects
+              overmind.effects,
+              false
             )
           }
           overmind.actions.ovl.overlay.CloseOverlay()
@@ -1044,14 +1048,13 @@ export const rowControlActionsHandler = async (
             },
             overmind.state,
             overmind.actions,
-            overmind.effects
+            overmind.effects,
+            false
           )
         }
       } else {
         throw Error(
-          "Ovl logical error: Custom Action: " +
-            customFunctionName +
-            " not found!"
+          "Ovl error: Custom Action: " + customFunctionName + " not found!"
         )
       }
     }

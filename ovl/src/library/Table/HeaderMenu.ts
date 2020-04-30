@@ -48,6 +48,15 @@ export class TableHeaderMenu extends OvlBaseElement {
     this.actions.ovl.internal.TableFilterSelected(this.headerMenu.def)
   }
 
+  handleCustomSelectedClick = (e: Event, key: string, name: string) => {
+    this.actions.ovl.internal.TableMultipleCustomFunction({
+      def: this.headerMenu.def.def,
+      data: this.headerMenu.def.data,
+      customFnId: key,
+      customFnName: name,
+    })
+  }
+
   handleFilterTextEnter = (e: KeyboardEvent) => {
     //@ts-ignore
     if (e.key === "Enter") {
@@ -599,6 +608,33 @@ export class TableHeaderMenu extends OvlBaseElement {
         }
       }
 
+      // custom fns are also capable to be used in selection
+      let customFns = def.options.customRowActions
+      let customSelectedFunctions = Object.keys(customFns)
+        .filter((k) => customFns[k].selected)
+        .map((k) => {
+          let customFn = customFns[k]
+          let fnMultipleName = customFn.selected.name
+          if (customFn.selected.translationKey) {
+            fnMultipleName = T(customFn.selected.translationKey)
+          }
+          if (!fnMultipleName) {
+            fnMultipleName = k
+          }
+          return html`
+            <li>
+              <a
+                href="#"
+                class="fd-menu__item ${customFn.icon}"
+                @click="${(e) =>
+                  this.handleCustomSelectedClick(e, k, fnMultipleName)}"
+              >
+                ${fnMultipleName}</a
+              >
+            </li>
+          `
+        })
+
       selectedFunctions = html`
         <div class="fd-menu__group">
           <h2 class="fd-menu__title">
@@ -606,7 +642,7 @@ export class TableHeaderMenu extends OvlBaseElement {
           </h2>
           <ul class="fd-menu__list">
             ${filterSelectedRows} ${editSelectedRows} ${copySelectedRows}
-            ${deleteSelectedRows}
+            ${deleteSelectedRows} ${customSelectedFunctions}
           </ul>
         </div>
       `

@@ -52,7 +52,12 @@ type StaticFilter = {
 
 export type RowControlAction = {
   name: string
+  translationKey?: string
   icon: string
+  selected?: {
+    name: string
+    translationKey?: string
+  }
 }
 
 export type SelectedRow = {

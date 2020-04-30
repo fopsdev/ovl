@@ -25,7 +25,11 @@ export let tblTableTesting: TableDef = {
   },
   options: {
     customRowActions: {
-      Select: { icon: "sap-icon--travel-expense", name: "Travel Expense" },
+      Select: {
+        icon: "sap-icon--travel-expense",
+        name: "Travel Expense",
+        selected: { name: "Test Expenses Multiselect" },
+      },
       Shop: { icon: "sap-icon--cart", name: "Travel Expense" },
     },
     paging: { page: 0, pageSize: 3 },
@@ -103,7 +107,11 @@ export let tblTableTesting2: TableDef = {
   options: {
     maxRows: { maxRows: 100, showHint: true, showInTitle: true },
     customRowActions: {
-      Select: { icon: "sap-icon--travel-expense", name: "Travel Expense" },
+      Select: {
+        icon: "sap-icon--travel-expense",
+        name: "Travel Expense",
+        selected: { name: "Test Expenses Multiselect" },
+      },
     },
     edit: { editType: "big" },
     sortCustom: {
