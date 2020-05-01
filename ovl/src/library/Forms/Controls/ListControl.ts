@@ -465,7 +465,7 @@ export class OvlListControl extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-listcontrol-label ovl-formcontrol-label__${field.id}"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-listcontrol-label ovl-formcontrol-label__${field.fieldKey}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -499,14 +499,14 @@ export class OvlListControl extends OvlBaseElement {
         tabindex="-9999"
         id="delete${field.id}"
         @click=${(e) => this.handleDelete(e)}
-        class="fd-input-group__button fd-button--light sap-icon--decline ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.id}"
+        class="fd-input-group__button fd-button--light sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
       ></button>
     `
     //}
     return html`
       <div @focusout=${(e) => this.handleFocusOut(e)}>
         <div
-          class="ovl-formcontrol-container ovl-formcontrol-listcontrol-container ovl-formcontrol-container__${field.id}"
+          class="ovl-formcontrol-container ovl-formcontrol-listcontrol-container ovl-formcontrol-container__${field.fieldKey}"
         >
           ${label}
 
@@ -516,7 +516,7 @@ export class OvlListControl extends OvlBaseElement {
               style="${align}"
               +
               type="text"
-              class="fd-input fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-listcontrol-input ovl-formcontrol-input__${field.id}"
+              class="fd-input fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-listcontrol-input ovl-formcontrol-input__${field.fieldKey}"
               id="${field.id}"
               @change=${(e) => this.handleChange(e)}
               value="${displayValue}"
@@ -529,14 +529,14 @@ export class OvlListControl extends OvlBaseElement {
                 id="search${field.id}"
                 @click=${(e) => this.handleListPopup(e)}
                 @touchend=${(e) => this.handleListPopup(e)}
-                class="fd-input-group__button fd-button--light sap-icon--search ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.id}"
+                class="fd-input-group__button fd-button--light sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
               ></button>
             </div>
           </div>
         </div>
         <div
           style="margin-top:4px;"
-          class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.id}"
+          class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
         >
           ${field.validationResult.validationMsg}
         </div>

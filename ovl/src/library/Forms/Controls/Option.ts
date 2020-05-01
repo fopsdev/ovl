@@ -60,7 +60,7 @@ export class OvlOption extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-option-label ovl-formcontrol-label__${field.id}"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-option-label ovl-formcontrol-label__${field.fieldKey}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -79,7 +79,7 @@ export class OvlOption extends OvlBaseElement {
 
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-option-container ovl-formcontrol-container__${field.id}"
+        class="ovl-formcontrol-container ovl-formcontrol-option-container ovl-formcontrol-container__${field.fieldKey}"
       >
         ${label}
 
@@ -92,7 +92,7 @@ export class OvlOption extends OvlBaseElement {
                 tabindex="0"
               >
                 <input
-                  class="ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.id}"
+                  class="ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.fieldKey}"
                   @click=${(e) => e.stopPropagation()}
                   @change=${(e) =>
                     this.handleChange(
@@ -114,7 +114,7 @@ export class OvlOption extends OvlBaseElement {
                   listData[rowKey][list.valueField]}
                 />
                 <label
-                  class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.id}"
+                  class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.fieldKey}"
                   for="${field.id + rowKey}"
                 >
                   ${listData[rowKey][list.displayField]}
@@ -126,7 +126,7 @@ export class OvlOption extends OvlBaseElement {
       </div>
       <div
         style="margin-top:-20px;margin-bottom: 12px;"
-        class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-option-validation ovl-formcontrol-validation__${field.id}"
+        class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-option-validation ovl-formcontrol-validation__${field.fieldKey}"
       >
         ${field.validationResult.validationMsg}
       </div>

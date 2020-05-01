@@ -5,8 +5,17 @@ import { getDisplayValue } from "./helpers"
 import { customFunctions, overmind } from "../../index"
 import { resolvePath } from "../../global/globals"
 import { GetLabel } from "../forms/Controls/helpers"
-import { FieldGetList, FieldGetTableRowRender } from "../../global/hooks"
+import {
+  FieldGetList,
+  FieldGetTableRowRender,
+  TableHeaderCellClass,
+  TableRowCellClass,
+} from "../../global/hooks"
 import { FieldVisibility } from "./Table"
+
+export type RowCellClass = {
+  className: string
+}
 
 type CachedRendererData = {
   hasRenderer: boolean
@@ -30,8 +39,26 @@ export class TableRow extends OvlBaseElement {
     let align = this.row.columnsAlign
     let columnsVisible = this.row.columnsVisible
     let isMobile = this.state.ovl.uiState.isMobile
+
+    // see if we can gbet custom class names for the row columns
+    // eg. to color a cell
+
+    let customRowCellClasses: { [key: string]: RowCellClass }
+    let functionName = TableRowCellClass
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      customRowCellClasses = fn[functionName](def, row, isMobile, this.state)
+    }
+    if (!customRowCellClasses) {
+      customRowCellClasses = {}
+    }
+
     return html`
       ${Object.keys(columns).map((k) => {
+        let customRowCellClass: string = ""
+        if (customRowCellClasses[k]) {
+          customRowCellClass = customRowCellClasses[k].className
+        }
         let col = columns[k]
         let visible = columnsVisible[k]
         if (isMobile) {
@@ -69,17 +96,21 @@ export class TableRow extends OvlBaseElement {
         } else if (cachedRenderer.hasRenderer) {
           rendererFn = cachedRenderer.fn
         }
-
+        let rowPart
         if (!rendererFn) {
-          let displayValue = getDisplayValue(k, col, row, def.namespace)
-          return html`
-            <td class="fd-table__cell ${align[k]}">
-              ${displayValue}
-            </td>
-          `
+          rowPart = getDisplayValue(k, col, row, def.namespace)
         } else {
-          return rendererFn(k, row, def, align[k], this.state)
+          rowPart = rendererFn(k, row, def, align[k], this.state)
         }
+        return html`
+          <td
+            class="fd-table__cell ${align[
+              k
+            ]} ovl-tableview-rowcell ovl-tableview-rowcell__${k} ${customRowCellClass}"
+          >
+            ${rowPart}
+          </td>
+        `
       })}
     `
   }

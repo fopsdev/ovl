@@ -62,6 +62,11 @@ export const FieldGetTableRowRender = "Field_%_GetTableRowRender"
 // if you would like to do the rendering of a column header
 export const FieldGetTableHeaderRender = "Field_%_GetTableHeaderRender"
 
+// to style the header and row cells in tableview
+// this functions must return a object whose key is the fieldKey and the value is the custom classname to set
+export const TableRowCellClass = "TableRowCellClass"
+export const TableHeaderCellClass = "TableHeaderCellClass"
+
 //Form Save/Delete/Postback Functions ####################################
 // provide your complete form postback to server logic here if you don't wanna use the default
 export const FormCustomSave = "FormCustomSave"

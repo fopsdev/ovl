@@ -15,8 +15,27 @@
   font-size: small;
 }
 
+.ovl-formcontrol-textarea-input {
+  height: 120px;
+  font-size: small;
+}
+
+.ovl-formcontrol-textarea-label {
+  margin-top: 30px;
+  font-size: small;
+}
+
 @media screen and (max-width: 992px) {
   .ovl-detailview-label {
     margin-left: -20px;
   }
+}
+
+.ovl-tableview-rowcell__U_Decimal {
+  background-color: green;
+}
+
+.myredcell {
+  background-color: red;
+  font-weight: bold;
 }

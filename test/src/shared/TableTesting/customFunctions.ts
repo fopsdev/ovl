@@ -23,6 +23,7 @@ import {
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
 import { json } from "overmind"
+import { RowCellClass } from "../../../../ovl/src/library/Table/Row"
 
 export const FormShow = async (
   formState: FormState,
@@ -408,4 +409,15 @@ export const Field_MobileSummary_GetTableRowRender = (
       <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue}
     </td>
   `
+}
+
+export const TableRowCellClass = (
+  def: TableDef,
+  row: TableTesting,
+  isMobile: boolean,
+  state: typeof overmind.state
+): { [key in keyof TableTesting]?: RowCellClass } => {
+  if (row.U_Decimal > 100) {
+    return { U_Decimal: { className: "myredcell" } }
+  }
 }

@@ -68,7 +68,7 @@ export class OvlTextbox extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-textbox-label ovl-formcontrol-label__${field.id}"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-textbox-label ovl-formcontrol-label__${field.fieldKey}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -81,7 +81,7 @@ export class OvlTextbox extends OvlBaseElement {
     }
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-textbox-container ovl-formcontrol-container__${field.id}"
+        class="ovl-formcontrol-container ovl-formcontrol-textbox-container ovl-formcontrol-container__${field.fieldKey}"
       >
         ${label}
         <input
@@ -91,14 +91,14 @@ export class OvlTextbox extends OvlBaseElement {
           style="${style} ${align}"
           autocomplete="off"
           inputmode="${inputMode}"
-          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-textbox-input ovl-formcontrol-input__${field.id}"
+          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-textbox-input ovl-formcontrol-input__${field.fieldKey}"
           type="${type}"
           id="${field.id}"
           value="${field.value}"
         />
       </div>
       <span
-        class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textbox-validation ovl-formcontrol-validation__${field.id}"
+        class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textbox-validation ovl-formcontrol-validation__${field.fieldKey}"
       >
         ${field.validationResult.validationMsg}
       </span>

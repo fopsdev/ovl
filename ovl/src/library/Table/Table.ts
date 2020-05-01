@@ -508,7 +508,7 @@ export class TableHeader extends OvlBaseElement {
           <th
             style="${cellBgColor}"
             @click="${(e) => this.handleHeaderColumnClick(e, k)}"
-            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} "
+            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-tableview-headercell__${k}"
             scope="col"
           >
             ${headerPart}
@@ -633,7 +633,7 @@ export class TableHeader extends OvlBaseElement {
         alreadyRendered[k] = true
         let row = html`
           <ovl-trg
-            class="fd-table__body"
+            class="fd-table__body ovl-tableview-row"
             .props=${() => {
               return <TableRowDef>{
                 data: dataAndSchema,
@@ -727,7 +727,7 @@ export class TableHeader extends OvlBaseElement {
       </caption>
       ${colWidths}
       <thead class="fd-table__header">
-        <tr class="fd-table__row">
+        <tr class="fd-table__row ovl-tableview-header">
           ${headerRows}
         </tr>
       </thead>
