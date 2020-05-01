@@ -47,7 +47,7 @@ export class OvlTime extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-time-label ovl-formcontrol-label__${field.id}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -65,16 +65,20 @@ export class OvlTime extends OvlBaseElement {
       type = "time"
     }
     return html`
-      ${label}
-      <input
-        @focusout=${(e) => this.handleFocusOut(e)}
-        style="${style} ${align}"
-        autocomplete="off"
-        class="fd-input ${res.validationType} fd-has-type-1"
-        type="${type}"
-        id="${field.id}"
-        value="${field.value}"
-      />
+      <div
+        class="ovl-formcontrol-container ovl-formcontrol-time-container ovl-formcontrol-container__${field.id}"
+      >
+        ${label}
+        <input
+          @focusout=${(e) => this.handleFocusOut(e)}
+          style="${style} ${align}"
+          autocomplete="off"
+          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-time-input ovl-formcontrol-input__${field.id}"
+          type="${type}"
+          id="${field.id}"
+          value="${field.value}"
+        />
+      </div>
       <span class="fd-form-message ${res.validationHide}">
         ${field.validationResult.validationMsg}
       </span>

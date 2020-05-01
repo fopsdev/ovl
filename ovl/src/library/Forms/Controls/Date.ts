@@ -77,19 +77,23 @@ export class OvlDate extends OvlBaseElement {
       type = "date"
     }
     return html`
-      <div>
+      <div
+        class="ovl-formcontrol-container ovl-formcontrol-date-container ovl-formcontrol-container__${field.id}"
+      >
         ${label}
         <input
           @focusout=${(e) => this.handleFocusOut(e)}
           @keydown=${(e) => this.handleKeyDown(e)}
           style="${align}"
           autocomplete="off"
-          class="fd-input ${res.validationType} fd-has-type-1"
+          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-date-input ovl-formcontrol-input__${field.id}"
           type="${type}"
           id="${field.id}"
         />
 
-        <span class="fd-form-message ${res.validationHide}">
+        <span
+          class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-date-validation ovl-formcontrol-validation__${field.id}"
+        >
           ${field.validationResult.validationMsg}
         </span>
       </div>

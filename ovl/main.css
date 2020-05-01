@@ -40,6 +40,25 @@
 /* custom styles 
 #############################################################
 */
+
+.ovl-bigeditform,
+.ovl-detailview {
+  width: 70vw;
+}
+
+@media screen and (max-width: 992px) {
+  .ovl-bigeditform,
+  .ovl-detailview {
+    width: 99vw;
+  }
+}
+
+.ovl-value-view {
+  margin-top: -18px;
+  margin-bottom: 12px;
+  white-space: pre-line;
+}
+
 .menuDisabled {
   pointer-events: none;
   opacity: 0.6;

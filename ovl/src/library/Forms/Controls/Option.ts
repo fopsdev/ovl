@@ -60,7 +60,7 @@ export class OvlOption extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-option-label ovl-formcontrol-label__${field.id}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -78,46 +78,55 @@ export class OvlOption extends OvlBaseElement {
     }
 
     return html`
-      ${label}
-      <div class="fd-form-group ${inline}">
-        ${Object.keys(listData).map((rowKey) => {
-          return html`
-            <div
-              class="fd-form-group__item fd-form-item"
-              id="${this.field.id}"
-              tabindex="0"
-            >
-              <input
-                @click=${(e) => e.stopPropagation()}
-                @change=${(e) =>
-                  this.handleChange(
-                    e,
-                    listData[rowKey][list.valueField],
-                    field.id + rowKey
-                  )}
-                @focusout=${(e) =>
-                  this.handleFocusOut(
-                    e,
+      <div
+        class="ovl-formcontrol-container ovl-formcontrol-option-container ovl-formcontrol-container__${field.id}"
+      >
+        ${label}
 
-                    field.id + rowKey
-                  )}
-                type="radio"
-                class="fd-radio"
-                id="${field.id + rowKey}"
-                name="${list.valueField}"
-                ?checked=${field.convertedValue ===
-                listData[rowKey][list.valueField]}
-              />
-              <label class="fd-radio__label" for="${field.id + rowKey}">
-                ${listData[rowKey][list.displayField]}
-              </label>
-            </div>
-          `
-        })}
+        <div class="fd-form-group ${inline}">
+          ${Object.keys(listData).map((rowKey) => {
+            return html`
+              <div
+                class="fd-form-group__item fd-form-item"
+                id="${this.field.id}"
+                tabindex="0"
+              >
+                <input
+                  class="ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.id}"
+                  @click=${(e) => e.stopPropagation()}
+                  @change=${(e) =>
+                    this.handleChange(
+                      e,
+                      listData[rowKey][list.valueField],
+                      field.id + rowKey
+                    )}
+                  @focusout=${(e) =>
+                    this.handleFocusOut(
+                      e,
+
+                      field.id + rowKey
+                    )}
+                  type="radio"
+                  class="fd-radio"
+                  id="${field.id + rowKey}"
+                  name="${list.valueField}"
+                  ?checked=${field.convertedValue ===
+                  listData[rowKey][list.valueField]}
+                />
+                <label
+                  class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.id}"
+                  for="${field.id + rowKey}"
+                >
+                  ${listData[rowKey][list.displayField]}
+                </label>
+              </div>
+            `
+          })}
+        </div>
       </div>
       <div
         style="margin-top:-20px;margin-bottom: 12px;"
-        class="fd-form-message ${res.validationHide}"
+        class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-option-validation ovl-formcontrol-validation__${field.id}"
       >
         ${field.validationResult.validationMsg}
       </div>

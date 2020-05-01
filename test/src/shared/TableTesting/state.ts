@@ -243,7 +243,10 @@ export let tblTableTesting2: TableDef = {
         valueField: "Code",
         displayField: "U_Alpha",
       },
-      ui: { visibility: "TableNotMobile_Edit_View" },
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        showLabelIfNoValueInView: false,
+      },
     },
 
     U_Int: {

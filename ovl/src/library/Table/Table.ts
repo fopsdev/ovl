@@ -129,13 +129,9 @@ export type TableDef = {
     filterCustom?: { [key: string]: CustomFilter }
     edit?: {
       editType: "inline" | "big" | "custom"
-      editScreenWidth?: number
-      customTemplateId?: string
     }
     view?: {
       viewType: "default" | "custom"
-      viewScreenWidth?: number
-      customTemplateId?: string
     }
   }
   features?: {
@@ -275,6 +271,7 @@ export type ColumnDef = {
     inline?: boolean
     readonly?: boolean
     visibility?: FieldVisibility
+    showLabelIfNoValueInView?: boolean
   }
 }
 

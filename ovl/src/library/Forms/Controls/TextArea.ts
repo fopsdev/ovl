@@ -55,7 +55,7 @@ export class OvlTextArea extends OvlBaseElement {
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-textarea-label ovl-formcontrol-label__${field.id}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}${res.needsAttention ? "*" : ""}</label
@@ -68,19 +68,23 @@ export class OvlTextArea extends OvlBaseElement {
     }
 
     return html`
-      ${label}
-      <textarea
-        @keydown=${(e) => this.handleKeyDown(e)}
-        @change=${(e) => this.handleChange(e)}
-        @focusout=${(e) => this.handleFocusOut(e)}
-        style="${align} height:70px;"
-        class="fd-textarea ${res.validationType} fd-has-type-1"
-        id="${field.id}"
+      <div
+        class="ovl-formcontrol-container ovl-formcontrol-textarea-container ovl-formcontrol-container__${field.id}"
       >
+        ${label}
+        <textarea
+          @keydown=${(e) => this.handleKeyDown(e)}
+          @change=${(e) => this.handleChange(e)}
+          @focusout=${(e) => this.handleFocusOut(e)}
+          style="${align} height:70px;"
+          class="fd-textarea ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-formcontrol-textarea-input ovl-formcontrol-input__${field.id}"
+          id="${field.id}"
+        >
 ${field.value}</textarea
-      >
+        >
+      </div>
       <span
-        class="fd-form-message fd-form-message--warning ${res.validationHide}"
+        class="fd-form-message fd-form-message--warning ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textarea-validation ovl-formcontrol-validation__${field.id}"
       >
         ${field.validationResult.validationMsg}
       </span>

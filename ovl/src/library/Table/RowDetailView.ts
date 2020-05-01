@@ -10,6 +10,20 @@ import {
 import { RowControlAllAction } from "./RowControl"
 import { EditRowDef } from "./Table"
 
+type CachedRendererData = {
+  hasRenderer: boolean
+  fn: any
+}
+export let cachedLabelRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
+
+export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
+
 export class TableRowDetailView extends OvlBaseElement {
   props: any
   rowData: EditRowDef
@@ -44,11 +58,6 @@ export class TableRowDetailView extends OvlBaseElement {
   async getUIAsync() {
     let def = this.rowData.tableDef
     let columns = def.columns
-    let width = def.options.view.viewScreenWidth.toString() + "vw;"
-    if (this.state.ovl.uiState.isMobile) {
-      width = "99vw;"
-    }
-
     let rowControlActions: {
       [key: string]: RowControlAllAction
     } = await createDynamicRowFunctions(
@@ -60,9 +69,9 @@ export class TableRowDetailView extends OvlBaseElement {
 
     let rowActions = Object.keys(rowControlActions)
     return html`
-      <div style="width:${width}" class="fd-panel">
+      <div id="ovl-detailview-${def.id}" class="fd-panel ovl-detailview">
         <div class="fd-panel scrollableOverlay">
-          <div class="fd-panel__body">
+          <div class="fd-panel__body ovl-detailview-container">
             ${Object.keys(columns).map((k) => {
               let col = columns[k]
               let columnsVisible = this.rowData.columnsVisible
@@ -73,24 +82,26 @@ export class TableRowDetailView extends OvlBaseElement {
               uiItem = getDisplayValue(k, col, this.rowData.row, def.namespace)
               let label
               let value
-              if (uiItem) {
+              if (uiItem || (!uiItem && col.ui.showLabelIfNoValueInView)) {
                 let l
                 if (col.ui.labelTranslationKey) {
                   l = T(col.ui.labelTranslationKey)
                 } else {
                   l = k
                 }
-                label = html`<label class="fd-form-label fd-has-type-1"
-                  >${l}:</label
+                label = html`<label
+                  class="fd-form-label ovl-detailview-label ovl-detailview-label__${k}"
+                  >${l}</label
                 >`
+
                 value = html`<article
-                  class="fd-has-type-1"
-                  style="margin-top:-18px; margin-bottom:12px; white-space: pre-line;"
+                  class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value__${k}"
                 >
                   ${uiItem}
                 </article>`
               }
-              return html` ${label} ${value} `
+
+              return html`${label} ${value}`
             })}
           </div>
         </div>

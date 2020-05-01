@@ -4,3 +4,19 @@
   grid-gap: 10px;
   grid-template-rows: auto;
 }
+
+.ovl-detailview-container,
+.ovl-bigeditform .ovl-formcontrol-container {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+}
+.ovl-formcontrol-label {
+  margin-top: 8px;
+  font-size: small;
+}
+
+@media screen and (max-width: 992px) {
+  .ovl-detailview-label {
+    margin-left: -20px;
+  }
+}

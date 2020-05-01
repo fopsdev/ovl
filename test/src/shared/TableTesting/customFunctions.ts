@@ -403,5 +403,9 @@ export const Field_MobileSummary_GetTableRowRender = (
     def.namespace
   )
 
-  return html` <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue} `
+  return html`
+    <td class="fd-table__cell align}">
+      <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue}
+    </td>
+  `
 }

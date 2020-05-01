@@ -100,12 +100,8 @@ export class TableRowFormBig extends OvlFormElement {
     if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
       acceptEnabled = "fd-button nopointerevents"
     }
-    let width = def.options.edit.editScreenWidth.toString() + "vw;"
-    if (this.state.ovl.uiState.isMobile) {
-      width = "99vw;"
-    }
     return html`
-      <div style="width:${width}" class="fd-panel">
+      <div id="ovl-bigeditform-${def.id}" class="fd-panel ovl-bigeditform">
         <div class="scrollableOverlay">
           ${Object.keys(columns).map((k) => {
             let col = columns[k]

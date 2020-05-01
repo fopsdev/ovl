@@ -378,12 +378,6 @@ export const initTableState = (
       def.options = {}
     }
     let options = def.options
-    if (options.view === undefined) {
-      options.view = { viewType: "default", viewScreenWidth: 70 }
-    }
-    if (options.view.viewScreenWidth === undefined) {
-      options.view.viewScreenWidth = 70
-    }
 
     // if (def.translationGroup === undefined) {
     //   // assume tranlsation group is the same as namespace first group if not defined
@@ -420,10 +414,7 @@ export const initTableState = (
     }
 
     if (options.edit === undefined) {
-      options.edit = { editType: "inline", editScreenWidth: 50 }
-    }
-    if (options.edit.editScreenWidth === undefined) {
-      options.edit.editScreenWidth = 50
+      options.edit = { editType: "inline" }
     }
 
     if (options.sortCustom === undefined) {
@@ -554,6 +545,9 @@ export const initTableState = (
       }
       if (col.ui.visibility === undefined) {
         col.ui.visibility = "Table_Edit_View"
+      }
+      if (col.ui.showLabelIfNoValueInView === undefined) {
+        col.ui.showLabelIfNoValueInView = true
       }
       if (col.control === undefined) {
         col.control = "text"
