@@ -366,6 +366,16 @@ export const Field_U_ItemCode_GetFilteredList = (
   })
 }
 
+export const Field_MobileSummary_GetTableHeaderRender = (
+  columnKey: string,
+  caption: string,
+  def: TableDef,
+  align: string,
+  state: typeof overmind.state
+): TemplateResult => {
+  return html`<b>${caption}</b>`
+}
+
 export const Field_MobileSummary_GetTableRowRender = (
   columnKey: string,
   row: TableTesting,
@@ -393,9 +403,5 @@ export const Field_MobileSummary_GetTableRowRender = (
     def.namespace
   )
 
-  return html`
-    <td class="fd-table__cell ${align}">
-      <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue}
-    </td>
-  `
+  return html` <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue} `
 }

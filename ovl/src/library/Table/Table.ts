@@ -11,7 +11,7 @@ import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
-import { FieldIsVisible } from "../../global/hooks"
+import { FieldIsVisible, FieldGetTableHeaderRender } from "../../global/hooks"
 import { OvlConfig } from "../../init"
 export type SaveMode = "add" | "update"
 
@@ -312,6 +312,15 @@ export type ColumnFilterValue = {
 
 export type ColumnFilterTypes = "@@ovl_all" | "@@ovl_others"
 
+type CachedRendererData = {
+  hasRenderer: boolean
+  fn: any
+}
+export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
+
 export class TableHeader extends OvlBaseElement {
   props: any
   tabledata: TableDataAndDef
@@ -469,6 +478,35 @@ export class TableHeader extends OvlBaseElement {
           stickyTableHeader = "stickyTableHeader"
         }
 
+        // check for custom header renderer
+        let cachedRendererKey = def.namespace + k
+        let cachedRenderer = cachedRendererFn.get(cachedRendererKey)
+        let rendererFn
+        if (!cachedRenderer) {
+          let functionName = FieldGetTableHeaderRender.replace("%", k)
+          let fn = resolvePath(customFunctions, def.namespace)
+          if (fn && fn[functionName]) {
+            rendererFn = fn[functionName]
+            cachedRendererFn.set(cachedRendererKey, {
+              fn: rendererFn,
+              hasRenderer: true,
+            })
+          } else {
+            cachedRendererFn.set(cachedRendererKey, {
+              fn: undefined,
+              hasRenderer: false,
+            })
+          }
+        } else if (cachedRenderer.hasRenderer) {
+          rendererFn = cachedRenderer.fn
+        }
+        let headerPart
+        if (!rendererFn) {
+          headerPart = caption
+        } else {
+          headerPart = rendererFn(k, caption, def, align[k], this.state)
+        }
+
         return html`
           <th
             style="${cellBgColor}"
@@ -476,7 +514,7 @@ export class TableHeader extends OvlBaseElement {
             class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} "
             scope="col"
           >
-            ${caption}
+            ${headerPart}
           </th>
         `
       })}

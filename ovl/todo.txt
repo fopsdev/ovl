@@ -11,10 +11,10 @@ Hooks:
 - Hook FormTableRowStyle (Provides all the fields of a row analogous to validateField)
 - Hook FormTableHeaderStyle(...)
 
-- Hook Field_%_TableRowRender. A Custom Renderer for row field in tableview
-- Hook Field_%_TableHeaderRender. A Custom Renderer for header field in tableview
-- Hook Field_%_DetailviewLabelRender. A Custom Renderer for row field in tableview
-- Hook Field_%_DetailviewRender. A Custom Renderer for header field in tableview
+X - Hook Field_%_TableRowRender. A Custom Renderer for row field in tableview
+X - Hook Field_%_TableHeaderRender. A Custom Renderer for header field in tableview
+- Hook Field_%_DetailviewLabelRender. A Custom Renderer for label in detailview
+- Hook Field_%_DetailviewRender. A Custom Renderer for field in detailview
 
 - Hook Field_%_EditRender. A Custom Renderer for field in edit. Must fire ovlfocussout and ovlchange events to trigger validation
 - Hook FormViewRender. A Custom Renderer for the full Detail view content (Maybe prepare a codesandbox to test those...)

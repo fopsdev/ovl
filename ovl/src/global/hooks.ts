@@ -59,6 +59,8 @@ export const FieldIsReadOnly = "Field_%_IsReadOnly"
 export const FieldIsVisible = "Field_%_IsVisible"
 // if you would like to do the rendering of a column on your own
 export const FieldGetTableRowRender = "Field_%_GetTableRowRender"
+// if you would like to do the rendering of a column header
+export const FieldGetTableHeaderRender = "Field_%_GetTableHeaderRender"
 
 //Form Save/Delete/Postback Functions ####################################
 // provide your complete form postback to server logic here if you don't wanna use the default

@@ -69,16 +69,17 @@ export class TableRow extends OvlBaseElement {
         } else if (cachedRenderer.hasRenderer) {
           rendererFn = cachedRenderer.fn
         }
+        let rowPart
         if (!rendererFn) {
-          let displayValue = getDisplayValue(k, col, row, def.namespace)
-          return html`
-            <td class="fd-table__cell ${align[k]}">
-              ${displayValue}
-            </td>
-          `
+          rowPart = getDisplayValue(k, col, row, def.namespace)
         } else {
-          return rendererFn(k, row, def, align[k], this.state)
+          rowPart = rendererFn(k, row, def, align[k], this.state)
         }
+        return html`
+          <td class="fd-table__cell ${align[k]}">
+            ${rowPart}
+          </td>
+        `
       })}
     `
   }
