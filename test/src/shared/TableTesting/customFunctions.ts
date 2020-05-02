@@ -21,9 +21,10 @@ import {
   ChangeField,
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
-import { SnackAdd } from "../../../../ovl/src/library/helpers"
+import { SnackAdd, DialogOk } from "../../../../ovl/src/library/helpers"
 import { json } from "overmind"
-import { RowCellClass } from "../../../../ovl/src/library/Table/Row"
+import { CellClass } from "../../../../ovl/src/library/Table/Row"
+import { OkDialog } from "../../../../ovl/src/library/Dialog/actions"
 
 export const FormShow = async (
   formState: FormState,
@@ -404,11 +405,7 @@ export const Field_MobileSummary_GetTableRowRender = (
     def.namespace
   )
 
-  return html`
-    <td class="fd-table__cell align}">
-      <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue}
-    </td>
-  `
+  return html` <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue} `
 }
 
 export const TableRowCellClass = (
@@ -416,8 +413,47 @@ export const TableRowCellClass = (
   row: TableTesting,
   isMobile: boolean,
   state: typeof overmind.state
-): { [key in keyof TableTesting]?: RowCellClass } => {
+): { [key in keyof TableTesting]?: CellClass } => {
   if (row.U_Decimal > 100) {
-    return { U_Decimal: { className: "myredcell" } }
+    return { U_Decimal: { className: "testrowcell" } }
   }
+}
+
+export const Field_U_Decimal_RowCellSelectedHandler = async (
+  classList: DOMTokenList,
+  def: TableDef,
+  data: TableData,
+  rowKey: string,
+  state: typeof overmind.state
+): Promise<boolean> => {
+  // for this sample we just wanna make those cells clickable which has a specific custom class (see TableRowCellClass hook)
+  if (classList.contains("testrowcell")) {
+    await DialogOk(
+      "U_Decimal selected! Value:" + data.data[rowKey].U_Decimal.toString()
+    )
+    // do not use default event (select row)
+    return false
+  }
+  return true
+}
+
+export const TableHeaderCellClass = (
+  def: TableDef,
+  isMobile: boolean,
+  state: typeof overmind.state
+): { [key in keyof TableTesting]?: CellClass } => {
+  return { U_ItemCode: { className: "testheadercell" } }
+}
+
+export const Field_U_ItemCode_HeaderCellSelectedHandler = async (
+  classList: DOMTokenList,
+  def: TableDef,
+  state: typeof overmind.state
+): Promise<boolean> => {
+  if (classList.contains("testheadercell")) {
+    await DialogOk("Header U_ItemCode selected!")
+    // do not use default event (open tableheader menu)
+    return false
+  }
+  return true
 }

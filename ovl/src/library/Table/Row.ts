@@ -13,7 +13,7 @@ import {
 } from "../../global/hooks"
 import { FieldVisibility } from "./Table"
 
-export type RowCellClass = {
+export type CellClass = {
   className: string
 }
 
@@ -43,7 +43,7 @@ export class TableRow extends OvlBaseElement {
     // see if we can gbet custom class names for the row columns
     // eg. to color a cell
 
-    let customRowCellClasses: { [key: string]: RowCellClass }
+    let customRowCellClasses: { [key: string]: CellClass }
     let functionName = TableRowCellClass
     let fn = resolvePath(customFunctions, def.namespace)
     if (fn && fn[functionName]) {
@@ -104,6 +104,7 @@ export class TableRow extends OvlBaseElement {
         }
         return html`
           <td
+            data-col="${k}"
             class="fd-table__cell ${align[
               k
             ]} ovl-tableview-rowcell ovl-tableview-rowcell__${k} ${customRowCellClass}"

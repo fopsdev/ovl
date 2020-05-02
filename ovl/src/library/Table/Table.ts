@@ -11,8 +11,14 @@ import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
-import { FieldIsVisible, FieldGetTableHeaderRender } from "../../global/hooks"
+import {
+  FieldIsVisible,
+  FieldGetTableHeaderRender,
+  TableHeaderCellClass,
+  FieldHeaderCellSelectedHandler,
+} from "../../global/hooks"
 import { OvlConfig } from "../../init"
+import { CellClass } from "./Row"
 export type SaveMode = "add" | "update"
 
 export type SelectedCustomFunctionResult = {
@@ -327,10 +333,28 @@ export class TableHeader extends OvlBaseElement {
     e.preventDefault()
   }
 
-  handleHeaderColumnClick = (e: Event, key: string) => {
+  handleHeaderColumnClick = async (e: Event, key: string) => {
     e.stopPropagation()
     e.preventDefault()
     let def = this.tabledata.def
+
+    // first start custom event handler (hook)
+    //@ts-ignore
+    let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      if (
+        !(await fn[functionName](
+          //@ts-ignore
+          e.target.classList,
+          def,
+          this.state
+        ))
+      ) {
+        return
+      }
+    }
+
     if (
       def.features.add ||
       def.features.filter ||
@@ -379,6 +403,16 @@ export class TableHeader extends OvlBaseElement {
     let columnsVisible = {}
     let columnsCount = 0
     let isMobile = this.state.ovl.uiState.isMobile
+    let customHeaderCellClasses: { [key: string]: CellClass }
+    let functionName = TableHeaderCellClass
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      customHeaderCellClasses = fn[functionName](def, isMobile, this.state)
+    }
+    if (!customHeaderCellClasses) {
+      customHeaderCellClasses = {}
+    }
+
     let headerRows = html`
       ${Object.keys(columns).map((k) => {
         let column = columns[k]
@@ -504,11 +538,16 @@ export class TableHeader extends OvlBaseElement {
           headerPart = rendererFn(k, caption, def, align[k], this.state)
         }
 
+        let customHeaderCellClass: string = ""
+        if (customHeaderCellClasses[k]) {
+          customHeaderCellClass = customHeaderCellClasses[k].className
+        }
+
         return html`
           <th
             style="${cellBgColor}"
             @click="${(e) => this.handleHeaderColumnClick(e, k)}"
-            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-tableview-headercell__${k}"
+            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-tableview-headercell__${k} ${customHeaderCellClass}"
             scope="col"
           >
             ${headerPart}

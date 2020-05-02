@@ -32,10 +32,19 @@
 }
 
 .ovl-tableview-rowcell__U_Decimal {
-  background-color: green;
+  color: green;
 }
 
-.myredcell {
-  background-color: red;
+.testrowcell {
+  cursor: pointer;
+  text-decoration: underline;
+  color: red;
+  font-weight: bold;
+}
+
+.testheadercell {
+  cursor: pointer;
+  text-decoration: underline;
+  color: limegreen;
   font-weight: bold;
 }

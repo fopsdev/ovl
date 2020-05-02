@@ -36,7 +36,7 @@ export class OvlOverlay extends OvlBaseElement {
 
   handleDismissed = (e: Event) => {
     //@ts-ignore
-    if (e.srcElement.id === "ovloverlay") {
+    if (e.target.id === "ovloverlay") {
       e.stopPropagation()
       e.preventDefault()
       if (overlayToRender.overlayDismissedCallback) {

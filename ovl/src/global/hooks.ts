@@ -66,6 +66,10 @@ export const FieldGetTableHeaderRender = "Field_%_GetTableHeaderRender"
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set
 export const TableRowCellClass = "TableRowCellClass"
 export const TableHeaderCellClass = "TableHeaderCellClass"
+// now the eventhandler if the user selected/clicked the cell
+export const FieldRowCellSelectedHandler = "Field_%_RowCellSelectedHandler"
+export const FieldHeaderCellSelectedHandler =
+  "Field_%_HeaderCellSelectedHandler"
 
 //Form Save/Delete/Postback Functions ####################################
 // provide your complete form postback to server logic here if you don't wanna use the default

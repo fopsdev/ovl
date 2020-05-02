@@ -14,7 +14,7 @@ import {
 
 import { resolvePath } from "../../global/globals"
 import { SnackAdd } from "../helpers"
-import { FormStatus } from "../../global/hooks"
+import { FormStatus, FieldRowCellSelectedHandler } from "../../global/hooks"
 export type TableRowDef = {
   data: TableData
   selected: SelectedRow
@@ -53,9 +53,34 @@ export class TableRowWrapper extends OvlBaseElement {
     }
   }
 
-  handleRowClick = (e: Event, k: string) => {
+  handleRowClick = async (e: Event, k: string) => {
+    let def = this.row.tableDef
+    if (
+      //@ts-ignore
+      e.target.getAttribute("data-col")
+    ) {
+      // first start custom event handler (hook)
+      //@ts-ignore
+      let columnKey = e.target.getAttribute("data-col")
+      let functionName = FieldRowCellSelectedHandler.replace("%", columnKey)
+      let fn = resolvePath(customFunctions, def.namespace)
+      if (fn && fn[functionName]) {
+        if (
+          !(await fn[functionName](
+            //@ts-ignore
+            e.target.classList,
+            def,
+            this.row.data,
+            this.row.key,
+            this.state
+          ))
+        ) {
+          return
+        }
+      }
+    }
     let val: SelectRowDef = {
-      def: this.row.tableDef,
+      def,
       key: k,
       data: this.row.data,
     }
