@@ -8,8 +8,8 @@ import { GetLabel } from "../forms/Controls/helpers"
 import {
   FieldGetList,
   FieldGetTableRowRender,
-  TableHeaderCellClass,
-  TableRowCellClass,
+  ViewHeaderCellClass,
+  ViewRowCellClass,
 } from "../../global/hooks"
 import { FieldVisibility } from "./Table"
 
@@ -42,12 +42,18 @@ export class TableRow extends OvlBaseElement {
 
     // see if we can gbet custom class names for the row columns
     // eg. to color a cell
-
+    // this will also be used for detailview, differentiating by param isDetail
     let customRowCellClasses: { [key: string]: CellClass }
-    let functionName = TableRowCellClass
+    let functionName = ViewRowCellClass
     let fn = resolvePath(customFunctions, def.namespace)
     if (fn && fn[functionName]) {
-      customRowCellClasses = fn[functionName](def, row, isMobile, this.state)
+      customRowCellClasses = fn[functionName](
+        def,
+        row,
+        isMobile,
+        false,
+        this.state
+      )
     }
     if (!customRowCellClasses) {
       customRowCellClasses = {}

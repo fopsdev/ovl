@@ -240,7 +240,7 @@ export const ValidateDataType: Action<ValidateFieldType> = (_, value) => {
       if (val) {
         let parsedVal
         if (typeof val === "string") {
-          let valToParse = val.replace(/[^0-9.]/g, "")
+          let valToParse = val.replace(/[^0-9.-]/g, "")
           parsedVal = parseFloat(valToParse)
         } else {
           parsedVal = val

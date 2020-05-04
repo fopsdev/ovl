@@ -14,7 +14,7 @@ import { ListState } from "../Forms/Controls/ListControl"
 import {
   FieldIsVisible,
   FieldGetTableHeaderRender,
-  TableHeaderCellClass,
+  ViewHeaderCellClass,
   FieldHeaderCellSelectedHandler,
 } from "../../global/hooks"
 import { OvlConfig } from "../../init"
@@ -404,10 +404,15 @@ export class TableHeader extends OvlBaseElement {
     let columnsCount = 0
     let isMobile = this.state.ovl.uiState.isMobile
     let customHeaderCellClasses: { [key: string]: CellClass }
-    let functionName = TableHeaderCellClass
+    let functionName = ViewHeaderCellClass
     let fn = resolvePath(customFunctions, def.namespace)
     if (fn && fn[functionName]) {
-      customHeaderCellClasses = fn[functionName](def, isMobile, this.state)
+      customHeaderCellClasses = fn[functionName](
+        def,
+        isMobile,
+        false,
+        this.state
+      )
     }
     if (!customHeaderCellClasses) {
       customHeaderCellClasses = {}

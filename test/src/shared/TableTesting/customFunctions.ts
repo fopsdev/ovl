@@ -408,10 +408,11 @@ export const Field_MobileSummary_GetTableRowRender = (
   return html` <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue} `
 }
 
-export const TableRowCellClass = (
+export const ViewRowCellClass = (
   def: TableDef,
   row: TableTesting,
   isMobile: boolean,
+  isDetailView: boolean,
   state: typeof overmind.state
 ): { [key in keyof TableTesting]?: CellClass } => {
   if (row.U_Decimal > 100) {
@@ -437,9 +438,10 @@ export const Field_U_Decimal_RowCellSelectedHandler = async (
   return true
 }
 
-export const TableHeaderCellClass = (
+export const ViewHeaderCellClass = (
   def: TableDef,
   isMobile: boolean,
+  isDetailView: boolean,
   state: typeof overmind.state
 ): { [key in keyof TableTesting]?: CellClass } => {
   return { U_ItemCode: { className: "testheadercell" } }
