@@ -12,8 +12,8 @@ X - Apply Hook and Class Styling Concept from TableHeader/TableRow to Detailview
 
 X - Hook Field_%_TableRowRender. A Custom Renderer for row field in tableview
 X - Hook Field_%_TableHeaderRender. A Custom Renderer for header field in tableview
-- Hook Field_%_ViewLabelRender. A Custom Renderer for label in detailview
-- Hook Field_%_ViewRender. A Custom Renderer for field in detailview
+X - Hook Field_%_ViewLabelRender. A Custom Renderer for label in detailview
+X - Hook Field_%_ViewRender. A Custom Renderer for field in detailview
 
 - Hook Field_%_EditLabelRender. A Custom Renderer for label in edit. 
 - Hook Field_%_EditRender. A Custom Renderer for field in edit. Must fire ovlfocussout and ovlchange events to trigger validation

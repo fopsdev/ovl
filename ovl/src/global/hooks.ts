@@ -61,6 +61,10 @@ export const FieldIsVisible = "Field_%_IsVisible"
 export const FieldGetTableRowRender = "Field_%_GetTableRowRender"
 // if you would like to do the rendering of a column header
 export const FieldGetTableHeaderRender = "Field_%_GetTableHeaderRender"
+// if you would like to do the rendering of a field on your own (in detailview)
+export const FieldGetViewValueRender = "Field_%_GetViewValueRender"
+// if you would like to do the rendering of label on your own (in detailview)
+export const FieldGetViewLabelRender = "Field_%_GetViewLabelRender"
 
 // to style the header and row cells in tableview
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set

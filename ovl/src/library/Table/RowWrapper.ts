@@ -54,36 +54,61 @@ export class TableRowWrapper extends OvlBaseElement {
     }
   }
 
-  handleRowClick = async (e: Event, k: string) => {
+  handleRowClick = async (e) => {
     let def = this.row.tableDef
-    if (
-      //@ts-ignore
-      e.target.getAttribute("data-col")
+    let key
+    if (e.target.getAttribute("data-col")) {
+      key = e.target.getAttribute("data-col")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.getAttribute("data-col")
     ) {
-      // first start custom event handler (hook)
-      //@ts-ignore
-      let columnKey = e.target.getAttribute("data-col")
-      let functionName = FieldRowCellSelectedHandler.replace("%", columnKey)
-      let fn = resolvePath(customFunctions, def.namespace)
-      if (fn && fn[functionName]) {
-        if (
-          !(await fn[functionName](
-            //@ts-ignore
-            e.target.classList,
-            def,
-            this.row.data,
-            this.row.key,
-            false,
-            this.state
-          ))
-        ) {
-          return
-        }
+      key = e.target.parentNode.getAttribute("data-col")
+    }
+    if (!key) {
+      return
+    }
+    // first start custom event handler (hook)
+    let functionName = FieldRowCellSelectedHandler.replace("%", key)
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      if (
+        !(await fn[functionName](
+          //@ts-ignore
+          e.target.classList,
+          def,
+          this.row.data,
+          this.row.key,
+          false,
+          this.state
+        ))
+      ) {
+        return
       }
     }
+
+    let rowKey
+    if (e.target.getAttribute("data-rowkey")) {
+      rowKey = e.target.getAttribute("data-rowkey")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.getAttribute("data-rowkey")
+    ) {
+      rowKey = e.target.parentNode.getAttribute("data-rowkey")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.parentNode &&
+      e.target.parentNode.parentNode.getAttribute("data-rowkey")
+    ) {
+      rowKey = e.target.parentNode.parentNode.getAttribute("data-rowkey")
+    }
+    if (!rowKey) {
+      return
+    }
+
     let val: SelectRowDef = {
       def,
-      key: k,
+      key: rowKey,
       data: this.row.data,
     }
     this.actions.ovl.table.TableSelectRow(val)
@@ -286,8 +311,9 @@ export class TableRowWrapper extends OvlBaseElement {
         style="${selectedRowBg}"
         class="fd-table__row ${rowStatus}  animated fadeIn faster"
         title="${rowStatusMsg}"
-        @click="${(e) => this.handleRowClick(e, key)}"
-        @long-press="${(e) => this.handleRowLongPress(e)}"
+        data-rowkey="${key}"
+        @click="${this.handleRowClick}"
+        @long-press="${this.handleRowLongPress}"
         .props=${() => {
           return <TableRowDataDef>{
             row: row,

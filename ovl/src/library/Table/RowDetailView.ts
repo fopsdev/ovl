@@ -6,6 +6,8 @@ import {
   createDynamicRowFunctions,
   getDisplayValue,
   rowControlActionsHandler,
+  CachedRendererData,
+  GetRendererFn,
 } from "./helpers"
 import { RowControlAllAction } from "./RowControl"
 import { EditRowDef } from "./Table"
@@ -15,15 +17,13 @@ import {
   ViewHeaderCellClass,
   FieldRowCellSelectedHandler,
   FieldHeaderCellSelectedHandler,
+  FieldGetViewValueRender,
+  FieldGetViewLabelRender,
 } from "../../global/hooks"
 import { customFunctions } from "../.."
 import { ifDefined } from "lit-html/directives/if-defined"
 import { SnackAdd } from "../helpers"
 
-type CachedRendererData = {
-  hasRenderer: boolean
-  fn: any
-}
 export let cachedLabelRendererFn: Map<string, CachedRendererData> = new Map<
   string,
   CachedRendererData
@@ -113,9 +113,6 @@ export class TableRowDetailView extends OvlBaseElement {
       let mobileTooltip
       if (e.target.title) {
         mobileTooltip = e.target.title
-        // } else if (e.target.parentNode && e.target.parentNode.title) {
-        //   mobileTooltip = e.target.parentNode.title
-        // }
       }
       if (mobileTooltip) {
         SnackAdd(mobileTooltip, "Information")
@@ -176,6 +173,18 @@ export class TableRowDetailView extends OvlBaseElement {
             class="fd-panel__body ovl-detailview-container"
           >
             ${Object.keys(columns).map((k) => {
+              let rendererFn = GetRendererFn(
+                def,
+                cachedRendererFn,
+                FieldGetViewValueRender,
+                k
+              )
+              let labelRendererFn = GetRendererFn(
+                def,
+                cachedLabelRendererFn,
+                FieldGetViewLabelRender,
+                k
+              )
               let customHeaderCellClass = ""
               let headertooltip
               if (customHeaderCellClasses[k]) {
@@ -194,7 +203,22 @@ export class TableRowDetailView extends OvlBaseElement {
                 return null
               }
               let uiItem
-              uiItem = getDisplayValue(k, col, this.rowData.row, def.namespace)
+              if (rendererFn) {
+                uiItem = rendererFn(
+                  k,
+                  this.rowData.row,
+                  def,
+                  this.rowData.columnsAlign[k],
+                  this.state
+                )
+              } else {
+                uiItem = getDisplayValue(
+                  k,
+                  col,
+                  this.rowData.row,
+                  def.namespace
+                )
+              }
               let label
               let value
               if (uiItem || (!uiItem && col.ui.showLabelIfNoValueInView)) {
@@ -204,6 +228,10 @@ export class TableRowDetailView extends OvlBaseElement {
                 } else {
                   l = k
                 }
+                if (labelRendererFn) {
+                  l = labelRendererFn(k, l, def, "", this.state)
+                }
+
                 label = html`<label
                   title="${ifDefined(
                     headertooltip ? headertooltip : undefined

@@ -21,6 +21,7 @@ import { OvlConfig } from "../../init"
 import { CellClass } from "./Row"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { SnackAdd } from "../helpers"
+import { CachedRendererData, GetRendererFn } from "./helpers"
 export type SaveMode = "add" | "update"
 
 export type SelectedCustomFunctionResult = {
@@ -317,10 +318,6 @@ export type ColumnFilterValue = {
 
 export type ColumnFilterTypes = "@@ovl_all" | "@@ovl_others"
 
-type CachedRendererData = {
-  hasRenderer: boolean
-  fn: any
-}
 export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
   string,
   CachedRendererData
@@ -335,10 +332,22 @@ export class TableHeader extends OvlBaseElement {
     e.preventDefault()
   }
 
-  handleHeaderColumnClick = async (e: Event, key: string) => {
+  handleHeaderColumnClick = async (e) => {
     e.stopPropagation()
     e.preventDefault()
     let def = this.tabledata.def
+    let key
+    if (e.target.getAttribute("data-col")) {
+      key = e.target.getAttribute("data-col")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.getAttribute("data-col")
+    ) {
+      key = e.target.parentNode.getAttribute("data-col")
+    }
+    if (!key) {
+      return
+    }
 
     // first start custom event handler (hook)
     //@ts-ignore
@@ -533,27 +542,12 @@ export class TableHeader extends OvlBaseElement {
         }
 
         // check for custom header renderer
-        let cachedRendererKey = def.namespace + k
-        let cachedRenderer = cachedRendererFn.get(cachedRendererKey)
-        let rendererFn
-        if (!cachedRenderer) {
-          let functionName = FieldGetTableHeaderRender.replace("%", k)
-          let fn = resolvePath(customFunctions, def.namespace)
-          if (fn && fn[functionName]) {
-            rendererFn = fn[functionName]
-            cachedRendererFn.set(cachedRendererKey, {
-              fn: rendererFn,
-              hasRenderer: true,
-            })
-          } else {
-            cachedRendererFn.set(cachedRendererKey, {
-              fn: undefined,
-              hasRenderer: false,
-            })
-          }
-        } else if (cachedRenderer.hasRenderer) {
-          rendererFn = cachedRenderer.fn
-        }
+        let rendererFn = GetRendererFn(
+          def,
+          cachedRendererFn,
+          FieldGetTableHeaderRender,
+          k
+        )
         let headerPart
         if (!rendererFn) {
           headerPart = caption
@@ -570,9 +564,9 @@ export class TableHeader extends OvlBaseElement {
 
         return html`
           <th
+            data-col="${k}"
             title="${ifDefined(tooltip ? tooltip : undefined)}"
             style="${cellBgColor}"
-            @click="${(e) => this.handleHeaderColumnClick(e, k)}"
             class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-tableview-headercell__${k} ${customHeaderCellClass}"
             scope="col"
           >
@@ -723,15 +717,20 @@ export class TableHeader extends OvlBaseElement {
     if (showMaxSizeHint) {
       maxSizeHint = html`
         <tr
-          @click=${(e) =>
-            this.handleHeaderColumnClick(
-              e,
-              this.tabledata.def.database.dataIdField
-            )}
+          data-col="${def.database.dataIdField}"
+          @click="${this.handleHeaderColumnClick}"
           class="fd-table__row"
         >
-          <td class="fd-has-text-align-center" colspan="${columnsCount}">
-            <div class="fd-alert fd-alert--warning" role="alert">
+          <td
+            data-col="${def.database.dataIdField}"
+            class="fd-has-text-align-center"
+            colspan="${columnsCount}"
+          >
+            <div
+              data-col="${def.database.dataIdField}"
+              class="fd-alert fd-alert--warning"
+              role="alert"
+            >
               <p class="fd-alert__text">
                 Mehr als ${def.options.maxRows.maxRows} Zeilen
               </p>
@@ -794,6 +793,7 @@ export class TableHeader extends OvlBaseElement {
       <thead class="fd-table__header">
         <tr
           @long-press="${this.handleLongPress}"
+          @click="${this.handleHeaderColumnClick}"
           class="fd-table__row ovl-tableview-header"
         >
           ${headerRows}

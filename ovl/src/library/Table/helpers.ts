@@ -1079,3 +1079,37 @@ export const rowControlActionsHandler = async (
     }
   }
 }
+export type CachedRendererData = {
+  hasRenderer: boolean
+  fn: any
+}
+
+export const GetRendererFn = (
+  def: TableDef,
+  cachedRendererFn: Map<string, CachedRendererData>,
+  hookDef: string,
+  fieldKey: string
+) => {
+  let cachedRendererKey = def.namespace + fieldKey
+  let cachedRenderer = cachedRendererFn.get(cachedRendererKey)
+  let rendererFn
+  if (!cachedRenderer) {
+    let functionName = hookDef.replace("%", fieldKey)
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      rendererFn = fn[functionName]
+      cachedRendererFn.set(cachedRendererKey, {
+        fn: rendererFn,
+        hasRenderer: true,
+      })
+    } else {
+      cachedRendererFn.set(cachedRendererKey, {
+        fn: undefined,
+        hasRenderer: false,
+      })
+    }
+  } else if (cachedRenderer.hasRenderer) {
+    rendererFn = cachedRenderer.fn
+  }
+  return rendererFn
+}

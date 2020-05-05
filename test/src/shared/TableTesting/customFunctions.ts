@@ -369,6 +369,60 @@ export const Field_U_ItemCode_GetFilteredList = (
   })
 }
 
+export const Field_U_ItemCode_GetTableHeaderRender = (
+  columnKey: string,
+  caption: string,
+  def: TableDef,
+  align: string,
+  state: typeof overmind.state
+): TemplateResult => {
+  return html`${caption}(Code)`
+}
+
+export const Field_U_ItemCode_GetTableRowRender = (
+  columnKey: string,
+  row: TableTesting,
+  def: TableDef,
+  align: string,
+  state: typeof overmind.state
+): TemplateResult => {
+  let u_ItemCodeValue = getDisplayValue(
+    "U_ItemCode",
+    def.columns["U_ItemCode"],
+    row,
+    def.namespace
+  )
+
+  return html`${u_ItemCodeValue} (${row.U_ItemCode})`
+}
+
+export const Field_U_ItemCode_GetViewLabelRender = (
+  columnKey: string,
+  caption: string,
+  def: TableDef,
+  align: string,
+  state: typeof overmind.state
+): TemplateResult => {
+  return html`Name(Code)`
+}
+
+export const Field_U_ItemCode_GetViewValueRender = (
+  columnKey: string,
+  row: TableTesting,
+  def: TableDef,
+  align: string,
+  state: typeof overmind.state
+): TemplateResult => {
+  let u_ItemCodeValue = getDisplayValue(
+    "U_ItemCode",
+    def.columns["U_ItemCode"],
+    row,
+    def.namespace
+  )
+
+  return html`${u_ItemCodeValue} (${row.U_ItemCode})`
+}
+
 export const Field_MobileSummary_GetTableHeaderRender = (
   columnKey: string,
   caption: string,

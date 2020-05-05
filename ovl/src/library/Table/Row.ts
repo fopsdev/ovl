@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { TableRowDataDef } from "./RowWrapper"
-import { getDisplayValue } from "./helpers"
+import { getDisplayValue, CachedRendererData, GetRendererFn } from "./helpers"
 import { customFunctions, overmind } from "../../index"
 import { resolvePath } from "../../global/globals"
 import { GetLabel } from "../forms/Controls/helpers"
@@ -19,10 +19,6 @@ export type CellClass = {
   tooltip?: string
 }
 
-type CachedRendererData = {
-  hasRenderer: boolean
-  fn: any
-}
 export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
   string,
   CachedRendererData
@@ -85,28 +81,13 @@ export class TableRow extends OvlBaseElement {
         }
 
         // check for custom renderer
-        let cachedRendererKey = def.namespace + k
-        let cachedRenderer = cachedRendererFn.get(cachedRendererKey)
-        let rendererFn
-        if (!cachedRenderer) {
-          let functionName = FieldGetTableRowRender.replace("%", k)
-          let fn = resolvePath(customFunctions, def.namespace)
-          if (fn && fn[functionName]) {
-            rendererFn = fn[functionName]
-            cachedRendererFn.set(cachedRendererKey, {
-              fn: rendererFn,
-              hasRenderer: true,
-            })
-          } else {
-            cachedRendererFn.set(cachedRendererKey, {
-              fn: undefined,
-              hasRenderer: false,
-            })
-          }
-        } else if (cachedRenderer.hasRenderer) {
-          rendererFn = cachedRenderer.fn
-        }
         let rowPart
+        let rendererFn = GetRendererFn(
+          def,
+          cachedRendererFn,
+          FieldGetTableRowRender,
+          k
+        )
         if (!rendererFn) {
           rowPart = getDisplayValue(k, col, row, def.namespace)
         } else {
