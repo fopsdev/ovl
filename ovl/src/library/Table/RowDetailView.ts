@@ -17,6 +17,7 @@ import {
   FieldHeaderCellSelectedHandler,
 } from "../../global/hooks"
 import { customFunctions } from "../.."
+import { ifDefined } from "lit-html/directives/if-defined"
 
 type CachedRendererData = {
   hasRenderer: boolean
@@ -158,12 +159,16 @@ export class TableRowDetailView extends OvlBaseElement {
           >
             ${Object.keys(columns).map((k) => {
               let customHeaderCellClass = ""
+              let headertooltip
               if (customHeaderCellClasses[k]) {
                 customHeaderCellClass = customHeaderCellClasses[k].className
+                headertooltip = customHeaderCellClasses[k].tooltip
               }
+              let rowtooltip
               let customRowCellClass = ""
               if (customRowCellClasses[k]) {
                 customRowCellClass = customRowCellClasses[k].className
+                rowtooltip = customRowCellClasses[k].tooltip
               }
               let col = columns[k]
               let columnsVisible = this.rowData.columnsVisible
@@ -182,11 +187,15 @@ export class TableRowDetailView extends OvlBaseElement {
                   l = k
                 }
                 label = html`<label
+                  title="${ifDefined(
+                    headertooltip ? headertooltip : undefined
+                  )}"
                   data-col=${k}
                   class="fd-form-label ovl-detailview-label ovl-detailview-label__${k} ${customHeaderCellClass}"
                   >${l}</label
                 >`
                 value = html`<article
+                  title="${ifDefined(rowtooltip ? rowtooltip : undefined)}"
                   data-col=${k}
                   class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value__${k} ${customRowCellClass}"
                 >

@@ -1,5 +1,6 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
+import { ifDefined } from "lit-html/directives/if-defined"
 import { TableRowDataDef } from "./RowWrapper"
 import { getDisplayValue } from "./helpers"
 import { customFunctions, overmind } from "../../index"
@@ -14,7 +15,8 @@ import {
 import { FieldVisibility } from "./Table"
 
 export type CellClass = {
-  className: string
+  className?: string
+  tooltip?: string
 }
 
 type CachedRendererData = {
@@ -62,8 +64,10 @@ export class TableRow extends OvlBaseElement {
     return html`
       ${Object.keys(columns).map((k) => {
         let customRowCellClass: string = ""
+        let tooltip
         if (customRowCellClasses[k]) {
           customRowCellClass = customRowCellClasses[k].className
+          tooltip = customRowCellClasses[k].tooltip
         }
         let col = columns[k]
         let visible = columnsVisible[k]
@@ -110,6 +114,7 @@ export class TableRow extends OvlBaseElement {
         }
         return html`
           <td
+            title="${ifDefined(tooltip ? tooltip : undefined)}"
             data-col="${k}"
             class="fd-table__cell ${align[
               k

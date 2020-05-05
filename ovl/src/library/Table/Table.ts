@@ -19,6 +19,7 @@ import {
 } from "../../global/hooks"
 import { OvlConfig } from "../../init"
 import { CellClass } from "./Row"
+import { ifDefined } from "lit-html/directives/if-defined"
 export type SaveMode = "add" | "update"
 
 export type SelectedCustomFunctionResult = {
@@ -545,12 +546,15 @@ export class TableHeader extends OvlBaseElement {
         }
 
         let customHeaderCellClass: string = ""
+        let tooltip
         if (customHeaderCellClasses[k]) {
           customHeaderCellClass = customHeaderCellClasses[k].className
+          tooltip = customHeaderCellClasses[k].tooltip
         }
 
         return html`
           <th
+            title="${ifDefined(tooltip ? tooltip : undefined)}"
             style="${cellBgColor}"
             @click="${(e) => this.handleHeaderColumnClick(e, k)}"
             class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-tableview-headercell__${k} ${customHeaderCellClass}"

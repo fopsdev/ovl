@@ -1,5 +1,6 @@
 import { TableTesting, TblTableTesting, TableTestingColumn } from "./state"
 import { html, TemplateResult } from "../../../../ovl/node_modules/lit-html"
+
 import { overmind } from "../.."
 import {
   TableDataAndDef,
@@ -416,7 +417,12 @@ export const ViewRowCellClass = (
   state: typeof overmind.state
 ): { [key in keyof TableTesting]?: CellClass } => {
   if (row.U_Decimal > 100) {
-    return { U_Decimal: { className: "testrowcell" } }
+    return {
+      U_Decimal: {
+        className: "testrowcell",
+        tooltip: "Pay attention!,greater than 100!",
+      },
+    }
   }
 }
 
@@ -445,7 +451,12 @@ export const ViewHeaderCellClass = (
   isDetailView: boolean,
   state: typeof overmind.state
 ): { [key in keyof TableTesting]?: CellClass } => {
-  return { U_ItemCode: { className: "testheadercell" } }
+  return {
+    U_ItemCode: {
+      className: "testheadercell",
+      tooltip: "Hey i'm a custom Tooltip!",
+    },
+  }
 }
 
 export const Field_U_ItemCode_HeaderCellSelectedHandler = async (
