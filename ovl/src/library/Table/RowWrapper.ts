@@ -72,6 +72,7 @@ export class TableRowWrapper extends OvlBaseElement {
             def,
             this.row.data,
             this.row.key,
+            false,
             this.state
           ))
         ) {

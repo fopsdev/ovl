@@ -425,6 +425,7 @@ export const Field_U_Decimal_RowCellSelectedHandler = async (
   def: TableDef,
   data: TableData,
   rowKey: string,
+  isDetailView: boolean,
   state: typeof overmind.state
 ): Promise<boolean> => {
   // for this sample we just wanna make those cells clickable which has a specific custom class (see TableRowCellClass hook)
@@ -450,6 +451,7 @@ export const ViewHeaderCellClass = (
 export const Field_U_ItemCode_HeaderCellSelectedHandler = async (
   classList: DOMTokenList,
   def: TableDef,
+  isDetailView: boolean,
   state: typeof overmind.state
 ): Promise<boolean> => {
   if (classList.contains("testheadercell")) {

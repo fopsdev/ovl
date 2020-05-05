@@ -36,15 +36,15 @@
 }
 
 .testrowcell {
-  cursor: pointer;
+  cursor: pointer !important;
   text-decoration: underline;
   color: red;
   font-weight: bold;
 }
 
 .testheadercell {
-  cursor: pointer;
+  cursor: pointer !important;
   text-decoration: underline;
-  color: limegreen;
+  color: limegreen !important;
   font-weight: bold;
 }

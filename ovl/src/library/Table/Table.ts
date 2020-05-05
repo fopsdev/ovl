@@ -348,6 +348,7 @@ export class TableHeader extends OvlBaseElement {
           //@ts-ignore
           e.target.classList,
           def,
+          false,
           this.state
         ))
       ) {

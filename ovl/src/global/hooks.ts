@@ -64,8 +64,8 @@ export const FieldGetTableHeaderRender = "Field_%_GetTableHeaderRender"
 
 // to style the header and row cells in tableview
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set
-export const ViewRowCellClass = "TableRowCellClass"
-export const ViewHeaderCellClass = "TableHeaderCellClass"
+export const ViewRowCellClass = "ViewRowCellClass"
+export const ViewHeaderCellClass = "ViewHeaderCellClass"
 // now the eventhandler if the user selected/clicked the cell
 export const FieldRowCellSelectedHandler = "Field_%_RowCellSelectedHandler"
 export const FieldHeaderCellSelectedHandler =

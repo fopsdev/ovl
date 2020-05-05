@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { T } from "../../global/globals"
+import { T, resolvePath, isMobile } from "../../global/globals"
 import { overlayToRender } from "../Overlay/Overlay"
 import { OvlBaseElement } from "../OvlBaseElement"
 import {
@@ -9,6 +9,14 @@ import {
 } from "./helpers"
 import { RowControlAllAction } from "./RowControl"
 import { EditRowDef } from "./Table"
+import { CellClass } from "./Row"
+import {
+  ViewRowCellClass,
+  ViewHeaderCellClass,
+  FieldRowCellSelectedHandler,
+  FieldHeaderCellSelectedHandler,
+} from "../../global/hooks"
+import { customFunctions } from "../.."
 
 type CachedRendererData = {
   hasRenderer: boolean
@@ -55,6 +63,48 @@ export class TableRowDetailView extends OvlBaseElement {
     this.actions.ovl.overlay.CloseOverlay()
   }
 
+  handleClick = async (e) => {
+    if (e.target.getAttribute("data-col")) {
+      let key = e.target.getAttribute("data-col")
+      let def = this.rowData.tableDef
+      if (e.target.classList.contains("ovl-detailview-label")) {
+        let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
+        let fn = resolvePath(customFunctions, def.namespace)
+        if (fn && fn[functionName]) {
+          if (
+            !(await fn[functionName](
+              //@ts-ignore
+              e.target.classList,
+              def,
+              true,
+              this.state
+            ))
+          ) {
+            return
+          }
+        }
+      } else {
+        let functionName = FieldRowCellSelectedHandler.replace("%", key)
+        let fn = resolvePath(customFunctions, def.namespace)
+        if (fn && fn[functionName]) {
+          if (
+            !(await fn[functionName](
+              //@ts-ignore
+              e.target.classList,
+              def,
+              this.rowData.data,
+              this.rowData.key,
+              true,
+              this.state
+            ))
+          ) {
+            return
+          }
+        }
+      }
+    }
+  }
+
   async getUIAsync() {
     let def = this.rowData.tableDef
     let columns = def.columns
@@ -67,12 +117,54 @@ export class TableRowDetailView extends OvlBaseElement {
       true
     )
 
+    let customRowCellClasses: { [key: string]: CellClass }
+    let functionName = ViewRowCellClass
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      customRowCellClasses = fn[functionName](
+        def,
+        this.rowData.row,
+        isMobile,
+        true,
+        this.state
+      )
+    }
+    if (!customRowCellClasses) {
+      customRowCellClasses = {}
+    }
+
+    let customHeaderCellClasses: { [key: string]: CellClass }
+    let functionName2 = ViewHeaderCellClass
+    let fn2 = resolvePath(customFunctions, def.namespace)
+    if (fn2 && fn[functionName2]) {
+      customHeaderCellClasses = fn2[functionName2](
+        def,
+        isMobile,
+        false,
+        this.state
+      )
+    }
+    if (!customHeaderCellClasses) {
+      customHeaderCellClasses = {}
+    }
+
     let rowActions = Object.keys(rowControlActions)
     return html`
       <div id="ovl-detailview-${def.id}" class="fd-panel ovl-detailview">
         <div class="fd-panel scrollableOverlay">
-          <div class="fd-panel__body ovl-detailview-container">
+          <div
+            @click="${this.handleClick}"
+            class="fd-panel__body ovl-detailview-container"
+          >
             ${Object.keys(columns).map((k) => {
+              let customHeaderCellClass = ""
+              if (customHeaderCellClasses[k]) {
+                customHeaderCellClass = customHeaderCellClasses[k].className
+              }
+              let customRowCellClass = ""
+              if (customRowCellClasses[k]) {
+                customRowCellClass = customRowCellClasses[k].className
+              }
               let col = columns[k]
               let columnsVisible = this.rowData.columnsVisible
               if (columnsVisible[k].indexOf("View") < 0) {
@@ -90,12 +182,13 @@ export class TableRowDetailView extends OvlBaseElement {
                   l = k
                 }
                 label = html`<label
-                  class="fd-form-label ovl-detailview-label ovl-detailview-label__${k}"
+                  data-col=${k}
+                  class="fd-form-label ovl-detailview-label ovl-detailview-label__${k} ${customHeaderCellClass}"
                   >${l}</label
                 >`
-
                 value = html`<article
-                  class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value__${k}"
+                  data-col=${k}
+                  class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value__${k} ${customRowCellClass}"
                 >
                   ${uiItem}
                 </article>`
