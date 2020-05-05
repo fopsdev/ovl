@@ -5,6 +5,11 @@
   grid-template-rows: auto;
 }
 
+#mobiletimerecording1 .ovl-formcontrol-container {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+}
+
 .ovl-detailview-container,
 .ovl-bigeditform .ovl-formcontrol-container {
   display: grid;
@@ -40,6 +45,7 @@
   text-decoration: underline;
   color: red;
   font-weight: bold;
+  user-select: none;
 }
 
 .testheadercell {
@@ -47,4 +53,5 @@
   text-decoration: underline;
   color: limegreen !important;
   font-weight: bold;
+  user-select: none;
 }

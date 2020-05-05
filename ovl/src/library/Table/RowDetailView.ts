@@ -18,6 +18,7 @@ import {
 } from "../../global/hooks"
 import { customFunctions } from "../.."
 import { ifDefined } from "lit-html/directives/if-defined"
+import { SnackAdd } from "../helpers"
 
 type CachedRendererData = {
   hasRenderer: boolean
@@ -106,6 +107,22 @@ export class TableRowDetailView extends OvlBaseElement {
     }
   }
 
+  handleLongPress = (e) => {
+    // if on touch device also display row status message as a snack
+    if (this.state.ovl.uiState.isTouch) {
+      let mobileTooltip
+      if (e.target.title) {
+        mobileTooltip = e.target.title
+        // } else if (e.target.parentNode && e.target.parentNode.title) {
+        //   mobileTooltip = e.target.parentNode.title
+        // }
+      }
+      if (mobileTooltip) {
+        SnackAdd(mobileTooltip, "Information")
+      }
+    }
+  }
+
   async getUIAsync() {
     let def = this.rowData.tableDef
     let columns = def.columns
@@ -155,6 +172,7 @@ export class TableRowDetailView extends OvlBaseElement {
         <div class="fd-panel scrollableOverlay">
           <div
             @click="${this.handleClick}"
+            @long-press="${this.handleLongPress}"
             class="fd-panel__body ovl-detailview-container"
           >
             ${Object.keys(columns).map((k) => {

@@ -20,6 +20,7 @@ import {
 import { OvlConfig } from "../../init"
 import { CellClass } from "./Row"
 import { ifDefined } from "lit-html/directives/if-defined"
+import { SnackAdd } from "../helpers"
 export type SaveMode = "add" | "update"
 
 export type SelectedCustomFunctionResult = {
@@ -371,6 +372,21 @@ export class TableHeader extends OvlBaseElement {
 
           key: key,
         })
+      }
+    }
+  }
+
+  handleLongPress = (e) => {
+    // if on touch device also display row status message as a snack
+    if (this.state.ovl.uiState.isTouch) {
+      let mobileTooltip
+      if (e.target.title) {
+        mobileTooltip = e.target.title
+      } else if (e.target.parentNode && e.target.parentNode.title) {
+        mobileTooltip = e.target.parentNode.title
+      }
+      if (mobileTooltip) {
+        SnackAdd(mobileTooltip, "Information")
       }
     }
   }
@@ -776,7 +792,10 @@ export class TableHeader extends OvlBaseElement {
       </caption>
       ${colWidths}
       <thead class="fd-table__header">
-        <tr class="fd-table__row ovl-tableview-header">
+        <tr
+          @long-press="${this.handleLongPress}"
+          class="fd-table__row ovl-tableview-header"
+        >
           ${headerRows}
         </tr>
       </thead>

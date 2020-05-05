@@ -83,43 +83,37 @@ export class OvlOption extends OvlBaseElement {
       >
         ${label}
 
-        <div class="fd-form-group ${inline}">
+        <div tabindex="0" class="fd-form-group ${inline}" id="${this.field.id}">
           ${Object.keys(listData).map((rowKey) => {
             return html`
-              <div
-                class="fd-form-group__item fd-form-item"
-                id="${this.field.id}"
-                tabindex="0"
-              >
-                <input
-                  class="ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.fieldKey}"
-                  @click=${(e) => e.stopPropagation()}
-                  @change=${(e) =>
-                    this.handleChange(
-                      e,
-                      listData[rowKey][list.valueField],
-                      field.id + rowKey
-                    )}
-                  @focusout=${(e) =>
-                    this.handleFocusOut(
-                      e,
+              <input
+                class="fd-radio ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.fieldKey}"
+                @click=${(e) => e.stopPropagation()}
+                @change=${(e) =>
+                  this.handleChange(
+                    e,
+                    listData[rowKey][list.valueField],
+                    field.id + rowKey
+                  )}
+                @focusout=${(e) =>
+                  this.handleFocusOut(
+                    e,
 
-                      field.id + rowKey
-                    )}
-                  type="radio"
-                  class="fd-radio"
-                  id="${field.id + rowKey}"
-                  name="${list.valueField}"
-                  ?checked=${field.convertedValue ===
-                  listData[rowKey][list.valueField]}
-                />
-                <label
-                  class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.fieldKey}"
-                  for="${field.id + rowKey}"
-                >
-                  ${listData[rowKey][list.displayField]}
-                </label>
-              </div>
+                    field.id + rowKey
+                  )}
+                type="radio"
+                class="fd-radio"
+                id="${field.id + rowKey}"
+                name="${list.valueField}"
+                ?checked=${field.convertedValue ===
+                listData[rowKey][list.valueField]}
+              />
+              <label
+                class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.fieldKey}"
+                for="${field.id + rowKey}"
+              >
+                ${listData[rowKey][list.displayField]}
+              </label>
             `
           })}
         </div>

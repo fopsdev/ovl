@@ -39,17 +39,18 @@ export class TableRowWrapper extends OvlBaseElement {
   props: any
   row: TableRowDef
 
-  handleRowLongPress = (e: Event) => {
+  handleRowLongPress = (e) => {
     // if on touch device also display row status message as a snack
-    if (
-      this.state.ovl.uiState.isTouch &&
-      //@ts-ignore
-      e.target.parentNode &&
-      //@ts-ignore
-      e.target.parentNode.title
-    ) {
-      //@ts-ignore
-      SnackAdd(e.target.parentNode.title, "Information")
+    if (this.state.ovl.uiState.isTouch) {
+      let mobileTooltip
+      if (e.target.title) {
+        mobileTooltip = e.target.title
+      } else if (e.target.parentNode && e.target.parentNode.title) {
+        mobileTooltip = e.target.parentNode.title
+      }
+      if (mobileTooltip) {
+        SnackAdd(mobileTooltip, "Information")
+      }
     }
   }
 
