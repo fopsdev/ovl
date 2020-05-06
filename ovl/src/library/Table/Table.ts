@@ -13,7 +13,7 @@ import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
 import {
   FieldIsVisible,
-  FieldGetTableHeaderRender,
+  FieldGetLabelRender,
   ViewHeaderCellClass,
   FieldHeaderCellSelectedHandler,
 } from "../../global/hooks"
@@ -23,6 +23,8 @@ import { ifDefined } from "lit-html/directives/if-defined"
 import { SnackAdd } from "../helpers"
 import { CachedRendererData, GetRendererFn } from "./helpers"
 export type SaveMode = "add" | "update"
+
+export type DisplayMode = "Table" | "Detailview" | "Edit" | "EditInline"
 
 export type SelectedCustomFunctionResult = {
   // this msg will be concancenated in the result output
@@ -359,7 +361,7 @@ export class TableHeader extends OvlBaseElement {
           //@ts-ignore
           e.target.classList,
           def,
-          false,
+          <DisplayMode>"Table",
           this.state
         ))
       ) {
@@ -437,7 +439,7 @@ export class TableHeader extends OvlBaseElement {
       customHeaderCellClasses = fn[functionName](
         def,
         isMobile,
-        false,
+        <DisplayMode>"Table",
         this.state
       )
     }
@@ -545,14 +547,21 @@ export class TableHeader extends OvlBaseElement {
         let rendererFn = GetRendererFn(
           def,
           cachedRendererFn,
-          FieldGetTableHeaderRender,
+          FieldGetLabelRender,
           k
         )
         let headerPart
         if (!rendererFn) {
           headerPart = caption
         } else {
-          headerPart = rendererFn(k, caption, def, align[k], this.state)
+          headerPart = rendererFn(
+            k,
+            caption,
+            def,
+            align[k],
+            <DisplayMode>"Table",
+            this.state
+          )
         }
 
         let customHeaderCellClass: string = ""

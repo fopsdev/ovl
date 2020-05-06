@@ -10,15 +10,15 @@ import {
   GetRendererFn,
 } from "./helpers"
 import { RowControlAllAction } from "./RowControl"
-import { EditRowDef } from "./Table"
+import { EditRowDef, DisplayMode } from "./Table"
 import { CellClass } from "./Row"
 import {
   ViewRowCellClass,
   ViewHeaderCellClass,
   FieldRowCellSelectedHandler,
   FieldHeaderCellSelectedHandler,
-  FieldGetViewValueRender,
-  FieldGetViewLabelRender,
+  FieldGetValueRender,
+  FieldGetLabelRender,
 } from "../../global/hooks"
 import { customFunctions } from "../.."
 import { ifDefined } from "lit-html/directives/if-defined"
@@ -78,7 +78,7 @@ export class TableRowDetailView extends OvlBaseElement {
               //@ts-ignore
               e.target.classList,
               def,
-              true,
+              <DisplayMode>"Detailview",
               this.state
             ))
           ) {
@@ -96,7 +96,7 @@ export class TableRowDetailView extends OvlBaseElement {
               def,
               this.rowData.data,
               this.rowData.key,
-              true,
+              <DisplayMode>"Detailview",
               this.state
             ))
           ) {
@@ -140,7 +140,7 @@ export class TableRowDetailView extends OvlBaseElement {
         def,
         this.rowData.row,
         isMobile,
-        true,
+        <DisplayMode>"DetailView",
         this.state
       )
     }
@@ -155,7 +155,7 @@ export class TableRowDetailView extends OvlBaseElement {
       customHeaderCellClasses = fn2[functionName2](
         def,
         isMobile,
-        false,
+        <DisplayMode>"Detailview",
         this.state
       )
     }
@@ -176,13 +176,13 @@ export class TableRowDetailView extends OvlBaseElement {
               let rendererFn = GetRendererFn(
                 def,
                 cachedRendererFn,
-                FieldGetViewValueRender,
+                FieldGetValueRender,
                 k
               )
               let labelRendererFn = GetRendererFn(
                 def,
                 cachedLabelRendererFn,
-                FieldGetViewLabelRender,
+                FieldGetLabelRender,
                 k
               )
               let customHeaderCellClass = ""
@@ -209,6 +209,7 @@ export class TableRowDetailView extends OvlBaseElement {
                   this.rowData.row,
                   def,
                   this.rowData.columnsAlign[k],
+                  <DisplayMode>"Detailview",
                   this.state
                 )
               } else {
@@ -229,7 +230,14 @@ export class TableRowDetailView extends OvlBaseElement {
                   l = k
                 }
                 if (labelRendererFn) {
-                  l = labelRendererFn(k, l, def, "", this.state)
+                  l = labelRendererFn(
+                    k,
+                    l,
+                    def,
+                    this.rowData.columnsAlign[k],
+                    <DisplayMode>"Detailview",
+                    this.state
+                  )
                 }
 
                 label = html`<label

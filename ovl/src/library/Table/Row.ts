@@ -8,11 +8,11 @@ import { resolvePath } from "../../global/globals"
 import { GetLabel } from "../forms/Controls/helpers"
 import {
   FieldGetList,
-  FieldGetTableRowRender,
+  FieldGetValueRender,
   ViewHeaderCellClass,
   ViewRowCellClass,
 } from "../../global/hooks"
-import { FieldVisibility } from "./Table"
+import { FieldVisibility, DisplayMode } from "./Table"
 
 export type CellClass = {
   className?: string
@@ -49,7 +49,7 @@ export class TableRow extends OvlBaseElement {
         def,
         row,
         isMobile,
-        false,
+        <DisplayMode>"Table",
         this.state
       )
     }
@@ -85,13 +85,20 @@ export class TableRow extends OvlBaseElement {
         let rendererFn = GetRendererFn(
           def,
           cachedRendererFn,
-          FieldGetTableRowRender,
+          FieldGetValueRender,
           k
         )
         if (!rendererFn) {
           rowPart = getDisplayValue(k, col, row, def.namespace)
         } else {
-          rowPart = rendererFn(k, row, def, align[k], this.state)
+          rowPart = rendererFn(
+            k,
+            row,
+            def,
+            align[k],
+            <DisplayMode>"Table",
+            this.state
+          )
         }
         return html`
           <td

@@ -1,6 +1,11 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
-import { TableData, TableDataAndDef, SelectedViewRow } from "./Table"
+import {
+  TableData,
+  TableDataAndDef,
+  SelectedViewRow,
+  DisplayMode,
+} from "./Table"
 import { NavProps } from "./RowControl"
 import { customFunctions, overmind } from "../../index"
 import {
@@ -79,7 +84,7 @@ export class TableRowWrapper extends OvlBaseElement {
           def,
           this.row.data,
           this.row.key,
-          false,
+          <DisplayMode>"Table",
           this.state
         ))
       ) {
