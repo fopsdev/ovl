@@ -27,6 +27,11 @@
   font-size: small;
 }
 
+.ovl-detailview-container {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+}
+
 @media screen and (max-width: 992px) {
   .ovl-detailview-label {
     margin-left: -20px;

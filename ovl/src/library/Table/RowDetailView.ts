@@ -170,7 +170,7 @@ export class TableRowDetailView extends OvlBaseElement {
           <div
             @click="${this.handleClick}"
             @long-press="${this.handleLongPress}"
-            class="fd-panel__body ovl-detailview-container"
+            class="fd-panel__body"
           >
             ${Object.keys(columns).map((k) => {
               let rendererFn = GetRendererFn(
@@ -257,7 +257,11 @@ export class TableRowDetailView extends OvlBaseElement {
                 </article>`
               }
 
-              return html`${label} ${value}`
+              return html`<div
+                class="ovl-detailview-container ovl-detailview-container__${k}"
+              >
+                ${label} ${value}
+              </div>`
             })}
           </div>
         </div>
