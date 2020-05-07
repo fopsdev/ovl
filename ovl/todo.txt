@@ -9,6 +9,7 @@ X - A "TableOnlyMobile" - visibility (Can be used to display aggregated data of 
 More Hooks:
 
 X - Apply Hook and Class Styling Concept from TableHeader/TableRow to Detailview 
+X - Apply Hook and Class Styling Concept from TableHeader/TableRow to Editviews 
 
 X - Hook Field_%_TableRowRender. A Custom Renderer for row field in tableview
 X - Hook Field_%_TableHeaderRender. A Custom Renderer for header field in tableview

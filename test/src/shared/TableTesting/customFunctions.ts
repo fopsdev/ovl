@@ -411,7 +411,7 @@ export const Field_MobileSummary_GetLabelRender = (
   displayMode: DisplayMode,
   state: typeof overmind.state
 ): TemplateResult => {
-  return html`<b>${caption}</b>`
+  return html`${caption}(has more details...)</b>`
 }
 
 export const Field_MobileSummary_GetValueRender = (
@@ -450,9 +450,17 @@ export const ViewRowCellClass = (
   row: TableTesting,
   isMobile: boolean,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: typeof overmind.state,
+  formState?: FormState
 ): { [key in keyof TableTesting]?: CellClass } => {
-  if (row.U_Decimal > 100) {
+  let val
+  if (displayMode.startsWith("Edit")) {
+    val = formState.fields["U_Decimal"].convertedValue
+    formState.fields["U_Decimal"].value
+  } else {
+    val = row.U_Decimal
+  }
+  if (val > 100) {
     return {
       U_Decimal: {
         className: "testrowcell",
@@ -468,14 +476,26 @@ export const Field_U_Decimal_RowCellSelectedHandler = async (
   data: TableData,
   rowKey: string,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: typeof overmind.state,
+  formState?: FormState
 ): Promise<boolean> => {
   // for this sample we just wanna make those cells clickable which has a specific custom class (see TableRowCellClass hook)
   if (classList.contains("testrowcell")) {
-    await DialogOk(
-      "U_Decimal selected! Value:" + data.data[rowKey].U_Decimal.toString()
-    )
-    // do not use default event (select row)
+    let val
+    if (displayMode.startsWith("Edit")) {
+      val = formState.fields["U_Decimal"].value
+      SnackAdd("U_Decimal selected! Value:" + val)
+    } else {
+      val = getDisplayValue(
+        "U_Decimal",
+        def.columns["U_Decimal"],
+        data.data[rowKey],
+        def.namespace
+      )
+      await DialogOk("U_Decimal selected! Value:" + val)
+    }
+
+    // do not use default event (select row in cas called from table)
     return false
   }
   return true

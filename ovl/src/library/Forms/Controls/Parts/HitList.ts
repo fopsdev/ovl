@@ -4,6 +4,7 @@ import { getDisplayValue } from "../../../Table/helpers"
 import { ListFnReturnValue } from "../../../Table/Table"
 import { ListState } from "../ListControl"
 import { T } from "../../../../global/globals"
+import { overlay2ToRender } from "../../../Overlay2/Overlay2"
 
 export type HitListState = {
   fieldId: string
@@ -211,18 +212,22 @@ export class OvlHitList extends OvlBaseElement {
     `
   }
   afterRender() {
+    overlay2ToRender.elementToFocusAfterOpen = document.getElementById(
+      this.controlState.fieldId + this.controlState.type + "ovlhl_1"
+      //console.log(el.offsetWidth)
+    )
+  }
+  updated() {
     //only set scrollable if bigger than windowheight
     if (!this.focusSet && this.controlState.type === "overlay") {
       this.focusSet = true
       //@@workaround
-      let el = document.getElementById(
-        this.controlState.fieldId + this.controlState.type + "ovlhl_1"
-        //console.log(el.offsetWidth)
-      )
+
       let el2 = document.getElementById("ovlhitlist")
-      el.focus()
-      // somehow it renders too small (maybe scrollbar issue). consider this as a workaround
       el2.style.width = (el2.offsetWidth + 16).toString() + "px"
+
+      // somehow it renders too small (maybe scrollbar issue). consider this as a workaround
     }
+    super.updated()
   }
 }

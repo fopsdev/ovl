@@ -129,7 +129,7 @@ export const FilterHitList = (
         }, {})
       }
     }
-    if (filterValue === null) {
+    if (!filterValue) {
       filterValue = ""
     }
     res = res.filter((f) => {

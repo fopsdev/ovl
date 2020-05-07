@@ -1,12 +1,19 @@
 import { OvlFormElement, DataType } from "../../library/forms/OvlFormElement"
 
-import { EditRowDef, TableDataAndDef } from "./Table"
+import { EditRowDef, TableDataAndDef, DisplayMode } from "./Table"
 import { html } from "lit-html"
-import { resolvePath } from "../../global/globals"
+import { resolvePath, isMobile } from "../../global/globals"
 import { customFunctions, overmind } from "../../index"
 import { overlayToRender } from "../Overlay/Overlay"
 
-import { FieldIsReadOnly } from "../../global/hooks"
+import {
+  FieldIsReadOnly,
+  ViewRowCellClass,
+  ViewHeaderCellClass,
+  FieldHeaderCellSelectedHandler,
+  FieldRowCellSelectedHandler,
+} from "../../global/hooks"
+import { CellClass } from "./Row"
 
 export class TableRowForm extends OvlFormElement {
   props: any
@@ -21,6 +28,41 @@ export class TableRowForm extends OvlFormElement {
     super.init()
     // </form init>
   }
+  handleClick = async (e) => {
+    let searchDataCol = e.target
+    let key
+
+    while (searchDataCol) {
+      if (searchDataCol.getAttribute("data-col")) {
+        key = searchDataCol.getAttribute("data-col")
+        break
+      }
+      searchDataCol = searchDataCol.parentNode
+    }
+
+    if (key) {
+      let def = this.rowData.tableDef
+      let functionName = FieldRowCellSelectedHandler.replace("%", key)
+      let fn = resolvePath(customFunctions, def.namespace)
+      if (fn && fn[functionName]) {
+        if (
+          !(await fn[functionName](
+            //@ts-ignore
+            e.target.classList,
+            def,
+            this.rowData.data,
+            this.rowData.key,
+            <DisplayMode>"EditInline",
+            this.state,
+            this.formState
+          ))
+        ) {
+          return
+        }
+      }
+    }
+  }
+
   updated() {
     if (this.state.ovl.libState.overlay.closing) {
       overlayToRender.overlayClosedCallback = () => {
@@ -58,10 +100,47 @@ export class TableRowForm extends OvlFormElement {
   getUI() {
     let def = this.rowData.tableDef
     let fields = this.formState.fields
+
+    let customRowCellClasses: { [key: string]: CellClass }
+    let functionName = ViewRowCellClass
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      customRowCellClasses = fn[functionName](
+        def,
+        this.rowData.row,
+        this.state.ovl.uiState.isMobile,
+        <DisplayMode>"EditInline",
+        this.state,
+        this.formState
+      )
+    }
+
+    if (!customRowCellClasses) {
+      customRowCellClasses = {}
+    }
+
+    let customHeaderCellClasses: { [key: string]: CellClass }
+    let functionName2 = ViewHeaderCellClass
+    let fn2 = resolvePath(customFunctions, def.namespace)
+    if (fn2 && fn[functionName2]) {
+      customHeaderCellClasses = fn2[functionName2](
+        def,
+        this.state.ovl.uiState.isMobile,
+        <DisplayMode>"EditInline",
+        this.state
+      )
+    }
+    if (!customHeaderCellClasses) {
+      customHeaderCellClasses = {}
+    }
+
     let columns = def.columns
     let firstEditable = false
     return html`
       ${Object.keys(columns).map((k) => {
+        let customHeaderCellClass: CellClass = customHeaderCellClasses[k]
+        let customRowCellClass: CellClass = customRowCellClasses[k]
+
         let col = columns[k]
         let columnsVisible = this.rowData.columnsVisible
         if (columnsVisible[k].indexOf("Edit") < 0) {
@@ -123,7 +202,13 @@ export class TableRowForm extends OvlFormElement {
                 <ovl-textbox
                   id="${id}"
                   class="fd-form__item "
-                  .props="${() => fields[k]}"
+                  .props=${() => {
+                    return {
+                      field: fields[k],
+                      customHeaderCellClass,
+                      customRowCellClass,
+                    }
+                  }}
                 >
                 </ovl-textbox>
               `
@@ -133,9 +218,32 @@ export class TableRowForm extends OvlFormElement {
                 <ovl-datebox
                   id="${id}"
                   class="fd-form__item "
-                  .props=${() => fields[k]}
+                  .props=${() => {
+                    return {
+                      field: fields[k],
+                      customHeaderCellClass,
+                      customRowCellClass,
+                    }
+                  }}
                 >
                 </ovl-datebox>
+              `
+              break
+
+            case "time":
+              uiItem = html`
+                <ovl-timebox
+                  id="${id}"
+                  class="fd-form__item "
+                  .props=${() => {
+                    return {
+                      field: fields[k],
+                      customHeaderCellClass,
+                      customRowCellClass,
+                    }
+                  }}
+                >
+                </ovl-timebox>
               `
               break
 
@@ -144,7 +252,13 @@ export class TableRowForm extends OvlFormElement {
                 <ovl-textarea
                   id="${id}"
                   class="fd-form__item "
-                  .props=${() => fields[k]}
+                  .props=${() => {
+                    return {
+                      field: fields[k],
+                      customHeaderCellClass,
+                      customRowCellClass,
+                    }
+                  }}
                 >
                 </ovl-textarea>
               `
@@ -155,7 +269,13 @@ export class TableRowForm extends OvlFormElement {
                   <ovl-listcontrol
                     id="${id}"
                     class="fd-form__item "
-                    .props="${() => fields[k]}"
+                    .props=${() => {
+                      return {
+                        field: fields[k],
+                        customHeaderCellClass,
+                        customRowCellClass,
+                      }
+                    }}
                   >
                   </ovl-listcontrol>
                 `
@@ -167,7 +287,12 @@ export class TableRowForm extends OvlFormElement {
         }
 
         return html`
-          <td class="fd-table__cell" style="vertical-align:middle;">
+          <td
+            @click="${this.handleClick}"
+            data-col=${k}
+            class="fd-table__cell"
+            style="vertical-align:middle;"
+          >
             ${uiItem}
           </td>
         `

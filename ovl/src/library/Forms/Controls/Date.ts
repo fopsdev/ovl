@@ -11,7 +11,6 @@ export class OvlDate extends OvlBaseElement {
   field: ControlState
   inputElement: any
   init() {
-    this.field.field = this.props(this.state)
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
     } else {
@@ -53,6 +52,7 @@ export class OvlDate extends OvlBaseElement {
   }
 
   getUI() {
+    this.field = this.props(this.state)
     let field = this.field.field
     let res = getUIValidationObject(field)
 

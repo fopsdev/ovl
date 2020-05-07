@@ -4,25 +4,21 @@ import { html } from "lit-html"
 import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ListState } from "./ListControl"
-import { GetRowFromFormState, GetLabel } from "./helpers"
+import { GetRowFromFormState, GetLabel, ControlState } from "./helpers"
 import { overmind, customFunctions } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
+import { ifDefined } from "lit-html/directives/if-defined"
 
 export class OvlOption extends OvlBaseElement {
   props: any
-  field: Field
-
-  init() {
-    this.field = this.props(this.state)
-  }
-
+  field: ControlState
   handleFocusOut(e: Event, id: string) {
     e.stopPropagation()
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.field.id },
+      detail: { id: this.field.field.id },
     })
     document.getElementById(id).dispatchEvent(event)
   }
@@ -37,15 +33,16 @@ export class OvlOption extends OvlBaseElement {
       detail: {
         //@ts-ignore
         val: value,
-        id: this.field.id,
+        id: this.field.field.id,
       },
     })
     document.getElementById(id).dispatchEvent(event)
   }
   getUI() {
-    let field = this.field
+    this.field = this.props(this.state)
+    let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
-    let list = this.field.list
+    let list = field.list
     let listFn = FieldGetList.replace("%", field.fieldKey)
     let listData = resolvePath(customFunctions, formState.namespace)[listFn](
       GetRowFromFormState(formState),
@@ -54,13 +51,31 @@ export class OvlOption extends OvlBaseElement {
       overmind.effects
     ).data
 
+    let customRowCell = this.field.customRowCellClass
+    let customRowClassName = ""
+    let customRowTooltip
+    if (customRowCell) {
+      customRowClassName = customRowCell.className
+      customRowTooltip = customRowCell.tooltip
+    }
+    let customHeaderCell = this.field.customHeaderCellClass
+    let customHeaderClassName = ""
+    let customHeaderTooltip
+    if (customHeaderCell) {
+      customHeaderClassName = customHeaderCell.className
+      customHeaderTooltip = customHeaderCell.tooltip
+    }
+
     let res = getUIValidationObject(field)
     let label
     let labelText = GetLabel(field)
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-option-label ovl-formcontrol-label__${field.fieldKey}"
+          title="${ifDefined(
+            customHeaderTooltip ? customHeaderTooltip : undefined
+          )}"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-option-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -83,7 +98,12 @@ export class OvlOption extends OvlBaseElement {
       >
         ${label}
 
-        <div tabindex="0" class="fd-form-group ${inline}" id="${this.field.id}">
+        <div
+          tabindex="0"
+          title="${ifDefined(customRowTooltip ? customRowTooltip : undefined)}"
+          class="fd-form-group ${inline} ${customRowClassName}"
+          id="${this.field.field.id}"
+        >
           ${Object.keys(listData).map((rowKey) => {
             return html`
               <input

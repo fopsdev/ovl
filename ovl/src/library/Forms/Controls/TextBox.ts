@@ -12,10 +12,6 @@ export class OvlTextbox extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
-  init() {
-    this.field = this.props(this.state)
-  }
-
   handleFocusOut(e: Event) {
     e.stopPropagation()
     e.preventDefault()
@@ -50,6 +46,7 @@ export class OvlTextbox extends OvlBaseElement {
   }
 
   getUI() {
+    this.field = this.props(this.state)
     let field = this.field.field
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
@@ -65,6 +62,8 @@ export class OvlTextbox extends OvlBaseElement {
       customHeaderClassName = customHeaderCell.className
       customHeaderTooltip = customHeaderCell.tooltip
     }
+
+    console.log(customRowClassName)
 
     let inputMode: any = "text"
     if (field.type === "decimal") {

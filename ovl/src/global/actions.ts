@@ -110,6 +110,13 @@ export const NavigateBack: AsyncAction = async ({
   actions,
   effects,
 }) => {
+  // if (
+  //   !(
+  //     state.ovl.libState.overlay.open ||
+  //     state.ovl.libState.overlay2.open ||
+  //     state.ovl.libState.dialog.visible
+  //   )
+  // ) {
   if (state.ovl.screens.nav.screensHistory.length > 1) {
     let fn = customFunctions["screens"]
     if (fn) {
@@ -175,6 +182,7 @@ export const NavigateBack: AsyncAction = async ({
       SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
     }
   }
+  //}
 }
 
 const SetClosingScreen = (
@@ -407,7 +415,7 @@ export const InitApp: AsyncAction<Init> = async (
   value
 ) => {
   history.pushState(null, null, document.URL)
-  window.addEventListener("popstate", function () {
+  window.addEventListener("popstate", function (e) {
     overmind.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })

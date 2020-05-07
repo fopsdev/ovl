@@ -10,9 +10,12 @@ import {
   FieldIsReadOnly,
   ViewRowCellClass,
   ViewHeaderCellClass,
+  FieldHeaderCellSelectedHandler,
+  FieldRowCellSelectedHandler,
 } from "../../global/hooks"
 import { CachedRendererData } from "./helpers"
 import { CellClass } from "./Row"
+import { SnackAdd } from "../helpers"
 
 export let cachedLabelRendererFn: Map<string, CachedRendererData> = new Map<
   string,
@@ -36,17 +39,92 @@ export class TableRowFormBig extends OvlFormElement {
     }
     super.init()
   }
-  updated() {
+  afterRender() {
     if (
       this.rowData.tableDef.features.focusToFirstEditableField &&
       !this.focusInit
     ) {
       this.focusInit = true
-      let focusEl = document.getElementById("ovlRFNFocus_focus")
+      overlayToRender.elementToFocusAfterOpen = document.getElementById(
+        "ovlRFNFocus_focus"
+      ).firstElementChild.firstElementChild
       //@ts-ignore
-      focusEl.firstElementChild.focus()
+      //focusEl.firstElementChild.focus()
     }
-    super.updated()
+  }
+
+  handleLongPress = (e) => {
+    // if on touch device also display row status message as a snack
+    if (this.state.ovl.uiState.isTouch) {
+      let mobileTooltip
+
+      let searchDataCol = e.target
+
+      while (searchDataCol) {
+        if (searchDataCol.title) {
+          mobileTooltip = searchDataCol.title
+          break
+        }
+        searchDataCol = searchDataCol.parentNode
+      }
+
+      if (mobileTooltip) {
+        SnackAdd(mobileTooltip, "Information")
+      }
+    }
+  }
+
+  handleClick = async (e) => {
+    let searchDataCol = e.target
+    let key
+
+    while (searchDataCol) {
+      if (searchDataCol.getAttribute("data-col")) {
+        key = searchDataCol.getAttribute("data-col")
+        break
+      }
+      searchDataCol = searchDataCol.parentNode
+    }
+
+    if (key) {
+      let def = this.rowData.tableDef
+      if (e.target.classList.contains("ovl-formcontrol-label")) {
+        let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
+        let fn = resolvePath(customFunctions, def.namespace)
+        if (fn && fn[functionName]) {
+          if (
+            !(await fn[functionName](
+              //@ts-ignore
+              e.target.classList,
+              def,
+              <DisplayMode>"Edit",
+              this.state
+            ))
+          ) {
+            return
+          }
+        }
+      } else {
+        let functionName = FieldRowCellSelectedHandler.replace("%", key)
+        let fn = resolvePath(customFunctions, def.namespace)
+        if (fn && fn[functionName]) {
+          if (
+            !(await fn[functionName](
+              //@ts-ignore
+              e.target.classList,
+              def,
+              this.rowData.data,
+              this.rowData.key,
+              <DisplayMode>"Edit",
+              this.state,
+              this.formState
+            ))
+          ) {
+            return
+          }
+        }
+      }
+    }
   }
 
   handleCancel = async () => {
@@ -122,11 +200,13 @@ export class TableRowFormBig extends OvlFormElement {
       customRowCellClasses = fn[functionName](
         def,
         this.rowData.row,
-        isMobile,
+        this.state.ovl.uiState.isMobile,
         <DisplayMode>"Edit",
-        this.state
+        this.state,
+        this.formState
       )
     }
+
     if (!customRowCellClasses) {
       customRowCellClasses = {}
     }
@@ -137,7 +217,7 @@ export class TableRowFormBig extends OvlFormElement {
     if (fn2 && fn[functionName2]) {
       customHeaderCellClasses = fn2[functionName2](
         def,
-        isMobile,
+        this.state.ovl.uiState.isMobile,
         <DisplayMode>"Edit",
         this.state
       )
@@ -215,7 +295,7 @@ export class TableRowFormBig extends OvlFormElement {
                       class="fd-form__item "
                       .props=${() => {
                         return {
-                          fields: fields[k],
+                          field: fields[k],
                           customHeaderCellClass,
                           customRowCellClass,
                         }
@@ -232,7 +312,7 @@ export class TableRowFormBig extends OvlFormElement {
                       class="fd-form__item "
                       .props=${() => {
                         return {
-                          fields: fields[k],
+                          field: fields[k],
                           customHeaderCellClass,
                           customRowCellClass,
                         }
@@ -249,7 +329,7 @@ export class TableRowFormBig extends OvlFormElement {
                       class="fd-form__item "
                       .props=${() => {
                         return {
-                          fields: fields[k],
+                          field: fields[k],
                           customHeaderCellClass,
                           customRowCellClass,
                         }
@@ -266,7 +346,7 @@ export class TableRowFormBig extends OvlFormElement {
                       class="fd-form__item "
                       .props=${() => {
                         return {
-                          fields: fields[k],
+                          field: fields[k],
                           customHeaderCellClass,
                           customRowCellClass,
                         }
@@ -284,7 +364,7 @@ export class TableRowFormBig extends OvlFormElement {
                         class="fd-form__item "
                         .props=${() => {
                           return {
-                            fields: fields[k],
+                            field: fields[k],
                             customHeaderCellClass,
                             customRowCellClass,
                           }
@@ -300,7 +380,12 @@ export class TableRowFormBig extends OvlFormElement {
             }
 
             return html`
-              <div class="fd-panel__body">
+              <div
+                data-col="${k}"
+                @click="${this.handleClick}"
+                @long-press="${this.handleLongPress}"
+                class="fd-panel__body"
+              >
                 ${uiItem}
               </div>
             `

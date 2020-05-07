@@ -139,7 +139,7 @@ export class TableRowDetailView extends OvlBaseElement {
       customRowCellClasses = fn[functionName](
         def,
         this.rowData.row,
-        isMobile,
+        this.state.ovl.uiState.isMobile,
         <DisplayMode>"DetailView",
         this.state
       )
@@ -154,7 +154,7 @@ export class TableRowDetailView extends OvlBaseElement {
     if (fn2 && fn[functionName2]) {
       customHeaderCellClasses = fn2[functionName2](
         def,
-        isMobile,
+        this.state.ovl.uiState.isMobile,
         <DisplayMode>"Detailview",
         this.state
       )
