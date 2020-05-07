@@ -5,27 +5,24 @@
   grid-template-rows: auto;
 }
 
-#mobiletimerecording1 .ovl-formcontrol-container {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-}
-
-.ovl-detailview-container,
 .ovl-bigeditform .ovl-formcontrol-container {
   display: grid;
   grid-template-columns: 110px 1fr;
-}
-.ovl-formcontrol-label {
-  margin-top: 8px;
-  font-size: small;
+  grid-template-areas:
+    "label  value"
+    ".... validation";
 }
 
-.ovl-formcontrol-textarea-input {
+.ovl-bigeditform .ovl-formcontrol-textarea-input {
   height: 120px;
+}
+
+.ovl-bigeditform .ovl-formcontrol-label {
+  top: 10px;
   font-size: small;
 }
 
-.ovl-formcontrol-textarea-label {
+.ovl-bigeditform .ovl-formcontrol-textarea-label {
   margin-top: 30px;
   font-size: small;
 }

@@ -63,6 +63,25 @@
   height: 70px;
 }
 
+.ovl-formcontrol-label {
+  grid-area: label;
+}
+.ovl-formcontrol-value {
+  grid-area: value;
+}
+.ovl-formcontrol-validation {
+  grid-area: validation;
+}
+
+.ovl-formcontrol-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "label"
+    "value"
+    "validation";
+}
+
 .menuDisabled {
   pointer-events: none;
   opacity: 0.6;
