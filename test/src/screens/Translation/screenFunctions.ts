@@ -17,7 +17,7 @@ export const ScreenNavigateIn = async (
 ) => {
   let defId: TableDefIds = "translation"
   let data = state.portal.tables.translation
-  actions.ovl.table.TableRefresh({
+  await actions.ovl.table.TableRefresh({
     defId,
     data,
     ignoreRefreshedMessageSnack: true,

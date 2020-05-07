@@ -34,8 +34,7 @@ export const FormCanCopy = "FormCanCopy"
 // gets called when a form/row is selected and controls the "More ..." Button which opens the FormSettings enabled
 // return a string explaining why it can not be done
 export const FormCanMore = "FormCanMore"
-// gets called when a form/row is selected and controls the "More ..." Button which opens the FormSettings enabled
-// return a string explaining why it can not be done
+// gets called when a form/row is selected and controls the "Detailview" Button which opens the Detailview form
 export const FormCanDetail = "FormCanDetail"
 // defines custom form functionalities enabled
 // return a string explaining why it can not be done

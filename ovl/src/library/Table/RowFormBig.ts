@@ -1,14 +1,28 @@
 import { OvlFormElement, DataType } from "../forms/OvlFormElement"
 
-import { EditRowDef, TableDataAndDef } from "./Table"
+import { EditRowDef, TableDataAndDef, DisplayMode } from "./Table"
 import { html } from "lit-html"
-import { T, ovltemp, resolvePath } from "../../global/globals"
+import { T, ovltemp, resolvePath, isMobile } from "../../global/globals"
 import { DialogResult } from "../actions"
 import { customFunctions, overmind } from "../../index"
 import { overlayToRender } from "../Overlay/Overlay"
+import {
+  FieldIsReadOnly,
+  ViewRowCellClass,
+  ViewHeaderCellClass,
+} from "../../global/hooks"
+import { CachedRendererData } from "./helpers"
+import { CellClass } from "./Row"
 
-import { FieldIsReadOnly } from "../../global/hooks"
+export let cachedLabelRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
 
+export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
 export class TableRowFormBig extends OvlFormElement {
   props: any
   rowData: EditRowDef
@@ -100,10 +114,44 @@ export class TableRowFormBig extends OvlFormElement {
     if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
       acceptEnabled = "fd-button nopointerevents"
     }
+
+    let customRowCellClasses: { [key: string]: CellClass }
+    let functionName = ViewRowCellClass
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      customRowCellClasses = fn[functionName](
+        def,
+        this.rowData.row,
+        isMobile,
+        <DisplayMode>"Edit",
+        this.state
+      )
+    }
+    if (!customRowCellClasses) {
+      customRowCellClasses = {}
+    }
+
+    let customHeaderCellClasses: { [key: string]: CellClass }
+    let functionName2 = ViewHeaderCellClass
+    let fn2 = resolvePath(customFunctions, def.namespace)
+    if (fn2 && fn[functionName2]) {
+      customHeaderCellClasses = fn2[functionName2](
+        def,
+        isMobile,
+        <DisplayMode>"Edit",
+        this.state
+      )
+    }
+    if (!customHeaderCellClasses) {
+      customHeaderCellClasses = {}
+    }
+
     return html`
       <div id="ovl-bigeditform-${def.id}" class="fd-panel ovl-bigeditform">
         <div class="scrollableOverlay">
           ${Object.keys(columns).map((k) => {
+            let customHeaderCellClass: CellClass = customHeaderCellClasses[k]
+            let customRowCellClass: CellClass = customRowCellClasses[k]
             let col = columns[k]
             let columnsVisible = this.rowData.columnsVisible
             if (columnsVisible[k].indexOf("Edit") < 0) {
@@ -165,7 +213,13 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-textbox
                       id="${id}"
                       class="fd-form__item "
-                      .props=${() => fields[k]}
+                      .props=${() => {
+                        return {
+                          fields: fields[k],
+                          customHeaderCellClass,
+                          customRowCellClass,
+                        }
+                      }}
                     >
                     </ovl-textbox>
                   `
@@ -176,9 +230,32 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-datebox
                       id="${id}"
                       class="fd-form__item "
-                      .props=${() => fields[k]}
+                      .props=${() => {
+                        return {
+                          fields: fields[k],
+                          customHeaderCellClass,
+                          customRowCellClass,
+                        }
+                      }}
                     >
                     </ovl-datebox>
+                  `
+                  break
+
+                case "time":
+                  uiItem = html`
+                    <ovl-timebox
+                      id="${id}"
+                      class="fd-form__item "
+                      .props=${() => {
+                        return {
+                          fields: fields[k],
+                          customHeaderCellClass,
+                          customRowCellClass,
+                        }
+                      }}
+                    >
+                    </ovl-timebox>
                   `
                   break
 
@@ -187,7 +264,13 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-textarea
                       id="${id}"
                       class="fd-form__item "
-                      .props=${() => fields[k]}
+                      .props=${() => {
+                        return {
+                          fields: fields[k],
+                          customHeaderCellClass,
+                          customRowCellClass,
+                        }
+                      }}
                     >
                     </ovl-textarea>
                   `
@@ -199,7 +282,13 @@ export class TableRowFormBig extends OvlFormElement {
                       <ovl-listcontrol
                         id="${id}"
                         class="fd-form__item "
-                        .props="${() => fields[k]}"
+                        .props=${() => {
+                          return {
+                            fields: fields[k],
+                            customHeaderCellClass,
+                            customRowCellClass,
+                          }
+                        }}
                       >
                       </ovl-listcontrol>
                     `

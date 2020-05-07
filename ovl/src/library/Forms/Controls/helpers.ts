@@ -14,6 +14,7 @@ import {
   FieldGetList,
   FieldGetFilteredList,
 } from "../../../global/hooks"
+import { CellClass } from "../../Table/Row"
 
 export type LookupListPostData = {
   url: string
@@ -21,6 +22,12 @@ export type LookupListPostData = {
   filterValue: string
   lookupType: string
   paramList?: { [key: string]: {} }
+}
+
+export type ControlState = {
+  customHeaderCellClass: CellClass
+  customRowCellClass: CellClass
+  field: Field
 }
 
 export const KeyValueListFromServerFn = async (

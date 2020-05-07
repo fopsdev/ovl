@@ -3,14 +3,15 @@ import { ColumnAlign } from "../../Table/Table"
 import { html } from "lit-html"
 import { Field } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { GetLabel } from "./helpers"
+import { GetLabel, ControlState } from "./helpers"
+import { ifDefined } from "lit-html/directives/if-defined"
 
 export class OvlDate extends OvlBaseElement {
   props: any
-  field: Field
+  field: ControlState
   inputElement: any
   init() {
-    this.field = this.props(this.state)
+    this.field.field = this.props(this.state)
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
     } else {
@@ -23,7 +24,7 @@ export class OvlDate extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.field.id },
+      detail: { id: this.field.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -33,7 +34,7 @@ export class OvlDate extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
-      detail: { val: this.inputElement.value, id: this.field.id },
+      detail: { val: this.inputElement.value, id: this.field.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -44,7 +45,7 @@ export class OvlDate extends OvlBaseElement {
         bubbles: true,
         detail: {
           val: this.inputElement.value,
-          id: this.field.id,
+          id: this.field.field.id,
         },
       })
       this.inputElement.dispatchEvent(event)
@@ -52,16 +53,33 @@ export class OvlDate extends OvlBaseElement {
   }
 
   getUI() {
-    let field = this.field
-
+    let field = this.field.field
     let res = getUIValidationObject(field)
+
+    let customRowCell = this.field.customRowCellClass
+    let customRowClassName = ""
+    let customRowTooltip
+    if (customRowCell) {
+      customRowClassName = customRowCell.className
+      customRowTooltip = customRowCell.tooltip
+    }
+    let customHeaderCell = this.field.customHeaderCellClass
+    let customHeaderClassName = ""
+    let customHeaderTooltip
+    if (customHeaderCell) {
+      customHeaderClassName = customHeaderCell.className
+      customHeaderTooltip = customHeaderCell.tooltip
+    }
 
     let label
     let labelText = GetLabel(field)
     if (labelText) {
       label = html`
         <label
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-date-label ovl-formcontrol-label__${field.fieldKey}"
+          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-date-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
+          title="${ifDefined(
+            customHeaderTooltip ? customHeaderTooltip : undefined
+          )}"
           aria-required="${res.needsAttention}"
           for="${field.id}"
           >${labelText}</label
@@ -82,11 +100,12 @@ export class OvlDate extends OvlBaseElement {
       >
         ${label}
         <input
+          title="${ifDefined(customRowTooltip ? customRowTooltip : undefined)}"
           @focusout=${(e) => this.handleFocusOut(e)}
           @keydown=${(e) => this.handleKeyDown(e)}
           style="${align}"
           autocomplete="off"
-          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-date-input ovl-formcontrol-input__${field.fieldKey}"
+          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-date-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
           type="${type}"
           id="${field.id}"
         />
@@ -101,11 +120,11 @@ export class OvlDate extends OvlBaseElement {
   }
   afterRender() {
     // place picker under date with picker on the right just visible
-    this.inputElement = document.getElementById(this.field.id)
+    this.inputElement = document.getElementById(this.field.field.id)
     if (this.state.ovl.uiState.isMobile) {
-      this.inputElement.value = this.field.convertedValue.substring(0, 10)
+      this.inputElement.value = this.field.field.convertedValue.substring(0, 10)
     } else {
-      this.inputElement.value = this.field.value
+      this.inputElement.value = this.field.field.value
     }
   }
   disconnectedCallback() {
