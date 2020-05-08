@@ -77,6 +77,12 @@ export type RowControlAction = {
   }
 }
 
+export type ColumnAction = {
+  name: string
+  translationKey?: string
+  icon: string
+}
+
 export type SelectedRow = {
   selected: boolean
   timestamp: number
@@ -131,6 +137,13 @@ export type TableDef = {
 
       [key: string]: RowControlAction
     }
+    customColumnActions?: {
+      // dynamically displays menuentry in headerform
+      // key will be the action name that will be executed when custom button is pressed
+      // check hooks.ts for the required fn names
+      [key: string]: ColumnAction
+    }
+
     navType?: "top/bottom" | "top" | "bottom"
     maxRows?: { maxRows: number; showHint: boolean; showInTitle?: boolean }
     sort?: Sort
@@ -164,6 +177,15 @@ export type TableDef = {
 }
 
 export type EditRowDef = {
+  tableDef: TableDef
+  key: string
+  row: {}
+  data: TableData
+  columnsAlign: {}
+  columnsVisible: {}
+}
+
+export type ViewRowDef = {
   tableDef: TableDef
   key: string
   row: {}

@@ -47,7 +47,6 @@
   text-decoration: underline;
   color: red;
   font-weight: bold;
-  user-select: none;
 }
 
 .testheadercell {
@@ -56,4 +55,11 @@
   color: limegreen !important;
   font-weight: bold;
   user-select: none;
+}
+
+.ovl-detailview .chartwidth {
+  width: 98%;
+}
+.chartwidth {
+  width: 97vw;
 }

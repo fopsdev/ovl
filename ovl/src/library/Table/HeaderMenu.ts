@@ -453,10 +453,7 @@ export class TableHeaderMenu extends OvlBaseElement {
               `
             }
             columnFilter = html`
-              <div
-                style="margin-bottom:6px;margin-left:24px;"
-                class="documentation-site-popover-container"
-              >
+              <div style="margin-bottom:6px;margin-left:24px;">
                 <span class="sap-icon--filter"></span>
                 <div class="fd-popover" style="width:90%;">
                   <div

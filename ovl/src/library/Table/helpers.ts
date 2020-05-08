@@ -395,6 +395,10 @@ export const initTableState = (
     if (options.customRowActions === undefined) {
       options.customRowActions = {}
     }
+    if (options.customColumnActions === undefined) {
+      options.customColumnActions = {}
+    }
+
     if (options.navType === undefined) {
       options.navType = "bottom"
     }

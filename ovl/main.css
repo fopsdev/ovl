@@ -215,10 +215,6 @@ body {
     bottom: 0;
     right: 0;
   }
-
-  .chartwidth {
-    width: 94vw;
-  }
 }
 
 @media (orientation: portrait) {

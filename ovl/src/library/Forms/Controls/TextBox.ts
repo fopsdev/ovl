@@ -63,8 +63,6 @@ export class OvlTextbox extends OvlBaseElement {
       customHeaderTooltip = customHeaderCell.tooltip
     }
 
-    console.log(customRowClassName)
-
     let inputMode: any = "text"
     if (field.type === "decimal") {
       inputMode = "decimal"

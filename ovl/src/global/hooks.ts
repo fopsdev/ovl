@@ -6,6 +6,12 @@ export const ScreenNavigateOut = "ScreenNavigateOut"
 // gets called when screen first time gets shown
 export const ScreenShow = "ScreenShow"
 
+//Detailview Functions
+// gets called when detailview is shown
+export const ViewShow = "ViewShow"
+// gets called whenever detailview rendered
+export const ViewAfterRender = "ViewAfterRender"
+
 //Form Functions ####################################
 // gets called when a form first time is shown
 export const FormShow = "FormShow"

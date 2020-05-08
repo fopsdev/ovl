@@ -4,12 +4,17 @@ import { T } from "../../../../../ovl/src/global/globals"
 
 export class CompSummaryChart extends OvlBaseElement {
   chart: any
+  props: any
+  chartProps: string
+  init() {
+    this.chartProps = this.props()
+  }
   getUI() {
     return html`
       <div class="chartwidth">
         <canvas
           id="canvas"
-          style="width:100%;height:500px;"
+          style="${this.chartProps}"
           class="chartjs-render-monitor"
         ></canvas>
       </div>
@@ -32,12 +37,10 @@ export class CompSummaryChart extends OvlBaseElement {
             JSON.stringify(this.state.portal.chartData.values_1)
           ),
           //@ts-ignore
-          backgroundColor: color("rgb(255, 0, 0)")
-            .alpha(0.5)
-            .rgbString(),
+          backgroundColor: color("rgb(255, 0, 0)").alpha(0.5).rgbString(),
           //@ts-ignore
           borderColor: "rgb(255, 0, 0)",
-          borderWidth: 1
+          borderWidth: 1,
         },
         {
           label: T("PortalLastYear"),
@@ -45,14 +48,12 @@ export class CompSummaryChart extends OvlBaseElement {
             JSON.stringify(this.state.portal.chartData.values_2)
           ),
           //@ts-ignore
-          backgroundColor: color("rgb(54, 162, 235)")
-            .alpha(0.5)
-            .rgbString(),
+          backgroundColor: color("rgb(54, 162, 235)").alpha(0.5).rgbString(),
           //@ts-ignore
           borderColor: "rgb(54, 162, 235)",
-          borderWidth: 1
-        }
-      ]
+          borderWidth: 1,
+        },
+      ],
     }
   }
   disconnectedCallback() {
@@ -82,20 +83,20 @@ export class CompSummaryChart extends OvlBaseElement {
                 display: true,
                 ticks: {
                   beginAtZero: true,
-                  stepSize: 1
-                }
-              }
-            ]
+                  stepSize: 1,
+                },
+              },
+            ],
           },
           responsive: true,
           legend: {
-            position: "top"
+            position: "top",
           },
           title: {
             display: true,
-            text: T("PortalChartOrderQtyTitle")
-          }
-        }
+            text: T("PortalChartOrderQtyTitle"),
+          },
+        },
       })
       //console.log(this.chart)
       //this.chart.update()

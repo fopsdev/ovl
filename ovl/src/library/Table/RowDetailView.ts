@@ -10,7 +10,7 @@ import {
   GetRendererFn,
 } from "./helpers"
 import { RowControlAllAction } from "./RowControl"
-import { EditRowDef, DisplayMode } from "./Table"
+import { EditRowDef, DisplayMode, ViewRowDef } from "./Table"
 import { CellClass } from "./Row"
 import {
   ViewRowCellClass,
@@ -19,8 +19,11 @@ import {
   FieldHeaderCellSelectedHandler,
   FieldGetValueRender,
   FieldGetLabelRender,
+  ViewShow,
+  FormAfterRender,
+  ViewAfterRender,
 } from "../../global/hooks"
-import { customFunctions } from "../.."
+import { customFunctions, overmind } from "../.."
 import { ifDefined } from "lit-html/directives/if-defined"
 import { SnackAdd } from "../helpers"
 
@@ -36,7 +39,10 @@ export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
 
 export class TableRowDetailView extends OvlBaseElement {
   props: any
-  rowData: EditRowDef
+  rowData: ViewRowDef
+  formAfterRenderFn: any
+  formShowFn: any
+  formShowed: boolean
 
   init() {
     this.async = true
@@ -285,5 +291,78 @@ export class TableRowDetailView extends OvlBaseElement {
         </div>
       </div>
     `
+  }
+  afterRender() {
+    this.handleAfterRenderCustomHook()
+  }
+
+  updated() {
+    this.handleFormShowCustomHook()
+  }
+
+  handleFormShowCustomHook() {
+    if (!this.formShowed) {
+      this.formShowed = true
+      // preserve form control focus
+
+      // call form Show hook
+      if (this.formShowFn !== -1) {
+        if (this.formShowFn) {
+          this.callFormShow()
+        } else {
+          if (customFunctions) {
+            let formFunctions = resolvePath(
+              customFunctions,
+              this.rowData.tableDef.namespace
+            )
+            if (formFunctions) {
+              if (formFunctions[ViewShow]) {
+                this.formShowFn = formFunctions[ViewShow]
+                this.callFormShow()
+                return
+              }
+            }
+          }
+          this.formShowFn = -1
+        }
+      }
+    }
+  }
+
+  handleAfterRenderCustomHook() {
+    if (this.formAfterRenderFn !== -1) {
+      if (this.formAfterRenderFn) {
+        this.callFormAfterRender()
+      } else {
+        if (customFunctions) {
+          let formFunctions = resolvePath(
+            customFunctions,
+            this.rowData.tableDef.namespace
+          )
+          if (formFunctions) {
+            if (formFunctions[ViewAfterRender]) {
+              this.formAfterRenderFn = formFunctions[ViewAfterRender]
+              this.callFormAfterRender()
+              return
+            }
+          }
+        }
+        this.formAfterRenderFn = -1
+      }
+    }
+  }
+  callFormAfterRender() {
+    this.formAfterRenderFn(
+      this.rowData,
+      this.state,
+      this.actions,
+      overmind.effects
+    )
+  }
+
+  callFormShow() {
+    setTimeout(() => {
+      this.formShowFn(this.rowData, this.state, this.actions, overmind.effects)
+    }, 200)
   }
 }

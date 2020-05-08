@@ -1,5 +1,9 @@
 import { TableTesting, TblTableTesting, TableTestingColumn } from "./state"
-import { html, TemplateResult } from "../../../../ovl/node_modules/lit-html"
+import {
+  html,
+  TemplateResult,
+  render,
+} from "../../../../ovl/node_modules/lit-html"
 
 import { overmind } from "../.."
 import {
@@ -10,6 +14,7 @@ import {
   RowStatus,
   SelectedCustomFunctionResult,
   DisplayMode,
+  ViewRowDef,
 } from "../../../../ovl/src/library/Table/Table"
 import {
   getTextSort,
@@ -37,6 +42,35 @@ export const FormShow = async (
   console.log("hello from formshow hook. setting focus to item group")
   //@ts-ignore
   document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()
+}
+
+export const ViewAfterRender = async (
+  view: ViewRowDef,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  console.log(
+    "hello from tabletesting view afterrender hook. you may do some crazy stuff in here. why not add a chart?"
+  )
+  let newDiv = document.createElement("div")
+  render(
+    html`<comp-summarychart
+      .props=${() => "height:300px;"}
+    ></comp-summarychart>`,
+    newDiv
+  )
+  let mainViewEl = document.getElementById("ovl-detailview-tab2")
+  mainViewEl.firstElementChild.appendChild(newDiv)
+}
+
+export const ViewShow = async (
+  view: ViewRowDef,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+) => {
+  console.log("hello from tabletesting view show hook.")
 }
 
 export const FormAfterRender = async (

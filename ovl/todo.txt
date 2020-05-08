@@ -1,5 +1,7 @@
 Todos:
 
+- Custom Column Functions
+
 X Custom Functions for Multiple Selected Rows
 
 Configuration:
