@@ -69,8 +69,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
           <ovl-option
             class="fd-form__item "
             .props="${() => {
-              let col = def.columns["U_Type"]
-              return typeField
+              return { field: typeField }
             }}"
           >
           </ovl-option>
@@ -79,7 +78,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
           <ovl-listcontrol
             class="fd-form__item "
             .props="${() => {
-              return typeIdField
+              return { field: typeIdField }
             }}"
           >
           </ovl-listcontrol>
@@ -88,7 +87,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
           <ovl-timebox
             class="fd-form__item "
             .props=${() => {
-              return fromTimeField
+              return { field: fromTimeField }
             }}
           >
           </ovl-timebox>
@@ -98,7 +97,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
           <ovl-timebox
             class="fd-form__item "
             .props=${() => {
-              return toTimeField
+              return { field: toTimeField }
             }}
           >
           </ovl-timebox>
