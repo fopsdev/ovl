@@ -36,6 +36,12 @@ export let tblTableTesting: TableDef = {
       },
       Shop: { icon: "sap-icon--cart", name: "Shop" },
     },
+    customColumnActions: {
+      ValidValues: {
+        icon: "sap-icon--cart",
+        name: "Gültige Werte",
+      },
+    },
     paging: { page: 0, pageSize: 3 },
   },
   database: {

@@ -50,6 +50,9 @@ export const FormCanCustom = "FormCan%"
 export const FormCustomFilter = "Form_%_Filter"
 // custom sort function
 export const FormCustomSort = "Form_%_Sort"
+// defines custom column functions (eg. goto valid values)
+
+export const FormCustomColumnFn = "FormCustomColumnFn_%"
 
 //Form Field Functions ####################################
 // defines the list of ListControl and Option so far

@@ -33,6 +33,17 @@ import { json } from "overmind"
 import { CellClass } from "../../../../ovl/src/library/Table/Row"
 import { OkDialog } from "../../../../ovl/src/library/Dialog/actions"
 
+export const FormCustomColumnFn_ValidValues = async (
+  fnName: string,
+  coumnKey: string,
+  def: TableDef,
+  state: typeof overmind.state
+) => {
+  console.log(
+    "custom column function 'ValidValues' startet (nothing implemented)"
+  )
+}
+
 export const FormShow = async (
   formState: FormState,
   state: typeof overmind.state,

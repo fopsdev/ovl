@@ -11,7 +11,9 @@ import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { SnackAdd } from "../helpers"
-import { T } from "../../global/globals"
+import { T, resolvePath } from "../../global/globals"
+import { FormCustomColumnFn } from "../../global/hooks"
+import { customFunctions } from "../.."
 
 export type HeaderMenuDef = {
   def: TableDataAndDef
@@ -46,6 +48,20 @@ export class TableHeaderMenu extends OvlBaseElement {
 
   handleFilterSelectedClick = (e: Event) => {
     this.actions.ovl.internal.TableFilterSelected(this.headerMenu.def)
+  }
+
+  handleCustomColumnFunctionClick = (e: Event, key: string, name: string) => {
+    let def = this.headerMenu.def.def
+    let fnName = FormCustomColumnFn.replace("%", key)
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[fnName]) {
+      fn[fnName](
+        name,
+        this.headerMenu.def.def.uiState.headerSelected,
+        def,
+        this.state
+      )
+    }
   }
 
   handleCustomSelectedClick = (e: Event, key: string, name: string) => {
@@ -648,7 +664,57 @@ export class TableHeaderMenu extends OvlBaseElement {
     let columnFunctions
 
     if (def.uiState.headerSelected !== "") {
+      let sortingFunctions
       if (columns[def.uiState.headerSelected].sortable) {
+        sortingFunctions = html`
+          <li>
+            <a
+              href="#"
+              class="fd-menu__item sap-icon--up ${ascendingDisabled}"
+              @click="${(e) =>
+                this.handleSortClick(e, def.uiState.headerSelected, true)}"
+            >
+              Ascending</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="fd-menu__item sap-icon--down ${descendingDisabled}"
+              @click="${(e) =>
+                this.handleSortClick(e, def.uiState.headerSelected, false)}"
+            >
+              Descending</a
+            >
+          </li>
+        `
+      }
+
+      let customFns = def.options.customColumnActions
+      let customColumnFunctions = Object.keys(customFns).map((k) => {
+        let customFn = customFns[k]
+        let fnName = customFn.name
+        if (customFn.translationKey) {
+          fnName = T(customFn.translationKey)
+        }
+        if (!fnName) {
+          fnName = k
+        }
+        return html`
+          <li>
+            <a
+              href="#"
+              class="fd-menu__item ${customFn.icon}"
+              @click="${(e) =>
+                this.handleCustomColumnFunctionClick(e, k, fnName)}"
+            >
+              ${fnName}</a
+            >
+          </li>
+        `
+      })
+
+      if (sortingFunctions || customColumnFunctions) {
         let columncaption =
           columns[def.uiState.headerSelected].ui.labelTranslationKey
         if (columncaption) {
@@ -664,26 +730,7 @@ export class TableHeaderMenu extends OvlBaseElement {
             </h4>
             ${columnFilter}
             <ul class="fd-menu__list">
-              <li>
-                <a
-                  href="#"
-                  class="fd-menu__item sap-icon--up ${ascendingDisabled}"
-                  @click="${(e) =>
-                    this.handleSortClick(e, def.uiState.headerSelected, true)}"
-                >
-                  Ascending</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="fd-menu__item sap-icon--down ${descendingDisabled}"
-                  @click="${(e) =>
-                    this.handleSortClick(e, def.uiState.headerSelected, false)}"
-                >
-                  Descending</a
-                >
-              </li>
+              ${sortingFunctions} ${customColumnFunctions}
             </ul>
           </div>
         `
