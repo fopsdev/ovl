@@ -56,7 +56,7 @@ export const ViewAfterRender = async (
   let newDiv = document.createElement("div")
   render(
     html`<comp-summarychart
-      .props=${() => "height:300px;"}
+      .props=${() => "height:500px;"}
     ></comp-summarychart>`,
     newDiv
   )

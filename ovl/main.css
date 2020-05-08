@@ -44,12 +44,14 @@
 .ovl-bigeditform,
 .ovl-detailview {
   width: 70vw;
+  height: 98vh;
 }
 
 @media screen and (max-width: 992px) {
   .ovl-bigeditform,
   .ovl-detailview {
     width: 99vw;
+    height: 98vh;
   }
 }
 
@@ -124,9 +126,27 @@ ovl-table {
   --fd-width-gutter: 8px;
 }
 
+.ovl-panel__header {
+  margin: 2px;
+  padding: 2px;
+  justify-content: center;
+}
+
+.ovl-panel__footer {
+  margin: 2px;
+  padding: 2px;
+  margin-bottom: 8px;
+}
+
+.scrollableMobileOverlay {
+  overflow-y: auto;
+  height: calc(100vh - 55px);
+  -webkit-overflow-scrolling: touch;
+}
+
 .scrollableOverlay {
   overflow-y: auto;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 63px);
   -webkit-overflow-scrolling: touch;
 }
 

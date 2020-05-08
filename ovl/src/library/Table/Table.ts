@@ -152,10 +152,13 @@ export type TableDef = {
     filter?: Filter
     filterCustom?: { [key: string]: CustomFilter }
     edit?: {
+      caption?: { translationKey: string }
       editType: "inline" | "big" | "custom"
     }
     view?: {
-      viewType: "default" | "custom"
+      caption?: { translationKey: string }
+      viewType?: "default" | "custom"
+      customId?: string
     }
   }
   features?: {

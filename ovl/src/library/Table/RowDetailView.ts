@@ -170,9 +170,26 @@ export class TableRowDetailView extends OvlBaseElement {
     }
 
     let rowActions = Object.keys(rowControlActions)
+    let scrollable = "scrollableOverlay"
+    if (this.state.ovl.uiState.isMobile) {
+      scrollable = "scrollableMobileOverlay"
+    }
+
+    let caption
+    if (def.options.view && def.options.view.caption) {
+      caption = html`
+        <div
+          class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
+        >
+          ${T(def.options.view.caption.translationKey)}
+        </div>
+      `
+    }
+
     return html`
       <div id="ovl-detailview-${def.id}" class="fd-panel ovl-detailview">
-        <div class="fd-panel scrollableOverlay">
+        <div class="fd-panel ${scrollable}">
+          ${caption}
           <div
             @click="${this.handleClick}"
             @long-press="${this.handleLongPress}"
@@ -271,7 +288,7 @@ export class TableRowDetailView extends OvlBaseElement {
             })}
           </div>
         </div>
-        <div class="fd-panel__footer" style="margin:2px; padding:2px;">
+        <div class="fd-panel__footer ovl-panel__footer ovl-detailview-footer">
           ${rowActions.map((k, i) => {
             let button = rowControlActions[k]
             return html`<button

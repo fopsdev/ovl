@@ -225,10 +225,26 @@ export class TableRowFormBig extends OvlFormElement {
     if (!customHeaderCellClasses) {
       customHeaderCellClasses = {}
     }
+    let scrollable = "scrollableOverlay"
+    if (this.state.ovl.uiState.isMobile) {
+      scrollable = "scrollableMobileOverlay"
+    }
+
+    let caption
+    if (def.options.edit && def.options.edit.caption) {
+      caption = html`
+        <div
+          class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
+        >
+          ${T(def.options.edit.caption.translationKey)}
+        </div>
+      `
+    }
 
     return html`
       <div id="ovl-bigeditform-${def.id}" class="fd-panel ovl-bigeditform">
-        <div class="scrollableOverlay">
+        <div class="fd-panel ${scrollable}">
+          ${caption}
           ${Object.keys(columns).map((k) => {
             let customHeaderCellClass: CellClass = customHeaderCellClasses[k]
             let customRowCellClass: CellClass = customRowCellClasses[k]
@@ -391,7 +407,7 @@ export class TableRowFormBig extends OvlFormElement {
             `
           })}
         </div>
-        <div class="fd-panel__footer" style="margin:2px; padding:2px;">
+        <div class="fd-panel__footer ovl-bigedit-footer ovl-panel__footer">
           <button
             @click=${handleSave}
             title="Datensatz speichern"

@@ -117,7 +117,10 @@ export let tblTableTesting2: TableDef = {
         selected: { name: "Test Expenses Multiselect" },
       },
     },
-    edit: { editType: "big" },
+    edit: { editType: "big", caption: { translationKey: "PortalEdit" } },
+    view: {
+      caption: { translationKey: "PortalDetailView" },
+    },
     sortCustom: {
       sorts: {
         alphaThenMemo: {

@@ -420,6 +420,12 @@ export const initTableState = (
     if (options.edit === undefined) {
       options.edit = { editType: "inline" }
     }
+    if (options.view === undefined) {
+      options.view = { viewType: "default" }
+    }
+    if (options.view.viewType === undefined) {
+      options.view.viewType = "default"
+    }
 
     if (options.sortCustom === undefined) {
       options.sortCustom = { sorts: {}, selected: "" }
