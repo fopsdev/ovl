@@ -39,7 +39,7 @@ export class TableRowFormBig extends OvlFormElement {
     }
     super.init()
   }
-  afterRender() {
+  updated() {
     if (
       this.rowData.tableDef.features.focusToFirstEditableField &&
       !this.focusInit
@@ -51,6 +51,7 @@ export class TableRowFormBig extends OvlFormElement {
       //@ts-ignore
       //focusEl.firstElementChild.focus()
     }
+    super.updated()
   }
 
   handleLongPress = (e) => {

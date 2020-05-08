@@ -34,7 +34,7 @@ export let tblTableTesting: TableDef = {
         name: "Travel Expense",
         selected: { name: "Test Expenses Multiselect" },
       },
-      Shop: { icon: "sap-icon--cart", name: "Travel Expense" },
+      Shop: { icon: "sap-icon--cart", name: "Shop" },
     },
     paging: { page: 0, pageSize: 3 },
   },
@@ -47,7 +47,7 @@ export let tblTableTesting: TableDef = {
     add: true,
     noButtonsAtTheBottom: false,
     forceFreshServerDataIfOlderThan: 0,
-    focusToFirstEditableField: false,
+    focusToFirstEditableField: true,
   },
   columns: {
     U_Alpha: {

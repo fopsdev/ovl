@@ -83,10 +83,10 @@ export class TableRowForm extends OvlFormElement {
       this.focusInit = true
       let focusEl = document.getElementById(
         this.rowData.key + "ovlRFNFocus_focus"
-      )
+      ).firstElementChild
       //@ts-ignore
       focusEl.firstElementChild.focus()
-      let target = focusEl.firstElementChild
+      let target = focusEl
       var rect = target.getBoundingClientRect()
       if (rect.bottom > window.innerHeight) {
         target.scrollIntoView(false)
