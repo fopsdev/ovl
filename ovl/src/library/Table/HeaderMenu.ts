@@ -13,7 +13,7 @@ import { overlayToRender } from "../../library/Overlay/Overlay"
 import { SnackAdd } from "../helpers"
 import { T, resolvePath } from "../../global/globals"
 import { FormCustomColumnFn } from "../../global/hooks"
-import { customFunctions } from "../.."
+import { customFunctions, overmind } from "../.."
 
 export type HeaderMenuDef = {
   def: TableDataAndDef
@@ -59,7 +59,9 @@ export class TableHeaderMenu extends OvlBaseElement {
         name,
         this.headerMenu.def.def.uiState.headerSelected,
         def,
-        this.state
+        this.state,
+        this.actions,
+        overmind.effects
       )
     }
   }
