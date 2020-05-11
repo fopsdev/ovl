@@ -266,7 +266,7 @@ export class TableRowFormBig extends OvlFormElement {
               return null
             }
             let rendererFn = GetRendererFn(
-              def,
+              def.namespace,
               cachedRendererFn,
               EditGetLabelAndValueRender,
               k

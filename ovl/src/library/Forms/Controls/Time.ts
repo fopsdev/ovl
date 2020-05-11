@@ -48,33 +48,14 @@ export class OvlTime extends OvlBaseElement {
       customRowClassName = customRowCell.className
       customRowTooltip = customRowCell.tooltip
     }
-    let customHeaderCell = this.field.customHeaderCellClass
-    let customHeaderClassName = ""
-    let customHeaderTooltip
-    if (customHeaderCell) {
-      customHeaderClassName = customHeaderCell.className
-      customHeaderTooltip = customHeaderCell.tooltip
-    }
 
     let res = getUIValidationObject(field)
     let style = ""
-    let label
-    let labelText = GetLabel(field)
-    if (labelText) {
-      label = html`
-        <label
-          title="${ifDefined(customRowTooltip ? customRowTooltip : undefined)}"
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-time-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
-          aria-required="${res.needsAttention}"
-          for="${field.id}"
-          >${labelText}</label
-        >
-      `
-    }
     let align = ""
     if (field.ui && field.ui.align) {
       align = field.ui.align
     }
+    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
 
     type TimeBoxType = "text" | "time"
     let type: TimeBoxType = "text"

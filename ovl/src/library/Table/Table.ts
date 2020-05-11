@@ -9,7 +9,7 @@ import { HeaderMenuDef } from "./HeaderMenu"
 import { FieldFormat } from "../Forms/OvlFormElement"
 import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
-import { ovltemp, resolvePath, T, GetLabelText } from "../../global/globals"
+import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
 import {
   FieldIsVisible,
@@ -563,7 +563,7 @@ export class TableHeader extends OvlBaseElement {
           caption = k
         }
 
-        caption = GetLabelText(caption, k, def.namespace, this.state)
+        //caption = GetLabelText(caption, k, def.namespace, this.state)
 
         let stickyTableHeader
         if (OvlConfig.stickyHeaderEnabled(this.state)) {
@@ -572,7 +572,7 @@ export class TableHeader extends OvlBaseElement {
 
         // check for custom header renderer
         let rendererFn = GetRendererFn(
-          def,
+          def.namespace,
           cachedRendererFn,
           FieldGetLabelRender,
           k
@@ -584,7 +584,6 @@ export class TableHeader extends OvlBaseElement {
           headerPart = rendererFn(
             k,
             caption,
-            def,
             align[k],
             <DisplayMode>"Table",
             this.state

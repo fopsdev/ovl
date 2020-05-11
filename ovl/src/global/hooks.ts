@@ -65,8 +65,8 @@ export const FieldLookupPostData = "Field_%_LookupPostData"
 export const FieldIsReadOnly = "Field_%_IsReadOnly"
 // if a field should not be displayed. Make sure to return a FieldVisibilty - Type
 export const FieldIsVisible = "Field_%_IsVisible"
-// if you would like to have a custom label/columnheader text on table/view/edit-views
-export const FieldGetLabelText = "Field_%_GetLabelText"
+// // if you would like to have a custom label/columnheader text on table/view/edit-views
+// export const FieldGetLabelText = "Field_%_GetLabelText"
 
 // if you would like to do the rendering of a label/columnheader on your own
 export const FieldGetValueRender = "Field_%_GetValueRender"

@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { T, resolvePath, isMobile, GetLabelText } from "../../global/globals"
+import { T, resolvePath, isMobile } from "../../global/globals"
 import { overlayToRender } from "../Overlay/Overlay"
 import { OvlBaseElement } from "../OvlBaseElement"
 import {
@@ -215,13 +215,13 @@ export class TableRowDetailView extends OvlBaseElement {
           >
             ${Object.keys(columns).map((k) => {
               let rendererFn = GetRendererFn(
-                def,
+                def.namespace,
                 cachedRendererFn,
                 FieldGetValueRender,
                 k
               )
               let labelRendererFn = GetRendererFn(
-                def,
+                def.namespace,
                 cachedLabelRendererFn,
                 FieldGetLabelRender,
                 k
@@ -270,12 +270,11 @@ export class TableRowDetailView extends OvlBaseElement {
                 } else {
                   l = k
                 }
-                l = GetLabelText(l, k, def.namespace, this.state)
+                //l = GetLabelText(l, k, def.namespace, this.state)
                 if (labelRendererFn) {
                   l = labelRendererFn(
                     k,
                     l,
-                    def,
                     this.rowData.columnsAlign[k],
                     <DisplayMode>"Detailview",
                     this.state

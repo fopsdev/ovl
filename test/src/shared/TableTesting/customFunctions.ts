@@ -436,66 +436,42 @@ export const Edit_U_Memo_GetLabelAndValueRender = (
   id: string,
   readonly: boolean
 ): TemplateResult => {
-  const handleChange = (e) => {
-    e.stopPropagation()
-    e.preventDefault()
-    let inputElement = document.getElementById(id)
-
-    let event = new CustomEvent("ovlchange", {
-      bubbles: true,
-      detail: { val: inputElement.innerText, id: field.id },
-    })
-    inputElement.dispatchEvent(event)
+  // use the existing custom element for now.... but its possible to introduce new elements here
+  if (readonly) {
+    return html`${field.value}`
+  } else {
+    return html`
+      <ovl-textarea
+        id="${id}"
+        class="fd-form__item "
+        .props=${() => {
+          return {
+            field,
+            customHeaderCellClass,
+            customRowCellClass,
+          }
+        }}
+      >
+      </ovl-textarea>
+    `
   }
-
-  const handleFocusOut = (e) => {
-    e.stopPropagation()
-    e.preventDefault()
-    let inputElement = document.getElementById(id)
-
-    let event = new CustomEvent("ovlfocusout", {
-      bubbles: true,
-      detail: { id: field.id },
-    })
-    inputElement.dispatchEvent(event)
-  }
-
-  return html` <div
-    class="ovl-formcontrol-container ovl-formcontrol-custom-container ovl-formcontrol-container__${field.fieldKey}"
-  >
-    <div
-      class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-custom-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderCellClass
-        ? customHeaderCellClass.className
-        : ""}"
-    >
-      ${GetLabel(field) + " (Custom)"}
-    </div>
-    <div
-      @focusout="${handleFocusOut}"
-      @input="${handleChange}"
-      contenteditable="true"
-      class="ovl-formcontrol-input  ovl-formcontrol-custom-input ovl-formcontrol-input__${field.fieldKey} ${customRowCellClass
-        ? customRowCellClass.className
-        : ""}"
-      id=${id}
-    >
-      ${field.value}
-    </div>
-  </div>`
 }
 
 export const Field_U_ItemCode_GetLabelRender = (
   columnKey: string,
   caption: string,
-  def: TableDef,
   align: string,
   displayMode: DisplayMode,
   state: typeof overmind.state
 ): TemplateResult => {
   if (displayMode === "Detailview") {
     return html`Name(Code)`
-  } else {
+  }
+  if (displayMode === "Table") {
     return html`${caption}(Code)`
+  }
+  if (displayMode === "Edit") {
+    return html`${caption}(C)`
   }
 }
 
@@ -523,14 +499,14 @@ export const Field_U_ItemCode_GetValueRender = (
   displayMode: DisplayMode,
   state: typeof overmind.state
 ): TemplateResult => {
-  let u_ItemCodeValue = getDisplayValue(
+  let itemCodeValue = getDisplayValue(
     "U_ItemCode",
     def.columns["U_ItemCode"],
     row,
     def.namespace
   )
 
-  return html`${u_ItemCodeValue} (${row.U_ItemCode})`
+  return html`${itemCodeValue} (${row.U_ItemCode})`
 }
 
 export const Field_MobileSummary_GetLabelRender = (

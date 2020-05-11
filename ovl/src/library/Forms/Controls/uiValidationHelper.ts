@@ -1,5 +1,5 @@
 import { Field } from "../actions"
-type UIValidationObject = {
+export type UIValidationObject = {
   validationType: string
   validationHide: string
   needsAttention: boolean
@@ -8,7 +8,7 @@ export const getUIValidationObject = (field: Field): UIValidationObject => {
   let res: UIValidationObject = {
     needsAttention: false,
     validationHide: " hide ",
-    validationType: ""
+    validationType: "",
   }
   if (!field.validationResult.valid) {
     if (field.dirty || field.watched) {

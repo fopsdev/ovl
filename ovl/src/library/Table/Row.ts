@@ -83,7 +83,7 @@ export class TableRow extends OvlBaseElement {
         // check for custom renderer
         let rowPart
         let rendererFn = GetRendererFn(
-          def,
+          def.namespace,
           cachedRendererFn,
           FieldGetValueRender,
           k

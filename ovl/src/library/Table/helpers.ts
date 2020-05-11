@@ -1095,17 +1095,17 @@ export type CachedRendererData = {
 }
 
 export const GetRendererFn = (
-  def: TableDef,
+  namespace: string,
   cachedRendererFn: Map<string, CachedRendererData>,
   hookDef: string,
   fieldKey: string
 ) => {
-  let cachedRendererKey = def.namespace + fieldKey
+  let cachedRendererKey = namespace + fieldKey
   let cachedRenderer = cachedRendererFn.get(cachedRendererKey)
   let rendererFn
   if (!cachedRenderer) {
     let functionName = hookDef.replace("%", fieldKey)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(customFunctions, namespace)
     if (fn && fn[functionName]) {
       rendererFn = fn[functionName]
       cachedRendererFn.set(cachedRendererKey, {

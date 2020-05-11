@@ -55,13 +55,6 @@ export class OvlTextbox extends OvlBaseElement {
       customRowClassName = customRowCell.className
       customRowTooltip = customRowCell.tooltip
     }
-    let customHeaderCell = this.field.customHeaderCellClass
-    let customHeaderClassName = ""
-    let customHeaderTooltip
-    if (customHeaderCell) {
-      customHeaderClassName = customHeaderCell.className
-      customHeaderTooltip = customHeaderCell.tooltip
-    }
 
     let inputMode: any = "text"
     if (field.type === "decimal") {
@@ -76,26 +69,12 @@ export class OvlTextbox extends OvlBaseElement {
     if (field.ui && field.ui.isPassword) {
       type = "password"
     }
-
-    let label
-    let labelText = GetLabel(field)
-    if (labelText) {
-      label = html`
-        <label
-          title="${ifDefined(
-            customHeaderTooltip ? customHeaderTooltip : undefined
-          )}"
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-textbox-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
-          aria-required="${res.needsAttention}"
-          for="${field.id}"
-          >${labelText}</label
-        >
-      `
-    }
     let align = ""
     if (field.ui && field.ui.align) {
       align = field.ui.align
     }
+
+    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
     return html`
       <div
         class="ovl-formcontrol-container ovl-formcontrol-textbox-container ovl-formcontrol-container__${field.fieldKey}"

@@ -477,25 +477,13 @@ export class OvlListControl extends OvlBaseElement {
 
     let res = getUIValidationObject(field)
 
-    let label
-    let labelText = GetLabel(field)
-    if (labelText) {
-      label = html`
-        <label
-          title="${ifDefined(
-            customHeaderTooltip ? customHeaderTooltip : undefined
-          )}"
-          class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-listcontrol-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
-          aria-required="${res.needsAttention}"
-          for="${field.id}"
-          >${labelText}</label
-        >
-      `
-    }
     let align = ""
     if (field.ui && field.ui.align) {
       align = field.ui.align
     }
+
+    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
+
     let displayValue = this.displayValue
 
     if (displayValue === undefined) {
