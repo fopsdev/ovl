@@ -4,3 +4,62 @@
   grid-gap: 10px;
   grid-template-rows: auto;
 }
+
+.ovl-bigeditform .ovl-formcontrol-container {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  grid-template-areas:
+    "label  value"
+    ".... validation";
+}
+
+.ovl-bigeditform .ovl-formcontrol-textarea-input {
+  height: 120px;
+}
+
+.ovl-bigeditform .ovl-formcontrol-label {
+  top: 10px;
+  font-size: small;
+}
+
+.ovl-bigeditform .ovl-formcontrol-textarea-label {
+  margin-top: 30px;
+  font-size: small;
+}
+
+.ovl-detailview-container {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+}
+
+@media screen and (max-width: 992px) {
+  .ovl-detailview-label {
+    margin-left: -20px;
+  }
+}
+
+.ovl-tableview-rowcell__U_Decimal {
+  color: green;
+}
+
+.testrowcell {
+  cursor: pointer !important;
+  text-decoration: underline;
+  color: red;
+  font-weight: bold;
+}
+
+.testheadercell {
+  cursor: pointer !important;
+  text-decoration: underline;
+  color: limegreen !important;
+  font-weight: bold;
+  user-select: none;
+}
+
+.ovl-detailview .chartwidth {
+  width: 98%;
+}
+.chartwidth {
+  width: 97vw;
+}

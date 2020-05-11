@@ -192,7 +192,7 @@ export class OvlDialog extends OvlBaseElement {
     }
   }
   connectedCallback() {
-    this.addEventListener("animationend", this.handleAnimationEnd, true)
+    this.addEventListener("animationend", this.handleAnimationEnd)
     super.connectedCallback()
   }
   disconnectedCallback() {

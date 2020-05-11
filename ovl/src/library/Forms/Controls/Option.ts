@@ -4,25 +4,21 @@ import { html } from "lit-html"
 import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ListState } from "./ListControl"
-import { GetRowFromFormState, GetLabel } from "./helpers"
+import { GetRowFromFormState, GetLabel, ControlState } from "./helpers"
 import { overmind, customFunctions } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
+import { ifDefined } from "lit-html/directives/if-defined"
 
 export class OvlOption extends OvlBaseElement {
   props: any
-  field: Field
-
-  init() {
-    this.field = this.props(this.state)
-  }
-
+  field: ControlState
   handleFocusOut(e: Event, id: string) {
     e.stopPropagation()
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.field.id },
+      detail: { id: this.field.field.id },
     })
     document.getElementById(id).dispatchEvent(event)
   }
@@ -37,15 +33,16 @@ export class OvlOption extends OvlBaseElement {
       detail: {
         //@ts-ignore
         val: value,
-        id: this.field.id,
+        id: this.field.field.id,
       },
     })
     document.getElementById(id).dispatchEvent(event)
   }
   getUI() {
-    let field = this.field
+    this.field = this.props(this.state)
+    let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
-    let list = this.field.list
+    let list = field.list
     let listFn = FieldGetList.replace("%", field.fieldKey)
     let listData = resolvePath(customFunctions, formState.namespace)[listFn](
       GetRowFromFormState(formState),
@@ -54,23 +51,27 @@ export class OvlOption extends OvlBaseElement {
       overmind.effects
     ).data
 
-    let res = getUIValidationObject(field)
-    let label
-    let labelText = GetLabel(field)
-    if (labelText) {
-      label = html`
-        <label
-          class="fd-form-label fd-has-type-1"
-          aria-required="${res.needsAttention}"
-          for="${field.id}"
-          >${labelText}</label
-        >
-      `
+    let customRowCell = this.field.customRowCellClass
+    let customRowClassName = ""
+    let customRowTooltip
+    if (customRowCell) {
+      customRowClassName = customRowCell.className
+      customRowTooltip = customRowCell.tooltip
     }
+
+    let res = getUIValidationObject(field)
     let align = ""
     if (field.ui.align) {
       align = field.ui.align
     }
+
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "option",
+      align
+    )
 
     let inline
     if (field.ui && field.ui.inline) {
@@ -78,16 +79,21 @@ export class OvlOption extends OvlBaseElement {
     }
 
     return html`
-      ${label}
-      <div class="fd-form-group ${inline}">
-        ${Object.keys(listData).map((rowKey) => {
-          return html`
-            <div
-              class="fd-form-group__item fd-form-item"
-              id="${this.field.id}"
-              tabindex="0"
-            >
+      <div
+        class="ovl-formcontrol-container ovl-formcontrol-option-container ovl-formcontrol-container__${field.fieldKey}"
+      >
+        ${label}
+
+        <div
+          tabindex="0"
+          title="${ifDefined(customRowTooltip ? customRowTooltip : undefined)}"
+          class="fd-form-group ${inline} ${customRowClassName}"
+          id="${this.field.field.id}"
+        >
+          ${Object.keys(listData).map((rowKey) => {
+            return html`
               <input
+                class="fd-radio ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.fieldKey}"
                 @click=${(e) => e.stopPropagation()}
                 @change=${(e) =>
                   this.handleChange(
@@ -108,16 +114,19 @@ export class OvlOption extends OvlBaseElement {
                 ?checked=${field.convertedValue ===
                 listData[rowKey][list.valueField]}
               />
-              <label class="fd-radio__label" for="${field.id + rowKey}">
+              <label
+                class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.fieldKey}"
+                for="${field.id + rowKey}"
+              >
                 ${listData[rowKey][list.displayField]}
               </label>
-            </div>
-          `
-        })}
+            `
+          })}
+        </div>
       </div>
       <div
         style="margin-top:-20px;margin-bottom: 12px;"
-        class="fd-form-message ${res.validationHide}"
+        class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-option-validation ovl-formcontrol-validation__${field.fieldKey}"
       >
         ${field.validationResult.validationMsg}
       </div>

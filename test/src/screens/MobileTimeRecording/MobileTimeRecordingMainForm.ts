@@ -139,7 +139,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
                 <ovl-datebox
                   class="fd-form-item "
                   .props="${() => {
-                    return dateField
+                    return { field: dateField }
                   }}"
                 >
                 </ovl-datebox>

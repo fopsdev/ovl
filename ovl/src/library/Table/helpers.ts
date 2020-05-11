@@ -51,7 +51,7 @@ export const getDateSort = (valA: string, valB: string): number => {
   const bDate = new Date(valB).getTime()
   return aDate - bDate
 }
-
+export let cachedListFn: Map<string, any> = new Map<string, any>()
 export const getDisplayValue = (
   key: string,
   col: ColumnDisplayDef,
@@ -61,10 +61,20 @@ export const getDisplayValue = (
   let value = row[key]
 
   if (col.list && namespace) {
-    let listdata
-    listdata = resolvePath(customFunctions, namespace)[
-      FieldGetList.replace("%", key)
-    ](row, overmind.state, overmind.actions, overmind.effects)
+    let cachedListKey = namespace + key
+    let listFn = cachedListFn.get(cachedListKey)
+    if (!listFn) {
+      listFn = resolvePath(customFunctions, namespace)[
+        FieldGetList.replace("%", key)
+      ]
+      cachedListFn.set(cachedListKey, listFn)
+    }
+    let listdata = listFn(
+      row,
+      overmind.state,
+      overmind.actions,
+      overmind.effects
+    )
     return GetListDisplayValue(col.list, value, listdata)
   }
   let format
@@ -368,12 +378,6 @@ export const initTableState = (
       def.options = {}
     }
     let options = def.options
-    if (options.view === undefined) {
-      options.view = { viewType: "default", viewScreenWidth: 70 }
-    }
-    if (options.view.viewScreenWidth === undefined) {
-      options.view.viewScreenWidth = 70
-    }
 
     // if (def.translationGroup === undefined) {
     //   // assume tranlsation group is the same as namespace first group if not defined
@@ -391,6 +395,10 @@ export const initTableState = (
     if (options.customRowActions === undefined) {
       options.customRowActions = {}
     }
+    if (options.customColumnActions === undefined) {
+      options.customColumnActions = {}
+    }
+
     if (options.navType === undefined) {
       options.navType = "bottom"
     }
@@ -410,10 +418,13 @@ export const initTableState = (
     }
 
     if (options.edit === undefined) {
-      options.edit = { editType: "inline", editScreenWidth: 50 }
+      options.edit = { editType: "inline" }
     }
-    if (options.edit.editScreenWidth === undefined) {
-      options.edit.editScreenWidth = 50
+    if (options.view === undefined) {
+      options.view = { viewType: "default" }
+    }
+    if (options.view.viewType === undefined) {
+      options.view.viewType = "default"
     }
 
     if (options.sortCustom === undefined) {
@@ -544,6 +555,9 @@ export const initTableState = (
       }
       if (col.ui.visibility === undefined) {
         col.ui.visibility = "Table_Edit_View"
+      }
+      if (col.ui.showLabelIfNoValueInView === undefined) {
+        col.ui.showLabelIfNoValueInView = true
       }
       if (col.control === undefined) {
         col.control = "text"
@@ -690,19 +704,20 @@ export const TableFilterFn = (
           let column = columns[columnId]
 
           let filter = column.filter
+          let row = data[rowKey]
           if (filter.isOthersSelected) {
             // match only others
             return Object.keys(filter.filterValues).some((k) => {
               let selectedFilter = filter.filterValues[k]
 
-              if (selectedFilter.value === data[rowKey][columnId]) {
+              if (selectedFilter.value === row[columnId]) {
                 return true
               }
             })
           } else {
             // match exact
             let selectedFilter = filter.filterValues[filter.selected]
-            return selectedFilter.value !== data[rowKey][columnId]
+            return selectedFilter.value !== row[columnId]
           }
         })
     })
@@ -710,20 +725,13 @@ export const TableFilterFn = (
 
   // now the customFilters
   if (hasCustomFilter) {
-    restable = restable.filter(
-      (rowKey) =>
-        !customFilterFn.some(
-          (f) =>
-            !f(
-              def,
-              tableDataAndDef.data,
-              rowKey,
-              state,
-              overmind.actions,
-              overmind.effects
-            )
-        )
-    )
+    restable = restable.filter((rowKey) => {
+      let data = tableDataAndDef.data
+      let row = data.data[rowKey]
+      return !customFilterFn.some(
+        (f) => !f(def, data, row, state, overmind.actions, overmind.effects)
+      )
+    })
   }
 
   // if tablefiltering is switched off thats it, just return
@@ -797,6 +805,9 @@ export const createDynamicRowFunctions = async (
         let custom = def.options.customRowActions[k]
         let disabled = false
         let title = custom.name
+        if (custom.translationKey) {
+          title = T(custom.translationKey)
+        }
         let functionName = FormCanCustom.replace("%", k)
 
         if (fn && fn[functionName]) {
@@ -1024,11 +1035,11 @@ export const rowControlActionsHandler = async (
               def,
             })
             await customFunction(
-              key,
-              {
-                def,
-                data,
-              },
+              rowKey,
+              def,
+              data,
+              true,
+              null,
               overmind.state,
               overmind.actions,
               overmind.effects
@@ -1037,11 +1048,11 @@ export const rowControlActionsHandler = async (
           overmind.actions.ovl.overlay.CloseOverlay()
         } else {
           await customFunction(
-            key,
-            {
-              def,
-              data,
-            },
+            rowKey,
+            def,
+            data,
+            true,
+            null,
             overmind.state,
             overmind.actions,
             overmind.effects
@@ -1049,9 +1060,7 @@ export const rowControlActionsHandler = async (
         }
       } else {
         throw Error(
-          "Ovl logical error: Custom Action: " +
-            customFunctionName +
-            " not found!"
+          "Ovl error: Custom Action: " + customFunctionName + " not found!"
         )
       }
     }
@@ -1079,4 +1088,38 @@ export const rowControlActionsHandler = async (
       })
     }
   }
+}
+export type CachedRendererData = {
+  hasRenderer: boolean
+  fn: any
+}
+
+export const GetRendererFn = (
+  namespace: string,
+  cachedRendererFn: Map<string, CachedRendererData>,
+  hookDef: string,
+  fieldKey: string
+) => {
+  let cachedRendererKey = namespace + fieldKey
+  let cachedRenderer = cachedRendererFn.get(cachedRendererKey)
+  let rendererFn
+  if (!cachedRenderer) {
+    let functionName = hookDef.replace("%", fieldKey)
+    let fn = resolvePath(customFunctions, namespace)
+    if (fn && fn[functionName]) {
+      rendererFn = fn[functionName]
+      cachedRendererFn.set(cachedRendererKey, {
+        fn: rendererFn,
+        hasRenderer: true,
+      })
+    } else {
+      cachedRendererFn.set(cachedRendererKey, {
+        fn: undefined,
+        hasRenderer: false,
+      })
+    }
+  } else if (cachedRenderer.hasRenderer) {
+    rendererFn = cachedRenderer.fn
+  }
+  return rendererFn
 }

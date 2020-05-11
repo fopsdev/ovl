@@ -3,14 +3,14 @@ import { ColumnAlign } from "../../Table/Table"
 import { html } from "lit-html"
 import { Field } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { GetLabel } from "./helpers"
+import { GetLabel, ControlState } from "./helpers"
+import { ifDefined } from "lit-html/directives/if-defined"
 
 export class OvlTime extends OvlBaseElement {
   props: any
-  field: Field
+  field: ControlState
   inputElement: any
   init() {
-    this.field = this.props(this.state)
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
     } else {
@@ -23,7 +23,7 @@ export class OvlTime extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlfocusout", {
       bubbles: true,
-      detail: { id: this.field.id },
+      detail: { id: this.field.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
@@ -33,31 +33,35 @@ export class OvlTime extends OvlBaseElement {
     e.preventDefault()
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
-      detail: { val: this.inputElement.value, id: this.field.id },
+      detail: { val: this.inputElement.value, id: this.field.field.id },
     })
     this.inputElement.dispatchEvent(event)
   }
   getUI() {
-    let field = this.field
+    this.field = this.props(this.state)
+    let field = this.field.field
+
+    let customRowCell = this.field.customRowCellClass
+    let customRowClassName = ""
+    let customRowTooltip
+    if (customRowCell) {
+      customRowClassName = customRowCell.className
+      customRowTooltip = customRowCell.tooltip
+    }
 
     let res = getUIValidationObject(field)
     let style = ""
-    let label
-    let labelText = GetLabel(field)
-    if (labelText) {
-      label = html`
-        <label
-          class="fd-form-label fd-has-type-1"
-          aria-required="${res.needsAttention}"
-          for="${field.id}"
-          >${labelText}</label
-        >
-      `
-    }
     let align = ""
     if (field.ui && field.ui.align) {
       align = field.ui.align
     }
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "time",
+      align
+    )
 
     type TimeBoxType = "text" | "time"
     let type: TimeBoxType = "text"
@@ -65,24 +69,31 @@ export class OvlTime extends OvlBaseElement {
       type = "time"
     }
     return html`
-      ${label}
-      <input
-        @focusout=${(e) => this.handleFocusOut(e)}
-        style="${style} ${align}"
-        autocomplete="off"
-        class="fd-input ${res.validationType} fd-has-type-1"
-        type="${type}"
-        id="${field.id}"
-        value="${field.value}"
-      />
-      <span class="fd-form-message ${res.validationHide}">
+      <div
+        class="ovl-formcontrol-container ovl-formcontrol-time-container ovl-formcontrol-container__${field.fieldKey}"
+      >
+        ${label}
+        <input
+          title="${ifDefined(customRowTooltip ? customRowTooltip : undefined)}"
+          @focusout=${(e) => this.handleFocusOut(e)}
+          style="${style} ${align}"
+          autocomplete="off"
+          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-time-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
+          type="${type}"
+          id="${field.id}"
+          value="${field.value}"
+        />
+      </div>
+      <span
+        class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-time-validation ovl-formcontrol-time__${field.fieldKey}"
+      >
         ${field.validationResult.validationMsg}
       </span>
     `
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.field.id)
-    this.inputElement.value = this.field.value
+    this.inputElement = document.getElementById(this.field.field.id)
+    this.inputElement.value = this.field.field.value
   }
   disconnectedCallback() {
     if (this.state.ovl.uiState.isMobile) {

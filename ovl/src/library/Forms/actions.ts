@@ -10,7 +10,7 @@ import { ListState } from "./Controls/ListControl"
 import { customFunctions, FormType } from "../../index"
 import { ListFnReturnValue, ColumnAlign } from "../Table/Table"
 import { getFormFields, ValidationAddError } from "./helper"
-import { FormValidate, FormChanged } from "../../global/hooks"
+import { FormValidate, FormChanged, FieldGetList } from "../../global/hooks"
 export { FillListControl }
 
 export type Field = {
@@ -240,7 +240,7 @@ export const ValidateDataType: Action<ValidateFieldType> = (_, value) => {
       if (val) {
         let parsedVal
         if (typeof val === "string") {
-          let valToParse = val.replace(/[^0-9.]/g, "")
+          let valToParse = val.replace(/[^0-9.-]/g, "")
           parsedVal = parseFloat(valToParse)
         } else {
           parsedVal = val
@@ -308,7 +308,6 @@ export const ValidateList: Action<ValidateFieldType> = (
   if (list.acceptEmpty && !list.acceptOnlyListValues) {
     return
   }
-
   if (!list.acceptEmpty && !value.newVal) {
     ValidationAddError(validatorId, "Field cannot be empty", res)
     return
@@ -321,7 +320,7 @@ export const ValidateList: Action<ValidateFieldType> = (
       return val
     }, {})
 
-    let functionName = value.fieldId + "GetListFn"
+    let functionName = FieldGetList.replace("%", value.fieldId)
 
     let listdata: ListFnReturnValue
     let fn = resolvePath(customFunctions, namespace)
@@ -551,7 +550,7 @@ export type FieldChanged = {
   fieldId: string
   newConvertedVal: string
   oldConvertedVal: string
-  row: { [key: string]: {} }
+  row: any
 }
 
 export type TouchField = {

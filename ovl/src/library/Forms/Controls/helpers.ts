@@ -1,7 +1,7 @@
 import { overmind } from "../../.."
 import { ListState } from "./ListControl"
-import { ListFnReturnValue } from "../../Table/Table"
-import { FormState, Field } from "../actions"
+import { ListFnReturnValue, DisplayMode, ControlType } from "../../Table/Table"
+import { FormState, Field, ValidateFieldResult } from "../actions"
 import { customFunctions } from "../../../index"
 import {
   resolvePath,
@@ -13,7 +13,13 @@ import {
   FieldLookupPostData,
   FieldGetList,
   FieldGetFilteredList,
+  FieldGetLabelRender,
 } from "../../../global/hooks"
+import { CellClass } from "../../Table/Row"
+import { TemplateResult, html } from "lit-html"
+import { ifDefined } from "lit-html/directives/if-defined"
+import { UIValidationObject } from "./uiValidationHelper"
+import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
 
 export type LookupListPostData = {
   url: string
@@ -21,6 +27,12 @@ export type LookupListPostData = {
   filterValue: string
   lookupType: string
   paramList?: { [key: string]: {} }
+}
+
+export type ControlState = {
+  customHeaderCellClass: CellClass
+  customRowCellClass: CellClass
+  field: Field
 }
 
 export const KeyValueListFromServerFn = async (
@@ -122,7 +134,7 @@ export const FilterHitList = (
         }, {})
       }
     }
-    if (filterValue === null) {
+    if (!filterValue) {
       filterValue = ""
     }
     res = res.filter((f) => {
@@ -187,19 +199,65 @@ export const GetRowFromFormState = (formState: FormState) => {
   }, {})
 }
 
-export const GetLabel = (field: Field): string => {
-  let caption = ""
+export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
 
+export const GetLabel = (
+  field: Field,
+  customHeaderCell: CellClass,
+  res: UIValidationObject,
+  controltype: ControlType,
+  align: string
+): TemplateResult => {
+  let caption = ""
+  let label
   if (field.ui) {
     if (field.ui.noLabel) {
-      return ""
-    }
-
-    if (field.ui.labelTranslationKey) {
+      caption = ""
+    } else if (field.ui.labelTranslationKey) {
       caption = T(field.ui.labelTranslationKey)
     } else {
       caption = field.fieldKey
     }
   }
-  return caption
+
+  let customHeaderClassName = ""
+  let customHeaderTooltip
+  if (customHeaderCell) {
+    customHeaderClassName = customHeaderCell.className
+    customHeaderTooltip = customHeaderCell.tooltip
+  }
+  let state = overmind.state
+  let formState: FormState = state.ovl.forms[field.formType][field.formId]
+  let rendererFn = GetRendererFn(
+    formState.namespace,
+    cachedRendererFn,
+    FieldGetLabelRender,
+    field.fieldKey
+  )
+
+  if (rendererFn) {
+    caption = rendererFn(
+      field.fieldKey,
+      caption,
+      align,
+      <DisplayMode>"Edit",
+      state
+    )
+  }
+
+  label = html`
+    <label
+      title="${ifDefined(
+        customHeaderTooltip ? customHeaderTooltip : undefined
+      )}"
+      class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-${controltype}-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
+      aria-required="${res.needsAttention}"
+      for="${field.id}"
+      >${caption}</label
+    >
+  `
+  return label
 }

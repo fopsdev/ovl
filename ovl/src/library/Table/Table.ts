@@ -11,9 +11,26 @@ import { NavDef } from "./NavControl"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ovltemp, resolvePath, T } from "../../global/globals"
 import { ListState } from "../Forms/Controls/ListControl"
-import { FieldIsVisible } from "../../global/hooks"
+import {
+  FieldIsVisible,
+  FieldGetLabelRender,
+  ViewHeaderCellClass,
+  FieldHeaderCellSelectedHandler,
+} from "../../global/hooks"
 import { OvlConfig } from "../../init"
+import { CellClass } from "./Row"
+import { ifDefined } from "lit-html/directives/if-defined"
+import { SnackAdd } from "../helpers"
+import { CachedRendererData, GetRendererFn } from "./helpers"
 export type SaveMode = "add" | "update"
+
+export type DisplayMode = "Table" | "Detailview" | "Edit" | "EditInline"
+
+export type SelectedCustomFunctionResult = {
+  // this msg will be concancenated in the result output
+  msg: string
+  success: boolean
+}
 
 export type BeforeSaveParam = {
   key: string
@@ -52,6 +69,17 @@ type StaticFilter = {
 
 export type RowControlAction = {
   name: string
+  translationKey?: string
+  icon: string
+  selected?: {
+    name: string
+    translationKey?: string
+  }
+}
+
+export type ColumnAction = {
+  name: string
+  translationKey?: string
   icon: string
 }
 
@@ -109,6 +137,13 @@ export type TableDef = {
 
       [key: string]: RowControlAction
     }
+    customColumnActions?: {
+      // dynamically displays menuentry in headerform
+      // key will be the action name that will be executed when custom button is pressed
+      // check hooks.ts for the required fn names
+      [key: string]: ColumnAction
+    }
+
     navType?: "top/bottom" | "top" | "bottom"
     maxRows?: { maxRows: number; showHint: boolean; showInTitle?: boolean }
     sort?: Sort
@@ -117,14 +152,12 @@ export type TableDef = {
     filter?: Filter
     filterCustom?: { [key: string]: CustomFilter }
     edit?: {
+      caption?: { translationKey: string }
       editType: "inline" | "big" | "custom"
-      editScreenWidth?: number
-      customTemplateId?: string
     }
     view?: {
-      viewType: "default" | "custom"
-      viewScreenWidth?: number
-      customTemplateId?: string
+      caption?: { translationKey: string }
+      viewType?: "default" | "custom"
     }
   }
   features?: {
@@ -146,6 +179,15 @@ export type TableDef = {
 }
 
 export type EditRowDef = {
+  tableDef: TableDef
+  key: string
+  row: {}
+  data: TableData
+  columnsAlign: {}
+  columnsVisible: {}
+}
+
+export type ViewRowDef = {
   tableDef: TableDef
   key: string
   row: {}
@@ -243,6 +285,7 @@ export type DBInsertMode =
 
 export type FieldVisibility =
   | "TableNotMobile_Edit_View"
+  | "TableOnlyMobile"
   | "Table_Edit_View"
   | "Edit_View"
   | "View"
@@ -263,6 +306,7 @@ export type ColumnDef = {
     inline?: boolean
     readonly?: boolean
     visibility?: FieldVisibility
+    showLabelIfNoValueInView?: boolean
   }
 }
 
@@ -300,6 +344,11 @@ export type ColumnFilterValue = {
 
 export type ColumnFilterTypes = "@@ovl_all" | "@@ovl_others"
 
+export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
+
 export class TableHeader extends OvlBaseElement {
   props: any
   tabledata: TableDataAndDef
@@ -309,10 +358,41 @@ export class TableHeader extends OvlBaseElement {
     e.preventDefault()
   }
 
-  handleHeaderColumnClick = (e: Event, key: string) => {
+  handleHeaderColumnClick = async (e) => {
     e.stopPropagation()
     e.preventDefault()
     let def = this.tabledata.def
+    let key
+    if (e.target.getAttribute("data-col")) {
+      key = e.target.getAttribute("data-col")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.getAttribute("data-col")
+    ) {
+      key = e.target.parentNode.getAttribute("data-col")
+    }
+    if (!key) {
+      return
+    }
+
+    // first start custom event handler (hook)
+    //@ts-ignore
+    let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      if (
+        !(await fn[functionName](
+          //@ts-ignore
+          e.target.classList,
+          def,
+          <DisplayMode>"Table",
+          this.state
+        ))
+      ) {
+        return
+      }
+    }
+
     if (
       def.features.add ||
       def.features.filter ||
@@ -327,6 +407,21 @@ export class TableHeader extends OvlBaseElement {
 
           key: key,
         })
+      }
+    }
+  }
+
+  handleLongPress = (e) => {
+    // if on touch device also display row status message as a snack
+    if (this.state.ovl.uiState.isTouch) {
+      let mobileTooltip
+      if (e.target.title) {
+        mobileTooltip = e.target.title
+      } else if (e.target.parentNode && e.target.parentNode.title) {
+        mobileTooltip = e.target.parentNode.title
+      }
+      if (mobileTooltip) {
+        SnackAdd(mobileTooltip, "Information")
       }
     }
   }
@@ -361,6 +456,21 @@ export class TableHeader extends OvlBaseElement {
     let columnsVisible = {}
     let columnsCount = 0
     let isMobile = this.state.ovl.uiState.isMobile
+    let customHeaderCellClasses: { [key: string]: CellClass }
+    let functionName = ViewHeaderCellClass
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      customHeaderCellClasses = fn[functionName](
+        def,
+        isMobile,
+        <DisplayMode>"Table",
+        this.state
+      )
+    }
+    if (!customHeaderCellClasses) {
+      customHeaderCellClasses = {}
+    }
+
     let headerRows = html`
       ${Object.keys(columns).map((k) => {
         let column = columns[k]
@@ -382,10 +492,16 @@ export class TableHeader extends OvlBaseElement {
         }
 
         columnsVisible[k] = visible
-        if (
-          visible.indexOf("Table") < 0 ||
-          (isMobile && visible.indexOf("TableNotMobile") > -1)
-        ) {
+        if (isMobile) {
+          if (visible.indexOf("TableNotMobile") > -1) {
+            return null
+          }
+        } else {
+          if (visible.indexOf("TableOnlyMobile") > -1) {
+            return null
+          }
+        }
+        if (visible.indexOf("Table") < 0) {
           return null
         }
 
@@ -446,19 +562,49 @@ export class TableHeader extends OvlBaseElement {
           caption = k
         }
 
+        //caption = GetLabelText(caption, k, def.namespace, this.state)
+
         let stickyTableHeader
         if (OvlConfig.stickyHeaderEnabled(this.state)) {
           stickyTableHeader = "stickyTableHeader"
         }
 
+        // check for custom header renderer
+        let rendererFn = GetRendererFn(
+          def.namespace,
+          cachedRendererFn,
+          FieldGetLabelRender,
+          k
+        )
+        let headerPart
+        if (!rendererFn) {
+          headerPart = caption
+        } else {
+          headerPart = rendererFn(
+            k,
+            caption,
+            align[k],
+            <DisplayMode>"Table",
+            this.state
+          )
+        }
+
+        let customHeaderCellClass: string = ""
+        let tooltip
+        if (customHeaderCellClasses[k]) {
+          customHeaderCellClass = customHeaderCellClasses[k].className
+          tooltip = customHeaderCellClasses[k].tooltip
+        }
+
         return html`
           <th
+            data-col="${k}"
+            title="${ifDefined(tooltip ? tooltip : undefined)}"
             style="${cellBgColor}"
-            @click="${(e) => this.handleHeaderColumnClick(e, k)}"
-            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} "
+            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-tableview-headercell__${k} ${customHeaderCellClass}"
             scope="col"
           >
-            ${caption}
+            ${headerPart}
           </th>
         `
       })}
@@ -580,7 +726,7 @@ export class TableHeader extends OvlBaseElement {
         alreadyRendered[k] = true
         let row = html`
           <ovl-trg
-            class="fd-table__body"
+            class="fd-table__body ovl-tableview-row"
             .props=${() => {
               return <TableRowDef>{
                 data: dataAndSchema,
@@ -605,15 +751,20 @@ export class TableHeader extends OvlBaseElement {
     if (showMaxSizeHint) {
       maxSizeHint = html`
         <tr
-          @click=${(e) =>
-            this.handleHeaderColumnClick(
-              e,
-              this.tabledata.def.database.dataIdField
-            )}
+          data-col="${def.database.dataIdField}"
+          @click="${this.handleHeaderColumnClick}"
           class="fd-table__row"
         >
-          <td class="fd-has-text-align-center" colspan="${columnsCount}">
-            <div class="fd-alert fd-alert--warning" role="alert">
+          <td
+            data-col="${def.database.dataIdField}"
+            class="fd-has-text-align-center"
+            colspan="${columnsCount}"
+          >
+            <div
+              data-col="${def.database.dataIdField}"
+              class="fd-alert fd-alert--warning"
+              role="alert"
+            >
               <p class="fd-alert__text">
                 Mehr als ${def.options.maxRows.maxRows} Zeilen
               </p>
@@ -674,7 +825,11 @@ export class TableHeader extends OvlBaseElement {
       </caption>
       ${colWidths}
       <thead class="fd-table__header">
-        <tr class="fd-table__row">
+        <tr
+          @long-press="${this.handleLongPress}"
+          @click="${this.handleHeaderColumnClick}"
+          class="fd-table__row ovl-tableview-header"
+        >
           ${headerRows}
         </tr>
       </thead>

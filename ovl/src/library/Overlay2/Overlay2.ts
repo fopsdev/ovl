@@ -8,6 +8,7 @@ export let overlay2ToRender: {
   overlayClosedCallback: any
   template?: any
   elementToFocusAfterClose?: Element
+  elementToFocusAfterOpen?: Element
 }
 overlay2ToRender = {
   overlayDismissedCallback: undefined,
@@ -36,7 +37,7 @@ export class OvlOverlay2 extends OvlBaseElement {
 
   handleDismissed = (e: Event) => {
     //@ts-ignore
-    if (e.srcElement.id === "ovloverlay2") {
+    if (e.target.id === "ovloverlay2") {
       e.stopPropagation()
       e.preventDefault()
       if (overlay2ToRender.overlayDismissedCallback) {
@@ -93,8 +94,12 @@ export class OvlOverlay2 extends OvlBaseElement {
     `)
   }
   updated() {
-    let el = document.getElementById("ovloverlay2")
+    let el = overlay2ToRender.elementToFocusAfterOpen
+    if (!el) {
+      el = document.getElementById("ovloverlay2")
+    }
     if (el) {
+      //@ts-ignore
       el.focus()
     }
     super.updated()

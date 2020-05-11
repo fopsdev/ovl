@@ -103,7 +103,7 @@ export class CompFeedbackForm extends OvlFormElement {
             <div class="fd-form__item">
               <ovl-textarea
                 .props=${() => {
-                  return msgField
+                  return { field: msgField }
                 }}
               >
               </ovl-textarea>

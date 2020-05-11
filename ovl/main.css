@@ -40,6 +40,50 @@
 /* custom styles 
 #############################################################
 */
+
+.ovl-bigeditform,
+.ovl-detailview {
+  width: 70vw;
+  height: 98vh;
+}
+
+@media screen and (max-width: 992px) {
+  .ovl-bigeditform,
+  .ovl-detailview {
+    width: 99vw;
+    height: 98vh;
+  }
+}
+
+.ovl-value-view {
+  margin-top: -18px;
+  margin-bottom: 12px;
+  white-space: pre-line;
+}
+
+.ovl-formcontrol-textarea-input {
+  height: 70px;
+}
+
+.ovl-formcontrol-label {
+  grid-area: label;
+}
+.ovl-formcontrol-value {
+  grid-area: value;
+}
+.ovl-formcontrol-validation {
+  grid-area: validation;
+}
+
+.ovl-formcontrol-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "label"
+    "value"
+    "validation";
+}
+
 .menuDisabled {
   pointer-events: none;
   opacity: 0.6;
@@ -82,9 +126,27 @@ ovl-table {
   --fd-width-gutter: 8px;
 }
 
+.ovl-panel__header {
+  margin: 2px;
+  padding: 2px;
+  justify-content: center;
+}
+
+.ovl-panel__footer {
+  margin: 2px;
+  padding: 2px;
+  margin-bottom: 8px;
+}
+
+.scrollableMobileOverlay {
+  overflow-y: auto;
+  height: calc(100vh - 55px);
+  -webkit-overflow-scrolling: touch;
+}
+
 .scrollableOverlay {
   overflow-y: auto;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 63px);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -172,10 +234,6 @@ body {
     position: absolute;
     bottom: 0;
     right: 0;
-  }
-
-  .chartwidth {
-    width: 94vw;
   }
 }
 

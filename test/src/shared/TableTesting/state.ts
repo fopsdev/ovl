@@ -8,6 +8,10 @@ export type TableTesting = {
   U_Date: Date
   U_Int: number
   U_Decimal: number
+  U_ItemCode: string
+  U_ItmsGrpCod: string
+  U_ParentCode: string
+  U_ParentCode2: string
 }
 
 export type TableTestingColumn = keyof TableTesting
@@ -25,10 +29,21 @@ export let tblTableTesting: TableDef = {
   },
   options: {
     customRowActions: {
-      Select: { icon: "sap-icon--travel-expense", name: "Travel Expense" },
-      Shop: { icon: "sap-icon--cart", name: "Travel Expense" },
+      Select: {
+        icon: "sap-icon--travel-expense",
+        name: "Travel Expense",
+        selected: { name: "Test Expenses Multiselect" },
+      },
+      Shop: { icon: "sap-icon--cart", name: "Shop" },
+    },
+    customColumnActions: {
+      ValidValues: {
+        icon: "sap-icon--cart",
+        name: "Gültige Werte",
+      },
     },
     paging: { page: 0, pageSize: 3 },
+    view: { viewType: "custom" },
   },
   database: {
     dataIdField: "Code",
@@ -39,7 +54,8 @@ export let tblTableTesting: TableDef = {
     add: true,
     noButtonsAtTheBottom: false,
     forceFreshServerDataIfOlderThan: 0,
-    focusToFirstEditableField: false,
+    focusToFirstEditableField: true,
+    detailView: "Enabled",
   },
   columns: {
     U_Alpha: {
@@ -103,9 +119,16 @@ export let tblTableTesting2: TableDef = {
   options: {
     maxRows: { maxRows: 100, showHint: true, showInTitle: true },
     customRowActions: {
-      Select: { icon: "sap-icon--travel-expense", name: "Travel Expense" },
+      Select: {
+        icon: "sap-icon--travel-expense",
+        name: "Travel Expense",
+        selected: { name: "Test Expenses Multiselect" },
+      },
     },
-    edit: { editType: "big" },
+    edit: { editType: "big", caption: { translationKey: "PortalEdit" } },
+    view: {
+      caption: { translationKey: "PortalDetailView" },
+    },
     sortCustom: {
       sorts: {
         alphaThenMemo: {
@@ -163,18 +186,25 @@ export let tblTableTesting2: TableDef = {
     forceFreshServerDataIfOlderThan: 10,
   },
   columns: {
+    MobileSummary: {
+      sortable: true,
+      ui: { visibility: "TableOnlyMobile" },
+    },
     U_Alpha: {
       sortable: true,
 
       filter: { top: 3 },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
     U_Memo: {
       sortable: true,
       control: "textarea",
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
     U_Date: {
       control: "date",
       sortable: true,
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
 
     U_ItmsGrpCod: {
@@ -201,6 +231,7 @@ export let tblTableTesting2: TableDef = {
         acceptEmpty: false,
         acceptOnlyListValues: true,
       },
+      ui: { visibility: "TableNotMobile_Edit_View" },
     },
 
     U_ParentCode: {
@@ -223,7 +254,10 @@ export let tblTableTesting2: TableDef = {
         valueField: "Code",
         displayField: "U_Alpha",
       },
-      ui: { visibility: "TableNotMobile_Edit_View" },
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        showLabelIfNoValueInView: false,
+      },
     },
 
     U_Int: {

@@ -64,16 +64,16 @@ export class CompLoginForm extends OvlFormElement {
               <div class="fd-form__group">
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${(state) => {
-                      return userField
+                    .props=${() => {
+                      return { field: userField }
                     }}
                   >
                   </ovl-textbox>
                 </div>
                 <div class="fd-form-item">
                   <ovl-textbox
-                    .props=${(state) => {
-                      return pwField
+                    .props=${() => {
+                      return { field: pwField }
                     }}
                   >
                   </ovl-textbox>

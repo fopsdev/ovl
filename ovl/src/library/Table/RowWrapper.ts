@@ -1,6 +1,11 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
-import { TableData, TableDataAndDef, SelectedViewRow } from "./Table"
+import {
+  TableData,
+  TableDataAndDef,
+  SelectedViewRow,
+  DisplayMode,
+} from "./Table"
 import { NavProps } from "./RowControl"
 import { customFunctions, overmind } from "../../index"
 import {
@@ -14,7 +19,7 @@ import {
 
 import { resolvePath } from "../../global/globals"
 import { SnackAdd } from "../helpers"
-import { FormStatus } from "../../global/hooks"
+import { FormStatus, FieldRowCellSelectedHandler } from "../../global/hooks"
 export type TableRowDef = {
   data: TableData
   selected: SelectedRow
@@ -39,24 +44,76 @@ export class TableRowWrapper extends OvlBaseElement {
   props: any
   row: TableRowDef
 
-  handleRowLongPress = (e: Event) => {
+  handleRowLongPress = (e) => {
     // if on touch device also display row status message as a snack
-    if (
-      this.state.ovl.uiState.isTouch &&
-      //@ts-ignore
-      e.target.parentNode &&
-      //@ts-ignore
-      e.target.parentNode.title
-    ) {
-      //@ts-ignore
-      SnackAdd(e.target.parentNode.title, "Information")
+    if (this.state.ovl.uiState.isTouch) {
+      let mobileTooltip
+      if (e.target.title) {
+        mobileTooltip = e.target.title
+      } else if (e.target.parentNode && e.target.parentNode.title) {
+        mobileTooltip = e.target.parentNode.title
+      }
+      if (mobileTooltip) {
+        SnackAdd(mobileTooltip, "Information")
+      }
     }
   }
 
-  handleRowClick = (e: Event, k: string) => {
+  handleRowClick = async (e) => {
+    let def = this.row.tableDef
+    let key
+    if (e.target.getAttribute("data-col")) {
+      key = e.target.getAttribute("data-col")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.getAttribute("data-col")
+    ) {
+      key = e.target.parentNode.getAttribute("data-col")
+    }
+    if (!key) {
+      return
+    }
+    // first start custom event handler (hook)
+    let functionName = FieldRowCellSelectedHandler.replace("%", key)
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      if (
+        !(await fn[functionName](
+          //@ts-ignore
+          e.target.classList,
+          def,
+          this.row.data,
+          this.row.key,
+          <DisplayMode>"Table",
+          this.state
+        ))
+      ) {
+        return
+      }
+    }
+
+    let rowKey
+    if (e.target.getAttribute("data-rowkey")) {
+      rowKey = e.target.getAttribute("data-rowkey")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.getAttribute("data-rowkey")
+    ) {
+      rowKey = e.target.parentNode.getAttribute("data-rowkey")
+    } else if (
+      e.target.parentNode &&
+      e.target.parentNode.parentNode &&
+      e.target.parentNode.parentNode.getAttribute("data-rowkey")
+    ) {
+      rowKey = e.target.parentNode.parentNode.getAttribute("data-rowkey")
+    }
+    if (!rowKey) {
+      return
+    }
+
     let val: SelectRowDef = {
-      def: this.row.tableDef,
-      key: k,
+      def,
+      key: rowKey,
       data: this.row.data,
     }
     this.actions.ovl.table.TableSelectRow(val)
@@ -169,7 +226,7 @@ export class TableRowWrapper extends OvlBaseElement {
 
         return Promise.resolve(html`
           <ovl-trowform
-            class="fd-table__row"
+            class="fd-table__row ovl-inlineeditform"
             style="border-top:2px solid #0cd7ed; border-bottom:2px solid #0cd7ed; "
             id=${"trow" + def.id + key}
             .props=${() => {
@@ -243,7 +300,6 @@ export class TableRowWrapper extends OvlBaseElement {
         this.row.tableDef,
         data,
         this.state,
-        this.actions,
         overmind.effects
       )
       if (status) {
@@ -259,8 +315,9 @@ export class TableRowWrapper extends OvlBaseElement {
         style="${selectedRowBg}"
         class="fd-table__row ${rowStatus}  animated fadeIn faster"
         title="${rowStatusMsg}"
-        @click="${(e) => this.handleRowClick(e, key)}"
-        @long-press="${(e) => this.handleRowLongPress(e)}"
+        data-rowkey="${key}"
+        @click="${this.handleRowClick}"
+        @long-press="${this.handleRowLongPress}"
         .props=${() => {
           return <TableRowDataDef>{
             row: row,

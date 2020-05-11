@@ -1,14 +1,28 @@
 import { OvlFormElement, DataType } from "../forms/OvlFormElement"
 
-import { EditRowDef, TableDataAndDef } from "./Table"
+import { EditRowDef, TableDataAndDef, DisplayMode } from "./Table"
 import { html } from "lit-html"
-import { T, ovltemp, resolvePath } from "../../global/globals"
+import { T, ovltemp, resolvePath, isMobile } from "../../global/globals"
 import { DialogResult } from "../actions"
 import { customFunctions, overmind } from "../../index"
 import { overlayToRender } from "../Overlay/Overlay"
+import {
+  FieldIsReadOnly,
+  ViewRowCellClass,
+  ViewHeaderCellClass,
+  FieldHeaderCellSelectedHandler,
+  FieldRowCellSelectedHandler,
+  EditGetCaptionRender,
+  EditGetLabelAndValueRender,
+} from "../../global/hooks"
+import { CachedRendererData, GetRendererFn } from "./helpers"
+import { CellClass } from "./Row"
+import { SnackAdd } from "../helpers"
 
-import { FieldIsReadOnly } from "../../global/hooks"
-
+export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
 export class TableRowFormBig extends OvlFormElement {
   props: any
   rowData: EditRowDef
@@ -28,11 +42,89 @@ export class TableRowFormBig extends OvlFormElement {
       !this.focusInit
     ) {
       this.focusInit = true
-      let focusEl = document.getElementById("ovlRFNFocus_focus")
+      let el = document.getElementById("ovlRFNFocus_focus")
+      if (el) {
+        overlayToRender.elementToFocusAfterOpen =
+          el.firstElementChild.firstElementChild
+      }
       //@ts-ignore
-      focusEl.firstElementChild.focus()
+      //focusEl.firstElementChild.focus()
     }
     super.updated()
+  }
+
+  handleLongPress = (e) => {
+    // if on touch device also display row status message as a snack
+    if (this.state.ovl.uiState.isTouch) {
+      let mobileTooltip
+
+      let searchDataCol = e.target
+
+      while (searchDataCol) {
+        if (searchDataCol.title) {
+          mobileTooltip = searchDataCol.title
+          break
+        }
+        searchDataCol = searchDataCol.parentNode
+      }
+
+      if (mobileTooltip) {
+        SnackAdd(mobileTooltip, "Information")
+      }
+    }
+  }
+
+  handleClick = async (e) => {
+    let searchDataCol = e.target
+    let key
+
+    while (searchDataCol) {
+      if (searchDataCol.getAttribute("data-col")) {
+        key = searchDataCol.getAttribute("data-col")
+        break
+      }
+      searchDataCol = searchDataCol.parentNode
+    }
+
+    if (key) {
+      let def = this.rowData.tableDef
+      if (e.target.classList.contains("ovl-formcontrol-label")) {
+        let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
+        let fn = resolvePath(customFunctions, def.namespace)
+        if (fn && fn[functionName]) {
+          if (
+            !(await fn[functionName](
+              //@ts-ignore
+              e.target.classList,
+              def,
+              <DisplayMode>"Edit",
+              this.state
+            ))
+          ) {
+            return
+          }
+        }
+      } else {
+        let functionName = FieldRowCellSelectedHandler.replace("%", key)
+        let fn = resolvePath(customFunctions, def.namespace)
+        if (fn && fn[functionName]) {
+          if (
+            !(await fn[functionName](
+              //@ts-ignore
+              e.target.classList,
+              def,
+              this.rowData.data,
+              this.rowData.key,
+              <DisplayMode>"Edit",
+              this.state,
+              this.formState
+            ))
+          ) {
+            return
+          }
+        }
+      }
+    }
   }
 
   handleCancel = async () => {
@@ -90,29 +182,95 @@ export class TableRowFormBig extends OvlFormElement {
       }
     }
 
-    // const handleMainClick = (e: Event) => {
-    //   e.stopPropagation()
-    //   //e.preventDefault()
-    // }
-
     let acceptEnabled = "fd-button--positive sap-icon--accept"
 
     if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
       acceptEnabled = "fd-button nopointerevents"
     }
-    let width = def.options.edit.editScreenWidth.toString() + "vw;"
-    if (this.state.ovl.uiState.isMobile) {
-      width = "99vw;"
+
+    let customRowCellClasses: { [key: string]: CellClass }
+    let functionName = ViewRowCellClass
+    let fn = resolvePath(customFunctions, def.namespace)
+    if (fn && fn[functionName]) {
+      customRowCellClasses = fn[functionName](
+        def,
+        this.rowData.row,
+        this.state.ovl.uiState.isMobile,
+        <DisplayMode>"Edit",
+        this.state,
+        this.formState
+      )
     }
+
+    if (!customRowCellClasses) {
+      customRowCellClasses = {}
+    }
+
+    let customHeaderCellClasses: { [key: string]: CellClass }
+    let functionName2 = ViewHeaderCellClass
+    let fn2 = resolvePath(customFunctions, def.namespace)
+    if (fn2 && fn[functionName2]) {
+      customHeaderCellClasses = fn2[functionName2](
+        def,
+        this.state.ovl.uiState.isMobile,
+        <DisplayMode>"Edit",
+        this.state
+      )
+    }
+    if (!customHeaderCellClasses) {
+      customHeaderCellClasses = {}
+    }
+    let scrollable = "scrollableOverlay"
+    if (this.state.ovl.uiState.isMobile) {
+      scrollable = "scrollableMobileOverlay"
+    }
+
+    let caption
+    // lets see if we have a custom caption renderer
+    let captionFunctionName = EditGetCaptionRender
+    let captionFn = resolvePath(customFunctions, def.namespace)
+    if (def.options.view || captionFn[captionFunctionName]) {
+      let captionContent
+      let captionTranslated
+      if (def.options.edit.caption && def.options.edit.caption.translationKey) {
+        captionTranslated = T(def.options.edit.caption.translationKey)
+      }
+      if (captionFn[captionFunctionName]) {
+        captionContent = captionFn[captionFunctionName](
+          captionTranslated,
+          this.rowData,
+          this.state
+        )
+      } else {
+        captionContent = captionTranslated
+      }
+      caption = html`
+        <div
+          class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
+        >
+          ${captionContent}
+        </div>
+      `
+    }
+
     return html`
-      <div style="width:${width}" class="fd-panel">
-        <div class="scrollableOverlay">
+      <div id="ovl-bigeditform-${def.id}" class="fd-panel ovl-bigeditform">
+        <div class="fd-panel ${scrollable}">
+          ${caption}
           ${Object.keys(columns).map((k) => {
+            let customHeaderCellClass: CellClass = customHeaderCellClasses[k]
+            let customRowCellClass: CellClass = customRowCellClasses[k]
             let col = columns[k]
             let columnsVisible = this.rowData.columnsVisible
             if (columnsVisible[k].indexOf("Edit") < 0) {
               return null
             }
+            let rendererFn = GetRendererFn(
+              def.namespace,
+              cachedRendererFn,
+              EditGetLabelAndValueRender,
+              k
+            )
             let uiItem
             let id = "ovlRFNFocus_" + k
             // let controlAlign = ""
@@ -131,11 +289,9 @@ export class TableRowFormBig extends OvlFormElement {
             if (fn && fn[functionName]) {
               readonly = fn[functionName](
                 this.rowData.key,
-                this.rowData.tableDef,
+                def,
                 this.rowData.data,
-                this.state,
-                this.actions,
-                overmind.effects
+                this.state
               )
             }
             let insertMode = this.rowData.tableDef.database.dbInsertMode
@@ -162,66 +318,124 @@ export class TableRowFormBig extends OvlFormElement {
                 id = "ovlRFNFocus_focus"
                 firstEditable = true
               }
-              //@@todo switch case for the other controltypes (combo, area, check,...)
-              switch (col.control) {
-                case "text":
-                  uiItem = html`
-                    <ovl-textbox
-                      id="${id}"
-                      class="fd-form__item "
-                      .props=${() => fields[k]}
-                    >
-                    </ovl-textbox>
-                  `
-                  break
-
-                case "date":
-                  uiItem = html`
-                    <ovl-datebox
-                      id="${id}"
-                      class="fd-form__item "
-                      .props=${() => fields[k]}
-                    >
-                    </ovl-datebox>
-                  `
-                  break
-
-                case "textarea":
-                  uiItem = html`
-                    <ovl-textarea
-                      id="${id}"
-                      class="fd-form__item "
-                      .props=${() => fields[k]}
-                    >
-                    </ovl-textarea>
-                  `
-                  break
-
-                case "list":
-                  {
+            }
+            if (rendererFn) {
+              uiItem = rendererFn(
+                fields[k],
+                customHeaderCellClass,
+                customRowCellClass,
+                id,
+                readonly
+              )
+            } else {
+              if (!readonly) {
+                //@@todo switch case for the other controltypes (combo, area, check,...)
+                switch (col.control) {
+                  case "text":
                     uiItem = html`
-                      <ovl-listcontrol
+                      <ovl-textbox
                         id="${id}"
                         class="fd-form__item "
-                        .props="${() => fields[k]}"
+                        .props=${() => {
+                          return {
+                            field: fields[k],
+                            customHeaderCellClass,
+                            customRowCellClass,
+                          }
+                        }}
                       >
-                      </ovl-listcontrol>
+                      </ovl-textbox>
                     `
-                  }
-                  break
+                    break
+
+                  case "date":
+                    uiItem = html`
+                      <ovl-datebox
+                        id="${id}"
+                        class="fd-form__item "
+                        .props=${() => {
+                          return {
+                            field: fields[k],
+                            customHeaderCellClass,
+                            customRowCellClass,
+                          }
+                        }}
+                      >
+                      </ovl-datebox>
+                    `
+                    break
+
+                  case "time":
+                    uiItem = html`
+                      <ovl-timebox
+                        id="${id}"
+                        class="fd-form__item "
+                        .props=${() => {
+                          return {
+                            field: fields[k],
+                            customHeaderCellClass,
+                            customRowCellClass,
+                          }
+                        }}
+                      >
+                      </ovl-timebox>
+                    `
+                    break
+
+                  case "textarea":
+                    uiItem = html`
+                      <ovl-textarea
+                        id="${id}"
+                        class="fd-form__item "
+                        .props=${() => {
+                          return {
+                            field: fields[k],
+                            customHeaderCellClass,
+                            customRowCellClass,
+                          }
+                        }}
+                      >
+                      </ovl-textarea>
+                    `
+                    break
+
+                  case "list":
+                    {
+                      uiItem = html`
+                        <ovl-listcontrol
+                          id="${id}"
+                          class="fd-form__item "
+                          .props=${() => {
+                            return {
+                              field: fields[k],
+                              customHeaderCellClass,
+                              customRowCellClass,
+                            }
+                          }}
+                        >
+                        </ovl-listcontrol>
+                      `
+                    }
+                    break
+                }
+              } else {
+                uiItem = fields[k].value
               }
-            } else {
-              uiItem = fields[k].value
             }
 
             return html`
-              <div class="fd-panel__body">
+              <div
+                data-col="${k}"
+                @click="${this.handleClick}"
+                @long-press="${this.handleLongPress}"
+                class="fd-panel__body"
+              >
                 ${uiItem}
               </div>
             `
           })}
         </div>
-        <div class="fd-panel__footer" style="margin:2px; padding:2px;">
+        <div class="fd-panel__footer ovl-bigedit-footer ovl-panel__footer">
           <button
             @click=${handleSave}
             title="Datensatz speichern"

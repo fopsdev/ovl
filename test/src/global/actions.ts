@@ -96,19 +96,6 @@ export const Login: AsyncAction<FormState> = async (
     SnackAdd(GetFormValidationErrors(value).join("\n"), "Error")
   }
 }
-export const LoginValidateField: Action<ValidateFieldType> = (_, value) => {
-  let field = value.formState.fields[value.fieldId]
-  if (field.watched) {
-    switch (<FieldId>value.fieldId) {
-      case "pw":
-        Mandatory(T("AppLoginPassword"), value.newVal, value.validationResult)
-        break
-      case "user":
-        Email(T("AppLoginUser"), value.newVal, value.validationResult)
-        break
-    }
-  }
-}
 
 export const ForgotPw: AsyncAction<FormState> = async (
   { state, actions, effects },

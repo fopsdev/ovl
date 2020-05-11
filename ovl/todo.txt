@@ -1,33 +1,36 @@
 Todos:
 
-Custom Functions for Multiple Selected Rows
+X - Custom Column Functions
+X - Custom Functions for Multiple Selected Rows
 
 Configuration:
-- A "TableOnlyMobile" - visibility (Can be used to display aggregated data of a table only on mobile. Details are then visible as usual in detail view)
+X - A "TableOnlyMobile" - visibility (Can be used to display aggregated data of a table only on mobile. Details are then visible as usual in detail view)
 
-Field Hooks:
-- Maybe just use a Field_XX Hook instead of using the Field Key as well
-- Could simplify styling Hooks which sould be applied for all Columns(Fields)
 
-Hooks:
-- Hook FormEditLabelStyle (Provides all the fields of a row analogous to validateField)
-- Hook FormEditControlStyle(...)
-- Hook FormTableRowStyle (Provides all the fields of a row analogous to validateField)
-- Hook FormTableHeaderStyle(...)
+More Hooks:
 
-- Hook Field_%_TableRowRender. A Custom Renderer for row field in tableview
-- Hook Field_%_TableHeaderRender. A Custom Renderer for header field in tableview
-- Hook Field_%_DetailviewLabelRender. A Custom Renderer for row field in tableview
-- Hook Field_%_DetailviewRender. A Custom Renderer for header field in tableview
+X - Apply Hook and Class Styling Concept from TableHeader/TableRow to Detailview 
+X - Apply Hook and Class Styling Concept from TableHeader/TableRow to Editviews 
 
-- Hook Field_%_EditRender. A Custom Renderer for field in edit. Must fire ovlfocussout and ovlchange events to trigger validation
-- Hook FormViewRender. A Custom Renderer for the full Detail view content (Maybe prepare a codesandbox to test those...)
+X - Hook Field_%_TableRowRender. A Custom Renderer for row field in tableview
+X - Hook Field_%_TableHeaderRender. A Custom Renderer for header field in tableview
+X - Hook Field_%_ViewLabelRender. A Custom Renderer for label in detailview
+X - Hook Field_%_ViewRender. A Custom Renderer for field in detailview
 
-- Hook Field_%_Link. If present the view will display a underline which can be clicked and then this hook gets called
+X - Hook ViewCaptionRender. A custom renderer for View Title
+X - Hook EditCaptionRender. A custom renderer for Edit Title
+
+
+X - Hook Field_%_EditLabelRender. A Custom Renderer for label in edit. 
+X - Hook Field_%_EditRender. A Custom Renderer for field in edit. Must fire ovlfocussout and ovlchange events to trigger validation
+X - Hook FormViewRender. A Custom Renderer for the full Detail view content (Maybe prepare a codesandbox to test those...)
+
+- Rearrange customFunctions content into multiple files (its super big covering a lot of tests)
 
 Controls:
 - type Checkbox
 - type Link
+- type Upload File
 - type Image
 
 Offline Save/Delete:

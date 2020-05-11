@@ -24,7 +24,7 @@ export class CompDashboard extends OvlBaseElement {
                 ${T("PortalWelcome", [
                   this.state.portal.user.firstName,
                   this.state.portal.user.lastName,
-                  partner.cardName
+                  partner.cardName,
                 ])} 
                 </p>
               </div>
@@ -109,7 +109,8 @@ export class CompDashboard extends OvlBaseElement {
           <div class="fd-panel">
             <div class="fd-panel__header">
               <div class="fd-panel__head">
-                <comp-summarychart></comp-summarychart>
+                <comp-summarychart .props=${() =>
+                  "width:100%;height:500px;"} > </comp-summarychart>
               </div>
             </div>
           </div>

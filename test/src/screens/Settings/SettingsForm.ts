@@ -61,7 +61,7 @@ export class CompSettingsForm extends OvlFormElement {
                 <div class="fd-form-item ">
                   <ovl-textbox
                     .props=${() => {
-                      return pwField
+                      return { field: pwField }
                     }}
                   >
                   </ovl-textbox>
@@ -69,7 +69,7 @@ export class CompSettingsForm extends OvlFormElement {
                 <div class="fd-form-item">
                   <ovl-textbox
                     .props=${() => {
-                      return pw1Field
+                      return { field: pw1Field }
                     }}
                   >
                   </ovl-textbox>
@@ -77,7 +77,7 @@ export class CompSettingsForm extends OvlFormElement {
                 <div class="fd-form-item">
                   <ovl-textbox
                     .props=${() => {
-                      return pw2Field
+                      return { field: pw2Field }
                     }}
                   >
                   </ovl-textbox>

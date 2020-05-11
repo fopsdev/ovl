@@ -31,6 +31,7 @@ export type FormFields = {
     inline?: boolean
     isPassword?: boolean
     readonly?: boolean
+    showLabelIfNoValueInView?: boolean
   }
 }
 
