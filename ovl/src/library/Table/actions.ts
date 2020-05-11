@@ -1052,7 +1052,6 @@ export const TableMultipleDeleteRow: AsyncAction<{
             k,
             <TableDataAndDef>{ def: def, data: value.data },
             state,
-            actions,
             effects
           )
           if (res) {
@@ -1155,7 +1154,6 @@ export const TableMultipleCopyRow: AsyncAction<{
             k,
             <TableDataAndDef>{ def: def, data: value.data },
             state,
-            actions,
             effects
           )
           if (res) {
@@ -1249,7 +1247,6 @@ export const TableMultipleEditRow: AsyncAction<{
             k,
             <TableDataAndDef>{ def: def, data: value.data },
             state,
-            actions,
             effects
           )
           if (res) {
@@ -1345,7 +1342,6 @@ export const TableMultipleCustomFunction: AsyncAction<{
             k,
             <TableDataAndDef>{ def: def, data: value.data },
             state,
-            actions,
             effects
           )
           if (res) {

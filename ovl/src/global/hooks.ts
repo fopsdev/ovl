@@ -65,10 +65,26 @@ export const FieldLookupPostData = "Field_%_LookupPostData"
 export const FieldIsReadOnly = "Field_%_IsReadOnly"
 // if a field should not be displayed. Make sure to return a FieldVisibilty - Type
 export const FieldIsVisible = "Field_%_IsVisible"
-// if you would like to do the rendering of a column on your own
+// if you would like to have a custom label/columnheader text on table/view/edit-views
+export const FieldGetLabelText = "Field_%_GetLabelText"
+
+// if you would like to do the rendering of a label/columnheader on your own
 export const FieldGetValueRender = "Field_%_GetValueRender"
 // if you would like to do the rendering of a column header
 export const FieldGetLabelRender = "Field_%_GetLabelRender"
+
+// custom title on the detailview form
+export const ViewGetCaptionRender = "ViewGetCaptionRender"
+
+// custom title on the bigedit form
+export const EditGetCaptionRender = "EditGetCaptionRender"
+
+// // custom label on bigedit form
+// export const EditGetLabelRender = "Edit_%_GetLabelRender"
+
+// custom value on bigedit form. you are also responsible for rendering the label
+// check existing controls to see what events  and stuff you need to fire
+export const EditGetLabelAndValueRender = "Edit_%_GetLabelAndValueRender"
 
 // to style the header and row cells in tableview
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set

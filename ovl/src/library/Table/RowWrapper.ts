@@ -300,7 +300,6 @@ export class TableRowWrapper extends OvlBaseElement {
         this.row.tableDef,
         data,
         this.state,
-        this.actions,
         overmind.effects
       )
       if (status) {

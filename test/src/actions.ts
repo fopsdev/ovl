@@ -1,5 +1,4 @@
 import {
-  LoginValidateField,
   Login,
   ForgotPw,
   HandleAdditionalLanguageResult,
@@ -8,7 +7,6 @@ import {
   TogglePDFPopup,
 } from "./global/actions"
 let user = {
-  LoginValidateField,
   Login,
   ForgotPw,
   HandleAdditionalLanguageResult,

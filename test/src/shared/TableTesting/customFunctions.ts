@@ -15,17 +15,22 @@ import {
   SelectedCustomFunctionResult,
   DisplayMode,
   ViewRowDef,
+  EditRowDef,
 } from "../../../../ovl/src/library/Table/Table"
 import {
   getTextSort,
   getDisplayValue,
 } from "../../../../ovl/src/library/Table/helpers"
-import { LookupListPostData } from "../../../../ovl/src/library/forms/Controls/helpers"
+import {
+  LookupListPostData,
+  GetLabel,
+} from "../../../../ovl/src/library/forms/Controls/helpers"
 import {
   FormState,
   ValidateFieldType,
   FieldChanged,
   ChangeField,
+  Field,
 } from "../../../../ovl/src/library/forms/actions"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { SnackAdd, DialogOk } from "../../../../ovl/src/library/helpers"
@@ -201,7 +206,6 @@ export const FormStatus = async (
   tableDef: TableDef,
   data: TableData,
   state: typeof overmind.state,
-  actions: typeof overmind.actions,
   effects: typeof overmind.effects
 ): Promise<RowStatus> => {
   let row = <TableTesting>data.data[key]
@@ -417,6 +421,69 @@ export const Field_U_ItemCode_GetFilteredList = (
   })
 }
 
+export const Field_U_Memo_GetLabelText = (
+  caption: string,
+  columnKey: string,
+  state: typeof overmind.state
+): string => {
+  return "Memo"
+}
+
+export const Edit_U_Memo_GetLabelAndValueRender = (
+  field: Field,
+  customHeaderCellClass: CellClass,
+  customRowCellClass: CellClass,
+  id: string,
+  readonly: boolean
+): TemplateResult => {
+  const handleChange = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    let inputElement = document.getElementById(id)
+
+    let event = new CustomEvent("ovlchange", {
+      bubbles: true,
+      detail: { val: inputElement.innerText, id: field.id },
+    })
+    inputElement.dispatchEvent(event)
+  }
+
+  const handleFocusOut = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    let inputElement = document.getElementById(id)
+
+    let event = new CustomEvent("ovlfocusout", {
+      bubbles: true,
+      detail: { id: field.id },
+    })
+    inputElement.dispatchEvent(event)
+  }
+
+  return html` <div
+    class="ovl-formcontrol-container ovl-formcontrol-custom-container ovl-formcontrol-container__${field.fieldKey}"
+  >
+    <div
+      class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-custom-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderCellClass
+        ? customHeaderCellClass.className
+        : ""}"
+    >
+      ${GetLabel(field) + " (Custom)"}
+    </div>
+    <div
+      @focusout="${handleFocusOut}"
+      @input="${handleChange}"
+      contenteditable="true"
+      class="ovl-formcontrol-input  ovl-formcontrol-custom-input ovl-formcontrol-input__${field.fieldKey} ${customRowCellClass
+        ? customRowCellClass.className
+        : ""}"
+      id=${id}
+    >
+      ${field.value}
+    </div>
+  </div>`
+}
+
 export const Field_U_ItemCode_GetLabelRender = (
   columnKey: string,
   caption: string,
@@ -430,6 +497,22 @@ export const Field_U_ItemCode_GetLabelRender = (
   } else {
     return html`${caption}(Code)`
   }
+}
+
+export const ViewGetCaptionRender = (
+  caption: string,
+  row: ViewRowDef,
+  state: typeof overmind.state
+): TemplateResult => {
+  return html`Custom Caption ${caption}`
+}
+
+export const EditGetCaptionRender = (
+  caption: string,
+  row: EditRowDef,
+  state: typeof overmind.state
+): TemplateResult => {
+  return html`Custom Caption ${caption}`
 }
 
 export const Field_U_ItemCode_GetValueRender = (

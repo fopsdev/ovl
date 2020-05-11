@@ -1,9 +1,10 @@
-import { overmind } from "../index"
+import { overmind, customFunctions } from "../index"
 import { OvlConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
 import { SnackAdd } from "../library/helpers"
+import { FieldGetLabelText } from "./hooks"
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
@@ -421,4 +422,20 @@ export interface IAttachmentUpload {
   //File: IFormFile
   DocEntry: number
   FileType: string
+}
+
+// this is global to forms and table so thats why its here
+export const GetLabelText = (
+  caption: string,
+  columnKey: string,
+  namespace: string,
+  state: typeof overmind.state
+) => {
+  let fnName = FieldGetLabelText.replace("%", columnKey)
+  let fn = resolvePath(customFunctions, namespace)
+  if (fn && fn[fnName]) {
+    return fn[fnName](caption, columnKey, state)
+  } else {
+    return caption
+  }
 }

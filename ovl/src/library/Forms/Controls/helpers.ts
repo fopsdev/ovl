@@ -8,6 +8,7 @@ import {
   getDateValue,
   getDecimalValue,
   T,
+  GetLabelText,
 } from "../../../global/globals"
 import {
   FieldLookupPostData,
@@ -207,6 +208,9 @@ export const GetLabel = (field: Field): string => {
     } else {
       caption = field.fieldKey
     }
+    let state = overmind.state
+    let formState: FormState = state.ovl.forms[field.formType][field.formId]
+    caption = GetLabelText(caption, field.fieldKey, formState.namespace, state)
   }
   return caption
 }

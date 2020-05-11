@@ -1,8 +1,7 @@
 Todos:
 
-- Custom Column Functions
-
-X Custom Functions for Multiple Selected Rows
+X - Custom Column Functions
+X - Custom Functions for Multiple Selected Rows
 
 Configuration:
 X - A "TableOnlyMobile" - visibility (Can be used to display aggregated data of a table only on mobile. Details are then visible as usual in detail view)
@@ -18,11 +17,15 @@ X - Hook Field_%_TableHeaderRender. A Custom Renderer for header field in tablev
 X - Hook Field_%_ViewLabelRender. A Custom Renderer for label in detailview
 X - Hook Field_%_ViewRender. A Custom Renderer for field in detailview
 
+X - Hook ViewCaptionRender. A custom renderer for View Title
+X - Hook EditCaptionRender. A custom renderer for Edit Title
+
+
 - Hook Field_%_EditLabelRender. A Custom Renderer for label in edit. 
 - Hook Field_%_EditRender. A Custom Renderer for field in edit. Must fire ovlfocussout and ovlchange events to trigger validation
 - Hook FormViewRender. A Custom Renderer for the full Detail view content (Maybe prepare a codesandbox to test those...)
 
-
+- Rearrange customFunctions content into multiple files (its super big covering a lot of tests)
 
 Controls:
 - type Checkbox

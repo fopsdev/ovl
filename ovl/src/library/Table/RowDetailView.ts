@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { T, resolvePath, isMobile } from "../../global/globals"
+import { T, resolvePath, isMobile, GetLabelText } from "../../global/globals"
 import { overlayToRender } from "../Overlay/Overlay"
 import { OvlBaseElement } from "../OvlBaseElement"
 import {
@@ -22,6 +22,7 @@ import {
   ViewShow,
   FormAfterRender,
   ViewAfterRender,
+  ViewGetCaptionRender,
 } from "../../global/hooks"
 import { customFunctions, overmind } from "../.."
 import { ifDefined } from "lit-html/directives/if-defined"
@@ -176,12 +177,29 @@ export class TableRowDetailView extends OvlBaseElement {
     }
 
     let caption
-    if (def.options.view && def.options.view.caption) {
+    // lets see if we have a custom caption renderer
+    let captionFunctionName = ViewGetCaptionRender
+    let captionFn = resolvePath(customFunctions, def.namespace)
+    if (def.options.view || captionFn[captionFunctionName]) {
+      let captionContent
+      let captionTranslated
+      if (def.options.view.caption && def.options.view.caption.translationKey) {
+        captionTranslated = T(def.options.view.caption.translationKey)
+      }
+      if (captionFn[captionFunctionName]) {
+        captionContent = captionFn[captionFunctionName](
+          captionTranslated,
+          this.rowData,
+          this.state
+        )
+      } else {
+        captionContent = captionTranslated
+      }
       caption = html`
         <div
           class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
         >
-          ${T(def.options.view.caption.translationKey)}
+          ${captionContent}
         </div>
       `
     }
@@ -252,6 +270,7 @@ export class TableRowDetailView extends OvlBaseElement {
                 } else {
                   l = k
                 }
+                l = GetLabelText(l, k, def.namespace, this.state)
                 if (labelRendererFn) {
                   l = labelRendererFn(
                     k,
