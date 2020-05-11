@@ -69,7 +69,13 @@ export class OvlDate extends OvlBaseElement {
       align = field.ui.align
     }
 
-    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "date",
+      align
+    )
     let type: "date" | "text" = "text"
     if (this.state.ovl.uiState.isMobile) {
       type = "date"

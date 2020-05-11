@@ -482,7 +482,13 @@ export class OvlListControl extends OvlBaseElement {
       align = field.ui.align
     }
 
-    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "list",
+      align
+    )
 
     let displayValue = this.displayValue
 

@@ -62,7 +62,13 @@ export class OvlTextArea extends OvlBaseElement {
     if (field.ui && field.ui.align) {
       align = field.ui.align
     }
-    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "textarea",
+      align
+    )
 
     return html`
       <div

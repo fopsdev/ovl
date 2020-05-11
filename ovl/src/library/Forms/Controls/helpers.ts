@@ -1,6 +1,6 @@
 import { overmind } from "../../.."
 import { ListState } from "./ListControl"
-import { ListFnReturnValue, DisplayMode } from "../../Table/Table"
+import { ListFnReturnValue, DisplayMode, ControlType } from "../../Table/Table"
 import { FormState, Field, ValidateFieldResult } from "../actions"
 import { customFunctions } from "../../../index"
 import {
@@ -208,6 +208,7 @@ export const GetLabel = (
   field: Field,
   customHeaderCell: CellClass,
   res: UIValidationObject,
+  controltype: ControlType,
   align: string
 ): TemplateResult => {
   let caption = ""
@@ -252,7 +253,7 @@ export const GetLabel = (
       title="${ifDefined(
         customHeaderTooltip ? customHeaderTooltip : undefined
       )}"
-      class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-textbox-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
+      class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-formcontrol-${controltype}-label ovl-formcontrol-label__${field.fieldKey} ${customHeaderClassName}"
       aria-required="${res.needsAttention}"
       for="${field.id}"
       >${caption}</label

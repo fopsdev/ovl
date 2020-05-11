@@ -79,11 +79,9 @@ export const ViewGetCaptionRender = "ViewGetCaptionRender"
 // custom title on the bigedit form
 export const EditGetCaptionRender = "EditGetCaptionRender"
 
-// // custom label on bigedit form
-// export const EditGetLabelRender = "Edit_%_GetLabelRender"
-
 // custom value on bigedit form. you are also responsible for rendering the label
 // check existing controls to see what events  and stuff you need to fire
+// easiest is to copy the existing custom element and change it (eg. textbox.ts)
 export const EditGetLabelAndValueRender = "Edit_%_GetLabelAndValueRender"
 
 // to style the header and row cells in tableview

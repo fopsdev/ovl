@@ -55,7 +55,13 @@ export class OvlTime extends OvlBaseElement {
     if (field.ui && field.ui.align) {
       align = field.ui.align
     }
-    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "time",
+      align
+    )
 
     type TimeBoxType = "text" | "time"
     let type: TimeBoxType = "text"

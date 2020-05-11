@@ -65,7 +65,13 @@ export class OvlOption extends OvlBaseElement {
       align = field.ui.align
     }
 
-    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "option",
+      align
+    )
 
     let inline
     if (field.ui && field.ui.inline) {

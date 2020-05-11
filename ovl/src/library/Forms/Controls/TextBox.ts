@@ -74,7 +74,13 @@ export class OvlTextbox extends OvlBaseElement {
       align = field.ui.align
     }
 
-    let label = GetLabel(field, this.field.customHeaderCellClass, res, align)
+    let label = GetLabel(
+      field,
+      this.field.customHeaderCellClass,
+      res,
+      "text",
+      align
+    )
     return html`
       <div
         class="ovl-formcontrol-container ovl-formcontrol-textbox-container ovl-formcontrol-container__${field.fieldKey}"
