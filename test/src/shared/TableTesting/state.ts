@@ -43,6 +43,7 @@ export let tblTableTesting: TableDef = {
       },
     },
     paging: { page: 0, pageSize: 3 },
+    view: { viewType: "custom" },
   },
   database: {
     dataIdField: "Code",
@@ -54,6 +55,7 @@ export let tblTableTesting: TableDef = {
     noButtonsAtTheBottom: false,
     forceFreshServerDataIfOlderThan: 0,
     focusToFirstEditableField: true,
+    detailView: "Enabled",
   },
   columns: {
     U_Alpha: {

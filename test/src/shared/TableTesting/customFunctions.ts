@@ -37,6 +37,7 @@ import { SnackAdd, DialogOk } from "../../../../ovl/src/library/helpers"
 import { json } from "overmind"
 import { CellClass } from "../../../../ovl/src/library/Table/Row"
 import { OkDialog } from "../../../../ovl/src/library/Dialog/actions"
+import { ViewRendererResult } from "../../../../ovl/src/library/Table/RowDetailView"
 
 export const FormCustomColumnFn_ValidValues = async (
   fnName: string,
@@ -186,6 +187,15 @@ export const FormChanged = async (
         actions.ovl.internal.SetField(cf)
       }
   }
+}
+
+export const ViewCustom_tab1_Render = (row: ViewRowDef): ViewRendererResult => {
+  let res: ViewRendererResult = {
+    type: "Body",
+    result: undefined,
+  }
+  res.result = html`Custom Test Body`
+  return res
 }
 
 export const FormValidate = async (

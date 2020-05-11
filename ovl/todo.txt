@@ -23,7 +23,7 @@ X - Hook EditCaptionRender. A custom renderer for Edit Title
 
 X - Hook Field_%_EditLabelRender. A Custom Renderer for label in edit. 
 X - Hook Field_%_EditRender. A Custom Renderer for field in edit. Must fire ovlfocussout and ovlchange events to trigger validation
-- Hook FormViewRender. A Custom Renderer for the full Detail view content (Maybe prepare a codesandbox to test those...)
+X - Hook FormViewRender. A Custom Renderer for the full Detail view content (Maybe prepare a codesandbox to test those...)
 
 - Rearrange customFunctions content into multiple files (its super big covering a lot of tests)
 

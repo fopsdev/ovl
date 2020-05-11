@@ -158,7 +158,6 @@ export type TableDef = {
     view?: {
       caption?: { translationKey: string }
       viewType?: "default" | "custom"
-      customId?: string
     }
   }
   features?: {

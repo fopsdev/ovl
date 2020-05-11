@@ -88,6 +88,10 @@ export const EditGetLabelAndValueRender = "Edit_%_GetLabelAndValueRender"
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set
 export const ViewRowCellClass = "ViewRowCellClass"
 export const ViewHeaderCellClass = "ViewHeaderCellClass"
+
+// must return a lit-Template and a indication if it replaces all or just the body
+export const ViewCustomRender = "ViewCustom_%_Render"
+
 // now the eventhandler if the user selected/clicked the cell
 export const FieldRowCellSelectedHandler = "Field_%_RowCellSelectedHandler"
 export const FieldHeaderCellSelectedHandler =

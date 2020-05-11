@@ -1,4 +1,4 @@
-import { html } from "lit-html"
+import { html, TemplateResult } from "lit-html"
 import { T, resolvePath, isMobile } from "../../global/globals"
 import { overlayToRender } from "../Overlay/Overlay"
 import { OvlBaseElement } from "../OvlBaseElement"
@@ -10,7 +10,7 @@ import {
   GetRendererFn,
 } from "./helpers"
 import { RowControlAllAction } from "./RowControl"
-import { EditRowDef, DisplayMode, ViewRowDef } from "./Table"
+import { DisplayMode, ViewRowDef } from "./Table"
 import { CellClass } from "./Row"
 import {
   ViewRowCellClass,
@@ -23,10 +23,21 @@ import {
   FormAfterRender,
   ViewAfterRender,
   ViewGetCaptionRender,
+  ViewCustomRender,
 } from "../../global/hooks"
 import { customFunctions, overmind } from "../.."
 import { ifDefined } from "lit-html/directives/if-defined"
 import { SnackAdd } from "../helpers"
+
+export type ViewRendererResult = {
+  result: TemplateResult
+  type: "Full" | "Body"
+}
+
+export let cachedViewRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
 
 export let cachedLabelRendererFn: Map<string, CachedRendererData> = new Map<
   string,
@@ -129,6 +140,26 @@ export class TableRowDetailView extends OvlBaseElement {
 
   async getUIAsync() {
     let def = this.rowData.tableDef
+
+    // check if custom view needs to be rendered
+    let viewRendererFn
+    if (def.options.view && def.options.view.viewType === "custom") {
+      viewRendererFn = GetRendererFn(
+        def.namespace,
+        cachedViewRendererFn,
+        ViewCustomRender,
+        def.id
+      )
+    }
+    let viewRendererResult: ViewRendererResult
+    if (viewRendererFn) {
+      viewRendererResult = viewRendererFn(this.rowData)
+
+      if (viewRendererResult.type === "Full") {
+        return viewRendererResult.result
+      }
+    }
+
     let columns = def.columns
     let rowControlActions: {
       [key: string]: RowControlAllAction
@@ -204,6 +235,98 @@ export class TableRowDetailView extends OvlBaseElement {
       `
     }
 
+    let body
+
+    if (viewRendererFn) {
+      body = viewRendererResult.result
+    } else {
+      body = html`
+        ${Object.keys(columns).map((k) => {
+          let rendererFn = GetRendererFn(
+            def.namespace,
+            cachedRendererFn,
+            FieldGetValueRender,
+            k
+          )
+          let labelRendererFn = GetRendererFn(
+            def.namespace,
+            cachedLabelRendererFn,
+            FieldGetLabelRender,
+            k
+          )
+          let customHeaderCellClass = ""
+          let headertooltip
+          if (customHeaderCellClasses[k]) {
+            customHeaderCellClass = customHeaderCellClasses[k].className
+            headertooltip = customHeaderCellClasses[k].tooltip
+          }
+          let rowtooltip
+          let customRowCellClass = ""
+          if (customRowCellClasses[k]) {
+            customRowCellClass = customRowCellClasses[k].className
+            rowtooltip = customRowCellClasses[k].tooltip
+          }
+          let col = columns[k]
+          let columnsVisible = this.rowData.columnsVisible
+          if (columnsVisible[k].indexOf("View") < 0) {
+            return null
+          }
+          let uiItem
+          if (rendererFn) {
+            uiItem = rendererFn(
+              k,
+              this.rowData.row,
+              def,
+              this.rowData.columnsAlign[k],
+              <DisplayMode>"Detailview",
+              this.state
+            )
+          } else {
+            uiItem = getDisplayValue(k, col, this.rowData.row, def.namespace)
+          }
+          let label
+          let value
+          if (uiItem || (!uiItem && col.ui.showLabelIfNoValueInView)) {
+            let l
+            if (col.ui.labelTranslationKey) {
+              l = T(col.ui.labelTranslationKey)
+            } else {
+              l = k
+            }
+            //l = GetLabelText(l, k, def.namespace, this.state)
+            if (labelRendererFn) {
+              l = labelRendererFn(
+                k,
+                l,
+                this.rowData.columnsAlign[k],
+                <DisplayMode>"Detailview",
+                this.state
+              )
+            }
+
+            label = html`<label
+              title="${ifDefined(headertooltip ? headertooltip : undefined)}"
+              data-col=${k}
+              class="fd-form-label ovl-detailview-label ovl-detailview-label__${k} ${customHeaderCellClass}"
+              >${l}</label
+            >`
+            value = html`<article
+              title="${ifDefined(rowtooltip ? rowtooltip : undefined)}"
+              data-col=${k}
+              class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value__${k} ${customRowCellClass}"
+            >
+              ${uiItem}
+            </article>`
+          }
+
+          return html`<div
+            class="ovl-detailview-container ovl-detailview-container__${k}"
+          >
+            ${label} ${value}
+          </div>`
+        })}
+      `
+    }
     return html`
       <div id="ovl-detailview-${def.id}" class="fd-panel ovl-detailview">
         <div class="fd-panel ${scrollable}">
@@ -213,97 +336,7 @@ export class TableRowDetailView extends OvlBaseElement {
             @long-press="${this.handleLongPress}"
             class="fd-panel__body"
           >
-            ${Object.keys(columns).map((k) => {
-              let rendererFn = GetRendererFn(
-                def.namespace,
-                cachedRendererFn,
-                FieldGetValueRender,
-                k
-              )
-              let labelRendererFn = GetRendererFn(
-                def.namespace,
-                cachedLabelRendererFn,
-                FieldGetLabelRender,
-                k
-              )
-              let customHeaderCellClass = ""
-              let headertooltip
-              if (customHeaderCellClasses[k]) {
-                customHeaderCellClass = customHeaderCellClasses[k].className
-                headertooltip = customHeaderCellClasses[k].tooltip
-              }
-              let rowtooltip
-              let customRowCellClass = ""
-              if (customRowCellClasses[k]) {
-                customRowCellClass = customRowCellClasses[k].className
-                rowtooltip = customRowCellClasses[k].tooltip
-              }
-              let col = columns[k]
-              let columnsVisible = this.rowData.columnsVisible
-              if (columnsVisible[k].indexOf("View") < 0) {
-                return null
-              }
-              let uiItem
-              if (rendererFn) {
-                uiItem = rendererFn(
-                  k,
-                  this.rowData.row,
-                  def,
-                  this.rowData.columnsAlign[k],
-                  <DisplayMode>"Detailview",
-                  this.state
-                )
-              } else {
-                uiItem = getDisplayValue(
-                  k,
-                  col,
-                  this.rowData.row,
-                  def.namespace
-                )
-              }
-              let label
-              let value
-              if (uiItem || (!uiItem && col.ui.showLabelIfNoValueInView)) {
-                let l
-                if (col.ui.labelTranslationKey) {
-                  l = T(col.ui.labelTranslationKey)
-                } else {
-                  l = k
-                }
-                //l = GetLabelText(l, k, def.namespace, this.state)
-                if (labelRendererFn) {
-                  l = labelRendererFn(
-                    k,
-                    l,
-                    this.rowData.columnsAlign[k],
-                    <DisplayMode>"Detailview",
-                    this.state
-                  )
-                }
-
-                label = html`<label
-                  title="${ifDefined(
-                    headertooltip ? headertooltip : undefined
-                  )}"
-                  data-col=${k}
-                  class="fd-form-label ovl-detailview-label ovl-detailview-label__${k} ${customHeaderCellClass}"
-                  >${l}</label
-                >`
-                value = html`<article
-                  title="${ifDefined(rowtooltip ? rowtooltip : undefined)}"
-                  data-col=${k}
-                  class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value__${k} ${customRowCellClass}"
-                >
-                  ${uiItem}
-                </article>`
-              }
-
-              return html`<div
-                class="ovl-detailview-container ovl-detailview-container__${k}"
-              >
-                ${label} ${value}
-              </div>`
-            })}
+            ${body}
           </div>
         </div>
         <div class="fd-panel__footer ovl-panel__footer ovl-detailview-footer">
