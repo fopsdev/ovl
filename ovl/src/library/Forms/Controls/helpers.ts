@@ -1,25 +1,25 @@
+import { html, TemplateResult } from "lit-html"
+import { ifDefined } from "lit-html/directives/if-defined"
 import { overmind } from "../../.."
-import { ListState } from "./ListControl"
-import { ListFnReturnValue, DisplayMode, ControlType } from "../../Table/Table"
-import { FormState, Field, ValidateFieldResult } from "../actions"
-import { customFunctions } from "../../../index"
 import {
-  resolvePath,
   getDateValue,
   getDecimalValue,
+  resolvePath,
   T,
 } from "../../../global/globals"
 import {
-  FieldLookupPostData,
-  FieldGetList,
   FieldGetFilteredList,
   FieldGetLabelRender,
+  FieldGetList,
+  FieldLookupPostData,
 } from "../../../global/hooks"
-import { CellClass } from "../../Table/Row"
-import { TemplateResult, html } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
-import { UIValidationObject } from "./uiValidationHelper"
+import { customFunctions } from "../../../index"
 import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
+import { CellClass } from "../../Table/Row"
+import { ControlType, DisplayMode, ListFnReturnValue } from "../../Table/Table"
+import { Field, FormState } from "../actions"
+import { ListState } from "./ListControl"
+import { UIValidationObject } from "./uiValidationHelper"
 
 export type LookupListPostData = {
   url: string
@@ -213,14 +213,17 @@ export const GetLabel = (
 ): TemplateResult => {
   let caption = ""
   let label
+
   if (field.ui) {
     if (field.ui.noLabel) {
-      caption = ""
-    } else if (field.ui.labelTranslationKey) {
-      caption = T(field.ui.labelTranslationKey)
-    } else {
-      caption = field.fieldKey
+      return null
     }
+    if (field.ui.labelTranslationKey) {
+      caption = T(field.ui.labelTranslationKey)
+    }
+  }
+  if (!caption) {
+    caption = field.fieldKey
   }
 
   let customHeaderClassName = ""
