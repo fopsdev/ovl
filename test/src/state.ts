@@ -1,15 +1,14 @@
-import { tblTableTesting, tblTableTesting2 } from "./shared/TableTesting/state"
-import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/state"
-import {
-  TableData,
-  ListFnReturnValue,
-  TableDef,
-  TableDataAndDef,
-} from "../../ovl/src/library/Table/Table"
-import { File } from "./components/FileList/FileList"
-import { tblTranslation } from "./screens/Translation/state"
-import { tblAudit } from "./screens/Audit/state"
 import { LookupDef } from "../../ovl/src/library/forms/OvlFormElement"
+import { ListFnReturnValue, TableData } from "../../ovl/src/library/Table/Table"
+import { File } from "./components/FileList/FileList"
+import { tblAudit } from "./screens/Audit/state"
+import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/state"
+import { tblTranslation } from "./screens/Translation/state"
+import {
+  tblTableTesting,
+  tblTableTesting2,
+  tblTableTesting3,
+} from "./shared/TableTesting/state"
 
 export type FileList = {
   files: File[]
@@ -169,6 +168,7 @@ export type TableDefIds =
   | "audit"
   | "tab1"
   | "tab2"
+  | "tab3"
   | "mobiletimerecording1"
 
 export let portal: Portal = {
@@ -202,7 +202,11 @@ export let testtables = {
   tableTesting: <TableData>{
     data: {},
     schema: {},
-    tableDef: { tab1: tblTableTesting, tab2: tblTableTesting2 },
+    tableDef: {
+      tab1: tblTableTesting,
+      tab2: tblTableTesting2,
+      tab3: tblTableTesting3,
+    },
     lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
     lookupDef2: <{ [key: string]: LookupDef }>{
       U_Alpha: { type: "text" },

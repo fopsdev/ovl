@@ -243,7 +243,10 @@ export let tblTableTesting2: TableDef = {
         valueField: "Code",
         displayField: "U_Alpha",
       },
-      ui: { visibility: "TableNotMobile_Edit_View" },
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        showLabelIfNoValueInView: false,
+      },
     },
     U_ParentCode2: {
       sortable: true,
@@ -268,6 +271,59 @@ export let tblTableTesting2: TableDef = {
     U_Decimal: {
       sortable: true,
       ui: { format: "4digits" },
+    },
+  },
+}
+
+export let tblTableTesting3: TableDef = {
+  id: "tab3",
+  title: "Testtabelle3 aus SAP",
+  namespace: "testtables.tabletesting",
+  server: {
+    endpoint: "tabletesting",
+  },
+  options: {
+    maxRows: { maxRows: 100, showHint: true, showInTitle: true },
+    edit: { editType: "big" },
+  },
+  database: {
+    dataIdField: "Code",
+    dbInsertMode: "UDTAutoNumberBoth",
+  },
+  features: {
+    detailView: "Enabled",
+    filter: false,
+    page: false,
+    add: true,
+    noButtonsAtTheBottom: true,
+    forceFreshServerDataIfOlderThan: 10,
+  },
+  columns: {
+    MobileSummary: {
+      sortable: true,
+      ui: { visibility: "TableOnlyMobile" },
+    },
+    U_Alpha: {
+      sortable: true,
+
+      filter: { top: 3 },
+      ui: { visibility: "TableNotMobile_Edit_View" },
+    },
+    U_Date: {
+      control: "date",
+      sortable: true,
+      ui: { visibility: "TableNotMobile_Edit_View" },
+    },
+
+    U_Decimal: {
+      sortable: true,
+      ui: { format: "4digits" },
+    },
+    U_Checked: {
+      sortable: true,
+      control: "checkbox",
+
+      ui: { checkedValue: "Y", align: "center" },
     },
   },
 }

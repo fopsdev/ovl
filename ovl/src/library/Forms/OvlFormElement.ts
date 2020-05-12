@@ -1,10 +1,10 @@
+import { customFunctions, FormType, overmind } from "../.."
+import { resolvePath } from "../../global/globals"
+import { FormAfterRender, FormShow } from "../../global/hooks"
 import { OvlBaseElement } from "../OvlBaseElement"
+import { ColumnAlign } from "../Table/Table"
 import { FormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
-import { FormType, customFunctions, overmind, Screen } from "../.."
-import { resolvePath } from "../../global/globals"
-import { ColumnAlign } from "../Table/Table"
-import { FormAfterRender, FormShow } from "../../global/hooks"
 
 export type FieldFormat =
   | "2digits"
@@ -32,6 +32,7 @@ export type FormFields = {
     isPassword?: boolean
     readonly?: boolean
     showLabelIfNoValueInView?: boolean
+    checkedValue?: string | boolean
   }
 }
 

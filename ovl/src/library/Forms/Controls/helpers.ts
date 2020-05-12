@@ -221,9 +221,9 @@ export const GetLabel = (
     if (field.ui.labelTranslationKey) {
       caption = T(field.ui.labelTranslationKey)
     }
-  }
-  if (!caption) {
-    caption = field.fieldKey
+    if (!caption) {
+      caption = field.fieldKey
+    }
   }
 
   let customHeaderClassName = ""

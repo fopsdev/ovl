@@ -1,27 +1,31 @@
-import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
+import { ifDefined } from "lit-html/directives/if-defined"
 import { repeat } from "lit-html/directives/repeat"
-import { TableRowDef } from "./RowWrapper"
-import { DataType, Schema, LookupDef } from "../Forms/OvlFormElement"
-import { customFunctions, overmind, TableDefIds } from "../../index"
-
-import { HeaderMenuDef } from "./HeaderMenu"
-import { FieldFormat } from "../Forms/OvlFormElement"
-import { NavDef } from "./NavControl"
-import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ovltemp, resolvePath, T } from "../../global/globals"
+import {
+  FieldGetLabelRender,
+  FieldHeaderCellSelectedHandler,
+  FieldIsVisible,
+  ViewHeaderCellClass,
+} from "../../global/hooks"
+import { customFunctions, overmind, TableDefIds } from "../../index"
+import { OvlConfig } from "../../init"
+import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ListState } from "../Forms/Controls/ListControl"
 import {
-  FieldIsVisible,
-  FieldGetLabelRender,
-  ViewHeaderCellClass,
-  FieldHeaderCellSelectedHandler,
-} from "../../global/hooks"
-import { OvlConfig } from "../../init"
-import { CellClass } from "./Row"
-import { ifDefined } from "lit-html/directives/if-defined"
+  DataType,
+  FieldFormat,
+  LookupDef,
+  Schema,
+} from "../Forms/OvlFormElement"
 import { SnackAdd } from "../helpers"
+import { OvlBaseElement } from "../OvlBaseElement"
+import { HeaderMenuDef } from "./HeaderMenu"
 import { CachedRendererData, GetRendererFn } from "./helpers"
+import { NavDef } from "./NavControl"
+import { CellClass } from "./Row"
+import { TableRowDef } from "./RowWrapper"
+
 export type SaveMode = "add" | "update"
 
 export type DisplayMode = "Table" | "Detailview" | "Edit" | "EditInline"
@@ -214,7 +218,7 @@ export type ControlType =
   | "text"
   | "textarea"
   | "list"
-  | "bool"
+  | "checkbox"
   | "option"
   | "select"
   | "date"
@@ -231,7 +235,8 @@ type Sort = {
 }
 
 type CustomSort = {
-  description: string
+  description?: string
+  translationKey?: string
   showInTitle: boolean
 }
 
@@ -244,7 +249,8 @@ type Filter = {
 type CustomFilterType = "single" | "multi"
 
 type CustomFilter = {
-  description: string
+  description?: string
+  translationKey?: string
   showInTitle: boolean
   type: CustomFilterType
   active: boolean
@@ -307,6 +313,7 @@ export type ColumnDef = {
     readonly?: boolean
     visibility?: FieldVisibility
     showLabelIfNoValueInView?: boolean
+    checkedValue?: string | boolean
   }
 }
 
@@ -788,13 +795,21 @@ export class TableHeader extends OvlBaseElement {
       sortCustom.selected &&
       sortCustom.sorts[sortCustom.selected].showInTitle
     ) {
-      sortText = sortCustom.sorts[sortCustom.selected].description
+      let description = sortCustom.sorts[sortCustom.selected].description
+      if (sortCustom.sorts[sortCustom.selected].translationKey) {
+        description = T(sortCustom.sorts[sortCustom.selected].translationKey)
+      }
+      sortText = description
     }
     let filterText = ""
     Object.keys(filterCustom)
       .filter((f) => filterCustom[f].active && filterCustom[f].showInTitle)
       .map((m) => {
-        filterText = filterText + filterCustom[m].description + ", "
+        let description = filterCustom[m].description
+        if (filterCustom[m].translationKey) {
+          description = T(filterCustom[m].translationKey)
+        }
+        filterText = filterText + description + ", "
       })
     // if (filterText) {
     //   filterText = filterText.substring(0,filterText.length-1);

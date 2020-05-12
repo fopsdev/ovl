@@ -1,18 +1,12 @@
-import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { TableRowDataDef } from "./RowWrapper"
-import { getDisplayValue, CachedRendererData, GetRendererFn } from "./helpers"
-import { customFunctions, overmind } from "../../index"
 import { resolvePath } from "../../global/globals"
-import { GetLabel } from "../forms/Controls/helpers"
-import {
-  FieldGetList,
-  FieldGetValueRender,
-  ViewHeaderCellClass,
-  ViewRowCellClass,
-} from "../../global/hooks"
-import { FieldVisibility, DisplayMode } from "./Table"
+import { FieldGetValueRender, ViewRowCellClass } from "../../global/hooks"
+import { customFunctions } from "../../index"
+import { OvlBaseElement } from "../OvlBaseElement"
+import { CachedRendererData, getDisplayValue, GetRendererFn } from "./helpers"
+import { TableRowDataDef } from "./RowWrapper"
+import { DisplayMode } from "./Table"
 
 export type CellClass = {
   className?: string
@@ -89,7 +83,28 @@ export class TableRow extends OvlBaseElement {
           k
         )
         if (!rendererFn) {
-          rowPart = getDisplayValue(k, col, row, def.namespace)
+          if (col.control === "checkbox") {
+            if (row[k] === col.ui.checkedValue) {
+              rowPart = html`<b>✓</b>`
+            }
+
+            // rowPart = html`<div class="fd-form-item">
+            //   <input
+            //     type="checkbox"
+            //     class="fd-checkbox ovl-table-checkbox"
+            //     id="ovl-checkbox${this.row.key}"
+            //     readonly
+            //     ?checked=${row[k] === col.ui.checkedValue}
+            //   />
+            //   <label
+            //     class="fd-checkbox__label"
+            //     for="ovl-checkbox${this.row.key}"
+            //   >
+            //   </label>
+            // </div>`
+          } else {
+            rowPart = getDisplayValue(k, col, row, def.namespace)
+          }
         } else {
           rowPart = rendererFn(
             k,

@@ -1,14 +1,11 @@
-import { OvlBaseElement } from "../../OvlBaseElement"
-import { ColumnAlign } from "../../Table/Table"
 import { html } from "lit-html"
-import { Field, FormState } from "../actions"
-import { getUIValidationObject } from "./uiValidationHelper"
-import { ListState } from "./ListControl"
-import { GetRowFromFormState, GetLabel, ControlState } from "./helpers"
-import { overmind, customFunctions } from "../../.."
+import { ifDefined } from "lit-html/directives/if-defined"
+import { customFunctions, overmind } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { OvlBaseElement } from "../../OvlBaseElement"
+import { ControlState, GetLabel, GetRowFromFormState } from "./helpers"
+import { getUIValidationObject } from "./uiValidationHelper"
 
 export class OvlOption extends OvlBaseElement {
   props: any
@@ -93,7 +90,7 @@ export class OvlOption extends OvlBaseElement {
           ${Object.keys(listData).map((rowKey) => {
             return html`
               <input
-                class="fd-radio ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.fieldKey}"
+                class="fd-radio ovl-focusable ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.fieldKey}"
                 @click=${(e) => e.stopPropagation()}
                 @change=${(e) =>
                   this.handleChange(

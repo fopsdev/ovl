@@ -1,23 +1,22 @@
-import { OvlFormElement, DataType } from "../forms/OvlFormElement"
-
-import { EditRowDef, TableDataAndDef, DisplayMode } from "./Table"
 import { html } from "lit-html"
-import { T, ovltemp, resolvePath, isMobile } from "../../global/globals"
-import { DialogResult } from "../actions"
-import { customFunctions, overmind } from "../../index"
-import { overlayToRender } from "../Overlay/Overlay"
+import { ovltemp, resolvePath, T } from "../../global/globals"
 import {
-  FieldIsReadOnly,
-  ViewRowCellClass,
-  ViewHeaderCellClass,
-  FieldHeaderCellSelectedHandler,
-  FieldRowCellSelectedHandler,
   EditGetCaptionRender,
   EditGetLabelAndValueRender,
+  FieldHeaderCellSelectedHandler,
+  FieldIsReadOnly,
+  FieldRowCellSelectedHandler,
+  ViewHeaderCellClass,
+  ViewRowCellClass,
 } from "../../global/hooks"
+import { customFunctions } from "../../index"
+import { DialogResult } from "../actions"
+import { OvlFormElement } from "../forms/OvlFormElement"
+import { SnackAdd } from "../helpers"
+import { overlayToRender } from "../Overlay/Overlay"
 import { CachedRendererData, GetRendererFn } from "./helpers"
 import { CellClass } from "./Row"
-import { SnackAdd } from "../helpers"
+import { DisplayMode, EditRowDef } from "./Table"
 
 export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
   string,
@@ -44,8 +43,10 @@ export class TableRowFormBig extends OvlFormElement {
       this.focusInit = true
       let el = document.getElementById("ovlRFNFocus_focus")
       if (el) {
-        overlayToRender.elementToFocusAfterOpen =
-          el.firstElementChild.firstElementChild
+        let focusEl: HTMLCollection = el.getElementsByClassName("ovl-focusable")
+        if (focusEl.length > 0) {
+          overlayToRender.elementToFocusAfterOpen = focusEl[0]
+        }
       }
       //@ts-ignore
       //focusEl.firstElementChild.focus()
@@ -414,6 +415,24 @@ export class TableRowFormBig extends OvlFormElement {
                           }}
                         >
                         </ovl-listcontrol>
+                      `
+                    }
+                    break
+                  case "checkbox":
+                    {
+                      uiItem = html`
+                        <ovl-checkbox
+                          id="${id}"
+                          class="fd-form__item "
+                          .props=${() => {
+                            return {
+                              field: fields[k],
+                              customHeaderCellClass,
+                              customRowCellClass,
+                            }
+                          }}
+                        >
+                        </ovl-checkbox>
                       `
                     }
                     break

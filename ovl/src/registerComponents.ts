@@ -1,25 +1,26 @@
 import { OvlDialog } from "./library/Dialog/Dialog"
-import { OvlSnack } from "./library/Snack/Snack"
-import { OvlOverlay } from "./library/Overlay/Overlay"
-import { OvlOverlay2 } from "./library/Overlay2/Overlay2"
-
-import { OvlTextbox } from "./library/Forms/Controls/TextBox"
+import { OvlCheckbox } from "./library/Forms/Controls/CheckBox"
+import { OvlDate } from "./library/Forms/Controls/Date"
 import { OvlListControl } from "./library/Forms/Controls/ListControl"
+import { OvlOption } from "./library/Forms/Controls/Option"
 import { OvlHitList } from "./library/Forms/Controls/Parts/HitList"
 import { OvlTextArea } from "./library/Forms/Controls/TextArea"
-import { OvlOption } from "./library/Forms/Controls/Option"
+import { OvlTextbox } from "./library/Forms/Controls/TextBox"
 import { OvlTime } from "./library/Forms/Controls/Time"
-import { OvlDate } from "./library/Forms/Controls/Date"
-import { TableHeader } from "./library/Table/Table"
+import { OvlOverlay } from "./library/Overlay/Overlay"
+import { OvlOverlay2 } from "./library/Overlay2/Overlay2"
+import { OvlSnack } from "./library/Snack/Snack"
+import { TableHeaderMenu } from "./library/Table/HeaderMenu"
+import { TableNavControl } from "./library/Table/NavControl"
 import { TableRow } from "./library/Table/Row"
-import { TableRowWrapper } from "./library/Table/RowWrapper"
+import { TableRowControl } from "./library/Table/RowControl"
+import { TableRowDetailView } from "./library/Table/RowDetailView"
 import { TableRowForm } from "./library/Table/RowForm"
 import { TableRowFormBig } from "./library/Table/RowFormBig"
-import { TableRowDetailView } from "./library/Table/RowDetailView"
 import { TableRowSaveCancel } from "./library/Table/RowFormSaveCancel"
-import { TableRowControl } from "./library/Table/RowControl"
-import { TableNavControl } from "./library/Table/NavControl"
-import { TableHeaderMenu } from "./library/Table/HeaderMenu"
+import { TableRowWrapper } from "./library/Table/RowWrapper"
+import { TableHeader } from "./library/Table/Table"
+
 export const defineElements = () => {
   customElements.define("ovl-trowcontrol", TableRowControl)
   customElements.define("ovl-tnavcontrol", TableNavControl)
@@ -33,6 +34,7 @@ export const defineElements = () => {
   customElements.define("ovl-trowsc", TableRowSaveCancel)
   customElements.define("ovl-textarea", OvlTextArea)
   customElements.define("ovl-textbox", OvlTextbox)
+  customElements.define("ovl-checkbox", OvlCheckbox)
   customElements.define("ovl-listcontrol", OvlListControl)
   customElements.define("ovl-option", OvlOption)
   customElements.define("ovl-hitlist", OvlHitList)

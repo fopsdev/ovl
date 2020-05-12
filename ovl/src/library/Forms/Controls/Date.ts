@@ -1,10 +1,8 @@
-import { OvlBaseElement } from "../../OvlBaseElement"
-import { ColumnAlign } from "../../Table/Table"
 import { html } from "lit-html"
-import { Field } from "../actions"
-import { getUIValidationObject } from "./uiValidationHelper"
-import { GetLabel, ControlState } from "./helpers"
 import { ifDefined } from "lit-html/directives/if-defined"
+import { OvlBaseElement } from "../../OvlBaseElement"
+import { ControlState, GetLabel } from "./helpers"
+import { getUIValidationObject } from "./uiValidationHelper"
 
 export class OvlDate extends OvlBaseElement {
   props: any
@@ -91,7 +89,7 @@ export class OvlDate extends OvlBaseElement {
           @keydown=${(e) => this.handleKeyDown(e)}
           style="${align}"
           autocomplete="off"
-          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-date-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
+          class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-date-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
           type="${type}"
           id="${field.id}"
         />

@@ -80,7 +80,7 @@ export class OvlTextArea extends OvlBaseElement {
           @keydown=${(e) => this.handleKeyDown(e)}
           @change=${(e) => this.handleChange(e)}
           @focusout=${(e) => this.handleFocusOut(e)}
-          class="fd-textarea ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-formcontrol-textarea-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
+          class="fd-textarea ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-formcontrol-textarea-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
           id="${field.id}"
         >
 ${field.value}</textarea

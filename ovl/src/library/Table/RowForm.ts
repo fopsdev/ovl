@@ -1,19 +1,16 @@
-import { OvlFormElement, DataType } from "../../library/forms/OvlFormElement"
-
-import { EditRowDef, TableDataAndDef, DisplayMode } from "./Table"
 import { html } from "lit-html"
-import { resolvePath, isMobile } from "../../global/globals"
-import { customFunctions, overmind } from "../../index"
-import { overlayToRender } from "../Overlay/Overlay"
-
+import { resolvePath } from "../../global/globals"
 import {
   FieldIsReadOnly,
-  ViewRowCellClass,
-  ViewHeaderCellClass,
-  FieldHeaderCellSelectedHandler,
   FieldRowCellSelectedHandler,
+  ViewHeaderCellClass,
+  ViewRowCellClass,
 } from "../../global/hooks"
+import { customFunctions, overmind } from "../../index"
+import { OvlFormElement } from "../../library/forms/OvlFormElement"
+import { overlayToRender } from "../Overlay/Overlay"
 import { CellClass } from "./Row"
+import { DisplayMode, EditRowDef } from "./Table"
 
 export class TableRowForm extends OvlFormElement {
   props: any
@@ -81,12 +78,16 @@ export class TableRowForm extends OvlFormElement {
       !this.focusInit
     ) {
       this.focusInit = true
-      let focusEl = document.getElementById(
-        this.rowData.key + "ovlRFNFocus_focus"
-      ).firstElementChild
-      //@ts-ignore
-      focusEl.firstElementChild.focus()
-      let target = focusEl
+
+      let el = document.getElementById(this.rowData.key + "ovlRFNFocus_focus")
+      let target
+      if (el) {
+        let focusEl: HTMLCollection = el.getElementsByClassName("ovl-focusable")
+        if (focusEl.length > 0) {
+          target = focusEl[0]
+        }
+      }
+      target.focus()
       var rect = target.getBoundingClientRect()
       if (rect.bottom > window.innerHeight) {
         target.scrollIntoView(false)

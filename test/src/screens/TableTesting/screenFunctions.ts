@@ -40,6 +40,13 @@ export const ScreenNavigateIn = async (
     data,
     ignoreRefreshedMessageSnack: true,
   })
+
+  defId = "tab3"
+  actions.ovl.table.TableRefresh({
+    defId,
+    data,
+    ignoreRefreshedMessageSnack: true,
+  })
 }
 
 export const ScreenNavigateOut = async (

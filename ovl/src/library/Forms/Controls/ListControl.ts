@@ -1,21 +1,19 @@
-import { OvlBaseElement } from "../../OvlBaseElement"
 import { html, TemplateResult } from "lit-html"
-import { Field } from "../actions"
-import { getUIValidationObject } from "./uiValidationHelper"
-import { ColumnAlign, ListFnReturnValue } from "../../Table/Table"
-
-import {
-  FilterHitList,
-  GetListDisplayValue,
-  GetRowFromFormState,
-  GetLabel,
-  ControlState,
-} from "./helpers"
-import { overmind, customFunctions } from "../../.."
-import { SnackAdd } from "../../helpers"
+import { ifDefined } from "lit-html/directives/if-defined"
+import { customFunctions, overmind } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { SnackAdd } from "../../helpers"
+import { OvlBaseElement } from "../../OvlBaseElement"
+import { ListFnReturnValue } from "../../Table/Table"
+import {
+  ControlState,
+  FilterHitList,
+  GetLabel,
+  GetListDisplayValue,
+  GetRowFromFormState,
+} from "./helpers"
+import { getUIValidationObject } from "./uiValidationHelper"
 
 type ListFunction = (
   row: { [key: string]: {} },
@@ -536,7 +534,7 @@ export class OvlListControl extends OvlBaseElement {
               style="${align}"
               +
               type="text"
-              class="fd-input fd-input-group__input fd-has-type-1  ovl-formcontrol-listcontrol-input ovl-formcontrol-input__${field.fieldKey}"
+              class="fd-input ovl-focusable fd-input-group__input fd-has-type-1  ovl-formcontrol-listcontrol-input ovl-formcontrol-input__${field.fieldKey}"
               id="${field.id}"
               @change=${(e) => this.handleChange(e)}
               value="${displayValue}"

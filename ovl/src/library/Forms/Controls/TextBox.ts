@@ -1,10 +1,8 @@
-import { OvlBaseElement } from "../../../library/OvlBaseElement"
-import { ColumnAlign } from "../../Table/Table"
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { Field } from "../actions"
+import { OvlBaseElement } from "../../../library/OvlBaseElement"
+import { ControlState, GetLabel } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { GetLabel, ControlState } from "./helpers"
 
 type TextBoxType = "text" | "password" | "text-security"
 
@@ -94,7 +92,7 @@ export class OvlTextbox extends OvlBaseElement {
           style="${style} ${align}"
           autocomplete="off"
           inputmode="${inputMode}"
-          class="fd-input ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-textbox-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
+          class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-textbox-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
           type="${type}"
           id="${field.id}"
           value="${field.value}"

@@ -9,7 +9,9 @@ export const FormShow = async (
 ) => {
   console.log("hello from formshow hook. setting focus to item group")
   //@ts-ignore
-  document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()
+  if (formState.fields["U_ItmsGrpCod"]) {
+    document.getElementById(formState.fields["U_ItmsGrpCod"].id).focus()
+  }
 }
 
 export const FormAfterRender = async (

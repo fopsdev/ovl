@@ -1,19 +1,12 @@
-import { OvlBaseElement } from "../OvlBaseElement"
 import { html, TemplateResult } from "lit-html"
-import {
-  TableDef,
-  TableDataAndDef,
-  ColumnFilter,
-  ColumnFilterTypes,
-} from "./Table"
-import { filter } from "overmind"
+import { customFunctions, overmind } from "../.."
+import { resolvePath, T } from "../../global/globals"
+import { FormCustomColumnFn } from "../../global/hooks"
+import { overlayToRender } from "../../library/Overlay/Overlay"
+import { OvlBaseElement } from "../OvlBaseElement"
 import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
-import { overlayToRender } from "../../library/Overlay/Overlay"
-import { SnackAdd } from "../helpers"
-import { T, resolvePath } from "../../global/globals"
-import { FormCustomColumnFn } from "../../global/hooks"
-import { customFunctions, overmind } from "../.."
+import { ColumnFilter, ColumnFilterTypes, TableDataAndDef } from "./Table"
 
 export type HeaderMenuDef = {
   def: TableDataAndDef
@@ -744,7 +737,11 @@ export class TableHeaderMenu extends OvlBaseElement {
     let sortCustomKeys = Object.keys(sortCustom.sorts)
     if (sortCustomKeys.length > 0) {
       let options = sortCustomKeys.map((k) => {
-        let optionText = sortCustom.sorts[k].description
+        let description = sortCustom.sorts[k].description
+        if (sortCustom.sorts[k].translationKey) {
+          description = T(sortCustom.sorts[k].translationKey)
+        }
+        let optionText = description
 
         if (sortCustom.selected === k) {
           return html`
@@ -791,7 +788,11 @@ export class TableHeaderMenu extends OvlBaseElement {
     let filterCustomKeys = Object.keys(filterCustom)
     if (filterCustomKeys.length > 0) {
       let options = filterCustomKeys.map((k) => {
-        let optionText = filterCustom[k].description
+        let description = filterCustom[k].description
+        if (filterCustom[k].translationKey) {
+          description = T(filterCustom[k].translationKey)
+        }
+        let optionText = description
 
         if (filterCustom[k].active) {
           return html`

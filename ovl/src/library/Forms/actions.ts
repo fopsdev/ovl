@@ -1,16 +1,16 @@
 import { Action } from "overmind"
-import { DataType, FieldFormat, Schema, FormFields } from "./OvlFormElement"
 import {
-  getDecimalValue,
   getDateValue,
+  getDecimalValue,
   resolvePath,
 } from "../../global/globals"
+import { FieldGetList, FormChanged, FormValidate } from "../../global/hooks"
+import { customFunctions, FormType } from "../../index"
+import { ColumnAlign, ListFnReturnValue } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
-import { customFunctions, FormType } from "../../index"
-import { ListFnReturnValue, ColumnAlign } from "../Table/Table"
 import { getFormFields, ValidationAddError } from "./helper"
-import { FormValidate, FormChanged, FieldGetList } from "../../global/hooks"
+import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
 export { FillListControl }
 
 export type Field = {
@@ -33,6 +33,7 @@ export type Field = {
     inline?: boolean
     isPassword?: boolean
     readonly?: boolean
+    checkedValue?: string | boolean
   }
 }
 
