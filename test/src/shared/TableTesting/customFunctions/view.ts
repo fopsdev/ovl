@@ -20,15 +20,20 @@ export const ViewAfterRender = async (
   console.log(
     "hello from tabletesting view afterrender hook. you may do some crazy stuff in here. why not add a chart?"
   )
-  let newDiv = document.createElement("div")
-  render(
-    html`<comp-summarychart
-      .props=${() => "height:500px;"}
-    ></comp-summarychart>`,
-    newDiv
+  let mainViewEl: HTMLCollection = document.getElementsByClassName(
+    "ovl-detailview-body"
   )
-  let mainViewEl = document.getElementById("ovl-detailview-tab2")
-  mainViewEl.firstElementChild.appendChild(newDiv)
+  if (mainViewEl.length > 0) {
+    let newDiv = document.createElement("div")
+    render(
+      html`<comp-summarychart
+        .props=${() => "height:500px;"}
+      ></comp-summarychart>`,
+      newDiv
+    )
+
+    mainViewEl[0].appendChild(newDiv)
+  }
 }
 
 export const ViewShow = async (

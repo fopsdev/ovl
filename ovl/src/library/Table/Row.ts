@@ -85,23 +85,10 @@ export class TableRow extends OvlBaseElement {
         if (!rendererFn) {
           if (col.control === "checkbox") {
             if (row[k] === col.ui.checkedValue) {
-              rowPart = html`<b>✓</b>`
+              rowPart = def.options.controlsRendering.checkbox.table.checked
+            } else {
+              rowPart = def.options.controlsRendering.checkbox.table.unchecked
             }
-
-            // rowPart = html`<div class="fd-form-item">
-            //   <input
-            //     type="checkbox"
-            //     class="fd-checkbox ovl-table-checkbox"
-            //     id="ovl-checkbox${this.row.key}"
-            //     readonly
-            //     ?checked=${row[k] === col.ui.checkedValue}
-            //   />
-            //   <label
-            //     class="fd-checkbox__label"
-            //     for="ovl-checkbox${this.row.key}"
-            //   >
-            //   </label>
-            // </div>`
           } else {
             rowPart = getDisplayValue(k, col, row, def.namespace)
           }

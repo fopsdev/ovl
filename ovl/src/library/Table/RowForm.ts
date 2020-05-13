@@ -282,6 +282,24 @@ export class TableRowForm extends OvlFormElement {
                 `
               }
               break
+            case "checkbox":
+              {
+                uiItem = html`
+                  <ovl-checkbox
+                    id="${id}"
+                    class="fd-form__item "
+                    .props=${() => {
+                      return {
+                        field: fields[k],
+                        customHeaderCellClass,
+                        customRowCellClass,
+                      }
+                    }}
+                  >
+                  </ovl-checkbox>
+                `
+              }
+              break
           }
         } else {
           uiItem = fields[k].value

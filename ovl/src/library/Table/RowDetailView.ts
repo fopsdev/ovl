@@ -1,33 +1,32 @@
 import { html, TemplateResult } from "lit-html"
-import { T, resolvePath, isMobile } from "../../global/globals"
+import { ifDefined } from "lit-html/directives/if-defined"
+import { customFunctions, overmind } from "../.."
+import { resolvePath, T } from "../../global/globals"
+import {
+  FieldGetLabelRender,
+  FieldGetValueRender,
+  FieldHeaderCellSelectedHandler,
+  FieldRowCellSelectedHandler,
+  ViewAfterRender,
+  ViewCustomRender,
+  ViewGetCaptionRender,
+  ViewHeaderCellClass,
+  ViewRowCellClass,
+  ViewShow,
+} from "../../global/hooks"
+import { SnackAdd } from "../helpers"
 import { overlayToRender } from "../Overlay/Overlay"
 import { OvlBaseElement } from "../OvlBaseElement"
 import {
+  CachedRendererData,
   createDynamicRowFunctions,
   getDisplayValue,
-  rowControlActionsHandler,
-  CachedRendererData,
   GetRendererFn,
+  rowControlActionsHandler,
 } from "./helpers"
+import { CellClass } from "./Row"
 import { RowControlAllAction } from "./RowControl"
 import { DisplayMode, ViewRowDef } from "./Table"
-import { CellClass } from "./Row"
-import {
-  ViewRowCellClass,
-  ViewHeaderCellClass,
-  FieldRowCellSelectedHandler,
-  FieldHeaderCellSelectedHandler,
-  FieldGetValueRender,
-  FieldGetLabelRender,
-  ViewShow,
-  FormAfterRender,
-  ViewAfterRender,
-  ViewGetCaptionRender,
-  ViewCustomRender,
-} from "../../global/hooks"
-import { customFunctions, overmind } from "../.."
-import { ifDefined } from "lit-html/directives/if-defined"
-import { SnackAdd } from "../helpers"
 
 export type ViewRendererResult = {
   result: TemplateResult
@@ -236,7 +235,7 @@ export class TableRowDetailView extends OvlBaseElement {
     }
 
     let body
-
+    let row = this.rowData.row
     if (viewRendererFn) {
       body = viewRendererResult.result
     } else {
@@ -275,14 +274,22 @@ export class TableRowDetailView extends OvlBaseElement {
           if (rendererFn) {
             uiItem = rendererFn(
               k,
-              this.rowData.row,
+              row,
               def,
               this.rowData.columnsAlign[k],
               <DisplayMode>"Detailview",
               this.state
             )
           } else {
-            uiItem = getDisplayValue(k, col, this.rowData.row, def.namespace)
+            if (col.control === "checkbox") {
+              if (row[k] === col.ui.checkedValue) {
+                uiItem = def.options.controlsRendering.checkbox.view.checked
+              } else {
+                uiItem = def.options.controlsRendering.checkbox.view.unchecked
+              }
+            } else {
+              uiItem = getDisplayValue(k, col, row, def.namespace)
+            }
           }
           let label
           let value
@@ -332,9 +339,10 @@ export class TableRowDetailView extends OvlBaseElement {
         <div class="fd-panel ${scrollable}">
           ${caption}
           <div
+            id="ovl-detailview-body-${def.id}"
             @click="${this.handleClick}"
             @long-press="${this.handleLongPress}"
-            class="fd-panel__body"
+            class="fd-panel__body ovl-detailview-body"
           >
             ${body}
           </div>

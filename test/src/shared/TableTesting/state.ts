@@ -94,6 +94,13 @@ export let tblTableTesting: TableDef = {
       },
       width: 10,
     },
+    U_Checked: {
+      sortable: true,
+      control: "checkbox",
+      width: 1,
+      ui: { checkedValue: "Y", align: "center" },
+    },
+
     U_Date: {
       sortable: true,
       control: "date",

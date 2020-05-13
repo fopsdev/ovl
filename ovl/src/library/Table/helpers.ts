@@ -1,36 +1,30 @@
 import { overmind } from "../.."
+import { TableDefIds } from "../../../../test/src"
 import {
   getDateValue,
   getDecimalValue,
   ovltemp,
-  uuidv4,
   resolvePath,
   T,
+  uuidv4,
 } from "../../global/globals"
-import { state } from "../../state"
-import { customFunctions } from "../../index"
-import { GetListDisplayValue } from "../forms/Controls/helpers"
-import { DataType, FormFields } from "../forms/OvlFormElement"
 import {
-  ColumnDisplayDef,
-  ListFnReturnValue,
-  TableData,
-  TableDataAndDef,
-  TableDef,
-} from "./Table"
-import { TableDefIds } from "../../../../test/src"
-import {
-  FormCustomFilter,
   FieldGetList,
+  FormCanCopy,
   FormCanCustom,
   FormCanDelete,
-  FormCanCopy,
-  FormCanEdit,
   FormCanDetail,
+  FormCanEdit,
   FormCanMore,
+  FormCustomFilter,
 } from "../../global/hooks"
-import { RowControlAllAction } from "./RowControl"
+import { customFunctions } from "../../index"
+import { state } from "../../state"
+import { GetListDisplayValue } from "../forms/Controls/helpers"
+import { DataType, FormFields } from "../forms/OvlFormElement"
 import { overlayToRender } from "../Overlay/Overlay"
+import { RowControlAllAction } from "./RowControl"
+import { ColumnDisplayDef, TableData, TableDataAndDef, TableDef } from "./Table"
 
 export const getTextSort = (valA: string, valB: string): number => {
   if (valA === null) {
@@ -433,6 +427,30 @@ export const initTableState = (
 
     if (options.filterCustom === undefined) {
       options.filterCustom = {}
+    }
+
+    if (
+      options.controlsRendering === undefined ||
+      options.controlsRendering.checkbox === undefined
+    ) {
+      options.controlsRendering = {
+        checkbox: {
+          view: { checked: "✔️", unchecked: "☐" },
+          table: { checked: "✔️", unchecked: "☐" },
+        },
+      }
+      if (options.controlsRendering.checkbox.view === undefined) {
+        options.controlsRendering.checkbox.view = {
+          checked: "✔️",
+          unchecked: "☐",
+        }
+      }
+      if (options.controlsRendering.checkbox.table === undefined) {
+        options.controlsRendering.checkbox.table = {
+          checked: "✔️",
+          unchecked: "☐",
+        }
+      }
     }
 
     if (def.uiState === undefined) {

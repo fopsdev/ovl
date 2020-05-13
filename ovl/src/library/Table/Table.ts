@@ -163,6 +163,12 @@ export type TableDef = {
       caption?: { translationKey: string }
       viewType?: "default" | "custom"
     }
+    controlsRendering?: {
+      checkbox?: {
+        view?: { checked: string; unchecked: string }
+        table?: { checked: string; unchecked: string }
+      }
+    }
   }
   features?: {
     detailView?: DetailViewMode

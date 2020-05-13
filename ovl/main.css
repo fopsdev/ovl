@@ -75,6 +75,24 @@
   grid-area: validation;
 }
 
+.ovl-inlineeditform .ovl-formcontrol-checkbox-container {
+  margin-top: 0px;
+  margin-left: 10px;
+}
+
+.ovl-bigeditform .ovl-formcontrol-checkbox-input {
+  margin-left: -10px;
+}
+
+.ovl-formcontrol-checkbox-container {
+  margin-top: -10px;
+}
+
+.ovl-inlineeditform .ovl-formcontrol-checkbox-container {
+  margin-top: 0px;
+  margin-left: 10px;
+}
+
 .ovl-formcontrol-container {
   display: grid;
   grid-template-columns: 1fr;
