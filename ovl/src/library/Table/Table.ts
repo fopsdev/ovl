@@ -72,18 +72,15 @@ type StaticFilter = {
 }
 
 export type RowControlAction = {
-  name: string
-  translationKey?: string
+  translationKey: string
   icon: string
   selected?: {
-    name: string
     translationKey?: string
   }
 }
 
 export type ColumnAction = {
-  name: string
-  translationKey?: string
+  translationKey: string
   icon: string
 }
 
@@ -107,7 +104,7 @@ export type DetailViewMode = "None" | "Enabled" | "EnabledOnlyMobile"
 export type TableDef = {
   initialised?: boolean
   id?: TableDefIds
-  title?: string
+  titleTranslationKey?: string
   namespace: string
   //translationGroup?: string
   server: {
@@ -247,8 +244,7 @@ type Sort = {
 }
 
 type CustomSort = {
-  description?: string
-  translationKey?: string
+  translationKey: string
   showInTitle: boolean
 }
 
@@ -261,8 +257,7 @@ type Filter = {
 type CustomFilterType = "single" | "multi"
 
 type CustomFilter = {
-  description?: string
-  translationKey?: string
+  translationKey: string
   showInTitle: boolean
   type: CustomFilterType
   active: boolean
@@ -794,8 +789,8 @@ export class TableHeader extends OvlBaseElement {
     }
 
     let title
-    if (def.title) {
-      title = def.title
+    if (def.titleTranslationKey) {
+      title = T(def.titleTranslationKey)
     }
     // check if filters and sort need to be put in title
     let filterCustom = def.options.filterCustom
@@ -807,20 +802,15 @@ export class TableHeader extends OvlBaseElement {
       sortCustom.selected &&
       sortCustom.sorts[sortCustom.selected].showInTitle
     ) {
-      let description = sortCustom.sorts[sortCustom.selected].description
-      if (sortCustom.sorts[sortCustom.selected].translationKey) {
-        description = T(sortCustom.sorts[sortCustom.selected].translationKey)
-      }
+      let description = T(sortCustom.sorts[sortCustom.selected].translationKey)
       sortText = description
     }
     let filterText = ""
     Object.keys(filterCustom)
       .filter((f) => filterCustom[f].active && filterCustom[f].showInTitle)
       .map((m) => {
-        let description = filterCustom[m].description
-        if (filterCustom[m].translationKey) {
-          description = T(filterCustom[m].translationKey)
-        }
+        let description = T(filterCustom[m].translationKey)
+
         filterText = filterText + description + ", "
       })
     // if (filterText) {

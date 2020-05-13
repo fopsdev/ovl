@@ -22,7 +22,7 @@ export type TblTableTesting = {
 
 export let tblTableTesting: TableDef = {
   id: "tab1",
-  title: "Test Tabelle mit Paging und Inline-Editierfunktion",
+  titleTranslationKey: "PortalTitleTable1",
   namespace: "testtables.tabletesting",
   server: {
     endpoint: "tabletesting",
@@ -31,15 +31,15 @@ export let tblTableTesting: TableDef = {
     customRowActions: {
       Select: {
         icon: "sap-icon--travel-expense",
-        name: "Travel Expense",
-        selected: { name: "Test Expenses Multiselect" },
+        translationKey: "PortalTravelExpense",
+        selected: { translationKey: "PortalTravelExpense" },
       },
-      Shop: { icon: "sap-icon--cart", name: "Shop" },
+      Shop: { icon: "sap-icon--cart", translationKey: "PortalShop" },
     },
     customColumnActions: {
       ValidValues: {
         icon: "sap-icon--cart",
-        name: "Gültige Werte",
+        translationKey: "PortalValidValues",
       },
     },
     paging: { page: 0, pageSize: 3 },
@@ -118,7 +118,7 @@ export let tblTableTesting: TableDef = {
 }
 export let tblTableTesting2: TableDef = {
   id: "tab2",
-  title: "Testtabelle aus SAP",
+  titleTranslationKey: "PortalTitleTable2",
   namespace: "testtables.tabletesting",
   server: {
     endpoint: "tabletesting",
@@ -128,8 +128,8 @@ export let tblTableTesting2: TableDef = {
     customRowActions: {
       Select: {
         icon: "sap-icon--travel-expense",
-        name: "Travel Expense",
-        selected: { name: "Test Expenses Multiselect" },
+        translationKey: "PortalTravelExpense",
+        selected: { translationKey: "PortalTravelExpense" },
       },
     },
     edit: {
@@ -146,15 +146,15 @@ export let tblTableTesting2: TableDef = {
     sortCustom: {
       sorts: {
         alphaThenMemo: {
-          description: "Text dann Memo",
+          translationKey: "PortalSortAlphaThenMemo",
           showInTitle: true,
         },
         memoThenAlpha: {
-          description: "Memo dann Text",
+          translationKey: "PortalSortMemoThenAlpha",
           showInTitle: true,
         },
         onlyTest: {
-          description: "Enthält Test",
+          translationKey: "PortalSortContainsTest",
           showInTitle: true,
         },
       },
@@ -163,25 +163,25 @@ export let tblTableTesting2: TableDef = {
     filterCustom: {
       alphaStartsWithA: {
         active: false,
-        description: 'Text beginnt mit "A"',
+        translationKey: "PortalFilterAlphaStartsWithA",
         type: "single",
         showInTitle: true,
       },
       alphaStartsWithB: {
         active: false,
-        description: 'Text beginnt mit "B"',
+        translationKey: "PortalFilterAlphaStartsWithB",
         type: "single",
         showInTitle: true,
       },
       memoContainsTest: {
         active: false,
-        description: 'Memo enthält "test"',
+        translationKey: "PortalFilterMemoContainsTest",
         type: "multi",
         showInTitle: true,
       },
       memoContainsText: {
         active: false,
-        description: 'Memo enthält "text"',
+        translationKey: "PortalFilterMemoContainsText",
         type: "multi",
         showInTitle: true,
       },
@@ -291,7 +291,7 @@ export let tblTableTesting2: TableDef = {
 
 export let tblTableTesting3: TableDef = {
   id: "tab3",
-  title: "Testtabelle3 aus SAP",
+  titleTranslationKey: "PortalTitleTable3",
   namespace: "testtables.tabletesting",
   server: {
     endpoint: "tabletesting",

@@ -1,9 +1,9 @@
-import { overmind, customFunctions } from "../index"
+import { overmind } from "../index"
 import { OvlConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
+import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
-import { SnackAdd } from "../library/helpers"
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
@@ -354,10 +354,10 @@ export const T = (key: string, reps?: string[]): string => {
   }
   let str = overmind.state.ovl.language.translations[key]
   if (str === undefined || str === null) {
-    if (uiState.isReady) {
-      console.warn("Ovl Translations: key " + key + " not found")
-    }
-    return ""
+    // if (uiState.isReady) {
+    //   console.warn("Ovl Translations: key " + key + " not found")
+    // }
+    return key
   }
   if (str.split("{").length !== str.split("}").length) {
     return str + " invalid{}"

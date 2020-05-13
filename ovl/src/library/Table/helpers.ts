@@ -369,9 +369,6 @@ export const initTableState = (
         def.database.dataIdField = "Code"
       }
     }
-    if (def.title === undefined) {
-      def.title = ""
-    }
 
     if (def.options === undefined) {
       def.options = {}
@@ -827,12 +824,9 @@ export const createDynamicRowFunctions = async (
       Object.keys(def.options.customRowActions).map(async (k) => {
         let custom = def.options.customRowActions[k]
         let disabled = false
-        let title = custom.name
-        if (custom.translationKey) {
-          title = T(custom.translationKey)
-        }
-        let functionName = FormCanCustom.replace("%", k)
 
+        let title = T(custom.translationKey)
+        let functionName = FormCanCustom.replace("%", k)
         if (fn && fn[functionName]) {
           disabled = true
           title = await fn[functionName](
@@ -852,6 +846,7 @@ export const createDynamicRowFunctions = async (
         } else {
           rowControlActions[k] = JSON.parse(JSON.stringify(custom))
           rowControlActions[k].disabled = false
+          rowControlActions[k].name = title
           rowControlActions[k].custom = true
         }
       })
@@ -889,7 +884,7 @@ export const createDynamicRowFunctions = async (
         disabled: false,
         icon: "sap-icon--delete",
         custom: false,
-        name: "Datensatz löschen",
+        name: T("AppRowFunctionDelete"),
       }
     }
   }
@@ -924,7 +919,7 @@ export const createDynamicRowFunctions = async (
         disabled: false,
         icon: "sap-icon--copy",
         custom: false,
-        name: "Datensatz duplizieren",
+        name: T("AppRowFunctionCopy"),
       }
     }
   }
@@ -957,7 +952,7 @@ export const createDynamicRowFunctions = async (
         disabled: false,
         icon: "sap-icon--edit",
         custom: false,
-        name: "Datensatz ändern",
+        name: T("AppRowFunctionEdit"),
       }
     }
   }
@@ -995,7 +990,7 @@ export const createDynamicRowFunctions = async (
           disabled: false,
           icon: "sap-icon--detail-view",
           custom: false,
-          name: "Detailansicht",
+          name: T("AppRowFunctionDetailView"),
         }
       }
     }
@@ -1029,7 +1024,7 @@ export const createDynamicRowFunctions = async (
         disabled: false,
         icon: "sap-icon--overflow",
         custom: false,
-        name: "Tabellenfunktionen",
+        name: T("AppRowFunctionMore"),
       }
     }
   }

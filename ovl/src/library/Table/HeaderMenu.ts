@@ -622,10 +622,8 @@ export class TableHeaderMenu extends OvlBaseElement {
         .filter((k) => customFns[k].selected)
         .map((k) => {
           let customFn = customFns[k]
-          let fnMultipleName = customFn.selected.name
-          if (customFn.selected.translationKey) {
-            fnMultipleName = T(customFn.selected.translationKey)
-          }
+          let fnMultipleName = T(customFn.selected.translationKey)
+
           if (!fnMultipleName) {
             fnMultipleName = k
           }
@@ -688,10 +686,8 @@ export class TableHeaderMenu extends OvlBaseElement {
       let customFns = def.options.customColumnActions
       let customColumnFunctions = Object.keys(customFns).map((k) => {
         let customFn = customFns[k]
-        let fnName = customFn.name
-        if (customFn.translationKey) {
-          fnName = T(customFn.translationKey)
-        }
+        let fnName = T(customFn.translationKey)
+
         if (!fnName) {
           fnName = k
         }
@@ -737,10 +733,8 @@ export class TableHeaderMenu extends OvlBaseElement {
     let sortCustomKeys = Object.keys(sortCustom.sorts)
     if (sortCustomKeys.length > 0) {
       let options = sortCustomKeys.map((k) => {
-        let description = sortCustom.sorts[k].description
-        if (sortCustom.sorts[k].translationKey) {
-          description = T(sortCustom.sorts[k].translationKey)
-        }
+        let description = T(sortCustom.sorts[k].translationKey)
+
         let optionText = description
 
         if (sortCustom.selected === k) {
@@ -788,10 +782,8 @@ export class TableHeaderMenu extends OvlBaseElement {
     let filterCustomKeys = Object.keys(filterCustom)
     if (filterCustomKeys.length > 0) {
       let options = filterCustomKeys.map((k) => {
-        let description = filterCustom[k].description
-        if (filterCustom[k].translationKey) {
-          description = T(filterCustom[k].translationKey)
-        }
+        let description = T(filterCustom[k].translationKey)
+
         let optionText = description
 
         if (filterCustom[k].active) {
