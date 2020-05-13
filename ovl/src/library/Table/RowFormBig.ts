@@ -250,18 +250,21 @@ export class TableRowFormBig extends OvlFormElement {
         captionContent = captionFn[captionFunctionName](
           captionTranslated,
           this.rowData,
+          this.rowData.mode,
           this.state
         )
       } else {
         captionContent = captionTranslated
       }
-      caption = html`
-        <div
-          class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
-        >
-          ${captionContent}
-        </div>
-      `
+      if (captionContent) {
+        caption = html`
+          <div
+            class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
+          >
+            ${captionContent}
+          </div>
+        `
+      }
     }
 
     return html`

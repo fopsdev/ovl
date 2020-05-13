@@ -9,6 +9,7 @@ import { getDisplayValue } from "../../../../../ovl/src/library/Table/helpers"
 import { CellClass } from "../../../../../ovl/src/library/Table/Row"
 import {
   DisplayMode,
+  EditMode,
   EditRowDef,
   TableData,
   TableDef,
@@ -73,6 +74,7 @@ export const ViewGetCaptionRender = (
 export const EditGetCaptionRender = (
   caption: string,
   row: EditRowDef,
+  mode: EditMode,
   state: typeof overmind.state
 ): TemplateResult => {
   return html`Custom Caption ${caption}`

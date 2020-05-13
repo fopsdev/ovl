@@ -90,9 +90,11 @@ export type SelectedRow = {
   showNav: boolean
 }
 
+export type EditMode = "edit" | "copy" | "add"
+
 export type SelectedEditRow = {
   selected: boolean
-  mode: "edit" | "copy" | "add"
+  mode: EditMode
 }
 
 export type SelectedViewRow = {
@@ -197,7 +199,7 @@ export type EditRowDef = {
   data: TableData
   columnsAlign: {}
   columnsVisible: {}
-  mode: "edit" | "add" | "copy"
+  mode: EditMode
 }
 
 export type ViewRowDef = {

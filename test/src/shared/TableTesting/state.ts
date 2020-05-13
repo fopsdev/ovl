@@ -323,6 +323,19 @@ export let tblTableTesting3: TableDef = {
       filter: { top: 3 },
       ui: { visibility: "TableNotMobile_Edit_View" },
     },
+    U_ItemCode: {
+      sortable: true,
+      control: "list",
+      list: {
+        valueField: "U_ItemCode",
+        displayField: "ItemName",
+        serverEndpoint: "item",
+        acceptEmpty: false,
+        acceptOnlyListValues: true,
+      },
+      ui: { visibility: "TableNotMobile_Edit_View" },
+    },
+
     U_Date: {
       control: "date",
       sortable: true,

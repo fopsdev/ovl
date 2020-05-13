@@ -15,6 +15,7 @@ import {
   SelectRowDef,
   TableData,
   TableDef,
+  ViewRowDef,
 } from "./Table"
 
 export type TableRowDef = {
@@ -186,7 +187,7 @@ export class TableRowWrapper extends OvlBaseElement {
           <ovl-trowdetailview
             id=${"trow" + def.id + key}
             .props=${() => {
-              return <EditRowDef>{
+              return <ViewRowDef>{
                 tableDef: def,
                 data: data,
                 row: row,
