@@ -436,7 +436,7 @@ export const initTableState = (
       options.controlsRendering = {
         checkbox: {
           view: { checked: "✔️", unchecked: "☐" },
-          table: { checked: "✔️", unchecked: "☐" },
+          table: { checked: "✔️", unchecked: "" },
         },
       }
       if (options.controlsRendering.checkbox.view === undefined) {
@@ -448,7 +448,7 @@ export const initTableState = (
       if (options.controlsRendering.checkbox.table === undefined) {
         options.controlsRendering.checkbox.table = {
           checked: "✔️",
-          unchecked: "☐",
+          unchecked: "",
         }
       }
     }
