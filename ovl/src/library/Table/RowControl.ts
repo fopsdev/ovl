@@ -1,19 +1,9 @@
-import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
-import { TableDef, RowControlAction, TableData, TableDataAndDef } from "./Table"
-
-import { customFunctions, overmind } from "../../index"
-import { ovltemp, resolvePath } from "../../global/globals"
+import { ovltemp } from "../../global/globals"
 import { SnackAdd } from "../helpers"
-import {
-  FormCanCustom,
-  FormCanDelete,
-  FormCanCopy,
-  FormCanEdit,
-  FormCanMore,
-  FormCanDetail,
-} from "../../global/hooks"
+import { OvlBaseElement } from "../OvlBaseElement"
 import { createDynamicRowFunctions, rowControlActionsHandler } from "./helpers"
+import { TableData, TableDef } from "./Table"
 
 export type NavProps = {
   tableDef: TableDef

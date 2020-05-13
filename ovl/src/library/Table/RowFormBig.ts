@@ -233,10 +233,20 @@ export class TableRowFormBig extends OvlFormElement {
     if (def.options.view || captionFn[captionFunctionName]) {
       let captionContent
       let captionTranslated
-      if (def.options.edit.caption && def.options.edit.caption.translationKey) {
-        captionTranslated = T(def.options.edit.caption.translationKey)
+      if (def.options.edit.caption) {
+        switch (this.rowData.mode) {
+          case "edit":
+            captionTranslated = T(def.options.edit.caption.editTranslationKey)
+            break
+          case "add":
+            captionTranslated = T(def.options.edit.caption.addTranslationKey)
+            break
+          case "copy":
+            captionTranslated = T(def.options.edit.caption.copyTranslationKey)
+            break
+        }
       }
-      if (captionFn[captionFunctionName]) {
+      if (captionTranslated && captionFn[captionFunctionName]) {
         captionContent = captionFn[captionFunctionName](
           captionTranslated,
           this.rowData,

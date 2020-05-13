@@ -95,6 +95,7 @@ export type SelectedRow = {
 
 export type SelectedEditRow = {
   selected: boolean
+  mode: "edit" | "copy" | "add"
 }
 
 export type SelectedViewRow = {
@@ -156,7 +157,11 @@ export type TableDef = {
     filter?: Filter
     filterCustom?: { [key: string]: CustomFilter }
     edit?: {
-      caption?: { translationKey: string }
+      caption?: {
+        editTranslationKey: string
+        copyTranslationKey: string
+        addTranslationKey: string
+      }
       editType: "inline" | "big" | "custom"
     }
     view?: {
@@ -195,6 +200,7 @@ export type EditRowDef = {
   data: TableData
   columnsAlign: {}
   columnsVisible: {}
+  mode: "edit" | "add" | "copy"
 }
 
 export type ViewRowDef = {

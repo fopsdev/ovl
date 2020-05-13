@@ -1,25 +1,22 @@
-import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
-import {
-  TableData,
-  TableDataAndDef,
-  SelectedViewRow,
-  DisplayMode,
-} from "./Table"
-import { NavProps } from "./RowControl"
+import { resolvePath } from "../../global/globals"
+import { FieldRowCellSelectedHandler, FormStatus } from "../../global/hooks"
 import { customFunctions, overmind } from "../../index"
+import { SnackAdd } from "../helpers"
+import { OvlBaseElement } from "../OvlBaseElement"
+import { NavProps } from "./RowControl"
 import {
-  TableDef,
-  SelectedRow,
-  SelectedEditRow,
+  DisplayMode,
   EditRowDef,
-  SelectRowDef,
   EditRowSaveCancelDef,
+  SelectedEditRow,
+  SelectedRow,
+  SelectedViewRow,
+  SelectRowDef,
+  TableData,
+  TableDef,
 } from "./Table"
 
-import { resolvePath } from "../../global/globals"
-import { SnackAdd } from "../helpers"
-import { FormStatus, FieldRowCellSelectedHandler } from "../../global/hooks"
 export type TableRowDef = {
   data: TableData
   selected: SelectedRow
@@ -237,6 +234,7 @@ export class TableRowWrapper extends OvlBaseElement {
                 key: key,
                 columnsAlign: this.row.columnsAlign,
                 columnsVisible: this.row.columnsVisible,
+                mode: editSelected.mode,
               }
             }}
           >
@@ -256,6 +254,7 @@ export class TableRowWrapper extends OvlBaseElement {
                   key: key,
                   columnsAlign: this.row.columnsAlign,
                   columnsVisible: this.row.columnsVisible,
+                  mode: editSelected.mode,
                 }
               }}
             >

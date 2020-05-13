@@ -28,7 +28,7 @@ X - Hook FormViewRender. A Custom Renderer for the full Detail view content (May
 X - Rearrange customFunctions content into multiple files (its super big covering a lot of tests)
 
 Controls:
-X - type Checkbox
+X  - type Checkbox
 - type Link
 - type Upload File
 - type Image

@@ -104,7 +104,8 @@ export const setTableRow = (
   newId: string,
   newData: any,
   editMode: boolean,
-  actions: typeof overmind.actions
+  actions: typeof overmind.actions,
+  copy?: boolean
 ) => {
   let def = tableDataAndDef.def
   let data = tableDataAndDef.data
@@ -147,7 +148,7 @@ export const setTableRow = (
           showNav: false,
           timestamp: 0,
         }
-        def.uiState.editRow[newId] = { selected: false }
+        def.uiState.editRow[newId] = { selected: false, mode: undefined }
         def.uiState.viewRow[newId] = { selected: false }
       }
       Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
@@ -162,7 +163,7 @@ export const setTableRow = (
               showNav: false,
               timestamp: 0,
             }
-            editRow[newId] = { selected: false }
+            editRow[newId] = { selected: false, mode: undefined }
           }
           let dataFilteredAndSorted = cdef.uiState.dataFilteredAndSorted
           // its now a "good" one so also push it to the displayed lists
@@ -184,7 +185,11 @@ export const setTableRow = (
         showNav: false,
         timestamp: 0,
       }
-      def.uiState.editRow[newId] = { selected: false }
+      let mode: any = "add"
+      if (copy) {
+        mode = "copy"
+      }
+      def.uiState.editRow[newId] = { selected: false, mode }
       def.uiState.viewRow[newId] = { selected: false }
       let paging = def.options.paging
       let rowsCount = def.uiState.dataFilteredAndSorted.length

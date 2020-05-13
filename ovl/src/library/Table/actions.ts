@@ -1,11 +1,34 @@
-import { Action, AsyncAction, json } from "overmind"
+import { Action, AsyncAction } from "overmind"
+import { overmind } from "../.."
 import { postRequest } from "../../effects"
-import { api, ovltemp, uuidv4, resolvePath, T } from "../../global/globals"
+import { api, ovltemp, resolvePath, T, uuidv4 } from "../../global/globals"
+import {
+  FieldGetList,
+  FormAdd,
+  FormAfterDelete,
+  FormAfterSave,
+  FormBeforeSave,
+  FormCanCopy,
+  FormCanCustom,
+  FormCanDelete,
+  FormCanEdit,
+  FormCopy,
+  FormCustomSave,
+  FormCustomSort,
+  FormDeleteError,
+  FormSaveError,
+} from "../../global/hooks"
 import { customFunctions, TableDefIds } from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
 import { ValidationAddError } from "../Forms/helper"
+import {
+  DialogOk,
+  SnackAdd,
+  SnackTrackedAdd,
+  SnackTrackedRemove,
+} from "../helpers"
 import {
   getDateSort,
   getFormFieldsFromColumns,
@@ -27,37 +50,13 @@ import {
   ListFnReturnValue,
   Paging,
   SaveMode,
+  SelectedCustomFunctionResult,
   SelectRowDef,
   SortClick,
   TableData,
   TableDataAndDef,
   TableDef,
-  SelectedCustomFunctionResult,
 } from "./Table"
-import { overmind } from "../.."
-import {
-  SnackAdd,
-  SnackTrackedAdd,
-  SnackTrackedRemove,
-  DialogOk,
-} from "../helpers"
-import {
-  FieldGetList,
-  FormCustomSort,
-  FormCustomSave,
-  FormBeforeSave,
-  FormSaveError,
-  FormAfterSave,
-  FormCopy,
-  FormAdd,
-  FormDeleteError,
-  FormAfterDelete,
-  FormCanDelete,
-  FormCanCopy,
-  FormCanEdit,
-  FormCanCustom,
-} from "../../global/hooks"
-import { OkDialog } from "../Dialog/actions"
 
 const minimumFilterChars = 3
 
@@ -461,6 +460,7 @@ export const TableRebuild: AsyncAction<{
       if (!editRow[k]) {
         editRow[k] = {
           selected: false,
+          mode: undefined,
         }
       }
       let viewRow = def.uiState.viewRow
@@ -783,6 +783,7 @@ export const TableEditClose: Action<{
   let editRow = value.tableDef.uiState.editRow
   if (editRow[value.key]) {
     editRow[value.key].selected = false
+    editRow[value.key].mode = undefined
   }
   if (value.tableDef.options.edit.editType === "big") {
     actions.ovl.overlay.CloseOverlay()
@@ -816,6 +817,9 @@ export const TableEditRow: Action<{
   actions.ovl.form.InitForm(initForm)
   let editRow = value.def.uiState.editRow
   editRow[value.key].selected = true
+  if (editRow[value.key].mode === undefined) {
+    editRow[value.key].mode = "edit"
+  }
 }
 
 export const TableMoreRow: Action<{
@@ -892,7 +896,8 @@ export const TableCopyRow: AsyncAction<{
     undefined,
     newRow,
     true,
-    actions
+    actions,
+    true
   )
 }
 
@@ -932,7 +937,7 @@ export const TableAddRow: AsyncAction<TableDataAndDef> = async (
       newRow["Name"] = ""
     }
   }
-  setTableRow(value, undefined, undefined, newRow, true, actions)
+  setTableRow(value, undefined, undefined, newRow, true, actions, false)
   if (def.features.page) {
     let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
     let count = dataFilteredAndSorted.length
@@ -1149,6 +1154,7 @@ export const TableMultipleCopyRow: AsyncAction<{
     Object.keys(selectedRows).map(async (k) => {
       let selected = selectedRows[k]
       if (selected.selected) {
+        def.uiState.editRow[k].mode = "copy"
         if (fn) {
           let res = await fn(
             k,
@@ -1296,6 +1302,7 @@ export const TableMultipleEditRow: AsyncAction<{
   if (!cancel) {
     wait = Promise.all(
       selectedObjects.map(async (k) => {
+        def.uiState.editRow[k].mode = "edit"
         await actions.ovl.table.TableEditRow({
           key: k,
           def: def,
