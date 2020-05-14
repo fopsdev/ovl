@@ -1,14 +1,6 @@
 import { html } from "lit-html"
 import { ovltemp, resolvePath, T } from "../../global/globals"
-import {
-  EditGetCaptionRender,
-  EditGetLabelAndValueRender,
-  FieldHeaderCellSelectedHandler,
-  FieldIsReadOnly,
-  FieldRowCellSelectedHandler,
-  ViewHeaderCellClass,
-  ViewRowCellClass,
-} from "../../global/hooks"
+import { EditGetCaptionRender, EditGetLabelAndValueRender, FieldHeaderCellSelectedHandler, FieldIsReadOnly, FieldRowCellSelectedHandler, ViewHeaderCellClass, ViewRowCellClass } from "../../global/hooks"
 import { customFunctions } from "../../index"
 import { DialogResult } from "../actions"
 import { OvlFormElement } from "../forms/OvlFormElement"
@@ -230,7 +222,7 @@ export class TableRowFormBig extends OvlFormElement {
     // lets see if we have a custom caption renderer
     let captionFunctionName = EditGetCaptionRender
     let captionFn = resolvePath(customFunctions, def.namespace)
-    if (def.options.view || captionFn[captionFunctionName]) {
+    if (def.options.edit || captionFn[captionFunctionName]) {
       let captionContent
       let captionTranslated
       if (def.options.edit.caption) {

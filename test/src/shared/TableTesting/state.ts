@@ -12,6 +12,7 @@ export type TableTesting = {
   U_ItmsGrpCod: string
   U_ParentCode: string
   U_ParentCode2: string
+  U_Checked: string
 }
 
 export type TableTestingColumn = keyof TableTesting
