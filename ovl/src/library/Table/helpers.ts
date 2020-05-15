@@ -799,8 +799,9 @@ export const getFormFieldsFromColumns = (
     formFields[k] = {
       type,
       value: dispVal,
-      list: col.list,
-      ui: JSON.parse(JSON.stringify(col.ui)),
+      list: col.list ? JSON.parse(JSON.stringify(col.list)) : undefined,
+      ui: col.ui ? JSON.parse(JSON.stringify(col.ui)) : undefined,
+      asset: col.asset ? JSON.parse(JSON.stringify(col.asset)) : undefined,
     }
     if (!formFields[k].ui) {
       formFields[k].ui = {}
@@ -1086,7 +1087,7 @@ export const rowControlActionsHandler = async (
     let actionName = "Table" + key + "Row"
     if (isDetailView) {
       overlayToRender.overlayClosedCallback = async () => {
-        overmind.actions.ovl.internal.TableCloseViewRow({
+        await overmind.actions.ovl.internal.TableCloseViewRow({
           key: rowKey,
           def,
         })

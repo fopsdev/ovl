@@ -8,7 +8,6 @@ import {
 } from "../../global/hooks"
 import { customFunctions, overmind } from "../../index"
 import { OvlFormElement } from "../../library/forms/OvlFormElement"
-import { overlayToRender } from "../Overlay/Overlay"
 import { CellClass } from "./Row"
 import { DisplayMode, EditRowDef } from "./Table"
 
@@ -61,13 +60,13 @@ export class TableRowForm extends OvlFormElement {
   }
 
   updated() {
-    if (this.state.ovl.libState.overlay.closing) {
-      overlayToRender.overlayClosedCallback = () => {
-        this.setFocus()
-      }
-    } else {
-      this.setFocus()
-    }
+    // if (this.state.ovl.libState.overlay.closing) {
+    //   overlayToRender.overlayClosedCallback = () => {
+    //     this.setFocus()
+    //   }
+    // } else {
+    this.setFocus()
+    //}
 
     // if there is a custom afterrender
     super.updated()
@@ -87,7 +86,9 @@ export class TableRowForm extends OvlFormElement {
           target = focusEl[0]
         }
       }
+
       target.focus()
+
       var rect = target.getBoundingClientRect()
       if (rect.bottom > window.innerHeight) {
         target.scrollIntoView(false)

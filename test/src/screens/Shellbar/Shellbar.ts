@@ -1,16 +1,14 @@
 import { html } from "../../../../ovl/node_modules/lit-html"
+import { T } from "../../../../ovl/src/global/globals"
+import { OvlConfig } from "../../../../ovl/src/init"
+import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 // @ts-ignore
 import langpic_de from "../../../img/de.png"
 // @ts-ignore
 import langpic_fr from "../../../img/fr.png"
 // @ts-ignore
 import logo from "../../../img/icon-192x192.png"
-import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
-import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
-import { InitForm } from "../../../../ovl/src/library/forms/actions"
-import { T } from "../../../../ovl/src/global/globals"
 import { ShellButtonOrMenu } from "../../components/Refresh/Refresh"
-import { OvlConfig } from "../../../../ovl/src/init"
 
 export type ShellbarState = {
   mainMenuExpanded: boolean
@@ -42,7 +40,7 @@ export class CompShellbar extends OvlBaseElement {
 
     if (this.state.ovl.uiState.isReady) {
       app = html`
-        <div class="${scrollable}">
+        <div id="ovl-intersectionobserver" class="${scrollable}">
           <ovl-loginform id="loginform"></ovl-loginform>
           <comp-settingsform id="settingsform"></comp-settingsform>
           <ovl-audit> </ovl-audit>

@@ -20,10 +20,18 @@ export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
 export class TableRow extends OvlBaseElement {
   props: any
   row: TableRowDataDef
+  hasLazyImage: boolean
   init() {
     this.row = this.props()
   }
-
+  afterRender() {
+    if (this.hasLazyImage) {
+      let lazyImages = this.querySelectorAll(".ovl-lazy-image")
+      lazyImages.forEach((element) => {
+        this.row.intersectionObserver.observe(element)
+      })
+    }
+  }
   getUI() {
     let row = this.row.row
     let def = this.row.tableDef
@@ -88,6 +96,29 @@ export class TableRow extends OvlBaseElement {
               rowPart = def.options.controlsRendering.checkbox.table.checked
             } else {
               rowPart = def.options.controlsRendering.checkbox.table.unchecked
+            }
+          } else if (col.control === "ImageLink") {
+            if (row[k]) {
+              let params: string[] = row[k].split("/")
+              if (params.length < 4) {
+                throw Error("ovl error lazy image link invalid format")
+              }
+              //  param[1] might be an id, so replace it
+              if (params[1]) {
+                let keysToReplace: string[] = params[1].split(";")
+                let replacedKeys = keysToReplace.map((m) => {
+                  return row[m]
+                })
+                params[1] = replacedKeys.join(";")
+              }
+              let paramString = params.join("/")
+              this.hasLazyImage = true
+              rowPart = html`<img
+                class="ovl-lazy-image"
+                data-params="${paramString}"
+                id="ovllazyimage${def.id + this.row.key}"
+                src=""
+              />`
             }
           } else {
             rowPart = getDisplayValue(k, col, row, def.namespace)

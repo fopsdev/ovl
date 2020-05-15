@@ -1,23 +1,13 @@
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { repeat } from "lit-html/directives/repeat"
-import { ovltemp, resolvePath, T } from "../../global/globals"
-import {
-  FieldGetLabelRender,
-  FieldHeaderCellSelectedHandler,
-  FieldIsVisible,
-  ViewHeaderCellClass,
-} from "../../global/hooks"
+import { api, ovltemp, resolvePath, T } from "../../global/globals"
+import { FieldGetLabelRender, FieldHeaderCellSelectedHandler, FieldIsVisible, ViewHeaderCellClass } from "../../global/hooks"
 import { customFunctions, overmind, TableDefIds } from "../../index"
 import { OvlConfig } from "../../init"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ListState } from "../Forms/Controls/ListControl"
-import {
-  DataType,
-  FieldFormat,
-  LookupDef,
-  Schema,
-} from "../Forms/OvlFormElement"
+import { DataType, FieldFormat, LookupDef, Schema } from "../Forms/OvlFormElement"
 import { SnackAdd } from "../helpers"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { HeaderMenuDef } from "./HeaderMenu"
@@ -34,6 +24,13 @@ export type SelectedCustomFunctionResult = {
   // this msg will be concancenated in the result output
   msg: string
   success: boolean
+}
+
+export type AssetDefinition = {
+  type?: string
+  ids?: string[]
+  extension?: string
+  externalUrl?: string
 }
 
 export type BeforeSaveParam = {
@@ -156,7 +153,7 @@ export type TableDef = {
     filter?: Filter
     filterCustom?: { [key: string]: CustomFilter }
     edit?: {
-      caption?: {
+      customCaption?: {
         editTranslationKey: string
         copyTranslationKey: string
         addTranslationKey: string
@@ -164,7 +161,7 @@ export type TableDef = {
       editType: "inline" | "big" | "custom"
     }
     view?: {
-      caption?: { translationKey: string }
+      customCaption?: { translationKey: string }
       viewType?: "default" | "custom"
     }
     controlsRendering?: {
@@ -234,6 +231,8 @@ export type ControlType =
   | "select"
   | "date"
   | "time"
+  | "Link"
+  | "ImageLink"
 export type ColumnAlign = "left" | "center" | "right"
 
 export type ColumnsDef = {
@@ -324,6 +323,11 @@ export type ColumnDef = {
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
   }
+  asset?: {
+    validFileExtensions: string[]
+    validCategories: string[]
+    idColumns: string[]
+  }
 }
 
 export type ColumnDisplayDef = {
@@ -368,7 +372,7 @@ export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
 export class TableHeader extends OvlBaseElement {
   props: any
   tabledata: TableDataAndDef
-
+  intersectionObserver: IntersectionObserver
   handleNavClick = (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
@@ -445,8 +449,39 @@ export class TableHeader extends OvlBaseElement {
   init() {
     this.async = true
     this.tabledata = this.props(this.state)
+    this.intersectionObserver = new IntersectionObserver(
+      async (entries, observer) => {
+        for (let i = 0; i < entries.length; i++) {
+          let entry = entries[i]
+          if (entry.intersectionRatio === 1) {
+            // get data path
+            let params = entry.target.getAttribute("data-params")
+            let res = await overmind.effects.ovlFetch(
+              api.url + "assets/get",
+              { params },
+              true
+            )
+            if (res.data) {
+              const urlCreator = window.URL || window.webkitURL
+              //@ts-ignore
+              entry.target.src = urlCreator.createObjectURL(res.data)
+              observer.unobserve(entry.target)
+            }
+          }
+        }
+      },
+      {
+        root: document.getElementById("ovl-intersectionobserver"),
+        threshold: 1,
+      }
+    )
+
     // this prepares the table on first use
     //this.actions.ovl.table.TableRefresh(this.tabledata)
+  }
+  disconnectedCallback() {
+    this.intersectionObserver.disconnect()
+    super.disconnectedCallback()
   }
   async getUIAsync() {
     this.state.ovl.language.language
@@ -455,7 +490,7 @@ export class TableHeader extends OvlBaseElement {
       throw new Error(
         "ovl tabledef: " +
           def.id +
-          " is not initialised. Make sure to call TableRefresh at least once before uisng it"
+          " is not initialised. Make sure to call TableRefresh at least once before using it"
       )
     }
     let dataAndSchema = this.tabledata.data
@@ -754,6 +789,7 @@ export class TableHeader extends OvlBaseElement {
                 selected: def.uiState.selectedRow[k],
                 viewRow: def.uiState.viewRow[k],
                 editSelected: def.uiState.editRow[k],
+                intersectionObserver: this.intersectionObserver,
               }
             }}
           >

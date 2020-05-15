@@ -1,6 +1,14 @@
 import { html } from "lit-html"
 import { ovltemp, resolvePath, T } from "../../global/globals"
-import { EditGetCaptionRender, EditGetLabelAndValueRender, FieldHeaderCellSelectedHandler, FieldIsReadOnly, FieldRowCellSelectedHandler, ViewHeaderCellClass, ViewRowCellClass } from "../../global/hooks"
+import {
+  EditGetCaptionRender,
+  EditGetLabelAndValueRender,
+  FieldHeaderCellSelectedHandler,
+  FieldIsReadOnly,
+  FieldRowCellSelectedHandler,
+  ViewHeaderCellClass,
+  ViewRowCellClass,
+} from "../../global/hooks"
 import { customFunctions } from "../../index"
 import { DialogResult } from "../actions"
 import { OvlFormElement } from "../forms/OvlFormElement"
@@ -220,25 +228,32 @@ export class TableRowFormBig extends OvlFormElement {
 
     let caption
     // lets see if we have a custom caption renderer
-    let captionFunctionName = EditGetCaptionRender
-    let captionFn = resolvePath(customFunctions, def.namespace)
-    if (def.options.edit || captionFn[captionFunctionName]) {
+    if (def.options.edit.customCaption) {
+      let captionFunctionName = EditGetCaptionRender
+      let captionFn = resolvePath(customFunctions, def.namespace)
+
       let captionContent
       let captionTranslated
-      if (def.options.edit.caption) {
+      if (def.options.edit.customCaption) {
         switch (this.rowData.mode) {
           case "edit":
-            captionTranslated = T(def.options.edit.caption.editTranslationKey)
+            captionTranslated = T(
+              def.options.edit.customCaption.editTranslationKey
+            )
             break
           case "add":
-            captionTranslated = T(def.options.edit.caption.addTranslationKey)
+            captionTranslated = T(
+              def.options.edit.customCaption.addTranslationKey
+            )
             break
           case "copy":
-            captionTranslated = T(def.options.edit.caption.copyTranslationKey)
+            captionTranslated = T(
+              def.options.edit.customCaption.copyTranslationKey
+            )
             break
         }
       }
-      if (captionTranslated && captionFn[captionFunctionName]) {
+      if (captionFn[captionFunctionName]) {
         captionContent = captionFn[captionFunctionName](
           captionTranslated,
           this.rowData,

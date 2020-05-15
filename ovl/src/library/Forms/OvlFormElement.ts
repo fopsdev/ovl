@@ -34,6 +34,11 @@ export type FormFields = {
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
   }
+  asset?: {
+    validFileExtensions: string[]
+    validCategories: string[]
+    idColumns: string[]
+  }
 }
 
 export type DataType = "text" | "date" | "decimal" | "int" | "bool" | "time"

@@ -208,13 +208,14 @@ export class TableRowDetailView extends OvlBaseElement {
 
     let caption
     // lets see if we have a custom caption renderer
-    let captionFunctionName = ViewGetCaptionRender
-    let captionFn = resolvePath(customFunctions, def.namespace)
-    if (def.options.view || captionFn[captionFunctionName]) {
+    if (def.options.view.customCaption) {
+      let captionFunctionName = ViewGetCaptionRender
+      let captionFn = resolvePath(customFunctions, def.namespace)
+
       let captionContent
       let captionTranslated
-      if (def.options.view.caption && def.options.view.caption.translationKey) {
-        captionTranslated = T(def.options.view.caption.translationKey)
+      if (def.options.view.customCaption.translationKey) {
+        captionTranslated = T(def.options.view.customCaption.translationKey)
       }
       if (captionFn[captionFunctionName]) {
         captionContent = captionFn[captionFunctionName](

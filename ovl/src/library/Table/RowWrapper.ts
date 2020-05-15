@@ -28,6 +28,7 @@ export type TableRowDef = {
   columnsVisible: {}
   columnsCount: number
   key: string
+  intersectionObserver: IntersectionObserver
 }
 
 export type TableRowDataDef = {
@@ -36,6 +37,7 @@ export type TableRowDataDef = {
   key: string
   columnsAlign: {}
   columnsVisible: {}
+  intersectionObserver: IntersectionObserver
 }
 
 export class TableRowWrapper extends OvlBaseElement {
@@ -325,6 +327,7 @@ export class TableRowWrapper extends OvlBaseElement {
             tableDef: def,
             columnsAlign: this.row.columnsAlign,
             columnsVisible: this.row.columnsVisible,
+            intersectionObserver: this.row.intersectionObserver,
           }
         }}
       >

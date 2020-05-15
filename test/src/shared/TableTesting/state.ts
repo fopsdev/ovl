@@ -135,14 +135,14 @@ export let tblTableTesting2: TableDef = {
     },
     edit: {
       editType: "big",
-      caption: {
+      customCaption: {
         editTranslationKey: "PortalEdit",
         copyTranslationKey: "PortalCopy",
         addTranslationKey: "PortalAdd",
       },
     },
     view: {
-      caption: { translationKey: "PortalDetailView" },
+      customCaption: { translationKey: "PortalDetailView" },
     },
     sortCustom: {
       sorts: {
@@ -352,6 +352,15 @@ export let tblTableTesting3: TableDef = {
       control: "checkbox",
 
       ui: { checkedValue: "Y", align: "center" },
+    },
+    U_Image: {
+      control: "ImageLink",
+      ui: { align: "center" },
+      asset: {
+        validFileExtensions: ["jpg"],
+        validCategories: ["PortalItemPicture"],
+        idColumns: ["U_ItemCode"],
+      },
     },
   },
 }

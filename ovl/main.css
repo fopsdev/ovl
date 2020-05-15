@@ -47,14 +47,6 @@
   height: 98vh;
 }
 
-@media screen and (max-width: 992px) {
-  .ovl-bigeditform,
-  .ovl-detailview {
-    width: 99vw;
-    height: 98vh;
-  }
-}
-
 .ovl-value-view {
   margin-top: -18px;
   margin-bottom: 12px;
@@ -100,6 +92,25 @@
     "label"
     "value"
     "validation";
+}
+
+.ovl-tableview-rowcell {
+  vertical-align: middle;
+}
+
+.ovl-lazy-image {
+  width: 128px;
+}
+
+@media screen and (max-width: 992px) {
+  .ovl-bigeditform,
+  .ovl-detailview {
+    width: 99vw;
+    height: 98vh;
+  }
+  .ovl-lazy-image {
+    width: 64px;
+  }
 }
 
 .menuDisabled {
