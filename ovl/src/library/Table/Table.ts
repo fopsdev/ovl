@@ -2,12 +2,22 @@ import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { repeat } from "lit-html/directives/repeat"
 import { api, ovltemp, resolvePath, T } from "../../global/globals"
-import { FieldGetLabelRender, FieldHeaderCellSelectedHandler, FieldIsVisible, ViewHeaderCellClass } from "../../global/hooks"
+import {
+  FieldGetLabelRender,
+  FieldHeaderCellSelectedHandler,
+  FieldIsVisible,
+  ViewHeaderCellClass,
+} from "../../global/hooks"
 import { customFunctions, overmind, TableDefIds } from "../../index"
 import { OvlConfig } from "../../init"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ListState } from "../Forms/Controls/ListControl"
-import { DataType, FieldFormat, LookupDef, Schema } from "../Forms/OvlFormElement"
+import {
+  DataType,
+  FieldFormat,
+  LookupDef,
+  Schema,
+} from "../Forms/OvlFormElement"
 import { SnackAdd } from "../helpers"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { HeaderMenuDef } from "./HeaderMenu"
@@ -455,10 +465,11 @@ export class TableHeader extends OvlBaseElement {
           let entry = entries[i]
           if (entry.intersectionRatio === 1) {
             // get data path
-            let params = entry.target.getAttribute("data-params")
-            let res = await overmind.effects.ovlFetch(
+            //@ts-ignore
+            let params = entry.target.dataLinkObject
+            let res = await overmind.effects.getRequest(
               api.url + "assets/get",
-              { params },
+              params,
               true
             )
             if (res.data) {

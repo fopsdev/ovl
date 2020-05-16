@@ -98,24 +98,26 @@ export class TableRow extends OvlBaseElement {
               rowPart = def.options.controlsRendering.checkbox.table.unchecked
             }
           } else if (col.control === "ImageLink") {
-            if (row[k]) {
-              let params: string[] = row[k].split("/")
-              if (params.length < 4) {
-                throw Error("ovl error lazy image link invalid format")
+            let linkValue = row[k]
+
+            if (linkValue) {
+              let linkObject = JSON.parse(linkValue)
+              if (
+                linkObject.cat !== "Ext" &&
+                linkObject.cat !== "SAPAtt" &&
+                linkObject.cat !== "SAPImg"
+              ) {
+                if (linkObject.id1) {
+                  linkObject.id1 = row[linkObject.id1]
+                }
+                if (linkObject.id2) {
+                  linkObject.id2 = row[linkObject.id2]
+                }
               }
-              //  param[1] might be an id, so replace it
-              if (params[1]) {
-                let keysToReplace: string[] = params[1].split(";")
-                let replacedKeys = keysToReplace.map((m) => {
-                  return row[m]
-                })
-                params[1] = replacedKeys.join(";")
-              }
-              let paramString = params.join("/")
               this.hasLazyImage = true
               rowPart = html`<img
                 class="ovl-lazy-image"
-                data-params="${paramString}"
+                .dataLinkObject="${linkObject}"
                 id="ovllazyimage${def.id + this.row.key}"
                 src=""
               />`
