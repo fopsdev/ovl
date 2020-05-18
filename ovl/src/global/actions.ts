@@ -1,7 +1,7 @@
 import { Action, AsyncAction } from "overmind"
-import { overmind, Screen, customFunctions } from "../index"
-import { OvlConfig, Init } from "../init"
-
+import { customFunctions, overmind, Screen } from "../index"
+import { Init, OvlConfig } from "../init"
+import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
   FileInfoStore,
   fileStore,
@@ -10,16 +10,15 @@ import {
   stateStore,
 } from "../offlineStorage"
 import {
+  api,
   isMobile,
   isTouch,
-  api,
   logout,
   ResetT,
   saveState,
   ShowFile,
 } from "./globals"
-import { SnackAdd, DialogOkCancel, DialogOk } from "../library/helpers"
-import { ScreenNavigateOut, ScreenNavigateIn } from "./hooks"
+import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
 
 export const NavigateTo: AsyncAction<Screen> = async (
   { state, actions, effects },
@@ -394,7 +393,10 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         state.ovl.uiState.isReady = true
 
         let updateCheck = await effects.getRequest(
-          "./updatecheck/ovldataversion" + OvlConfig._system.DataVersion + ".js"
+          "./updatecheck/ovldataversion" +
+            OvlConfig._system.DataVersion +
+            ".js",
+          undefined
         )
         if (updateCheck.status === 404) {
           // we need an update

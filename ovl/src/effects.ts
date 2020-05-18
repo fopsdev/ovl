@@ -18,6 +18,8 @@ export type GETRequestParams = {
   cat: string
   id1: string
   id2?: string
+  ext?: string
+  mode?: string
 }
 
 export const getRequest = async (
