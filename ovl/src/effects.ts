@@ -68,6 +68,12 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
       if (data.id2) {
         urlWithParams.searchParams.append("id2", data.id2)
       }
+      if (data.ext) {
+        urlWithParams.searchParams.append("ext", data.ext)
+      }
+      if (data.mode) {
+        urlWithParams.searchParams.append("mode", data.mode)
+      }
 
       // encode params as url param
       url = urlWithParams.toString()

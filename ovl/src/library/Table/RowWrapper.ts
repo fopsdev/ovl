@@ -183,7 +183,7 @@ export class TableRowWrapper extends OvlBaseElement {
       return null
     }
 
-    if (viewRow.selected) {
+    if (viewRow && viewRow.selected) {
       this.actions.ovl.overlay.OpenOverlay({
         templateResult: html`
           <ovl-trowdetailview

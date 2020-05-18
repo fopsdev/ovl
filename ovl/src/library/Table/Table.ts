@@ -143,14 +143,14 @@ export type TableDef = {
     copyColumnsIgnore?: { [key: string]: string }
     customRowActions?: {
       // dynamically displays button when a row is selected or the detailview is called
-      // key will be the action name that will be executed when custom button is pressed
+      // key will be the function name that will be executed when custom button is pressed
       // check hooks.ts for the required fn names
 
       [key: string]: RowControlAction
     }
     customColumnActions?: {
       // dynamically displays menuentry in headerform
-      // key will be the action name that will be executed when custom button is pressed
+      // key will be the function name that will be executed when custom button is pressed
       // check hooks.ts for the required fn names
       [key: string]: ColumnAction
     }
@@ -242,7 +242,6 @@ export type ControlType =
   | "date"
   | "time"
   | "Link"
-  | "ImageLink"
 export type ColumnAlign = "left" | "center" | "right"
 
 export type ColumnsDef = {
@@ -315,6 +314,8 @@ export type FieldVisibility =
   | "View"
   | "none"
 
+export type AssetType = "Image" | "File" | "SAPImage" | "SAPFile"
+
 export type ColumnDef = {
   control?: ControlType
   type?: DataType
@@ -334,6 +335,7 @@ export type ColumnDef = {
     checkedValue?: string | boolean
   }
   asset?: {
+    type: AssetType
     validFileExtensions: string[]
     validCategories: string[]
     idColumns: string[]
@@ -467,6 +469,7 @@ export class TableHeader extends OvlBaseElement {
             // get data path
             //@ts-ignore
             let params = entry.target.dataLinkObject
+            params["mode"] = "Thumb"
             let res = await overmind.effects.getRequest(
               api.url + "assets/get",
               params,

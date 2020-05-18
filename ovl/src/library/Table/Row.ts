@@ -97,30 +97,27 @@ export class TableRow extends OvlBaseElement {
             } else {
               rowPart = def.options.controlsRendering.checkbox.table.unchecked
             }
-          } else if (col.control === "ImageLink") {
-            let linkValue = row[k]
+          } else if (col.control === "Link") {
+            if (col.asset.type === "Image") {
+              let linkValue = row[k]
 
-            if (linkValue) {
-              let linkObject = JSON.parse(linkValue)
-              if (
-                linkObject.cat !== "Ext" &&
-                linkObject.cat !== "SAPAtt" &&
-                linkObject.cat !== "SAPImg"
-              ) {
-                if (linkObject.id1) {
-                  linkObject.id1 = row[linkObject.id1]
+              if (linkValue) {
+                let linkObject = JSON.parse(linkValue)
+                if (linkObject.cat !== "Ext") {
+                  if (linkObject.id1) {
+                    linkObject.id1 = row[linkObject.id1]
+                  }
+                  if (linkObject.id2) {
+                    linkObject.id2 = row[linkObject.id2]
+                  }
                 }
-                if (linkObject.id2) {
-                  linkObject.id2 = row[linkObject.id2]
-                }
+                this.hasLazyImage = true
+                rowPart = html`<img
+                  class="ovl-lazy-image"
+                  .dataLinkObject="${linkObject}"
+                  src=""
+                />`
               }
-              this.hasLazyImage = true
-              rowPart = html`<img
-                class="ovl-lazy-image"
-                .dataLinkObject="${linkObject}"
-                id="ovllazyimage${def.id + this.row.key}"
-                src=""
-              />`
             }
           } else {
             rowPart = getDisplayValue(k, col, row, def.namespace)

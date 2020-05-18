@@ -354,11 +354,12 @@ export let tblTableTesting3: TableDef = {
       ui: { checkedValue: "Y", align: "center" },
     },
     U_Image: {
-      control: "ImageLink",
+      control: "Link",
       ui: { align: "center" },
       asset: {
-        validFileExtensions: ["jpg"],
-        validCategories: ["PortalItemPicture"],
+        type: "Image",
+        validFileExtensions: ["jpg", "gif"],
+        validCategories: ["ItemPicture", "FreePicture"],
         idColumns: ["U_ItemCode"],
       },
     },
