@@ -1,5 +1,5 @@
+import { html } from "lit-html"
 import { OvlBaseElement } from "../../library/OvlBaseElement"
-import { html, TemplateResult } from "lit-html"
 
 export let overlayToRender: {
   resolve?: any

@@ -26,7 +26,7 @@ export class TableRow extends OvlBaseElement {
   }
   afterRender() {
     if (this.hasLazyImage) {
-      let lazyImages = this.querySelectorAll(".ovl-lazy-image")
+      let lazyImages = this.querySelectorAll(".ovl-lazy-image-thumb")
       lazyImages.forEach((element) => {
         this.row.intersectionObserver.observe(element)
       })
@@ -113,7 +113,7 @@ export class TableRow extends OvlBaseElement {
                 }
                 this.hasLazyImage = true
                 rowPart = html`<img
-                  class="ovl-lazy-image"
+                  class="ovl-lazy-image-thumb"
                   .dataLinkObject="${linkObject}"
                   src=""
                 />`
@@ -138,7 +138,10 @@ export class TableRow extends OvlBaseElement {
             data-col="${k}"
             class="fd-table__cell ${align[
               k
-            ]} ovl-tableview-rowcell ovl-tableview-rowcell__${k} ${customRowCellClass}"
+            ]} ovl-tableview-rowcell ovl-tableview-rowcell-${col.control +
+            (col.asset
+              ? col.asset.type
+              : "")}  ovl-tableview-rowcell__${k} ${customRowCellClass}"
           >
             ${rowPart}
           </td>

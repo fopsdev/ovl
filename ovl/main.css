@@ -98,8 +98,12 @@
   vertical-align: middle;
 }
 
-.ovl-lazy-image {
+.ovl-tableview-rowcell-LinkImage img {
   width: 128px;
+}
+
+.ovl-detailview-value-LinkImage img {
+  width: 100%;
 }
 
 @media screen and (max-width: 992px) {
@@ -108,8 +112,8 @@
     width: 99vw;
     height: 98vh;
   }
-  .ovl-lazy-image {
-    width: 64px;
+  .ovl-tableview-rowcell-LinkImage img {
+    width: 80px;
   }
 }
 

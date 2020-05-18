@@ -1,7 +1,7 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { customFunctions, overmind } from "../.."
-import { resolvePath, T } from "../../global/globals"
+import { api, resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,
   FieldGetValueRender,
@@ -54,6 +54,8 @@ export class TableRowDetailView extends OvlBaseElement {
   formAfterRenderFn: any
   formShowFn: any
   formShowed: boolean
+  hasLazyImage: boolean
+  intersectionObserver: IntersectionObserver
 
   init() {
     this.async = true
@@ -64,6 +66,7 @@ export class TableRowDetailView extends OvlBaseElement {
         def: this.rowData.tableDef,
       })
     }
+
     super.init()
   }
   handleAction = (e: Event, key: string, isCustom: boolean) => {
@@ -288,7 +291,39 @@ export class TableRowDetailView extends OvlBaseElement {
               } else {
                 uiItem = def.options.controlsRendering.checkbox.view.unchecked
               }
+            } else if (col.control === "Link") {
+              if (col.asset.type === "Image") {
+                let linkValue = row[k]
+
+                if (linkValue) {
+                  let linkObject = JSON.parse(linkValue)
+                  if (linkObject.cat !== "Ext") {
+                    if (linkObject.id1) {
+                      linkObject.id1 = row[linkObject.id1]
+                    }
+                    if (linkObject.id2) {
+                      linkObject.id2 = row[linkObject.id2]
+                    }
+                  }
+                  this.hasLazyImage = true
+                  uiItem = html`<img
+                    class="ovl-lazy-image"
+                    .dataLinkObject="${linkObject}"
+                    src=""
+                  />`
+                }
+              }
             } else {
+              // let res = await overmind.effects.getRequest(
+              //   api.url + "assets/get",
+              //   params,
+              //   true
+              // )
+              // if (res.data) {
+              //   const urlCreator = window.URL || window.webkitURL
+              //   //@ts-ignore
+              //   entry.target.src = urlCreator.createObjectURL(res.data)
+
               uiItem = getDisplayValue(k, col, row, def.namespace)
             }
           }
@@ -315,20 +350,27 @@ export class TableRowDetailView extends OvlBaseElement {
             label = html`<label
               title="${ifDefined(headertooltip ? headertooltip : undefined)}"
               data-col=${k}
-              class="fd-form-label ovl-detailview-label ovl-detailview-label__${k} ${customHeaderCellClass}"
+              class="fd-form-label ovl-detailview-label ovl-detailview-label-${col.control +
+              (col.asset
+                ? col.asset.type
+                : "")} ovl-detailview-label__${k} ${customHeaderCellClass}"
               >${l}</label
             >`
             value = html`<article
               title="${ifDefined(rowtooltip ? rowtooltip : undefined)}"
               data-col=${k}
-              class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value__${k} ${customRowCellClass}"
+              class="fd-has-type-1 ovl-value-view ovl-detailview-value ovl-detailview-value-${col.control +
+              (col.asset
+                ? col.asset.type
+                : "")} ovl-detailview-value__${k} ${customRowCellClass}"
             >
               ${uiItem}
             </article>`
           }
 
           return html`<div
-            class="ovl-detailview-container ovl-detailview-container__${k}"
+            class="ovl-detailview-container ovl-detailview-container-${col.control +
+            (col.asset ? col.asset.type : "")}} ovl-detailview-container__${k}"
           >
             ${label} ${value}
           </div>`
@@ -337,7 +379,11 @@ export class TableRowDetailView extends OvlBaseElement {
     }
     return html`
       <div id="ovl-detailview-${def.id}" class="fd-panel ovl-detailview">
-        <div class="fd-panel ${scrollable}">
+        <div
+          tabindex="0"
+          id="ovl-detailview-intersectionobserver"
+          class="fd-panel ${scrollable}"
+        >
           ${caption}
           <div
             id="ovl-detailview-body-${def.id}"
@@ -371,6 +417,45 @@ export class TableRowDetailView extends OvlBaseElement {
   }
   afterRender() {
     this.handleAfterRenderCustomHook()
+
+    overlayToRender.elementToFocusAfterOpen = document.getElementById(
+      "ovl-detailview-intersectionobserver"
+    )
+
+    if (this.hasLazyImage && !this.intersectionObserver) {
+      this.intersectionObserver = new IntersectionObserver(
+        async (entries, observer) => {
+          for (let i = 0; i < entries.length; i++) {
+            let entry = entries[i]
+            if (entry.intersectionRatio === 1) {
+              // get data path
+              //@ts-ignore
+              let params = entry.target.dataLinkObject
+              let res = await overmind.effects.getRequest(
+                api.url + "assets/get",
+                params,
+                true
+              )
+              if (res.data) {
+                const urlCreator = window.URL || window.webkitURL
+                //@ts-ignore
+                entry.target.src = urlCreator.createObjectURL(res.data)
+                observer.unobserve(entry.target)
+              }
+            }
+          }
+        },
+        {
+          root: document.getElementById("ovl-detailview-intersectionobserver"),
+          threshold: 1,
+        }
+      )
+
+      let lazyImages = this.querySelectorAll(".ovl-lazy-image")
+      lazyImages.forEach((element) => {
+        this.intersectionObserver.observe(element)
+      })
+    }
   }
 
   updated() {
