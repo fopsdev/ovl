@@ -37,14 +37,16 @@ type OvlConfig = {
   stickyHeaderEnabled: (state: typeof overmind.state) => {}
 }
 
-import { state } from "./state"
+import { AsyncAction } from "overmind"
+import { overmind } from "."
 import * as actions from "./actions"
-export { actions }
 import * as effects from "./effects"
 import onInitialize from "./onInitialize"
 import { defineElements } from "./registerComponents"
-import { AsyncAction, Overmind } from "overmind"
-import { overmind } from "."
+import { state } from "./state"
+export { actions }
+
+// #####################################################################################################################################
 
 defineElements()
 
@@ -100,5 +102,5 @@ if (window.OvlVersion) {
 OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.DataVersion
 OvlConfig._system.PersistTimestampId =
   "ovltimestamp" + OvlConfig._system.DataVersion
-// #####################################################################################################################################
+
 export { OvlConfig }

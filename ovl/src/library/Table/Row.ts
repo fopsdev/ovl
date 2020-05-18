@@ -26,7 +26,7 @@ export class TableRow extends OvlBaseElement {
   }
   afterRender() {
     if (this.hasLazyImage) {
-      let lazyImages = this.querySelectorAll(".ovl-lazy-image-thumb")
+      let lazyImages = this.querySelectorAll(".ovl-lazy-image")
       lazyImages.forEach((element) => {
         this.row.intersectionObserver.observe(element)
       })
@@ -113,7 +113,7 @@ export class TableRow extends OvlBaseElement {
                 }
                 this.hasLazyImage = true
                 rowPart = html`<img
-                  class="ovl-lazy-image-thumb"
+                  class="ovl-lazy-image"
                   .dataLinkObject="${linkObject}"
                   src=""
                 />`

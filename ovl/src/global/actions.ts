@@ -393,9 +393,7 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
         state.ovl.uiState.isReady = true
 
         let updateCheck = await effects.getRequest(
-          "./updatecheck/ovldataversion" +
-            OvlConfig._system.DataVersion +
-            ".js",
+          "./updatecheck/ovlnocache" + OvlConfig._system.DataVersion + ".js",
           undefined
         )
         if (updateCheck.status === 404) {

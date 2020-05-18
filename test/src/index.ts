@@ -2,14 +2,10 @@ import { html, render } from "../../ovl/node_modules/lit-html"
 import { createOvermind } from "../../ovl/node_modules/overmind"
 import { merge } from "../../ovl/node_modules/overmind/config"
 import { baseOvermindConfig, OvlConfig } from "../../ovl/src/init"
-import { defineElements } from "./registerComponents"
 import * as actions from "./actions"
+import { defineElements } from "./registerComponents"
 import * as state from "./state"
-import { TableDefIds, CustomFormType } from "./state"
-import {
-  SnackTrackedAdd,
-  SnackTrackedRemove,
-} from "../../ovl/src/library/helpers"
+import { CustomFormType, TableDefIds } from "./state"
 export { TableDefIds, CustomFormType }
 
 defineElements()

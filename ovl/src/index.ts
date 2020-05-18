@@ -2,20 +2,17 @@
 // replace test with the app
 
 import { IConfig } from "overmind"
-
 // import { overmind, config } from "../../../kaltag/src/index"
 // import { screens } from "../../../kaltag/src/stateScreens"
 // import * as customFunctions from "../../../kaltag/src/customFunctions"
-
 //#################### ovl test prj ######################################
 import {
-  overmind,
   config,
-  TableDefIds,
   CustomFormType,
-} from "../..//test/src/index"
+  overmind,
+  TableDefIds,
+} from "../../test/src/index"
 import { screens } from "../../test/src/stateScreens"
-import * as customFunctions from "../../test/src/customFunctions"
 
 //#################### ovl lib Standalone ######################################
 /* uncomment when used standalone for base dev 
@@ -33,7 +30,7 @@ declare module "overmind" {
   // tslint:disable:interface-name
   interface Config extends IConfig<typeof config> {}
 }
-
+import * as customFunctions from "../../test/src/customFunctions"
 export type FormType = CustomFormType | "TableRowEdit"
 export { customFunctions, screens, overmind, TableDefIds }
 export type Screen = keyof typeof screens

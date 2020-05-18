@@ -1,5 +1,4 @@
 import { overmind } from "../.."
-import { TableDefIds } from "../../../../test/src"
 import {
   getDateValue,
   getDecimalValue,
@@ -18,7 +17,7 @@ import {
   FormCanMore,
   FormCustomFilter,
 } from "../../global/hooks"
-import { customFunctions } from "../../index"
+import { customFunctions, TableDefIds } from "../../index"
 import { state } from "../../state"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
