@@ -372,6 +372,7 @@ export const TableRefresh: AsyncAction<{
     snackId = uuidv4()
     SnackTrackedAdd("Ansicht wird aktualisiert...", "Success", snackId)
   }
+
   if (!def.dataFetching.useCustomDataFetching) {
     await TableRefreshServerData(
       def,

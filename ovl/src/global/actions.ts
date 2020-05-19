@@ -3,10 +3,10 @@ import { customFunctions, overmind, Screen } from "../index"
 import { Init, OvlConfig } from "../init"
 import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
-  FileInfoStore,
-  fileStore,
-  FileStore,
-  fileStoreInfo,
+  // FileInfoStore,
+  // fileStore,
+  // FileStore,
+  //fileStoreInfo,
   stateStore,
 } from "../offlineStorage"
 import {
@@ -317,56 +317,58 @@ export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
 }
 
 export const GetFile: AsyncAction<{
-  fileName: string
-  fileType: string
-  docNum: string
+  cat: string
+  id1: string
+  id2?: string
+  ext?: string
 }> = async ({ actions, state, effects }, value) => {
-  let docNum = value.docNum
-  if (!docNum) {
-    docNum = ""
+  let cat = value.cat
+  let id1 = value.id1
+  let id2 = value.id2
+  let ext = value.ext
+  if (!id2) {
+    id2 = ""
   }
-  let fileType = value.fileType
-  let fileName = value.fileName
-  let id = docNum + fileType + fileName
+  if (!ext) {
+    ext = ""
+  }
+
+  //  let id = docNum + fileType + fileName
   if (state.ovl.uiState.isIOS === true) {
     // saving state here fixes a ios handling issue when file gets opened and navigated back the page on ios safari (in standalone) reloads
     // that way it reloads to current state...
     saveState(true, "GetFile")
   }
-  let res = await effects.postRequest(
-    state.ovl.apiUrl + "attachment/getfile",
-    {
-      fileName,
-      fileType,
-      docNum,
-    },
+  let res = await effects.getRequest(
+    state.ovl.apiUrl + "assets/get",
+    { cat, id1, id2, ext },
     true
   )
 
   if (res.status === 200) {
     let mimeType = res.headers["content-type"]
-    let fo: FileStore = { id, mimeType, content: res.data, fileName }
-    fileStore.set(fo)
-    let dt = new Date()
-    let foinfo: FileInfoStore = { id, lastAccess: dt, refreshed: dt }
-    fileStoreInfo.set(foinfo)
-    ShowFile(res.data, mimeType, fileName)
+    // let fo: FileStore = { id, mimeType, content: res.data, fileName }
+    // fileStore.set(fo)
+    // let dt = new Date()
+    // let foinfo: FileInfoStore = { id, lastAccess: dt, refreshed: dt }
+    // fileStoreInfo.set(foinfo)
+    ShowFile(res.data, mimeType, id1)
   } else if (res.status === 449) {
     //get file from store
-    let fo: FileStore = await fileStore.get(id)
-    if (fo) {
-      if (state.ovl.uiState.isIOS === true) {
-        ShowFile(fo.content, fo.mimeType, fileName)
-      } else {
-        let blob = new Blob([fo.content], { type: fo.mimeType })
-        ShowFile(blob, fo.mimeType, fileName)
-      }
-      let foinfo: FileInfoStore = await fileStoreInfo.get(id)
-      foinfo.lastAccess = new Date()
-      fileStoreInfo.set(foinfo)
-    } else {
-      SnackAdd("File not cached", "Information")
-    }
+    //let fo: FileStore = await fileStore.get(id)
+    // if (fo) {
+    //   if (state.ovl.uiState.isIOS === true) {
+    //     ShowFile(fo.content, fo.mimeType, fileName)
+    //   } else {
+    //     let blob = new Blob([fo.content], { type: fo.mimeType })
+    //     ShowFile(blob, fo.mimeType, fileName)
+    //   }
+    //   let foinfo: FileInfoStore = await fileStoreInfo.get(id)
+    //   foinfo.lastAccess = new Date()
+    //   fileStoreInfo.set(foinfo)
+    // } else {
+    //   SnackAdd("File not cached", "Information")
+    // }
   }
 }
 

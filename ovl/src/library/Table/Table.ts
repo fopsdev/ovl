@@ -461,6 +461,7 @@ export class TableHeader extends OvlBaseElement {
   init() {
     this.async = true
     this.tabledata = this.props(this.state)
+    this.setAttribute("id", "ovl-table-" + this.tabledata.def.id)
     this.intersectionObserver = new IntersectionObserver(
       async (entries, observer) => {
         for (let i = 0; i < entries.length; i++) {
