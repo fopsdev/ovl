@@ -1,4 +1,4 @@
-import { Action } from "overmind"
+import { Action } from "../../../../ovl/node_modules/overmind"
 
 export const CloseMainMenu: Action = ({ state }) => {
   state.ovl.screens.screens.Shellbar.mainMenuExpanded = false

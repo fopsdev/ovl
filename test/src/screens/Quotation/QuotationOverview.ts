@@ -14,11 +14,15 @@ export class CompQuotationOverview extends OvlBaseElement {
   handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
     e.preventDefault()
 
-    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({
+      id1: fileName,
+      cat: fileType,
+      id2: docNum,
+    })
   }
 
   getUI() {
-    const handlePDFPopup = e => {
+    const handlePDFPopup = (e) => {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR214", "")
@@ -27,15 +31,15 @@ export class CompQuotationOverview extends OvlBaseElement {
         }
         this.actions.portal.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Quotation
+          obj: this.state.ovl.screens.screens.Quotation,
         })
       }
     }
 
-    const handleRemoveAllPDFPopup = e => {
+    const handleRemoveAllPDFPopup = (e) => {
       this.actions.portal.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Quotation
+        obj: this.state.ovl.screens.screens.Quotation,
       })
     }
 
@@ -48,7 +52,7 @@ export class CompQuotationOverview extends OvlBaseElement {
     let statusColors = {
       Open: "fd-has-background-color-background-6",
       Closed: "fd-has-background-color-background-3",
-      Canceled: "fd-has-background-color-background-5"
+      Canceled: "fd-has-background-color-background-5",
     }
 
     return html`
@@ -115,7 +119,7 @@ export class CompQuotationOverview extends OvlBaseElement {
                   <tbody class="fd-table__body">
                     ${Object.keys(this.state.portal.quotationDetail.quotations)
                       .sort((a, b) => parseInt(b) - parseInt(a))
-                      .map(k => {
+                      .map((k) => {
                         let o = this.state.portal.quotationDetail.quotations[k]
                         let files = this.state.portal.quotationDetail
                           .quotations[k].attachments.files
@@ -132,8 +136,8 @@ export class CompQuotationOverview extends OvlBaseElement {
                                     aria-controls="pQqQR214${k}"
                                     aria-haspopup="true"
                                     aria-expanded="${k ===
-                                      this.state.ovl.screens.screens.Quotation
-                                        .activeFilePopup}"
+                                    this.state.ovl.screens.screens.Quotation
+                                      .activeFilePopup}"
                                     aria-label="More"
                                   ></button>
                                 </div>
@@ -143,21 +147,21 @@ export class CompQuotationOverview extends OvlBaseElement {
                                   aria-hidden="${k !==
                                     this.state.ovl.screens.screens.Quotation
                                       .activeFilePopup ||
-                                    this.state.portal.quotationDetail
-                                      .quotations[k].attachments.files
-                                      .length === 0}"
+                                  this.state.portal.quotationDetail.quotations[
+                                    k
+                                  ].attachments.files.length === 0}"
                                   id="pQqQR214${k}"
                                 >
                                   <nav class="fd-menu">
                                     <ul class="fd-menu__list">
                                       ${this.state.portal.quotationDetail.quotations[
                                         k
-                                      ].attachments.files.map(f => {
+                                      ].attachments.files.map((f) => {
                                         return html`
                                           <li>
                                             <a
                                               href=""
-                                              @click=${e =>
+                                              @click=${(e) =>
                                                 this.handleFile(
                                                   e,
                                                   f.fileName,

@@ -394,7 +394,10 @@ export class TableRowDetailView extends OvlBaseElement {
             ${body}
           </div>
         </div>
-        <div class="fd-panel__footer ovl-panel__footer ovl-detailview-footer">
+        <div
+          id="ovl-detailview-footer"
+          class="fd-panel__footer ovl-panel__footer ovl-detailview-footer"
+        >
           ${rowActions.map((k, i) => {
             let button = rowControlActions[k]
             return html`<button

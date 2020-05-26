@@ -57,6 +57,10 @@
   user-select: none;
 }
 
+#ovl-detailview-intersectionobserver:focus {
+  outline: none;
+}
+
 .ovl-detailview .chartwidth {
   width: 98%;
 }

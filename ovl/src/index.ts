@@ -11,8 +11,8 @@ import {
   CustomFormType,
   overmind,
   TableDefIds,
-} from "../../../kaltag/src/index"
-import { screens } from "../../../kaltag/src/stateScreens"
+} from "../../test/src/index"
+import { screens } from "../../test/src/stateScreens"
 
 //#################### ovl lib Standalone ######################################
 /* uncomment when used standalone for base dev 
@@ -30,7 +30,7 @@ declare module "overmind" {
   // tslint:disable:interface-name
   interface Config extends IConfig<typeof config> {}
 }
-import * as customFunctions from "../../../kaltag/src/customFunctions"
+import * as customFunctions from "../../test/src/customFunctions"
 export type FormType = CustomFormType | "TableRowEdit"
 export { customFunctions, screens, overmind, TableDefIds }
 export type Screen = keyof typeof screens

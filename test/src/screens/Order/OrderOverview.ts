@@ -13,7 +13,11 @@ export class CompOrderOverview extends OvlBaseElement {
   }
   handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
     e.preventDefault()
-    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({
+      id1: fileName,
+      cat: fileType,
+      id2: docNum,
+    })
   }
   handleDetail(e: Event, key: string) {
     //@ts-ignore

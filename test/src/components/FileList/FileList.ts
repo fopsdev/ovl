@@ -42,7 +42,11 @@ export class CompFileList extends OvlBaseElement {
     e.preventDefault()
     e.stopPropagation()
     let docNum = this.state.ovl.screens.screens.Orderdetail.selectedOrder
-    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({
+      id1: fileName,
+      cat: fileType,
+      id2: docNum,
+    })
   }
 
   getUI() {
@@ -58,7 +62,7 @@ export class CompFileList extends OvlBaseElement {
           </tr>
         </thead>
         <tbody class="fd-table__body">
-          ${this.fileList.map(f => {
+          ${this.fileList.map((f) => {
             if (f.type === "MainAttachment") {
               let endNames = f.fileName.split(".")
               let toCheck = endNames[endNames.length - 2]
@@ -78,7 +82,7 @@ export class CompFileList extends OvlBaseElement {
                 <td class="fd-table__cell ">
                   <a
                     href=""
-                    @click=${e => {
+                    @click=${(e) => {
                       this.handleFile(e, f.fileName, f.type)
                     }}
                     class="fd-link fd-has-font-weight-semi"

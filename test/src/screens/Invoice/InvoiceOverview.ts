@@ -14,11 +14,15 @@ export class CompInvoiceOverview extends OvlBaseElement {
 
   handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
     e.preventDefault()
-    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({
+      id1: fileName,
+      cat: fileType,
+      id2: docNum,
+    })
   }
 
   getUI() {
-    const handlePDFPopup = e => {
+    const handlePDFPopup = (e) => {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR213", "")
@@ -27,15 +31,15 @@ export class CompInvoiceOverview extends OvlBaseElement {
         }
         this.actions.portal.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Invoice
+          obj: this.state.ovl.screens.screens.Invoice,
         })
       }
     }
 
-    const handleRemoveAllPDFPopup = e => {
+    const handleRemoveAllPDFPopup = (e) => {
       this.actions.portal.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Invoice
+        obj: this.state.ovl.screens.screens.Invoice,
       })
     }
 
@@ -97,7 +101,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
                     <tbody class="fd-table__body">
                       ${Object.keys(this.state.portal.invoiceDetail.invoices)
                         .sort((a, b) => parseInt(b) - parseInt(a))
-                        .map(k => {
+                        .map((k) => {
                           let o = this.state.portal.invoiceDetail.invoices[k]
                           let files = o.attachments.files
                           let bgColor = "fd-has-background-color-background-5"
@@ -121,8 +125,8 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                       aria-controls="pQqQR213${k}"
                                       aria-haspopup="true"
                                       aria-expanded="${k ===
-                                        this.state.ovl.screens.screens.Invoice
-                                          .activeFilePopup}"
+                                      this.state.ovl.screens.screens.Invoice
+                                        .activeFilePopup}"
                                       aria-label="More"
                                     ></button>
                                   </div>
@@ -132,21 +136,20 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                     aria-hidden="${k !==
                                       this.state.ovl.screens.screens.Invoice
                                         .activeFilePopup ||
-                                      this.state.portal.invoiceDetail.invoices[
-                                        k
-                                      ].attachments.files.length === 0}"
+                                    this.state.portal.invoiceDetail.invoices[k]
+                                      .attachments.files.length === 0}"
                                     id="pQqQR213${k}"
                                   >
                                     <nav class="fd-menu">
                                       <ul class="fd-menu__list">
                                         ${this.state.portal.invoiceDetail.invoices[
                                           k
-                                        ].attachments.files.map(f => {
+                                        ].attachments.files.map((f) => {
                                           return html`
                                             <li>
                                               <a
                                                 href=""
-                                                @click=${e =>
+                                                @click=${(e) =>
                                                   this.handleFile(
                                                     e,
                                                     f.fileName,

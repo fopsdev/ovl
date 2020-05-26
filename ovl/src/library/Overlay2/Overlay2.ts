@@ -86,7 +86,7 @@ export class OvlOverlay2 extends OvlBaseElement {
         @keydown=${(e) => handleKeyDown(e)}
         @mousedown=${this.handleDismissed}
         id="ovloverlay2"
-        class="fd-shell__overlay fd-overlay fd-overlay--modal ${animation}"
+        class="fd-shell__overlay fd-overlay fd-overlay--modal ovl-overlay ${animation}"
         aria-hidden="false"
       >
         ${overlay2ToRender.template}

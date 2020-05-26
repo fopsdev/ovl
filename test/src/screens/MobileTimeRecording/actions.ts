@@ -1,4 +1,4 @@
-import { AsyncAction, Action } from "overmind"
+import { AsyncAction, Action } from "../../../../ovl/node_modules/overmind"
 import { uuidv4 } from "../../../../ovl/src/global/globals"
 import {
   SnackAdd,
