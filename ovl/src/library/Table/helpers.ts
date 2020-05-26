@@ -692,7 +692,7 @@ export const TableFilterFn = (
   )
 
   let visibleColumns = Object.keys(columns).filter(
-    (f) => columns[f].ui.visibility === "Table_Edit_View"
+    (f) => columns[f].ui.visibility.indexOf("Table") > -1
   )
 
   // restable is now filtered by static filter already, thats fine and our starting point for the next 4 filters

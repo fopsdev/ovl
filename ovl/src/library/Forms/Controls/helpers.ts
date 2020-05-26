@@ -179,7 +179,7 @@ export const GetListDisplayValue = (
   listdata: ListFnReturnValue
 ) => {
   if (!value) {
-    return value
+    return ""
   }
   let displayField = list.displayField
   let displayValue

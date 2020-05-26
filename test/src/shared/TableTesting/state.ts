@@ -307,7 +307,7 @@ export let tblTableTesting3: TableDef = {
   },
   features: {
     detailView: "Enabled",
-    filter: false,
+    filter: true,
     page: false,
     add: true,
     noButtonsAtTheBottom: true,
@@ -324,6 +324,21 @@ export let tblTableTesting3: TableDef = {
       filter: { top: 3 },
       ui: { visibility: "TableNotMobile_Edit_View" },
     },
+
+    U_ItmsGrpCod: {
+      sortable: true,
+      control: "list",
+      type: "int",
+      list: {
+        valueField: "ItmsGrpCod",
+        displayField: "ItmsGrpNam",
+        serverEndpoint: "itemGroup",
+        acceptEmpty: false,
+        acceptOnlyListValues: true,
+      },
+      ui: { visibility: "Edit_View" },
+    },
+
     U_ItemCode: {
       sortable: true,
       control: "list",
