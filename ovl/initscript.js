@@ -1,19 +1,19 @@
-if (window.navigator.userAgent.indexOf("Edge") > -1) {
-  window.location.href =
-    "https://support.microsoft.com/de-ch/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
-}
-
 if (
+  window.navigator.userAgent.indexOf("Edge") > -1 ||
   (!!window.MSInputMethodContext && !!document.documentMode) ||
   navigator.appVersion.indexOf("MSIE 10") !== -1
 ) {
-  window.location.href = "http://outdatedbrowser.com/de"
+  alert(
+    "DE: Inkompatibler Browser entdeckt. Kalt AG Portal läuft auf: Chrome, Firefox und dem neuen MS Edge. Falls Sie nicht Chrome oder Firefox einsetzen wollen installieren Sie doch bitte den neuen Edge Browser nach dem bestätigen dieser Meldung.\nFR: Navigateur incompatible découvert. Kalt AG Portal fonctionne sur: Chrome, Firefox et le nouveau navigateur MS Edge. Si vous ne souhaitez pas utiliser Chrome ou Firefox, veuillez installer le nouveau navigateur Edge après avoir confirmé ce message"
+  )
+  window.location.href =
+    "https://support.microsoft.com/de-ch/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
 }
 /*
  * long-press-event
  * Pure JavaScript long-press-event
  * */
-!(function(e, t) {
+!(function (e, t) {
   "use strict"
   var n = null,
     a =
@@ -31,7 +31,7 @@ if (
     v(i)
     var m = i.target,
       u = parseInt(m.getAttribute("data-long-press-delay") || "450", 10)
-    n = (function(t, n) {
+    n = (function (t, n) {
       if (
         !(
           e.requestAnimationFrame ||
@@ -44,14 +44,14 @@ if (
         return e.setTimeout(t, n)
       var a = new Date().getTime(),
         i = {},
-        o = function() {
+        o = function () {
           new Date().getTime() - a >= n
             ? t.call()
             : (i.value = requestAnimFrame(o))
         }
       return (i.value = requestAnimFrame(o)), i
     })(
-      function(e) {
+      function (e) {
         v()
         var n = a ? e.touches[0].clientX : e.clientX,
           i = a ? e.touches[0].clientY : e.clientY
@@ -59,14 +59,14 @@ if (
           new CustomEvent("long-press", {
             bubbles: !0,
             cancelable: !0,
-            detail: { clientX: n, clientY: i }
+            detail: { clientX: n, clientY: i },
           })
         ) &&
           t.addEventListener(
             o,
             function e(n) {
               t.removeEventListener(o, e, !0),
-                (function(e) {
+                (function (e) {
                   e.stopImmediatePropagation(),
                     e.preventDefault(),
                     e.stopPropagation()
@@ -97,7 +97,7 @@ if (
       (n = null)
   }
   "function" != typeof e.CustomEvent &&
-    ((e.CustomEvent = function(e, n) {
+    ((e.CustomEvent = function (e, n) {
       n = n || { bubbles: !1, cancelable: !1, detail: void 0 }
       var a = t.createEvent("CustomEvent")
       return a.initCustomEvent(e, n.bubbles, n.cancelable, n.detail), a
@@ -109,13 +109,13 @@ if (
       e.mozRequestAnimationFrame ||
       e.oRequestAnimationFrame ||
       e.msRequestAnimationFrame ||
-      function(t) {
+      function (t) {
         e.setTimeout(t, 1e3 / 60)
       }),
     t.addEventListener(o, v, !0),
     t.addEventListener(
       m,
-      function(e) {
+      function (e) {
         var t = Math.abs(u - e.clientX),
           n = Math.abs(r - e.clientY)
         ;(t >= s || n >= c) && v()
@@ -126,7 +126,7 @@ if (
     t.addEventListener("scroll", v, !0),
     t.addEventListener(
       i,
-      function(e) {
+      function (e) {
         ;(u = e.clientX), (r = e.clientY), l(e)
       },
       !0

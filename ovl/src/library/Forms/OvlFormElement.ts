@@ -177,10 +177,18 @@ export class OvlFormElement extends OvlBaseElement {
         let lastTouchedField = this.formState.fields[
           this.formState.lastTouchedField
         ]
+
         if (lastTouchedField) {
           let focusEl = document.getElementById(lastTouchedField.id)
           if (focusEl) {
             focusEl.focus()
+            //@ts-ignore
+            if (focusEl.value && focusEl.setSelectionRange) {
+              //@ts-ignore
+              let val = focusEl.value
+              //@ts-ignore
+              focusEl.setSelectionRange(val.length, val.length)
+            }
           }
         }
 

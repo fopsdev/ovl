@@ -79,6 +79,7 @@ export type InitForm = {
   namespace?: string
   schema?: { [key: string]: Schema }
   forceOverwrite?: boolean
+  initialFocusElementId?: string
 }
 
 export type FormsState = { [key in FormType]: FormStatePerInstance }
@@ -454,6 +455,7 @@ export const InitForm: Action<InitForm> = (
       lastTouchedField: undefined,
     }
     let formState = formInstanceList[value.instanceId]
+    formState.lastTouchedField = value.initialFocusElementId
 
     // initial validation of all fields
     let fn = resolvePath(customFunctions, formState.namespace)

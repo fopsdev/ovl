@@ -185,7 +185,7 @@ export const NavigateBack: AsyncAction = async ({
 }
 
 const SetClosingScreen = (
-  actions: any,
+  actions: typeof overmind.actions,
   state: typeof overmind.state,
   value: string
 ) => {
@@ -197,7 +197,7 @@ const SetClosingScreen = (
       if (!state.ovl.uiState.hasOSReducedMotion) {
         o.closing = true
       } else {
-        actions.portal.global.SetVisibleFalse(value)
+        actions.ovl.internal.SetVisibleFalse(value)
       }
     }
   }

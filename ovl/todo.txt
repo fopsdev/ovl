@@ -1,5 +1,7 @@
 Todos:
 
+- Check Focus Setting... In Live KaltAg you can see on the loginform after pasting in the username
+
 X - Custom Column Functions
 X - Custom Functions for Multiple Selected Rows
 
