@@ -119,7 +119,6 @@ export class OvlDialog extends OvlBaseElement {
           class="fd-button ${this.state.ovl.libState.dialog.okText == ""
             ? " hide"
             : ""}"
-          ?autofocus=${this.state.ovl.libState.dialog.default == 1}
           aria-selected="${this.state.ovl.libState.dialog.default == 1}"
           id="ovldialogok"
         >
@@ -135,7 +134,6 @@ export class OvlDialog extends OvlBaseElement {
           class="fd-button ${this.state.ovl.libState.dialog.cancelText == ""
             ? " hide"
             : ""}"
-          ?autofocus=${this.state.ovl.libState.dialog.default == 2}
           aria-selected="${this.state.ovl.libState.dialog.default == 2}"
           id="ovldialogcancel"
         >
@@ -188,8 +186,10 @@ export class OvlDialog extends OvlBaseElement {
       if (this.state.ovl.libState.dialog.default == 1) {
         id = "ovldialogok"
       }
+      console.log("focus " + id)
       document.getElementById(id).focus()
     }
+    super.updated()
   }
   connectedCallback() {
     this.addEventListener("animationend", this.handleAnimationEnd)

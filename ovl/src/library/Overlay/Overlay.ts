@@ -1,5 +1,6 @@
 import { html } from "lit-html"
 import { OvlBaseElement } from "../../library/OvlBaseElement"
+import { overlay2ToRender } from "../Overlay2/Overlay2"
 
 export let overlayToRender: {
   resolve?: any
@@ -92,13 +93,15 @@ export class OvlOverlay extends OvlBaseElement {
     `)
   }
   updated() {
-    let el = overlayToRender.elementToFocusAfterOpen
-    if (!el) {
-      el = document.getElementById("ovloverlay")
-    }
-    if (el) {
-      //@ts-ignore
-      el.focus()
+    if (!this.state.ovl.libState.overlay.closing) {
+      let el = overlayToRender.elementToFocusAfterOpen
+      if (!el) {
+        el = document.getElementById("ovloverlay")
+      }
+      if (el) {
+        //@ts-ignore
+        el.focus()
+      }
     }
     super.updated()
   }

@@ -94,13 +94,15 @@ export class OvlOverlay2 extends OvlBaseElement {
     `)
   }
   updated() {
-    let el = overlay2ToRender.elementToFocusAfterOpen
-    if (!el) {
-      el = document.getElementById("ovloverlay2")
-    }
-    if (el) {
-      //@ts-ignore
-      el.focus()
+    if (!this.state.ovl.libState.overlay2.closing) {
+      let el = overlay2ToRender.elementToFocusAfterOpen
+      if (!el) {
+        el = document.getElementById("ovloverlay2")
+      }
+      if (el) {
+        //@ts-ignore
+        el.focus()
+      }
     }
     super.updated()
   }
