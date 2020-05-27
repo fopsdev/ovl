@@ -47,7 +47,7 @@ export const CloseOverlay: AsyncAction = async ({ state }, _) => {
     overlayToRender.overlayClosedCallback()
   }
   if (overlayToRender.elementToFocusAfterClose) {
-    if (state.ovl.libState.dialog.visible) {
+    if (state.ovl.libState.dialog && state.ovl.libState.dialog.visible) {
       dialogAfterClose.elementToFocus = overlayToRender.elementToFocusAfterClose
     } else {
       //@ts-ignore

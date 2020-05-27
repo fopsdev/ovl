@@ -186,7 +186,6 @@ export class OvlDialog extends OvlBaseElement {
       if (this.state.ovl.libState.dialog.default == 1) {
         id = "ovldialogok"
       }
-      console.log("focus " + id)
       document.getElementById(id).focus()
     }
     super.updated()
