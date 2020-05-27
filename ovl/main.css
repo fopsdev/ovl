@@ -41,16 +41,26 @@
 #############################################################
 */
 
+/* firefox needs this to support breaks inside textarea */
+@supports (-moz-appearance: none) {
+  textarea {
+    white-space: pre-wrap !important;
+  }
+}
+
+.ovl-tableview-rowcell-textarea,
+.ovl-detailview-value-textarea {
+  white-space: pre-wrap;
+}
+
+.ovl-detailview-container {
+  margin-bottom: 1em;
+}
+
 .ovl-bigeditform,
 .ovl-detailview {
   width: 70vw;
   height: 98vh;
-}
-
-.ovl-value-view {
-  margin-top: -18px;
-  margin-bottom: 12px;
-  white-space: pre-line;
 }
 
 .ovl-formcontrol-textarea-input {

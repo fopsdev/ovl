@@ -200,6 +200,7 @@ export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
     instanceId: "loginform",
     formType: "Login",
     fields,
+    initialFocusElementId: "user",
   }
   actions.ovl.form.InitForm(loginForm)
   actions.ovl.navigation.NavigateTo("Login")

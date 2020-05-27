@@ -370,7 +370,7 @@ export let tblTableTesting3: TableDef = {
     },
     U_Image: {
       control: "Link",
-      ui: { align: "center" },
+      ui: { align: "center", showLabelIfNoValueInView: false },
       asset: {
         type: "Image",
         validFileExtensions: ["jpg", "gif"],

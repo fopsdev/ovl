@@ -132,19 +132,11 @@ export class TableRow extends OvlBaseElement {
             this.state
           )
         }
+
+        // needs to be ignored to get css white-space: line-wrap work correctly
+        // prettier-ignore
         return html`
-          <td
-            title="${ifDefined(tooltip ? tooltip : undefined)}"
-            data-col="${k}"
-            class="fd-table__cell ${align[
-              k
-            ]} ovl-tableview-rowcell ovl-tableview-rowcell-${col.control +
-            (col.asset
-              ? col.asset.type
-              : "")}  ovl-tableview-rowcell__${k} ${customRowCellClass}"
-          >
-            ${rowPart}
-          </td>
+          <td title="${ifDefined(tooltip ? tooltip : undefined)}" data-col="${k}" class="fd-table__cell ${align[k]} ovl-tableview-rowcell ovl-tableview-rowcell-${col.control + (col.asset?col.asset.type: "")} ovl-tableview-rowcell__${k} ${customRowCellClass}">${rowPart}</td>
         `
       })}
     `
