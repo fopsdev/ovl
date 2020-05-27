@@ -225,43 +225,6 @@ body {
   pointer-events: none;
 }
 
-.cols2080 {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(100px, 1fr) minmax(200px, 2fr)
-  );
-  grid-template-rows: auto;
-}
-
-.evenCols2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  grid-template-rows: auto;
-}
-
-.dateInputCols2 {
-  display: grid;
-  grid-template-columns: 93% 7%;
-  grid-gap: 0px;
-  grid-template-rows: auto;
-}
-
-.evenCols3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 10px;
-  grid-template-rows: auto;
-}
-.evenCols4 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
-  grid-template-rows: auto;
-}
-
 @media (orientation: landscape) {
   .ovldialogcentered {
     width: 350px;
