@@ -12,6 +12,7 @@ import {
   GetLabel,
   GetListDisplayValue,
   GetRowFromFormState,
+  GetValueFromCustomFunction,
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { FormState } from "../actions"
@@ -555,12 +556,24 @@ export class OvlListControl extends OvlBaseElement {
             </div>
           </div>
 
-          <div
-            style="margin-top:4px;"
+          <span
+            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey}"
+          >
+            ${GetValueFromCustomFunction(
+              this.field.row,
+              field,
+              this.formState,
+              align,
+              this.field.isInline,
+              this.state
+            )}
+          </span>
+
+          <span
             class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
           >
             ${field.validationResult.validationMsg}
-          </div>
+          </span>
         </div>
         <div style="margin-top:-3px;">
           ${this.localList}

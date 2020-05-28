@@ -3,7 +3,7 @@ import { html } from "lit-html"
 import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ColumnAlign } from "../../Table/Table"
-import { GetLabel, ControlState } from "./helpers"
+import { GetLabel, ControlState, GetValueFromCustomFunction } from "./helpers"
 import { ifDefined } from "lit-html/directives/if-defined"
 
 export class OvlTextArea extends OvlBaseElement {
@@ -89,6 +89,19 @@ export class OvlTextArea extends OvlBaseElement {
 ${field.value}</textarea
         >
       </div>
+      <span
+        class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textarea-custom ovl-formcontrol-custom__${field.fieldKey}"
+      >
+        ${GetValueFromCustomFunction(
+          this.field.row,
+          field,
+          this.formState,
+          align,
+          this.field.isInline,
+          this.state
+        )}
+      </span>
+
       <span
         class="fd-form-message fd-form-message--warning ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textarea-validation ovl-formcontrol-validation__${field.fieldKey}"
       >

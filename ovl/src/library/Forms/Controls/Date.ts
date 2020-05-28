@@ -1,7 +1,7 @@
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ControlState, GetLabel } from "./helpers"
+import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { FormState } from "../actions"
 import { ColumnDisplayDef } from "../../Table/Table"
@@ -102,6 +102,19 @@ export class OvlDate extends OvlBaseElement {
           type="${type}"
           id="${field.id}"
         />
+
+        <span
+          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-date-custom ovl-formcontrol-custom__${field.fieldKey}"
+        >
+          ${GetValueFromCustomFunction(
+            this.field.row,
+            field,
+            this.formState,
+            align,
+            this.field.isInline,
+            this.state
+          )}
+        </span>
 
         <span
           class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-date-validation ovl-formcontrol-validation__${field.fieldKey}"

@@ -4,7 +4,12 @@ import { customFunctions, overmind } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ControlState, GetLabel, GetRowFromFormState } from "./helpers"
+import {
+  ControlState,
+  GetLabel,
+  GetRowFromFormState,
+  GetValueFromCustomFunction,
+} from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { FormState } from "../actions"
 
@@ -126,12 +131,24 @@ export class OvlOption extends OvlBaseElement {
           })}
         </div>
       </div>
-      <div
-        style="margin-top:-20px;margin-bottom: 12px;"
+      <span
+        class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-option-custom ovl-formcontrol-custom__${field.fieldKey}"
+      >
+        ${GetValueFromCustomFunction(
+          this.field.row,
+          field,
+          this.formState,
+          align,
+          this.field.isInline,
+          this.state
+        )}
+      </span>
+
+      <span
         class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-option-validation ovl-formcontrol-validation__${field.fieldKey}"
       >
         ${field.validationResult.validationMsg}
-      </div>
+      </span>
     `
   }
 }

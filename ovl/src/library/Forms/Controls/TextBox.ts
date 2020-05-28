@@ -51,9 +51,11 @@ export class OvlTextbox extends OvlBaseElement {
     this.formState = this.state.ovl.forms[field.formType][field.formId]
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
+    let customRowClassContainerName = ""
     let customRowTooltip
     if (customRowCell) {
       customRowClassName = customRowCell.className
+      customRowClassContainerName = customRowClassName + "Container"
       customRowTooltip = customRowCell.tooltip
     }
 
@@ -85,7 +87,7 @@ export class OvlTextbox extends OvlBaseElement {
     )
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-textbox-container ovl-formcontrol-container__${field.fieldKey}"
+        class="ovl-formcontrol-container ovl-formcontrol-textbox-container ovl-formcontrol-container__${field.fieldKey} ${customRowClassContainerName}"
       >
         ${label}
         <input

@@ -226,7 +226,7 @@ export class TableRowWrapper extends OvlBaseElement {
 
         return Promise.resolve(html`
           <ovl-trowform
-            class="fd-table__row ovl-inlineeditform"
+            class="fd-table__row ovl-editform ovl-inlineeditform ovl-editform-${def.id}"
             style="border-top:2px solid #0cd7ed; border-bottom:2px solid #0cd7ed; "
             id=${"trow" + def.id + key}
             .props=${() => {

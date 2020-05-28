@@ -39,7 +39,8 @@
   }
 }
 
-.ovl-tableview-rowcell__U_Decimal {
+.ovl-tableview-rowcell__U_Decimal,
+.ovl-detailview-value__U_Decimal {
   color: green;
 }
 

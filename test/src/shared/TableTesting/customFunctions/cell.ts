@@ -83,7 +83,7 @@ export const Field_U_ItemCode_GetLabelRender = (
 
 export const Field_U_ItemCode_GetValueRender = (
   columnKey: string,
-  currentVal: string,
+
   row: TableTesting,
   namespace: string,
   columnsDef: { [key: string]: ColumnDisplayDef },
@@ -98,7 +98,11 @@ export const Field_U_ItemCode_GetValueRender = (
     namespace
   )
 
-  return html`${itemCodeValue} (${row.U_ItemCode})`
+  if (displayMode.startsWith("Edit")) {
+    return html`(${row.U_ItemCode})`
+  } else {
+    return html`${itemCodeValue} (${row.U_ItemCode})`
+  }
 }
 
 export const Field_MobileSummary_GetLabelRender = (
@@ -113,7 +117,7 @@ export const Field_MobileSummary_GetLabelRender = (
 
 export const Field_U_Alpha_GetValueRender = (
   columnKey: string,
-  currentVal: string,
+
   row: TableTesting,
   namespace: string,
   columnsDef: { [key: string]: ColumnDisplayDef },
@@ -121,22 +125,21 @@ export const Field_U_Alpha_GetValueRender = (
   displayMode: DisplayMode,
   state: typeof overmind.state
 ): TemplateResult => {
-  debugger
   let u_alpha = row.U_Alpha
   let additionalComment = ""
-  if (currentVal && currentVal.toLowerCase().indexOf("todo") > -1) {
+  if (u_alpha && u_alpha.toLowerCase().indexOf("todo") > -1) {
     additionalComment = "(hat todos)"
   }
   if (displayMode.startsWith("Edit")) {
     return html`<b>${additionalComment}</b>`
   } else {
-    return html`${currentVal} <b>${additionalComment}</b>`
+    return html`${u_alpha} <b>${additionalComment}</b>`
   }
 }
 
 export const Field_MobileSummary_GetValueRender = (
   columnKey: string,
-  currentVal: string,
+
   row: TableTesting,
   namespace: string,
   columnsDef: { [key: string]: ColumnDisplayDef },

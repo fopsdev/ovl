@@ -278,7 +278,6 @@ export class TableRowDetailView extends OvlBaseElement {
           if (rendererFn) {
             uiItem = rendererFn(
               k,
-              row[k],
               row,
               def.namespace,
               def.columns,
@@ -372,7 +371,7 @@ export class TableRowDetailView extends OvlBaseElement {
       `
     }
     return html`
-      <div id="ovl-detailview-${def.id}" class="fd-panel ovl-detailview">
+      <div class="fd-panel ovl-detailview ovl-detailview-${def.id}">
         <div
           tabindex="0"
           id="ovl-detailview-intersectionobserver"

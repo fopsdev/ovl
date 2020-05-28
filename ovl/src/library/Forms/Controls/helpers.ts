@@ -234,8 +234,8 @@ export const GetValueFromCustomFunction = (
   if (rendererFn) {
     let val = rendererFn(
       field.fieldKey,
-      field.value,
-      row,
+
+      fillReactiveRows(row, formState),
       formState.namespace,
       getColumnDefsFromFormState(formState),
       align,
@@ -248,6 +248,18 @@ export const GetValueFromCustomFunction = (
     }
   }
   return null
+}
+
+const fillReactiveRows = (
+  originalRow: { [key: string]: {} },
+  formState: FormState
+): { [key: string]: {} } => {
+  let row = JSON.parse(JSON.stringify(originalRow))
+  Object.keys(formState.fields).forEach((f) => {
+    let field = formState.fields[f]
+    row[field.fieldKey] = field.convertedValue
+  })
+  return row
 }
 
 const getColumnDefsFromFormState = (
