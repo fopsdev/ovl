@@ -1,8 +1,9 @@
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
-import { ControlState, GetLabel } from "./helpers"
+import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { FormState } from "../actions"
 
 type TextBoxType = "text" | "password" | "text-security"
 
@@ -10,6 +11,7 @@ export class OvlTextbox extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
+  formState: FormState
   handleFocusOut(e: Event) {
     e.stopPropagation()
     e.preventDefault()
@@ -46,6 +48,7 @@ export class OvlTextbox extends OvlBaseElement {
   getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
+    this.formState = this.state.ovl.forms[field.formType][field.formId]
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
@@ -77,7 +80,8 @@ export class OvlTextbox extends OvlBaseElement {
       this.field.customHeaderCellClass,
       res,
       "text",
-      align
+      align,
+      this.formState
     )
     return html`
       <div
@@ -99,6 +103,19 @@ export class OvlTextbox extends OvlBaseElement {
         />
 
         <span
+          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey}"
+        >
+          ${GetValueFromCustomFunction(
+            this.field.row,
+            field,
+            this.formState,
+            align,
+            this.field.isInline,
+            this.state
+          )}
+        </span>
+
+        <span
           class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textbox-validation ovl-formcontrol-validation__${field.fieldKey}"
         >
           ${field.validationResult.validationMsg}
@@ -110,4 +127,5 @@ export class OvlTextbox extends OvlBaseElement {
     this.inputElement = document.getElementById(this.field.field.id)
     this.inputElement.value = this.field.field.value
   }
+  getDisplayValue() {}
 }

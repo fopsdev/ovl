@@ -6,10 +6,12 @@ import { FieldGetList } from "../../../global/hooks"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { ControlState, GetLabel, GetRowFromFormState } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { FormState } from "../actions"
 
 export class OvlOption extends OvlBaseElement {
   props: any
   field: ControlState
+  formState: FormState
   handleFocusOut(e: Event, id: string) {
     e.stopPropagation()
     e.preventDefault()
@@ -38,11 +40,13 @@ export class OvlOption extends OvlBaseElement {
   getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
-    let formState = this.state.ovl.forms[field.formType][field.formId]
+    this.formState = this.state.ovl.forms[field.formType][field.formId]
     let list = field.list
     let listFn = FieldGetList.replace("%", field.fieldKey)
-    let listData = resolvePath(customFunctions, formState.namespace)[listFn](
-      GetRowFromFormState(formState),
+    let listData = resolvePath(customFunctions, this.formState.namespace)[
+      listFn
+    ](
+      GetRowFromFormState(this.formState),
       this.state,
       this.actions,
       overmind.effects
@@ -67,7 +71,8 @@ export class OvlOption extends OvlBaseElement {
       this.field.customHeaderCellClass,
       res,
       "option",
-      align
+      align,
+      this.formState
     )
 
     let inline

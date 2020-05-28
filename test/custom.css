@@ -10,6 +10,7 @@
   grid-template-columns: 110px 1fr;
   grid-template-areas:
     "label  value"
+    ".... custom"
     ".... validation";
 }
 

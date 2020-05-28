@@ -14,6 +14,7 @@ import {
   TableData,
   TableDef,
   ViewRowDef,
+  ColumnDisplayDef,
 } from "../../../../../ovl/src/library/Table/Table"
 import { TableTesting } from "../state"
 
@@ -45,6 +46,23 @@ export const Edit_U_Memo_GetLabelAndValueRender = (
   }
 }
 
+export const ViewGetCaptionRender = (
+  caption: string,
+  row: ViewRowDef,
+  state: typeof overmind.state
+): TemplateResult => {
+  return html`Custom Caption ${caption}`
+}
+
+export const EditGetCaptionRender = (
+  caption: string,
+  row: EditRowDef,
+  mode: EditMode,
+  state: typeof overmind.state
+): TemplateResult => {
+  return html`Custom Caption ${caption}`
+}
+
 export const Field_U_ItemCode_GetLabelRender = (
   columnKey: string,
   caption: string,
@@ -63,36 +81,21 @@ export const Field_U_ItemCode_GetLabelRender = (
   }
 }
 
-export const ViewGetCaptionRender = (
-  caption: string,
-  row: ViewRowDef,
-  state: typeof overmind.state
-): TemplateResult => {
-  return html`Custom Caption ${caption}`
-}
-
-export const EditGetCaptionRender = (
-  caption: string,
-  row: EditRowDef,
-  mode: EditMode,
-  state: typeof overmind.state
-): TemplateResult => {
-  return html`Custom Caption ${caption}`
-}
-
 export const Field_U_ItemCode_GetValueRender = (
   columnKey: string,
+  currentVal: string,
   row: TableTesting,
-  def: TableDef,
+  namespace: string,
+  columnsDef: { [key: string]: ColumnDisplayDef },
   align: string,
   displayMode: DisplayMode,
   state: typeof overmind.state
 ): TemplateResult => {
   let itemCodeValue = getDisplayValue(
     "U_ItemCode",
-    def.columns["U_ItemCode"],
+    columnsDef["U_ItemCode"],
     row,
-    def.namespace
+    namespace
   )
 
   return html`${itemCodeValue} (${row.U_ItemCode})`
@@ -101,7 +104,6 @@ export const Field_U_ItemCode_GetValueRender = (
 export const Field_MobileSummary_GetLabelRender = (
   columnKey: string,
   caption: string,
-  def: TableDef,
   align: string,
   displayMode: DisplayMode,
   state: typeof overmind.state
@@ -109,32 +111,57 @@ export const Field_MobileSummary_GetLabelRender = (
   return html`${caption}(has more details...)</b>`
 }
 
+export const Field_U_Alpha_GetValueRender = (
+  columnKey: string,
+  currentVal: string,
+  row: TableTesting,
+  namespace: string,
+  columnsDef: { [key: string]: ColumnDisplayDef },
+  align: string,
+  displayMode: DisplayMode,
+  state: typeof overmind.state
+): TemplateResult => {
+  debugger
+  let u_alpha = row.U_Alpha
+  let additionalComment = ""
+  if (currentVal && currentVal.toLowerCase().indexOf("todo") > -1) {
+    additionalComment = "(hat todos)"
+  }
+  if (displayMode.startsWith("Edit")) {
+    return html`<b>${additionalComment}</b>`
+  } else {
+    return html`${currentVal} <b>${additionalComment}</b>`
+  }
+}
+
 export const Field_MobileSummary_GetValueRender = (
   columnKey: string,
+  currentVal: string,
   row: TableTesting,
-  def: TableDef,
+  namespace: string,
+  columnsDef: { [key: string]: ColumnDisplayDef },
   align: string,
   displayMode: DisplayMode,
   state: typeof overmind.state
 ): TemplateResult => {
   let u_AlphaValue = getDisplayValue(
     "U_Alpha",
-    def.columns["U_Alpha"],
+    columnsDef["U_Alpha"],
     row,
-    def.namespace
+    namespace
   )
   let u_ItemCodeValue = getDisplayValue(
     "U_ItemCode",
-    def.columns["U_ItemCode"],
+    columnsDef["U_ItemCode"],
     row,
-    def.namespace
+    namespace
   )
 
   let u_DateValue = getDisplayValue(
     "U_Date",
-    def.columns["U_Date"],
+    columnsDef["U_Date"],
     row,
-    def.namespace
+    namespace
   )
 
   return html` <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue} `

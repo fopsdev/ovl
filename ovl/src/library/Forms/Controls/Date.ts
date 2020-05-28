@@ -3,11 +3,14 @@ import { ifDefined } from "lit-html/directives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { ControlState, GetLabel } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { FormState } from "../actions"
+import { ColumnDisplayDef } from "../../Table/Table"
 
 export class OvlDate extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
+  formState: FormState
   init() {
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
@@ -52,7 +55,12 @@ export class OvlDate extends OvlBaseElement {
   getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
+    this.formState = this.state.ovl.forms[field.formType][field.formId]
     let res = getUIValidationObject(field)
+
+    // let columnsDef: ColumnDisplayDef
+
+    // columnsDef = { list: field.list, type: field.type, ui: field.ui }
 
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
@@ -72,7 +80,8 @@ export class OvlDate extends OvlBaseElement {
       this.field.customHeaderCellClass,
       res,
       "date",
-      align
+      align,
+      this.formState
     )
     let type: "date" | "text" = "text"
     if (this.state.ovl.uiState.isMobile) {

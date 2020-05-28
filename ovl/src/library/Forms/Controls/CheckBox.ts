@@ -3,6 +3,7 @@ import { ifDefined } from "lit-html/directives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { ControlState, GetLabel } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { FormState } from "../actions"
 
 type TextBoxType = "text" | "password" | "text-security"
 
@@ -10,6 +11,7 @@ export class OvlCheckbox extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
+  formState: FormState
   handleFocusOut(e: Event) {
     e.stopPropagation()
     e.preventDefault()
@@ -48,6 +50,7 @@ export class OvlCheckbox extends OvlBaseElement {
   getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
+    this.formState = this.state.ovl.forms[field.formType][field.formId]
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
@@ -67,7 +70,8 @@ export class OvlCheckbox extends OvlBaseElement {
       this.field.customHeaderCellClass,
       res,
       "checkbox",
-      align
+      align,
+      this.formState
     )
     return html`
       <div

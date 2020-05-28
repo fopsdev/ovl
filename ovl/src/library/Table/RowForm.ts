@@ -209,6 +209,8 @@ export class TableRowForm extends OvlFormElement {
                       field: fields[k],
                       customHeaderCellClass,
                       customRowCellClass,
+                      row: this.rowData.row,
+                      isInline: true,
                     }
                   }}
                 >
@@ -225,6 +227,8 @@ export class TableRowForm extends OvlFormElement {
                       field: fields[k],
                       customHeaderCellClass,
                       customRowCellClass,
+                      row: this.rowData.row,
+                      isInline: true,
                     }
                   }}
                 >
@@ -242,6 +246,8 @@ export class TableRowForm extends OvlFormElement {
                       field: fields[k],
                       customHeaderCellClass,
                       customRowCellClass,
+                      row: this.rowData.row,
+                      isInline: true,
                     }
                   }}
                 >
@@ -259,6 +265,8 @@ export class TableRowForm extends OvlFormElement {
                       field: fields[k],
                       customHeaderCellClass,
                       customRowCellClass,
+                      row: this.rowData.row,
+                      isInline: true,
                     }
                   }}
                 >
@@ -276,6 +284,8 @@ export class TableRowForm extends OvlFormElement {
                         field: fields[k],
                         customHeaderCellClass,
                         customRowCellClass,
+                        row: this.rowData.row,
+                        isInline: true,
                       }
                     }}
                   >
@@ -294,6 +304,8 @@ export class TableRowForm extends OvlFormElement {
                         field: fields[k],
                         customHeaderCellClass,
                         customRowCellClass,
+                        row: this.rowData.row,
+                        isInline: true,
                       }
                     }}
                   >

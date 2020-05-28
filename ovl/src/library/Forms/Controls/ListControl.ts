@@ -14,6 +14,7 @@ import {
   GetRowFromFormState,
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { FormState } from "../actions"
 
 type ListFunction = (
   row: { [key: string]: {} },
@@ -43,6 +44,8 @@ export class OvlListControl extends OvlBaseElement {
   writeBackValue: any
   lastDisplayValue: any
   timer: any
+
+  formState: FormState
   // handleClearFilter(e: Event) {}
   handleCancel = () => {
     this.actions.ovl.overlay.CloseOverlay2()
@@ -131,7 +134,7 @@ export class OvlListControl extends OvlBaseElement {
   selectedCallback = async (selectedKey: string) => {
     this.actions.ovl.overlay.CloseOverlay2()
     let field = this.field.field
-    let formState = this.state.ovl.forms[field.formType][field.formId]
+
     if (this.localList !== null) {
       this.inputElement.focus()
       setTimeout(() => {
@@ -144,10 +147,10 @@ export class OvlListControl extends OvlBaseElement {
       await this.resetLocalList()
     } else if (selectedKey !== "@@ovlcanceled") {
       this.writeBackValue = selectedKey
-      let dataList = resolvePath(customFunctions, formState.namespace)[
+      let dataList = resolvePath(customFunctions, this.formState.namespace)[
         FieldGetList.replace("%", field.fieldKey)
       ](
-        GetRowFromFormState(formState),
+        GetRowFromFormState(this.formState),
         this.state,
         this.actions,
         overmind.effects
@@ -368,7 +371,6 @@ export class OvlListControl extends OvlBaseElement {
     // }
 
     let field = this.field.field
-    let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let filterValue = this.inputElement.value
     if (!openLocalList) {
@@ -391,7 +393,7 @@ export class OvlListControl extends OvlBaseElement {
       let filteredKeys = FilterHitList(
         field.list,
         filterValue,
-        formState,
+        this.formState,
         this.state,
         field.fieldKey,
         10
@@ -418,9 +420,9 @@ export class OvlListControl extends OvlBaseElement {
                 .props=${(state) => {
                   let listData = resolvePath(
                     customFunctions,
-                    formState.namespace
+                    this.formState.namespace
                   )[FieldGetList.replace("%", field.fieldKey)](
-                    GetRowFromFormState(formState),
+                    GetRowFromFormState(this.formState),
                     state,
                     overmind.actions,
                     overmind.effects
@@ -455,7 +457,7 @@ export class OvlListControl extends OvlBaseElement {
   getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
-
+    this.formState = this.state.ovl.forms[field.formType][field.formId]
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
@@ -485,7 +487,8 @@ export class OvlListControl extends OvlBaseElement {
       this.field.customHeaderCellClass,
       res,
       "list",
-      align
+      align,
+      this.formState
     )
 
     let displayValue = this.displayValue
@@ -590,6 +593,7 @@ export class OvlListControl extends OvlBaseElement {
     if (val !== undefined) {
       this.writeBackValue = val
     }
+    console.log(dispVal)
     this.displayValue = dispVal
   }
   async resetLocalList() {

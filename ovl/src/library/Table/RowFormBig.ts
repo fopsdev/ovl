@@ -362,6 +362,8 @@ export class TableRowFormBig extends OvlFormElement {
                             field: fields[k],
                             customHeaderCellClass,
                             customRowCellClass,
+                            row: this.rowData.row,
+                            isInline: false,
                           }
                         }}
                       >
@@ -379,6 +381,8 @@ export class TableRowFormBig extends OvlFormElement {
                             field: fields[k],
                             customHeaderCellClass,
                             customRowCellClass,
+                            row: this.rowData.row,
+                            isInline: false,
                           }
                         }}
                       >
@@ -396,6 +400,8 @@ export class TableRowFormBig extends OvlFormElement {
                             field: fields[k],
                             customHeaderCellClass,
                             customRowCellClass,
+                            row: this.rowData.row,
+                            isInline: false,
                           }
                         }}
                       >
@@ -413,6 +419,8 @@ export class TableRowFormBig extends OvlFormElement {
                             field: fields[k],
                             customHeaderCellClass,
                             customRowCellClass,
+                            row: this.rowData.row,
+                            isInline: false,
                           }
                         }}
                       >
@@ -431,6 +439,8 @@ export class TableRowFormBig extends OvlFormElement {
                               field: fields[k],
                               customHeaderCellClass,
                               customRowCellClass,
+                              row: this.rowData.row,
+                              isInline: false,
                             }
                           }}
                         >
@@ -449,6 +459,8 @@ export class TableRowFormBig extends OvlFormElement {
                               field: fields[k],
                               customHeaderCellClass,
                               customRowCellClass,
+                              row: this.rowData.row,
+                              isInline: false,
                             }
                           }}
                         >

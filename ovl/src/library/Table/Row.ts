@@ -125,8 +125,10 @@ export class TableRow extends OvlBaseElement {
         } else {
           rowPart = rendererFn(
             k,
+            row[k],
             row,
-            def,
+            def.namespace,
+            def.columns,
             align[k],
             <DisplayMode>"Table",
             this.state

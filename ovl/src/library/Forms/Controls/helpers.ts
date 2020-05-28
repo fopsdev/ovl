@@ -12,11 +12,17 @@ import {
   FieldGetLabelRender,
   FieldGetList,
   FieldLookupPostData,
+  FieldGetValueRender,
 } from "../../../global/hooks"
 import { customFunctions } from "../../../index"
 import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
 import { CellClass } from "../../Table/Row"
-import { ControlType, DisplayMode, ListFnReturnValue } from "../../Table/Table"
+import {
+  ControlType,
+  DisplayMode,
+  ListFnReturnValue,
+  ColumnDisplayDef,
+} from "../../Table/Table"
 import { Field, FormState } from "../actions"
 import { ListState } from "./ListControl"
 import { UIValidationObject } from "./uiValidationHelper"
@@ -33,6 +39,8 @@ export type ControlState = {
   customHeaderCellClass: CellClass
   customRowCellClass: CellClass
   field: Field
+  row: { [key: string]: any }
+  isInline: boolean
 }
 
 export const KeyValueListFromServerFn = async (
@@ -199,17 +207,72 @@ export const GetRowFromFormState = (formState: FormState) => {
   }, {})
 }
 
+export let cachedValueRendererFn: Map<string, CachedRendererData> = new Map<
+  string,
+  CachedRendererData
+>()
+
 export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
   string,
   CachedRendererData
 >()
+
+export const GetValueFromCustomFunction = (
+  row: { [key: string]: {} },
+  field: Field,
+  formState: FormState,
+  align: string,
+  isInline: boolean,
+  state: typeof overmind.state
+): TemplateResult => {
+  let rendererFn = GetRendererFn(
+    formState.namespace,
+    cachedValueRendererFn,
+    FieldGetValueRender,
+    field.fieldKey
+  )
+  if (rendererFn) {
+    let val = rendererFn(
+      field.fieldKey,
+      field.value,
+      row,
+      formState.namespace,
+      getColumnDefsFromFormState(formState),
+      align,
+      isInline ? <DisplayMode>"EditInline" : <DisplayMode>"Edit",
+      state
+    )
+    let d = field.value
+    if (val !== undefined) {
+      return val
+    }
+  }
+  return null
+}
+
+const getColumnDefsFromFormState = (
+  formState: FormState
+): { [key: string]: ColumnDisplayDef } => {
+  let colDisplayDefs = Object.keys(formState.fields).reduce((val, f) => {
+    let field = formState.fields[f]
+    let res: ColumnDisplayDef = {
+      list: field.list,
+      ui: field.ui,
+      type: field.type,
+    }
+    val[field.fieldKey] = res
+    return val
+  }, {})
+  return colDisplayDefs
+}
 
 export const GetLabel = (
   field: Field,
   customHeaderCell: CellClass,
   res: UIValidationObject,
   controltype: ControlType,
-  align: string
+  align: string,
+  formState: FormState
 ): TemplateResult => {
   let caption = ""
   let label
@@ -233,7 +296,7 @@ export const GetLabel = (
     customHeaderTooltip = customHeaderCell.tooltip
   }
   let state = overmind.state
-  let formState: FormState = state.ovl.forms[field.formType][field.formId]
+  //let formState: FormState = state.ovl.forms[field.formType][field.formId]
   let rendererFn = GetRendererFn(
     formState.namespace,
     cachedRendererFn,

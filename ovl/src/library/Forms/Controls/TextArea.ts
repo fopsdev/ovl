@@ -1,6 +1,6 @@
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { html } from "lit-html"
-import { Field } from "../actions"
+import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ColumnAlign } from "../../Table/Table"
 import { GetLabel, ControlState } from "./helpers"
@@ -10,6 +10,7 @@ export class OvlTextArea extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
+  formState: FormState
 
   handleKeyDown(e: KeyboardEvent) {
     if (e.key === "Enter") {
@@ -47,6 +48,7 @@ export class OvlTextArea extends OvlBaseElement {
   getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
+    this.formState = this.state.ovl.forms[field.formType][field.formId]
 
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
@@ -67,7 +69,8 @@ export class OvlTextArea extends OvlBaseElement {
       this.field.customHeaderCellClass,
       res,
       "textarea",
-      align
+      align,
+      this.formState
     )
 
     return html`

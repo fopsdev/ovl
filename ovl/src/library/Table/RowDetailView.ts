@@ -278,8 +278,10 @@ export class TableRowDetailView extends OvlBaseElement {
           if (rendererFn) {
             uiItem = rendererFn(
               k,
+              row[k],
               row,
-              def,
+              def.namespace,
+              def.columns,
               this.rowData.columnsAlign[k],
               <DisplayMode>"Detailview",
               this.state

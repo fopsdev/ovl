@@ -3,11 +3,13 @@ import { ifDefined } from "lit-html/directives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { ControlState, GetLabel } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { FormState } from "../actions"
 
 export class OvlTime extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
+  formState: FormState
   init() {
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
@@ -38,7 +40,7 @@ export class OvlTime extends OvlBaseElement {
   getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
-
+    this.formState = this.state.ovl.forms[field.formType][field.formId]
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
@@ -58,7 +60,8 @@ export class OvlTime extends OvlBaseElement {
       this.field.customHeaderCellClass,
       res,
       "time",
-      align
+      align,
+      this.formState
     )
 
     type TimeBoxType = "text" | "time"
