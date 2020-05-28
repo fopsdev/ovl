@@ -275,7 +275,9 @@ export class TableRowFormBig extends OvlFormElement {
     }
 
     return html`
-      <div class="fd-panel ovl-editform ovl-bigeditform ovl-editform-${def.id}">
+      <div
+        class="fd-panel ovl-table-${def.id} ovl-editform ovl-bigeditform ovl-editform-${def.id}"
+      >
         <div class="fd-panel ${scrollable}">
           ${caption}
           ${Object.keys(columns).map((k) => {

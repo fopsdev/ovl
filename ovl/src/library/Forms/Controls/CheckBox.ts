@@ -54,8 +54,10 @@ export class OvlCheckbox extends OvlBaseElement {
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
+    let customRowClassContainerName = ""
     if (customRowCell) {
       customRowClassName = customRowCell.className
+      customRowClassContainerName = customRowClassName + "Container"
       customRowTooltip = customRowCell.tooltip
     }
 
@@ -75,7 +77,7 @@ export class OvlCheckbox extends OvlBaseElement {
     )
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-checkbox-container ovl-formcontrol-container__${field.fieldKey}"
+        class="ovl-formcontrol-container ovl-container-checkbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
       >
         ${label}
 
@@ -88,13 +90,13 @@ export class OvlCheckbox extends OvlBaseElement {
             @focusout=${(e) => this.handleFocusOut(e)}
             style="${align}"
             autocomplete="off"
-            class="fd-checkbox ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-checkbox-input ovl-formcontrol-checkbox__${field.fieldKey} ${customRowClassName}"
+            class="fd-checkbox ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-checkbox-input ovl-table-value__${field.fieldKey} ${customRowClassName}"
             type="checkbox"
             id="${field.id}"
             ?checked=${field.value === field.ui.checkedValue}
           />
           <label
-            class="fd-checkbox__label ovl-formcontrol-checkbox-input ovl-formcontrol-checkbox__${field.fieldKey} "
+            class="fd-checkbox__label ovl-formcontrol-checkbox-input ovl-table-value__${field.fieldKey} "
             for="${field.id}"
           >
           </label>

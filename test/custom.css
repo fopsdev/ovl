@@ -14,7 +14,7 @@
     ".... validation";
 }
 
-.ovl-bigeditform .ovl-formcontrol-textarea-input {
+.ovl-bigeditform .ovl-table-value-textarea {
   height: 120px;
 }
 
@@ -23,7 +23,7 @@
   font-size: small;
 }
 
-.ovl-bigeditform .ovl-formcontrol-textarea-label {
+.ovl-bigeditform .ovl-table-label-textarea {
   margin-top: 30px;
   font-size: small;
 }
@@ -39,8 +39,7 @@
   }
 }
 
-.ovl-tableview-rowcell__U_Decimal,
-.ovl-detailview-value__U_Decimal {
+.ovl-table-value__U_Decimal {
   color: green;
 }
 

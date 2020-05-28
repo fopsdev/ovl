@@ -60,8 +60,10 @@ export class OvlOption extends OvlBaseElement {
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
+    let customRowClassContainerName = ""
     if (customRowCell) {
       customRowClassName = customRowCell.className
+      customRowClassContainerName = customRowClassName + "Container"
       customRowTooltip = customRowCell.tooltip
     }
 
@@ -87,7 +89,7 @@ export class OvlOption extends OvlBaseElement {
 
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-option-container ovl-formcontrol-container__${field.fieldKey}"
+        class="ovl-formcontrol-container ovl-container-option ovl-container__${field.fieldKey} ${customRowClassContainerName}"
       >
         ${label}
 
@@ -100,7 +102,7 @@ export class OvlOption extends OvlBaseElement {
           ${Object.keys(listData).map((rowKey) => {
             return html`
               <input
-                class="fd-radio ovl-focusable ovl-formcontrol-input ovl-formcontrol-option-input ovl-formcontrol-input__${field.fieldKey}"
+                class="fd-radio ovl-focusable ovl-formcontrol-input ovl-table-value-option ovl-table-value__${field.fieldKey}"
                 @click=${(e) => e.stopPropagation()}
                 @change=${(e) =>
                   this.handleChange(

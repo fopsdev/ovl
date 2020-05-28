@@ -462,19 +462,12 @@ export class OvlListControl extends OvlBaseElement {
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
+    let customRowClassContainerName = ""
     if (customRowCell) {
       customRowClassName = customRowCell.className
+      customRowClassContainerName = customRowClassName + "Container"
       customRowTooltip = customRowCell.tooltip
     }
-    let customHeaderCell = this.field.customHeaderCellClass
-    let customHeaderClassName = ""
-    let customHeaderTooltip
-    if (customHeaderCell) {
-      customHeaderClassName = customHeaderCell.className
-      customHeaderTooltip = customHeaderCell.tooltip
-    }
-
-    let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let res = getUIValidationObject(field)
 
@@ -499,8 +492,8 @@ export class OvlListControl extends OvlBaseElement {
       displayValue = GetListDisplayValue(
         field.list,
         field.value,
-        resolvePath(customFunctions, formState.namespace)[getListFnName](
-          GetRowFromFormState(formState),
+        resolvePath(customFunctions, this.formState.namespace)[getListFnName](
+          GetRowFromFormState(this.formState),
           this.state,
           this.actions,
           overmind.effects
@@ -523,7 +516,7 @@ export class OvlListControl extends OvlBaseElement {
     return html`
       <div @focusout=${(e) => this.handleFocusOut(e)}>
         <div
-          class="ovl-formcontrol-container ovl-formcontrol-listcontrol-container ovl-formcontrol-container__${field.fieldKey}"
+          class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
         >
           ${label}
 
@@ -538,7 +531,7 @@ export class OvlListControl extends OvlBaseElement {
               style="${align}"
               +
               type="text"
-              class="fd-input ovl-focusable fd-input-group__input fd-has-type-1  ovl-formcontrol-listcontrol-input ovl-formcontrol-input__${field.fieldKey}"
+              class="fd-input ovl-focusable fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-table-value-listcontrol ovl-table-value__${field.fieldKey}"
               id="${field.id}"
               @change=${(e) => this.handleChange(e)}
               value="${displayValue}"

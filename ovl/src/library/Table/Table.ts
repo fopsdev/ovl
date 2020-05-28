@@ -462,6 +462,7 @@ export class TableHeader extends OvlBaseElement {
     this.async = true
     this.tabledata = this.props(this.state)
     this.classList.add("ovl-tableview")
+    this.classList.add("ovl-table-" + this.tabledata.def.id)
     this.classList.add("ovl-tableview-" + this.tabledata.def.id)
     this.intersectionObserver = new IntersectionObserver(
       async (entries, observer) => {
@@ -668,10 +669,10 @@ export class TableHeader extends OvlBaseElement {
             data-col="${k}"
             title="${ifDefined(tooltip ? tooltip : undefined)}"
             style="${cellBgColor}"
-            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-tableview-headercell-${column.control +
+            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-table-label-${column.control +
             (column.asset
               ? column.asset.type
-              : "")} ovl-tableview-headercell__${k} ${customHeaderCellClass}"
+              : "")} ovl-table-label__${k} ${customHeaderCellClass}"
             scope="col"
           >
             ${headerPart}
@@ -902,13 +903,14 @@ export class TableHeader extends OvlBaseElement {
         <tr
           @long-press="${this.handleLongPress}"
           @click="${this.handleHeaderColumnClick}"
-          class="fd-table__row ovl-tableview-header"
+          class="fd-table__row ovl-tableview-header-${def.id} ovl-tableview-header"
         >
           ${headerRows}
         </tr>
       </thead>
 
       ${rows} ${maxSizeHint}
+
       <tr class="fd-table__row">
         <td class="fd-has-text-align-center" colspan="${columnsCount}">
           ${rowNavBottom}

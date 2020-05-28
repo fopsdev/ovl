@@ -65,8 +65,10 @@ export class OvlDate extends OvlBaseElement {
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
+    let customRowClassContainerName = ""
     if (customRowCell) {
       customRowClassName = customRowCell.className
+      customRowClassContainerName = customRowClassName + "Container"
       customRowTooltip = customRowCell.tooltip
     }
 
@@ -89,7 +91,7 @@ export class OvlDate extends OvlBaseElement {
     }
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-date-container ovl-formcontrol-container__${field.fieldKey}"
+        class="ovl-formcontrol-container ovl-container-date ovl-container__${field.fieldKey} ${customRowClassContainerName}"
       >
         ${label}
         <input
@@ -98,7 +100,7 @@ export class OvlDate extends OvlBaseElement {
           @keydown=${(e) => this.handleKeyDown(e)}
           style="${align}"
           autocomplete="off"
-          class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-date-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
+          class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-date ovl-table-value__${field.fieldKey} ${customRowClassName}"
           type="${type}"
           id="${field.id}"
         />

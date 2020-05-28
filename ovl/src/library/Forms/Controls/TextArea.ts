@@ -53,8 +53,10 @@ export class OvlTextArea extends OvlBaseElement {
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
+    let customRowClassContainerName = ""
     if (customRowCell) {
       customRowClassName = customRowCell.className
+      customRowClassContainerName = customRowClassName + "Container"
       customRowTooltip = customRowCell.tooltip
     }
 
@@ -75,7 +77,7 @@ export class OvlTextArea extends OvlBaseElement {
 
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-textarea-container ovl-formcontrol-container__${field.fieldKey}"
+        class="ovl-formcontrol-container ovl-container-textarea ovl-container__${field.fieldKey} ${customRowClassContainerName}"
       >
         ${label}
         <textarea
@@ -83,7 +85,7 @@ export class OvlTextArea extends OvlBaseElement {
           @keydown=${(e) => this.handleKeyDown(e)}
           @change=${(e) => this.handleChange(e)}
           @focusout=${(e) => this.handleFocusOut(e)}
-          class="fd-textarea ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-formcontrol-textarea-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
+          class="fd-textarea ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-table-value-textarea ovl-table-value__${field.fieldKey} ${customRowClassName}"
           id="${field.id}"
         >
 ${field.value}</textarea

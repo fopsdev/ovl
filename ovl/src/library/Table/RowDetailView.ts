@@ -351,19 +351,19 @@ export class TableRowDetailView extends OvlBaseElement {
             label = html`<label
               title="${ifDefined(headertooltip ? headertooltip : undefined)}"
               data-col=${k}
-              class="fd-form-label ovl-detailview-label ovl-detailview-label-${col.control +
+              class="fd-form-label ovl-detailview-label ovl-table-label-${col.control +
               (col.asset
                 ? col.asset.type
-                : "")} ovl-detailview-label__${k} ${customHeaderCellClass}"
+                : "")} ovl-table-label__${k} ${customHeaderCellClass}"
               >${l}</label
             >`
             // needs to be ignored to get css white-space: line-wrap work correctly
             // prettier-ignore
-            value = html`<article title="${ifDefined(rowtooltip ? rowtooltip : undefined)}" data-col=${k} class="fd-has-type-1 ovl-detailview-value ovl-detailview-value-${col.control + (col.asset ? col.asset.type : "")} ovl-detailview-value__${k} ${customRowCellClass}">${uiItem}</article>`
+            value = html`<article title="${ifDefined(rowtooltip ? rowtooltip : undefined)}" data-col=${k} class="fd-has-type-1 ovl-detailview-value ovl-table-value-${col.control + (col.asset ? col.asset.type : "")} ovl-table-value__${k} ${customRowCellClass}">${uiItem}</article>`
           }
           return html`<div
-            class="ovl-detailview-container ovl-detailview-container-${col.control +
-            (col.asset ? col.asset.type : "")} ovl-detailview-container__${k}"
+            class="ovl-detailview-container ovl-container-${col.control +
+            (col.asset ? col.asset.type : "")} ovl-container__${k}"
           >
             ${label} ${value}
           </div>`
@@ -371,7 +371,9 @@ export class TableRowDetailView extends OvlBaseElement {
       `
     }
     return html`
-      <div class="fd-panel ovl-detailview ovl-detailview-${def.id}">
+      <div
+        class="fd-panel ovl-detailview ovl-table-${def.id} ovl-detailview-${def.id}"
+      >
         <div
           tabindex="0"
           id="ovl-detailview-intersectionobserver"
@@ -379,17 +381,15 @@ export class TableRowDetailView extends OvlBaseElement {
         >
           ${caption}
           <div
-            id="ovl-detailview-body-${def.id}"
             @click="${this.handleClick}"
             @long-press="${this.handleLongPress}"
-            class="fd-panel__body ovl-detailview-body"
+            class="fd-panel__body ovl-detailview-body-${def.id} ovl-detailview-body"
           >
             ${body}
           </div>
         </div>
         <div
-          id="ovl-detailview-footer"
-          class="fd-panel__footer ovl-panel__footer ovl-detailview-footer"
+          class="fd-panel__footer ovl-panel__footer ovl-detailview-footer-${def.id} ovl-detailview-footer"
         >
           ${rowActions.map((k, i) => {
             let button = rowControlActions[k]

@@ -44,8 +44,10 @@ export class OvlTime extends OvlBaseElement {
     let customRowCell = this.field.customRowCellClass
     let customRowClassName = ""
     let customRowTooltip
+    let customRowClassContainerName = ""
     if (customRowCell) {
       customRowClassName = customRowCell.className
+      customRowClassContainerName = customRowClassName + "Container"
       customRowTooltip = customRowCell.tooltip
     }
 
@@ -71,7 +73,7 @@ export class OvlTime extends OvlBaseElement {
     }
     return html`
       <div
-        class="ovl-formcontrol-container ovl-formcontrol-time-container ovl-formcontrol-container__${field.fieldKey}"
+        class="ovl-formcontrol-container ovl-container-time ovl-container__${field.fieldKey} ${customRowClassContainerName}"
       >
         ${label}
         <input
@@ -79,7 +81,7 @@ export class OvlTime extends OvlBaseElement {
           @focusout=${(e) => this.handleFocusOut(e)}
           style="${style} ${align}"
           autocomplete="off"
-          class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-time-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
+          class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-time ovl-table-value__${field.fieldKey} ${customRowClassName}"
           type="${type}"
           id="${field.id}"
           value="${field.value}"
