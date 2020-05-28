@@ -23,9 +23,12 @@
   font-size: small;
 }
 
+.ovl-bigeditform .ovl-formcontrol-custom {
+  font-size: xx-small;
+}
+
 .ovl-bigeditform .ovl-table-label-textarea {
-  margin-top: 30px;
-  font-size: small;
+  margin-top: 45px;
 }
 
 .ovl-detailview-container {
