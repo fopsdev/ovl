@@ -46,6 +46,10 @@
   color: green;
 }
 
+.ovl-tableview-rowcell {
+  font-size: xx-small;
+}
+
 .testrowcell {
   cursor: pointer !important;
   text-decoration: underline;

@@ -48,8 +48,7 @@
   }
 }
 
-.ovl-tableview-rowcell-textarea,
-.ovl-detailview-value-textarea {
+.ovl-table-value-textarea {
   white-space: pre-wrap;
 }
 
@@ -63,7 +62,7 @@
   height: 98vh;
 }
 
-.ovl-formcontrol-textarea-input {
+.ovl-table-textarea-input {
   height: 70px;
 }
 

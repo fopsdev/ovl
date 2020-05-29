@@ -508,7 +508,7 @@ export class OvlListControl extends OvlBaseElement {
         tabindex="-9999"
         id="delete${field.id}"
         @click=${(e) => this.handleDelete(e)}
-        class="fd-input-group__button fd-button--light sap-icon--decline ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
+        class="fd-input-group__button fd-button--light sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
       ></button>
     `
     //}
@@ -544,7 +544,7 @@ export class OvlListControl extends OvlBaseElement {
                 id="search${field.id}"
                 @click=${(e) => this.handleListPopup(e)}
                 @touchend=${(e) => this.handleListPopup(e)}
-                class="fd-input-group__button fd-button--light sap-icon--search ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
+                class="fd-input-group__button fd-button--light sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
               ></button>
             </div>
           </div>

@@ -2,7 +2,7 @@ import { html } from "../../../../ovl/node_modules/lit-html/lit-html"
 import { TableDataAndDef } from "../../../../ovl/src/library/Table/Table"
 import { getFormFieldsFromColumns } from "../../../../ovl/src/library/Table/helpers"
 import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
-import { ovltemp, N, api } from "../../../../ovl/src/global/globals"
+import { ovltemp, N, api, uuidv4 } from "../../../../ovl/src/global/globals"
 import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
 import { Field_U_TypeId_GetList } from "./MobileTimeRecordingDetail/customFunctions"
 import { overmind } from "../../../../ovl/src"
@@ -44,16 +44,13 @@ export class CompMobileTimeEntry extends OvlFormElement {
     let guids = rowKeys.map((m) => {
       return { timeentry_id: data.data[m].Code }
     })
-    SnackTrackedAdd(
-      "Zeit(en) werden übermittelt...",
-      "Information",
-      "ovltimesadd"
-    )
+    let snackUid = uuidv4()
+    SnackTrackedAdd("Zeit(en) werden übermittelt...", "Information", snackUid)
     await overmind.effects.postRequest(api.url + "job/addworktime", guids)
     // tag data as synched
     this.actions.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
 
-    SnackTrackedRemove("ovltimesadd")
+    SnackTrackedRemove(snackUid)
     SnackAdd("Zeit(en) erfolgreich übermittelt.")
   }
   handleAddRowClick = async (e: Event) => {
