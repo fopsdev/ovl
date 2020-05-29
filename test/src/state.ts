@@ -14,6 +14,8 @@ export type FileList = {
   files: File[]
 }
 
+export type Language = "DE" | "FR"
+
 export type DoubleBarChartState = {
   labels_ext: number[]
   labels: number[]
@@ -126,7 +128,7 @@ let pics: PicsState = {
 }
 
 type Role = "User" | "Admin"
-type Language = "DE" | "FR"
+
 export type Feature = {
   nrOfQuotations: number
   nrOfOrders: number

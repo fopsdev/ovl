@@ -18,7 +18,6 @@ let snacks: { [key: string]: SnackState } = {}
 
 let dialog: DialogState = undefined
 
-let availableLanguages: string[] = []
 let translations: Translation = {}
 let apiUrl = ""
 
@@ -44,9 +43,7 @@ export const state = {
     user,
     language: {
       language: "",
-      availableLanguages,
       translations,
-
       showTranslationKeys: false,
     },
     uiState: {

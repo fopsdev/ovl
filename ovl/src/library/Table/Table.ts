@@ -8,7 +8,7 @@ import {
   FieldIsVisible,
   ViewHeaderCellClass,
 } from "../../global/hooks"
-import { customFunctions, overmind, TableDefIds } from "../../index"
+import { customFunctions, overmind, TableDefIds, Language } from "../../index"
 import { OvlConfig } from "../../init"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ListState } from "../Forms/Controls/ListControl"
@@ -333,6 +333,7 @@ export type ColumnDef = {
     visibility?: FieldVisibility
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
+    language?: Language
   }
   asset?: {
     type: AssetType
@@ -557,6 +558,13 @@ export class TableHeader extends OvlBaseElement {
             this.actions,
             overmind.effects
           )
+        }
+        // just display user language in table view
+        if (
+          column.ui.language &&
+          column.ui.language !== this.state.ovl.language.language
+        ) {
+          visible = "none"
         }
 
         columnsVisible[k] = visible

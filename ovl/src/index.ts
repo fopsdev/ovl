@@ -11,6 +11,7 @@ import {
   CustomFormType,
   overmind,
   TableDefIds,
+  Language,
 } from "../../test/src/index"
 import { screens } from "../../test/src/stateScreens"
 
@@ -32,5 +33,5 @@ declare module "overmind" {
 }
 import * as customFunctions from "../../test/src/customFunctions"
 export type FormType = CustomFormType | "TableRowEdit"
-export { customFunctions, screens, overmind, TableDefIds }
+export { customFunctions, screens, overmind, TableDefIds, Language }
 export type Screen = keyof typeof screens

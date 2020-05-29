@@ -43,6 +43,7 @@ export type TableRowDataDef = {
 export class TableRowWrapper extends OvlBaseElement {
   props: any
   row: TableRowDef
+  columnsVisible: {}
 
   handleRowLongPress = (e) => {
     // if on touch device also display row status message as a snack
@@ -330,6 +331,7 @@ export class TableRowWrapper extends OvlBaseElement {
             intersectionObserver: this.row.intersectionObserver,
           }
         }}
+        .columnsVisible=${this.columnsVisible}
       >
       </ovl-trow>
       ${nav}

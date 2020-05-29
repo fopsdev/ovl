@@ -5,8 +5,8 @@ import { baseOvermindConfig, OvlConfig } from "../../ovl/src/init"
 import * as actions from "./actions"
 import { defineElements } from "./registerComponents"
 import * as state from "./state"
-import { CustomFormType, TableDefIds } from "./state"
-export { TableDefIds, CustomFormType }
+import { CustomFormType, TableDefIds, Language } from "./state"
+export { TableDefIds, CustomFormType, Language }
 
 defineElements()
 
