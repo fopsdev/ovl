@@ -387,9 +387,13 @@ export let tblTableTesting3: TableDef = {
       ui: { align: "center", showLabelIfNoValueInView: false },
       asset: {
         type: "Image",
-        validFileExtensions: ["jpg", "gif"],
-        validCategories: ["ItemPicture", "FreePicture"],
-        idColumns: ["U_ItemCode"],
+        validCategories: {
+          ItemPicture: {
+            idColumn: "U_ItemCode",
+            validFileExtensions: undefined,
+          },
+          Ext: undefined,
+        },
       },
     },
   },

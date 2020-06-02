@@ -232,6 +232,11 @@ export type SelectRowDef = {
   data: TableData
 }
 
+export type Tabs = {
+  edit: { [key: string]: { translationKey: string } }
+  view: { [key: string]: { translationKey: string } }
+}
+
 export type ControlType =
   | "text"
   | "textarea"
@@ -336,12 +341,14 @@ export type ColumnDef = {
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
     language?: Language
+    editTab?: string
+    viewTab?: string
   }
   asset?: {
     type: AssetType
-    validFileExtensions: string[]
-    validCategories: string[]
-    idColumns: string[]
+    validCategories: {
+      [key: string]: { idColumn: string; validFileExtensions: string[] }
+    }
   }
 }
 
