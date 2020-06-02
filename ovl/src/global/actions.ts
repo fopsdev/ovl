@@ -266,6 +266,11 @@ export const SetLanguage: AsyncAction<string> = async (
     )
   }
   localStorage.setItem("PortalLanguage", res.data.lang)
+  state.ovl.uiState.tableNeedsRebuild = true
+}
+
+export const TableFinishedRebuild: AsyncAction = async ({ state }) => {
+  state.ovl.uiState.tableNeedsRebuild = false
 }
 
 export const Logout: AsyncAction = async ({ state, actions }) => {

@@ -312,6 +312,7 @@ export type FieldVisibility =
   | "Table_Edit_View"
   | "Edit_View"
   | "View"
+  | "Edit"
   | "none"
 
 export type AssetType = "Image" | "File" | "SAPImage" | "SAPFile"
@@ -331,6 +332,7 @@ export type ColumnDef = {
     inline?: boolean
     readonly?: boolean
     visibility?: FieldVisibility
+    translationVisibility?: FieldVisibility
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
     language?: Language
@@ -502,7 +504,14 @@ export class TableHeader extends OvlBaseElement {
     super.disconnectedCallback()
   }
   async getUIAsync() {
-    this.state.ovl.language.language
+    if (this.state.ovl.uiState.tableNeedsRebuild) {
+      // needed bacause calculated props (childs are refering to calculated values from here)
+      // this ensures the screen gets reevaluated correctly
+      setTimeout(() => {
+        this.actions.ovl.internal.TableFinishedRebuild()
+      }, 1)
+      return null
+    }
     let def = this.tabledata.def
     if (!def.initialised) {
       throw new Error(
@@ -545,9 +554,16 @@ export class TableHeader extends OvlBaseElement {
         let column = columns[k]
 
         let visible: FieldVisibility = "Table_Edit_View"
-        if (column.ui.visibility !== undefined) {
+
+        if (
+          column.ui.language &&
+          column.ui.language !== this.state.ovl.language.language
+        ) {
+          visible = column.ui.translationVisibility
+        } else {
           visible = column.ui.visibility
         }
+
         //@@hook
         let functionName = FieldIsVisible.replace("%", k)
         let fn = resolvePath(customFunctions, def.namespace)
@@ -558,13 +574,6 @@ export class TableHeader extends OvlBaseElement {
             this.actions,
             overmind.effects
           )
-        }
-        // just display user language in table view
-        if (
-          column.ui.language &&
-          column.ui.language !== this.state.ovl.language.language
-        ) {
-          visible = "none"
         }
 
         columnsVisible[k] = visible

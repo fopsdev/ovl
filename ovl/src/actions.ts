@@ -36,6 +36,7 @@ import {
   PrepareApp,
   SetLanguage,
   SetVisibleFalse,
+  TableFinishedRebuild,
 } from "./global/actions"
 
 import {
@@ -128,7 +129,7 @@ let internal = {
   CloseOverlay,
 
   CloseOverlay2,
-
+  TableFinishedRebuild,
   PlaceSnack,
   ClearSnack,
   AddSnack,

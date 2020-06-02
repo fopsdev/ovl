@@ -54,6 +54,7 @@ export const state = {
       isIOS: false,
       isReady: false,
       stateSavedReason: "",
+      tableNeedsRebuild: false,
     },
     apiUrl,
     libState: {

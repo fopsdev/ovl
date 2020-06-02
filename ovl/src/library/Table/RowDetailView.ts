@@ -270,6 +270,7 @@ export class TableRowDetailView extends OvlBaseElement {
             rowtooltip = customRowCellClasses[k].tooltip
           }
           let col = columns[k]
+
           let columnsVisible = this.rowData.columnsVisible
           if (columnsVisible[k].indexOf("View") < 0) {
             return null

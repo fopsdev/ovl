@@ -214,12 +214,20 @@ export let tblTableTesting2: TableDef = {
     U_Memo: {
       sortable: true,
       control: "textarea",
-      ui: { visibility: "TableNotMobile_Edit_View", language: "DE" },
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        language: "DE",
+        translationVisibility: "Edit_View",
+      },
     },
     U_Memo_FR: {
       sortable: true,
       control: "textarea",
-      ui: { visibility: "TableNotMobile_Edit_View", language: "FR" },
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        language: "FR",
+        translationVisibility: "Edit_View",
+      },
     },
 
     U_Date: {

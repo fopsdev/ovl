@@ -186,11 +186,13 @@ export class OvlBaseElement extends HTMLElement {
       this.updated()
     }, 50)
 
+    this.state.ovl.language.translations
+
     //console.log(this.trackedTree.pathDependencies)
 
     // always track translations
     // its using a caching mechanism thats why not all translations were properly tracked. this line enforces it
-    this.state.ovl.language.translations
+
     //if (this.screen) {
     //   // Special case: we don't want the roots of screenstate to be tracked
     //   // because every screen adds its state dynamically to it

@@ -575,6 +575,11 @@ export const initTableState = (
       if (col.ui.visibility === undefined) {
         col.ui.visibility = "Table_Edit_View"
       }
+      if (col.ui.language) {
+        if (col.ui.translationVisibility === undefined) {
+          col.ui.translationVisibility = "Edit"
+        }
+      }
       if (col.ui.showLabelIfNoValueInView === undefined) {
         col.ui.showLabelIfNoValueInView = true
       }
