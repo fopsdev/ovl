@@ -14,6 +14,50 @@ export type ScreensState = {
   formIdToReset: string
 }
 
+export const setLastScrollPosition = (state: typeof overmind.state) => {
+  let currentScreen = state.ovl.screens.nav.currentScreen
+  if (currentScreen) {
+    // get the first scrollable class of the doc
+    let o = state.ovl.screens.screenState[currentScreen]
+    let scrollable
+    if (state.ovl.uiState.isMobile) {
+      scrollable = document.querySelector(".scrollableMobile")
+    } else {
+      scrollable = document.querySelector(".scrollable")
+    }
+
+    // and remember the scroll pos
+    if (scrollable && scrollable.scrollTop) {
+      o.lastScrollTop = scrollable.scrollTop
+    } else {
+      o.lastScrollTop = undefined
+    }
+  }
+}
+
+export const scrollToLastPosition = (state: typeof overmind.state) => {
+  let screen = state.ovl.screens.nav.currentScreen
+  let lastScrollTop = state.ovl.screens.screenState[screen].lastScrollTop
+  // set scroll to remembered pos
+  let scrollable
+  if (state.ovl.uiState.isMobile) {
+    scrollable = document.querySelector(".scrollableMobile")
+  } else {
+    scrollable = document.querySelector(".scrollable")
+  }
+  //console.log(scrollable)
+  if (scrollable) {
+    if (!lastScrollTop) {
+      lastScrollTop = 0
+    }
+    scrollable.scrollTo({
+      top: lastScrollTop,
+      left: 0,
+      behavior: "smooth",
+    })
+  }
+}
+
 export class OvlBaseElement extends HTMLElement {
   async: boolean
   _id: number
@@ -89,30 +133,10 @@ export class OvlBaseElement extends HTMLElement {
 
   handleAnimationStart = (e) => {
     if (e.animationName === "fadeInScreen") {
-      let screen = this.state.ovl.screens.nav.currentScreen
-      let lastScrollTop = this.state.ovl.screens.screenState[screen]
-        .lastScrollTop
-      // set scroll to remembered pos
-      let scrollable
-      if (this.state.ovl.uiState.isMobile) {
-        scrollable = document.querySelector(".scrollableMobile")
-      } else {
-        scrollable = document.querySelector(".scrollable")
-      }
-      //console.log(scrollable)
-      if (scrollable) {
-        if (!lastScrollTop) {
-          lastScrollTop = 0
-        }
-        scrollable.scrollTo({
-          top: lastScrollTop,
-          left: 0,
-          behavior: "smooth",
-        })
-      }
-
       // if there is a screen show function call it
+      scrollToLastPosition(this.state)
       if (customFunctions) {
+        let screen = this.state.ovl.screens.nav.currentScreen
         let screensFunctions = customFunctions["screens"]
         if (screensFunctions) {
           if (screensFunctions[screen]) {

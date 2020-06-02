@@ -135,6 +135,7 @@ export class CompShellbar extends OvlBaseElement {
         lang = "FR"
       }
       await this.actions.ovl.internal.SetLanguage(lang)
+      this.actions.ovl.internal.SetTableNeedsRebuild(true)
     }
 
     const handleLanguageTable = (e: Event) => {

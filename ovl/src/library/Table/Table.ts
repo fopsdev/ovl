@@ -19,7 +19,11 @@ import {
   Schema,
 } from "../Forms/OvlFormElement"
 import { SnackAdd } from "../helpers"
-import { OvlBaseElement } from "../OvlBaseElement"
+import {
+  OvlBaseElement,
+  scrollToLastPosition,
+  setLastScrollPosition,
+} from "../OvlBaseElement"
 import { HeaderMenuDef } from "./HeaderMenu"
 import { CachedRendererData, GetRendererFn } from "./helpers"
 import { NavDef } from "./NavControl"
@@ -162,6 +166,7 @@ export type TableDef = {
     paging?: Paging
     filter?: Filter
     filterCustom?: { [key: string]: CustomFilter }
+    tabs?: Tabs
     edit?: {
       customCaption?: {
         editTranslationKey: string
@@ -510,13 +515,9 @@ export class TableHeader extends OvlBaseElement {
     this.intersectionObserver.disconnect()
     super.disconnectedCallback()
   }
+
   async getUIAsync() {
-    if (this.state.ovl.uiState.tableNeedsRebuild) {
-      // needed bacause calculated props (childs are refering to calculated values from here)
-      // this ensures the screen gets reevaluated correctly
-      setTimeout(() => {
-        this.actions.ovl.internal.TableFinishedRebuild()
-      }, 1)
+    if (this.tableRebuildCheck()) {
       return null
     }
     let def = this.tabledata.def
@@ -941,5 +942,20 @@ export class TableHeader extends OvlBaseElement {
         </td>
       </tr>
     `)
+  }
+  tableRebuildCheck() {
+    if (this.state.ovl.uiState.tableNeedsRebuild) {
+      // needed bacause calculated props (childs are refering to calculated values from here)
+      // this ensures the screen gets reevaluated correctly
+      this.actions.ovl.internal.SetLastScrollPosition()
+      setTimeout(() => {
+        this.actions.ovl.internal.SetTableNeedsRebuild(false)
+        setTimeout(() => {
+          scrollToLastPosition(this.state)
+        }, 300)
+      }, 1)
+      return true
+    }
+    return false
   }
 }

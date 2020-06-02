@@ -19,6 +19,11 @@ import {
   ShowFile,
 } from "./globals"
 import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
+import { setLastScrollPosition } from "../library/OvlBaseElement"
+
+export const SetLastScrollPosition: Action = ({ state }) => {
+  setLastScrollPosition(state)
+}
 
 export const NavigateTo: AsyncAction<Screen> = async (
   { state, actions, effects },
@@ -28,39 +33,9 @@ export const NavigateTo: AsyncAction<Screen> = async (
     let fn = customFunctions["screens"]
     if (fn) {
       let currentScreen = state.ovl.screens.nav.currentScreen
-      if (currentScreen) {
-        // get the first scrollable class of the doc
-        let o = state.ovl.screens.screenState[currentScreen]
-        let scrollable
-        if (state.ovl.uiState.isMobile) {
-          scrollable = document.querySelector(".scrollableMobile")
-        } else {
-          scrollable = document.querySelector(".scrollable")
-        }
-
-        // and remember the scroll pos
-        if (scrollable && scrollable.scrollTop) {
-          o.lastScrollTop = scrollable.scrollTop
-        } else {
-          o.lastScrollTop = undefined
-        }
-
-        if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
-          let navErrorMessage = await fn[currentScreen][ScreenNavigateOut](
-            state,
-            actions,
-            effects
-          )
-          if (navErrorMessage) {
-            if (navErrorMessage.toLowerCase() !== "error") {
-              SnackAdd(navErrorMessage, "Error")
-            }
-            return
-          }
-        }
-      }
-      if (fn[value] && fn[value][ScreenNavigateIn]) {
-        let navErrorMessage = await fn[value][ScreenNavigateIn](
+      setLastScrollPosition(state)
+      if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
+        let navErrorMessage = await fn[currentScreen][ScreenNavigateOut](
           state,
           actions,
           effects
@@ -71,6 +46,19 @@ export const NavigateTo: AsyncAction<Screen> = async (
           }
           return
         }
+      }
+    }
+    if (fn[value] && fn[value][ScreenNavigateIn]) {
+      let navErrorMessage = await fn[value][ScreenNavigateIn](
+        state,
+        actions,
+        effects
+      )
+      if (navErrorMessage) {
+        if (navErrorMessage.toLowerCase() !== "error") {
+          SnackAdd(navErrorMessage, "Error")
+        }
+        return
       }
     }
 
@@ -266,11 +254,10 @@ export const SetLanguage: AsyncAction<string> = async (
     )
   }
   localStorage.setItem("PortalLanguage", res.data.lang)
-  state.ovl.uiState.tableNeedsRebuild = true
 }
 
-export const TableFinishedRebuild: AsyncAction = async ({ state }) => {
-  state.ovl.uiState.tableNeedsRebuild = false
+export const SetTableNeedsRebuild: Action<boolean> = ({ state }, value) => {
+  state.ovl.uiState.tableNeedsRebuild = value
 }
 
 export const Logout: AsyncAction = async ({ state, actions }) => {
