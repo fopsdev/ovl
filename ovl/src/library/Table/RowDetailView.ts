@@ -26,7 +26,7 @@ import {
 } from "./helpers"
 import { CellClass } from "./Row"
 import { RowControlAllAction } from "./RowControl"
-import { DisplayMode, ViewRowDef } from "./Table"
+import { DisplayMode, ViewRowDef, TableDef } from "./Table"
 
 export type ViewRendererResult = {
   result: TemplateResult
@@ -83,6 +83,15 @@ export class TableRowDetailView extends OvlBaseElement {
   }
   handleClose = () => {
     this.actions.ovl.overlay.CloseOverlay()
+  }
+
+  handleTabClick = (e: Event, key: string | number) => {
+    e.preventDefault()
+    e.stopPropagation()
+    this.actions.ovl.table.TableSetViewTab({
+      def: this.rowData.tableDef.options.tabs,
+      key,
+    })
   }
 
   handleClick = async (e) => {
@@ -162,6 +171,7 @@ export class TableRowDetailView extends OvlBaseElement {
       }
     }
 
+    console.log(this.trackedTree.pathDependencies)
     let columns = def.columns
     let rowControlActions: {
       [key: string]: RowControlAllAction
@@ -171,6 +181,7 @@ export class TableRowDetailView extends OvlBaseElement {
       this.rowData.key,
       true
     )
+    console.log(this.trackedTree.pathDependencies)
 
     let customRowCellClasses: { [key: string]: CellClass }
     let functionName = ViewRowCellClass
@@ -240,137 +251,107 @@ export class TableRowDetailView extends OvlBaseElement {
 
     let body
     let row = this.rowData.row
-    if (viewRendererFn) {
-      body = viewRendererResult.result
-    } else {
-      body = html`
-        ${Object.keys(columns).map((k) => {
-          let rendererFn = GetRendererFn(
-            def.namespace,
-            cachedRendererFn,
-            FieldGetValueRender,
-            k
-          )
-          let labelRendererFn = GetRendererFn(
-            def.namespace,
-            cachedLabelRendererFn,
-            FieldGetLabelRender,
-            k
-          )
-          let customHeaderCellClass = ""
-          let headertooltip
-          if (customHeaderCellClasses[k]) {
-            customHeaderCellClass = customHeaderCellClasses[k].className
-            headertooltip = customHeaderCellClasses[k].tooltip
-          }
-          let rowtooltip
-          let customRowCellClass = ""
-          if (customRowCellClasses[k]) {
-            customRowCellClass = customRowCellClasses[k].className
-            rowtooltip = customRowCellClasses[k].tooltip
-          }
-          let col = columns[k]
 
-          let columnsVisible = this.rowData.columnsVisible
-          if (columnsVisible[k].indexOf("View") < 0) {
-            return null
-          }
-          let uiItem
-          if (rendererFn) {
-            uiItem = rendererFn(
-              k,
-              row,
-              def.namespace,
-              def.columns,
-              this.rowData.columnsAlign[k],
-              <DisplayMode>"Detailview",
-              this.state
-            )
-          } else {
-            if (col.control === "checkbox") {
-              if (row[k] === col.ui.checkedValue) {
-                uiItem = def.options.controlsRendering.checkbox.view.checked
-              } else {
-                uiItem = def.options.controlsRendering.checkbox.view.unchecked
-              }
-            } else if (col.control === "Link") {
-              if (col.asset.type === "Image") {
-                let linkValue = row[k]
+    let columnsVisible = this.rowData.columnsVisible
+    // some tabbed content prep
+    let tabbedContent
 
-                if (linkValue) {
-                  let linkObject = JSON.parse(linkValue)
-                  if (linkObject.cat !== "Ext") {
-                    if (linkObject.id1) {
-                      linkObject.id1 = row[linkObject.id1]
-                    }
-                    if (linkObject.id2) {
-                      linkObject.id2 = row[linkObject.id2]
-                    }
-                  }
-                  this.hasLazyImage = true
-                  uiItem = html`<img
-                    class="ovl-lazy-image"
-                    .dataLinkObject="${linkObject}"
-                    src=""
-                  />`
-                }
-              }
-            } else {
-              // let res = await overmind.effects.getRequest(
-              //   api.url + "assets/get",
-              //   params,
-              //   true
-              // )
-              // if (res.data) {
-              //   const urlCreator = window.URL || window.webkitURL
-              //   //@ts-ignore
-              //   entry.target.src = urlCreator.createObjectURL(res.data)
-
-              uiItem = getDisplayValue(k, col, row, def.namespace)
-            }
+    let hasTabs =
+      def.options.tabs !== undefined && def.options.tabs.view !== undefined
+    let tabsFound = new Set<string | number>()
+    if (hasTabs) {
+      //console.log(def.options.tabs.view)
+      // lets first see how many tabs are there if any
+      Object.keys(columns).forEach((k) => {
+        let col = columns[k]
+        if (columnsVisible[k].indexOf("View") > -1) {
+          if (col.ui.viewTab) {
+            tabsFound.add(col.ui.viewTab)
           }
-          let label
-          let value
-          if (uiItem || (!uiItem && col.ui.showLabelIfNoValueInView)) {
-            let l
-            if (col.ui.labelTranslationKey) {
-              l = T(col.ui.labelTranslationKey)
-            } else {
-              l = k
-            }
-            //l = GetLabelText(l, k, def.namespace, this.state)
-            if (labelRendererFn) {
-              l = labelRendererFn(
-                k,
-                l,
-                this.rowData.columnsAlign[k],
-                <DisplayMode>"Detailview",
-                this.state
-              )
-            }
+        }
+      })
+      // also add custom tabs which have a customfunction defined
+      Object.keys(def.options.tabs.view.tabs).filter((f) => {
+        let tab = def.options.tabs.view.tabs[f]
+        if (tab.hasCustomContent) {
+        }
+      })
 
-            label = html`<label
-              title="${ifDefined(headertooltip ? headertooltip : undefined)}"
-              data-col=${k}
-              class="fd-form-label ovl-detailview-label ovl-table-label-${col.control +
-              (col.asset
-                ? col.asset.type
-                : "")} ovl-table-label__${k} ${customHeaderCellClass}"
-              >${l}</label
-            >`
-            // needs to be ignored to get css white-space: line-wrap work correctly
-            // prettier-ignore
-            value = html`<article title="${ifDefined(rowtooltip ? rowtooltip : undefined)}" data-col=${k} class="fd-has-type-1 ovl-detailview-value ovl-table-value-${col.control + (col.asset ? col.asset.type : "")} ovl-table-value__${k} ${customRowCellClass}">${uiItem}</article>`
-          }
-          return html`<div
-            class="ovl-detailview-container ovl-container-${col.control +
-            (col.asset ? col.asset.type : "")} ovl-container__${k}"
-          >
-            ${label} ${value}
-          </div>`
-        })}
-      `
+      if (tabsFound.size === 0) {
+        hasTabs = false
+      }
     }
+    if (hasTabs) {
+      let activeTab = def.options.tabs.view.selected
+      if (!activeTab) {
+        Object.keys(def.options.tabs.view.tabs).some((k) => {
+          if (tabsFound.has(k)) {
+            activeTab = k
+            return true
+          }
+        })
+      }
+      let tabbedControls = this.getControls(
+        Object.keys(def.columns).filter(
+          (f) => def.columns[f].ui.viewTab === activeTab
+        ),
+        def,
+        row,
+        customHeaderCellClasses,
+        customRowCellClasses,
+        columnsVisible
+      )
+
+      tabbedContent = html`<div class="fd-panel ovl-tab ovl-viewtab">
+        <ul class="fd-tabs fd-tabs--l ovl-tabs ovl-viewtabs" role="tablist">
+          ${Array.from(tabsFound).map((k) => {
+            let tab = def.options.tabs.view.tabs[k]
+            let selected = k === activeTab
+            return html`
+              
+                <li class="fd-tabs__item ovl-tab-header ovl-viewtab-header ovl-tab-header__${k}">
+                  <a
+                    class="fd-tabs__link"
+                    @click=${(e) => this.handleTabClick(e, k)}
+                    aria-controls="${k}"
+                    aria-selected="${selected}"
+                    href="#${k}"
+                    role="tab"
+                  >
+                    <span class="fd-tabs__tag">
+                      ${T(tab.translationKey)}
+                    </span>
+                  </a>
+                </li>
+              </div>
+            `
+          })}
+        </ul>
+        <div
+          class="fd-tabs__panel ovl-tabcontent ovl-viewtabcontent ovl-tabcontent__${activeTab}"
+          aria-expanded="true"
+          id="${activeTab}"
+          role="tabpanel"
+        >
+          ${tabbedControls}
+        </div>
+      </div>`
+    }
+    let bodyContent
+    if (viewRendererFn) {
+      bodyContent = viewRendererResult.result
+    } else {
+      body = this.getControls(
+        Object.keys(def.columns).filter((f) => !def.columns[f].ui.viewTab),
+        def,
+        row,
+        customHeaderCellClasses,
+        customRowCellClasses,
+        columnsVisible
+      )
+      bodyContent = html`${body} ${tabbedContent}`
+    }
+
     return html`
       <div
         class="fd-panel ovl-detailview ovl-table-${def.id} ovl-detailview-${def.id}"
@@ -386,7 +367,7 @@ export class TableRowDetailView extends OvlBaseElement {
             @long-press="${this.handleLongPress}"
             class="fd-panel__body ovl-detailview-body-${def.id} ovl-detailview-body"
           >
-            ${body}
+            ${bodyContent}
           </div>
         </div>
         <div
@@ -411,6 +392,140 @@ export class TableRowDetailView extends OvlBaseElement {
         </div>
       </div>
     `
+  }
+  getControls(
+    controls,
+    def: TableDef,
+    row,
+    customHeaderCellClasses,
+    customRowCellClasses,
+    columnsVisible
+  ) {
+    let columns = def.columns
+    return controls.map((k) => {
+      let rendererFn = GetRendererFn(
+        def.namespace,
+        cachedRendererFn,
+        FieldGetValueRender,
+        k
+      )
+      let labelRendererFn = GetRendererFn(
+        def.namespace,
+        cachedLabelRendererFn,
+        FieldGetLabelRender,
+        k
+      )
+      let customHeaderCellClass = ""
+      let headertooltip
+      if (customHeaderCellClasses[k]) {
+        customHeaderCellClass = customHeaderCellClasses[k].className
+        headertooltip = customHeaderCellClasses[k].tooltip
+      }
+      let rowtooltip
+      let customRowCellClass = ""
+      if (customRowCellClasses[k]) {
+        customRowCellClass = customRowCellClasses[k].className
+        rowtooltip = customRowCellClasses[k].tooltip
+      }
+      let col = columns[k]
+
+      if (columnsVisible[k].indexOf("View") < 0) {
+        return null
+      }
+      let uiItem
+      if (rendererFn) {
+        uiItem = rendererFn(
+          k,
+          row,
+          def.namespace,
+          def.columns,
+          this.rowData.columnsAlign[k],
+          <DisplayMode>"Detailview",
+          this.state
+        )
+      } else {
+        if (col.control === "checkbox") {
+          if (row[k] === col.ui.checkedValue) {
+            uiItem = def.options.controlsRendering.checkbox.view.checked
+          } else {
+            uiItem = def.options.controlsRendering.checkbox.view.unchecked
+          }
+        } else if (col.control === "link") {
+          if (col.asset.type === "Image") {
+            let linkValue = row[k]
+
+            if (linkValue) {
+              let linkObject = JSON.parse(linkValue)
+              if (linkObject.cat !== "Ext") {
+                if (linkObject.id1) {
+                  linkObject.id1 = row[linkObject.id1]
+                }
+                if (linkObject.id2) {
+                  linkObject.id2 = row[linkObject.id2]
+                }
+              }
+              this.hasLazyImage = true
+              uiItem = html`<img
+                class="ovl-lazy-image"
+                .dataLinkObject="${linkObject}"
+                src=""
+              />`
+            }
+          }
+        } else {
+          // let res = await overmind.effects.getRequest(
+          //   api.url + "assets/get",
+          //   params,
+          //   true
+          // )
+          // if (res.data) {
+          //   const urlCreator = window.URL || window.webkitURL
+          //   //@ts-ignore
+          //   entry.target.src = urlCreator.createObjectURL(res.data)
+
+          uiItem = getDisplayValue(k, col, row, def.namespace)
+        }
+      }
+      let label
+      let value
+      if (uiItem || (!uiItem && col.ui.showLabelIfNoValueInView)) {
+        let l
+        if (col.ui.labelTranslationKey) {
+          l = T(col.ui.labelTranslationKey)
+        } else {
+          l = k
+        }
+        //l = GetLabelText(l, k, def.namespace, this.state)
+        if (labelRendererFn) {
+          l = labelRendererFn(
+            k,
+            l,
+            this.rowData.columnsAlign[k],
+            <DisplayMode>"Detailview",
+            this.state
+          )
+        }
+
+        label = html`<label
+          title="${ifDefined(headertooltip ? headertooltip : undefined)}"
+          data-col=${k}
+          class="fd-form-label ovl-detailview-label ovl-table-label-${col.control +
+          (col.asset
+            ? col.asset.type
+            : "")} ovl-table-label__${k} ${customHeaderCellClass}"
+          >${l}</label
+        >`
+        // needs to be ignored to get css white-space: line-wrap work correctly
+        // prettier-ignore
+        value = html`<article title="${ifDefined(rowtooltip ? rowtooltip : undefined)}" data-col=${k} class="fd-has-type-1 ovl-detailview-value ovl-table-value-${col.control + (col.asset ? col.asset.type : "")} ovl-table-value__${k} ${customRowCellClass}">${uiItem}</article>`
+      }
+      return html`<div
+        class="ovl-detailview-container ovl-container-${col.control +
+        (col.asset ? col.asset.type : "")} ovl-container__${k}"
+      >
+        ${label} ${value}
+      </div>`
+    })
   }
   afterRender() {
     this.handleAfterRenderCustomHook()

@@ -11,30 +11,28 @@ import { TableTesting } from "../state"
 
 export const FormCanEdit = async (
   rowKey: string,
-  tableDefAndData: TableDataAndDef,
+  tableDef: TableDef,
+  tableData: TableData,
   state: typeof overmind.state,
   effects: typeof overmind.effects
 ): Promise<string> => {
-  let row = <TableTesting>tableDefAndData.data.data[rowKey]
-  return Promise.resolve(
-    row.U_Alpha && row.U_Alpha.indexOf("noedit") > -1
-      ? "Ändern nicht möglich da Text 'noedit' enthält!"
-      : ""
-  )
+  let row = <TableTesting>tableData.data[rowKey]
+  return row.U_Alpha && row.U_Alpha.indexOf("noedit") > -1
+    ? "Ändern nicht möglich da Text 'noedit' enthält!"
+    : ""
 }
 
 export const FormCanDelete = async (
   rowKey: string,
-  tableDefAndData: TableDataAndDef,
+  tableDef: TableDef,
+  tableData: TableData,
   state: typeof overmind.state,
   effects: typeof overmind.effects
 ): Promise<string> => {
-  let row = <TableTesting>tableDefAndData.data.data[rowKey]
-  return Promise.resolve(
-    row.U_Alpha && row.U_Alpha.indexOf("nodelete") > -1
-      ? 'Löschen nicht möglich da Text "nodelete" enthält!'
-      : ""
-  )
+  let row = <TableTesting>tableData.data[rowKey]
+  return row.U_Alpha && row.U_Alpha.indexOf("nodelete") > -1
+    ? 'Löschen nicht möglich da Text "nodelete" enthält!'
+    : ""
 }
 
 export const FormStatus = async (
@@ -57,13 +55,15 @@ export const FormStatus = async (
       msg: 'Text enthält "Fehler"',
     }
   }
-  return Promise.resolve(res)
+  return res
 }
 
 export const FormCopy = async (
   key: string,
   newRow: TableTesting,
-  tableDef: TableDataAndDef,
+  tableDef: TableDef,
+  tableData: TableData,
+
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects
@@ -73,7 +73,9 @@ export const FormCopy = async (
 
 export const FormAdd = async (
   newRow: TableTesting,
-  tableDef: TableDataAndDef,
+  tableDef: TableDef,
+  tableData: TableData,
+
   state: typeof overmind.state,
   actions: typeof overmind.actions,
   effects: typeof overmind.effects

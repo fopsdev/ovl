@@ -1,4 +1,4 @@
-import { TableDef } from "../../../../ovl/src/library/Table/Table"
+import { TableDef, Tabs } from "../../../../ovl/src/library/Table/Table"
 
 export type TableTesting = {
   Code: string
@@ -118,19 +118,24 @@ export let tblTableTesting: TableDef = {
   },
 }
 
-let tableTesting2Tabs = {
+let tableTesting2Tabs: Tabs = {
   edit: {
-    TabA: { translationKey: "PortalEditTabA" },
-    TabB: { translationKey: "PortalEditTabB" },
+    tabs: {
+      TabA: { translationKey: "PortalEditTabA" },
+      TabB: { translationKey: "PortalEditTabB" },
+    },
   },
   view: {
-    TabA: { translationKey: "PortalViewTabA" },
-    TabB: { translationKey: "PortalViewTabB" },
+    tabs: {
+      TabA: { translationKey: "PortalViewTabA" },
+      TabB: { translationKey: "PortalViewTabB" },
+      TabX: { translationKey: "PortalViewTabX", hasCustomContent: true },
+    },
   },
 }
 
-export type tab2EditTabs = keyof typeof tableTesting2Tabs.edit
-export type tab2ViewTabs = keyof typeof tableTesting2Tabs.view
+export type tab2EditTabs = keyof typeof tableTesting2Tabs.edit.tabs
+export type tab2ViewTabs = keyof typeof tableTesting2Tabs.view.tabs
 
 export let tblTableTesting2: TableDef = {
   id: "tab2",
@@ -404,7 +409,7 @@ export let tblTableTesting3: TableDef = {
       ui: { checkedValue: "Y", align: "center" },
     },
     U_Image: {
-      control: "Link",
+      control: "link",
       ui: { align: "center", showLabelIfNoValueInView: false },
       asset: {
         type: "Image",

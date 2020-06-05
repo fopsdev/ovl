@@ -24,6 +24,7 @@ import { DataType, FormFields } from "../forms/OvlFormElement"
 import { overlayToRender } from "../Overlay/Overlay"
 import { RowControlAllAction } from "./RowControl"
 import { ColumnDisplayDef, TableData, TableDataAndDef, TableDef } from "./Table"
+import { TableRowDetailView } from "./RowDetailView"
 
 export const getTextSort = (valA: string, valB: string): number => {
   if (valA === null) {
@@ -374,6 +375,9 @@ export const initTableState = (
     }
     let options = def.options
 
+    // if (options.tabs) {
+
+    // }
     // if (def.translationGroup === undefined) {
     //   // assume tranlsation group is the same as namespace first group if not defined
     //   let firstGroup = def.namespace.split(".")[0]
@@ -823,40 +827,45 @@ export const createDynamicRowFunctions = async (
 ) => {
   let rowControlActions: { [key: string]: RowControlAllAction } = {}
   let fn = resolvePath(customFunctions, def.namespace)
-  // first all custom ones
-  if (def.options.customRowActions) {
-    let wait = Promise.all(
-      Object.keys(def.options.customRowActions).map(async (k) => {
-        let custom = def.options.customRowActions[k]
-        let disabled = false
 
-        let title = T(custom.translationKey)
-        let functionName = FormCanCustom.replace("%", k)
-        if (fn && fn[functionName]) {
-          disabled = true
-          title = await fn[functionName](
-            key,
-            <TableDataAndDef>{ def, data },
-            overmind.state,
-            overmind.effects
-          )
-          if (title) {
-            rowControlActions[k] = {
-              disabled: disabled,
-              icon: custom.icon,
-              custom: true,
-              name: title,
-            }
+  let chk = def.dataFetching.useCustomDataFetching
+
+  // first all custom ones
+
+  if (def.options.customRowActions) {
+    //await Promise.all(
+    Object.keys(def.options.customRowActions).map(async (k) => {
+      let custom = def.options.customRowActions[k]
+      let disabled = false
+
+      let title = T(custom.translationKey)
+      let functionName = FormCanCustom.replace("%", k)
+
+      if (fn && fn[functionName]) {
+        disabled = true
+        title = await fn[functionName](
+          key,
+          def,
+          data,
+          overmind.state,
+          overmind.effects
+        )
+        if (title) {
+          rowControlActions[k] = {
+            disabled: disabled,
+            icon: custom.icon,
+            custom: true,
+            name: title,
           }
-        } else {
-          rowControlActions[k] = JSON.parse(JSON.stringify(custom))
-          rowControlActions[k].disabled = false
-          rowControlActions[k].name = title
-          rowControlActions[k].custom = true
         }
-      })
-    )
-    await wait
+      } else {
+        rowControlActions[k] = JSON.parse(JSON.stringify(custom))
+        rowControlActions[k].disabled = false
+        rowControlActions[k].name = title
+        rowControlActions[k].custom = true
+      }
+    })
+    //)
   }
 
   // then add the default ones
@@ -865,15 +874,21 @@ export const createDynamicRowFunctions = async (
     let deleteDisabled = false
     let deleteTitle = ""
     let functionName = FormCanDelete
-
+    //@show christian
+    // the following path is tracked
+    def.dataFetching.useSchema
     if (fn && fn[functionName]) {
       deleteTitle = await fn[functionName](
         key,
-        <TableDataAndDef>{ def, data },
+        def,
+        data,
         overmind.state,
 
         overmind.effects
       )
+      //@show christian
+      // the following access is NOT (correctly) tracked
+      def.database.dataIdField
       deleteDisabled = true
       if (deleteTitle) {
         rowControlActions["Delete"] = {
@@ -904,7 +919,8 @@ export const createDynamicRowFunctions = async (
     if (fn && fn[functionName]) {
       copyTitle = await fn[functionName](
         key,
-        <TableDataAndDef>{ def, data },
+        def,
+        data,
         overmind.state,
 
         overmind.effects
@@ -938,7 +954,8 @@ export const createDynamicRowFunctions = async (
     if (fn && fn[functionName]) {
       editTitle = await fn[functionName](
         key,
-        <TableDataAndDef>{ def, data },
+        def,
+        data,
         overmind.state,
         overmind.effects
       )
@@ -975,7 +992,8 @@ export const createDynamicRowFunctions = async (
       if (fn && fn[functionName]) {
         detailTitle = await fn[functionName](
           key,
-          <TableDataAndDef>{ def, data },
+          def,
+          data,
           overmind.state,
 
           overmind.effects
@@ -1009,7 +1027,8 @@ export const createDynamicRowFunctions = async (
     if (fn && fn[functionName]) {
       moreTitle = fn[functionName](
         key,
-        <TableDataAndDef>{ def, data },
+        def,
+        data,
         overmind.state,
 
         overmind.effects

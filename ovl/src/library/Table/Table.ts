@@ -238,8 +238,18 @@ export type SelectRowDef = {
 }
 
 export type Tabs = {
-  edit: { [key: string]: { translationKey: string } }
-  view: { [key: string]: { translationKey: string } }
+  edit: {
+    selected?: string | number
+    tabs: {
+      [key: string]: { translationKey: string; hasCustomContent?: boolean }
+    }
+  }
+  view: {
+    selected?: string | number
+    tabs: {
+      [key: string]: { translationKey: string; hasCustomContent?: boolean }
+    }
+  }
 }
 
 export type ControlType =
@@ -251,7 +261,7 @@ export type ControlType =
   | "select"
   | "date"
   | "time"
-  | "Link"
+  | "link"
 export type ColumnAlign = "left" | "center" | "right"
 
 export type ColumnsDef = {
@@ -346,8 +356,8 @@ export type ColumnDef = {
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
     language?: Language
-    editTab?: string
-    viewTab?: string
+    editTab?: string | number
+    viewTab?: string | number
   }
   asset?: {
     type: AssetType

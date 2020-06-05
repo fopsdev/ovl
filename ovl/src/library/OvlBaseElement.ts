@@ -264,9 +264,10 @@ export class OvlBaseElement extends HTMLElement {
     }
   }
 
-  onUpdate = (mutations, paths, flushId) => {
+  onUpdate = async (mutations, paths, flushId, isAsync) => {
     // console.log(this.name + " onUpdate")
     // console.log("paths:")
+    // console.log(isAsync)
     // console.log(paths)
     // // console.log(flushId)
     // console.log("mutations:")
@@ -276,15 +277,32 @@ export class OvlBaseElement extends HTMLElement {
     // console.log(this.trackedTree.pathDependencies)
 
     this._flushId = flushId
+    // if (this.async) {
+    //   await this.trackedTree.trackScopeAsync(async () => {
+    //     await this.doRender()
+    //     return
+    //   }, await this.onUpdate)
+    // } else {
+
+    // this.trackedTree.track(this.onUpdate)
+    // if (this.async) await this.doRender()
+    // else this.doRender()
+    // this.trackedTree.stopTracking()
+
     this.trackedTree.trackScope(() => this.doRender(), this.onUpdate)
+    // }
   }
 
   connectedCallback() {
     this.trackedTree.trackScope(() => {
       this.init()
-
       this.doRender()
     }, this.onUpdate)
+
+    // this.trackedTree.track(this.onUpdate)
+    // this.init()
+    // this.doRender()
+    // this.trackedTree.stopTracking()
     if (this.screen) {
       this.addEventListener("animationend", this.handleAnimationEnd, true)
       this.addEventListener("animationstart", this.handleAnimationStart, true)

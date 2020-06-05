@@ -92,6 +92,14 @@ export const ViewHeaderCellClass = "ViewHeaderCellClass"
 // must return a lit-Template and a indication if it replaces all or just the body
 export const ViewCustomRender = "ViewCustom_%_Render"
 
+export const ViewCustomTabRender = "ViewCustomTab_%_Render"
+export const ViewTabHeaderRender = "ViewTab_%_HeaderRender"
+export const ViewTabFooterRender = "ViewTab_%_FooterRender"
+
+export const EditCustomTabRender = "EditCustomTab_%_Render"
+export const EditTabHeaderRender = "EditTab_%_HeaderRender"
+export const EditTabFooterRender = "EditTab_%_FooterRender"
+
 // now the eventhandler if the user selected/clicked the cell
 export const FieldRowCellSelectedHandler = "Field_%_RowCellSelectedHandler"
 export const FieldHeaderCellSelectedHandler =

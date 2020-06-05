@@ -599,7 +599,7 @@ export class OvlListControl extends OvlBaseElement {
     if (val !== undefined) {
       this.writeBackValue = val
     }
-    console.log(dispVal)
+    //console.log(dispVal)
     this.displayValue = dispVal
   }
   async resetLocalList() {

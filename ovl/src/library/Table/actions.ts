@@ -56,6 +56,7 @@ import {
   TableData,
   TableDataAndDef,
   TableDef,
+  Tabs,
 } from "./Table"
 
 const minimumFilterChars = 3
@@ -155,6 +156,13 @@ export const TableSelectAll: Action<{
       selectedRows[k].selected = true
     })
   }
+}
+
+export const TableSetViewTab: Action<{ def: Tabs; key: string | number }> = (
+  _,
+  value
+) => {
+  value.def.view.selected = value.key
 }
 
 export const TableSelectRow: Action<SelectRowDef> = (_, selectRow) => {

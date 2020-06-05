@@ -1,6 +1,7 @@
 import { Action, AsyncAction } from "overmind"
 import { ResultType, DialogState } from "./Dialog/Dialog"
 import {
+  TableSetViewTab,
   TableRefresh,
   TableRebuild,
   TableSelectRow,
@@ -34,6 +35,7 @@ import {
 } from "./Table/actions"
 import { dialogAfterClose } from "./Dialog/actions"
 export {
+  TableSetViewTab,
   TableRefresh,
   TableRebuild,
   TableSelectRow,

@@ -16,7 +16,8 @@ Todos:
     viewTab: "tab1"
     editTab: "tab1"
   }
-- TabShow-Hook
+- TabContent-Hook
+- Custom Tabs
 
 
 X - Rethink Translation Display. Maybe isntead of setting to "none" for translatable fields which are not in the ui use a different value.

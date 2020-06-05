@@ -97,6 +97,7 @@ import {
   TableSelectCustomSort,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableSetViewTab,
 } from "./library/actions"
 
 let navigation = { NavigateBack, NavigateTo }
@@ -124,6 +125,7 @@ let table = {
   TableClearFilter,
   TableAddRow,
   TableDirectSaveRow,
+  TableSetViewTab,
 }
 
 let internal = {

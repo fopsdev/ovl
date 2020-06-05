@@ -97,7 +97,7 @@ export class TableRow extends OvlBaseElement {
             } else {
               rowPart = def.options.controlsRendering.checkbox.table.unchecked
             }
-          } else if (col.control === "Link") {
+          } else if (col.control === "link") {
             if (col.asset.type === "Image") {
               let linkValue = row[k]
 
