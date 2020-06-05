@@ -1,5 +1,9 @@
 import { overmind } from "../../.."
-import { html, render } from "../../../../../ovl/node_modules/lit-html/lit-html"
+import {
+  html,
+  render,
+  TemplateResult,
+} from "../../../../../ovl/node_modules/lit-html/lit-html"
 import { ViewRendererResult } from "../../../../../ovl/src/library/Table/RowDetailView"
 import { ViewRowDef } from "../../../../../ovl/src/library/Table/Table"
 
@@ -43,4 +47,13 @@ export const ViewShow = async (
   effects: typeof overmind.effects
 ) => {
   console.log("hello from tabletesting view show hook.")
+}
+
+export const ViewCustomTab_TabX_Render = async (
+  view: ViewRowDef,
+  state: typeof overmind.state,
+  actions: typeof overmind.actions,
+  effects: typeof overmind.effects
+): Promise<TemplateResult> => {
+  return html`<b>I'm a custom Tab!</b> Yeah!`
 }

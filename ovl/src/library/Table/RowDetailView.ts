@@ -13,6 +13,7 @@ import {
   ViewHeaderCellClass,
   ViewRowCellClass,
   ViewShow,
+  ViewCustomTabRender,
 } from "../../global/hooks"
 import { SnackAdd } from "../helpers"
 import { overlayToRender } from "../Overlay/Overlay"
@@ -201,9 +202,9 @@ export class TableRowDetailView extends OvlBaseElement {
 
     let customHeaderCellClasses: { [key: string]: CellClass }
     let functionName2 = ViewHeaderCellClass
-    let fn2 = resolvePath(customFunctions, def.namespace)
-    if (fn2 && fn[functionName2]) {
-      customHeaderCellClasses = fn2[functionName2](
+
+    if (fn && fn[functionName2]) {
+      customHeaderCellClasses = fn[functionName2](
         def,
         this.state.ovl.uiState.isMobile,
         <DisplayMode>"Detailview",
@@ -224,15 +225,14 @@ export class TableRowDetailView extends OvlBaseElement {
     // lets see if we have a custom caption renderer
     if (def.options.view.customCaption) {
       let captionFunctionName = ViewGetCaptionRender
-      let captionFn = resolvePath(customFunctions, def.namespace)
 
       let captionContent
       let captionTranslated
       if (def.options.view.customCaption.translationKey) {
         captionTranslated = T(def.options.view.customCaption.translationKey)
       }
-      if (captionFn[captionFunctionName]) {
-        captionContent = captionFn[captionFunctionName](
+      if (fn[captionFunctionName]) {
+        captionContent = fn[captionFunctionName](
           captionTranslated,
           this.rowData,
           this.state
@@ -255,7 +255,8 @@ export class TableRowDetailView extends OvlBaseElement {
     let columnsVisible = this.rowData.columnsVisible
     // some tabbed content prep
     let tabbedContent
-
+    let tabbedControls
+    let viewCustomTabFn
     let hasTabs =
       def.options.tabs !== undefined && def.options.tabs.view !== undefined
     let tabsFound = new Set<string | number>()
@@ -271,9 +272,15 @@ export class TableRowDetailView extends OvlBaseElement {
         }
       })
       // also add custom tabs which have a customfunction defined
-      Object.keys(def.options.tabs.view.tabs).filter((f) => {
+      Object.keys(def.options.tabs.view.tabs).filter(async (f) => {
         let tab = def.options.tabs.view.tabs[f]
         if (tab.hasCustomContent) {
+          tabsFound.add(f)
+          let viewCustomTabRenderFunctionName = ViewCustomTabRender.replace(
+            "%",
+            f
+          )
+          viewCustomTabFn = fn[viewCustomTabRenderFunctionName]
         }
       })
 
@@ -291,17 +298,27 @@ export class TableRowDetailView extends OvlBaseElement {
           }
         })
       }
-      let tabbedControls = this.getControls(
-        Object.keys(def.columns).filter(
-          (f) => def.columns[f].ui.viewTab === activeTab
-        ),
-        def,
-        row,
-        customHeaderCellClasses,
-        customRowCellClasses,
-        columnsVisible
-      )
-
+      if (!def.options.tabs.view.tabs[activeTab].hasCustomContent) {
+        tabbedControls = this.getControls(
+          Object.keys(def.columns).filter(
+            (f) => def.columns[f].ui.viewTab === activeTab
+          ),
+          def,
+          row,
+          customHeaderCellClasses,
+          customRowCellClasses,
+          columnsVisible
+        )
+      } else {
+        if (viewCustomTabFn) {
+          tabbedControls = await viewCustomTabFn(
+            this.rowData,
+            this.state,
+            this.actions,
+            overmind.effects
+          )
+        }
+      }
       tabbedContent = html`<div class="fd-panel ovl-tab ovl-viewtab">
         <ul class="fd-tabs fd-tabs--l ovl-tabs ovl-viewtabs" role="tablist">
           ${Array.from(tabsFound).map((k) => {
