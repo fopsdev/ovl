@@ -68,7 +68,7 @@ export class TableNavControl extends OvlBaseElement {
   init() {
     this.nav = this.props()
   }
-  getUI() {
+  async getUI() {
     let compact = ""
     // if (this.state.ovl.uiState.isMobile || this.nav.type === "row") {
     //   compact = "fd-button--compact"

@@ -33,7 +33,7 @@ export class CompOrderOverview extends OvlBaseElement {
       e.stopPropagation()
     }
   }
-  getUI() {
+  async getUI() {
     const handlePDFPopup = (e: Event) => {
       e.preventDefault()
       e.stopPropagation()

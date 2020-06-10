@@ -4,7 +4,7 @@ export class CompTableTesting extends OvlBaseElement {
   init() {
     this.screen = "TableTesting"
   }
-  getUI() {
+  async getUI() {
     return html`
       <div class="${this.animatedClass}">
         <div class="fd-panel">

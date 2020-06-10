@@ -25,7 +25,6 @@ export class TableRowControl extends OvlBaseElement {
 
   init() {
     this.nav = this.props()
-    this.async = true
   }
 
   handleRowLongPress = (e: Event, msg: string) => {
@@ -48,7 +47,7 @@ export class TableRowControl extends OvlBaseElement {
     )
   }
 
-  async getUIAsync() {
+  async getUI() {
     let compact = ""
     let selectedRowBg = "background-color: var(--fd-color-accent-7)"
     let key = this.nav.key

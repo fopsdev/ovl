@@ -59,7 +59,6 @@ export class TableRowDetailView extends OvlBaseElement {
   intersectionObserver: IntersectionObserver
 
   init() {
-    this.async = true
     this.rowData = this.props()
     overlayToRender.overlayClosedCallback = () => {
       this.actions.ovl.internal.TableCloseViewRow({
@@ -150,7 +149,7 @@ export class TableRowDetailView extends OvlBaseElement {
     }
   }
 
-  async getUIAsync() {
+  async getUI() {
     let def = this.rowData.tableDef
 
     // check if custom view needs to be rendered
@@ -171,19 +170,7 @@ export class TableRowDetailView extends OvlBaseElement {
         return viewRendererResult.result
       }
     }
-
-    console.log(this.trackedTree.pathDependencies)
     let columns = def.columns
-    let rowControlActions: {
-      [key: string]: RowControlAllAction
-    } = await createDynamicRowFunctions(
-      def,
-      this.rowData.data,
-      this.rowData.key,
-      true
-    )
-    console.log(this.trackedTree.pathDependencies)
-
     let customRowCellClasses: { [key: string]: CellClass }
     let functionName = ViewRowCellClass
     let fn = resolvePath(customFunctions, def.namespace)
@@ -215,7 +202,6 @@ export class TableRowDetailView extends OvlBaseElement {
       customHeaderCellClasses = {}
     }
 
-    let rowActions = Object.keys(rowControlActions)
     let scrollable = "scrollableOverlay"
     if (this.state.ovl.uiState.isMobile) {
       scrollable = "scrollableMobileOverlay"
@@ -368,6 +354,16 @@ export class TableRowDetailView extends OvlBaseElement {
       )
       bodyContent = html`${body} ${tabbedContent}`
     }
+
+    let rowControlActions: {
+      [key: string]: RowControlAllAction
+    } = await createDynamicRowFunctions(
+      def,
+      this.rowData.data,
+      this.rowData.key,
+      true
+    )
+    let rowActions = Object.keys(rowControlActions)
 
     return html`
       <div

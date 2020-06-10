@@ -280,7 +280,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       })
     }
   }
-  getUI() {
+  async getUI() {
     let def = this.headerMenu.def.def
     if (!def.uiState.headerSelected) {
       // whilst fade out leave the ui as it is

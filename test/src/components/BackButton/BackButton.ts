@@ -3,7 +3,7 @@ import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { T } from "../../../../ovl/src/global/globals"
 
 export class OvlBackButton extends OvlBaseElement {
-  getUI() {
+  async getUI() {
     const handleBack = (e: Event) => {
       this.actions.ovl.navigation.NavigateBack()
     }

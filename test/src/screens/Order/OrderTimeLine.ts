@@ -3,7 +3,7 @@ import { html } from "../../../../ovl/node_modules/lit-html"
 import { T, D } from "../../../../ovl/src/global/globals"
 
 export class CompOrderTimeLine extends OvlBaseElement {
-  getUI() {
+  async getUI() {
     let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
     let order = this.state.portal.orderDetail.orders[key]
 
@@ -24,7 +24,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
             </div>
             <div class="fd-panel__body fd-has-padding-tiny">
               <comp-filelist
-                .props=${s =>
+                .props=${(s) =>
                   s.portal.orderDetail.orders[key].steps.step1.attachments
                     .files}
               ></comp-filelist>
@@ -47,7 +47,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
             </div>
             <div class="fd-panel__body fd-has-padding-tiny">
               <comp-filelist
-                .props=${s =>
+                .props=${(s) =>
                   s.portal.orderDetail.orders[key].steps.step2.attachments
                     .files}
               ></comp-filelist>
@@ -69,7 +69,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
             </div>
             <div class="fd-panel__body fd-has-padding-tiny">
               <comp-filelist
-                .props=${s =>
+                .props=${(s) =>
                   s.portal.orderDetail.orders[key].steps.step3.attachments
                     .files}
               ></comp-filelist>
@@ -92,7 +92,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
             </div>
             <div class="fd-panel__body fd-has-padding-tiny">
               <comp-filelist
-                .props=${s =>
+                .props=${(s) =>
                   s.portal.orderDetail.orders[key].steps.step4.attachments
                     .files}
               ></comp-filelist>

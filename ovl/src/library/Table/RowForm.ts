@@ -99,7 +99,7 @@ export class TableRowForm extends OvlFormElement {
     }
   }
 
-  getUI() {
+  async getUI() {
     let def = this.rowData.tableDef
     let fields = this.formState.fields
 

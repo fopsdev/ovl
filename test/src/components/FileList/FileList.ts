@@ -49,7 +49,7 @@ export class CompFileList extends OvlBaseElement {
     })
   }
 
-  getUI() {
+  async getUI() {
     this.fileList = this.props(this.state)
 
     return html`

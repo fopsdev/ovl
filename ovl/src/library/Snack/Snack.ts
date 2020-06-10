@@ -45,7 +45,7 @@ export class OvlSnack extends OvlBaseElement {
     }
   }
 
-  getUI() {
+  async getUI() {
     // this render just defines the slots...
     // all other handling is in the ...Snack - Actions
     let res = []

@@ -3,7 +3,7 @@ import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { T, D } from "../../../../ovl/src/global/globals"
 
 export class CompOrderDetail extends OvlBaseElement {
-  getUI() {
+  async getUI() {
     let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
     let order = this.state.portal.orderDetail.orders[key]
 

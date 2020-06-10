@@ -47,7 +47,7 @@ export class OvlCheckbox extends OvlBaseElement {
     this.inputElement.dispatchEvent(event)
   }
 
-  getUI() {
+  async getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
     this.formState = this.state.ovl.forms[field.formType][field.formId]

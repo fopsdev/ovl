@@ -102,7 +102,7 @@ export class OvlDialog extends OvlBaseElement {
     }
   }
 
-  getUI() {
+  async getUI() {
     if (
       !this.state.ovl.libState.dialog ||
       !this.state.ovl.libState.dialog.visible

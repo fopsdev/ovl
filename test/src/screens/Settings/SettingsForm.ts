@@ -12,7 +12,7 @@ export class CompSettingsForm extends OvlFormElement {
     this.screen = "Settings"
     super.init()
   }
-  getUI() {
+  async getUI() {
     let handleSave = () => {
       if (!this.state.ovl.libState.indicator.open) {
         this.actions.portal.settings.SaveSettings(this.formState)

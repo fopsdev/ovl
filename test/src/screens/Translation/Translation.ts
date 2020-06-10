@@ -7,7 +7,7 @@ export class CompTranslation extends OvlBaseElement {
   init() {
     this.screen = "Translation"
   }
-  getUI() {
+  async getUI() {
     return html`
       <div class="fd-panel ${this.animatedClass}">
         <div class="fd-panel__header">
@@ -24,7 +24,7 @@ export class CompTranslation extends OvlBaseElement {
             .props=${(state: typeof overmind.state) => {
               return {
                 def: state.portal.tables.translation.tableDef.translation,
-                data: state.portal.tables.translation
+                data: state.portal.tables.translation,
               }
             }}
           >

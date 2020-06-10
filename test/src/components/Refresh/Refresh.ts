@@ -6,7 +6,7 @@ export type ShellButtonOrMenu = "button" | "menu"
 
 export class OvlRefresh extends OvlBaseElement {
   refresh: ShellButtonOrMenu
-  getUI() {
+  async getUI() {
     const handleRefresh = async (e: Event) => {
       if (!this.state.ovl.libState.indicator.open) {
         this.actions.portal.global.HandleRefresh()

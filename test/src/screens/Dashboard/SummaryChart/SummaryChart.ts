@@ -9,7 +9,7 @@ export class CompSummaryChart extends OvlBaseElement {
   init() {
     this.chartProps = this.props()
   }
-  getUI() {
+  async getUI() {
     return html`
       <div class="chartwidth">
         <canvas

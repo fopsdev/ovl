@@ -5,10 +5,10 @@ import { T } from "../../../../ovl/src/global/globals"
 import { html } from "../../../../ovl/node_modules/lit-html"
 
 export class CompOrderFeedback extends OvlBaseElement {
-  getUI() {
+  async getUI() {
     const handlePositiveFeedback = (e: Event) => {
       this.actions.portal.order.PreparePositiveFeedback({
-        message: T("PortalFeedbackDefaultPositive")
+        message: T("PortalFeedbackDefaultPositive"),
       })
 
       this.actions.ovl.navigation.NavigateTo("Feedback")
@@ -16,14 +16,14 @@ export class CompOrderFeedback extends OvlBaseElement {
 
     const handleNegativeFeedback = (e: Event) => {
       this.actions.portal.order.PrepareNegativeFeedback({
-        message: T("PortalFeedbackDefaultNegative")
+        message: T("PortalFeedbackDefaultNegative"),
       })
       this.actions.ovl.navigation.NavigateTo("Feedback")
     }
 
     const handleDeliveryDateFeedback = (e: Event) => {
       this.actions.portal.order.PrepareDeliveryDateFeedback({
-        message: T("PortalFeedbackDefaultDeliveryMsg")
+        message: T("PortalFeedbackDefaultDeliveryMsg"),
       })
       this.actions.ovl.navigation.NavigateTo("Feedback")
     }

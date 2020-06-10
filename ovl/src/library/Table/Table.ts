@@ -484,7 +484,6 @@ export class TableHeader extends OvlBaseElement {
   }
 
   init() {
-    this.async = true
     this.tabledata = this.props(this.state)
     this.classList.add("ovl-tableview")
     this.classList.add("ovl-table-" + this.tabledata.def.id)
@@ -526,7 +525,7 @@ export class TableHeader extends OvlBaseElement {
     super.disconnectedCallback()
   }
 
-  async getUIAsync() {
+  async getUI() {
     if (this.tableRebuildCheck()) {
       return null
     }

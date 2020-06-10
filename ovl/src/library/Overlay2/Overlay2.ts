@@ -49,11 +49,10 @@ export class OvlOverlay2 extends OvlBaseElement {
   }
 
   init() {
-    this.async = true
     super.init()
   }
 
-  async getUIAsync() {
+  async getUI() {
     const handleKeyDown = (e: KeyboardEvent) => {
       e.stopPropagation()
       if (e.key === "Escape") {

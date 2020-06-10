@@ -17,7 +17,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
       "trow" + this.rowData.tableDef.id + this.rowData.key
     ]
   }
-  getUI() {
+  async getUI() {
     let handleSave = () => {
       if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
         this.actions.ovl.internal.TableEditSaveRow({

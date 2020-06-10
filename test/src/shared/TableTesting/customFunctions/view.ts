@@ -28,15 +28,22 @@ export const ViewAfterRender = async (
     "ovl-detailview-body"
   )
   if (mainViewEl.length > 0) {
-    let newDiv = document.createElement("div")
+    let div
+    div = document.getElementById("customViewChart")
+    let createdDiv: boolean
+    if (!div) {
+      createdDiv = true
+      div = document.createElement("div")
+    }
     render(
-      html`<comp-summarychart
-        .props=${() => "height:500px;"}
-      ></comp-summarychart>`,
-      newDiv
+      html`<div id="customViewChart">
+        <comp-summarychart .props=${() => "height:500px;"}></comp-summarychart>
+      </div>`,
+      div
     )
-
-    mainViewEl[0].appendChild(newDiv)
+    if (createdDiv) {
+      mainViewEl[0].appendChild(div)
+    }
   }
 }
 

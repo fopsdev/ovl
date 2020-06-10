@@ -48,13 +48,11 @@ export class OvlOverlay extends OvlBaseElement {
       }
     }
   }
-
   init() {
-    this.async = true
     super.init()
   }
 
-  async getUIAsync() {
+  async getUI() {
     if (!this.state.ovl.libState.overlay.open) {
       return null
     }

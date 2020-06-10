@@ -42,7 +42,7 @@ export class OvlOption extends OvlBaseElement {
     })
     document.getElementById(id).dispatchEvent(event)
   }
-  getUI() {
+  async getUI() {
     this.field = this.props(this.state)
     let field = this.field.field
     this.formState = this.state.ovl.forms[field.formType][field.formId]

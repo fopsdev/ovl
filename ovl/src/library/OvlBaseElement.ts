@@ -1,7 +1,8 @@
 import { overmind, Screen, FormType, customFunctions } from "../index"
+import { IS_PROXY } from "proxy-state-tree"
 
 import { EventType } from "overmind"
-import { render, TemplateResult, nothing } from "lit-html"
+import { render, TemplateResult } from "lit-html"
 import { ITrackStateTree } from "proxy-state-tree"
 
 type ScreensHistory = Screen[]
@@ -59,7 +60,6 @@ export const scrollToLastPosition = (state: typeof overmind.state) => {
 }
 
 export class OvlBaseElement extends HTMLElement {
-  async: boolean
   _id: number
   _flushId: number
   state: typeof overmind.state
@@ -68,16 +68,13 @@ export class OvlBaseElement extends HTMLElement {
   trackedTree: ITrackStateTree<object>
   screen: string
   animatedClass: string
-
+  props: any
+  hasRescoped: boolean
   static _counter: number = 0
 
   // should be overwritten in derived element
   // gets a optimized lit-html template
-  async getUIAsync(): Promise<TemplateResult> {
-    return undefined
-  }
-
-  getUI(): TemplateResult {
+  async getUI(): Promise<TemplateResult> {
     return undefined
   }
 
@@ -161,14 +158,9 @@ export class OvlBaseElement extends HTMLElement {
 
   constructor() {
     super()
-    this.async = false
     this.animatedClass = ""
-
     this._id = ++OvlBaseElement._counter
     this.name = this.localName + this._id.toString()
-    this.trackedTree = overmind.getTrackStateTree()
-    this.actions = overmind.actions
-    this.state = <typeof overmind.state>this.trackedTree.state
   }
 
   async doRender() {
@@ -194,11 +186,7 @@ export class OvlBaseElement extends HTMLElement {
 
     let res = null
     if (!this.screen || this.screenVisible()) {
-      if (this.async) {
-        res = await this.getUIAsync()
-      } else {
-        res = this.getUI()
-      }
+      res = await this.getUI()
     }
     if (res !== undefined) {
       render(res, this)
@@ -265,44 +253,46 @@ export class OvlBaseElement extends HTMLElement {
   }
 
   onUpdate = async (mutations, paths, flushId, isAsync) => {
-    // console.log(this.name + " onUpdate")
-    // console.log("paths:")
-    // console.log(isAsync)
-    // console.log(paths)
+    this.trackedTree.track(this.onUpdate)
+    console.log(this.name + " onUpdate")
+    console.log("paths:")
+    //console.log(isAsync)
+    console.log(paths)
     // // console.log(flushId)
     // console.log("mutations:")
     // console.log(mutations)
 
     // console.log("tracked tree deps")
     // console.log(this.trackedTree.pathDependencies)
-
+    this.doRender()
     this._flushId = flushId
-    // if (this.async) {
-    //   await this.trackedTree.trackScopeAsync(async () => {
-    //     await this.doRender()
-    //     return
-    //   }, await this.onUpdate)
-    // } else {
+  }
 
-    // this.trackedTree.track(this.onUpdate)
-    // if (this.async) await this.doRender()
-    // else this.doRender()
-    // this.trackedTree.stopTracking()
-
-    this.trackedTree.trackScope(() => this.doRender(), this.onUpdate)
-    // }
+  rescope(data: any) {
+    let hasRescoped = false
+    if (!data) {
+      for (let key in this.props) {
+        if (this.props[key] && this.props[key][IS_PROXY]) {
+          //@ts-ignore
+          this.props[key] = overmind.proxyStateTree.rescope(
+            this.props[key],
+            this.trackedTree
+          )
+          hasRescoped = true
+        }
+      }
+    }
   }
 
   connectedCallback() {
-    this.trackedTree.trackScope(() => {
-      this.init()
-      this.doRender()
-    }, this.onUpdate)
+    //@ts-ignore
+    this.trackedTree = overmind.proxyStateTree.getTrackStateTreeWithProxifier() // overmind.getTrackStateTreeWithProxifier()
+    this.actions = overmind.actions
 
-    // this.trackedTree.track(this.onUpdate)
-    // this.init()
-    // this.doRender()
-    // this.trackedTree.stopTracking()
+    this.trackedTree.track(this.onUpdate)
+    this.state = <typeof overmind.state>this.trackedTree.state
+    this.init()
+    this.doRender()
     if (this.screen) {
       this.addEventListener("animationend", this.handleAnimationEnd, true)
       this.addEventListener("animationstart", this.handleAnimationStart, true)

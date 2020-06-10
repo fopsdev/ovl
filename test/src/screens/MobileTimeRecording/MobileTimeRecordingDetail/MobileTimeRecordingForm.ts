@@ -44,7 +44,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
       }
     }
   }
-  getUI() {
+  async getUI() {
     let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
     let typeField = this.formState.fields["U_Type"]
     let typeIdField = this.formState.fields["U_TypeId"]

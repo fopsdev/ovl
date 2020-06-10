@@ -78,7 +78,7 @@ export class OvlHitList extends OvlBaseElement {
     }
   }
 
-  getUI() {
+  async getUI() {
     let rowNr = 0
     let list = this.controlState.list
     let listData = this.controlState.listData

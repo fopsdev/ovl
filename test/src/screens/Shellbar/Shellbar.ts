@@ -16,7 +16,7 @@ export type ShellbarState = {
 }
 
 export class CompShellbar extends OvlBaseElement {
-  getUI() {
+  async getUI() {
     let feedbackForm = null
     let screenState = this.state.ovl.screens.screenState
     if (

@@ -10,7 +10,7 @@ export class CompDashboard extends OvlBaseElement {
     this.screen = "Dashboard"
   }
 
-  getUI() {
+  async getUI() {
     let partner = this.state.portal.partner
     return html`
     <div class="${this.animatedClass}">

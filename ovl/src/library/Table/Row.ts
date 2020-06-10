@@ -32,7 +32,7 @@ export class TableRow extends OvlBaseElement {
       })
     }
   }
-  getUI() {
+  async getUI() {
     let row = this.row.row
     let def = this.row.tableDef
     let columns = def.columns

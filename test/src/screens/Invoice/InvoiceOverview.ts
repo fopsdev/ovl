@@ -21,7 +21,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
     })
   }
 
-  getUI() {
+  async getUI() {
     const handlePDFPopup = (e) => {
       if (!e.target.disabled) {
         e.stopPropagation()

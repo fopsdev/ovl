@@ -163,7 +163,7 @@ export class TableRowFormBig extends OvlFormElement {
     }
   }
 
-  getUI() {
+  async getUI() {
     let fields = this.formState.fields
     let def = this.rowData.tableDef
     let columns = def.columns

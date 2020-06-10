@@ -169,10 +169,11 @@ export class TableRowWrapper extends OvlBaseElement {
 
   init() {
     this.row = this.props()
-    this.async = true
   }
 
-  async getUIAsync() {
+  async getUI() {
+    console.log("rowwrapper")
+
     let editSelected = this.row.editSelected
     let viewRow = this.row.viewRow
     let def = this.row.tableDef

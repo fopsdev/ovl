@@ -99,7 +99,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
       }
     }
   }
-  getUI() {
+  async getUI() {
     let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
     let dataKeys = def.uiState.dataFilteredAndSorted.filter(
       (k) => k.indexOf(ovltemp) === -1

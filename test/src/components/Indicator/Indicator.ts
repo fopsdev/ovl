@@ -2,7 +2,7 @@ import { html } from "../../../../ovl/node_modules/lit-html"
 import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 
 export class OvlIndicator extends OvlBaseElement {
-  getUI() {
+  async getUI() {
     let hideIndicator = "hide"
     if (this.state.ovl.libState.indicator.open) {
       hideIndicator = ""

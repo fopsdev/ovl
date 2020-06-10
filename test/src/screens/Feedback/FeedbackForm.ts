@@ -26,7 +26,7 @@ export class CompFeedbackForm extends OvlFormElement {
     super.init()
   }
 
-  getUI() {
+  async getUI() {
     let fields = this.formState.fields
     const id = (id: FieldId) => this.getFormFieldId(id)
     let msgField = fields["msg"]

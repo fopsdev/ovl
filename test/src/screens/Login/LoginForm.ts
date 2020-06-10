@@ -8,11 +8,12 @@ export type FieldId = "pw" | "user"
 
 export class CompLoginForm extends OvlFormElement {
   init() {
+    debugger
     this.screen = "Login"
     this.formType = "Login"
     super.init()
   }
-  getUI() {
+  async getUI() {
     let handleLogin = () => {
       if (!this.state.ovl.user.token) {
         this.actions.portal.system.user.Login(this.formState)

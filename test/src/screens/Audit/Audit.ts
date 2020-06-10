@@ -7,7 +7,7 @@ export class OvlAudit extends OvlBaseElement {
   init() {
     this.screen = "Audit"
   }
-  getUI() {
+  async getUI() {
     return html`
       <div class="fd-panel ${this.animatedClass}">
         <div class="fd-panel__header">
@@ -24,7 +24,7 @@ export class OvlAudit extends OvlBaseElement {
             .props=${(state: typeof overmind.state) => {
               return {
                 def: state.portal.tables.audit.tableDef.audit,
-                data: state.portal.tables.audit
+                data: state.portal.tables.audit,
               }
             }}
           >
