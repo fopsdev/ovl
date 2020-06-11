@@ -556,7 +556,7 @@ export class TableRowDetailView extends OvlBaseElement {
               // get data path
               //@ts-ignore
               let params = entry.target.dataLinkObject
-              let res = await ovl.effects.getRequest(
+              let res = await ovl.effects.ovl.getRequest(
                 api.url + "assets/get",
                 params,
                 true

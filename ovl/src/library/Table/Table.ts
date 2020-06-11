@@ -497,7 +497,7 @@ export class TableHeader extends OvlBaseElement {
             //@ts-ignore
             let params = entry.target.dataLinkObject
             params["mode"] = "Thumb"
-            let res = await ovl.effects.getRequest(
+            let res = await ovl.effects.ovl.getRequest(
               api.url + "assets/get",
               params,
               true

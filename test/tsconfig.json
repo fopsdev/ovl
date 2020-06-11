@@ -6,13 +6,7 @@
     "target": "es6",
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
-    "moduleResolution": "node",
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin",
-        "validate": false
-      }
-    ]
+    "moduleResolution": "node"
   },
   "exclude": [
     "**/_patched_node_modules",

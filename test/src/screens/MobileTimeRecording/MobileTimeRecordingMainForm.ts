@@ -47,7 +47,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
     })
     let snackUid = uuidv4()
     SnackTrackedAdd("Zeit(en) werden übermittelt...", "Information", snackUid)
-    await ovl.effects.postRequest(api.url + "job/addworktime", guids)
+    await ovl.effects.ovl.postRequest(api.url + "job/addworktime", guids)
     // tag data as synched
     this.actions.portal.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
 

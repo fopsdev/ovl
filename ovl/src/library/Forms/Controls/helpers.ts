@@ -79,7 +79,7 @@ export const KeyValueListFromServerFn = async (
     fn[functionName](postData, row, state, ovl.actions, effects)
   }
 
-  let res = await effects.postRequest(postData.url, {
+  let res = await effects.ovl.postRequest(postData.url, {
     lang: postData.lang,
     filterValue: postData.filterValue,
     lookupType: postData.lookupType,

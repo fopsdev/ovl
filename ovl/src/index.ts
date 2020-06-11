@@ -7,6 +7,7 @@ import { screens } from "../../test/src/stateScreens"
 import * as customFunctions from "../../test/src/customFunctions"
 import { ovlState } from "./state"
 import * as ovlActions from "./actions"
+import * as ovlEffects from "./effects"
 import { createDeepProxy } from "./tracker/proxyHandler"
 
 export declare type OvlAction<T = {}> = (context?, value?: T) => void
@@ -26,11 +27,11 @@ let _actions = {
 
 export declare type OvlActions = typeof _actions
 
-let _effects = {}
+let effects = {
+  ovl: ovlEffects,
+}
 
-export declare type OvlEffects = typeof _effects
-
-let effects = _effects
+export declare type OvlEffects = typeof effects
 
 let actions: OvlActions = JSON.parse(JSON.stringify(_actions))
 
