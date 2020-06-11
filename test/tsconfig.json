@@ -6,7 +6,8 @@
     "target": "es6",
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "outDir": ""
   },
   "exclude": [
     "**/_patched_node_modules",
