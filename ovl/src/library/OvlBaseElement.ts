@@ -168,6 +168,7 @@ export class OvlBaseElement extends HTMLElement {
     this._id = ++OvlBaseElement._counter
     this.name = this.localName + this._id.toString()
     this.state = ovl.state
+    this.actions = ovl.actions
   }
 
   async doRender() {

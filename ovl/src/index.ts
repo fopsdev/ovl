@@ -20,12 +20,22 @@ let _state = {
 export declare type OvlState = typeof _state
 let state: OvlState = createDeepProxy(_state)
 
-let _actions = {
+let actions = {
   ovl: ovlActions,
   portal: portalActions,
 }
 
-export declare type OvlActions = typeof _actions
+// find the functions in actions and inject our own action caller
+const getMethods = (obj) =>
+  Object.keys(obj).forEach((item) => {
+    if (typeof obj[item] === "function") {
+      console.log(item)
+    } else if (typeof obj[item] === "object") {
+      getMethods(obj[item])
+    }
+  })
+
+export declare type OvlActions = typeof actions
 
 let effects = {
   ovl: ovlEffects,
@@ -33,15 +43,14 @@ let effects = {
 
 export declare type OvlEffects = typeof effects
 
-let actions: OvlActions = JSON.parse(JSON.stringify(_actions))
-
 export let ovl = {
   state,
   actions,
   effects,
 }
 
-console.log(ovl)
+import { defineElements } from "./registerComponents"
+defineElements()
 
 export type FormType = CustomFormType | "TableRowEdit"
 export { customFunctions, screens, TableDefIds, Language }

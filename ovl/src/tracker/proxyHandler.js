@@ -52,7 +52,6 @@ export function createDeepProxy(target) {
         return Reflect.has(...arguments)
       },
       set(target, key, value, receiver) {
-        debugger
         if (typeof value === "object") {
           value = proxify(value, [...path, key])
         }
