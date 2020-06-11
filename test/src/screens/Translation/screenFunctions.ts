@@ -1,4 +1,5 @@
-import { overmind, TableDefIds } from "../../index"
+import { TableDefIds } from "../../index"
+import { OvlState, OvlActions, OvlEffects } from "../../../../ovl/src"
 
 export const ScreenRefresh = async (
   state: OvlState,

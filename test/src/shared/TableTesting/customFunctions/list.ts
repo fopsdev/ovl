@@ -1,8 +1,8 @@
-import { overmind } from "../../.."
 import { FormState } from "../../../../../ovl/src/library/forms/actions"
 import { LookupListPostData } from "../../../../../ovl/src/library/forms/Controls/helpers"
 import { ListFnReturnValue } from "../../../../../ovl/src/library/Table/Table"
 import { TableTesting } from "../state"
+import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
 
 // some list functions
 export const Field_U_ItemCode_GetList = (

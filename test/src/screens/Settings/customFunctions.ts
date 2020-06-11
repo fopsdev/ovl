@@ -1,10 +1,10 @@
-import { overmind } from "../.."
 import { T } from "../../../../ovl/src/global/globals"
 import { ValidateFieldType } from "../../../../ovl/src/library/forms/actions"
 import {
   Mandatory,
   MinLength,
 } from "../../../../ovl/src/library/forms/validators"
+import { OvlState, OvlActions, OvlEffects } from "../../../../ovl/src"
 
 export const FormValidate = (
   value: ValidateFieldType,

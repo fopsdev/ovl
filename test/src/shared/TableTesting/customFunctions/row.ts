@@ -1,4 +1,3 @@
-import { overmind } from "../../.."
 import { SnackAdd } from "../../../../../ovl/src/library/helpers"
 import {
   RowStatus,
@@ -8,6 +7,7 @@ import {
   TableDef,
 } from "../../../../../ovl/src/library/Table/Table"
 import { TableTesting } from "../state"
+import { OvlState, OvlEffects, OvlActions } from "../../../../../ovl/src"
 
 export const FormCanEdit = async (
   rowKey: string,

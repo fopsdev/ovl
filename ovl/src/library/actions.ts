@@ -1,4 +1,3 @@
-import { Action, OvlAction } from "overmind"
 import { ResultType, DialogState } from "./Dialog/Dialog"
 import {
   TableSetViewTab,
@@ -34,6 +33,7 @@ import {
   TableSelectColumnFilter,
 } from "./Table/actions"
 import { dialogAfterClose } from "./Dialog/actions"
+import { OvlAction } from ".."
 export {
   TableSetViewTab,
   TableRefresh,
@@ -118,12 +118,12 @@ export const DialogResult = () => {
   })
 }
 
-export const SetIndicatorOpen: Action = ({ state }) => {
+export const SetIndicatorOpen: OvlAction = ({ state }) => {
   state.ovl.libState.indicator.refCounter++
   state.ovl.libState.indicator.open = true
 }
 
-export const SetIndicatorClose: Action = ({ state }) => {
+export const SetIndicatorClose: OvlAction = ({ state }) => {
   state.ovl.libState.indicator.refCounter--
   if (state.ovl.libState.indicator.refCounter < 1) {
     state.ovl.libState.indicator.open = false

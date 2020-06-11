@@ -1,6 +1,6 @@
-import { overmind } from "../../.."
 import { getTextSort } from "../../../../../ovl/src/library/Table/helpers"
 import { TableTesting, TblTableTesting } from "../state"
+import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
 
 export const Form_alphaThenMemo_Sort = (
   a: string,

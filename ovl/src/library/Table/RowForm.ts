@@ -6,7 +6,7 @@ import {
   ViewHeaderCellClass,
   ViewRowCellClass,
 } from "../../global/hooks"
-import { customFunctions, overmind } from "../../index"
+import { customFunctions, ovl } from "../../index"
 import { OvlFormElement } from "../../library/forms/OvlFormElement"
 import { CellClass } from "./Row"
 import { DisplayMode, EditRowDef } from "./Table"

@@ -64,7 +64,7 @@ export class TableRowControl extends OvlBaseElement {
       [key: string]: RowControlAllAction
     } = await createDynamicRowFunctions(def, this.nav.data, key, false)
     let rowControlButtons
-    console.log(this.trackedTree.pathDependencies)
+
     let firstBorder = "border-top:none;border-top-left-radius:0px;"
     let middleBorder = "border-top:none;"
     let lastBorder = "border-top:none;border-top-right-radius:0px;"

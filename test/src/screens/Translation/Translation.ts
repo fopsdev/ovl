@@ -1,7 +1,8 @@
 import { html } from "../../../../ovl/node_modules/lit-html"
-import { overmind } from "../.."
+
 import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { T } from "../../../../ovl/src/global/globals"
+import { OvlState } from "../../../../ovl/src"
 
 export class CompTranslation extends OvlBaseElement {
   init() {

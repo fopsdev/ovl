@@ -1,7 +1,7 @@
 import { html } from "lit-html"
 import { resolvePath } from "../../global/globals"
 import { FieldRowCellSelectedHandler, FormStatus } from "../../global/hooks"
-import { customFunctions, overmind } from "../../index"
+import { customFunctions, ovl } from "../../index"
 import { SnackAdd } from "../helpers"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { NavProps } from "./RowControl"

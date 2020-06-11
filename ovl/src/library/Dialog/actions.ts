@@ -1,6 +1,5 @@
-import { Action, OvlAction } from "overmind"
 import { OpenDialogState, ResultType } from "./Dialog"
-import { Screen } from "../../index"
+import { Screen, OvlAction } from "../../index"
 
 let currentScreen: Screen = undefined
 export let dialogAfterClose = {

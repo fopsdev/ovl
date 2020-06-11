@@ -5,6 +5,7 @@
     "allowJs": true,
     "target": "es6",
     "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
 
     "moduleResolution": "node",
     "plugins": [
@@ -15,10 +16,10 @@
     ]
   },
   "exclude": [
-    "_patched_node_modules",
-    "updateCheck",
-    "node_modules",
-    "dist",
+    "**/_patched_node_modules",
+    "**/updateCheck",
+    "**/node_modules",
+    "**/dist",
     "**/*.js"
   ]
 }

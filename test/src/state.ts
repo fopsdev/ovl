@@ -155,7 +155,7 @@ type Portal = {
   partner: PartnerState
   pics: PicsState
   tables: { translation: TableData; audit: TableData }
-  testtables: { [key: string]: TableData; lookups: any }
+  testtables: { tableTesting: TableData; timeentries: TableData; lookups: any }
 }
 
 export type CustomFormType =
@@ -188,6 +188,15 @@ let tableTesting: TableData = {
     U_Date: { type: "date" },
   },
 }
+
+let timeentries: TableData = {
+  data: {},
+  schema: {},
+  tableDef: {
+    mobiletimerecording1: tblMobileTimeRecording,
+  },
+}
+
 let lookups = {
   U_ItemCode: <ListFnReturnValue>{
     data: undefined,
@@ -208,7 +217,7 @@ let lookups = {
   },
 }
 
-let testtables = { tableTesting, lookups }
+let testtables = { tableTesting, timeentries, lookups }
 
 export let portalState: Portal = {
   user: undefined,

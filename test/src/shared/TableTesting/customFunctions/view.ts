@@ -1,4 +1,3 @@
-import { overmind } from "../../.."
 import {
   html,
   render,
@@ -6,6 +5,7 @@ import {
 } from "../../../../../ovl/node_modules/lit-html/lit-html"
 import { ViewRendererResult } from "../../../../../ovl/src/library/Table/RowDetailView"
 import { ViewRowDef } from "../../../../../ovl/src/library/Table/Table"
+import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
 
 export const ViewCustom_tab1_Render = (row: ViewRowDef): ViewRendererResult => {
   let res: ViewRendererResult = {

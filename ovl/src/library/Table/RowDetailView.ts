@@ -1,6 +1,6 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { customFunctions, overmind } from "../.."
+import { customFunctions, ovl } from "../.."
 import { api, resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,

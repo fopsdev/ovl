@@ -1,6 +1,6 @@
-import { overmind } from "../../../../../ovl/src"
 import { TableData, TableDef } from "../../../../../ovl/src/library/Table/Table"
 import { TableTesting } from "../state"
+import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
 
 export const Form_alphaStartsWithA_Filter = (
   def: TableDef,

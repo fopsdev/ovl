@@ -1,4 +1,3 @@
-import { overmind } from "../../.."
 import {
   html,
   TemplateResult,

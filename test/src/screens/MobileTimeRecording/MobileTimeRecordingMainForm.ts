@@ -5,7 +5,7 @@ import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
 import { ovltemp, N, api, uuidv4 } from "../../../../ovl/src/global/globals"
 import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
 import { Field_U_TypeId_GetList } from "./MobileTimeRecordingDetail/customFunctions"
-import { overmind } from "../../../../ovl/src"
+
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { displayFormats } from "../../../../ovl/src/global/displayFormats"
 import {
@@ -17,6 +17,7 @@ import {
   tblMobileTimeRecording,
   TableMobileTimeRecording,
 } from "./MobileTimeRecordingDetail/state"
+import { ovl } from "../../../../ovl/src"
 export class CompMobileTimeEntry extends OvlFormElement {
   init() {
     this.screen = "MobileTimeEntry"

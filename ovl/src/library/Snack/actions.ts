@@ -1,9 +1,9 @@
-import { Action, OvlAction } from "overmind"
 import {
   SnackAddState,
   RemoveSnack as StartRemoveSnack,
   SnackId,
 } from "./Snack"
+import { OvlAction } from "../.."
 
 export const RemoveSnack: OvlAction<string> = ({ state }, value) => {
   // if not already got added just remove from state (there are max. 3 snacks display so it could be that its not even displayed)
@@ -45,7 +45,7 @@ export const ClearSnack: OvlAction<string> = ({ state, actions }, value) => {
   }
 }
 
-export const PlaceSnack: Action = ({ state }) => {
+export const PlaceSnack: OvlAction = ({ state }) => {
   let snacks = state.ovl.libState.snacks
   if (snacks) {
     let filteredAndSortedSnacks = Object.keys(snacks)

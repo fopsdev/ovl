@@ -1,5 +1,5 @@
 import { html, TemplateResult } from "lit-html"
-import { customFunctions, overmind } from "../.."
+import { customFunctions, ovl } from "../.."
 import { resolvePath, T } from "../../global/globals"
 import { FormCustomColumnFn } from "../../global/hooks"
 import { overlayToRender } from "../../library/Overlay/Overlay"
