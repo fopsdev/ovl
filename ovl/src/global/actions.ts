@@ -1,5 +1,11 @@
-import { Action, AsyncAction } from "overmind"
-import { customFunctions, overmind, Screen } from "../index"
+import {
+  customFunctions,
+  Screen,
+  ovl,
+  OvlState,
+  OvlAction,
+  OvlActions,
+} from "../index"
 import { Init, OvlConfig } from "../init"
 import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
@@ -21,11 +27,11 @@ import {
 import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 
-export const SetLastScrollPosition: Action = ({ state }) => {
+export const SetLastScrollPosition: OvlAction = ({ state }) => {
   setLastScrollPosition(state)
 }
 
-export const NavigateTo: AsyncAction<Screen> = async (
+export const NavigateTo: OvlAction<Screen> = async (
   { state, actions, effects },
   value
 ) => {
@@ -92,11 +98,7 @@ export const NavigateTo: AsyncAction<Screen> = async (
   }
 }
 
-export const NavigateBack: AsyncAction = async ({
-  state,
-  actions,
-  effects,
-}) => {
+export const NavigateBack: OvlAction = async ({ state, actions, effects }) => {
   // if (
   //   !(
   //     state.ovl.libState.overlay.open ||
@@ -173,8 +175,8 @@ export const NavigateBack: AsyncAction = async ({
 }
 
 const SetClosingScreen = (
-  actions: typeof overmind.actions,
-  state: typeof overmind.state,
+  actions: OvlActions,
+  state: OvlState,
   value: string
 ) => {
   if (value !== undefined) {
@@ -191,10 +193,7 @@ const SetClosingScreen = (
   }
 }
 
-const SetVisibleScreen = async (
-  state: typeof overmind.state,
-  value: string
-) => {
+const SetVisibleScreen = async (state: OvlState, value: string) => {
   if (!state.ovl.screens.screenState) {
     state.ovl.screens.screenState = {}
   }
@@ -207,7 +206,10 @@ const SetVisibleScreen = async (
   }
 }
 
-export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
+export const SetVisibleFalse: OvlAction<string> = (
+  { state, actions },
+  value
+) => {
   if (!state.ovl.screens.screenState) {
     state.ovl.screens.screenState = {}
   }
@@ -237,7 +239,7 @@ export const SetVisibleFalse: Action<string> = ({ state, actions }, value) => {
   // saveState()
 }
 
-export const SetLanguage: AsyncAction<string> = async (
+export const SetLanguage: OvlAction<string> = async (
   { state, actions, effects },
   value
 ) => {
@@ -256,23 +258,23 @@ export const SetLanguage: AsyncAction<string> = async (
   localStorage.setItem("PortalLanguage", res.data.lang)
 }
 
-export const SetTableNeedsRebuild: Action<boolean> = ({ state }, value) => {
+export const SetTableNeedsRebuild: OvlAction<boolean> = ({ state }, value) => {
   state.ovl.uiState.tableNeedsRebuild = value
 }
 
-export const Logout: AsyncAction = async ({ state, actions }) => {
+export const Logout: OvlAction = async ({ state, actions }) => {
   if ((await DialogOkCancel("Wollen Sie sich wirklich abmelden?", 1)) === 1) {
     state.ovl.user.token = ""
     logout()
   }
 }
 
-export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
+export const PrepareApp: OvlAction = async ({ actions, state, effects }) => {
   state.ovl.uiState.isReady = false
   state.ovl.libState.indicator.refCounter = 0
 
   // most of the following code is necessary because we still have some component state which is not handled by overmind
-  // lession learned: use overmind.state wherever possible...
+  // lession learned: use ovl.state wherever possible...
   if (state.ovl.libState.overlay2.open) {
     await actions.ovl.internal.CloseOverlay2()
   }
@@ -308,7 +310,7 @@ export const PrepareApp: AsyncAction = async ({ actions, state, effects }) => {
   }
 }
 
-export const GetFile: AsyncAction<{
+export const GetFile: OvlAction<{
   cat: string
   id1: string
   id2?: string
@@ -364,7 +366,7 @@ export const GetFile: AsyncAction<{
   }
 }
 
-export const RehydrateAndUpdateApp: AsyncAction = async ({
+export const RehydrateAndUpdateApp: OvlAction = async ({
   actions,
   state,
   effects,
@@ -404,13 +406,13 @@ export const RehydrateAndUpdateApp: AsyncAction = async ({
   }
 }
 
-export const InitApp: AsyncAction<Init> = async (
+export const InitApp: OvlAction<Init> = async (
   { actions, state, effects },
   value
 ) => {
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function (e) {
-    overmind.actions.ovl.navigation.NavigateBack()
+    ovl.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
 

@@ -1,6 +1,6 @@
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { customFunctions, overmind } from "../../.."
+import { customFunctions, ovl } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
 import { OvlBaseElement } from "../../OvlBaseElement"
@@ -54,7 +54,7 @@ export class OvlOption extends OvlBaseElement {
       GetRowFromFormState(this.formState),
       this.state,
       this.actions,
-      overmind.effects
+      ovl.effects
     ).data
 
     let customRowCell = this.field.customRowCellClass

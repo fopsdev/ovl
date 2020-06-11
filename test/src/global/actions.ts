@@ -1,5 +1,4 @@
-import { Action, AsyncAction } from "../../../ovl/node_modules/overmind"
-import { Screen, customFunctions } from "../../../ovl/src/index"
+import { Screen, customFunctions, OvlAction } from "../../../ovl/src/index"
 
 import { api, T, uuidv4 } from "../../../ovl/src/global/globals"
 import {
@@ -21,7 +20,7 @@ import {
 } from "../../../ovl/src/library/helpers"
 import { AddSnack } from "../../../ovl/src/library/Snack/actions"
 
-export const Login: AsyncAction<FormState> = async (
+export const Login: OvlAction<FormState> = async (
   { state, actions, effects },
   value
 ) => {
@@ -65,11 +64,11 @@ export const Login: AsyncAction<FormState> = async (
         lang: state.ovl.language.language,
         lookupType: "initial",
       })
-      state.testtables.lookups.U_ItemCode = res.data.item
-      state.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
+      state.portal.testtables.lookups.U_ItemCode = res.data.item
+      state.portal.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
 
-      state.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
-      state.testtables.lookups.ProjectTypeId = res.data.timeProjects
+      state.portal.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
+      state.portal.testtables.lookups.ProjectTypeId = res.data.timeProjects
 
       if (state.ovl.screens.nav.screensHistory.length > 1) {
         actions.ovl.navigation.NavigateBack()
@@ -97,7 +96,7 @@ export const Login: AsyncAction<FormState> = async (
   }
 }
 
-export const ForgotPw: AsyncAction<FormState> = async (
+export const ForgotPw: OvlAction<FormState> = async (
   { state, actions, effects },
   value
 ) => {
@@ -114,7 +113,7 @@ export const ForgotPw: AsyncAction<FormState> = async (
   }
 }
 
-export const HandleAdditionalLanguageResult: AsyncAction<any> = async (
+export const HandleAdditionalLanguageResult: OvlAction<any> = async (
   { state },
   value
 ) => {
@@ -130,7 +129,7 @@ export const HandleAdditionalLanguageResult: AsyncAction<any> = async (
   state.portal.partner.salesContact = value.sales
 }
 
-export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
+export const TogglePDFPopup: OvlAction<TogglePDFPopupState> = (_, value) => {
   if (value.obj.activeFilePopup === value.key) {
     value.obj.activeFilePopup = ""
   } else {
@@ -138,11 +137,7 @@ export const TogglePDFPopup: Action<TogglePDFPopupState> = (_, value) => {
   }
 }
 
-export const HandleRefresh: AsyncAction = async ({
-  state,
-  actions,
-  effects,
-}) => {
+export const HandleRefresh: OvlAction = async ({ state, actions, effects }) => {
   let snackId = uuidv4()
   SnackTrackedAdd("Daten werden aufgefrischt", "Success", snackId)
 
@@ -184,7 +179,7 @@ export const HandleRefresh: AsyncAction = async ({
   }
 }
 
-export const CustomInit: AsyncAction = async ({ actions, state }, _) => {
+export const CustomInit: OvlAction = async ({ actions, state }, _) => {
   if (state.ovl.user.token) {
     return
   }

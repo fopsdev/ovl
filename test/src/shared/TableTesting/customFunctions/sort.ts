@@ -6,9 +6,9 @@ export const Form_alphaThenMemo_Sort = (
   a: string,
   b: string,
   data: TblTableTesting,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ): number => {
   let rowA: TableTesting = data[a]
   let rowB: TableTesting = data[b]
@@ -24,9 +24,9 @@ export const Form_memoThenAlpha_Sort = (
   a: string,
   b: string,
   data: TblTableTesting,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ): number => {
   let rowA: TableTesting = data[a]
   let rowB: TableTesting = data[b]
@@ -42,9 +42,9 @@ export const Form_onlyTest_Sort = (
   a: string,
   b: string,
   data: TblTableTesting,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ): number => {
   let rowA: TableTesting = data[a]
   if (rowA.U_Alpha.toLocaleLowerCase().indexOf("test") > -1) {

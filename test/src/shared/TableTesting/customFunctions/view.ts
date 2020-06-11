@@ -17,9 +17,9 @@ export const ViewCustom_tab1_Render = (row: ViewRowDef): ViewRendererResult => {
 }
 export const ViewAfterRender = async (
   view: ViewRowDef,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log(
     "hello from tabletesting view afterrender hook. you may do some crazy stuff in here. why not add a chart?"
@@ -49,18 +49,18 @@ export const ViewAfterRender = async (
 
 export const ViewShow = async (
   view: ViewRowDef,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log("hello from tabletesting view show hook.")
 }
 
 export const ViewCustomTab_TabX_Render = async (
   view: ViewRowDef,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ): Promise<TemplateResult> => {
   return html`<b>I'm a custom Tab!</b> Yeah!`
 }

@@ -1,10 +1,10 @@
-import { Action } from "../../../../ovl/node_modules/overmind"
 import { T } from "../../../../ovl/src/global/globals"
+import { OvlAction } from "../../../../ovl/src"
 
 type OrderFeedbackState = {
   message: string
 }
-export const PreparePositiveFeedback: Action<OrderFeedbackState> = (
+export const PreparePositiveFeedback: OvlAction<OrderFeedbackState> = (
   { state },
   value
 ) => {
@@ -22,7 +22,7 @@ export const PreparePositiveFeedback: Action<OrderFeedbackState> = (
   state.ovl.screens.screens.Feedback.type = "OrderPositive"
 }
 
-export const PrepareNegativeFeedback: Action<OrderFeedbackState> = (
+export const PrepareNegativeFeedback: OvlAction<OrderFeedbackState> = (
   { state },
   value
 ) => {
@@ -40,7 +40,7 @@ export const PrepareNegativeFeedback: Action<OrderFeedbackState> = (
   state.ovl.screens.screens.Feedback.type = "OrderNegative"
 }
 
-export const PrepareDeliveryDateFeedback: Action<OrderFeedbackState> = (
+export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
   { state },
   value
 ) => {
@@ -58,6 +58,6 @@ export const PrepareDeliveryDateFeedback: Action<OrderFeedbackState> = (
   state.ovl.screens.screens.Feedback.type = "DeliveryDate"
 }
 
-export const SelectOrder: Action<string> = ({ state }, value) => {
+export const SelectOrder: OvlAction<string> = ({ state }, value) => {
   state.ovl.screens.screens.Orderdetail.selectedOrder = value
 }

@@ -1,4 +1,4 @@
-import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
+import { Action, OvlAction } from "../../../../ovl/node_modules/overmind"
 import {
   ValidateFieldType,
   FormState,
@@ -12,7 +12,7 @@ import { T, api } from "../../../../ovl/src/global/globals"
 import { postRequest } from "../../../../ovl/src/effects"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
 
-export const SaveSettings: AsyncAction<FormState> = async (
+export const SaveSettings: OvlAction<FormState> = async (
   { state, actions, effects },
   value
 ) => {

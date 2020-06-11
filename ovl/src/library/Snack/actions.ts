@@ -1,11 +1,11 @@
-import { Action, AsyncAction } from "overmind"
+import { Action, OvlAction } from "overmind"
 import {
   SnackAddState,
   RemoveSnack as StartRemoveSnack,
   SnackId,
 } from "./Snack"
 
-export const RemoveSnack: Action<string> = ({ state }, value) => {
+export const RemoveSnack: OvlAction<string> = ({ state }, value) => {
   // if not already got added just remove from state (there are max. 3 snacks display so it could be that its not even displayed)
   let key = "ovlsnack" + value
   if (state.ovl.libState.snacks[key].status === "queued") {
@@ -16,7 +16,7 @@ export const RemoveSnack: Action<string> = ({ state }, value) => {
   StartRemoveSnack(el)
 }
 
-export const ClearSnack: Action<string> = ({ state, actions }, value) => {
+export const ClearSnack: OvlAction<string> = ({ state, actions }, value) => {
   delete state.ovl.libState.snacks[value]
 
   let el = document.getElementById(value)
@@ -98,7 +98,10 @@ export const PlaceSnack: Action = ({ state }) => {
   }
 }
 
-export const AddSnack: Action<SnackAddState> = ({ state, actions }, value) => {
+export const AddSnack: OvlAction<SnackAddState> = (
+  { state, actions },
+  value
+) => {
   let id = SnackId.id++
   let key = value.key
   if (!key) {

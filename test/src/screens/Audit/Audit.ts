@@ -1,7 +1,7 @@
-import { overmind } from "../.."
 import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { html } from "../../../../ovl/node_modules/lit-html"
 import { T } from "../../../../ovl/src/global/globals"
+import { OvlState } from "../../../../ovl/src"
 
 export class OvlAudit extends OvlBaseElement {
   init() {
@@ -21,7 +21,7 @@ export class OvlAudit extends OvlBaseElement {
         <div class="fd-panel__body fd-has-padding-base fd-has-margin-base">
           <ovl-table
             class="fd-table"
-            .props=${(state: typeof overmind.state) => {
+            .props=${(state: OvlState) => {
               return {
                 def: state.portal.tables.audit.tableDef.audit,
                 data: state.portal.tables.audit,

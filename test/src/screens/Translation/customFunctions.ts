@@ -10,27 +10,27 @@ import { T } from "../../../../ovl/src/global/globals"
 
 export const FormShow = async (
   formState: FormState,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log("hello from translation formshow hook")
 }
 
 export const FormAfterRender = async (
   formState: FormState,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log("hello from  translation formafterrender hook.")
 }
 
 export const FormValidate = async (
   value: ValidateFieldType,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let def: TableDef = state.portal.tables.translation.tableDef.translation
   switch (value.fieldId as TblTranslationColumn) {
@@ -58,9 +58,9 @@ export const FormAfterSave = async (
     data,
     res,
   }: { key: string; def: TableDef; data: TableData; res: any },
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   await actions.ovl.internal.SetLanguage(state.ovl.language.language)
 }
@@ -72,9 +72,9 @@ export const FormAfterDelete = async (
     data,
     res,
   }: { key: string; def: TableDef; data: TableData; res: any },
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   await actions.ovl.internal.SetLanguage(state.ovl.language.language)
 }

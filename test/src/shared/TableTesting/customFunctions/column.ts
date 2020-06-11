@@ -5,9 +5,9 @@ export const FormCustomColumnFn_ValidValues = async (
   fnName: string,
   coumnKey: string,
   def: TableDef,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log(
     "custom column function 'ValidValues' startet (nothing implemented)"

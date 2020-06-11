@@ -17,6 +17,7 @@ import {
   ColumnDisplayDef,
 } from "../../../../../ovl/src/library/Table/Table"
 import { TableTesting } from "../state"
+import { OvlState } from "../../../../../ovl/src"
 
 export const Edit_U_Memo_GetLabelAndValueRender = (
   field: Field,
@@ -49,7 +50,7 @@ export const Edit_U_Memo_GetLabelAndValueRender = (
 export const ViewGetCaptionRender = (
   caption: string,
   row: ViewRowDef,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   return html`Custom Caption ${caption}`
 }
@@ -58,7 +59,7 @@ export const EditGetCaptionRender = (
   caption: string,
   row: EditRowDef,
   mode: EditMode,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   return html`Custom Caption ${caption}`
 }
@@ -68,7 +69,7 @@ export const Field_U_ItemCode_GetLabelRender = (
   caption: string,
   align: string,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   if (displayMode === "Detailview") {
     return html`Name(Code)`
@@ -89,7 +90,7 @@ export const Field_U_ItemCode_GetValueRender = (
   columnsDef: { [key: string]: ColumnDisplayDef },
   align: string,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   let itemCodeValue = getDisplayValue(
     "U_ItemCode",
@@ -110,7 +111,7 @@ export const Field_MobileSummary_GetLabelRender = (
   caption: string,
   align: string,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   return html`${caption}(has more details...)</b>`
 }
@@ -123,7 +124,7 @@ export const Field_U_Alpha_GetValueRender = (
   columnsDef: { [key: string]: ColumnDisplayDef },
   align: string,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   let u_alpha = row.U_Alpha
   let additionalComment = ""
@@ -145,7 +146,7 @@ export const Field_MobileSummary_GetValueRender = (
   columnsDef: { [key: string]: ColumnDisplayDef },
   align: string,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   let u_AlphaValue = getDisplayValue(
     "U_Alpha",
@@ -175,7 +176,7 @@ export const ViewRowCellClass = (
   row: TableTesting,
   isMobile: boolean,
   displayMode: DisplayMode,
-  state: typeof overmind.state,
+  state: OvlState,
   formState?: FormState
 ): { [key in keyof TableTesting]?: CellClass } => {
   let val
@@ -201,7 +202,7 @@ export const Field_U_Decimal_RowCellSelectedHandler = async (
   data: TableData,
   rowKey: string,
   displayMode: DisplayMode,
-  state: typeof overmind.state,
+  state: OvlState,
   formState?: FormState
 ): Promise<boolean> => {
   // for this sample we just wanna make those cells clickable which has a specific custom class (see TableRowCellClass hook)
@@ -230,7 +231,7 @@ export const ViewHeaderCellClass = (
   def: TableDef,
   isMobile: boolean,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: OvlState
 ): { [key in keyof TableTesting]?: CellClass } => {
   return {
     U_ItemCode: {
@@ -244,7 +245,7 @@ export const Field_U_ItemCode_HeaderCellSelectedHandler = async (
   classList: DOMTokenList,
   def: TableDef,
   displayMode: DisplayMode,
-  state: typeof overmind.state
+  state: OvlState
 ): Promise<boolean> => {
   if (classList.contains("testheadercell")) {
     await DialogOk("Header U_ItemCode selected!")

@@ -38,37 +38,35 @@ type User = {
 
 let user: User = { token: "" }
 
-export const state = {
-  ovl: {
-    user,
-    language: {
-      language: "",
-      translations,
-      showTranslationKeys: false,
-    },
-    uiState: {
-      hasOSReducedMotion: false,
-      isDemo: false,
-      isMobile: false,
-      isTouch: false,
-      isIOS: false,
-      isReady: false,
-      stateSavedReason: "",
-      tableNeedsRebuild: false,
-    },
-    apiUrl,
-    libState: {
-      dialog,
-      snacks,
-      indicator,
-      overlay,
-      overlay2,
-    },
-    screens: {
-      screens: screens,
-      nav,
-      screenState: undefined,
-    },
-    forms,
+export const ovlState = {
+  user,
+  language: {
+    language: "",
+    translations,
+    showTranslationKeys: false,
   },
+  uiState: {
+    hasOSReducedMotion: false,
+    isDemo: false,
+    isMobile: false,
+    isTouch: false,
+    isIOS: false,
+    isReady: false,
+    stateSavedReason: "",
+    tableNeedsRebuild: false,
+  },
+  apiUrl,
+  libState: {
+    dialog,
+    snacks,
+    indicator,
+    overlay,
+    overlay2,
+  },
+  screens: {
+    screens: screens,
+    nav,
+    screenState: undefined,
+  },
+  forms,
 }

@@ -1,4 +1,9 @@
-import { overmind, TableDefIds } from "../../../../ovl/src/index"
+import {
+  TableDefIds,
+  OvlState,
+  OvlActions,
+  OvlEffects,
+} from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
@@ -6,21 +11,21 @@ import { getDateValue } from "../../../../ovl/src/global/globals"
 
 /* this is for the mobiletimeentryform screen */
 export const ScreenShow = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log("hello from ScreenShow")
 }
 
 /* main form functions */
 export const ScreenRefresh = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let defId: TableDefIds = "mobiletimerecording1"
-  let data = state.testtables.timeentries
+  let data = state.portal.testtables.timeentries
   await actions.ovl.table.TableRefresh({
     defId,
     data,
@@ -30,9 +35,9 @@ export const ScreenRefresh = async (
 
 let initialised = false
 export const ScreenNavigateIn = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   if (!initialised) {
     let dt = new Date()
@@ -51,7 +56,7 @@ export const ScreenNavigateIn = async (
       fields,
     }
     actions.ovl.form.InitForm(initForm)
-    await actions.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+    await actions.portal.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
       {
         selected: convDate,
       }
@@ -61,9 +66,9 @@ export const ScreenNavigateIn = async (
 }
 
 export const ScreenNavigateOut = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   // if ((await DialogOkCancel("Test: Wirklich raus hier?", 1)) === 2) {
   //   return Promise.resolve("Navigation abgebrochen durch User")

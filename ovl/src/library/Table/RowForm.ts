@@ -170,7 +170,7 @@ export class TableRowForm extends OvlFormElement {
             this.rowData.data,
             this.state,
             this.actions,
-            overmind.effects
+            ovl.effects
           )
         }
         let insertMode = this.rowData.tableDef.database.dbInsertMode

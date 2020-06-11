@@ -301,7 +301,7 @@ export class TableRowDetailView extends OvlBaseElement {
             this.rowData,
             this.state,
             this.actions,
-            overmind.effects
+            ovl.effects
           )
         }
       }
@@ -486,7 +486,7 @@ export class TableRowDetailView extends OvlBaseElement {
             }
           }
         } else {
-          // let res = await overmind.effects.getRequest(
+          // let res = await ovl.effects.getRequest(
           //   api.url + "assets/get",
           //   params,
           //   true
@@ -556,7 +556,7 @@ export class TableRowDetailView extends OvlBaseElement {
               // get data path
               //@ts-ignore
               let params = entry.target.dataLinkObject
-              let res = await overmind.effects.getRequest(
+              let res = await ovl.effects.getRequest(
                 api.url + "assets/get",
                 params,
                 true
@@ -639,17 +639,12 @@ export class TableRowDetailView extends OvlBaseElement {
     }
   }
   callFormAfterRender() {
-    this.formAfterRenderFn(
-      this.rowData,
-      this.state,
-      this.actions,
-      overmind.effects
-    )
+    this.formAfterRenderFn(this.rowData, this.state, this.actions, ovl.effects)
   }
 
   callFormShow() {
     setTimeout(() => {
-      this.formShowFn(this.rowData, this.state, this.actions, overmind.effects)
+      this.formShowFn(this.rowData, this.state, this.actions, ovl.effects)
     }, 200)
   }
 }

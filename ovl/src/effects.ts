@@ -1,8 +1,9 @@
 import { T } from "./global/globals"
-import { overmind } from "./index"
+
 import { OvlConfig } from "./init"
 import { SnackAdd } from "./library/helpers"
 import { SnackType } from "./library/Snack/Snack"
+import { ovl } from "."
 
 export let lastOfflineMsg
 
@@ -35,7 +36,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
   let snackMessage = ""
   let snackMessageType: SnackType = "Information"
   try {
-    overmind.actions.ovl.indicator.SetIndicatorOpen()
+    ovl.actions.ovl.indicator.SetIndicatorOpen()
     // Create request to api service
 
     let headers = {}
@@ -43,9 +44,9 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
       let contentType = "application/json"
       headers["Content-Type"] = contentType
     }
-    let user = overmind.state.ovl.user
+    let user = ovl.state.ovl.user
     if (user && user.token) {
-      headers["Authorization"] = "Bearer " + overmind.state.ovl.user.token
+      headers["Authorization"] = "Bearer " + ovl.state.ovl.user.token
     }
     let reqOptions = {
       method,
@@ -86,7 +87,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
       // unauthorised
 
       snackMessage = T("AppPleaseRelogin")
-      overmind.actions.ovl.navigation.NavigateTo("Login")
+      ovl.actions.ovl.navigation.NavigateTo("Login")
 
       return
     } else if (req.status === 404) {
@@ -172,7 +173,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
       type: "",
     }
   } finally {
-    overmind.actions.ovl.indicator.SetIndicatorClose()
+    ovl.actions.ovl.indicator.SetIndicatorClose()
     if (snackMessage) {
       SnackAdd(snackMessage, snackMessageType)
     }
@@ -184,7 +185,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
 //   let snackMessage = ""
 //   let snackMessageType: SnackType = "Information"
 //   try {
-//     overmind.actions.ovl.indicator.SetIndicatorOpen()
+//     ovl.actions.ovl.indicator.SetIndicatorOpen()
 //     // Create request to api service
 
 //     var curl = new URL(url)
@@ -194,9 +195,9 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
 
 //     let headers = {}
 //     let method = "GET"
-//     let user = overmind.state.ovl.user
+//     let user = ovl.state.ovl.user
 //     if (user && user.token) {
-//       headers["Authorization"] = "Bearer " + overmind.state.ovl.user.token
+//       headers["Authorization"] = "Bearer " + ovl.state.ovl.user.token
 //     }
 //     // let cache:RequestCache = "default"
 //     // if (isBlob) {
@@ -211,7 +212,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
 //       // unauthorised
 
 //       snackMessage = T("AppPleaseRelogin")
-//       overmind.actions.ovl.navigation.NavigateTo("Login")
+//       ovl.actions.ovl.navigation.NavigateTo("Login")
 
 //       return
 //     } else if (req.status === 404) {
@@ -291,7 +292,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
 //       type: "",
 //     }
 //   } finally {
-//     overmind.actions.ovl.indicator.SetIndicatorClose()
+//     ovl.actions.ovl.indicator.SetIndicatorClose()
 //     if (snackMessage) {
 //       SnackAdd(snackMessage, snackMessageType)
 //     }

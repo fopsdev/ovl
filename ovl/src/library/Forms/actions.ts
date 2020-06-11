@@ -1,11 +1,10 @@
-import { Action } from "overmind"
 import {
   getDateValue,
   getDecimalValue,
   resolvePath,
 } from "../../global/globals"
 import { FieldGetList, FormChanged, FormValidate } from "../../global/hooks"
-import { customFunctions, FormType } from "../../index"
+import { customFunctions, FormType, OvlAction } from "../../index"
 import { ColumnAlign, ListFnReturnValue } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
@@ -84,14 +83,14 @@ export type InitForm = {
 
 export type FormsState = { [key in FormType]: FormStatePerInstance }
 
-export const ResetForm: Action<FormState> = (_, value) => {
+export const ResetForm: OvlAction<FormState> = (_, value) => {
   value.dirty = false
   value.fields = JSON.parse(JSON.stringify(value.initFields))
   value.valid = true
   value.lastTouchedField = undefined
 }
 
-export const SetFormUndirty: Action<FormState> = (_, value) => {
+export const SetFormUndirty: OvlAction<FormState> = (_, value) => {
   value.dirty = false
   Object.keys(value.fields).forEach((e) => {
     let field = value.fields[e]
@@ -99,7 +98,7 @@ export const SetFormUndirty: Action<FormState> = (_, value) => {
   })
 }
 
-export const ResetFormAfterNavigation: Action<FormState> = (
+export const ResetFormAfterNavigation: OvlAction<FormState> = (
   { state },
   value
 ) => {
@@ -107,7 +106,7 @@ export const ResetFormAfterNavigation: Action<FormState> = (
   state.ovl.screens.nav.formIdToReset = value.formId
 }
 
-export const ValidateDataType: Action<ValidateFieldType> = (_, value) => {
+export const ValidateDataType: OvlAction<ValidateFieldType> = (_, value) => {
   let validatorId = "DataType"
   let field = value.formState.fields[value.fieldId]
   let type = field.type
@@ -265,7 +264,7 @@ export const ValidateDataType: Action<ValidateFieldType> = (_, value) => {
   }
 }
 
-export const ValidateSchema: Action<ValidateFieldType> = (_, value) => {
+export const ValidateSchema: OvlAction<ValidateFieldType> = (_, value) => {
   if (value.formState.schema) {
     let validatorId = "Schema"
     let field = value.formState.fields[value.fieldId]
@@ -298,7 +297,7 @@ export const ValidateSchema: Action<ValidateFieldType> = (_, value) => {
   }
 }
 
-export const ValidateList: Action<ValidateFieldType> = (
+export const ValidateList: OvlAction<ValidateFieldType> = (
   { state, actions, effects },
   value
 ) => {
@@ -340,7 +339,7 @@ export const ValidateList: Action<ValidateFieldType> = (
   }
 }
 
-export const ValidateForm: Action<FormState> = (
+export const ValidateForm: OvlAction<FormState> = (
   { actions, state, effects },
   value
 ) => {
@@ -422,7 +421,7 @@ export const ValidateForm: Action<FormState> = (
   actions.ovl.internal.SetFormValid(value)
 }
 
-export const InitForm: Action<InitForm> = (
+export const InitForm: OvlAction<InitForm> = (
   { state, actions, effects },
   value
 ) => {
@@ -526,7 +525,7 @@ export const InitForm: Action<InitForm> = (
 //   instanceId: string
 // }
 
-// export const RemoveForm: Action<RemoveForm> = ({ state }, value) => {
+// export const RemoveForm: OvlAction<RemoveForm> = ({ state }, value) => {
 //   let formInstanceList = state.ovl.forms[value.formType]
 //   if (formInstanceList) {
 //     delete formInstanceList[value.instanceId]
@@ -561,12 +560,12 @@ export type TouchField = {
   fieldId: string
 }
 
-export const TouchField: Action<TouchField> = (_, value) => {
+export const TouchField: OvlAction<TouchField> = (_, value) => {
   value.formState.fields[value.fieldId].watched = true
   value.formState.lastTouchedField = value.fieldId
 }
 
-export const SetField: Action<ChangeField> = ({ actions }, value) => {
+export const SetField: OvlAction<ChangeField> = ({ actions }, value) => {
   // purpose of setfield is to use it in custom chagedactions to set other fields values without triggering the full validation (just the warning)
   let field = value.formState.fields[value.fieldId]
   field.dirty = false
@@ -574,7 +573,7 @@ export const SetField: Action<ChangeField> = ({ actions }, value) => {
   actions.ovl.internal.ChangeField(value)
 }
 
-export const ChangeField: Action<ChangeField> = (
+export const ChangeField: OvlAction<ChangeField> = (
   { actions, state, effects },
   value
 ) => {
@@ -666,7 +665,7 @@ export const ChangeField: Action<ChangeField> = (
   actions.ovl.internal.SetFormValid(value.formState)
 }
 
-export const SetFormValid: Action<FormState> = ({ actions }, value) => {
+export const SetFormValid: OvlAction<FormState> = ({ actions }, value) => {
   value.valid = !Object.keys(value.fields).some(
     (k) => value.fields[k].validationResult.valid === false
   )

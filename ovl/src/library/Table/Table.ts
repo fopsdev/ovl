@@ -8,7 +8,7 @@ import {
   FieldIsVisible,
   ViewHeaderCellClass,
 } from "../../global/hooks"
-import { customFunctions, overmind, TableDefIds, Language } from "../../index"
+import { customFunctions, TableDefIds, Language, ovl } from "../../index"
 import { OvlConfig } from "../../init"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ListState } from "../Forms/Controls/ListControl"
@@ -497,7 +497,7 @@ export class TableHeader extends OvlBaseElement {
             //@ts-ignore
             let params = entry.target.dataLinkObject
             params["mode"] = "Thumb"
-            let res = await overmind.effects.getRequest(
+            let res = await ovl.effects.getRequest(
               api.url + "assets/get",
               params,
               true
@@ -589,7 +589,7 @@ export class TableHeader extends OvlBaseElement {
             this.tabledata,
             this.state,
             this.actions,
-            overmind.effects
+            ovl.effects
           )
         }
 

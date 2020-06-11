@@ -21,7 +21,7 @@ export class CompTranslation extends OvlBaseElement {
         <div class="fd-panel__body fd-has-padding-base fd-has-margin-base">
           <ovl-table
             class="fd-table"
-            .props=${(state: typeof overmind.state) => {
+            .props=${(state: OvlState) => {
               return {
                 def: state.portal.tables.translation.tableDef.translation,
                 data: state.portal.tables.translation,

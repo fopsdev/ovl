@@ -2,12 +2,12 @@ import { overmind, TableDefIds } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 
 export const ScreenRefresh = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let defId: TableDefIds = "tab1"
-  let data = state.testtables.tableTesting
+  let data = state.portal.testtables.tableTesting
   await actions.ovl.table.TableRefresh({
     defId,
     data,
@@ -22,12 +22,12 @@ export const ScreenRefresh = async (
 }
 
 export const ScreenNavigateIn = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let defId: TableDefIds = "tab1"
-  let data = state.testtables.tableTesting
+  let data = state.portal.testtables.tableTesting
   await actions.ovl.table.TableRefresh({
     defId,
     data,
@@ -50,9 +50,9 @@ export const ScreenNavigateIn = async (
 }
 
 export const ScreenNavigateOut = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   if ((await DialogOkCancel("Test: Wirklich raus hier?", 1)) === 2) {
     return Promise.resolve("Navigation abgebrochen durch User")

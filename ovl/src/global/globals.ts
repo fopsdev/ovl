@@ -1,9 +1,9 @@
-import { overmind } from "../index"
 import { OvlConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
+import { ovl, OvlState } from ".."
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
@@ -161,18 +161,15 @@ export const visibilityChange = async (event) => {
       //@ts-ignore
       document.visibilityState === "unloaded"
     ) {
-      if (overmind.state.ovl.uiState.isIOS) {
+      if (ovl.state.ovl.uiState.isIOS) {
         saveState(false, "Visibility")
       } else {
         await saveState(false, "Visibility")
       }
     }
-    if (
-      overmind.state.ovl.uiState.isIOS &&
-      document.visibilityState === "visible"
-    ) {
+    if (ovl.state.ovl.uiState.isIOS && document.visibilityState === "visible") {
       // rehydrate state here on ios. eg. switching from standalone app to a downloaded doc and back needs to rehydrate on ios (not on android,chrome)
-      await overmind.actions.ovl.internal.RehydrateAndUpdateApp()
+      await ovl.actions.ovl.internal.RehydrateAndUpdateApp()
     }
   }
 }
@@ -182,7 +179,7 @@ let saveReason = ""
 export const saveState = async (force: boolean, reason: string) => {
   if (OvlConfig._system.OfflineMode && !logoutAndClearFlag) {
     saveReason = reason
-    if (overmind.state.ovl.screens.nav.currentScreen !== "Login") {
+    if (ovl.state.ovl.screens.nav.currentScreen !== "Login") {
       let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
       let ts
       if (td !== undefined) {
@@ -192,10 +189,10 @@ export const saveState = async (force: boolean, reason: string) => {
       if (force || ts === undefined || dt - ts > 5000) {
         await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
         OvlTimestamp = dt
-        // let refstate = overmind.state
+        // let refstate = ovl.state
         let newObj = {}
         // let dtStart = Date.now()
-        stateCleaner(overmind.state, newObj, "state")
+        stateCleaner(ovl.state, newObj, "state")
         // let dtEnd = Date.now()
         // console.log("stateCleaner " + ((dtEnd - dtStart) / 1000).toString())
         // dtStart = Date.now()
@@ -212,7 +209,7 @@ let gotoFileFlag = false
 
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
-  overmind.actions.ovl.indicator.SetIndicatorOpen()
+  ovl.actions.ovl.indicator.SetIndicatorOpen()
   if (OvlConfig._system.OfflineMode) {
     window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
@@ -239,11 +236,7 @@ export const logout = async () => {
   window.location.reload()
 }
 
-export const stateCleaner = (
-  state: typeof overmind.state,
-  newObj,
-  parentKey: string
-) => {
+export const stateCleaner = (state: OvlState, newObj, parentKey: string) => {
   let cb
   let hasCb = false
   if (OvlConfig.saveStateCallback) {
@@ -316,7 +309,7 @@ export const ShowFile = (blob, type, fileName) => {
 
   anchor.textContent = "dummy"
   anchor.style.display = "none"
-  if (!overmind.state.ovl.uiState.isIOS) {
+  if (!ovl.state.ovl.uiState.isIOS) {
     anchor.download = fileName
     anchor.target = "_blank"
   }
@@ -325,7 +318,7 @@ export const ShowFile = (blob, type, fileName) => {
   anchor.click()
   gotoFileFlag = false
 
-  if (!overmind.state.ovl.uiState.isIOS) {
+  if (!ovl.state.ovl.uiState.isIOS) {
     SnackAdd("File has been downloaded", "Success")
   }
 }
@@ -337,10 +330,10 @@ export const ResetT = () => {
 export const T = (key: string, reps?: string[]): string => {
   // check for mobile key and use translation for mobile users to get shorter translations if applicable (key_M)
   //@ts-ignore
-  let uiState = overmind.state.ovl.uiState
+  let uiState = ovl.state.ovl.uiState
   if (uiState.isMobile) {
     let mobileKey = key + "_M"
-    if (overmind.state.ovl.language.translations[mobileKey]) {
+    if (ovl.state.ovl.language.translations[mobileKey]) {
       key = mobileKey
     }
   }
@@ -352,7 +345,7 @@ export const T = (key: string, reps?: string[]): string => {
   if (cacheRes !== undefined) {
     return cacheRes
   }
-  let str = overmind.state.ovl.language.translations[key]
+  let str = ovl.state.ovl.language.translations[key]
   if (str === undefined || str === null) {
     // if (uiState.isReady) {
     //   console.warn("Ovl Translations: key " + key + " not found")

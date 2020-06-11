@@ -8,9 +8,9 @@ import {
 
 export const FormValidate = (
   value: ValidateFieldType,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   switch (value.fieldId) {
     case "pw":

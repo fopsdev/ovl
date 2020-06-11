@@ -151,7 +151,7 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleCreateTestEntries = async (e: Event) => {
-      this.actions.testtables.mobiletimerecording.CreateTestEntries()
+      this.actions.portal.testtables.mobiletimerecording.CreateTestEntries()
     }
 
     const handleTestTable = async (e: Event) => {

@@ -181,13 +181,4 @@ let internal = {
 
 let user = { Logout }
 
-export let ovl = {
-  indicator,
-  navigation,
-  overlay,
-  internal,
-  dialog,
-  form,
-  table,
-  user,
-}
+export { indicator, navigation, overlay, internal, dialog, form, table, user }

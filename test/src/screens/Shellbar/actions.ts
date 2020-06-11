@@ -1,15 +1,15 @@
-import { Action } from "../../../../ovl/node_modules/overmind"
+import { OvlAction } from "../../../../ovl/src"
 
-export const CloseMainMenu: Action = ({ state }) => {
+export const CloseMainMenu: OvlAction = ({ state }) => {
   state.ovl.screens.screens.Shellbar.mainMenuExpanded = false
 }
-export const OpenMainMenu: Action = ({ state }) => {
+export const OpenMainMenu: OvlAction = ({ state }) => {
   state.ovl.screens.screens.Shellbar.mainMenuExpanded = true
 }
 
-export const CloseUserMenu: Action = ({ state }) => {
+export const CloseUserMenu: OvlAction = ({ state }) => {
   state.ovl.screens.screens.Shellbar.userMenuExpanded = false
 }
-export const OpenUserMenu: Action = ({ state }) => {
+export const OpenUserMenu: OvlAction = ({ state }) => {
   state.ovl.screens.screens.Shellbar.userMenuExpanded = true
 }

@@ -1,30 +1,19 @@
 import { html, render } from "../../ovl/node_modules/lit-html"
-import { createOvermind } from "../../ovl/node_modules/overmind"
-import { merge } from "../../ovl/node_modules/overmind/config"
-import { baseOvermindConfig, OvlConfig } from "../../ovl/src/init"
-import * as actions from "./actions"
 import { defineElements } from "./registerComponents"
-import * as state from "./state"
 import { CustomFormType, TableDefIds, Language } from "./state"
+import * as portalActions from "../src/actions"
+import { OvlConfig } from "../../ovl/src/init"
+import { OvlState } from "../../ovl/src"
 export { TableDefIds, CustomFormType, Language }
 
 defineElements()
 
-let appOvermindConfig = { actions, state }
-
-export const config = merge(baseOvermindConfig, appOvermindConfig)
-
-export const overmind = createOvermind(config, {
-  devtools: true,
-  logProxies: true,
-  delimiter: " ",
-})
 OvlConfig.requiredActions = {
   customPrepareActionPath: undefined,
-  customInitActionPath: overmind.actions.portal.system.user.CustomInit,
+  customInitActionPath: portalActions.system.user.CustomInit,
   handleAdditionalTranslationResultActionPath:
-    overmind.actions.portal.system.user.HandleAdditionalLanguageResult,
-  handleGlobalRefreshActionPath: overmind.actions.portal.global.HandleRefresh,
+    portalActions.system.user.HandleAdditionalLanguageResult,
+  handleGlobalRefreshActionPath: portalActions.global.HandleRefresh,
 }
 
 OvlConfig.apiUrl = {
@@ -37,7 +26,7 @@ OvlConfig.apiUrl = {
   devServer: "http://192.168.1.117:1233/api/",
 }
 
-OvlConfig.stickyHeaderEnabled = (state: typeof overmind.state) => {
+OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
   return (
     !state.ovl.uiState.isIOS &&
     !state.ovl.screens.screens.Shellbar.mainMenuExpanded &&
@@ -45,13 +34,13 @@ OvlConfig.stickyHeaderEnabled = (state: typeof overmind.state) => {
   )
 }
 
-overmind.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
+//ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
 
-window.scrollTo(0, 1)
-render(
-  html`
-    <ovl-shellbar></ovl-shellbar>
-    <ovl-snack> </ovl-snack>
-  `,
-  document.getElementById("app")
-)
+// window.scrollTo(0, 1)
+// render(
+//   html`
+//     <ovl-shellbar></ovl-shellbar>
+//     <ovl-snack> </ovl-snack>
+//   `,
+//   document.getElementById("app")
+// )

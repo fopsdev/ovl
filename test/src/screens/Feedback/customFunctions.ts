@@ -5,9 +5,9 @@ import { ValidateFieldType } from "../../../../ovl/src/library/forms/actions"
 
 export const FormValidate = (
   value: ValidateFieldType,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   switch (value.fieldId) {
     case "msg":

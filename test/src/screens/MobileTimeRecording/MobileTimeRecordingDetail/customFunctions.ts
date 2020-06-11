@@ -1,4 +1,3 @@
-import { overmind } from "../../.."
 import { GetWeekNr, ovltemp } from "../../../../../ovl/src/global/globals"
 import {
   ChangeField,
@@ -19,12 +18,13 @@ import {
   TableDataAndDef,
 } from "../../../../../ovl/src/library/Table/Table"
 import { TableMobileTimeRecording } from "./state"
+import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
 
 export const FormShow = async (
   formState: FormState,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log("hello from timeentry formshow hook")
   console.log(formState)
@@ -32,9 +32,9 @@ export const FormShow = async (
 
 export const Field_U_Type_GetList = (
   row: { [key: string]: {} },
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ): ListFnReturnValue => {
   return {
     data: {
@@ -46,23 +46,23 @@ export const Field_U_Type_GetList = (
 
 export const Field_U_TypeId_GetList = (
   row: TableMobileTimeRecording,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ): ListFnReturnValue => {
   if (row.U_Type === "PROJECT") {
-    return state.testtables.lookups.ProjectTypeId
+    return state.portal.testtables.lookups.ProjectTypeId
   } else {
-    return state.testtables.lookups.AbsenceTypeId
+    return state.portal.testtables.lookups.AbsenceTypeId
   }
 }
 
 export const Field_U_TypeId_LookupPostData = (
   lookupData: LookupListPostData,
   row: {},
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   if (row["U_Type"] === "PROJECT") {
     lookupData.lookupType = "timeProject"
@@ -73,9 +73,9 @@ export const Field_U_TypeId_LookupPostData = (
 
 export const FormValidate = async (
   value: ValidateFieldType,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   switch (value.fieldId) {
     case "U_Type":
@@ -106,15 +106,12 @@ export const FormValidate = async (
   }
 }
 
-const CheckExistingTimeRange = (
-  state: typeof overmind.state,
-  value: ValidateFieldType
-) => {
-  let def = state.testtables.timeentries.tableDef.mobiletimerecording1
+const CheckExistingTimeRange = (state: OvlState, value: ValidateFieldType) => {
+  let def = state.portal.testtables.timeentries.tableDef.mobiletimerecording1
   let keysToCheck = def.uiState.dataFilteredAndSorted.filter(
     (k) => k.indexOf(ovltemp) < 0
   )
-  let data = state.testtables.timeentries.data
+  let data = state.portal.testtables.timeentries.data
   keysToCheck.some((k) => {
     if (value.newVal > data[k].U_FromTime && value.newVal < data[k].U_ToTime) {
       ValidationAddError(
@@ -159,9 +156,9 @@ const CheckFromTimeSmaller = (formState: FormState, fieldId: string) => {
 }
 export const FormChanged = async (
   value: FieldChanged,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let formState = value.formState
   switch (value.fieldId) {
@@ -203,9 +200,9 @@ export const FormChanged = async (
 
 export const FormBeforeSave = async (
   value: BeforeSaveParam,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let newRow = <TableMobileTimeRecording>value.row
   let dt = new Date(newRow.U_Date)
@@ -216,9 +213,9 @@ export const FormBeforeSave = async (
 export const FormAdd = async (
   newRow: TableMobileTimeRecording,
   tableDef: TableDataAndDef,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   newRow.U_Type = "PROJECT"
   newRow.U_Duration = 0

@@ -24,38 +24,29 @@ type OvlConfig = {
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
-    customInitActionPath: AsyncAction
-    customPrepareActionPath: AsyncAction
-    handleAdditionalTranslationResultActionPath: AsyncAction
-    handleGlobalRefreshActionPath: AsyncAction
+    customInitActionPath: OvlAction
+    customPrepareActionPath: OvlAction
+    handleAdditionalTranslationResultActionPath: OvlAction
+    handleGlobalRefreshActionPath: OvlAction
   }
   /*check stateCleaner in ovl global to see the possibilities of this fn*/
   saveStateCallback: (parentKey: string, key: string, obj: any) => {}
   /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
      thats why we have a check function to check if they should be enabled
   */
-  stickyHeaderEnabled: (state: typeof overmind.state) => {}
+  stickyHeaderEnabled: (state: OvlState) => {}
 }
 
-import { AsyncAction } from "overmind"
-import { overmind } from "."
+import { OvlState, OvlAction } from "."
 import * as actions from "./actions"
 import * as effects from "./effects"
-import onInitialize from "./onInitialize"
 import { defineElements } from "./registerComponents"
-import { state } from "./state"
+
 export { actions }
 
 // #####################################################################################################################################
 
 defineElements()
-
-export const baseOvermindConfig = {
-  onInitialize,
-  state,
-  actions,
-  effects,
-}
 
 let dataVersion = "1"
 let OvlConfig: OvlConfig = {

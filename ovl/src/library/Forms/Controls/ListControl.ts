@@ -1,6 +1,6 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { customFunctions, overmind } from "../../.."
+
 import { resolvePath } from "../../../global/globals"
 import { FieldGetList } from "../../../global/hooks"
 import { SnackAdd } from "../../helpers"
@@ -16,12 +16,19 @@ import {
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { FormState } from "../actions"
+import {
+  OvlState,
+  OvlActions,
+  OvlEffects,
+  customFunctions,
+  ovl,
+} from "../../.."
 
 type ListFunction = (
   row: { [key: string]: {} },
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => any //ListFnReturnValue -> gives a ton of ts errors. not sure why. so i've put any for now
 
 export type ListState = {
@@ -65,7 +72,7 @@ export class OvlListControl extends OvlBaseElement {
       GetRowFromFormState(formState),
       this.state,
       this.actions,
-      overmind.effects
+      ovl.effects
     )
 
     //@ts-ignore
@@ -98,12 +105,7 @@ export class OvlListControl extends OvlBaseElement {
           .props=${(state) => {
             let listData = resolvePath(customFunctions, formState.namespace)[
               FieldGetList.replace("%", field.fieldKey)
-            ](
-              GetRowFromFormState(formState),
-              state,
-              overmind.actions,
-              overmind.effects
-            )
+            ](GetRowFromFormState(formState), state, ovl.actions, ovl.effects)
 
             return {
               fieldId: field.id,
@@ -154,7 +156,7 @@ export class OvlListControl extends OvlBaseElement {
         GetRowFromFormState(this.formState),
         this.state,
         this.actions,
-        overmind.effects
+        ovl.effects
       )
 
       this.displayValue =
@@ -192,12 +194,7 @@ export class OvlListControl extends OvlBaseElement {
       if (filteredKeys.length === 1) {
         let dataList = resolvePath(customFunctions, formState.namespace)[
           FieldGetList.replace("%", field.fieldKey)
-        ](
-          GetRowFromFormState(formState),
-          this.state,
-          this.actions,
-          overmind.effects
-        )
+        ](GetRowFromFormState(formState), this.state, this.actions, ovl.effects)
         let singleValue =
           dataList.data[filteredKeys[0]][this.field.field.list.valueField]
         val = dataList.data[filteredKeys[0]][this.field.field.list.displayField]
@@ -291,7 +288,7 @@ export class OvlListControl extends OvlBaseElement {
             GetRowFromFormState(formState),
             this.state,
             this.actions,
-            overmind.effects
+            ovl.effects
           )
           singleValue = listData.data[filteredKeys[0]][field.list.valueField]
           val = listData.data[filteredKeys[0]][field.list.displayField]
@@ -317,7 +314,7 @@ export class OvlListControl extends OvlBaseElement {
             GetRowFromFormState(formState),
             this.state,
             this.actions,
-            overmind.effects
+            ovl.effects
           )
           if (listData.data[singleValue]) {
             val = listData.data[singleValue][field.list.displayField]
@@ -425,8 +422,8 @@ export class OvlListControl extends OvlBaseElement {
                   )[FieldGetList.replace("%", field.fieldKey)](
                     GetRowFromFormState(this.formState),
                     state,
-                    overmind.actions,
-                    overmind.effects
+                    ovl.actions,
+                    ovl.effects
                   )
                   return {
                     fieldId: field.id,
@@ -496,7 +493,7 @@ export class OvlListControl extends OvlBaseElement {
           GetRowFromFormState(this.formState),
           this.state,
           this.actions,
-          overmind.effects
+          ovl.effects
         )
       )
     }

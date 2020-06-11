@@ -1,9 +1,14 @@
-import { overmind, TableDefIds } from "../../index"
+import {
+  OvlState,
+  OvlActions,
+  OvlEffects,
+  TableDefIds,
+} from "../../../../ovl/src"
 
 export const ScreenRefresh = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let defId: TableDefIds = "audit"
   let data = state.portal.tables.audit
@@ -11,9 +16,9 @@ export const ScreenRefresh = async (
 }
 
 export const ScreenNavigateIn = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let defId: TableDefIds = "audit"
   let data = state.portal.tables.audit

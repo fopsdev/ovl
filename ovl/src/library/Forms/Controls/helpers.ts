@@ -1,6 +1,6 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { overmind } from "../../.."
+
 import {
   getDateValue,
   getDecimalValue,
@@ -14,7 +14,7 @@ import {
   FieldLookupPostData,
   FieldGetValueRender,
 } from "../../../global/hooks"
-import { customFunctions } from "../../../index"
+import { customFunctions, OvlState, OvlEffects, ovl } from "../../../index"
 import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
 import { CellClass } from "../../Table/Row"
 import {
@@ -44,14 +44,14 @@ export type ControlState = {
 }
 
 export const KeyValueListFromServerFn = async (
-  state: typeof overmind.state,
+  state: OvlState,
   list: ListState,
   listData: ListFnReturnValue,
   filterValue: string,
   row: {},
   namespace: string,
   fieldId: string,
-  effects: typeof overmind.effects,
+  effects: OvlEffects,
   paramList?: { [key: string]: {} }
 ) => {
   if (!paramList) {
@@ -76,7 +76,7 @@ export const KeyValueListFromServerFn = async (
   let fn = resolvePath(customFunctions, namespace)
   let functionName = FieldLookupPostData.replace("%", fieldId)
   if (fn && fn[functionName]) {
-    fn[functionName](postData, row, state, overmind.actions, effects)
+    fn[functionName](postData, row, state, ovl.actions, effects)
   }
 
   let res = await effects.postRequest(postData.url, {
@@ -108,7 +108,7 @@ export const FilterHitList = (
   list: ListState,
   filterValue: string,
   formState: FormState,
-  state: typeof overmind.state,
+  state: OvlState,
   fieldId: string,
   top?: number
 ) => {
@@ -116,7 +116,7 @@ export const FilterHitList = (
   let functionName = FieldGetFilteredList.replace("%", fieldId)
   let dataList = resolvePath(customFunctions, formState.namespace)[
     FieldGetList.replace("%", fieldId)
-  ](GetRowFromFormState(formState), state, overmind.actions, overmind.effects)
+  ](GetRowFromFormState(formState), state, ovl.actions, ovl.effects)
   if (dataList.data) {
     let res = Object.keys(dataList.data)
     let fn = resolvePath(customFunctions, formState.namespace)
@@ -125,8 +125,8 @@ export const FilterHitList = (
         dataList,
         formState,
         state,
-        overmind.actions,
-        overmind.effects
+        ovl.actions,
+        ovl.effects
       )
     }
 
@@ -223,7 +223,7 @@ export const GetValueFromCustomFunction = (
   formState: FormState,
   align: string,
   isInline: boolean,
-  state: typeof overmind.state
+  state: OvlState
 ): TemplateResult => {
   let rendererFn = GetRendererFn(
     formState.namespace,
@@ -307,7 +307,7 @@ export const GetLabel = (
     customHeaderClassName = customHeaderCell.className
     customHeaderTooltip = customHeaderCell.tooltip
   }
-  let state = overmind.state
+  let state = ovl.state
   //let formState: FormState = state.ovl.forms[field.formType][field.formId]
   let rendererFn = GetRendererFn(
     formState.namespace,

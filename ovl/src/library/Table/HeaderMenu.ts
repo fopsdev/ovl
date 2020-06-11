@@ -54,7 +54,7 @@ export class TableHeaderMenu extends OvlBaseElement {
         def,
         this.state,
         this.actions,
-        overmind.effects
+        ovl.effects
       )
     }
   }

@@ -1,4 +1,3 @@
-import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
 import { T, api } from "../../../../ovl/src/global/globals"
 import {
   FormState,
@@ -8,8 +7,9 @@ import {
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { FieldId } from "./FeedbackForm"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
+import { OvlAction } from "../../../../ovl/src"
 
-export const SaveFeedback: AsyncAction<FormState> = async (
+export const SaveFeedback: OvlAction<FormState> = async (
   { state, actions, effects },
   value
 ) => {

@@ -25,7 +25,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
   }
 
   getKeysToSync = () => {
-    let data = this.state.testtables.timeentries
+    let data = this.state.portal.testtables.timeentries
     let def = data.tableDef.mobiletimerecording1
     //let rowKeys = Object.keys(data.data)
     return def.uiState.dataFilteredAndSorted.filter((k) => {
@@ -39,16 +39,16 @@ export class CompMobileTimeEntry extends OvlFormElement {
   handleAddToSAPClick = async (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    let data = this.state.testtables.timeentries
+    let data = this.state.portal.testtables.timeentries
     let rowKeys = this.getKeysToSync()
     let guids = rowKeys.map((m) => {
       return { timeentry_id: data.data[m].Code }
     })
     let snackUid = uuidv4()
     SnackTrackedAdd("Zeit(en) werden übermittelt...", "Information", snackUid)
-    await overmind.effects.postRequest(api.url + "job/addworktime", guids)
+    await ovl.effects.postRequest(api.url + "job/addworktime", guids)
     // tag data as synched
-    this.actions.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
+    this.actions.portal.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
 
     SnackTrackedRemove(snackUid)
     SnackAdd("Zeit(en) erfolgreich übermittelt.")
@@ -56,8 +56,9 @@ export class CompMobileTimeEntry extends OvlFormElement {
   handleAddRowClick = async (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
-    let data = this.state.testtables.timeentries
+    let def = this.state.portal.testtables.timeentries.tableDef
+      .mobiletimerecording1
+    let data = this.state.portal.testtables.timeentries
     let tableDataAndDef: TableDataAndDef = {
       data,
       def,
@@ -86,8 +87,9 @@ export class CompMobileTimeEntry extends OvlFormElement {
   }
 
   async handleDelete(e: Event, key: string) {
-    let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
-    let data = this.state.testtables.timeentries
+    let def = this.state.portal.testtables.timeentries.tableDef
+      .mobiletimerecording1
+    let data = this.state.portal.testtables.timeentries
     await this.actions.ovl.internal.TableDeleteRow({ key, def, data })
     let formState: FormState
     if (this.state.ovl.forms.MobileTimeEntry) {
@@ -100,11 +102,12 @@ export class CompMobileTimeEntry extends OvlFormElement {
     }
   }
   async getUI() {
-    let def = this.state.testtables.timeentries.tableDef.mobiletimerecording1
+    let def = this.state.portal.testtables.timeentries.tableDef
+      .mobiletimerecording1
     let dataKeys = def.uiState.dataFilteredAndSorted.filter(
       (k) => k.indexOf(ovltemp) === -1
     )
-    let data = this.state.testtables.timeentries.data
+    let data = this.state.portal.testtables.timeentries.data
     let fields = this.formState.fields
     let dateField = fields["date"]
     let fd = new Date(dateField.convertedValue)
@@ -193,7 +196,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
                 data[k],
                 this.state,
                 this.actions,
-                overmind.effects
+                ovl.effects
               )
             )
             let listValue2 =

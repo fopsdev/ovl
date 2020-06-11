@@ -3,9 +3,9 @@ import { FormState } from "../../../../../ovl/src/library/forms/actions"
 
 export const FormShow = async (
   formState: FormState,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log("hello from formshow hook. setting focus to item group")
   //@ts-ignore
@@ -16,9 +16,9 @@ export const FormShow = async (
 
 export const FormAfterRender = async (
   formState: FormState,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   console.log(
     "hello from tabletesting formafterrender hook. you may do some crazy stuff in here"

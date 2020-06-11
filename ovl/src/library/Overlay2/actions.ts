@@ -1,9 +1,9 @@
-import { Action, AsyncAction } from "overmind"
 import { overlay2ToRender, OvlOverlay2 } from "../Overlay2/Overlay2"
 import { TemplateResult } from "lit-html"
 import { dialogAfterClose } from "../Dialog/actions"
+import { OvlAction } from "../.."
 
-export const OpenOverlay2: AsyncAction<{
+export const OpenOverlay2: OvlAction<{
   templateResult: TemplateResult
   elementToFocusAfterClose?: Element
 }> = async ({ state }, value) => {
@@ -28,7 +28,7 @@ export const OpenOverlay2: AsyncAction<{
   }
 }
 
-export const StartCloseOverlay2: AsyncAction = async ({ state }, _) => {
+export const StartCloseOverlay2: OvlAction = async ({ state }, _) => {
   if (state.ovl.libState.overlay2.open === true) {
     overlay2ToRender.resolve = null
     if (!state.ovl.uiState.hasOSReducedMotion) {
@@ -40,7 +40,7 @@ export const StartCloseOverlay2: AsyncAction = async ({ state }, _) => {
   }
 }
 
-export const CloseOverlay2: AsyncAction = async ({ state }, _) => {
+export const CloseOverlay2: OvlAction = async ({ state }, _) => {
   state.ovl.libState.overlay2.open = false
   state.ovl.libState.overlay2.closing = false
   if (overlay2ToRender.overlayClosedCallback) {

@@ -1,9 +1,9 @@
 import { overmind, TableDefIds } from "../../index"
 
 export const ScreenRefresh = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let defId: TableDefIds = "translation"
   let data = state.portal.tables.translation
@@ -11,9 +11,9 @@ export const ScreenRefresh = async (
 }
 
 export const ScreenNavigateIn = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let defId: TableDefIds = "translation"
   let data = state.portal.tables.translation

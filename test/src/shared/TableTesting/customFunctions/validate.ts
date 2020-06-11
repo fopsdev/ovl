@@ -10,9 +10,9 @@ import { Field_U_ItemCode_GetList } from "./list"
 
 export const FormChanged = async (
   value: FieldChanged,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   switch (value.fieldId) {
     case "U_ItmsGrpCod":
@@ -53,9 +53,9 @@ export const FormChanged = async (
 
 export const FormValidate = async (
   value: ValidateFieldType,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   switch (value.fieldId as TableTestingColumn) {
     case "U_Alpha":

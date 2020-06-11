@@ -1,4 +1,3 @@
-import { overmind } from "../.."
 import {
   getDateValue,
   getDecimalValue,
@@ -17,8 +16,7 @@ import {
   FormCanMore,
   FormCustomFilter,
 } from "../../global/hooks"
-import { customFunctions, TableDefIds } from "../../index"
-import { state } from "../../state"
+import { customFunctions, TableDefIds, ovl, OvlActions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
 import { overlayToRender } from "../Overlay/Overlay"
@@ -63,12 +61,7 @@ export const getDisplayValue = (
       ]
       cachedListFn.set(cachedListKey, listFn)
     }
-    let listdata = listFn(
-      row,
-      overmind.state,
-      overmind.actions,
-      overmind.effects
-    )
+    let listdata = listFn(row, ovl.state, ovl.actions, ovl.effects)
     return GetListDisplayValue(col.list, value, listdata)
   }
   let format
@@ -104,7 +97,7 @@ export const setTableRow = (
   newId: string,
   newData: any,
   editMode: boolean,
-  actions: typeof overmind.actions,
+  actions: OvlActions,
   copy?: boolean
 ) => {
   let def = tableDataAndDef.def
@@ -633,7 +626,7 @@ export const initTableState = (
 export const TableRefreshServerData = async (
   def: TableDef,
   data: TableData,
-  actions: typeof overmind.actions,
+  actions: OvlActions,
   forceServerDataRefresh?: boolean
 ) => {
   if (!data.timestamp || !!forceServerDataRefresh) {
@@ -757,7 +750,7 @@ export const TableFilterFn = (
       let data = tableDataAndDef.data
       let row = data.data[rowKey]
       return !customFilterFn.some(
-        (f) => !f(def, data, row, state, overmind.actions, overmind.effects)
+        (f) => !f(def, data, row, ovl.state, ovl.actions, ovl.effects)
       )
     })
   }
@@ -843,13 +836,7 @@ export const createDynamicRowFunctions = async (
 
       if (fn && fn[functionName]) {
         disabled = true
-        title = await fn[functionName](
-          key,
-          def,
-          data,
-          overmind.state,
-          overmind.effects
-        )
+        title = await fn[functionName](key, def, data, ovl.state, ovl.effects)
         if (title) {
           rowControlActions[k] = {
             disabled: disabled,
@@ -882,9 +869,9 @@ export const createDynamicRowFunctions = async (
         key,
         def,
         data,
-        overmind.state,
+        ovl.state,
 
-        overmind.effects
+        ovl.effects
       )
       //@show christian
       // the following access is NOT (correctly) tracked
@@ -921,9 +908,9 @@ export const createDynamicRowFunctions = async (
         key,
         def,
         data,
-        overmind.state,
+        ovl.state,
 
-        overmind.effects
+        ovl.effects
       )
       copyDisabled = true
       if (copyTitle) {
@@ -952,13 +939,7 @@ export const createDynamicRowFunctions = async (
     //@@hook
     let functionName = FormCanEdit
     if (fn && fn[functionName]) {
-      editTitle = await fn[functionName](
-        key,
-        def,
-        data,
-        overmind.state,
-        overmind.effects
-      )
+      editTitle = await fn[functionName](key, def, data, ovl.state, ovl.effects)
       editDisabled = true
       if (editTitle) {
         rowControlActions["Edit"] = {
@@ -982,7 +963,7 @@ export const createDynamicRowFunctions = async (
   if (!isDetailView) {
     if (
       def.features.detailView === "Enabled" ||
-      (overmind.state.ovl.uiState.isMobile &&
+      (ovl.state.ovl.uiState.isMobile &&
         def.features.detailView === "EnabledOnlyMobile")
     ) {
       let detailDisabled = false
@@ -994,9 +975,9 @@ export const createDynamicRowFunctions = async (
           key,
           def,
           data,
-          overmind.state,
+          ovl.state,
 
-          overmind.effects
+          ovl.effects
         )
         detailDisabled = true
         if (detailTitle) {
@@ -1029,9 +1010,9 @@ export const createDynamicRowFunctions = async (
         key,
         def,
         data,
-        overmind.state,
+        ovl.state,
 
-        overmind.effects
+        ovl.effects
       )
       moreDisabled = true
       if (moreTitle) {
@@ -1072,7 +1053,7 @@ export const rowControlActionsHandler = async (
       if (customFunction) {
         if (isDetailView) {
           overlayToRender.overlayClosedCallback = async () => {
-            overmind.actions.ovl.internal.TableCloseViewRow({
+            ovl.actions.ovl.internal.TableCloseViewRow({
               key: rowKey,
               def,
             })
@@ -1082,12 +1063,12 @@ export const rowControlActionsHandler = async (
               data,
               true,
               null,
-              overmind.state,
-              overmind.actions,
-              overmind.effects
+              ovl.state,
+              ovl.actions,
+              ovl.effects
             )
           }
-          overmind.actions.ovl.overlay.CloseOverlay()
+          ovl.actions.ovl.overlay.CloseOverlay()
         } else {
           await customFunction(
             rowKey,
@@ -1095,9 +1076,9 @@ export const rowControlActionsHandler = async (
             data,
             true,
             null,
-            overmind.state,
-            overmind.actions,
-            overmind.effects
+            ovl.state,
+            ovl.actions,
+            ovl.effects
           )
         }
       } else {
@@ -1110,20 +1091,20 @@ export const rowControlActionsHandler = async (
     let actionName = "Table" + key + "Row"
     if (isDetailView) {
       overlayToRender.overlayClosedCallback = async () => {
-        await overmind.actions.ovl.internal.TableCloseViewRow({
+        await ovl.actions.ovl.internal.TableCloseViewRow({
           key: rowKey,
           def,
         })
 
-        await overmind.actions.ovl.internal[actionName]({
+        await ovl.actions.ovl.internal[actionName]({
           key: rowKey,
           def,
           data,
         })
       }
-      overmind.actions.ovl.overlay.CloseOverlay()
+      ovl.actions.ovl.overlay.CloseOverlay()
     } else {
-      await overmind.actions.ovl.internal[actionName]({
+      await ovl.actions.ovl.internal[actionName]({
         key: rowKey,
         def,
         data,

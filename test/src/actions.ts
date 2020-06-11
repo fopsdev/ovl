@@ -50,12 +50,7 @@ import * as feedback from "./screens/Feedback/actions"
 
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 
-export const portal = {
-  system: { shellbar, user },
-  global,
-  settings,
-  order,
-  feedback,
-}
+let system = { shellbar, user }
+let testtables = { mobiletimerecording }
 
-export const testtables = { mobiletimerecording }
+export { system, global, settings, order, feedback, testtables }

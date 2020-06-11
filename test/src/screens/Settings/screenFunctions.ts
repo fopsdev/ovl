@@ -4,9 +4,9 @@ import { InitForm } from "../../../../ovl/src/library/forms/actions"
 import { T } from "../../../../ovl/src/global/globals"
 
 export const ScreenNavigateIn = async (
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   let fields: { [key: string]: FormFields } = {
     pw: {

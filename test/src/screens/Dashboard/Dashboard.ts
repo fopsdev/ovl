@@ -1,7 +1,7 @@
 import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 import { html } from "../../../../ovl/node_modules/lit-html"
 import { T } from "../../../../ovl/src/global/globals"
-import { overmind } from "../.."
+import { OvlState } from "../../../../ovl/src"
 
 export type DashboardState = {}
 
@@ -44,7 +44,7 @@ export class CompDashboard extends OvlBaseElement {
               </div>
             </div>
         <div class="fd-panel__body fd-has-padding-tiny fd-has-margin-tiny">
-        <comp-filelist  .props=${(s: typeof overmind.state) =>
+        <comp-filelist  .props=${(s: OvlState) =>
           s.portal.partner.attachments.files}></comp-filelist>
         </div>
         </div>

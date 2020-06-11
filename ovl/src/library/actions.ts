@@ -1,4 +1,4 @@
-import { Action, AsyncAction } from "overmind"
+import { Action, OvlAction } from "overmind"
 import { ResultType, DialogState } from "./Dialog/Dialog"
 import {
   TableSetViewTab,
@@ -73,7 +73,7 @@ export type DialogChangedParam = {
   result: ResultType
 }
 
-export const DialogChanged: Action<DialogChangedParam> = (
+export const DialogChanged: OvlAction<DialogChangedParam> = (
   { state, actions },
   value
 ) => {
@@ -88,14 +88,14 @@ export const DialogChanged: Action<DialogChangedParam> = (
   }
 }
 
-export const DialogDefaultChanged: Action<{ default: ResultType }> = (
+export const DialogDefaultChanged: OvlAction<{ default: ResultType }> = (
   { state },
   value
 ) => {
   state.ovl.libState.dialog.default = value.default
 }
 
-export const DialogClosed: AsyncAction = async ({ state }) => {
+export const DialogClosed: OvlAction = async ({ state }) => {
   state.ovl.libState.dialog.closing = false
   state.ovl.libState.dialog.visible = false
   state.ovl.libState.dialog.cancelText = "rerender force workaround"

@@ -1,4 +1,4 @@
-import { Action, AsyncAction } from "overmind"
+import { Action, OvlAction } from "overmind"
 import { OpenDialogState, ResultType } from "./Dialog"
 import { Screen } from "../../index"
 
@@ -8,7 +8,7 @@ export let dialogAfterClose = {
   currentScreen,
 }
 
-export const DialogOpen: AsyncAction<OpenDialogState> = async (
+export const DialogOpen: OvlAction<OpenDialogState> = async (
   { state, actions },
   value
 ) => {
@@ -49,7 +49,7 @@ type OkCancelDialog = {
   text: string
   default: ResultType
 }
-export const OkCancelDialog: AsyncAction<OkCancelDialog> = async (
+export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   { actions },
   value
 ) =>
@@ -60,7 +60,7 @@ export const OkCancelDialog: AsyncAction<OkCancelDialog> = async (
     default: value.default,
   })
 
-export const OkDialog: AsyncAction<{ text: string }> = async (
+export const OkDialog: OvlAction<{ text: string }> = async (
   { actions },
   value
 ) => {

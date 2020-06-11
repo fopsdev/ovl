@@ -1,4 +1,4 @@
-import { customFunctions, FormType, overmind } from "../.."
+import { customFunctions, FormType, ovl } from "../.."
 import { resolvePath } from "../../global/globals"
 import { FormAfterRender, FormShow } from "../../global/hooks"
 import { OvlBaseElement } from "../OvlBaseElement"
@@ -222,17 +222,12 @@ export class OvlFormElement extends OvlBaseElement {
       this.formState,
       this.state,
       this.actions,
-      overmind.effects
+      ovl.effects
     )
   }
   callFormShow() {
     setTimeout(() => {
-      this.formShowFn(
-        this.formState,
-        this.state,
-        this.actions,
-        overmind.effects
-      )
+      this.formShowFn(this.formState, this.state, this.actions, ovl.effects)
     }, 200)
   }
 }

@@ -304,7 +304,7 @@ export class TableRowWrapper extends OvlBaseElement {
         this.row.tableDef,
         data,
         this.state,
-        overmind.effects
+        ovl.effects
       )
       if (status) {
         rowStatus = "fd-table__row--" + status.status

@@ -155,6 +155,7 @@ type Portal = {
   partner: PartnerState
   pics: PicsState
   tables: { translation: TableData; audit: TableData }
+  testtables: { [key: string]: TableData; lookups: any }
 }
 
 export type CustomFormType =
@@ -173,7 +174,43 @@ export type TableDefIds =
   | "tab3"
   | "mobiletimerecording1"
 
-export let portal: Portal = {
+let tableTesting: TableData = {
+  data: {},
+  schema: {},
+  tableDef: {
+    tab1: tblTableTesting,
+    tab2: tblTableTesting2,
+    tab3: tblTableTesting3,
+  },
+  lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
+  lookupDef2: <{ [key: string]: LookupDef }>{
+    U_Alpha: { type: "text" },
+    U_Date: { type: "date" },
+  },
+}
+let lookups = {
+  U_ItemCode: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+
+  U_ItmsGrpCod: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+  ProjectTypeId: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+  AbsenceTypeId: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+}
+
+let testtables = { tableTesting, lookups }
+
+export let portalState: Portal = {
   user: undefined,
   orderDetail: undefined,
   chartData: undefined,
@@ -198,47 +235,5 @@ export let portal: Portal = {
       },
     },
   },
-}
-
-export let testtables = {
-  tableTesting: <TableData>{
-    data: {},
-    schema: {},
-    tableDef: {
-      tab1: tblTableTesting,
-      tab2: tblTableTesting2,
-      tab3: tblTableTesting3,
-    },
-    lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
-    lookupDef2: <{ [key: string]: LookupDef }>{
-      U_Alpha: { type: "text" },
-      U_Date: { type: "date" },
-    },
-  },
-  timeentries: <TableData>{
-    data: {},
-    schema: {},
-    tableDef: {
-      mobiletimerecording1: tblMobileTimeRecording,
-    },
-  },
-  lookups: {
-    U_ItemCode: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
-
-    U_ItmsGrpCod: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
-    ProjectTypeId: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
-    AbsenceTypeId: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
-  },
+  testtables,
 }

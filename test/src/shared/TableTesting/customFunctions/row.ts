@@ -13,8 +13,8 @@ export const FormCanEdit = async (
   rowKey: string,
   tableDef: TableDef,
   tableData: TableData,
-  state: typeof overmind.state,
-  effects: typeof overmind.effects
+  state: OvlState,
+  effects: OvlEffects
 ): Promise<string> => {
   let row = <TableTesting>tableData.data[rowKey]
   return row.U_Alpha && row.U_Alpha.indexOf("noedit") > -1
@@ -26,8 +26,8 @@ export const FormCanDelete = async (
   rowKey: string,
   tableDef: TableDef,
   tableData: TableData,
-  state: typeof overmind.state,
-  effects: typeof overmind.effects
+  state: OvlState,
+  effects: OvlEffects
 ): Promise<string> => {
   let row = <TableTesting>tableData.data[rowKey]
   return row.U_Alpha && row.U_Alpha.indexOf("nodelete") > -1
@@ -39,8 +39,8 @@ export const FormStatus = async (
   key: string,
   tableDef: TableDef,
   data: TableData,
-  state: typeof overmind.state,
-  effects: typeof overmind.effects
+  state: OvlState,
+  effects: OvlEffects
 ): Promise<RowStatus> => {
   let row = <TableTesting>data.data[key]
   let res: RowStatus
@@ -64,9 +64,9 @@ export const FormCopy = async (
   tableDef: TableDef,
   tableData: TableData,
 
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   newRow.U_Memo = newRow.U_Memo + " Copy!"
 }
@@ -76,9 +76,9 @@ export const FormAdd = async (
   tableDef: TableDef,
   tableData: TableData,
 
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   newRow.U_Memo = "Defaulttext Memo"
 }
@@ -88,9 +88,9 @@ export const FormSelect = async (
   data: TableData,
   isLastOrOnlyOne: boolean,
   startedFromSelectedResult: SelectedCustomFunctionResult,
-  state: typeof overmind.state,
-  actions: typeof overmind.actions,
-  effects: typeof overmind.effects
+  state: OvlState,
+  actions: OvlActions,
+  effects: OvlEffects
 ) => {
   // this sample shows how to deal with msg and succss when also used from headerform (multiple rows selected))
   let msg = ""
