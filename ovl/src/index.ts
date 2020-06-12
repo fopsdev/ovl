@@ -34,7 +34,8 @@ export let ovl = {
 }
 
 const interceptorFn = (originalFn) => {
-  return (value) =>
+  return (value) => {
+    console.log(originalFn.name + " called...")
     originalFn(
       {
         state: ovl.state,
@@ -43,13 +44,13 @@ const interceptorFn = (originalFn) => {
       },
       value
     )
+  }
 }
 
 const getMethods = (obj) =>
   Object.keys(obj).forEach((item) => {
     if (typeof obj[item] === "function") {
       obj[item] = interceptorFn(obj[item])
-      console.log(obj[item])
     } else if (typeof obj[item] === "object") {
       getMethods(obj[item])
     }

@@ -30,7 +30,7 @@ export const Login: OvlAction<FormState> = async (
     let pw = value.fields["pw"].value
     SnackTrackedAdd("Login", "Success", "AppLogin")
     try {
-      let res = await effects.postRequest(api.url + "users/authenticate", {
+      let res = await effects.ovl.postRequest(api.url + "users/authenticate", {
         email: user,
         password: pw,
         language: state.ovl.language.language,
@@ -60,7 +60,7 @@ export const Login: OvlAction<FormState> = async (
       state.portal.partner.attachments = res.data.data.attachments
 
       //init lookup values
-      res = await effects.postRequest(api.url + "lookup", {
+      res = await effects.ovl.postRequest(api.url + "lookup", {
         lang: state.ovl.language.language,
         lookupType: "initial",
       })
@@ -102,7 +102,7 @@ export const ForgotPw: OvlAction<FormState> = async (
 ) => {
   if ((await DialogOkCancel(T("AppLoginForgotPasswordConfirm"), 2)) === 1) {
     let user = value.fields["user"].value
-    let res = await effects.postRequest(api.url + "users/requestresetpw", {
+    let res = await effects.ovl.postRequest(api.url + "users/requestresetpw", {
       user,
       language: state.ovl.language.language,
     })
@@ -143,7 +143,7 @@ export const HandleRefresh: OvlAction = async ({ state, actions, effects }) => {
 
   try {
     // 1st get global data to be refreshed
-    let res = await effects.postRequest(api.url + "data/getdata", {
+    let res = await effects.ovl.postRequest(api.url + "data/getdata", {
       features: state.portal.user.features,
       language: state.ovl.language.language,
     })

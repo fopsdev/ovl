@@ -17,13 +17,16 @@ export const stopTrack = () => {
 
 export const disposeTrack = (cb: OvlBaseElement) => {
   // get all paths and remove from there as well
-  callbacks.get(cb).forEach((path: string) => {
-    let pathsCallbackSet = paths.get(path)
-    pathsCallbackSet.delete(cb)
-    if (pathsCallbackSet.size === 0) {
-      paths.delete(path)
-    }
-  })
+  let pathsSet = callbacks.get(cb)
+  if (pathsSet) {
+    pathsSet.forEach((path: string) => {
+      let pathsCallbackSet = paths.get(path)
+      pathsCallbackSet.delete(cb)
+      if (pathsCallbackSet.size === 0) {
+        paths.delete(path)
+      }
+    })
+  }
   callbacks.delete(cb)
 }
 

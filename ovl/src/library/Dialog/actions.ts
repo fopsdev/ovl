@@ -63,7 +63,6 @@ export const OkDialog: OvlAction<{ text: string }> = async (
   { actions },
   value
 ) => {
-  debugger
   actions.ovl.dialog.DialogOpen({
     cancel: "NoButton",
     ok: "AppOk",

@@ -486,7 +486,7 @@ export class TableRowDetailView extends OvlBaseElement {
             }
           }
         } else {
-          // let res = await ovl.effects.getRequest(
+          // let res = await ovl.effects.ovl.getRequest(
           //   api.url + "assets/get",
           //   params,
           //   true

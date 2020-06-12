@@ -15,7 +15,7 @@ export const SaveFeedback: OvlAction<FormState> = async (
 ) => {
   actions.ovl.form.ValidateForm(value)
   if (value.valid) {
-    let res = await effects.postRequest(api.url + "data/savefeedback", {
+    let res = await effects.ovl.postRequest(api.url + "data/savefeedback", {
       language: state.ovl.language.language,
       message: value.fields["msg"].value,
       orderDate: state.ovl.screens.screens.Feedback.orderDate,

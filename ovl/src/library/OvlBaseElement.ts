@@ -80,15 +80,15 @@ export class OvlBaseElement extends HTMLElement {
   animatedClass: string
   static _counter: number = 0
 
-  removePathsFromTracking(path: string) {
-    let cbs = paths.get(path)
-    if (cbs) {
-      cbs.forEach((key) => {
-        callbacks.get(key).delete(path)
-      })
-    }
-    paths.delete(path)
-  }
+  // removePathsFromTracking(path: string) {
+  //   let cbs = paths.get(path)
+  //   if (cbs) {
+  //     cbs.forEach((key) => {
+  //       callbacks.get(key).delete(path)
+  //     })
+  //   }
+  //   paths.delete(path)
+  // }
 
   screenClosing() {
     if (
@@ -96,25 +96,28 @@ export class OvlBaseElement extends HTMLElement {
       this.state.ovl.screens.screenState &&
       this.state.ovl.screens.screenState[this.screen] !== undefined
     ) {
-      return this.state.ovl.screens.screenState[this.screen].closing === true
+      return this.track(() => {
+        this.state.ovl.screens.screenState[this.screen]
+        return this.state.ovl.screens.screenState[this.screen].closing === true
+      })
     }
 
     return false
   }
 
   screenVisible() {
-    if (
-      this.state.ovl.screens &&
-      this.state.ovl.screens.screenState &&
-      this.state.ovl.screens.screenState[this.screen] !== undefined
-    ) {
-      return this.state.ovl.screens.screenState[this.screen].visible === true
-    }
-    return false
+    return this.track(() => {
+      this.state.ovl.screens.screenState[this.screen]
+      let visible =
+        this.state.ovl.screens.screenState[this.screen].visible === true
+      logTrackingList()
+      return visible
+    })
   }
 
   handleAnimationStart = (e) => {
     if (e.animationName === "fadeInScreen") {
+      //this.track(() => {
       // if there is a screen show function call it
       scrollToLastPosition(this.state)
       if (customFunctions) {
@@ -132,6 +135,7 @@ export class OvlBaseElement extends HTMLElement {
           }
         }
       }
+      //})
     }
   }
 
@@ -173,6 +177,9 @@ export class OvlBaseElement extends HTMLElement {
 
   async doRender() {
     console.log("render " + this.name)
+    let checkScreen
+
+    this.state.ovl.language.translations
     if (this.screen) {
       if (!this.screenClosing()) {
         this.animatedClass = " fadeInScreen"
@@ -190,9 +197,10 @@ export class OvlBaseElement extends HTMLElement {
         }
       }
     }
+    checkScreen = !this.screen || this.screenVisible()
 
     let res = null
-    if (!this.screen || this.screenVisible()) {
+    if (checkScreen) {
       res = await this.getUI()
     }
     if (res !== undefined) {
@@ -202,15 +210,23 @@ export class OvlBaseElement extends HTMLElement {
     setTimeout(() => {
       this.updated()
     }, 50)
-    this.state.ovl.language.translations
 
-    this.removePathsFromTracking("app.screens.screenState")
-    this.removePathsFromTracking("app.screens")
-    this.removePathsFromTracking("app.forms")
+    // this.removePathsFromTracking("app.screens.screenState")
+    // this.removePathsFromTracking("app.screens")
+    // this.removePathsFromTracking("app.forms")
   }
 
   connectedCallback() {
     this.init()
+    if (this.screen) {
+      if (this.state.ovl.screens.screenState[this.screen] === undefined) {
+        this.state.ovl.screens.screenState[this.screen] = {
+          visible: false,
+          isClosing: false,
+        }
+      }
+    }
+
     this.doRender()
     if (this.screen) {
       this.addEventListener("animationend", this.handleAnimationEnd, true)

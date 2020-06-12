@@ -244,7 +244,7 @@ export const SetLanguage: OvlAction<string> = async (
   value
 ) => {
   let lang = value
-  let res = await effects.postRequest(api.url + "users/translations", {
+  let res = await effects.ovl.postRequest(api.url + "users/translations", {
     language: lang,
   })
   ResetT()
@@ -333,7 +333,7 @@ export const GetFile: OvlAction<{
     // that way it reloads to current state...
     saveState(true, "GetFile")
   }
-  let res = await effects.getRequest(
+  let res = await effects.ovl.getRequest(
     state.ovl.apiUrl + "assets/get",
     { cat, id1, id2, ext },
     true
@@ -388,7 +388,7 @@ export const RehydrateAndUpdateApp: OvlAction = async ({
         api.url = state.ovl.apiUrl
         state.ovl.uiState.isReady = true
 
-        let updateCheck = await effects.getRequest(
+        let updateCheck = await effects.ovl.getRequest(
           "./updatecheck/ovlnocache" + OvlConfig._system.DataVersion + ".js",
           undefined
         )
@@ -415,7 +415,6 @@ export const InitApp: OvlAction<Init> = async (
     ovl.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
-
   // rehydrate state from indexeddb/check if update is needed
   await actions.ovl.internal.RehydrateAndUpdateApp()
   state.ovl.libState.indicator.open = false
@@ -442,7 +441,7 @@ export const InitApp: OvlAction<Init> = async (
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
   let lang = localStorage.getItem("PortalLanguage")
-  let res = await effects.postRequest(api.url + "users/translations", {
+  let res = await effects.ovl.postRequest(api.url + "users/translations", {
     language: lang,
   })
 

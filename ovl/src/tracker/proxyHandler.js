@@ -101,7 +101,7 @@ export function createDeepProxy(target) {
 
   function proxify(obj, path) {
     for (let key of Object.keys(obj)) {
-      if (typeof obj[key] === "object") {
+      if (typeof obj[key] === "object" && obj[key] !== null) {
         obj[key] = proxify(obj[key], [...path, key])
       }
     }

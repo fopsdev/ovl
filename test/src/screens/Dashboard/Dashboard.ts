@@ -11,8 +11,9 @@ export class CompDashboard extends OvlBaseElement {
   }
 
   async getUI() {
-    let partner = this.state.portal.partner
-    return html`
+    return this.track(() => {
+      let partner = this.state.portal.partner
+      return html`
     <div class="${this.animatedClass}">
       <div>
       <div class="fd-container fd-container--fluid">
@@ -66,8 +67,8 @@ export class CompDashboard extends OvlBaseElement {
 
               <p class="fd-panel__description">
                 <b>${partner.salesContact.firstName} ${
-      partner.salesContact.lastName
-    }</b>
+        partner.salesContact.lastName
+      }</b>
                   <br>
                   ${partner.salesContact.phone}
                   <br>
@@ -93,8 +94,8 @@ export class CompDashboard extends OvlBaseElement {
 
               <p class="fd-panel__description">
               <b>${partner.technicalContact.firstName} ${
-      partner.technicalContact.lastName
-    }</b>
+        partner.technicalContact.lastName
+      }</b>
                   <br>
                   ${partner.technicalContact.phone}
                   <br>
@@ -118,5 +119,6 @@ export class CompDashboard extends OvlBaseElement {
       </div>
       </div>
     `
+    })
   }
 }

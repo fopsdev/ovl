@@ -1,17 +1,16 @@
 import { html, render } from "../../ovl/node_modules/lit-html"
 
 import { CustomFormType, TableDefIds, Language } from "./state"
-import * as portalActions from "../src/actions"
 import { OvlConfig } from "../../ovl/src/init"
 import { OvlState, ovl } from "../../ovl/src/index"
 export { TableDefIds, CustomFormType, Language }
 
 OvlConfig.requiredActions = {
   customPrepareActionPath: undefined,
-  customInitActionPath: portalActions.system.user.CustomInit,
+  customInitActionPath: ovl.actions.portal.system.user.CustomInit,
   handleAdditionalTranslationResultActionPath:
-    portalActions.system.user.HandleAdditionalLanguageResult,
-  handleGlobalRefreshActionPath: portalActions.global.HandleRefresh,
+    ovl.actions.portal.system.user.HandleAdditionalLanguageResult,
+  handleGlobalRefreshActionPath: ovl.actions.portal.global.HandleRefresh,
 }
 
 OvlConfig.apiUrl = {
@@ -35,14 +34,12 @@ OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
 import { defineElements } from "./registerComponents"
 defineElements()
 console.log("hi from app index")
-
 ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
-
-// window.scrollTo(0, 1)
-// render(
-//   html`
-//     <ovl-shellbar></ovl-shellbar>
-//     <ovl-snack> </ovl-snack>
-//   `,
-//   document.getElementById("app")
-// )
+window.scrollTo(0, 1)
+render(
+  html`
+    <ovl-shellbar></ovl-shellbar>
+    <ovl-snack> </ovl-snack>
+  `,
+  document.getElementById("app")
+)
