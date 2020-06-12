@@ -122,11 +122,6 @@ export type PartnerState = {
   }
 }
 
-let pics: PicsState = {
-  salesContact: "",
-  technicalContact: "",
-}
-
 type Role = "User" | "Admin"
 
 export type Feature = {
@@ -143,19 +138,6 @@ type User = {
   role: Role
   features: Feature
   userCode: number
-}
-
-type Portal = {
-  user: User
-  orderDetail: OrderDetailState
-  quotationDetail: QuotationDetailState
-  invoiceDetail: InvoiceDetailState
-  dpInvoiceDetail: DPInvoiceDetailState
-  chartData: DoubleBarChartState
-  partner: PartnerState
-  pics: PicsState
-  tables: { translation: TableData; audit: TableData }
-  testtables: { tableTesting: TableData; timeentries: TableData; lookups: any }
 }
 
 export type CustomFormType =
@@ -219,30 +201,43 @@ let lookups = {
 
 let testtables = { tableTesting, timeentries, lookups }
 
-export let portalState: Portal = {
-  user: undefined,
-  orderDetail: undefined,
-  chartData: undefined,
-  dpInvoiceDetail: undefined,
-  invoiceDetail: undefined,
-  partner: undefined,
-  pics: undefined,
-  quotationDetail: undefined,
-  tables: {
-    translation: {
-      data: {},
-      schema: {},
-      tableDef: {
-        translation: tblTranslation,
-      },
-    },
-    audit: {
-      data: {},
-      schema: {},
-      tableDef: {
-        audit: tblAudit,
-      },
+let user: User
+let chartData
+let dpInvoiceDetail: DPInvoiceDetailState
+let invoiceDetail: InvoiceDetailState
+let orderDetail: OrderDetailState
+let partner: PartnerState
+let pics: PicsState = {
+  salesContact: "",
+  technicalContact: "",
+}
+let quotationDetail: QuotationDetailState
+let tables = {
+  translation: {
+    data: {},
+    schema: {},
+    tableDef: {
+      translation: tblTranslation,
     },
   },
+  audit: {
+    data: {},
+    schema: {},
+    tableDef: {
+      audit: tblAudit,
+    },
+  },
+}
+
+export {
+  user,
+  orderDetail,
+  chartData,
+  dpInvoiceDetail,
+  invoiceDetail,
+  partner,
+  pics,
+  quotationDetail,
+  tables,
   testtables,
 }

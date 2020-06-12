@@ -1,12 +1,10 @@
 import { html, render } from "../../ovl/node_modules/lit-html"
-import { defineElements } from "./registerComponents"
+
 import { CustomFormType, TableDefIds, Language } from "./state"
 import * as portalActions from "../src/actions"
 import { OvlConfig } from "../../ovl/src/init"
-import { OvlState } from "../../ovl/src"
+import { OvlState, ovl } from "../../ovl/src/index"
 export { TableDefIds, CustomFormType, Language }
-
-defineElements()
 
 OvlConfig.requiredActions = {
   customPrepareActionPath: undefined,
@@ -34,7 +32,11 @@ OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
   )
 }
 
-//ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
+import { defineElements } from "./registerComponents"
+defineElements()
+console.log("hi from app index")
+
+ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
 
 // window.scrollTo(0, 1)
 // render(

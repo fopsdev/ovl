@@ -4,8 +4,7 @@ import { Translation } from "./global/globals"
 import { ScreensState } from "./library/OvlBaseElement"
 import { OverlayState } from "./library/Overlay/Overlay"
 import { SnackState } from "./library/Snack/Snack"
-
-import { screens } from "./index"
+import { screens as screensState } from "./index"
 
 let forms: FormsState = undefined
 
@@ -38,35 +37,35 @@ type User = {
 
 let user: User = { token: "" }
 
-export const ovlState = {
-  user,
-  language: {
-    language: "",
-    translations,
-    showTranslationKeys: false,
-  },
-  uiState: {
-    hasOSReducedMotion: false,
-    isDemo: false,
-    isMobile: false,
-    isTouch: false,
-    isIOS: false,
-    isReady: false,
-    stateSavedReason: "",
-    tableNeedsRebuild: false,
-  },
-  apiUrl,
-  libState: {
-    dialog,
-    snacks,
-    indicator,
-    overlay,
-    overlay2,
-  },
-  screens: {
-    screens: screens,
-    nav,
-    screenState: undefined,
-  },
-  forms,
+let language = {
+  language: "",
+  translations,
+  showTranslationKeys: false,
 }
+
+let uiState = {
+  hasOSReducedMotion: false,
+  isDemo: false,
+  isMobile: false,
+  isTouch: false,
+  isIOS: false,
+  isReady: false,
+  stateSavedReason: "",
+  tableNeedsRebuild: false,
+}
+
+let libState = {
+  dialog,
+  snacks,
+  indicator,
+  overlay,
+  overlay2,
+}
+
+let screens = {
+  screens: screensState,
+  nav,
+  screenState: undefined,
+}
+
+export { user, language, uiState, apiUrl, libState, screens, forms }

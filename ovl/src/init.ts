@@ -37,16 +37,9 @@ type OvlConfig = {
   stickyHeaderEnabled: (state: OvlState) => {}
 }
 
-import { OvlState, OvlAction } from "."
-import * as actions from "./actions"
-import * as effects from "./effects"
-import { defineElements } from "./registerComponents"
-
-export { actions }
+import { OvlState, OvlAction } from "./index"
 
 // #####################################################################################################################################
-
-defineElements()
 
 let dataVersion = "1"
 let OvlConfig: OvlConfig = {

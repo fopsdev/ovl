@@ -112,10 +112,10 @@ export function createDeepProxy(target) {
   }
 
   function checkForCallbacks(path) {
-    console.log("tracked mutation on: " + path)
     let cbs = paths.get(path)
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0
+      console.log("tracked mutation on: " + path)
       console.log("update will be called on:")
       cbs.forEach((key) => {
         console.log(key.name)

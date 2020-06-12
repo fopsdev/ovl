@@ -1,5 +1,5 @@
 import { OpenDialogState, ResultType } from "./Dialog"
-import { Screen, OvlAction } from "../../index"
+import { Screen, OvlAction, OvlActions } from "../../index"
 
 let currentScreen: Screen = undefined
 export let dialogAfterClose = {
@@ -63,6 +63,7 @@ export const OkDialog: OvlAction<{ text: string }> = async (
   { actions },
   value
 ) => {
+  debugger
   actions.ovl.dialog.DialogOpen({
     cancel: "NoButton",
     ok: "AppOk",

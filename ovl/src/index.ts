@@ -1,23 +1,21 @@
 import { CustomFormType, TableDefIds, Language } from "../../test/src/index"
-
-import { portalState } from "../../test/src/state"
-import * as portalActions from "../../test/src/actions"
-
 import { screens } from "../../test/src/stateScreens"
 import * as customFunctions from "../../test/src/customFunctions"
-import { ovlState } from "./state"
+import * as portalState from "../../test/src/state"
+import * as portalActions from "../../test/src/actions"
+
+import { createDeepProxy } from "./tracker/proxyHandler"
+import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
-import { createDeepProxy } from "./tracker/proxyHandler"
 
-export declare type OvlAction<T = {}> = (context?, value?: T) => void
+export type OvlAction<T = {}> = (context?, value?: T) => void
 
 let _state = {
   ovl: ovlState,
   portal: portalState,
 }
 
-export declare type OvlState = typeof _state
 let state: OvlState = createDeepProxy(_state)
 
 let actions = {
@@ -25,23 +23,9 @@ let actions = {
   portal: portalActions,
 }
 
-// find the functions in actions and inject our own action caller
-const getMethods = (obj) =>
-  Object.keys(obj).forEach((item) => {
-    if (typeof obj[item] === "function") {
-      console.log(item)
-    } else if (typeof obj[item] === "object") {
-      getMethods(obj[item])
-    }
-  })
-
-export declare type OvlActions = typeof actions
-
 let effects = {
   ovl: ovlEffects,
 }
-
-export declare type OvlEffects = typeof effects
 
 export let ovl = {
   state,
@@ -49,9 +33,36 @@ export let ovl = {
   effects,
 }
 
-import { defineElements } from "./registerComponents"
-defineElements()
+const interceptorFn = (originalFn) => {
+  return (value) =>
+    originalFn(
+      {
+        state: ovl.state,
+        actions: ovl.actions,
+        effects: ovl.effects,
+      },
+      value
+    )
+}
 
+const getMethods = (obj) =>
+  Object.keys(obj).forEach((item) => {
+    if (typeof obj[item] === "function") {
+      obj[item] = interceptorFn(obj[item])
+      console.log(obj[item])
+    } else if (typeof obj[item] === "object") {
+      getMethods(obj[item])
+    }
+  })
+// find the functions in actions and inject our own action caller
+getMethods(actions)
+
+console.log("hi from ovl index")
+export type OvlState = typeof _state
+export type OvlActions = typeof actions
+export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
 export { customFunctions, screens, TableDefIds, Language }
 export type Screen = keyof typeof screens
+import { defineElements } from "./registerComponents"
+defineElements()
