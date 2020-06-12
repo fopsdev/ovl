@@ -9,6 +9,8 @@ import langpic_fr from "../../../img/fr.png"
 // @ts-ignore
 import logo from "../../../img/icon-192x192.png"
 import { ShellButtonOrMenu } from "../../components/Refresh/Refresh"
+import { logTrackingList } from "../../../../ovl/src/tracker/tracker"
+import { logState } from "../../../../ovl/src"
 
 export type ShellbarState = {
   mainMenuExpanded: boolean
@@ -96,6 +98,11 @@ export class CompShellbar extends OvlBaseElement {
 
     const handleLanguageTable = (e: Event) => {
       this.actions.ovl.navigation.NavigateTo("Translation")
+    }
+
+    const handleVersionClicked = async (e: Event) => {
+      logTrackingList()
+      logState()
     }
 
     const handleAudit = async (e: Event) => {
@@ -517,7 +524,10 @@ export class CompShellbar extends OvlBaseElement {
                           </li>
 
                           <li>
-                            <a class="fd-menu__item">
+                            <a
+                              @click=${handleVersionClicked}
+                              class="fd-menu__item"
+                            >
                               Version: ${version}
                             </a>
                           </li>

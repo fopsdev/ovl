@@ -9,29 +9,31 @@ export class CompTranslation extends OvlBaseElement {
     this.screen = "Translation"
   }
   async getUI() {
-    return html`
-      <div class="fd-panel ${this.animatedClass}">
-        <div class="fd-panel__header">
-          <div class="fd-panel__head">
-            <h3 class="fd-panel__title">
-              ${T("AppTranslations")}
-            </h3>
+    return this.track(() => {
+      return html`
+        <div class="fd-panel ${this.animatedClass}">
+          <div class="fd-panel__header">
+            <div class="fd-panel__head">
+              <h3 class="fd-panel__title">
+                ${T("AppTranslations")}
+              </h3>
+            </div>
+          </div>
+
+          <div class="fd-panel__body fd-has-padding-base fd-has-margin-base">
+            <ovl-table
+              class="fd-table"
+              .props=${(state: OvlState) => {
+                return {
+                  def: state.portal.tables.translation.tableDef.translation,
+                  data: state.portal.tables.translation,
+                }
+              }}
+            >
+            </ovl-table>
           </div>
         </div>
-
-        <div class="fd-panel__body fd-has-padding-base fd-has-margin-base">
-          <ovl-table
-            class="fd-table"
-            .props=${(state: OvlState) => {
-              return {
-                def: state.portal.tables.translation.tableDef.translation,
-                data: state.portal.tables.translation,
-              }
-            }}
-          >
-          </ovl-table>
-        </div>
-      </div>
-    `
+      `
+    })
   }
 }

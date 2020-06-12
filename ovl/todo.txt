@@ -1,4 +1,11 @@
+
+
 Todos:
+
+- Check async issue with  action calling
+  (tablerebuild gets calld before tabledata is loaded)
+  ( you may enter translations screen to see issue ) 
+
 
 - Tab Feature for Edit and Detailview
   Define a set of tabs for edit and detailview

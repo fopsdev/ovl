@@ -336,6 +336,7 @@ export const TableRefreshDataFromServer: OvlAction<{
   }
 
   value.data.timestamp = Date.now()
+  console.log("datafromserverloaded")
 }
 let lastRefreshMsg: number = 0
 export const TableRefresh: OvlAction<{
@@ -394,6 +395,7 @@ export const TableRefresh: OvlAction<{
       forceServerDataRefresh
     )
   }
+  console.log("tablerebuild")
   def.initialised = true
   let data = dataAndState
   setTimeout(() => {

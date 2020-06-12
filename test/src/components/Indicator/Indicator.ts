@@ -4,9 +4,11 @@ import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 export class OvlIndicator extends OvlBaseElement {
   async getUI() {
     let hideIndicator = "hide"
-    if (this.state.ovl.libState.indicator.open) {
-      hideIndicator = ""
-    }
+    this.track(() => {
+      if (this.state.ovl.libState.indicator.open) {
+        hideIndicator = ""
+      }
+    })
     return html`
       <span
         style="margin-left: 8px; color:white;"

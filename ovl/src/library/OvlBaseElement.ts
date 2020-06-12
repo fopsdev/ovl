@@ -110,7 +110,7 @@ export class OvlBaseElement extends HTMLElement {
       this.state.ovl.screens.screenState[this.screen]
       let visible =
         this.state.ovl.screens.screenState[this.screen].visible === true
-      logTrackingList()
+      //logTrackingList()
       return visible
     })
   }

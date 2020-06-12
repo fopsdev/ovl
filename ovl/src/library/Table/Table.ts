@@ -1,6 +1,6 @@
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { repeat } from "lit-html/directives/repeat"
+import { repeat } from "../../tracker/myRepeat.js"
 import { api, ovltemp, resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,
@@ -537,420 +537,424 @@ export class TableHeader extends OvlBaseElement {
           " is not initialised. Make sure to call TableRefresh at least once before using it"
       )
     }
-    let dataAndSchema = this.tabledata.data
-    let columns = def.columns
-    let colWidths = Object.keys(columns)
-      .filter((k) => columns[k].width)
-      .map((k) => {
-        let column = columns[k]
+    return this.track(() => {
+      let dataAndSchema = this.tabledata.data
+      let columns = def.columns
+      let colWidths = Object.keys(columns)
+        .filter((k) => columns[k].width)
+        .map((k) => {
+          let column = columns[k]
 
-        return html` <col style="width:${column.width}%" /> `
-      })
+          return html` <col style="width:${column.width}%" /> `
+        })
 
-    let columnsAlign = {}
-    let columnsVisible = {}
-    let columnsCount = 0
-    let isMobile = this.state.ovl.uiState.isMobile
-    let customHeaderCellClasses: { [key: string]: CellClass }
-    let functionName = ViewHeaderCellClass
-    let fn = resolvePath(customFunctions, def.namespace)
-    if (fn && fn[functionName]) {
-      customHeaderCellClasses = fn[functionName](
-        def,
-        isMobile,
-        <DisplayMode>"Table",
-        this.state
-      )
-    }
-    if (!customHeaderCellClasses) {
-      customHeaderCellClasses = {}
-    }
-
-    let headerRows = html`
-      ${Object.keys(columns).map((k) => {
-        let column = columns[k]
-
-        let visible: FieldVisibility = "Table_Edit_View"
-
-        if (
-          column.ui.language &&
-          column.ui.language !== this.state.ovl.language.language
-        ) {
-          visible = column.ui.translationVisibility
-        } else {
-          visible = column.ui.visibility
-        }
-
-        //@@hook
-        let functionName = FieldIsVisible.replace("%", k)
-        let fn = resolvePath(customFunctions, def.namespace)
-        if (fn && fn[functionName]) {
-          visible = fn[functionName](
-            this.tabledata,
-            this.state,
-            this.actions,
-            ovl.effects
-          )
-        }
-
-        columnsVisible[k] = visible
-        if (isMobile) {
-          if (visible.indexOf("TableNotMobile") > -1) {
-            return null
-          }
-        } else {
-          if (visible.indexOf("TableOnlyMobile") > -1) {
-            return null
-          }
-        }
-        if (visible.indexOf("Table") < 0) {
-          return null
-        }
-
-        let sortdirection = ""
-        let sortCustom = def.options.sortCustom
-        let hasCustomSort =
-          sortCustom.sorts &&
-          sortCustom.selected &&
-          sortCustom.sorts[sortCustom.selected]
-        if (column.sortable && !hasCustomSort) {
-          sortdirection = "fd-table__sort-column"
-          if (k === def.options.sort.field) {
-            if (def.options.sort.direction === "asc") {
-              sortdirection += " fd-table__sort-column--asc"
-            } else {
-              sortdirection += " fd-table__sort-column--dsc"
-            }
-          }
-        }
-        let cellBgColor = ""
-
-        if (column.filter.enabled) {
-          cellBgColor = "background-color: var(--fd-color-shell-2);"
-        }
-
-        if (k === def.uiState.headerSelected) {
-          cellBgColor = "background-color: var(--fd-color-accent-7);"
-        }
-        columnsCount++
-        let align: ColumnAlign = "left"
-        if (column.ui.align) {
-          align = column.ui.align
-        } else {
-          if (
-            column.type &&
-            (!column.control || column.control !== "list") &&
-            (column.type === "decimal" || column.type === "int")
-          ) {
-            align = "right"
-          }
-        }
-        let cssAlign = ""
-        switch (align) {
-          case "center":
-            cssAlign = "fd-has-text-align-center"
-            break
-
-          case "right":
-            cssAlign = "fd-has-text-align-right"
-            break
-        }
-        columnsAlign[k] = cssAlign
-        let caption
-        if (column.ui.labelTranslationKey) {
-          caption = T(column.ui.labelTranslationKey)
-        }
-        if (!caption) {
-          caption = k
-        }
-
-        //caption = GetLabelText(caption, k, def.namespace, this.state)
-
-        let stickyTableHeader
-        if (OvlConfig.stickyHeaderEnabled(this.state)) {
-          stickyTableHeader = "stickyTableHeader"
-        }
-
-        // check for custom header renderer
-        let rendererFn = GetRendererFn(
-          def.namespace,
-          cachedRendererFn,
-          FieldGetLabelRender,
-          k
+      let columnsAlign = {}
+      let columnsVisible = {}
+      let columnsCount = 0
+      let isMobile = this.state.ovl.uiState.isMobile
+      let customHeaderCellClasses: { [key: string]: CellClass }
+      let functionName = ViewHeaderCellClass
+      let fn = resolvePath(customFunctions, def.namespace)
+      if (fn && fn[functionName]) {
+        customHeaderCellClasses = fn[functionName](
+          def,
+          isMobile,
+          <DisplayMode>"Table",
+          this.state
         )
-        let headerPart
-        if (!rendererFn) {
-          headerPart = caption
-        } else {
-          headerPart = rendererFn(
-            k,
-            caption,
-            align[k],
-            <DisplayMode>"Table",
-            this.state
-          )
-        }
-
-        let customHeaderCellClass: string = ""
-        let tooltip
-        if (customHeaderCellClasses[k]) {
-          customHeaderCellClass = customHeaderCellClasses[k].className
-          tooltip = customHeaderCellClasses[k].tooltip
-        }
-
-        return html`
-          <th
-            data-col="${k}"
-            title="${ifDefined(tooltip ? tooltip : undefined)}"
-            style="${cellBgColor}"
-            class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-table-label-${column.control +
-            (column.asset
-              ? column.asset.type
-              : "")} ovl-table-label__${k} ${customHeaderCellClass}"
-            scope="col"
-          >
-            ${headerPart}
-          </th>
-        `
-      })}
-    `
-
-    let rowNavTop
-    if (
-      !def.uiState.headerSelected &&
-      (def.options.navType === "top/bottom" || def.options.navType === "top")
-    ) {
-      rowNavTop = html`
-        <ovl-tnavcontrol
-          class="fd-table__row"
-          .props=${() => {
-            return { tableData: this.tabledata, type: "row" } as NavDef
-          }}
-        ></ovl-tnavcontrol>
-      `
-    }
-    let rowNavBottom
-    let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
-    // get all the committed rows (no temporary keys)
-    let dataRows = dataFilteredAndSorted
-    let filteredRowsCount = dataRows.length
-    let paging = def.options.paging
-    // do paging only on committed rows
-    if (def.features.page) {
-      dataRows = dataRows.slice(
-        paging.page * paging.pageSize,
-        (paging.page + 1) * paging.pageSize
-      )
-    }
-
-    // check if we hit maxsize...so give a hint at the end of the table
-
-    let showMaxSizeHint = false
-    if (
-      !def.features.page &&
-      def.options.maxRows.maxRows !== -1 &&
-      def.options.maxRows.maxRows <
-        dataRows.filter((f) => {
-          return f.indexOf(ovltemp) < 0
-        }).length
-    ) {
-      dataRows = dataRows
-        .filter((f) => f.indexOf(ovltemp) < 0)
-        .slice(0, def.options.maxRows.maxRows)
-        .concat(dataRows.filter((f) => f.indexOf(ovltemp) > -1))
-      if (def.options.maxRows.showHint) {
-        showMaxSizeHint = true
       }
-    }
-
-    let dataAndAddRows = dataRows
-    // make sure to show freshly and not refreshed (=resorted) rows on the first page or last page depending on mode
-    let page = -1
-    if (def.features.page) {
-      page = Math.ceil(filteredRowsCount / paging.pageSize) - 1
-      if (page < 0) {
-        page = 0
+      if (!customHeaderCellClasses) {
+        customHeaderCellClasses = {}
       }
-    }
 
-    // put the tablemenu to the ovberlay
+      let headerRows = html`
+        ${Object.keys(columns).map((k) => {
+          let column = columns[k]
 
-    if (overlayToRender.resolve && def.uiState.headerSelected !== "") {
-      overlayToRender.resolve(html`
-        <ovl-tableheadermenu
-          .props=${() => {
-            return <HeaderMenuDef>{
-              def: this.tabledata,
+          let visible: FieldVisibility = "Table_Edit_View"
+
+          if (
+            column.ui.language &&
+            column.ui.language !== this.state.ovl.language.language
+          ) {
+            visible = column.ui.translationVisibility
+          } else {
+            visible = column.ui.visibility
+          }
+
+          //@@hook
+          let functionName = FieldIsVisible.replace("%", k)
+          let fn = resolvePath(customFunctions, def.namespace)
+          if (fn && fn[functionName]) {
+            visible = fn[functionName](
+              this.tabledata,
+              this.state,
+              this.actions,
+              ovl.effects
+            )
+          }
+
+          columnsVisible[k] = visible
+          if (isMobile) {
+            if (visible.indexOf("TableNotMobile") > -1) {
+              return null
             }
-          }}
-        ></ovl-tableheadermenu>
-      `)
-    }
+          } else {
+            if (visible.indexOf("TableOnlyMobile") > -1) {
+              return null
+            }
+          }
+          if (visible.indexOf("Table") < 0) {
+            return null
+          }
 
-    // if (def.options.addedRowsPosition === "bottom") {
-    //   // add only if on last page
+          let sortdirection = ""
+          let sortCustom = def.options.sortCustom
+          let hasCustomSort =
+            sortCustom.sorts &&
+            sortCustom.selected &&
+            sortCustom.sorts[sortCustom.selected]
+          if (column.sortable && !hasCustomSort) {
+            sortdirection = "fd-table__sort-column"
+            if (k === def.options.sort.field) {
+              if (def.options.sort.direction === "asc") {
+                sortdirection += " fd-table__sort-column--asc"
+              } else {
+                sortdirection += " fd-table__sort-column--dsc"
+              }
+            }
+          }
+          let cellBgColor = ""
 
-    //   if (!def.features.page || page === paging.page) {
-    //     dataAndAddRows = dataRows.concat(
-    //       Object.keys(data).filter(k => k.indexOf(ovltemp) > -1)
-    //     )
-    //   }
-    // }
-    // else if (def.options.addedRowsPosition === "top") {
-    //   // only if on first page
-    //   if (page === 0 || page < 0) {
-    //     //@ts-ignore
-    //     dataAndAddRows = dataAndSchema.addRows
-    //       .slice(def.uiState.addRowsIndex)
-    //       .reverse()
-    //       .concat(dataRows)
-    //   }
-    // }
+          if (column.filter.enabled) {
+            cellBgColor = "background-color: var(--fd-color-shell-2);"
+          }
 
-    if (
-      def.options.navType === "top/bottom" ||
-      def.options.navType === "bottom"
-    ) {
-      rowNavBottom = html`
-        <ovl-tnavcontrol
-          class="fd-table__row"
-          .props=${() => {
-            return { tableData: this.tabledata, type: "row" } as NavDef
-          }}
-        ></ovl-tnavcontrol>
+          if (k === def.uiState.headerSelected) {
+            cellBgColor = "background-color: var(--fd-color-accent-7);"
+          }
+          columnsCount++
+          let align: ColumnAlign = "left"
+          if (column.ui.align) {
+            align = column.ui.align
+          } else {
+            if (
+              column.type &&
+              (!column.control || column.control !== "list") &&
+              (column.type === "decimal" || column.type === "int")
+            ) {
+              align = "right"
+            }
+          }
+          let cssAlign = ""
+          switch (align) {
+            case "center":
+              cssAlign = "fd-has-text-align-center"
+              break
+
+            case "right":
+              cssAlign = "fd-has-text-align-right"
+              break
+          }
+          columnsAlign[k] = cssAlign
+          let caption
+          if (column.ui.labelTranslationKey) {
+            caption = T(column.ui.labelTranslationKey)
+          }
+          if (!caption) {
+            caption = k
+          }
+
+          //caption = GetLabelText(caption, k, def.namespace, this.state)
+
+          let stickyTableHeader
+          if (OvlConfig.stickyHeaderEnabled(this.state)) {
+            stickyTableHeader = "stickyTableHeader"
+          }
+
+          // check for custom header renderer
+          let rendererFn = GetRendererFn(
+            def.namespace,
+            cachedRendererFn,
+            FieldGetLabelRender,
+            k
+          )
+          let headerPart
+          if (!rendererFn) {
+            headerPart = caption
+          } else {
+            headerPart = rendererFn(
+              k,
+              caption,
+              align[k],
+              <DisplayMode>"Table",
+              this.state
+            )
+          }
+
+          let customHeaderCellClass: string = ""
+          let tooltip
+          if (customHeaderCellClasses[k]) {
+            customHeaderCellClass = customHeaderCellClasses[k].className
+            tooltip = customHeaderCellClasses[k].tooltip
+          }
+
+          return html`
+            <th
+              data-col="${k}"
+              title="${ifDefined(tooltip ? tooltip : undefined)}"
+              style="${cellBgColor}"
+              class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-table-label-${column.control +
+              (column.asset
+                ? column.asset.type
+                : "")} ovl-table-label__${k} ${customHeaderCellClass}"
+              scope="col"
+            >
+              ${headerPart}
+            </th>
+          `
+        })}
       `
-    }
-    let alreadyRendered = {}
-    let rows = repeat(
-      dataAndAddRows,
-      (k: string) => k,
-      (k) => {
-        if (alreadyRendered[k]) {
-          return null
-        }
-        alreadyRendered[k] = true
-        let row = html`
-          <ovl-trg
-            class="fd-table__body ovl-tableview-row"
+
+      let rowNavTop
+      if (
+        !def.uiState.headerSelected &&
+        (def.options.navType === "top/bottom" || def.options.navType === "top")
+      ) {
+        rowNavTop = html`
+          <ovl-tnavcontrol
+            class="fd-table__row"
             .props=${() => {
-              return <TableRowDef>{
-                data: dataAndSchema,
-                key: k,
-                tableDef: def,
-                columnsAlign,
-                columnsVisible,
-                columnsCount: columnsCount,
-                selected: def.uiState.selectedRow[k],
-                viewRow: def.uiState.viewRow[k],
-                editSelected: def.uiState.editRow[k],
-                intersectionObserver: this.intersectionObserver,
+              return { tableData: this.tabledata, type: "row" } as NavDef
+            }}
+          ></ovl-tnavcontrol>
+        `
+      }
+      let rowNavBottom
+      let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
+      // get all the committed rows (no temporary keys)
+      let dataRows = dataFilteredAndSorted
+      let filteredRowsCount = dataRows.length
+      let paging = def.options.paging
+      // do paging only on committed rows
+      if (def.features.page) {
+        dataRows = dataRows.slice(
+          paging.page * paging.pageSize,
+          (paging.page + 1) * paging.pageSize
+        )
+      }
+
+      // check if we hit maxsize...so give a hint at the end of the table
+
+      let showMaxSizeHint = false
+      if (
+        !def.features.page &&
+        def.options.maxRows.maxRows !== -1 &&
+        def.options.maxRows.maxRows <
+          dataRows.filter((f) => {
+            return f.indexOf(ovltemp) < 0
+          }).length
+      ) {
+        dataRows = dataRows
+          .filter((f) => f.indexOf(ovltemp) < 0)
+          .slice(0, def.options.maxRows.maxRows)
+          .concat(dataRows.filter((f) => f.indexOf(ovltemp) > -1))
+        if (def.options.maxRows.showHint) {
+          showMaxSizeHint = true
+        }
+      }
+
+      let dataAndAddRows = dataRows
+      // make sure to show freshly and not refreshed (=resorted) rows on the first page or last page depending on mode
+      let page = -1
+      if (def.features.page) {
+        page = Math.ceil(filteredRowsCount / paging.pageSize) - 1
+        if (page < 0) {
+          page = 0
+        }
+      }
+
+      // put the tablemenu to the ovberlay
+
+      if (overlayToRender.resolve && def.uiState.headerSelected !== "") {
+        overlayToRender.resolve(html`
+          <ovl-tableheadermenu
+            .props=${() => {
+              return <HeaderMenuDef>{
+                def: this.tabledata,
               }
             }}
-          >
-          </ovl-trg>
-        `
-        return html` ${row} `
+          ></ovl-tableheadermenu>
+        `)
       }
-    )
 
-    let maxSizeHint
-    if (showMaxSizeHint) {
-      maxSizeHint = html`
-        <tr
-          data-col="${def.database.dataIdField}"
-          @click="${this.handleHeaderColumnClick}"
-          class="fd-table__row"
-        >
-          <td
-            data-col="${def.database.dataIdField}"
-            class="fd-has-text-align-center"
-            colspan="${columnsCount}"
-          >
-            <div
-              data-col="${def.database.dataIdField}"
-              class="fd-alert fd-alert--warning"
-              role="alert"
+      // if (def.options.addedRowsPosition === "bottom") {
+      //   // add only if on last page
+
+      //   if (!def.features.page || page === paging.page) {
+      //     dataAndAddRows = dataRows.concat(
+      //       Object.keys(data).filter(k => k.indexOf(ovltemp) > -1)
+      //     )
+      //   }
+      // }
+      // else if (def.options.addedRowsPosition === "top") {
+      //   // only if on first page
+      //   if (page === 0 || page < 0) {
+      //     //@ts-ignore
+      //     dataAndAddRows = dataAndSchema.addRows
+      //       .slice(def.uiState.addRowsIndex)
+      //       .reverse()
+      //       .concat(dataRows)
+      //   }
+      // }
+
+      if (
+        def.options.navType === "top/bottom" ||
+        def.options.navType === "bottom"
+      ) {
+        rowNavBottom = html`
+          <ovl-tnavcontrol
+            class="fd-table__row"
+            .props=${() => {
+              return { tableData: this.tabledata, type: "row" } as NavDef
+            }}
+          ></ovl-tnavcontrol>
+        `
+      }
+      let alreadyRendered = {}
+      let rows = repeat(
+        dataAndAddRows,
+        (k: string) => k,
+        (k) => {
+          if (alreadyRendered[k]) {
+            return null
+          }
+          alreadyRendered[k] = true
+          let row = html`
+            <ovl-trg
+              class="fd-table__body ovl-tableview-row"
+              .props=${() => {
+                return <TableRowDef>{
+                  data: dataAndSchema,
+                  key: k,
+                  tableDef: def,
+                  columnsAlign,
+                  columnsVisible,
+                  columnsCount: columnsCount,
+                  selected: def.uiState.selectedRow[k],
+                  viewRow: def.uiState.viewRow[k],
+                  editSelected: def.uiState.editRow[k],
+                  intersectionObserver: this.intersectionObserver,
+                }
+              }}
             >
-              <p class="fd-alert__text">
-                Mehr als ${def.options.maxRows.maxRows} Zeilen
-              </p>
-            </div>
+            </ovl-trg>
+          `
+          return html` ${row} `
+        }
+      )
+
+      let maxSizeHint
+      if (showMaxSizeHint) {
+        maxSizeHint = html`
+          <tr
+            data-col="${def.database.dataIdField}"
+            @click="${this.handleHeaderColumnClick}"
+            class="fd-table__row"
+          >
+            <td
+              data-col="${def.database.dataIdField}"
+              class="fd-has-text-align-center"
+              colspan="${columnsCount}"
+            >
+              <div
+                data-col="${def.database.dataIdField}"
+                class="fd-alert fd-alert--warning"
+                role="alert"
+              >
+                <p class="fd-alert__text">
+                  Mehr als ${def.options.maxRows.maxRows} Zeilen
+                </p>
+              </div>
+            </td>
+          </tr>
+        `
+      }
+
+      let title
+      if (def.titleTranslationKey) {
+        title = T(def.titleTranslationKey)
+      }
+      // check if filters and sort need to be put in title
+      let filterCustom = def.options.filterCustom
+      let sortCustom = def.options.sortCustom
+
+      let sortText = ""
+      if (
+        sortCustom.sorts &&
+        sortCustom.selected &&
+        sortCustom.sorts[sortCustom.selected].showInTitle
+      ) {
+        let description = T(
+          sortCustom.sorts[sortCustom.selected].translationKey
+        )
+        sortText = description
+      }
+      let filterText = ""
+      Object.keys(filterCustom)
+        .filter((f) => filterCustom[f].active && filterCustom[f].showInTitle)
+        .map((m) => {
+          let description = T(filterCustom[m].translationKey)
+
+          filterText = filterText + description + ", "
+        })
+      // if (filterText) {
+      //   filterText = filterText.substring(0,filterText.length-1);
+      // }
+      let filterAndSortText = ""
+
+      if (filterText) {
+        filterAndSortText = "Filter: " + filterText
+      }
+      if (sortText) {
+        filterAndSortText += "Sortierung: " + sortText + ", "
+      }
+      if (def.options.maxRows.maxRows && def.options.maxRows.showInTitle) {
+        filterAndSortText += "Top: " + def.options.maxRows.maxRows + ", "
+      }
+      if (filterAndSortText) {
+        filterAndSortText = filterAndSortText.substring(
+          0,
+          filterAndSortText.length - 2
+        )
+        filterAndSortText = "(" + filterAndSortText + ")"
+      }
+
+      return Promise.resolve(html`
+        <caption>
+          <b>${title}</b>
+          ${filterAndSortText} ${rowNavTop}
+        </caption>
+        ${colWidths}
+        <thead class="fd-table__header">
+          <tr
+            @long-press="${this.handleLongPress}"
+            @click="${this.handleHeaderColumnClick}"
+            class="fd-table__row ovl-tableview-header-${def.id} ovl-tableview-header"
+          >
+            ${headerRows}
+          </tr>
+        </thead>
+
+        ${rows} ${maxSizeHint}
+
+        <tr class="fd-table__row">
+          <td class="fd-has-text-align-center" colspan="${columnsCount}">
+            ${rowNavBottom}
           </td>
         </tr>
-      `
-    }
-
-    let title
-    if (def.titleTranslationKey) {
-      title = T(def.titleTranslationKey)
-    }
-    // check if filters and sort need to be put in title
-    let filterCustom = def.options.filterCustom
-    let sortCustom = def.options.sortCustom
-
-    let sortText = ""
-    if (
-      sortCustom.sorts &&
-      sortCustom.selected &&
-      sortCustom.sorts[sortCustom.selected].showInTitle
-    ) {
-      let description = T(sortCustom.sorts[sortCustom.selected].translationKey)
-      sortText = description
-    }
-    let filterText = ""
-    Object.keys(filterCustom)
-      .filter((f) => filterCustom[f].active && filterCustom[f].showInTitle)
-      .map((m) => {
-        let description = T(filterCustom[m].translationKey)
-
-        filterText = filterText + description + ", "
-      })
-    // if (filterText) {
-    //   filterText = filterText.substring(0,filterText.length-1);
-    // }
-    let filterAndSortText = ""
-
-    if (filterText) {
-      filterAndSortText = "Filter: " + filterText
-    }
-    if (sortText) {
-      filterAndSortText += "Sortierung: " + sortText + ", "
-    }
-    if (def.options.maxRows.maxRows && def.options.maxRows.showInTitle) {
-      filterAndSortText += "Top: " + def.options.maxRows.maxRows + ", "
-    }
-    if (filterAndSortText) {
-      filterAndSortText = filterAndSortText.substring(
-        0,
-        filterAndSortText.length - 2
-      )
-      filterAndSortText = "(" + filterAndSortText + ")"
-    }
-
-    return Promise.resolve(html`
-      <caption>
-        <b>${title}</b>
-        ${filterAndSortText} ${rowNavTop}
-      </caption>
-      ${colWidths}
-      <thead class="fd-table__header">
-        <tr
-          @long-press="${this.handleLongPress}"
-          @click="${this.handleHeaderColumnClick}"
-          class="fd-table__row ovl-tableview-header-${def.id} ovl-tableview-header"
-        >
-          ${headerRows}
-        </tr>
-      </thead>
-
-      ${rows} ${maxSizeHint}
-
-      <tr class="fd-table__row">
-        <td class="fd-has-text-align-center" colspan="${columnsCount}">
-          ${rowNavBottom}
-        </td>
-      </tr>
-    `)
+      `)
+    })
   }
   tableRebuildCheck() {
     if (this.state.ovl.uiState.tableNeedsRebuild) {

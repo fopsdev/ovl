@@ -58,7 +58,10 @@ const getMethods = (obj) =>
 // find the functions in actions and inject our own action caller
 getMethods(actions)
 
-console.log("hi from ovl index")
+export const logState = () => {
+  console.log(ovl.state)
+}
+
 export type OvlState = typeof _state
 export type OvlActions = typeof actions
 export type OvlEffects = typeof effects
