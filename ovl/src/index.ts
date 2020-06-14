@@ -34,9 +34,9 @@ export let ovl = {
 }
 
 const interceptorFn = (originalFn) => {
-  return (value) => {
+  return async (value) => {
     console.log(originalFn.name + " called...")
-    originalFn(
+    let res = await originalFn(
       {
         state: ovl.state,
         actions: ovl.actions,
@@ -44,6 +44,7 @@ const interceptorFn = (originalFn) => {
       },
       value
     )
+    return res
   }
 }
 

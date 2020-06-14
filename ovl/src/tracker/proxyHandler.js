@@ -100,16 +100,16 @@ export function createDeepProxy(target) {
   }
 
   function proxify(obj, path) {
-    //if (obj !== null) {
-    for (let key of Object.keys(obj)) {
-      if (typeof obj[key] === "object" && obj[key] !== null) {
-        obj[key] = proxify(obj[key], [...path, key])
+    if (obj) {
+      for (let key of Object.keys(obj)) {
+        if (typeof obj[key] === "object" && obj[key] !== null) {
+          obj[key] = proxify(obj[key], [...path, key])
+        }
       }
+      let p = new Proxy(obj, makeHandler(path))
+      preproxy.set(p, obj)
+      return p
     }
-    let p = new Proxy(obj, makeHandler(path))
-    preproxy.set(p, obj)
-    return p
-    //}
   }
 
   function checkForCallbacks(path) {

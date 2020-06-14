@@ -103,76 +103,78 @@ export class OvlDialog extends OvlBaseElement {
   }
 
   async getUI() {
-    if (
-      !this.state.ovl.libState.dialog ||
-      !this.state.ovl.libState.dialog.visible
-    ) {
-      return null
-    }
+    return this.track(() => {
+      if (
+        !this.state.ovl.libState.dialog ||
+        !this.state.ovl.libState.dialog.visible
+      ) {
+        return null
+      }
 
-    let okButton = null
-    let cancelButton = null
-    if (this.state.ovl.libState.dialog.okText) {
-      okButton = html`
-        <button
-          @click=${this.handleOkClick}
-          class="fd-button ${this.state.ovl.libState.dialog.okText == ""
-            ? " hide"
-            : ""}"
-          aria-selected="${this.state.ovl.libState.dialog.default == 1}"
-          id="ovldialogok"
+      let okButton = null
+      let cancelButton = null
+      if (this.state.ovl.libState.dialog.okText) {
+        okButton = html`
+          <button
+            @click=${this.handleOkClick}
+            class="fd-button ${this.state.ovl.libState.dialog.okText == ""
+              ? " hide"
+              : ""}"
+            aria-selected="${this.state.ovl.libState.dialog.default == 1}"
+            id="ovldialogok"
+          >
+            ${T("AppOk")}
+          </button>
+        `
+      }
+
+      if (this.state.ovl.libState.dialog.cancelText) {
+        cancelButton = html`
+          <button
+            @click=${this.handleCancelClick}
+            class="fd-button ${this.state.ovl.libState.dialog.cancelText == ""
+              ? " hide"
+              : ""}"
+            aria-selected="${this.state.ovl.libState.dialog.default == 2}"
+            id="ovldialogcancel"
+          >
+            ${T("AppCancel")}
+          </button>
+        `
+      }
+      let lines: string[] = this.state.ovl.libState.dialog.text.split(/\r?\n/)
+
+      let animation = "animated fadeIn faster"
+      if (this.state.ovl.libState.dialog.closing) {
+        animation = "animated fadeOut faster nopointerevents"
+      }
+
+      return html`
+        <div
+          style="z-index:1007;"
+          class="fd-shell__overlay fd-overlay fd-overlay--modal ${animation}"
+          aria-hidden="false"
         >
-          ${T("AppOk")}
-        </button>
-      `
-    }
-
-    if (this.state.ovl.libState.dialog.cancelText) {
-      cancelButton = html`
-        <button
-          @click=${this.handleCancelClick}
-          class="fd-button ${this.state.ovl.libState.dialog.cancelText == ""
-            ? " hide"
-            : ""}"
-          aria-selected="${this.state.ovl.libState.dialog.default == 2}"
-          id="ovldialogcancel"
-        >
-          ${T("AppCancel")}
-        </button>
-      `
-    }
-    let lines: string[] = this.state.ovl.libState.dialog.text.split(/\r?\n/)
-
-    let animation = "animated fadeIn faster"
-    if (this.state.ovl.libState.dialog.closing) {
-      animation = "animated fadeOut faster nopointerevents"
-    }
-
-    return html`
-      <div
-        style="z-index:1007;"
-        class="fd-shell__overlay fd-overlay fd-overlay--modal ${animation}"
-        aria-hidden="false"
-      >
-        <div class="fd-panel" tabindex="0" @keydown=${this.keyHandler}>
-          <div class="fd-modal__content" role="document">
-            <div class="fd-modal__header ">
-              <h3 class="fd-modal__title" style="text-align: center;">
-                ${T("AppTitle")}
-              </h3>
-            </div>
-            <div class="fd-modal__body ">
-              ${lines.map((e) => html` ${e}<br /> `)}
-            </div>
-            <footer class="fd-modal__footer ">
-              <div class="fd-modal__actions">
-                ${okButton} ${cancelButton}
+          <div class="fd-panel" tabindex="0" @keydown=${this.keyHandler}>
+            <div class="fd-modal__content" role="document">
+              <div class="fd-modal__header ">
+                <h3 class="fd-modal__title" style="text-align: center;">
+                  ${T("AppTitle")}
+                </h3>
               </div>
-            </footer>
+              <div class="fd-modal__body ">
+                ${lines.map((e) => html` ${e}<br /> `)}
+              </div>
+              <footer class="fd-modal__footer ">
+                <div class="fd-modal__actions">
+                  ${okButton} ${cancelButton}
+                </div>
+              </footer>
+            </div>
           </div>
         </div>
-      </div>
-    `
+      `
+    })
   }
   updated() {
     // set focus to default element
