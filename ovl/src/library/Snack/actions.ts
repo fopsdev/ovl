@@ -5,7 +5,7 @@ import {
 } from "./Snack"
 import { OvlAction } from "../.."
 
-export const RemoveSnack: OvlAction<string> = ({ state }, value) => {
+export const RemoveSnack: OvlAction<string> = (value, { state }) => {
   // if not already got added just remove from state (there are max. 3 snacks display so it could be that its not even displayed)
   let key = "ovlsnack" + value
   if (state.ovl.libState.snacks[key].status === "queued") {
@@ -16,7 +16,7 @@ export const RemoveSnack: OvlAction<string> = ({ state }, value) => {
   StartRemoveSnack(el)
 }
 
-export const ClearSnack: OvlAction<string> = ({ state, actions }, value) => {
+export const ClearSnack: OvlAction<string> = (value, { state, actions }) => {
   delete state.ovl.libState.snacks[value]
 
   let el = document.getElementById(value)
@@ -45,7 +45,7 @@ export const ClearSnack: OvlAction<string> = ({ state, actions }, value) => {
   }
 }
 
-export const PlaceSnack: OvlAction = ({ state }) => {
+export const PlaceSnack: OvlAction = (_, { state }) => {
   let snacks = state.ovl.libState.snacks
   if (snacks) {
     let filteredAndSortedSnacks = Object.keys(snacks)
@@ -99,8 +99,8 @@ export const PlaceSnack: OvlAction = ({ state }) => {
 }
 
 export const AddSnack: OvlAction<SnackAddState> = (
-  { state, actions },
-  value
+  value,
+  { state, actions }
 ) => {
   let id = SnackId.id++
   let key = value.key

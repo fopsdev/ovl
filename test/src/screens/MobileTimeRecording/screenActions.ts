@@ -1,29 +1,16 @@
-import {
-  TableDefIds,
-  OvlState,
-  OvlActions,
-  OvlEffects,
-} from "../../../../ovl/src/index"
+import { TableDefIds, OvlAction } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
 import { getDateValue } from "../../../../ovl/src/global/globals"
 
 /* this is for the mobiletimeentryform screen */
-export const ScreenShow = async (
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const ScreenShow: OvlAction = async (_) => {
   console.log("hello from ScreenShow")
 }
 
 /* main form functions */
-export const ScreenRefresh = async (
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
   let defId: TableDefIds = "mobiletimerecording1"
   let data = state.portal.testtables.timeentries
   await actions.ovl.table.TableRefresh({
@@ -34,11 +21,7 @@ export const ScreenRefresh = async (
 }
 
 let initialised = false
-export const ScreenNavigateIn = async (
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const ScreenNavigateIn: OvlAction = async (_, { actions }) => {
   if (!initialised) {
     let dt = new Date()
     let convDate = dt.toISOString().substring(0, 10) + "T00:00:00"
@@ -65,11 +48,7 @@ export const ScreenNavigateIn = async (
   }
 }
 
-export const ScreenNavigateOut = async (
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const ScreenNavigateOut = async (_) => {
   // if ((await DialogOkCancel("Test: Wirklich raus hier?", 1)) === 2) {
   //   return Promise.resolve("Navigation abgebrochen durch User")
   // }

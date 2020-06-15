@@ -21,8 +21,8 @@ import {
 import { AddSnack } from "../../../ovl/src/library/Snack/actions"
 
 export const Login: OvlAction<FormState> = async (
-  { state, actions, effects },
-  value
+  value,
+  { state, actions, effects }
 ) => {
   actions.ovl.form.ValidateForm(value)
   if (value.valid) {
@@ -97,8 +97,8 @@ export const Login: OvlAction<FormState> = async (
 }
 
 export const ForgotPw: OvlAction<FormState> = async (
-  { state, actions, effects },
-  value
+  value,
+  { state, actions, effects }
 ) => {
   if ((await DialogOkCancel(T("AppLoginForgotPasswordConfirm"), 2)) === 1) {
     let user = value.fields["user"].value
@@ -114,8 +114,8 @@ export const ForgotPw: OvlAction<FormState> = async (
 }
 
 export const HandleAdditionalLanguageResult: OvlAction<any> = async (
-  { state },
-  value
+  value,
+  { state }
 ) => {
   state.portal.pics = {
     salesContact: value.salesPic,
@@ -129,7 +129,7 @@ export const HandleAdditionalLanguageResult: OvlAction<any> = async (
   state.portal.partner.salesContact = value.sales
 }
 
-export const TogglePDFPopup: OvlAction<TogglePDFPopupState> = (_, value) => {
+export const TogglePDFPopup: OvlAction<TogglePDFPopupState> = (value) => {
   if (value.obj.activeFilePopup === value.key) {
     value.obj.activeFilePopup = ""
   } else {
@@ -137,7 +137,10 @@ export const TogglePDFPopup: OvlAction<TogglePDFPopupState> = (_, value) => {
   }
 }
 
-export const HandleRefresh: OvlAction = async ({ state, actions, effects }) => {
+export const HandleRefresh: OvlAction = async (
+  _,
+  { state, actions, effects }
+) => {
   let snackId = uuidv4()
   SnackTrackedAdd("Daten werden aufgefrischt", "Success", snackId)
 
@@ -179,7 +182,7 @@ export const HandleRefresh: OvlAction = async ({ state, actions, effects }) => {
   }
 }
 
-export const CustomInit: OvlAction = async ({ actions, state }, _) => {
+export const CustomInit: OvlAction = async (_, { actions, state }) => {
   if (state.ovl.user.token) {
     return
   }

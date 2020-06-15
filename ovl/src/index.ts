@@ -9,15 +9,18 @@ import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
 
-type ActionContext = {
+export type OvlActionContext = {
   state: OvlState
   actions: OvlActions
   effects: OvlEffects
 }
+
 export type OvlAction<T = {}, R = void> = (
-  context?: ActionContext,
-  value?: T
+  value?: T,
+  context?: OvlActionContext
 ) => R
+
+//export type OvlAction<T = {}, R = void> = (context?: any, value?: T) => R
 
 let _state = {
   ovl: ovlState,
@@ -44,14 +47,11 @@ export let ovl = {
 const interceptorAsyncFn = (originalFn) => {
   return async (value) => {
     //console.log(originalFn.name + " called...")
-    let res = await originalFn(
-      {
-        state: ovl.state,
-        actions: ovl.actions,
-        effects: ovl.effects,
-      },
-      value
-    )
+    let res = await originalFn(value, {
+      state: ovl.state,
+      actions: ovl.actions,
+      effects: ovl.effects,
+    })
     return res
   }
 }
@@ -59,14 +59,11 @@ const interceptorAsyncFn = (originalFn) => {
 const interceptorFn = (originalFn) => {
   return (value) => {
     //console.log(originalFn.name + " called...")
-    let res = originalFn(
-      {
-        state: ovl.state,
-        actions: ovl.actions,
-        effects: ovl.effects,
-      },
-      value
-    )
+    let res = originalFn(value, {
+      state: ovl.state,
+      actions: ovl.actions,
+      effects: ovl.effects,
+    })
     return res
   }
 }

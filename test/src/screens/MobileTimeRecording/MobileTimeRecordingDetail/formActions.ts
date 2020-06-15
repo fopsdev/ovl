@@ -18,24 +18,16 @@ import {
   TableDataAndDef,
 } from "../../../../../ovl/src/library/Table/Table"
 import { TableMobileTimeRecording } from "./state"
-import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
+import { OvlAction, OvlActionContext, OvlState } from "../../../../../ovl/src"
 
-export const FormShow = async (
-  formState: FormState,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormShow: OvlAction = async (formState: FormState) => {
   console.log("hello from timeentry formshow hook")
   console.log(formState)
 }
 
-export const Field_U_Type_GetList = (
-  row: { [key: string]: {} },
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-): ListFnReturnValue => {
+export const Field_U_Type_GetList: OvlAction = (row: {
+  [key: string]: {}
+}): ListFnReturnValue => {
   return {
     data: {
       Prj: { Code: "PROJECT", Description: "Projekt" },
@@ -44,12 +36,10 @@ export const Field_U_Type_GetList = (
   }
 }
 
-export const Field_U_TypeId_GetList = (
-  row: TableMobileTimeRecording,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-): ListFnReturnValue => {
+export const Field_U_TypeId_GetList: OvlAction<
+  TableMobileTimeRecording,
+  ListFnReturnValue
+> = (row, { state }) => {
   if (row.U_Type === "PROJECT") {
     return state.portal.testtables.lookups.ProjectTypeId
   } else {
@@ -57,13 +47,10 @@ export const Field_U_TypeId_GetList = (
   }
 }
 
-export const Field_U_TypeId_LookupPostData = (
-  lookupData: LookupListPostData,
-  row: {},
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const Field_U_TypeId_LookupPostData: OvlAction<{
+  lookupData: LookupListPostData
+  row: {}
+}> = ({ lookupData, row }) => {
   if (row["U_Type"] === "PROJECT") {
     lookupData.lookupType = "timeProject"
   } else {
@@ -71,11 +58,9 @@ export const Field_U_TypeId_LookupPostData = (
   }
 }
 
-export const FormValidate = async (
-  value: ValidateFieldType,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
+export const FormValidate: OvlAction<ValidateFieldType> = async (
+  value,
+  { state }
 ) => {
   switch (value.fieldId) {
     case "U_Type":
@@ -154,11 +139,9 @@ const CheckFromTimeSmaller = (formState: FormState, fieldId: string) => {
     }
   }
 }
-export const FormChanged = async (
-  value: FieldChanged,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
+export const FormChanged: OvlAction<FieldChanged> = async (
+  value,
+  { actions }
 ) => {
   let formState = value.formState
   switch (value.fieldId) {
@@ -198,11 +181,9 @@ export const FormChanged = async (
   }
 }
 
-export const FormBeforeSave = async (
-  value: BeforeSaveParam,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
+export const FormBeforeSave: OvlAction<BeforeSaveParam> = async (
+  value,
+  { state }
 ) => {
   let newRow = <TableMobileTimeRecording>value.row
   let dt = new Date(newRow.U_Date)
@@ -210,13 +191,10 @@ export const FormBeforeSave = async (
   newRow.U_User = state.portal.user.userName
 }
 
-export const FormAdd = async (
-  newRow: TableMobileTimeRecording,
-  tableDef: TableDataAndDef,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormAdd: OvlAction<{
+  newRow: TableMobileTimeRecording
+  tableDef: TableDataAndDef
+}> = async ({ newRow }) => {
   newRow.U_Type = "PROJECT"
   newRow.U_Duration = 0
 }

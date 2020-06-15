@@ -83,14 +83,14 @@ export type InitForm = {
 
 export type FormsState = { [key in FormType]: FormStatePerInstance }
 
-export const ResetForm: OvlAction<FormState> = (_, value) => {
+export const ResetForm: OvlAction<FormState> = (value) => {
   value.dirty = false
   value.fields = JSON.parse(JSON.stringify(value.initFields))
   value.valid = true
   value.lastTouchedField = undefined
 }
 
-export const SetFormUndirty: OvlAction<FormState> = (_, value) => {
+export const SetFormUndirty: OvlAction<FormState> = (value) => {
   value.dirty = false
   Object.keys(value.fields).forEach((e) => {
     let field = value.fields[e]
@@ -99,14 +99,14 @@ export const SetFormUndirty: OvlAction<FormState> = (_, value) => {
 }
 
 export const ResetFormAfterNavigation: OvlAction<FormState> = (
-  { state },
-  value
+  value,
+  { state }
 ) => {
   state.ovl.screens.nav.formTypeToReset = value.formType
   state.ovl.screens.nav.formIdToReset = value.formId
 }
 
-export const ValidateDataType: OvlAction<ValidateFieldType> = (_, value) => {
+export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
   let validatorId = "DataType"
   let field = value.formState.fields[value.fieldId]
   let type = field.type
@@ -264,7 +264,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (_, value) => {
   }
 }
 
-export const ValidateSchema: OvlAction<ValidateFieldType> = (_, value) => {
+export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
   if (value.formState.schema) {
     let validatorId = "Schema"
     let field = value.formState.fields[value.fieldId]
@@ -298,8 +298,8 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (_, value) => {
 }
 
 export const ValidateList: OvlAction<ValidateFieldType> = (
-  { state, actions, effects },
-  value
+  value,
+  { state, actions, effects }
 ) => {
   let validatorId = "List"
   let field = value.formState.fields[value.fieldId]
@@ -340,8 +340,8 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
 }
 
 export const ValidateForm: OvlAction<FormState> = (
-  { actions, state, effects },
-  value
+  value,
+  { actions, state, effects }
 ) => {
   // re do validations with boolean watched set to true
   value.valid = true
@@ -422,8 +422,8 @@ export const ValidateForm: OvlAction<FormState> = (
 }
 
 export const InitForm: OvlAction<InitForm> = (
-  { state, actions, effects },
-  value
+  value,
+  { state, actions, effects }
 ) => {
   if (!state.ovl.forms) {
     //@ts-ignore
@@ -560,12 +560,12 @@ export type TouchField = {
   fieldId: string
 }
 
-export const TouchField: OvlAction<TouchField> = (_, value) => {
+export const TouchField: OvlAction<TouchField> = (value) => {
   value.formState.fields[value.fieldId].watched = true
   value.formState.lastTouchedField = value.fieldId
 }
 
-export const SetField: OvlAction<ChangeField> = ({ actions }, value) => {
+export const SetField: OvlAction<ChangeField> = (value, { actions }) => {
   // purpose of setfield is to use it in custom chagedactions to set other fields values without triggering the full validation (just the warning)
   let field = value.formState.fields[value.fieldId]
   field.dirty = false
@@ -574,8 +574,8 @@ export const SetField: OvlAction<ChangeField> = ({ actions }, value) => {
 }
 
 export const ChangeField: OvlAction<ChangeField> = (
-  { actions, state, effects },
-  value
+  value,
+  { actions, state, effects }
 ) => {
   let field = value.formState.fields[value.fieldId]
 
@@ -665,7 +665,7 @@ export const ChangeField: OvlAction<ChangeField> = (
   actions.ovl.internal.SetFormValid(value.formState)
 }
 
-export const SetFormValid: OvlAction<FormState> = ({ actions }, value) => {
+export const SetFormValid: OvlAction<FormState> = (value) => {
   value.valid = !Object.keys(value.fields).some(
     (k) => value.fields[k].validationResult.valid === false
   )

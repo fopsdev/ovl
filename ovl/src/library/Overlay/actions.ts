@@ -6,7 +6,7 @@ import { OvlAction } from "../.."
 export const OpenOverlay: OvlAction<{
   templateResult: TemplateResult
   elementToFocusAfterClose?: Element
-}> = async ({ state }, value) => {
+}> = async (value, { state }) => {
   if (state.ovl.libState.overlay.open === false) {
     state.ovl.libState.overlay.closing = false
     overlayToRender.overlayDismissedCallback = null
@@ -28,7 +28,7 @@ export const OpenOverlay: OvlAction<{
   }
 }
 
-export const StartCloseOverlay: OvlAction = async ({ state }, _) => {
+export const StartCloseOverlay: OvlAction = async (_, { state }) => {
   if (state.ovl.libState.overlay.open === true) {
     overlayToRender.resolve = null
     if (!state.ovl.uiState.hasOSReducedMotion) {
@@ -40,7 +40,7 @@ export const StartCloseOverlay: OvlAction = async ({ state }, _) => {
   }
 }
 
-export const CloseOverlay: OvlAction = async ({ state }, _) => {
+export const CloseOverlay: OvlAction = async (_, { state }) => {
   state.ovl.libState.overlay.open = false
   state.ovl.libState.overlay.closing = false
   if (overlayToRender.overlayClosedCallback) {

@@ -8,8 +8,8 @@ export let dialogAfterClose = {
 }
 
 export const DialogOpen: OvlAction<OpenDialogState> = async (
-  { state, actions },
-  value
+  value,
+  { state, actions }
 ) => {
   if (!state.ovl.libState.dialog) {
     //@ts-ignore
@@ -49,8 +49,8 @@ type OkCancelDialog = {
   default: ResultType
 }
 export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
-  { actions },
-  value
+  value,
+  { actions }
 ) =>
   await actions.ovl.dialog.DialogOpen({
     cancel: "AppCancel",
@@ -60,8 +60,8 @@ export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   })
 
 export const OkDialog: OvlAction<{ text: string }> = async (
-  { actions },
-  value
+  value,
+  { actions }
 ) => {
   actions.ovl.dialog.DialogOpen({
     cancel: "NoButton",

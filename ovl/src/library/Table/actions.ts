@@ -23,6 +23,7 @@ import {
   OvlState,
   OvlActions,
   ovl,
+  OvlActionContext,
 } from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
@@ -67,7 +68,6 @@ import {
 const minimumFilterChars = 3
 
 export const TableSetPage: OvlAction<{ paging: Paging; page: number }> = (
-  _,
   pageDef
 ) => {
   if (pageDef.page > -1) {
@@ -76,8 +76,8 @@ export const TableSetPage: OvlAction<{ paging: Paging; page: number }> = (
 }
 
 export const TableClearFilter: OvlAction<TableDataAndDef> = (
-  { actions },
-  value
+  value,
+  { actions }
 ) => {
   let def = value.def
   if (def.options.filter.showSelected) {
@@ -90,8 +90,8 @@ export const TableClearFilter: OvlAction<TableDataAndDef> = (
 }
 
 export const TableFilterSelected: OvlAction<TableDataAndDef> = (
-  { actions },
-  value
+  value,
+  { actions }
 ) => {
   let def = value.def
   def.options.filter.showSelected = !def.options.filter.showSelected
@@ -103,8 +103,8 @@ export const TableFilterSelected: OvlAction<TableDataAndDef> = (
 }
 
 export const TableSelectHeader: OvlAction<HeaderClick> = (
-  { actions, state },
-  def
+  def,
+  { actions, state }
 ) => {
   if (!state.ovl.libState.overlay.closing) {
     if (def.key !== "") {
@@ -119,7 +119,7 @@ export const TableSelectHeader: OvlAction<HeaderClick> = (
   }
 }
 
-export const TableSort: OvlAction<SortClick> = ({ actions }, value) => {
+export const TableSort: OvlAction<SortClick> = (value, { actions }) => {
   let def = value.def
   def.options.sort.field = value.key
   if (value.ascending) {
@@ -131,7 +131,7 @@ export const TableSort: OvlAction<SortClick> = ({ actions }, value) => {
   actions.ovl.table.TableRefresh({ defId: value.def.id, data: value.data })
 }
 
-export const TableFilter: OvlAction<FilterClick> = ({ actions }, value) => {
+export const TableFilter: OvlAction<FilterClick> = (value, { actions }) => {
   let def = value.def
   def.options.filter.value = value.value
   def.options.filter.showSelected = false
@@ -142,7 +142,6 @@ export const TableFilter: OvlAction<FilterClick> = ({ actions }, value) => {
       page: 0,
     })
   }
-
   actions.ovl.table.TableRefresh({ defId: value.def.id, data: value.data })
 }
 
@@ -150,7 +149,7 @@ export const TableSelectAll: OvlAction<{
   tableDef: TableDef
   data: TableData
   select: boolean
-}> = ({ actions }, def) => {
+}> = (def, { actions }) => {
   let selectedRows = def.tableDef.uiState.selectedRow
   Object.keys(selectedRows).forEach((k) => {
     selectedRows[k].selected = false
@@ -164,13 +163,12 @@ export const TableSelectAll: OvlAction<{
 }
 
 export const TableSetViewTab: OvlAction<{ def: Tabs; key: string | number }> = (
-  _,
   value
 ) => {
   value.def.view.selected = value.key
 }
 
-export const TableSelectRow: OvlAction<SelectRowDef> = (_, selectRow) => {
+export const TableSelectRow: OvlAction<SelectRowDef> = (selectRow) => {
   let selRows = selectRow.def.uiState.selectedRow
   let sel = selRows[selectRow.key]
   // toggle selected state
@@ -185,8 +183,8 @@ export const TableSelectRow: OvlAction<SelectRowDef> = (_, selectRow) => {
 }
 
 export const TableViewRefresh: OvlAction<TableDataAndDef> = (
-  { actions },
-  value
+  value,
+  { actions }
 ) => {
   actions.ovl.table.TableRefresh({
     defId: value.def.id,
@@ -197,7 +195,7 @@ export const TableViewRefresh: OvlAction<TableDataAndDef> = (
 export const TableRefreshDataFromServer: OvlAction<{
   def: TableDef
   data: TableData
-}> = async ({ state, actions, effects }, value) => {
+}> = async (value, { state, actions, effects }) => {
   let def = value.def
   let data = value.data.data
   let schema = value.data.schema
@@ -345,7 +343,7 @@ export const TableRefresh: OvlAction<{
   forceServerDataRefresh?: boolean
   defId: TableDefIds
   data: TableData
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let dataAndState = value.data
   let def = dataAndState.tableDef[value.defId]
 
@@ -411,7 +409,7 @@ export const TableRebuild: OvlAction<{
   snackId: string
   defId: string
   data: TableData
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let snackId = value.snackId
   let def = <TableDef>value.data.tableDef[value.defId]
   let data = value.data.data
@@ -510,7 +508,7 @@ export const TableDirectSaveRow: OvlAction<{
   defId: TableDefIds
   rowToSave: {}
   noSnack?: boolean
-}> = async ({ state, actions }, value) => {
+}> = async (value, { state, actions }) => {
   let data = value.data
   let def = data.tableDef[value.defId]
   let rowToSave = value.rowToSave
@@ -542,7 +540,7 @@ export const TableEditSaveRow: OvlAction<{
   def: TableDef
   data: TableData
   formState: FormState
-}> = async ({ actions, state }, value) => {
+}> = async (value, { actions, state }) => {
   await TableEditSaveRowHelper(
     value.key,
     value.def,
@@ -727,7 +725,7 @@ const TableEditSaveRowHelper = async (
 export const TableSelectCustomSort: OvlAction<{
   id: string
   def: TableDef
-}> = ({ actions }, value) => {
+}> = (value) => {
   if (value.def.options.sortCustom.selected !== value.id) {
     value.def.options.sortCustom.selected = value.id
   } else {
@@ -741,7 +739,7 @@ export const TableSelectColumnFilter: OvlAction<{
   columnId: string
   othersCount: number
   filter: { [key: string]: ColumnFilterValue }
-}> = ({ actions }, value) => {
+}> = (value) => {
   let key = value.key
   let def = value.def
   let columnId = value.columnId
@@ -770,7 +768,7 @@ export const TableSelectColumnFilter: OvlAction<{
 export const TableSelectCustomFilter: OvlAction<{
   id: string
   def: TableDef
-}> = ({ actions }, value) => {
+}> = (value) => {
   let def = value.def
   let id = value.id
   let filterCustom = def.options.filterCustom
@@ -795,7 +793,7 @@ export const TableEditClose: OvlAction<{
   key: string
   tableDef: TableDef
   data: TableData
-}> = ({ actions }, value) => {
+}> = (value, { actions }) => {
   let editRow = value.tableDef.uiState.editRow
   if (editRow[value.key]) {
     editRow[value.key].selected = false
@@ -810,7 +808,7 @@ export const TableEditRow: OvlAction<{
   key: string
   def: TableDef
   data: TableData
-}> = ({ actions }, value) => {
+}> = (value, { actions }) => {
   // init editform explicitly with table values
   let def = value.def
   let instanceId = "trow" + def.id + value.key
@@ -842,7 +840,7 @@ export const TableMoreRow: OvlAction<{
   key: string
   def: TableDef
   data: TableData
-}> = ({ actions }, value) => {
+}> = (value, { actions }) => {
   actions.ovl.internal.TableSelectHeader({
     def: value.def,
     data: value.data,
@@ -854,14 +852,14 @@ export const TableViewRow: OvlAction<{
   key: string
   def: TableDef
   data: TableData
-}> = (_, value) => {
+}> = (value) => {
   let def = value.def
   def.uiState.viewRow[value.key].selected = true
 }
 export const TableCloseViewRow: OvlAction<{
   key: string
   def: TableDef
-}> = (_, value) => {
+}> = (value) => {
   let def = value.def
   def.uiState.viewRow[value.key].selected = false
 }
@@ -870,7 +868,7 @@ export const TableCopyRow: OvlAction<{
   key: string
   def: TableDef
   data: TableData
-}> = async ({ state, actions, effects }, value) => {
+}> = async (value, { state, actions, effects }) => {
   let def = value.def
   let key = value.key
   let rows = value.data.data
@@ -918,8 +916,8 @@ export const TableCopyRow: OvlAction<{
 }
 
 export const TableAddRow: OvlAction<TableDataAndDef> = async (
-  { actions, state, effects },
-  value
+  value,
+  { actions, state, effects }
 ) => {
   let def = value.def
   let newRow = Object.keys(def.columns).reduce((val, key) => {
@@ -976,7 +974,7 @@ export const TableDeleteRow: OvlAction<{
   def: TableDef
   data: TableData
   isMass?: boolean
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let def = value.def
   let key = value.key
   let cancel: boolean = false
@@ -1048,7 +1046,7 @@ export const TableDeleteRow: OvlAction<{
 export const TableMultipleDeleteRow: OvlAction<{
   def: TableDef
   data: TableData
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let def = value.def
   let rows = value.data.data
   let data = value.data
@@ -1151,7 +1149,7 @@ export const TableMultipleDeleteRow: OvlAction<{
 export const TableMultipleCopyRow: OvlAction<{
   def: TableDef
   data: TableData
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let def = value.def
   let data = value.data
   let rows = value.data.data
@@ -1246,7 +1244,7 @@ export const TableMultipleCopyRow: OvlAction<{
 export const TableMultipleEditRow: OvlAction<{
   def: TableDef
   data: TableData
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let def = value.def
   let data = value.data
   let rows = value.data.data
@@ -1341,7 +1339,7 @@ export const TableMultipleCustomFunction: OvlAction<{
   data: TableData
   customFnId: string
   customFnName: string
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let def = value.def
   let data = value.data
   let rows = value.data.data
@@ -1483,7 +1481,7 @@ export const TableDeleteRowFromData: OvlAction<{
   key: string
   def: TableDef
   data: TableData
-}> = (_, value) => {
+}> = (value) => {
   let key = value.key
   let data = value.data.data
   delete data[key]

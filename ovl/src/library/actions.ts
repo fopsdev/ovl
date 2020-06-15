@@ -74,8 +74,8 @@ export type DialogChangedParam = {
 }
 
 export const DialogChanged: OvlAction<DialogChangedParam> = (
-  { state, actions },
-  value
+  value,
+  { state, actions }
 ) => {
   value.dialogState.result = value.result
   if (!state.ovl.uiState.hasOSReducedMotion) {
@@ -89,13 +89,13 @@ export const DialogChanged: OvlAction<DialogChangedParam> = (
 }
 
 export const DialogDefaultChanged: OvlAction<{ default: ResultType }> = (
-  { state },
-  value
+  value,
+  { state }
 ) => {
   state.ovl.libState.dialog.default = value.default
 }
 
-export const DialogClosed: OvlAction = async ({ state }) => {
+export const DialogClosed: OvlAction = async (_, { state }) => {
   state.ovl.libState.dialog.closing = false
   state.ovl.libState.dialog.visible = false
   state.ovl.libState.dialog.cancelText = "rerender force workaround"
@@ -118,12 +118,12 @@ export const DialogResult = () => {
   })
 }
 
-export const SetIndicatorOpen: OvlAction = ({ state }) => {
+export const SetIndicatorOpen: OvlAction = (_, { state }) => {
   state.ovl.libState.indicator.refCounter++
   state.ovl.libState.indicator.open = true
 }
 
-export const SetIndicatorClose: OvlAction = ({ state }) => {
+export const SetIndicatorClose: OvlAction = (_, { state }) => {
   state.ovl.libState.indicator.refCounter--
   if (state.ovl.libState.indicator.refCounter < 1) {
     state.ovl.libState.indicator.open = false

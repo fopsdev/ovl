@@ -1,30 +1,33 @@
-import {
-  html,
-  TemplateResult,
-} from "../../../../../ovl/node_modules/lit-html/lit-html"
-import { Field, FormState } from "../../../../../ovl/src/library/forms/actions"
+import { html } from "../../../../../ovl/node_modules/lit-html/lit-html"
 import { DialogOk, SnackAdd } from "../../../../../ovl/src/library/helpers"
 import { getDisplayValue } from "../../../../../ovl/src/library/Table/helpers"
-import { CellClass } from "../../../../../ovl/src/library/Table/Row"
-import {
-  DisplayMode,
-  EditMode,
-  EditRowDef,
-  TableData,
-  TableDef,
-  ViewRowDef,
-  ColumnDisplayDef,
-} from "../../../../../ovl/src/library/Table/Table"
-import { TableTesting } from "../state"
-import { OvlState } from "../../../../../ovl/src"
 
-export const Edit_U_Memo_GetLabelAndValueRender = (
-  field: Field,
-  customHeaderCellClass: CellClass,
-  customRowCellClass: CellClass,
-  id: string,
-  readonly: boolean
-): TemplateResult => {
+import { OvlAction } from "../../../../../ovl/src"
+import {
+  EditGetLabelAndValueRenderer_Type,
+  EditGetLabelAndValueRenderer_ReturnType,
+  ViewGetCaptionRender_Type,
+  ViewGetCaptionRender_ReturnType,
+  EditGetCaptionRender_Type,
+  EditGetCaptionRender_ReturnType,
+  FieldGetLabelRender_Type,
+  FieldGetLabelRender_ReturnType,
+  FieldGetValueRender_Type,
+  FieldGetValueRender_ReturnType,
+  ViewRowCellClass_Type,
+  ViewRowCellClass_ReturnType,
+  FieldRowCellSelectedHandler_Type,
+  FieldRowCellSelectedHandler_ReturnType,
+  ViewHeaderCellClass_Type,
+  ViewHeaderCellClass_ReturnType,
+  FieldHeaderCellSelectedHandler_Type,
+  FieldHeaderCellSelectedHandler_ReturnType,
+} from "../../../../../ovl/src/global/hooks"
+
+export const Edit_U_Memo_GetLabelAndValueRender: OvlAction<
+  EditGetLabelAndValueRenderer_Type,
+  EditGetLabelAndValueRenderer_ReturnType
+> = ({ field, customHeaderCellClass, customRowCellClass, id, readonly }) => {
   // use the existing custom element for now.... but its possible to introduce new elements here
   if (readonly) {
     return html`${field.value}`
@@ -46,30 +49,24 @@ export const Edit_U_Memo_GetLabelAndValueRender = (
   }
 }
 
-export const ViewGetCaptionRender = (
-  caption: string,
-  row: ViewRowDef,
-  state: OvlState
-): TemplateResult => {
+export const ViewGetCaptionRender: OvlAction<
+  ViewGetCaptionRender_Type,
+  ViewGetCaptionRender_ReturnType
+> = ({ caption, row }, { state }) => {
   return html`Custom Caption ${caption}`
 }
 
-export const EditGetCaptionRender = (
-  caption: string,
-  row: EditRowDef,
-  mode: EditMode,
-  state: OvlState
-): TemplateResult => {
+export const EditGetCaptionRender: OvlAction<
+  EditGetCaptionRender_Type,
+  EditGetCaptionRender_ReturnType
+> = ({ caption, row, mode }, { state }) => {
   return html`Custom Caption ${caption}`
 }
 
-export const Field_U_ItemCode_GetLabelRender = (
-  columnKey: string,
-  caption: string,
-  align: string,
-  displayMode: DisplayMode,
-  state: OvlState
-): TemplateResult => {
+export const Field_U_ItemCode_GetLabelRender: OvlAction<
+  FieldGetLabelRender_Type,
+  FieldGetLabelRender_ReturnType
+> = ({ columnKey, caption, align, displayMode }, { state }) => {
   if (displayMode === "Detailview") {
     return html`Name(Code)`
   }
@@ -81,16 +78,13 @@ export const Field_U_ItemCode_GetLabelRender = (
   }
 }
 
-export const Field_U_ItemCode_GetValueRender = (
-  columnKey: string,
-
-  row: TableTesting,
-  namespace: string,
-  columnsDef: { [key: string]: ColumnDisplayDef },
-  align: string,
-  displayMode: DisplayMode,
-  state: OvlState
-): TemplateResult => {
+export const Field_U_ItemCode_GetValueRender: OvlAction<
+  FieldGetValueRender_Type,
+  FieldGetValueRender_ReturnType
+> = (
+  { columnKey, row, namespace, columnsDef, align: string, displayMode },
+  { state }
+) => {
   let itemCodeValue = getDisplayValue(
     "U_ItemCode",
     columnsDef["U_ItemCode"],
@@ -105,26 +99,20 @@ export const Field_U_ItemCode_GetValueRender = (
   }
 }
 
-export const Field_MobileSummary_GetLabelRender = (
-  columnKey: string,
-  caption: string,
-  align: string,
-  displayMode: DisplayMode,
-  state: OvlState
-): TemplateResult => {
+export const Field_MobileSummary_GetLabelRender: OvlAction<
+  FieldGetLabelRender_Type,
+  FieldGetLabelRender_ReturnType
+> = ({ columnKey, caption, align, displayMode }, { state }) => {
   return html`${caption}(has more details...)</b>`
 }
 
-export const Field_U_Alpha_GetValueRender = (
-  columnKey: string,
-
-  row: TableTesting,
-  namespace: string,
-  columnsDef: { [key: string]: ColumnDisplayDef },
-  align: string,
-  displayMode: DisplayMode,
-  state: OvlState
-): TemplateResult => {
+export const Field_U_Alpha_GetValueRender: OvlAction<
+  FieldGetValueRender_Type,
+  FieldGetValueRender_ReturnType
+> = (
+  { columnKey, row, namespace, columnsDef, align, displayMode },
+  { state }
+) => {
   let u_alpha = row.U_Alpha
   let additionalComment = ""
   if (u_alpha && u_alpha.toLowerCase().indexOf("todo") > -1) {
@@ -137,16 +125,13 @@ export const Field_U_Alpha_GetValueRender = (
   }
 }
 
-export const Field_MobileSummary_GetValueRender = (
-  columnKey: string,
-
-  row: TableTesting,
-  namespace: string,
-  columnsDef: { [key: string]: ColumnDisplayDef },
-  align: string,
-  displayMode: DisplayMode,
-  state: OvlState
-): TemplateResult => {
+export const Field_MobileSummary_GetValueRender: OvlAction<
+  FieldGetValueRender_Type,
+  FieldGetValueRender_ReturnType
+> = (
+  { columnKey, row, namespace, columnsDef, align, displayMode },
+  { state }
+) => {
   let u_AlphaValue = getDisplayValue(
     "U_Alpha",
     columnsDef["U_Alpha"],
@@ -170,14 +155,10 @@ export const Field_MobileSummary_GetValueRender = (
   return html` <b>${u_DateValue}</b> ${u_AlphaValue} ${u_ItemCodeValue} `
 }
 
-export const ViewRowCellClass = (
-  def: TableDef,
-  row: TableTesting,
-  isMobile: boolean,
-  displayMode: DisplayMode,
-  state: OvlState,
-  formState?: FormState
-): { [key in keyof TableTesting]?: CellClass } => {
+export const ViewRowCellClass: OvlAction<
+  ViewRowCellClass_Type,
+  ViewRowCellClass_ReturnType
+> = ({ row, isMobile, displayMode, formState }, { state }) => {
   let val
   if (displayMode.startsWith("Edit")) {
     val = formState.fields["U_Decimal"].convertedValue
@@ -195,15 +176,13 @@ export const ViewRowCellClass = (
   }
 }
 
-export const Field_U_Decimal_RowCellSelectedHandler = async (
-  classList: DOMTokenList,
-  def: TableDef,
-  data: TableData,
-  rowKey: string,
-  displayMode: DisplayMode,
-  state: OvlState,
-  formState?: FormState
-): Promise<boolean> => {
+export const Field_U_Decimal_RowCellSelectedHandler: OvlAction<
+  FieldRowCellSelectedHandler_Type,
+  FieldRowCellSelectedHandler_ReturnType
+> = async (
+  { classList, def, data, rowKey, displayMode, formState },
+  { state }
+) => {
   // for this sample we just wanna make those cells clickable which has a specific custom class (see TableRowCellClass hook)
   if (classList.contains("testrowcell")) {
     let val
@@ -226,12 +205,10 @@ export const Field_U_Decimal_RowCellSelectedHandler = async (
   return true
 }
 
-export const ViewHeaderCellClass = (
-  def: TableDef,
-  isMobile: boolean,
-  displayMode: DisplayMode,
-  state: OvlState
-): { [key in keyof TableTesting]?: CellClass } => {
+export const ViewHeaderCellClass: OvlAction<
+  ViewHeaderCellClass_Type,
+  ViewHeaderCellClass_ReturnType
+> = ({ def, isMobile, displayMode }, { state }) => {
   return {
     U_ItemCode: {
       className: "testheadercell",
@@ -240,12 +217,10 @@ export const ViewHeaderCellClass = (
   }
 }
 
-export const Field_U_ItemCode_HeaderCellSelectedHandler = async (
-  classList: DOMTokenList,
-  def: TableDef,
-  displayMode: DisplayMode,
-  state: OvlState
-): Promise<boolean> => {
+export const Field_U_ItemCode_HeaderCellSelectedHandler: OvlAction<
+  FieldHeaderCellSelectedHandler_Type,
+  FieldHeaderCellSelectedHandler_ReturnType
+> = async ({ classList, def, displayMode }, { state }) => {
   if (classList.contains("testheadercell")) {
     await DialogOk("Header U_ItemCode selected!")
     // do not use default event (open tableheader menu)

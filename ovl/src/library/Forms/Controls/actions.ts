@@ -11,7 +11,7 @@ export const FillListControl: OvlAction<{
   row: {}
   namespace: string
   fieldId: string
-}> = async ({ state, effects }, value) => {
+}> = async (value, { state, effects }) => {
   await KeyValueListFromServerFn(
     state,
     value.list,

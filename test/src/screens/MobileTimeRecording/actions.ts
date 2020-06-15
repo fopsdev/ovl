@@ -8,8 +8,8 @@ import { TableMobileTimeRecording } from "./MobileTimeRecordingDetail/state"
 import { OvlAction } from "../../../../ovl/src"
 
 export const MarkAsSynced: OvlAction<string[]> = (
-  { state, actions },
-  value
+  value,
+  { state, actions }
 ) => {
   let data = state.portal.testtables.timeentries
   let nd = new Date()
@@ -20,7 +20,7 @@ export const MarkAsSynced: OvlAction<string[]> = (
 
 export const SetMobileTimeEntrySelectedDate: OvlAction<{
   selected: string
-}> = async ({ state, actions }, value) => {
+}> = async (value, { state, actions }) => {
   // value.def.options.filter.static.U_Date = value.selected
   // state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
   let data = state.portal.testtables.timeentries
@@ -34,7 +34,7 @@ export const SetMobileTimeEntrySelectedDate: OvlAction<{
   })
 }
 
-export const CreateTestEntries: OvlAction = async ({ state, actions }, _) => {
+export const CreateTestEntries: OvlAction = async (_, { state, actions }) => {
   let snackKey = uuidv4()
   SnackTrackedAdd("Datensätze werden hinzugefügt...", "Information", snackKey)
   let dt = new Date()

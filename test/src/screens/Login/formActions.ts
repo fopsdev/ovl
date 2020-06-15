@@ -2,15 +2,10 @@ import { T } from "../../../../ovl/src/global/globals"
 import { ValidateFieldType } from "../../../../ovl/src/library/forms/actions"
 import { Email, Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { FieldId } from "./LoginForm"
-import { OvlState, OvlActions, OvlEffects } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src"
 
-export const FormValidate = (
-  value: ValidateFieldType,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
-  let field = value.formState.fields[value.fieldId]
+export const FormValidate: OvlAction<ValidateFieldType> = (value) => {
+  //let field = value.formState.fields[value.fieldId]
   //if (field.watched) {
   switch (<FieldId>value.fieldId) {
     case "pw":

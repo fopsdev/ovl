@@ -13,8 +13,8 @@ import { SnackAdd } from "../../../../ovl/src/library/helpers"
 import { OvlAction } from "../../../../ovl/src"
 
 export const SaveSettings: OvlAction<FormState> = async (
-  { state, actions, effects },
-  value
+  value,
+  { state, actions }
 ) => {
   actions.ovl.form.ValidateForm(value)
   if (value.valid) {

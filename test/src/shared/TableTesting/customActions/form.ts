@@ -1,12 +1,11 @@
 import { FormState } from "../../../../../ovl/src/library/forms/actions"
-import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
+import { OvlAction } from "../../../../../ovl/src"
+import {
+  FormShow_Type,
+  FormAfterRender_Type,
+} from "../../../../../ovl/src/global/hooks"
 
-export const FormShow = async (
-  formState: FormState,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormShow: OvlAction<FormShow_Type> = async ({ formState }) => {
   console.log("hello from formshow hook. setting focus to item group")
   //@ts-ignore
   if (formState.fields["U_ItmsGrpCod"]) {
@@ -14,11 +13,9 @@ export const FormShow = async (
   }
 }
 
-export const FormAfterRender = async (
-  formState: FormState,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
+export const FormAfterRender: OvlAction<FormAfterRender_Type> = async (
+  { formState, comp },
+  { state }
 ) => {
   console.log(
     "hello from tabletesting formafterrender hook. you may do some crazy stuff in here"

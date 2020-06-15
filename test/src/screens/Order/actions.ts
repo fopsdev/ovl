@@ -5,8 +5,8 @@ type OrderFeedbackState = {
   message: string
 }
 export const PreparePositiveFeedback: OvlAction<OrderFeedbackState> = (
-  { state },
-  value
+  value,
+  { state }
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
@@ -23,8 +23,8 @@ export const PreparePositiveFeedback: OvlAction<OrderFeedbackState> = (
 }
 
 export const PrepareNegativeFeedback: OvlAction<OrderFeedbackState> = (
-  { state },
-  value
+  value,
+  { state }
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
@@ -41,8 +41,8 @@ export const PrepareNegativeFeedback: OvlAction<OrderFeedbackState> = (
 }
 
 export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
-  { state },
-  value
+  value,
+  { state }
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
@@ -58,6 +58,6 @@ export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
   state.ovl.screens.screens.Feedback.type = "DeliveryDate"
 }
 
-export const SelectOrder: OvlAction<string> = ({ state }, value) => {
+export const SelectOrder: OvlAction<string> = (value, { state }) => {
   state.ovl.screens.screens.Orderdetail.selectedOrder = value
 }

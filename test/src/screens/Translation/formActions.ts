@@ -7,31 +7,19 @@ import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 
 import { TblTranslationColumn } from "./state"
 import { T } from "../../../../ovl/src/global/globals"
-import { OvlState, OvlActions, OvlEffects } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src"
 
-export const FormShow = async (
-  formState: FormState,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormShow: OvlAction<FormState> = async (formState) => {
   console.log("hello from translation formshow hook")
 }
 
-export const FormAfterRender = async (
-  formState: FormState,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormAfterRender: OvlAction<FormState> = async (formState) => {
   console.log("hello from  translation formafterrender hook.")
 }
 
-export const FormValidate = async (
-  value: ValidateFieldType,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
+export const FormValidate: OvlAction<ValidateFieldType> = async (
+  value,
+  { state }
 ) => {
   let def: TableDef = state.portal.tables.translation.tableDef.translation
   switch (value.fieldId as TblTranslationColumn) {
@@ -52,30 +40,20 @@ export const FormValidate = async (
   }
 }
 
-export const FormAfterSave = async (
-  {
-    key,
-    def,
-    data,
-    res,
-  }: { key: string; def: TableDef; data: TableData; res: any },
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormAfterSave: OvlAction<{
+  key: string
+  def: TableDef
+  data: TableData
+  res: any
+}> = async ({ key, def, data, res }, { state, actions }) => {
   await actions.ovl.internal.SetLanguage(state.ovl.language.language)
 }
 
-export const FormAfterDelete = async (
-  {
-    key,
-    def,
-    data,
-    res,
-  }: { key: string; def: TableDef; data: TableData; res: any },
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormAfterDelete: OvlAction<{
+  key: string
+  def: TableDef
+  data: TableData
+  res: any
+}> = async ({ key, def, data, res }, { state, actions }) => {
   await actions.ovl.internal.SetLanguage(state.ovl.language.language)
 }
