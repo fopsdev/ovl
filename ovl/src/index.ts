@@ -9,7 +9,15 @@ import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
 
-export type OvlAction<T = {}> = (context?, value?: T) => void
+type ActionContext = {
+  state: OvlState
+  actions: OvlActions
+  effects: OvlEffects
+}
+export type OvlAction<T = {}, R = void> = (
+  context?: ActionContext,
+  value?: T
+) => R
 
 let _state = {
   ovl: ovlState,

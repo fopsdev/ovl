@@ -3,13 +3,10 @@ import {
   OvlActions,
   OvlEffects,
   TableDefIds,
+  OvlAction,
 } from "../../../../ovl/src"
 
-export const ScreenRefresh = async (
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const ScreenRefresh: OvlAction = async ({ state, actions, effects }) => {
   let defId: TableDefIds = "audit"
   let data = state.portal.tables.audit
   actions.ovl.table.TableRefresh({ defId, data, forceServerDataRefresh: true })
