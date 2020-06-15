@@ -39,13 +39,15 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
       })
     }
 
-    let detailCount = Object.keys(this.state.portal.dpInvoiceDetail.dpInvoices)
-      .length
-    if (detailCount === 0) {
-      return null
-    }
+    return this.track(() => {
+      let detailCount = Object.keys(
+        this.state.portal.dpInvoiceDetail.dpInvoices
+      ).length
+      if (detailCount === 0) {
+        return null
+      }
 
-    return html`
+      return html`
       <div @click=${handleRemoveAllPDFPopup}">
         <div class="fd-container fd-container--fluid">
           <div class="fd-col--12">
@@ -190,5 +192,6 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
         </div>
       </div>
     `
+    })
   }
 }

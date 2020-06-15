@@ -103,140 +103,142 @@ export class CompMobileTimeEntry extends OvlFormElement {
     }
   }
   async getUI() {
-    let def = this.state.portal.testtables.timeentries.tableDef
-      .mobiletimerecording1
-    let dataKeys = def.uiState.dataFilteredAndSorted.filter(
-      (k) => k.indexOf(ovltemp) === -1
-    )
-    let data = this.state.portal.testtables.timeentries.data
-    let fields = this.formState.fields
-    let dateField = fields["date"]
-    let fd = new Date(dateField.convertedValue)
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-    let fullDate = fd.toLocaleDateString(
-      displayFormats.mostPreferedLanguage,
-      options
-    )
-    return html`
-      <div class="fd-panel ${this.animatedClass}">
-        <div class="fd-tile">
-          <div class="fd-tile__content fd-has-type-2">
-            Zeiterfassung für
-            ${this.state.portal.user.firstName +
-            " " +
-            this.state.portal.user.lastName}
-          </div>
-        </div>
-
-        <div class="fd-container fd-container--fluid">
-          <div class="fd-col--4">
-            <div class="fd-tile">
-              <div class="fd-tile__content">
-                <ovl-datebox
-                  class="fd-form-item "
-                  .props="${() => {
-                    return { field: dateField }
-                  }}"
-                >
-                </ovl-datebox>
-              </div>
+    return this.track(() => {
+      let def = this.state.portal.testtables.timeentries.tableDef
+        .mobiletimerecording1
+      let dataKeys = def.uiState.dataFilteredAndSorted.filter(
+        (k) => k.indexOf(ovltemp) === -1
+      )
+      let data = this.state.portal.testtables.timeentries.data
+      let fields = this.formState.fields
+      let dateField = fields["date"]
+      let fd = new Date(dateField.convertedValue)
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+      let fullDate = fd.toLocaleDateString(
+        displayFormats.mostPreferedLanguage,
+        options
+      )
+      return html`
+        <div class="fd-panel ${this.animatedClass}">
+          <div class="fd-tile">
+            <div class="fd-tile__content fd-has-type-2">
+              Zeiterfassung für
+              ${this.state.portal.user.firstName +
+              " " +
+              this.state.portal.user.lastName}
             </div>
           </div>
-          <div class="fd-col--4">
-            <div class="fd-tile">
-              <div class="fd-tile__content">
-                <div class="fd-form-item fd-has-type-1 ">
-                  <input
-                    class="fd-input"
-                    tabindex="9999"
-                    type="text"
-                    value="${fullDate}"
-                    readonly
-                  />
+
+          <div class="fd-container fd-container--fluid">
+            <div class="fd-col--4">
+              <div class="fd-tile">
+                <div class="fd-tile__content">
+                  <ovl-datebox
+                    class="fd-form-item "
+                    .props="${() => {
+                      return { field: dateField }
+                    }}"
+                  >
+                  </ovl-datebox>
+                </div>
+              </div>
+            </div>
+            <div class="fd-col--4">
+              <div class="fd-tile">
+                <div class="fd-tile__content">
+                  <div class="fd-form-item fd-has-type-1 ">
+                    <input
+                      class="fd-input"
+                      tabindex="9999"
+                      type="text"
+                      value="${fullDate}"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="fd-col--4">
+              <div class="fd-tile">
+                <div class="fd-tile__content">
+                  <div class="fd-form-item ">
+                    <button
+                      @click=${(e) => this.handleAddRowClick(e)}
+                      class="fd-button--emphasized sap-icon--add"
+                      style="margin-top:4px;"
+                      title="Datensatz hinzufügen"
+                    ></button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="fd-col--4">
-            <div class="fd-tile">
-              <div class="fd-tile__content">
-                <div class="fd-form-item ">
-                  <button
-                    @click=${(e) => this.handleAddRowClick(e)}
-                    class="fd-button--emphasized sap-icon--add"
-                    style="margin-top:4px;"
-                    title="Datensatz hinzufügen"
-                  ></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <hr />
-        <ul class="fd-list">
-          ${dataKeys.map((k) => {
-            let declineButton
-            if (!data[k].U_Synced) {
-              declineButton = html`
-                <span
-                  @click=${(e) => this.handleDelete(e, k)}
-                  class="fd-list__icon sap-icon--decline"
-                ></span>
-              `
-            }
-            let listValue1 = GetListDisplayValue(
-              def.columns.U_TypeId.list,
-              data[k].U_TypeId,
-              Field_U_TypeId_GetList(
-                data[k],
-                this.state,
-                this.actions,
-                ovl.effects
+          <hr />
+          <ul class="fd-list">
+            ${dataKeys.map((k) => {
+              let declineButton
+              if (!data[k].U_Synced) {
+                declineButton = html`
+                  <span
+                    @click=${(e) => this.handleDelete(e, k)}
+                    class="fd-list__icon sap-icon--decline"
+                  ></span>
+                `
+              }
+              let listValue1 = GetListDisplayValue(
+                def.columns.U_TypeId.list,
+                data[k].U_TypeId,
+                Field_U_TypeId_GetList(
+                  data[k],
+                  this.state,
+                  this.actions,
+                  ovl.effects
+                )
               )
-            )
-            let listValue2 =
-              data[k].U_FromTime +
-              " - " +
-              data[k].U_ToTime +
-              " = " +
-              N(data[k].U_Duration) +
-              " Std."
-            return html`
-              <li
-                class="fd-list__item animated fadeIn"
-                style="padding-top:12px;padding-bottom:12px;height:auto;"
-              >
-                <span
-                  style="white-space: normal;width: 100%;"
-                  class="fd-list__title fd-has-type-2"
-                  >${listValue1} <br />
-                  ${listValue2}</span
+              let listValue2 =
+                data[k].U_FromTime +
+                " - " +
+                data[k].U_ToTime +
+                " = " +
+                N(data[k].U_Duration) +
+                " Std."
+              return html`
+                <li
+                  class="fd-list__item animated fadeIn"
+                  style="padding-top:12px;padding-bottom:12px;height:auto;"
                 >
-                ${declineButton}
-              </li>
-            `
-          })}
-        </ul>
+                  <span
+                    style="white-space: normal;width: 100%;"
+                    class="fd-list__title fd-has-type-2"
+                    >${listValue1} <br />
+                    ${listValue2}</span
+                  >
+                  ${declineButton}
+                </li>
+              `
+            })}
+          </ul>
 
-        <div class="fd-tile">
-          <div class="fd-tile__content fd-has-type-2">
-            <button
-              ?disabled=${this.getKeysToSync().length === 0}
-              @click=${(e) => this.handleAddToSAPClick(e)}
-              class="fd-button--emphasized sap-icon--add"
-              title="Zeiten ins SAP übertragen..."
-            >
-              Sync to SAP
-            </button>
+          <div class="fd-tile">
+            <div class="fd-tile__content fd-has-type-2">
+              <button
+                ?disabled=${this.getKeysToSync().length === 0}
+                @click=${(e) => this.handleAddToSAPClick(e)}
+                class="fd-button--emphasized sap-icon--add"
+                title="Zeiten ins SAP übertragen..."
+              >
+                Sync to SAP
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    `
+      `
+    })
   }
 }

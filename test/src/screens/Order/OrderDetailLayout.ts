@@ -12,9 +12,10 @@ export class CompOrderDetailLayout extends OvlBaseElement {
   }
 
   async getUI() {
-    let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
+    return this.track(() => {
+      let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
 
-    return html`
+      return html`
       <div class="${this.animatedClass}">
       <section
           class="fd-section fd-has-type-2" style="text-align: center;"
@@ -65,5 +66,6 @@ export class CompOrderDetailLayout extends OvlBaseElement {
         </div>
       </div>
     `
+    })
   }
 }

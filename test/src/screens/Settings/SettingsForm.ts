@@ -33,15 +33,16 @@ export class CompSettingsForm extends OvlFormElement {
         }
       }
     }
-    // this is just a helper fn to get typed ids
+    return this.track(() => {
+      // this is just a helper fn to get typed ids
 
-    let fields = this.formState.fields
-    let pwField = fields["pw"]
-    let pw1Field = fields["pw1"]
-    let pw2Field = fields["pw2"]
-    let partner = this.state.portal.partner
+      let fields = this.formState.fields
+      let pwField = fields["pw"]
+      let pw1Field = fields["pw1"]
+      let pw2Field = fields["pw2"]
+      let partner = this.state.portal.partner
 
-    return html`
+      return html`
       <div class="fd-panel ${this.animatedClass} ovldialogcentered">
         <div class="fd-panel__header">
           <div class="fd-panel__head">
@@ -114,5 +115,6 @@ export class CompSettingsForm extends OvlFormElement {
         </div>
       
     `
+    })
   }
 }

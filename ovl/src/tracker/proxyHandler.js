@@ -53,10 +53,10 @@ export function createDeepProxy(target) {
         return Reflect.has(...arguments)
       },
       set(target, key, value, receiver) {
-        if (window.ovldbg) {
-          debugger
-          window.ovldbg = undefined
-        }
+        // if (window.ovldbg) {
+        //   debugger
+        //   window.ovldbg = undefined
+        // }
         if (typeof value === "object") {
           value = proxify(value, [...path, key])
         }
@@ -122,16 +122,16 @@ export function createDeepProxy(target) {
     let cbs = paths.get(path)
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0
-      console.log("tracked mutation on: " + path)
-      console.log("update will be called on:")
+      // console.log("tracked mutation on: " + path)
+      // console.log("update will be called on:")
       cbs.forEach((key) => {
-        console.log(key.name)
+        //console.log(key.name)
         callbacksToCall.add(key)
       })
-      console.log(
-        "Submitting for rAF: callbacksToCall Count: " +
-          callbacksToCall.size.toString()
-      )
+      // console.log(
+      //   "Submitting for rAF: callbacksToCall Count: " +
+      //     callbacksToCall.size.toString()
+      // )
 
       if (freshQueueToRender) {
         window.requestAnimationFrame(callCallbacks)

@@ -10,15 +10,17 @@ export class CompSummaryChart extends OvlBaseElement {
     this.chartProps = this.props()
   }
   async getUI() {
-    return html`
-      <div class="chartwidth">
-        <canvas
-          id="canvas"
-          style="${this.chartProps}"
-          class="chartjs-render-monitor"
-        ></canvas>
-      </div>
-    `
+    return this.track(() => {
+      return html`
+        <div class="chartwidth">
+          <canvas
+            id="canvas"
+            style="${this.chartProps}"
+            class="chartjs-render-monitor"
+          ></canvas>
+        </div>
+      `
+    })
   }
   getData() {
     //@ts-ignore

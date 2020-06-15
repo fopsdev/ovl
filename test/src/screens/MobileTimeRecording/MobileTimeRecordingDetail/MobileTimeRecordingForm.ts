@@ -46,86 +46,88 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
     }
   }
   async getUI() {
-    let def = this.state.portal.testtables.timeentries.tableDef
-      .mobiletimerecording1
-    let typeField = this.formState.fields["U_Type"]
-    let typeIdField = this.formState.fields["U_TypeId"]
-    let fromTimeField = this.formState.fields["U_FromTime"]
-    let toTimeField = this.formState.fields["U_ToTime"]
-    let durationField = this.formState.fields["U_Duration"]
-    let duration = N(durationField.convertedValue)
-    let acceptEnabled = "fd-button--positive sap-icon--accept"
-    if (!this.formState.valid) {
-      acceptEnabled = "fd-button nopointerevents"
-    }
-    return html`
-      <div class="fd-panel ${this.animatedClass}">
-        <div class="fd-panel__header">
-          <div class="fd-panel__head">
-            <h3 class="fd-panel__title">
-              Zeit erfassen
-            </h3>
+    return this.track(() => {
+      let def = this.state.portal.testtables.timeentries.tableDef
+        .mobiletimerecording1
+      let typeField = this.formState.fields["U_Type"]
+      let typeIdField = this.formState.fields["U_TypeId"]
+      let fromTimeField = this.formState.fields["U_FromTime"]
+      let toTimeField = this.formState.fields["U_ToTime"]
+      let durationField = this.formState.fields["U_Duration"]
+      let duration = N(durationField.convertedValue)
+      let acceptEnabled = "fd-button--positive sap-icon--accept"
+      if (!this.formState.valid) {
+        acceptEnabled = "fd-button nopointerevents"
+      }
+      return html`
+        <div class="fd-panel ${this.animatedClass}">
+          <div class="fd-panel__header">
+            <div class="fd-panel__head">
+              <h3 class="fd-panel__title">
+                Zeit erfassen
+              </h3>
+            </div>
+          </div>
+          <div class="fd-panel__body">
+            <ovl-option
+              class="fd-form__item "
+              .props="${() => {
+                return { field: typeField }
+              }}"
+            >
+            </ovl-option>
+          </div>
+          <div class="fd-panel__body">
+            <ovl-listcontrol
+              class="fd-form__item "
+              .props="${() => {
+                return { field: typeIdField }
+              }}"
+            >
+            </ovl-listcontrol>
+          </div>
+          <div class="fd-panel__body">
+            <ovl-timebox
+              class="fd-form__item "
+              .props=${() => {
+                return { field: fromTimeField }
+              }}
+            >
+            </ovl-timebox>
+          </div>
+
+          <div class="fd-panel__body">
+            <ovl-timebox
+              class="fd-form__item "
+              .props=${() => {
+                return { field: toTimeField }
+              }}
+            >
+            </ovl-timebox>
+          </div>
+
+          <div class="fd-panel__body">
+            Dauer: ${duration}
+          </div>
+
+          <div class="fd-panel__footer">
+            <button
+              ?disabled=${this.state.ovl.libState.indicator.open ||
+              this.screenClosing()}
+              @click=${(e) => this.handleSave(e)}
+              class="fd-button fd-button--positive ${acceptEnabled}"
+            ></button>
+            <div style="margin-left:100px;"></div>
+            <button
+              ?disabled=${this.state.ovl.libState.indicator.open ||
+              this.screenClosing()}
+              @mousedown=${(e) => this.handleCancel(e)}
+              @click=${(e) => this.handleCancel(e)}
+              class="fd-button fd-button--negative sap-icon--decline"
+            ></button>
           </div>
         </div>
-        <div class="fd-panel__body">
-          <ovl-option
-            class="fd-form__item "
-            .props="${() => {
-              return { field: typeField }
-            }}"
-          >
-          </ovl-option>
-        </div>
-        <div class="fd-panel__body">
-          <ovl-listcontrol
-            class="fd-form__item "
-            .props="${() => {
-              return { field: typeIdField }
-            }}"
-          >
-          </ovl-listcontrol>
-        </div>
-        <div class="fd-panel__body">
-          <ovl-timebox
-            class="fd-form__item "
-            .props=${() => {
-              return { field: fromTimeField }
-            }}
-          >
-          </ovl-timebox>
-        </div>
-
-        <div class="fd-panel__body">
-          <ovl-timebox
-            class="fd-form__item "
-            .props=${() => {
-              return { field: toTimeField }
-            }}
-          >
-          </ovl-timebox>
-        </div>
-
-        <div class="fd-panel__body">
-          Dauer: ${duration}
-        </div>
-
-        <div class="fd-panel__footer">
-          <button
-            ?disabled=${this.state.ovl.libState.indicator.open ||
-            this.screenClosing()}
-            @click=${(e) => this.handleSave(e)}
-            class="fd-button fd-button--positive ${acceptEnabled}"
-          ></button>
-          <div style="margin-left:100px;"></div>
-          <button
-            ?disabled=${this.state.ovl.libState.indicator.open ||
-            this.screenClosing()}
-            @mousedown=${(e) => this.handleCancel(e)}
-            @click=${(e) => this.handleCancel(e)}
-            class="fd-button fd-button--negative sap-icon--decline"
-          ></button>
-        </div>
-      </div>
-    `
+      `
+    })
   }
 }

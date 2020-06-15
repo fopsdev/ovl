@@ -27,46 +27,47 @@ export class CompOrderFeedback extends OvlBaseElement {
       })
       this.actions.ovl.navigation.NavigateTo("Feedback")
     }
-
-    return html`
-      <div class="fd-panel">
-        <div class="fd-panel__header">
-          <div class="fd-panel__head">
-            <h3 class="fd-panel__title">
-              ${T("PortalOrderFeedback")}
-            </h3>
+    return this.track(() => {
+      return html`
+        <div class="fd-panel">
+          <div class="fd-panel__header">
+            <div class="fd-panel__head">
+              <h3 class="fd-panel__title">
+                ${T("PortalOrderFeedback")}
+              </h3>
+            </div>
+          </div>
+          <div class="fd-panel__body">
+            <div>
+              <button
+                style="width:100%;"
+                @click=${handlePositiveFeedback}
+                class="fd-button fd-button--positive sap-icon--thumb-up"
+              >
+                ${T("PortalPositiveFeedback")}
+              </button>
+            </div>
+            <div>
+              <button
+                style="width:100%;"
+                @click=${handleNegativeFeedback}
+                class="fd-button fd-button--negative sap-icon--thumb-down"
+              >
+                ${T("PortalNegativeFeedback")}
+              </button>
+            </div>
+            <div>
+              <button
+                style="width:100%;"
+                @click=${handleDeliveryDateFeedback}
+                class="fd-button sap-icon--date-time"
+              >
+                ${T("PortalDeliveryDateFeedback")}
+              </button>
+            </div>
           </div>
         </div>
-        <div class="fd-panel__body">
-          <div>
-            <button
-              style="width:100%;"
-              @click=${handlePositiveFeedback}
-              class="fd-button fd-button--positive sap-icon--thumb-up"
-            >
-              ${T("PortalPositiveFeedback")}
-            </button>
-          </div>
-          <div>
-            <button
-              style="width:100%;"
-              @click=${handleNegativeFeedback}
-              class="fd-button fd-button--negative sap-icon--thumb-down"
-            >
-              ${T("PortalNegativeFeedback")}
-            </button>
-          </div>
-          <div>
-            <button
-              style="width:100%;"
-              @click=${handleDeliveryDateFeedback}
-              class="fd-button sap-icon--date-time"
-            >
-              ${T("PortalDeliveryDateFeedback")}
-            </button>
-          </div>
-        </div>
-      </div>
-    `
+      `
+    })
   }
 }

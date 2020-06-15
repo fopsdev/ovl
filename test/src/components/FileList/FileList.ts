@@ -51,33 +51,33 @@ export class CompFileList extends OvlBaseElement {
 
   async getUI() {
     this.fileList = this.props(this.state)
-
-    return html`
-      <table class="fd-table ">
-        <thead class="fd-table__header">
-          <tr class="fd-table__row">
-            <th class="fd-table__cell " scope="col">
-              ${T("PortalFileName")}
-            </th>
-          </tr>
-        </thead>
-        <tbody class="fd-table__body">
-          ${this.fileList.map((f) => {
-            if (f.type === "MainAttachment") {
-              let endNames = f.fileName.split(".")
-              let toCheck = endNames[endNames.length - 2]
-              let toCheckEnd = toCheck.substring(toCheck.length - 3)
-              if (
-                !(
-                  this.state.ovl.language.language.toLowerCase() ===
-                    toCheckEnd.substring(1).toLowerCase() ||
-                  toCheckEnd.indexOf("_") < 0
-                )
-              ) {
-                return html``
+    return this.track(() => {
+      return html`
+        <table class="fd-table ">
+          <thead class="fd-table__header">
+            <tr class="fd-table__row">
+              <th class="fd-table__cell " scope="col">
+                ${T("PortalFileName")}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="fd-table__body">
+            ${this.fileList.map((f) => {
+              if (f.type === "MainAttachment") {
+                let endNames = f.fileName.split(".")
+                let toCheck = endNames[endNames.length - 2]
+                let toCheckEnd = toCheck.substring(toCheck.length - 3)
+                if (
+                  !(
+                    this.state.ovl.language.language.toLowerCase() ===
+                      toCheckEnd.substring(1).toLowerCase() ||
+                    toCheckEnd.indexOf("_") < 0
+                  )
+                ) {
+                  return html``
+                }
               }
-            }
-            return html`
+              return html`
               <tr class="fd-table__row">              
                 <td class="fd-table__cell ">
                   <a
@@ -91,9 +91,10 @@ export class CompFileList extends OvlBaseElement {
                 </td>
               </tr></tr>
             `
-          })}
-        </tbody>
-      </table>
-    `
+            })}
+          </tbody>
+        </table>
+      `
+    })
   }
 }

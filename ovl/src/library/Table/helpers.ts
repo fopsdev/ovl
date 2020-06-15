@@ -631,7 +631,7 @@ export const TableRefreshServerData = async (
 ) => {
   if (!data.timestamp || !!forceServerDataRefresh) {
     // now if there is no data do a get request
-    console.log(actions.ovl.table.TableRefreshDataFromServer)
+
     await actions.ovl.table.TableRefreshDataFromServer({
       def,
       data,
