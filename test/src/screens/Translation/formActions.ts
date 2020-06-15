@@ -8,6 +8,10 @@ import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { TblTranslationColumn } from "./state"
 import { T } from "../../../../ovl/src/global/globals"
 import { OvlAction } from "../../../../ovl/src"
+import {
+  FormAfterSave_Type,
+  FormAfterDelete_Type,
+} from "../../../../ovl/src/global/hooks"
 
 export const FormShow: OvlAction<FormState> = async (formState) => {
   console.log("hello from translation formshow hook")
@@ -40,20 +44,16 @@ export const FormValidate: OvlAction<ValidateFieldType> = async (
   }
 }
 
-export const FormAfterSave: OvlAction<{
-  key: string
-  def: TableDef
-  data: TableData
-  res: any
-}> = async ({ key, def, data, res }, { state, actions }) => {
+export const FormAfterSave: OvlAction<FormAfterSave_Type> = async (
+  { key, def, data, res },
+  { state, actions }
+) => {
   await actions.ovl.internal.SetLanguage(state.ovl.language.language)
 }
 
-export const FormAfterDelete: OvlAction<{
-  key: string
-  def: TableDef
-  data: TableData
-  res: any
-}> = async ({ key, def, data, res }, { state, actions }) => {
+export const FormAfterDelete: OvlAction<FormAfterDelete_Type> = async (
+  { key, def, data, res },
+  { state, actions }
+) => {
   await actions.ovl.internal.SetLanguage(state.ovl.language.language)
 }

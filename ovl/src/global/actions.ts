@@ -127,11 +127,9 @@ export const NavigateBack: OvlAction = async ({ state, actions, effects }) => {
           o.lastScrollTop = scrollable.scrollTop
         }
         if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
-          let navErrorMessage = await fn[currentScreen][ScreenNavigateOut](
-            state,
-            actions,
-            effects
-          )
+          let navErrorMessage: string = await fn[currentScreen][
+            ScreenNavigateOut
+          ](state, actions, effects)
           if (navErrorMessage) {
             if (navErrorMessage.toLowerCase() !== "error") {
               SnackAdd(navErrorMessage, "Error")

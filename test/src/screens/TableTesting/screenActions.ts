@@ -1,5 +1,6 @@
 import { TableDefIds, OvlAction } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
+import { ScreenNavigateOut_ReturnType } from "../../../../ovl/src/global/hooks"
 
 export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
   let defId: TableDefIds = "tab1"
@@ -42,6 +43,11 @@ export const ScreenNavigateIn: OvlAction = async (_, { state, actions }) => {
 }
 
 export const ScreenNavigateOut: OvlAction = async (_) => {
+ 
+export const ScreenNavigateOut: OvlAction<
+  {},
+  ScreenNavigateOut_ReturnType
+> = async (_) => {
   if ((await DialogOkCancel("Test: Wirklich raus hier?", 1)) === 2) {
     return Promise.resolve("Navigation abgebrochen durch User")
   }

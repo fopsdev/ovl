@@ -12,24 +12,37 @@ import {
   ColumnDisplayDef,
   RowStatus,
   SelectedCustomFunctionResult,
+  BeforeSaveParam,
 } from "../library/Table/Table"
-import { FormState, Field } from "../library/Forms/actions"
+import {
+  FormState,
+  Field,
+  FieldChanged,
+  ValidateFieldType,
+} from "../library/Forms/actions"
 import { TemplateResult } from "lit-html"
 import { CellClass } from "../library/Table/Row"
 import { TableTesting } from "../../../test/src/shared/TableTesting/state"
 import { OvlBaseElement } from "../library/OvlBaseElement"
+import { ViewRendererResult } from "../library/Table/RowDetailView"
 
 // gets called when user navigates into a screen
 export const ScreenNavigateIn = "ScreenNavigateIn"
+
 // gets called when user navigates out of a screen
+export type ScreenNavigateOut_ReturnType = Promise<string>
 export const ScreenNavigateOut = "ScreenNavigateOut"
+
 // gets called when screen first time gets shown
 export const ScreenShow = "ScreenShow"
 
 //Detailview Functions
 // gets called when detailview is shown
+export type ViewShow_Type = { view: ViewRowDef; comp: OvlBaseElement }
 export const ViewShow = "ViewShow"
+
 // gets called whenever detailview rendered
+export type ViewAfterRender_Type = { view: ViewRowDef; comp: OvlBaseElement }
 export const ViewAfterRender = "ViewAfterRender"
 
 //Form Functions ####################################
@@ -45,10 +58,15 @@ export type FormAfterRender_Type = {
   comp: OvlBaseElement
 }
 export const FormAfterRender = "FormAfterRender"
+
 // gets called when a form field is changed
+export type FormValidate_Type = ValidateFieldType
 export const FormValidate = "FormValidate"
+
 // gets called when a form field is changed and successfully validated
+export type FormChanged_Type = FieldChanged
 export const FormChanged = "FormChanged"
+
 // gets called when formdata is copied/duplicated
 export type FormCopy_Type = {
   key: string
@@ -110,15 +128,21 @@ export const FormCanDetail = "FormCanDetail"
 export const FormCanCustom = "FormCan%"
 
 // custom filter function
-export type FormFilter_Type = {
+export type FormCustomFilter_Type = {
   def: TableDef
   data: TableData
   row: TableTesting
 }
-export type FormFilter_ReturnType = boolean
-export const FormCustomFilter = "Form_%_Filter"
+export type FormCustomFilter_ReturnType = boolean
+export const FormCustomFilter = "FormCustom_%_Filter"
 // custom sort function
-export const FormCustomSort = "Form_%_Sort"
+export type FormCustomSort_Type = {
+  a: string
+  b: string
+  data: { [key: string]: { [key: string]: {} } }
+}
+export type FormCustomSort_ReturnType = number
+export const FormCustomSort = "FormCustom_%_Sort"
 
 // defines custom column functions (eg. goto valid values)
 export type FormCustomColumnFn_Type = {
@@ -228,14 +252,54 @@ export type ViewHeaderCellClass_ReturnType = {
 export const ViewHeaderCellClass = "ViewHeaderCellClass"
 
 // must return a lit-Template and a indication if it replaces all or just the body
+export type ViewCustomRender_Type = { view: ViewRowDef; comp: OvlBaseElement }
+export type ViewCustomRender_ReturnType = ViewRendererResult
 export const ViewCustomRender = "ViewCustom_%_Render"
-
+// renders a custom tab
+export type ViewCustomTabRender_Type = {
+  view: ViewRowDef
+  comp: OvlBaseElement
+}
+export type ViewCustomTabRender_ReturnType = Promise<TemplateResult>
 export const ViewCustomTabRender = "ViewCustomTab_%_Render"
+// renders a custom header section in tab x
+export type ViewTabHeaderRender_Type = {
+  view: ViewRowDef
+  comp: OvlBaseElement
+}
+export type ViewTabHeaderRender_ReturnType = TemplateResult
 export const ViewTabHeaderRender = "ViewTab_%_HeaderRender"
+
+// renders a custom footer section in tab x
+export type ViewTabFooterRender_Type = {
+  view: ViewRowDef
+  comp: OvlBaseElement
+}
+export type ViewTabFooterRender_ReturnType = TemplateResult
 export const ViewTabFooterRender = "ViewTab_%_FooterRender"
 
+// renders a custom tab on the bigedit form
+export type EditCustomTabRender_Type = {
+  view: EditRowDef
+  comp: OvlBaseElement
+}
+export type EditCustomTabRender_ReturnType = Promise<TemplateResult>
 export const EditCustomTabRender = "EditCustomTab_%_Render"
+
+// renders a custom header section on tab x
+export type EditTabHeaderRender_Type = {
+  view: EditRowDef
+  comp: OvlBaseElement
+}
+export type EditTabHeaderRender_ReturnType = TemplateResult
 export const EditTabHeaderRender = "EditTab_%_HeaderRender"
+
+// renders a custom header section on tab x
+export type EditTabFooterRender_Type = {
+  view: EditRowDef
+  comp: OvlBaseElement
+}
+export type EditTabFooterRender_ReturnType = TemplateResult
 export const EditTabFooterRender = "EditTab_%_FooterRender"
 
 // now the eventhandler if the user selected/clicked the cell
@@ -262,13 +326,43 @@ export const FieldHeaderCellSelectedHandler =
 //Form Save/Delete/Postback Functions ####################################
 // provide your complete form postback to server logic here if you don't wanna use the default
 export const FormCustomSave = "FormCustomSave"
+
 // gets called before the form gets saved/posted back to the server
+export type FormBeforeSave_Type = BeforeSaveParam
 export const FormBeforeSave = "FormBeforeSave"
+
 // if you would like to process save errors yourself
+export type FormSaveError_Type = {
+  key: string
+  def: TableDef
+  data: TableData
+  res: any
+}
 export const FormSaveError = "FormSaveError"
+
 // gets called after save
+export type FormAfterSave_Type = {
+  key: string
+  def: TableDef
+  data: TableData
+  res: any
+}
 export const FormAfterSave = "FormAfterSave"
+
 // if you would like to process delete errors yourself
+export type FormDeleteError_Type = {
+  key: string
+  tableDef: TableDef
+  res: TableData
+}
+export type FormDeleteError_ReturnType = string
 export const FormDeleteError = "FormDeleteError"
+
 // if you would like to do smth after delete
+export type FormAfterDelete_Type = {
+  key: string
+  def: TableDef
+  data: TableData
+  res: any
+}
 export const FormAfterDelete = "FormAfterDelete"

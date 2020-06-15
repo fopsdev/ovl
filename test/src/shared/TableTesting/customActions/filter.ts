@@ -1,33 +1,33 @@
 import { OvlAction } from "../../../../../ovl/src"
 import {
-  FormFilter_Type,
-  FormFilter_ReturnType,
+  FormCustomFilter_Type,
+  FormCustomFilter_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
 
-export const Form_alphaStartsWithA_Filter: OvlAction<
-  FormFilter_Type,
-  FormFilter_ReturnType
+export const FormCustom_alphaStartsWithA_Filter: OvlAction<
+  FormCustomFilter_Type,
+  FormCustomFilter_ReturnType
 > = ({ row }, { state, actions, effects }) => {
   return row.U_Alpha.startsWith("A")
 }
 
-export const Form_alphaStartsWithB_Filter: OvlAction<
-  FormFilter_Type,
-  FormFilter_ReturnType
+export const FormCustom_alphaStartsWithB_Filter: OvlAction<
+  FormCustomFilter_Type,
+  FormCustomFilter_ReturnType
 > = ({ row }, { state, actions, effects }) => {
   return row.U_Alpha.startsWith("B")
 }
 
-export const Form_memoContainsTest_Filter: OvlAction<
-  FormFilter_Type,
-  FormFilter_ReturnType
+export const FormCustom_memoContainsTest_Filter: OvlAction<
+  FormCustomFilter_Type,
+  FormCustomFilter_ReturnType
 > = ({ row }) => {
   return row.U_Memo.toLowerCase().indexOf("test") > -1
 }
 
-export const Form_memoContainsText_Filter: OvlAction<
-  FormFilter_Type,
-  FormFilter_ReturnType
+export const FormCustom_memoContainsText_Filter: OvlAction<
+  FormCustomFilter_Type,
+  FormCustomFilter_ReturnType
 > = ({ row }) => {
   return row.U_Memo.toLowerCase().indexOf("text") > -1
 }

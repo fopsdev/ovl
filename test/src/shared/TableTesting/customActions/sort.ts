@@ -1,17 +1,17 @@
 import { getTextSort } from "../../../../../ovl/src/library/Table/helpers"
-import { TableTesting, TblTableTesting } from "../state"
-import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
+import { TableTesting } from "../state"
+import { OvlAction } from "../../../../../ovl/src"
+import {
+  FormCustomSort_Type,
+  FormCustomSort_ReturnType,
+} from "../../../../../ovl/src/global/hooks"
 
-export const Form_alphaThenMemo_Sort = (
-  a: string,
-  b: string,
-  data: TblTableTesting,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-): number => {
-  let rowA: TableTesting = data[a]
-  let rowB: TableTesting = data[b]
+export const FormCustom_alphaThenMemo_Sort: OvlAction<
+  FormCustomSort_Type,
+  FormCustomSort_ReturnType
+> = ({ a, b, data }) => {
+  let rowA = data[a] as TableTesting
+  let rowB = data[b] as TableTesting
   let res = getTextSort(rowA.U_Alpha, rowB.U_Alpha)
   if (res === 0) {
     res = getTextSort(rowA.U_Memo, rowB.U_Memo)
@@ -20,33 +20,24 @@ export const Form_alphaThenMemo_Sort = (
   return res
 }
 
-export const Form_memoThenAlpha_Sort = (
-  a: string,
-  b: string,
-  data: TblTableTesting,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-): number => {
-  let rowA: TableTesting = data[a]
-  let rowB: TableTesting = data[b]
+export const FormCustom_memoThenAlpha_Sort: OvlAction<
+  FormCustomSort_Type,
+  FormCustomSort_ReturnType
+> = ({ a, b, data }) => {
+  let rowA = data[a] as TableTesting
+  let rowB = data[b] as TableTesting
   let res = getTextSort(rowA.U_Memo, rowB.U_Memo)
   if (res === 0) {
     res = getTextSort(rowA.U_Alpha, rowB.U_Alpha)
   }
-
   return res
 }
 
-export const Form_onlyTest_Sort = (
-  a: string,
-  b: string,
-  data: TblTableTesting,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-): number => {
-  let rowA: TableTesting = data[a]
+export const FormCustom_onlyTest_Sort: OvlAction<
+  FormCustomSort_Type,
+  FormCustomSort_ReturnType
+> = ({ a, b, data }) => {
+  let rowA = data[a] as TableTesting
   if (rowA.U_Alpha.toLocaleLowerCase().indexOf("test") > -1) {
     return -1
   } else {

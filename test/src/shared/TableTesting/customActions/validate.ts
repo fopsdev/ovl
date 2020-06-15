@@ -6,24 +6,27 @@ import {
 import { Mandatory } from "../../../../../ovl/src/library/forms/validators"
 import { TableTestingColumn } from "../state"
 import { Field_U_ItemCode_GetList } from "./list"
-import { OvlState, OvlActions, OvlEffects } from "../../../../../ovl/src"
+import {
+  OvlState,
+  OvlActions,
+  OvlEffects,
+  OvlAction,
+} from "../../../../../ovl/src"
+import {
+  FormChanged_Type,
+  FieldGetList_Type,
+  FormValidate_Type,
+} from "../../../../../ovl/src/global/hooks"
 
-export const FormChanged = async (
-  value: FieldChanged,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
+export const FormChanged: OvlAction<FormChanged_Type> = async (
+  value,
+  { actions }
 ) => {
   switch (value.fieldId) {
     case "U_ItmsGrpCod":
       // check if the entry is still in the list
       if (value.newConvertedVal) {
-        let listdata = Field_U_ItemCode_GetList(
-          value.row,
-          state,
-          actions,
-          effects
-        )
+        let listdata = Field_U_ItemCode_GetList(<FieldGetList_Type>value.row)
         let itemCode = value.formState.fields["U_ItemCode"].value
         if (itemCode) {
           let itemGroup = listdata.data[itemCode]["ItmsGrpCod"]
@@ -51,12 +54,7 @@ export const FormChanged = async (
   }
 }
 
-export const FormValidate = async (
-  value: ValidateFieldType,
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => {
+export const FormValidate: OvlAction<FormValidate_Type> = async (value) => {
   switch (value.fieldId as TableTestingColumn) {
     case "U_Alpha":
       Mandatory("U_Alpha", value.newVal, value.validationResult)

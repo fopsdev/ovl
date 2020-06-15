@@ -3,6 +3,7 @@ import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
 import { getDateValue } from "../../../../ovl/src/global/globals"
+import { ScreenNavigateOut_ReturnType } from "../../../../ovl/src/global/hooks"
 
 /* this is for the mobiletimeentryform screen */
 export const ScreenShow: OvlAction = async (_) => {
@@ -48,8 +49,12 @@ export const ScreenNavigateIn: OvlAction = async (_, { actions }) => {
   }
 }
 
-export const ScreenNavigateOut = async (_) => {
+export const ScreenNavigateOut: OvlAction<
+  {},
+  ScreenNavigateOut_ReturnType
+> = async (_) => {
   // if ((await DialogOkCancel("Test: Wirklich raus hier?", 1)) === 2) {
   //   return Promise.resolve("Navigation abgebrochen durch User")
   // }
+  return Promise.resolve("")
 }
