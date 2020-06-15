@@ -42,8 +42,6 @@ export const ScreenNavigateIn: OvlAction = async (_, { state, actions }) => {
   })
 }
 
-export const ScreenNavigateOut: OvlAction = async (_) => {
- 
 export const ScreenNavigateOut: OvlAction<
   {},
   ScreenNavigateOut_ReturnType

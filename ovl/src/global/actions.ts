@@ -27,13 +27,13 @@ import {
 import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 
-export const SetLastScrollPosition: OvlAction = ({ state }) => {
+export const SetLastScrollPosition: OvlAction = (_, { state }) => {
   setLastScrollPosition(state)
 }
 
 export const NavigateTo: OvlAction<Screen> = async (
-  { state, actions, effects },
-  value
+  value,
+  { state, actions, effects }
 ) => {
   if (state.ovl.screens.nav.currentScreen !== value) {
     let fn = customFunctions["screens"]
@@ -98,14 +98,10 @@ export const NavigateTo: OvlAction<Screen> = async (
   }
 }
 
-export const NavigateBack: OvlAction = async ({ state, actions, effects }) => {
-  // if (
-  //   !(
-  //     state.ovl.libState.overlay.open ||
-  //     state.ovl.libState.overlay2.open ||
-  //     state.ovl.libState.dialog.visible
-  //   )
-  // ) {
+export const NavigateBack: OvlAction = async (
+  _,
+  { state, actions, effects }
+) => {
   if (state.ovl.screens.nav.screensHistory.length > 1) {
     let fn = customFunctions["screens"]
     if (fn) {
@@ -205,8 +201,8 @@ const SetVisibleScreen = async (state: OvlState, value: string) => {
 }
 
 export const SetVisibleFalse: OvlAction<string> = (
-  { state, actions },
-  value
+  value,
+  { state, actions }
 ) => {
   if (!state.ovl.screens.screenState) {
     state.ovl.screens.screenState = {}
@@ -238,8 +234,8 @@ export const SetVisibleFalse: OvlAction<string> = (
 }
 
 export const SetLanguage: OvlAction<string> = async (
-  { state, actions, effects },
-  value
+  value,
+  { state, actions, effects }
 ) => {
   let lang = value
   let res = await effects.ovl.postRequest(api.url + "users/translations", {
@@ -256,18 +252,18 @@ export const SetLanguage: OvlAction<string> = async (
   localStorage.setItem("PortalLanguage", res.data.lang)
 }
 
-export const SetTableNeedsRebuild: OvlAction<boolean> = ({ state }, value) => {
+export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
   state.ovl.uiState.tableNeedsRebuild = value
 }
 
-export const Logout: OvlAction = async ({ state, actions }) => {
+export const Logout: OvlAction = async (_, { state, actions }) => {
   if ((await DialogOkCancel("Wollen Sie sich wirklich abmelden?", 1)) === 1) {
     state.ovl.user.token = ""
     logout()
   }
 }
 
-export const PrepareApp: OvlAction = async ({ actions, state, effects }) => {
+export const PrepareApp: OvlAction = async (_, { actions, state, effects }) => {
   state.ovl.uiState.isReady = false
   state.ovl.libState.indicator.refCounter = 0
 
@@ -313,7 +309,7 @@ export const GetFile: OvlAction<{
   id1: string
   id2?: string
   ext?: string
-}> = async ({ actions, state, effects }, value) => {
+}> = async (value, { actions, state, effects }) => {
   let cat = value.cat
   let id1 = value.id1
   let id2 = value.id2
@@ -364,11 +360,10 @@ export const GetFile: OvlAction<{
   }
 }
 
-export const RehydrateAndUpdateApp: OvlAction = async ({
-  actions,
-  state,
-  effects,
-}) => {
+export const RehydrateAndUpdateApp: OvlAction = async (
+  _,
+  { actions, state, effects }
+) => {
   if (OvlConfig._system.OfflineMode) {
     try {
       let persistedState = await stateStore.get(
@@ -405,8 +400,8 @@ export const RehydrateAndUpdateApp: OvlAction = async ({
 }
 
 export const InitApp: OvlAction<Init> = async (
-  { actions, state, effects },
-  value
+  value,
+  { actions, state, effects }
 ) => {
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function (e) {
