@@ -48,79 +48,81 @@ export class OvlCheckbox extends OvlBaseElement {
   }
 
   async getUI() {
-    this.field = this.props(this.state)
-    let field = this.field.field
-    this.formState = this.state.ovl.forms[field.formType][field.formId]
-    let customRowCell = this.field.customRowCellClass
-    let customRowClassName = ""
-    let customRowTooltip
-    let customRowClassContainerName = ""
-    if (customRowCell) {
-      customRowClassName = customRowCell.className
-      customRowClassContainerName = customRowClassName + "Container"
-      customRowTooltip = customRowCell.tooltip
-    }
+    return this.track(() => {
+      this.field = this.props(this.state)
+      let field = this.field.field
+      this.formState = this.state.ovl.forms[field.formType][field.formId]
+      let customRowCell = this.field.customRowCellClass
+      let customRowClassName = ""
+      let customRowTooltip
+      let customRowClassContainerName = ""
+      if (customRowCell) {
+        customRowClassName = customRowCell.className
+        customRowClassContainerName = customRowClassName + "Container"
+        customRowTooltip = customRowCell.tooltip
+      }
 
-    let res = getUIValidationObject(field)
-    let align = ""
-    if (field.ui && field.ui.align) {
-      align = field.ui.align
-    }
+      let res = getUIValidationObject(field)
+      let align = ""
+      if (field.ui && field.ui.align) {
+        align = field.ui.align
+      }
 
-    let label = GetLabel(
-      field,
-      this.field.customHeaderCellClass,
-      res,
-      "checkbox",
-      align,
-      this.formState
-    )
-    return html`
-      <div
-        class="ovl-formcontrol-container ovl-container-checkbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
-      >
-        ${label}
+      let label = GetLabel(
+        field,
+        this.field.customHeaderCellClass,
+        res,
+        "checkbox",
+        align,
+        this.formState
+      )
+      return html`
+        <div
+          class="ovl-formcontrol-container ovl-container-checkbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
+        >
+          ${label}
 
-        <div class="fd-form-item">
-          <input
-            title="${ifDefined(
-              customRowTooltip ? customRowTooltip : undefined
-            )}"
-            @change=${(e) => this.handleChange(e)}
-            @focusout=${(e) => this.handleFocusOut(e)}
-            style="${align}"
-            autocomplete="off"
-            class="fd-checkbox ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-checkbox-input ovl-table-value__${field.fieldKey} ${customRowClassName}"
-            type="checkbox"
-            id="${field.id}"
-            ?checked=${field.value === field.ui.checkedValue}
-          />
-          <label
-            class="fd-checkbox__label ovl-formcontrol-checkbox-input ovl-table-value__${field.fieldKey} "
-            for="${field.id}"
+          <div class="fd-form-item">
+            <input
+              title="${ifDefined(
+                customRowTooltip ? customRowTooltip : undefined
+              )}"
+              @change=${(e) => this.handleChange(e)}
+              @focusout=${(e) => this.handleFocusOut(e)}
+              style="${align}"
+              autocomplete="off"
+              class="fd-checkbox ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-checkbox-input ovl-table-value__${field.fieldKey} ${customRowClassName}"
+              type="checkbox"
+              id="${field.id}"
+              ?checked=${field.value === field.ui.checkedValue}
+            />
+            <label
+              class="fd-checkbox__label ovl-formcontrol-checkbox-input ovl-table-value__${field.fieldKey} "
+              for="${field.id}"
+            >
+            </label>
+          </div>
+          <span
+            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey}"
           >
-          </label>
-        </div>
-        <span
-          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey}"
-        >
-          ${GetValueFromCustomFunction(
-            this.field.row,
-            field,
-            this.formState,
-            align,
-            this.field.isInline,
-            this.state
-          )}
-        </span>
+            ${GetValueFromCustomFunction(
+              this.field.row,
+              field,
+              this.formState,
+              align,
+              this.field.isInline,
+              this.state
+            )}
+          </span>
 
-        <span
-          class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-checkbox-validation ovl-formcontrol-validation__${field.fieldKey}"
-        >
-          ${field.validationResult.validationMsg}
-        </span>
-      </div>
-    `
+          <span
+            class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-checkbox-validation ovl-formcontrol-validation__${field.fieldKey}"
+          >
+            ${field.validationResult.validationMsg}
+          </span>
+        </div>
+      `
+    })
   }
   afterRender() {
     this.inputElement = document.getElementById(this.field.field.id)

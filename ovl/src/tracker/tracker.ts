@@ -17,6 +17,7 @@ export const stopTrack = () => {
 
 export const disposeTrack = (cb: OvlBaseElement) => {
   // get all paths and remove from there as well
+
   let pathsSet = callbacks.get(cb)
   if (pathsSet) {
     pathsSet.forEach((path: string) => {

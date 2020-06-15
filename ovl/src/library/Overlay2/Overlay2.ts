@@ -63,34 +63,35 @@ export class OvlOverlay2 extends OvlBaseElement {
         }
       }
     }
+    return this.track(async () => {
+      if (!this.state.ovl.libState.overlay2.open) {
+        return null
+      }
 
-    if (!this.state.ovl.libState.overlay2.open) {
-      return null
-    }
+      let animation = "animated fadeIn faster"
 
-    let animation = "animated fadeIn faster"
+      if (this.state.ovl.libState.overlay2.closing) {
+        animation = "animated fadeOut faster nopointerevents"
+      }
 
-    if (this.state.ovl.libState.overlay2.closing) {
-      animation = "animated fadeOut faster nopointerevents"
-    }
+      if (!overlay2ToRender.template) {
+        overlay2ToRender.template = await overlay2ToRender.getTemplate()
+      }
 
-    if (!overlay2ToRender.template) {
-      overlay2ToRender.template = await overlay2ToRender.getTemplate()
-    }
-
-    return Promise.resolve(html`
-      <div
-        id="ovloverlay2"
-        tabindex="0"
-        @keydown=${(e) => handleKeyDown(e)}
-        @mousedown=${this.handleDismissed}
-        id="ovloverlay2"
-        class="fd-shell__overlay fd-overlay fd-overlay--modal ovl-overlay ${animation}"
-        aria-hidden="false"
-      >
-        ${overlay2ToRender.template}
-      </div>
-    `)
+      return Promise.resolve(html`
+        <div
+          id="ovloverlay2"
+          tabindex="0"
+          @keydown=${(e) => handleKeyDown(e)}
+          @mousedown=${this.handleDismissed}
+          id="ovloverlay2"
+          class="fd-shell__overlay fd-overlay fd-overlay--modal ovl-overlay ${animation}"
+          aria-hidden="false"
+        >
+          ${overlay2ToRender.template}
+        </div>
+      `)
+    })
   }
   updated() {
     if (!this.state.ovl.libState.overlay2.closing) {

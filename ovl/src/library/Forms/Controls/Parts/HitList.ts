@@ -79,142 +79,143 @@ export class OvlHitList extends OvlBaseElement {
   }
 
   async getUI() {
-    let rowNr = 0
-    let list = this.controlState.list
-    let listData = this.controlState.listData
-    let filterValue = this.controlState.filterValue
-    let filteredKeys = this.controlState.filteredKeys
-    let animation = ""
-    if (this.controlState.animation) {
-      animation = "animated fadeIn faster"
-    }
-    let scrollable = ""
-    if (this.controlState.type === "overlay") {
-      scrollable = "scrollableOverlay"
-    }
-    let lookupTypes = listData.lookupDef
-
-    if (!lookupTypes) {
-      // get the types from the data and assume its text
-      let keys = Object.keys(listData.data)
-      if (keys.length > 0) {
-        lookupTypes = Object.keys(listData.data[keys[0]]).reduce((val, k) => {
-          val[k] = { type: "text" }
-          return val
-        }, {})
+    return this.track(() => {
+      let rowNr = 0
+      let list = this.controlState.list
+      let listData = this.controlState.listData
+      let filterValue = this.controlState.filterValue
+      let filteredKeys = this.controlState.filteredKeys
+      let animation = ""
+      if (this.controlState.animation) {
+        animation = "animated fadeIn faster"
       }
-    }
-    // check if we should remove the valueField from the displayed list
-    if (
-      list.displayValueField !== undefined &&
-      list.displayValueField === false
-    ) {
-      // we have to clone it in order to remove an entry...its proxified thats why
-      lookupTypes = JSON.parse(JSON.stringify(lookupTypes))
-      delete lookupTypes[list.valueField]
-    }
+      let scrollable = ""
+      if (this.controlState.type === "overlay") {
+        scrollable = "scrollableOverlay"
+      }
+      let lookupTypes = listData.lookupDef
 
-    let lookupTypesKeys = Object.keys(lookupTypes)
+      if (!lookupTypes) {
+        // get the types from the data and assume its text
+        let keys = Object.keys(listData.data)
+        if (keys.length > 0) {
+          lookupTypes = Object.keys(listData.data[keys[0]]).reduce((val, k) => {
+            val[k] = { type: "text" }
+            return val
+          }, {})
+        }
+      }
+      // check if we should remove the valueField from the displayed list
+      if (
+        list.displayValueField !== undefined &&
+        list.displayValueField === false
+      ) {
+        // we have to clone it in order to remove an entry...its proxified thats why
+        lookupTypes = JSON.parse(JSON.stringify(lookupTypes))
+        delete lookupTypes[list.valueField]
+      }
 
-    let thead
+      let lookupTypesKeys = Object.keys(lookupTypes)
 
-    if (lookupTypesKeys.length > 1 || this.controlState.type === "overlay") {
-      thead = html`
-        <thead class="fd-table__header">
-          <tr class="fd-table__row">
-            ${lookupTypesKeys.map((k) => {
-              let caption = ""
-              if (lookupTypes[k].translationKey) {
-                caption = T(lookupTypes[k].translationKey)
-              } else {
-                caption = k
-              }
+      let thead
 
-              return html`
-                <th class="fd-table__cell stickyTableHeader" scope="col">
-                  ${caption}
-                </th>
-              `
-            })}
-          </tr>
-        </thead>
-      `
-    }
+      if (lookupTypesKeys.length > 1 || this.controlState.type === "overlay") {
+        thead = html`
+          <thead class="fd-table__header">
+            <tr class="fd-table__row">
+              ${lookupTypesKeys.map((k) => {
+                let caption = ""
+                if (lookupTypes[k].translationKey) {
+                  caption = T(lookupTypes[k].translationKey)
+                } else {
+                  caption = k
+                }
 
-    return html`
-      <div
-        id="ovlhitlist"
-        style="padding-right:2px;"
-        @keydown=${(e) => this.handleMainKeyDown(e)}
-        class="${scrollable} localList"
-      >
-        <table
-          class="fd-table ${animation}"
-          style="margin:2px; margin-bottom:0; padding:2px;padding-bottom:0px;"
+                return html`
+                  <th class="fd-table__cell stickyTableHeader" scope="col">
+                    ${caption}
+                  </th>
+                `
+              })}
+            </tr>
+          </thead>
+        `
+      }
+
+      return html`
+        <div
+          id="ovlhitlist"
+          style="padding-right:2px;"
+          @keydown=${(e) => this.handleMainKeyDown(e)}
+          class="${scrollable} localList"
         >
-          ${thead}
-          <tbody class="fd-table__body">
-            ${filteredKeys.map((rowKey) => {
-              let row = listData.data[rowKey]
-              rowNr++
-              this.maxRow = rowNr
-              return html`
-                <tr
-                  @click=${(e) => this.handleClick(e, rowKey)}
-                  id="${this.controlState.fieldId}${this.controlState
-                    .type}ovlhl_${rowNr}"
-                  tabindex="0"
-                  class="fd-table__row "
-                  @keydown=${(e) => this.handleKeyDown(e, rowKey)}
-                >
-                  ${lookupTypesKeys.map((c) => {
-                    let val = getDisplayValue(
-                      c,
-                      { type: lookupTypes[c].type },
-                      row,
-                      ""
-                    )
-                    let leftPart = ""
-                    let rightPart = ""
-                    // mark hits
-                    let filterHit = false
-                    if (filterValue) {
-                      let i = val
-                        .toLowerCase()
-                        .indexOf(filterValue.toLowerCase())
-                      if (i > -1) {
-                        leftPart = val.substring(0, i)
-                        rightPart = val.substring(i + filterValue.length)
-                        val = val.substring(i, i + filterValue.length)
-                        filterHit = true
+          <table
+            class="fd-table ${animation}"
+            style="margin:2px; margin-bottom:0; padding:2px;padding-bottom:0px;"
+          >
+            ${thead}
+            <tbody class="fd-table__body">
+              ${filteredKeys.map((rowKey) => {
+                let row = listData.data[rowKey]
+                rowNr++
+                this.maxRow = rowNr
+                return html`
+                  <tr
+                    @click=${(e) => this.handleClick(e, rowKey)}
+                    id="${this.controlState.fieldId}${this.controlState
+                      .type}ovlhl_${rowNr}"
+                    tabindex="0"
+                    class="fd-table__row "
+                    @keydown=${(e) => this.handleKeyDown(e, rowKey)}
+                  >
+                    ${lookupTypesKeys.map((c) => {
+                      let val = getDisplayValue(
+                        c,
+                        { type: lookupTypes[c].type },
+                        row,
+                        ""
+                      )
+                      let leftPart = ""
+                      let rightPart = ""
+                      // mark hits
+                      let filterHit = false
+                      if (filterValue) {
+                        let i = val
+                          .toLowerCase()
+                          .indexOf(filterValue.toLowerCase())
+                        if (i > -1) {
+                          leftPart = val.substring(0, i)
+                          rightPart = val.substring(i + filterValue.length)
+                          val = val.substring(i, i + filterValue.length)
+                          filterHit = true
+                          return html`
+                            <td class="fd-table__cell">
+                              ${leftPart}<b><i>${val}</i></b
+                              >${rightPart}
+                            </td>
+                          `
+                        }
+                      }
+                      if (!filterHit) {
                         return html`
                           <td class="fd-table__cell">
-                            ${leftPart}<b><i>${val}</i></b
-                            >${rightPart}
+                            ${val}
                           </td>
                         `
                       }
-                    }
-                    if (!filterHit) {
-                      return html`
-                        <td class="fd-table__cell">
-                          ${val}
-                        </td>
-                      `
-                    }
-                  })}
-                </tr>
-              `
-            })}
-          </tbody>
-        </table>
-      </div>
-    `
+                    })}
+                  </tr>
+                `
+              })}
+            </tbody>
+          </table>
+        </div>
+      `
+    })
   }
   afterRender() {
     overlay2ToRender.elementToFocusAfterOpen = document.getElementById(
       this.controlState.fieldId + this.controlState.type + "ovlhl_1"
-      //console.log(el.offsetWidth)
     )
   }
   updated() {

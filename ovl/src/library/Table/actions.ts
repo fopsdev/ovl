@@ -325,7 +325,7 @@ export const TableRefreshDataFromServer: OvlAction<{
     })
   })
   if (rowsDeleted) {
-    setPage(def, value.data, data)
+    setPage(value.data)
   }
 
   // don't ever do that. would result in a new refernece and all the existing comps uisng some state from it are lost
@@ -1023,7 +1023,7 @@ export const TableDeleteRow: OvlAction<{
     if (!value.isMass) {
       selectLatestRow(def, value.data)
       let rows = value.data.data
-      setPage(def, value.data, rows)
+      setPage(value.data)
     }
 
     // afterDelete @@hook
@@ -1139,7 +1139,7 @@ export const TableMultipleDeleteRow: OvlAction<{
     )
     selectLatestRow(def, value.data)
     let rows2 = value.data.data
-    setPage(def, value.data, rows2)
+    setPage(value.data)
     actions.ovl.internal.TableSelectHeader({
       def: value.def,
       data: value.data,
@@ -1489,8 +1489,10 @@ export const TableDeleteRowFromData: OvlAction<{
   delete data[key]
   let def = value.def
   let i = def.uiState.dataFilteredAndSorted.indexOf(key)
+  //window.ovldbg = "lala"
   def.uiState.dataFilteredAndSorted.splice(i, 1)
   delete def.uiState.selectedRow[key]
   delete def.uiState.editRow[key]
   delete def.uiState.viewRow[key]
+  setPage(value.data)
 }

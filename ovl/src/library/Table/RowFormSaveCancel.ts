@@ -62,39 +62,41 @@ export class TableRowSaveCancel extends OvlBaseElement {
         }
       }
     }
-    let acceptEnabled = "fd-button--positive sap-icon--accept"
+    return this.track(() => {
+      let acceptEnabled = "fd-button--positive sap-icon--accept"
 
-    if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
-      acceptEnabled = "fd-button nopointerevents"
-    }
-    return html`
-      <td
-        colspan="${this.rowData.columnsCount}"
-        class="fd-table__cell fd-has-text-align-center"
-        style="margin:0;padding:0;"
-      >
-        <div
-          class="fd-button-group animated fadeIn faster"
-          role="group"
-          aria-label="RowSaveCancel"
-          style="margin-top:-2px;"
+      if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
+        acceptEnabled = "fd-button nopointerevents"
+      }
+      return html`
+        <td
+          colspan="${this.rowData.columnsCount}"
+          class="fd-table__cell fd-has-text-align-center"
+          style="margin:0;padding:0;"
         >
-          <button
-            @click=${handleSave}
-            title="Datensatz speichern"
-            style="border-top-left-radius: 0px; border-left: 2px solid #0cd7ed;border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-right:none;"
-            class="${acceptEnabled}"
-          ></button>
+          <div
+            class="fd-button-group animated fadeIn faster"
+            role="group"
+            aria-label="RowSaveCancel"
+            style="margin-top:-2px;"
+          >
+            <button
+              @click=${handleSave}
+              title="Datensatz speichern"
+              style="border-top-left-radius: 0px; border-left: 2px solid #0cd7ed;border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-right:none;"
+              class="${acceptEnabled}"
+            ></button>
 
-          <button
-            @mousedown=${handleCancel}
-            @click=${handleCancel}
-            title="Abbrechen"
-            style="border-top-right-radius: 0px; border-right: 2px solid #0cd7ed; border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-left:none;"
-            class="fd-button--negative sap-icon--decline"
-          ></button>
-        </div>
-      </td>
-    `
+            <button
+              @mousedown=${handleCancel}
+              @click=${handleCancel}
+              title="Abbrechen"
+              style="border-top-right-radius: 0px; border-right: 2px solid #0cd7ed; border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-left:none;"
+              class="fd-button--negative sap-icon--decline"
+            ></button>
+          </div>
+        </td>
+      `
+    })
   }
 }

@@ -53,19 +53,6 @@ export class OvlOverlay extends OvlBaseElement {
   }
 
   async getUI() {
-    if (!this.state.ovl.libState.overlay.open) {
-      return null
-    }
-
-    let animation = "animated fadeIn faster"
-
-    if (this.state.ovl.libState.overlay.closing) {
-      animation = "animated fadeOut faster nopointerevents"
-    }
-    if (!overlayToRender.template) {
-      overlayToRender.template = await overlayToRender.getTemplate()
-    }
-
     const handleKeyDown = (e: KeyboardEvent) => {
       e.stopPropagation()
       if (e.key === "Escape") {
@@ -77,18 +64,33 @@ export class OvlOverlay extends OvlBaseElement {
       }
     }
 
-    return Promise.resolve(html`
-      <div
-        tabindex="0"
-        id="ovloverlay"
-        @keydown=${(e) => handleKeyDown(e)}
-        @mousedown=${this.handleDismissed}
-        class="fd-shell__overlay fd-overlay fd-overlay--modal ovl-overlay ${animation}"
-        aria-hidden="false"
-      >
-        ${overlayToRender.template}
-      </div>
-    `)
+    return this.track(async () => {
+      if (!this.state.ovl.libState.overlay.open) {
+        return null
+      }
+
+      let animation = "animated fadeIn faster"
+
+      if (this.state.ovl.libState.overlay.closing) {
+        animation = "animated fadeOut faster nopointerevents"
+      }
+      if (!overlayToRender.template) {
+        overlayToRender.template = await overlayToRender.getTemplate()
+      }
+
+      return Promise.resolve(html`
+        <div
+          tabindex="0"
+          id="ovloverlay"
+          @keydown=${(e) => handleKeyDown(e)}
+          @mousedown=${this.handleDismissed}
+          class="fd-shell__overlay fd-overlay fd-overlay--modal ovl-overlay ${animation}"
+          aria-hidden="false"
+        >
+          ${overlayToRender.template}
+        </div>
+      `)
+    })
   }
   updated() {
     if (!this.state.ovl.libState.overlay.closing) {

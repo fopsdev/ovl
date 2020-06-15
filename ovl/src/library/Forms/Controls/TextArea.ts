@@ -46,70 +46,74 @@ export class OvlTextArea extends OvlBaseElement {
   }
 
   async getUI() {
-    this.field = this.props(this.state)
-    let field = this.field.field
-    this.formState = this.state.ovl.forms[field.formType][field.formId]
+    return this.track(() => {
+      this.field = this.props(this.state)
+      let field = this.field.field
+      this.formState = this.state.ovl.forms[field.formType][field.formId]
 
-    let customRowCell = this.field.customRowCellClass
-    let customRowClassName = ""
-    let customRowTooltip
-    let customRowClassContainerName = ""
-    if (customRowCell) {
-      customRowClassName = customRowCell.className
-      customRowClassContainerName = customRowClassName + "Container"
-      customRowTooltip = customRowCell.tooltip
-    }
+      let customRowCell = this.field.customRowCellClass
+      let customRowClassName = ""
+      let customRowTooltip
+      let customRowClassContainerName = ""
+      if (customRowCell) {
+        customRowClassName = customRowCell.className
+        customRowClassContainerName = customRowClassName + "Container"
+        customRowTooltip = customRowCell.tooltip
+      }
 
-    let res = getUIValidationObject(field)
+      let res = getUIValidationObject(field)
 
-    let align = ""
-    if (field.ui && field.ui.align) {
-      align = field.ui.align
-    }
-    let label = GetLabel(
-      field,
-      this.field.customHeaderCellClass,
-      res,
-      "textarea",
-      align,
-      this.formState
-    )
+      let align = ""
+      if (field.ui && field.ui.align) {
+        align = field.ui.align
+      }
+      let label = GetLabel(
+        field,
+        this.field.customHeaderCellClass,
+        res,
+        "textarea",
+        align,
+        this.formState
+      )
 
-    return html`
-      <div
-        class="ovl-formcontrol-container ovl-container-textarea ovl-container__${field.fieldKey} ${customRowClassContainerName}"
-      >
-        ${label}
-        <textarea
-          title="${ifDefined(customRowTooltip ? customRowTooltip : undefined)}"
-          @keydown=${(e) => this.handleKeyDown(e)}
-          @change=${(e) => this.handleChange(e)}
-          @focusout=${(e) => this.handleFocusOut(e)}
-          class="fd-textarea ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-table-value-textarea ovl-table-value__${field.fieldKey} ${customRowClassName}"
-          id="${field.id}"
+      return html`
+        <div
+          class="ovl-formcontrol-container ovl-container-textarea ovl-container__${field.fieldKey} ${customRowClassContainerName}"
         >
+          ${label}
+          <textarea
+            title="${ifDefined(
+              customRowTooltip ? customRowTooltip : undefined
+            )}"
+            @keydown=${(e) => this.handleKeyDown(e)}
+            @change=${(e) => this.handleChange(e)}
+            @focusout=${(e) => this.handleFocusOut(e)}
+            class="fd-textarea ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-table-value-textarea ovl-table-value__${field.fieldKey} ${customRowClassName}"
+            id="${field.id}"
+          >
 ${field.value}</textarea
+          >
+        </div>
+        <span
+          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textarea-custom ovl-formcontrol-custom__${field.fieldKey}"
         >
-      </div>
-      <span
-        class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textarea-custom ovl-formcontrol-custom__${field.fieldKey}"
-      >
-        ${GetValueFromCustomFunction(
-          this.field.row,
-          field,
-          this.formState,
-          align,
-          this.field.isInline,
-          this.state
-        )}
-      </span>
+          ${GetValueFromCustomFunction(
+            this.field.row,
+            field,
+            this.formState,
+            align,
+            this.field.isInline,
+            this.state
+          )}
+        </span>
 
-      <span
-        class="fd-form-message fd-form-message--warning ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textarea-validation ovl-formcontrol-validation__${field.fieldKey}"
-      >
-        ${field.validationResult.validationMsg}
-      </span>
-    `
+        <span
+          class="fd-form-message fd-form-message--warning ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textarea-validation ovl-formcontrol-validation__${field.fieldKey}"
+        >
+          ${field.validationResult.validationMsg}
+        </span>
+      `
+    })
   }
   afterRender() {
     this.inputElement = document.getElementById(this.field.field.id)

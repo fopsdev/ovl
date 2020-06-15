@@ -33,10 +33,25 @@ export let ovl = {
   effects,
 }
 
-const interceptorFn = (originalFn) => {
+const interceptorAsyncFn = (originalFn) => {
   return async (value) => {
-    console.log(originalFn.name + " called...")
+    //console.log(originalFn.name + " called...")
     let res = await originalFn(
+      {
+        state: ovl.state,
+        actions: ovl.actions,
+        effects: ovl.effects,
+      },
+      value
+    )
+    return res
+  }
+}
+
+const interceptorFn = (originalFn) => {
+  return (value) => {
+    //console.log(originalFn.name + " called...")
+    let res = originalFn(
       {
         state: ovl.state,
         actions: ovl.actions,
@@ -51,7 +66,12 @@ const interceptorFn = (originalFn) => {
 const getMethods = (obj) =>
   Object.keys(obj).forEach((item) => {
     if (typeof obj[item] === "function") {
-      obj[item] = interceptorFn(obj[item])
+      let isAsync = obj[item].toString().startsWith("async")
+      if (isAsync) {
+        obj[item] = interceptorAsyncFn(obj[item])
+      } else {
+        obj[item] = interceptorFn(obj[item])
+      }
     } else if (typeof obj[item] === "object") {
       getMethods(obj[item])
     }

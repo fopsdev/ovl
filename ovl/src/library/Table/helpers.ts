@@ -251,7 +251,7 @@ export const selectLatestRow = (def: TableDef, data: TableData) => {
   }
 }
 
-export const setPage = (def: TableDef, data: TableData, rows: {}) => {
+export const setPage = (data: TableData) => {
   Object.keys(data.tableDef).forEach((k) => {
     let def = data.tableDef[k]
     if (def.features.page) {

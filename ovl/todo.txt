@@ -1,8 +1,10 @@
 
 
 Todos:
-
-- Check async issue with  action calling
+- check the if-defined directive
+- refactor custom functions to actions again...
+- formafterrender-hooks need parent component as param (this.track....)
+X - Check async issue with  action calling
   (tablerebuild gets calld before tabledata is loaded)
   ( you may enter translations screen to see issue ) 
 

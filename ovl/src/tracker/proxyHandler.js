@@ -1,4 +1,5 @@
-import { paths, isTracking, addTrackedPath } from "./tracker"
+import { paths, isTracking, addTrackedPath, disposeTrack } from "./tracker"
+import { SnackTrackedRemove } from "../library/helpers"
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
   let callbacksToCall = new Set()
@@ -52,6 +53,10 @@ export function createDeepProxy(target) {
         return Reflect.has(...arguments)
       },
       set(target, key, value, receiver) {
+        if (window.ovldbg) {
+          debugger
+          window.ovldbg = undefined
+        }
         if (typeof value === "object") {
           value = proxify(value, [...path, key])
         }
@@ -64,6 +69,7 @@ export function createDeepProxy(target) {
           pathToTrack = [...path].join(".")
         } else if (isArray) {
           pathToTrack = [...path, key].join(".")
+          console.log(pathToTrack)
         }
         if (pathToTrack) {
           checkForCallbacks(pathToTrack)
@@ -122,11 +128,12 @@ export function createDeepProxy(target) {
         console.log(key.name)
         callbacksToCall.add(key)
       })
+      console.log(
+        "Submitting for rAF: callbacksToCall Count: " +
+          callbacksToCall.size.toString()
+      )
+
       if (freshQueueToRender) {
-        console.log(
-          "Submitting for rAF: callbacksToCall Count: " +
-            callbacksToCall.size.toString()
-        )
         window.requestAnimationFrame(callCallbacks)
       }
     }
@@ -134,6 +141,7 @@ export function createDeepProxy(target) {
   function callCallbacks() {
     // call onUpdate method of affected component
     callbacksToCall.forEach(async (k) => {
+      disposeTrack(k)
       k.doRender()
     })
     callbacksToCall = new Set()

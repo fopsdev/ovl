@@ -453,123 +453,129 @@ export class OvlListControl extends OvlBaseElement {
     }, waitTime)
   }
   async getUI() {
-    this.field = this.props(this.state)
-    let field = this.field.field
-    this.formState = this.state.ovl.forms[field.formType][field.formId]
-    let customRowCell = this.field.customRowCellClass
-    let customRowClassName = ""
-    let customRowTooltip
-    let customRowClassContainerName = ""
-    if (customRowCell) {
-      customRowClassName = customRowCell.className
-      customRowClassContainerName = customRowClassName + "Container"
-      customRowTooltip = customRowCell.tooltip
-    }
+    return this.track(() => {
+      this.field = this.props(this.state)
+      let field = this.field.field
+      this.formState = this.state.ovl.forms[field.formType][field.formId]
+      let customRowCell = this.field.customRowCellClass
+      let customRowClassName = ""
+      let customRowTooltip
+      let customRowClassContainerName = ""
+      if (customRowCell) {
+        customRowClassName = customRowCell.className
+        customRowClassContainerName = customRowClassName + "Container"
+        customRowTooltip = customRowCell.tooltip
+      }
 
-    let res = getUIValidationObject(field)
+      let res = getUIValidationObject(field)
 
-    let align = ""
-    if (field.ui && field.ui.align) {
-      align = field.ui.align
-    }
+      let align = ""
+      if (field.ui && field.ui.align) {
+        align = field.ui.align
+      }
 
-    let label = GetLabel(
-      field,
-      this.field.customHeaderCellClass,
-      res,
-      "list",
-      align,
-      this.formState
-    )
-
-    let displayValue = this.displayValue
-
-    if (displayValue === undefined) {
-      let getListFnName = FieldGetList.replace("%", field.fieldKey)
-      displayValue = GetListDisplayValue(
-        field.list,
-        field.value,
-        resolvePath(customFunctions, this.formState.namespace)[getListFnName](
-          GetRowFromFormState(this.formState),
-          this.state,
-          this.actions,
-          ovl.effects
-        )
+      let label = GetLabel(
+        field,
+        this.field.customHeaderCellClass,
+        res,
+        "list",
+        align,
+        this.formState
       )
-    }
-    this.lastDisplayValue = displayValue
-    let deleteButton
-    //if (this.state.ovl.uiState.isMobile) {
-    deleteButton = html`
-      <button
-        tabindex="-9999"
-        id="delete${field.id}"
-        @click=${(e) => this.handleDelete(e)}
-        class="fd-input-group__button fd-button--light sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
-      ></button>
-    `
-    //}
 
-    return html`
-      <div @focusout=${(e) => this.handleFocusOut(e)}>
-        <div
-          class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
-        >
-          ${label}
+      let displayValue = this.displayValue
 
+      if (displayValue === undefined) {
+        let getListFnName = FieldGetList.replace("%", field.fieldKey)
+        displayValue = GetListDisplayValue(
+          field.list,
+          field.value,
+          resolvePath(customFunctions, this.formState.namespace)[getListFnName](
+            GetRowFromFormState(this.formState),
+            this.state,
+            this.actions,
+            ovl.effects
+          )
+        )
+      }
+      this.lastDisplayValue = displayValue
+      let deleteButton
+      //if (this.state.ovl.uiState.isMobile) {
+      deleteButton = html`
+        <button
+          tabindex="-9999"
+          id="delete${field.id}"
+          @click=${(e) => this.handleDelete(e)}
+          class="fd-input-group__button fd-button--light sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
+        ></button>
+      `
+      //}
+
+      return html`
+        <div @focusout=${(e) => this.handleFocusOut(e)}>
           <div
-            class="fd-input-group ${res.validationType} ${customRowClassName} ovl-formcontrol-input"
+            class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
           >
-            <input
-              title="${ifDefined(
-                customRowTooltip ? customRowTooltip : undefined
-              )}"
-              autocomplete="off"
-              style="${align}"
-              +
-              type="text"
-              class="fd-input ovl-focusable fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-table-value-listcontrol ovl-table-value__${field.fieldKey}"
-              id="${field.id}"
-              @change=${(e) => this.handleChange(e)}
-              value="${displayValue}"
-              @keydown=${(e) => this.handleKeyDown(e)}
-            />
+            ${label}
 
-            <div class="fd-button-group" role="group" aria-label="Group label">
-              ${deleteButton}
-              <button
-                id="search${field.id}"
-                @click=${(e) => this.handleListPopup(e)}
-                @touchend=${(e) => this.handleListPopup(e)}
-                class="fd-input-group__button fd-button--light sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
-              ></button>
+            <div
+              class="fd-input-group ${res.validationType} ${customRowClassName} ovl-formcontrol-input"
+            >
+              <input
+                title="${ifDefined(
+                  customRowTooltip ? customRowTooltip : undefined
+                )}"
+                autocomplete="off"
+                style="${align}"
+                +
+                type="text"
+                class="fd-input ovl-focusable fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-table-value-listcontrol ovl-table-value__${field.fieldKey}"
+                id="${field.id}"
+                @change=${(e) => this.handleChange(e)}
+                value="${displayValue}"
+                @keydown=${(e) => this.handleKeyDown(e)}
+              />
+
+              <div
+                class="fd-button-group"
+                role="group"
+                aria-label="Group label"
+              >
+                ${deleteButton}
+                <button
+                  id="search${field.id}"
+                  @click=${(e) => this.handleListPopup(e)}
+                  @touchend=${(e) => this.handleListPopup(e)}
+                  class="fd-input-group__button fd-button--light sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
+                ></button>
+              </div>
             </div>
+
+            <span
+              class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey}"
+            >
+              ${GetValueFromCustomFunction(
+                this.field.row,
+                field,
+                this.formState,
+                align,
+                this.field.isInline,
+                this.state
+              )}
+            </span>
+
+            <span
+              class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
+            >
+              ${field.validationResult.validationMsg}
+            </span>
           </div>
-
-          <span
-            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey}"
-          >
-            ${GetValueFromCustomFunction(
-              this.field.row,
-              field,
-              this.formState,
-              align,
-              this.field.isInline,
-              this.state
-            )}
-          </span>
-
-          <span
-            class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
-          >
-            ${field.validationResult.validationMsg}
-          </span>
+          <div style="margin-top:-3px;">
+            ${this.localList}
+          </div>
         </div>
-        <div style="margin-top:-3px;">
-          ${this.localList}
-        </div>
-      </div>
-    `
+      `
+    })
   }
   afterRender() {
     this.inputElement = document.getElementById(this.field.field.id)

@@ -150,167 +150,168 @@ export class TableRowDetailView extends OvlBaseElement {
   }
 
   async getUI() {
-    let def = this.rowData.tableDef
+    return this.track(async () => {
+      let def = this.rowData.tableDef
 
-    // check if custom view needs to be rendered
-    let viewRendererFn
-    if (def.options.view && def.options.view.viewType === "custom") {
-      viewRendererFn = GetRendererFn(
-        def.namespace,
-        cachedViewRendererFn,
-        ViewCustomRender,
-        def.id
-      )
-    }
-    let viewRendererResult: ViewRendererResult
-    if (viewRendererFn) {
-      viewRendererResult = viewRendererFn(this.rowData)
-
-      if (viewRendererResult.type === "Full") {
-        return viewRendererResult.result
+      // check if custom view needs to be rendered
+      let viewRendererFn
+      if (def.options.view && def.options.view.viewType === "custom") {
+        viewRendererFn = GetRendererFn(
+          def.namespace,
+          cachedViewRendererFn,
+          ViewCustomRender,
+          def.id
+        )
       }
-    }
-    let columns = def.columns
-    let customRowCellClasses: { [key: string]: CellClass }
-    let functionName = ViewRowCellClass
-    let fn = resolvePath(customFunctions, def.namespace)
-    if (fn && fn[functionName]) {
-      customRowCellClasses = fn[functionName](
-        def,
-        this.rowData.row,
-        this.state.ovl.uiState.isMobile,
-        <DisplayMode>"DetailView",
-        this.state
-      )
-    }
-    if (!customRowCellClasses) {
-      customRowCellClasses = {}
-    }
+      let viewRendererResult: ViewRendererResult
+      if (viewRendererFn) {
+        viewRendererResult = viewRendererFn(this.rowData)
 
-    let customHeaderCellClasses: { [key: string]: CellClass }
-    let functionName2 = ViewHeaderCellClass
-
-    if (fn && fn[functionName2]) {
-      customHeaderCellClasses = fn[functionName2](
-        def,
-        this.state.ovl.uiState.isMobile,
-        <DisplayMode>"Detailview",
-        this.state
-      )
-    }
-    if (!customHeaderCellClasses) {
-      customHeaderCellClasses = {}
-    }
-
-    let scrollable = "scrollableOverlay"
-    if (this.state.ovl.uiState.isMobile) {
-      scrollable = "scrollableMobileOverlay"
-    }
-
-    let caption
-    // lets see if we have a custom caption renderer
-    if (def.options.view.customCaption) {
-      let captionFunctionName = ViewGetCaptionRender
-
-      let captionContent
-      let captionTranslated
-      if (def.options.view.customCaption.translationKey) {
-        captionTranslated = T(def.options.view.customCaption.translationKey)
+        if (viewRendererResult.type === "Full") {
+          return viewRendererResult.result
+        }
       }
-      if (fn[captionFunctionName]) {
-        captionContent = fn[captionFunctionName](
-          captionTranslated,
-          this.rowData,
+      let columns = def.columns
+      let customRowCellClasses: { [key: string]: CellClass }
+      let functionName = ViewRowCellClass
+      let fn = resolvePath(customFunctions, def.namespace)
+      if (fn && fn[functionName]) {
+        customRowCellClasses = fn[functionName](
+          def,
+          this.rowData.row,
+          this.state.ovl.uiState.isMobile,
+          <DisplayMode>"DetailView",
           this.state
         )
-      } else {
-        captionContent = captionTranslated
       }
-      caption = html`
-        <div
-          class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
-        >
-          ${captionContent}
-        </div>
-      `
-    }
+      if (!customRowCellClasses) {
+        customRowCellClasses = {}
+      }
 
-    let body
-    let row = this.rowData.row
+      let customHeaderCellClasses: { [key: string]: CellClass }
+      let functionName2 = ViewHeaderCellClass
 
-    let columnsVisible = this.rowData.columnsVisible
-    // some tabbed content prep
-    let tabbedContent
-    let tabbedControls
-    let viewCustomTabFn
-    let hasTabs =
-      def.options.tabs !== undefined && def.options.tabs.view !== undefined
-    let tabsFound = new Set<string | number>()
-    if (hasTabs) {
-      //console.log(def.options.tabs.view)
-      // lets first see how many tabs are there if any
-      Object.keys(columns).forEach((k) => {
-        let col = columns[k]
-        if (columnsVisible[k].indexOf("View") > -1) {
-          if (col.ui.viewTab) {
-            tabsFound.add(col.ui.viewTab)
-          }
+      if (fn && fn[functionName2]) {
+        customHeaderCellClasses = fn[functionName2](
+          def,
+          this.state.ovl.uiState.isMobile,
+          <DisplayMode>"Detailview",
+          this.state
+        )
+      }
+      if (!customHeaderCellClasses) {
+        customHeaderCellClasses = {}
+      }
+
+      let scrollable = "scrollableOverlay"
+      if (this.state.ovl.uiState.isMobile) {
+        scrollable = "scrollableMobileOverlay"
+      }
+
+      let caption
+      // lets see if we have a custom caption renderer
+      if (def.options.view.customCaption) {
+        let captionFunctionName = ViewGetCaptionRender
+
+        let captionContent
+        let captionTranslated
+        if (def.options.view.customCaption.translationKey) {
+          captionTranslated = T(def.options.view.customCaption.translationKey)
         }
-      })
-      // also add custom tabs which have a customfunction defined
-      Object.keys(def.options.tabs.view.tabs).filter(async (f) => {
-        let tab = def.options.tabs.view.tabs[f]
-        if (tab.hasCustomContent) {
-          tabsFound.add(f)
-          let viewCustomTabRenderFunctionName = ViewCustomTabRender.replace(
-            "%",
-            f
+        if (fn[captionFunctionName]) {
+          captionContent = fn[captionFunctionName](
+            captionTranslated,
+            this.rowData,
+            this.state
           )
-          viewCustomTabFn = fn[viewCustomTabRenderFunctionName]
+        } else {
+          captionContent = captionTranslated
         }
-      })
-
-      if (tabsFound.size === 0) {
-        hasTabs = false
+        caption = html`
+          <div
+            class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
+          >
+            ${captionContent}
+          </div>
+        `
       }
-    }
-    if (hasTabs) {
-      let activeTab = def.options.tabs.view.selected
-      if (!activeTab) {
-        Object.keys(def.options.tabs.view.tabs).some((k) => {
-          if (tabsFound.has(k)) {
-            activeTab = k
-            return true
+
+      let body
+      let row = this.rowData.row
+
+      let columnsVisible = this.rowData.columnsVisible
+      // some tabbed content prep
+      let tabbedContent
+      let tabbedControls
+      let viewCustomTabFn
+      let hasTabs =
+        def.options.tabs !== undefined && def.options.tabs.view !== undefined
+      let tabsFound = new Set<string | number>()
+      if (hasTabs) {
+        //console.log(def.options.tabs.view)
+        // lets first see how many tabs are there if any
+        Object.keys(columns).forEach((k) => {
+          let col = columns[k]
+          if (columnsVisible[k].indexOf("View") > -1) {
+            if (col.ui.viewTab) {
+              tabsFound.add(col.ui.viewTab)
+            }
           }
         })
-      }
-      if (!def.options.tabs.view.tabs[activeTab].hasCustomContent) {
-        tabbedControls = this.getControls(
-          Object.keys(def.columns).filter(
-            (f) => def.columns[f].ui.viewTab === activeTab
-          ),
-          def,
-          row,
-          customHeaderCellClasses,
-          customRowCellClasses,
-          columnsVisible
-        )
-      } else {
-        if (viewCustomTabFn) {
-          tabbedControls = await viewCustomTabFn(
-            this.rowData,
-            this.state,
-            this.actions,
-            ovl.effects
-          )
+        // also add custom tabs which have a customfunction defined
+        Object.keys(def.options.tabs.view.tabs).filter(async (f) => {
+          let tab = def.options.tabs.view.tabs[f]
+          if (tab.hasCustomContent) {
+            tabsFound.add(f)
+            let viewCustomTabRenderFunctionName = ViewCustomTabRender.replace(
+              "%",
+              f
+            )
+            viewCustomTabFn = fn[viewCustomTabRenderFunctionName]
+          }
+        })
+
+        if (tabsFound.size === 0) {
+          hasTabs = false
         }
       }
-      tabbedContent = html`<div class="fd-panel ovl-tab ovl-viewtab">
-        <ul class="fd-tabs fd-tabs--l ovl-tabs ovl-viewtabs" role="tablist">
-          ${Array.from(tabsFound).map((k) => {
-            let tab = def.options.tabs.view.tabs[k]
-            let selected = k === activeTab
-            return html`
+      if (hasTabs) {
+        let activeTab = def.options.tabs.view.selected
+        if (!activeTab) {
+          Object.keys(def.options.tabs.view.tabs).some((k) => {
+            if (tabsFound.has(k)) {
+              activeTab = k
+              return true
+            }
+          })
+        }
+        if (!def.options.tabs.view.tabs[activeTab].hasCustomContent) {
+          tabbedControls = this.getControls(
+            Object.keys(def.columns).filter(
+              (f) => def.columns[f].ui.viewTab === activeTab
+            ),
+            def,
+            row,
+            customHeaderCellClasses,
+            customRowCellClasses,
+            columnsVisible
+          )
+        } else {
+          if (viewCustomTabFn) {
+            tabbedControls = await viewCustomTabFn(
+              this.rowData,
+              this.state,
+              this.actions,
+              ovl.effects
+            )
+          }
+        }
+        tabbedContent = html`<div class="fd-panel ovl-tab ovl-viewtab">
+          <ul class="fd-tabs fd-tabs--l ovl-tabs ovl-viewtabs" role="tablist">
+            ${Array.from(tabsFound).map((k) => {
+              let tab = def.options.tabs.view.tabs[k]
+              let selected = k === activeTab
+              return html`
               
                 <li class="fd-tabs__item ovl-tab-header ovl-viewtab-header ovl-tab-header__${k}">
                   <a
@@ -328,83 +329,84 @@ export class TableRowDetailView extends OvlBaseElement {
                 </li>
               </div>
             `
-          })}
-        </ul>
-        <div
-          class="fd-tabs__panel ovl-tabcontent ovl-viewtabcontent ovl-tabcontent__${activeTab}"
-          aria-expanded="true"
-          id="${activeTab}"
-          role="tabpanel"
-        >
-          ${tabbedControls}
-        </div>
-      </div>`
-    }
-    let bodyContent
-    if (viewRendererFn) {
-      bodyContent = viewRendererResult.result
-    } else {
-      body = this.getControls(
-        Object.keys(def.columns).filter((f) => !def.columns[f].ui.viewTab),
-        def,
-        row,
-        customHeaderCellClasses,
-        customRowCellClasses,
-        columnsVisible
-      )
-      bodyContent = html`${body} ${tabbedContent}`
-    }
-
-    let rowControlActions: {
-      [key: string]: RowControlAllAction
-    } = await createDynamicRowFunctions(
-      def,
-      this.rowData.data,
-      this.rowData.key,
-      true
-    )
-    let rowActions = Object.keys(rowControlActions)
-
-    return html`
-      <div
-        class="fd-panel ovl-detailview ovl-table-${def.id} ovl-detailview-${def.id}"
-      >
-        <div
-          tabindex="0"
-          id="ovl-detailview-intersectionobserver"
-          class="fd-panel ${scrollable}"
-        >
-          ${caption}
+            })}
+          </ul>
           <div
-            @click="${this.handleClick}"
-            @long-press="${this.handleLongPress}"
-            class="fd-panel__body ovl-detailview-body-${def.id} ovl-detailview-body"
+            class="fd-tabs__panel ovl-tabcontent ovl-viewtabcontent ovl-tabcontent__${activeTab}"
+            aria-expanded="true"
+            id="${activeTab}"
+            role="tabpanel"
           >
-            ${bodyContent}
+            ${tabbedControls}
+          </div>
+        </div>`
+      }
+      let bodyContent
+      if (viewRendererFn) {
+        bodyContent = viewRendererResult.result
+      } else {
+        body = this.getControls(
+          Object.keys(def.columns).filter((f) => !def.columns[f].ui.viewTab),
+          def,
+          row,
+          customHeaderCellClasses,
+          customRowCellClasses,
+          columnsVisible
+        )
+        bodyContent = html`${body} ${tabbedContent}`
+      }
+
+      let rowControlActions: {
+        [key: string]: RowControlAllAction
+      } = await createDynamicRowFunctions(
+        def,
+        this.rowData.data,
+        this.rowData.key,
+        true
+      )
+      let rowActions = Object.keys(rowControlActions)
+
+      return html`
+        <div
+          class="fd-panel ovl-detailview ovl-table-${def.id} ovl-detailview-${def.id}"
+        >
+          <div
+            tabindex="0"
+            id="ovl-detailview-intersectionobserver"
+            class="fd-panel ${scrollable}"
+          >
+            ${caption}
+            <div
+              @click="${this.handleClick}"
+              @long-press="${this.handleLongPress}"
+              class="fd-panel__body ovl-detailview-body-${def.id} ovl-detailview-body"
+            >
+              ${bodyContent}
+            </div>
+          </div>
+          <div
+            class="fd-panel__footer ovl-panel__footer ovl-detailview-footer-${def.id} ovl-detailview-footer"
+          >
+            ${rowActions.map((k, i) => {
+              let button = rowControlActions[k]
+              return html`<button
+                  @click=${(e) => this.handleAction(e, k, button.custom)}
+                  title="${button.name}"
+                  class="fd-button ${button.icon}"
+                  ?disabled=${button.disabled}
+                  id="${k + this.rowData.key}"
+                ></button>
+                <div style="margin-left:4px;"></div>`
+            })}
+            <button
+              @click=${this.handleClose}
+              title="Abbrechen"
+              class="fd-button--negative sap-icon--decline"
+            ></button>
           </div>
         </div>
-        <div
-          class="fd-panel__footer ovl-panel__footer ovl-detailview-footer-${def.id} ovl-detailview-footer"
-        >
-          ${rowActions.map((k, i) => {
-            let button = rowControlActions[k]
-            return html`<button
-                @click=${(e) => this.handleAction(e, k, button.custom)}
-                title="${button.name}"
-                class="fd-button ${button.icon}"
-                ?disabled=${button.disabled}
-                id="${k + this.rowData.key}"
-              ></button>
-              <div style="margin-left:4px;"></div>`
-          })}
-          <button
-            @click=${this.handleClose}
-            title="Abbrechen"
-            class="fd-button--negative sap-icon--decline"
-          ></button>
-        </div>
-      </div>
-    `
+      `
+    })
   }
   getControls(
     controls,
