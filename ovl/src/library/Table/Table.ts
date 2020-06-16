@@ -531,18 +531,19 @@ export class TableHeader extends OvlBaseElement {
   }
 
   async getUI() {
-    if (this.tableRebuildCheck()) {
-      return null
-    }
-    let def = this.tabledata.def
-    if (!def.initialised) {
-      throw new Error(
-        "ovl tabledef: " +
-          def.id +
-          " is not initialised. Make sure to call TableRefresh at least once before using it"
-      )
-    }
     return this.track(() => {
+      if (this.tableRebuildCheck()) {
+        return null
+      }
+      let def = this.tabledata.def
+      if (!def.initialised) {
+        throw new Error(
+          "ovl tabledef: " +
+            def.id +
+            " is not initialised. Make sure to call TableRefresh at least once before using it"
+        )
+      }
+
       let dataAndSchema = this.tabledata.data
       let columns = def.columns
       let colWidths = Object.keys(columns)
