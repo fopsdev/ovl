@@ -1,4 +1,4 @@
-import { Screen, customFunctions, OvlAction } from "../../../ovl/src/index"
+import { Screen, OvlAction } from "../../../ovl/src/index"
 
 import { api, T, uuidv4 } from "../../../ovl/src/global/globals"
 import {
@@ -166,14 +166,13 @@ export const HandleRefresh: OvlAction = async (
     }
 
     //now call the screens refresh action if any
-    if (customFunctions) {
-      let screensFunctions = customFunctions["screens"]
-      if (screensFunctions) {
-        let screen = state.ovl.screens.nav.currentScreen
-        if (screensFunctions[screen]) {
-          if (screensFunctions[screen]["ScreenRefresh"]) {
-            screensFunctions[screen]["ScreenRefresh"](state, actions, effects)
-          }
+
+    let screensFunctions = actions.custom["screens"]
+    if (screensFunctions) {
+      let screen = state.ovl.screens.nav.currentScreen
+      if (screensFunctions[screen]) {
+        if (screensFunctions[screen]["ScreenRefresh"]) {
+          screensFunctions[screen]["ScreenRefresh"]()
         }
       }
     }

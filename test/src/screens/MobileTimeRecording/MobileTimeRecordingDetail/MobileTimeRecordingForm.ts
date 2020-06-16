@@ -1,7 +1,6 @@
 import { html } from "../../../../../ovl/node_modules/lit-html"
 import { N, T } from "../../../../../ovl/src/global/globals"
 import { OvlFormElement } from "../../../../../ovl/src/library/forms/OvlFormElement"
-import { customFunctions } from "../../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../../ovl/src/library/helpers"
 
 export type MobileTimeEntryFormState = {

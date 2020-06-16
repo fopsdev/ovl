@@ -1,7 +1,13 @@
 import { html } from "lit-html"
 import { resolvePath } from "../../global/globals"
-import { FieldRowCellSelectedHandler, FormStatus } from "../../global/hooks"
-import { customFunctions, ovl } from "../../index"
+import {
+  FieldRowCellSelectedHandler,
+  FormStatus,
+  FieldRowCellSelectedHandler_Type,
+  FormStatus_Type,
+  FormStatus_ReturnType,
+} from "../../global/hooks"
+import { ovl } from "../../index"
 import { SnackAdd } from "../helpers"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { NavProps } from "./RowControl"
@@ -76,18 +82,17 @@ export class TableRowWrapper extends OvlBaseElement {
     }
     // first start custom event handler (hook)
     let functionName = FieldRowCellSelectedHandler.replace("%", key)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(this.actions.custom, def.namespace)
     if (fn && fn[functionName]) {
       if (
-        !(await fn[functionName](
+        !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
           //@ts-ignore
-          e.target.classList,
+          classList: e.target.classList,
           def,
-          this.row.data,
-          this.row.key,
-          <DisplayMode>"Table",
-          this.state
-        ))
+          data: this.row.data,
+          rowKey: this.row.key,
+          displayMode: <DisplayMode>"Table",
+        }))
       ) {
         return
       }
@@ -295,16 +300,14 @@ export class TableRowWrapper extends OvlBaseElement {
       }
       let rowStatus = ""
       let rowStatusMsg = ""
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(this.actions.custom, def.namespace)
       let fnName = FormStatus
       if (fn && fn[fnName]) {
-        let status = await fn[fnName](
-          key,
-          this.row.tableDef,
-          data,
-          this.state,
-          ovl.effects
-        )
+        let status = await fn[fnName](<FormStatus_Type>{
+          rowKey: key,
+          tableDef: this.row.tableDef,
+          tableData: data,
+        })
         if (status) {
           rowStatus = "fd-table__row--" + status.status
           rowStatusMsg = status.msg

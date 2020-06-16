@@ -1,8 +1,12 @@
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { customFunctions, ovl } from "../../.."
+import { ovl } from "../../.."
 import { resolvePath } from "../../../global/globals"
-import { FieldGetList } from "../../../global/hooks"
+import {
+  FieldGetList,
+  FieldGetList_ReturnType,
+  FieldGetList_Type,
+} from "../../../global/hooks"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import {
   ControlState,
@@ -49,14 +53,11 @@ export class OvlOption extends OvlBaseElement {
       this.formState = this.state.ovl.forms[field.formType][field.formId]
       let list = field.list
       let listFn = FieldGetList.replace("%", field.fieldKey)
-      let listData = resolvePath(customFunctions, this.formState.namespace)[
-        listFn
-      ](
-        GetRowFromFormState(this.formState),
-        this.state,
-        this.actions,
-        ovl.effects
-      ).data
+      let listData: FieldGetList_ReturnType = resolvePath(
+        this.actions.custom,
+        this.formState.namespace
+      )[listFn](<FieldGetList_Type>{ row: GetRowFromFormState(this.formState) })
+        .data
 
       let customRowCell = this.field.customRowCellClass
       let customRowClassName = ""

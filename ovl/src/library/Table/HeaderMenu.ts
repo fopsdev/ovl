@@ -1,7 +1,7 @@
 import { html, TemplateResult } from "lit-html"
-import { customFunctions, ovl } from "../.."
+import { ovl } from "../.."
 import { resolvePath, T } from "../../global/globals"
-import { FormCustomColumnFn } from "../../global/hooks"
+import { FormCustomColumnFn, FormCustomColumnFn_Type } from "../../global/hooks"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
@@ -46,16 +46,13 @@ export class TableHeaderMenu extends OvlBaseElement {
   handleCustomColumnFunctionClick = (e: Event, key: string, name: string) => {
     let def = this.headerMenu.def.def
     let fnName = FormCustomColumnFn.replace("%", key)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(this.actions.custom, def.namespace)
     if (fn && fn[fnName]) {
-      fn[fnName](
-        name,
-        this.headerMenu.def.def.uiState.headerSelected,
+      fn[fnName](<FormCustomColumnFn_Type>{
+        fnName: name,
+        columnKey: this.headerMenu.def.def.uiState.headerSelected,
         def,
-        this.state,
-        this.actions,
-        ovl.effects
-      )
+      })
     }
   }
 

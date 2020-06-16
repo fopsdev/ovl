@@ -15,16 +15,22 @@ import {
   FormCustomSort,
   FormDeleteError,
   FormSaveError,
+  FieldGetList_ReturnType,
+  FieldGetList_Type,
+  FormCustomSort_Type,
+  FormCustomSort_ReturnType,
+  FormCustomSave_Type,
+  FormBeforeSave_Type,
+  FormSaveError_Type,
+  FormCopy_Type,
+  FormAdd_Type,
+  FormDeleteError_Type,
+  FormAfterDelete_Type,
+  FormCan_Type,
+  FormCustomFn_Type,
+  FormCan_ReturnType,
 } from "../../global/hooks"
-import {
-  customFunctions,
-  TableDefIds,
-  OvlAction,
-  OvlState,
-  OvlActions,
-  ovl,
-  OvlActionContext,
-} from "../../index"
+import { TableDefIds, OvlAction, OvlState, OvlActions, ovl } from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
@@ -269,7 +275,7 @@ export const TableRefreshDataFromServer: OvlAction<{
         let lookupDefKey = dataFieldsToLookups[c]
         let lookupColumnDef = def.columns[lookupDefKey]
         let functionName = FieldGetList.replace("%", lookupDefKey)
-        let fn = resolvePath(customFunctions, def.namespace)
+        let fn = resolvePath(actions.custom, def.namespace)
         if (!fn || !fn[functionName]) {
           console.error(
             "ovl needs a function: " +
@@ -278,12 +284,9 @@ export const TableRefreshDataFromServer: OvlAction<{
               def.namespace
           )
         }
-        let listdata: ListFnReturnValue = fn[functionName](
-          serverData[k],
-          state,
-          actions,
-          effects
-        )
+        let listdata: FieldGetList_ReturnType = fn[functionName]({
+          row: serverData[k],
+        } as FieldGetList_Type)
 
         let value = localData[k][c]
         let listValueFound = true
@@ -417,7 +420,7 @@ export const TableRebuild: OvlAction<{
   try {
     let customSortFn = undefined
     let sortCustom = def.options.sortCustom
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(actions.custom, def.namespace)
     if (sortCustom.selected && sortCustom.sorts[sortCustom.selected]) {
       let functionName = FormCustomSort.replace("%", sortCustom.selected)
       if (fn && fn[functionName]) {
@@ -437,7 +440,9 @@ export const TableRebuild: OvlAction<{
     let res: number = 0
     restable = restable.sort((a, b) => {
       if (customSortFn !== undefined) {
-        return customSortFn(a, b, data, state, actions, effects)
+        return <FormCustomSort_ReturnType>(
+          customSortFn(<FormCustomSort_Type>{ a, b, data })
+        )
       } else {
         let valB = data[b][sortfield]
         let valA = data[a][sortfield]
@@ -584,20 +589,15 @@ const TableEditSaveRowHelper = async (
     newData = rowToSave
   }
   let res: any = {}
-  let fn = resolvePath(customFunctions, def.namespace)
+  let fn = resolvePath(actions.custom, def.namespace)
   let saveRowFnName = FormCustomSave
   if (fn && fn[saveRowFnName]) {
     // ok there is a customSaveRow - Function
-    await fn[saveRowFnName](
-      {
-        key,
-        tableDef: def,
-        newData,
-      },
-      state,
-      actions,
-      ovl.effects
-    )
+    await fn[saveRowFnName](<FormCustomSave_Type>{
+      key,
+      tableDef: def,
+      newData,
+    })
   } else {
     if (Object.keys(newData).length > 0) {
       if (hasFormState && def.options.filter.static) {
@@ -614,19 +614,14 @@ const TableEditSaveRowHelper = async (
         mode = "add"
       }
       let beforeSaveRowFnName = FormBeforeSave
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(actions.custom, def.namespace)
       if (fn && fn[beforeSaveRowFnName]) {
-        await fn[beforeSaveRowFnName](
-          <BeforeSaveParam>{
-            key,
-            mode,
-            tableDef: { def, data },
-            row: newData,
-          },
-          state,
-          actions,
-          ovl.effects
-        )
+        await fn[beforeSaveRowFnName](<FormBeforeSave_Type>{
+          key,
+          mode,
+          tableDef: { def, data },
+          row: newData,
+        })
       }
       res = await postRequest(api.url + def.server.endpoint + "/" + mode, {
         lang: state.ovl.language.language,
@@ -642,19 +637,14 @@ const TableEditSaveRowHelper = async (
         }
         let saveErrorFnName = FormSaveError
         // handleError @@hook
-        let fn = resolvePath(customFunctions, def.namespace)
+        let fn = resolvePath(actions.custom, def.namespace)
         if (fn && fn[saveErrorFnName]) {
-          await fn[saveErrorFnName](
-            {
-              key,
-              def,
-              data,
-              res,
-            },
-            state,
-            actions,
-            ovl.effects
-          )
+          await fn[saveErrorFnName](<FormSaveError_Type>{
+            key,
+            def,
+            data,
+            res,
+          })
         } else {
           if (hasFormState) {
             formState.valid = false
@@ -881,20 +871,15 @@ export const TableCopyRow: OvlAction<{
 
   let copyFnName = FormCopy
 
-  let fn = resolvePath(customFunctions, def.namespace)
+  let fn = resolvePath(actions.custom, def.namespace)
 
   if (fn && fn[copyFnName]) {
-    await fn[copyFnName](
+    await fn[copyFnName](<FormCopy_Type>{
       key,
       newRow,
-      {
-        def: value.def,
-        data: value.data,
-      },
-      state,
-      actions,
-      effects
-    )
+      tableDef: def,
+      tableData: value.data,
+    })
   }
   let insertMode = value.def.database.dbInsertMode
   if (insertMode !== "Manual") {
@@ -937,10 +922,14 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
   }, {})
 
   // addRow (Default Values) @@hook
-  let fn = resolvePath(customFunctions, def.namespace)
+  let fn = resolvePath(actions.custom, def.namespace)
   let addFnName = FormAdd
   if (fn && fn[addFnName]) {
-    await fn[addFnName](newRow, value, state, actions, effects)
+    await fn[addFnName](<FormAdd_Type>{
+      newRow,
+      tableDef: def,
+      tableData: value.data,
+    })
   }
   let insertMode = value.def.database.dbInsertMode
   if (insertMode !== "Manual") {
@@ -997,19 +986,14 @@ export const TableDeleteRow: OvlAction<{
     })
     if (!res.data) {
       // handleError @@hook
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(actions.custom, def.namespace)
       let deleteErrorFnName = FormDeleteError
       if (fn && fn[deleteErrorFnName]) {
-        await fn[deleteErrorFnName](
-          {
-            key,
-            tableDef: def,
-            res: res.data,
-          },
-          state,
-          actions,
-          effects
-        )
+        await fn[deleteErrorFnName](<FormDeleteError_Type>{
+          key,
+          tableDef: def,
+          res: res.data,
+        })
       }
       return
     }
@@ -1025,20 +1009,15 @@ export const TableDeleteRow: OvlAction<{
     }
 
     // afterDelete @@hook
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(actions.custom, def.namespace)
     let afterDeleteFnName = FormAfterDelete
     if (fn && fn[afterDeleteFnName]) {
-      await fn[afterDeleteFnName](
-        {
-          key,
-          def: def,
-          data: value.data,
-          res: res.data,
-        },
-        state,
-        actions,
-        effects
-      )
+      await fn[afterDeleteFnName](<FormAfterDelete_Type>{
+        key,
+        def: def,
+        data: value.data,
+        res: res.data,
+      })
     }
   }
 }
@@ -1057,7 +1036,7 @@ export const TableMultipleDeleteRow: OvlAction<{
   let selectedObjects = []
   let functionName = FormCanDelete
   let fn = null
-  let fnc = resolvePath(customFunctions, def.namespace)
+  let fnc = resolvePath(actions.custom, def.namespace)
   if (fnc && fnc[functionName]) {
     fn = fnc[functionName]
   }
@@ -1067,12 +1046,11 @@ export const TableMultipleDeleteRow: OvlAction<{
       let selected = selectedRows[k]
       if (selected.selected) {
         if (fn) {
-          let res = await fn(
-            k,
-            <TableDataAndDef>{ def: def, data: value.data },
-            state,
-            effects
-          )
+          let res: FormCan_ReturnType = await fn(<FormCan_Type>{
+            rowKey: k,
+            tableDef: def,
+            tableData: value.data,
+          })
           if (res) {
             canNotDeleteMsg +=
               "\n" + res + "\n(Id:" + rows[k][def.database.dataIdField] + ")"
@@ -1158,7 +1136,7 @@ export const TableMultipleCopyRow: OvlAction<{
   let selectedObjects = []
   let functionName = FormCanCopy
   let fn = null
-  let fnc = resolvePath(customFunctions, def.namespace)
+  let fnc = resolvePath(actions.custom, def.namespace)
   if (fnc && fnc[functionName]) {
     fn = fnc[functionName]
   }
@@ -1170,12 +1148,11 @@ export const TableMultipleCopyRow: OvlAction<{
       if (selected.selected) {
         def.uiState.editRow[k].mode = "copy"
         if (fn) {
-          let res = await fn(
-            k,
-            <TableDataAndDef>{ def: def, data: value.data },
-            state,
-            effects
-          )
+          let res: FormCan_ReturnType = await fn(<FormCan_Type>{
+            rowKey: k,
+            tableDef: def,
+            tableData: value.data,
+          })
           if (res) {
             canNotCopyMsg +=
               "\n" + res + "\n(Id:" + rows[k][def.database.dataIdField] + ")"
@@ -1253,7 +1230,7 @@ export const TableMultipleEditRow: OvlAction<{
   let selectedObjects = []
   let functionName = FormCanEdit
   let fn = null
-  let fnc = resolvePath(customFunctions, def.namespace)
+  let fnc = resolvePath(actions.custom, def.namespace)
   if (fnc && fnc[functionName]) {
     fn = fnc[functionName]
   }
@@ -1263,12 +1240,11 @@ export const TableMultipleEditRow: OvlAction<{
       let selected = selectedRows[k]
       if (selected.selected) {
         if (fn) {
-          let res = await fn(
-            k,
-            <TableDataAndDef>{ def: def, data: value.data },
-            state,
-            effects
-          )
+          let res: FormCan_ReturnType = await fn(<FormCan_Type>{
+            rowKey: k,
+            tableDef: def,
+            tableData: value.data,
+          })
           if (res) {
             canNotEditMsg +=
               "\n" + res + "\n(Id:" + rows[k][def.database.dataIdField] + ")"
@@ -1349,7 +1325,7 @@ export const TableMultipleCustomFunction: OvlAction<{
   let selectedObjects = []
   let functionName = FormCanCustom.replace("%", value.customFnId)
   let fn = null
-  let fnc = resolvePath(customFunctions, def.namespace)
+  let fnc = resolvePath(actions.custom, def.namespace)
   if (fnc && fnc[functionName]) {
     fn = fnc[functionName]
   }
@@ -1359,12 +1335,11 @@ export const TableMultipleCustomFunction: OvlAction<{
       let selected = selectedRows[k]
       if (selected.selected) {
         if (fn) {
-          let res = await fn(
-            k,
-            <TableDataAndDef>{ def: def, data: value.data },
-            state,
-            effects
-          )
+          let res: FormCan_ReturnType = await fn(<FormCan_Type>{
+            rowKey: k,
+            tableDef: def,
+            tableData: value.data,
+          })
           if (res) {
             canNotEditMsg +=
               "\n" + res + "\n(Id:" + rows[k][def.database.dataIdField] + ")"
@@ -1416,8 +1391,8 @@ export const TableMultipleCustomFunction: OvlAction<{
     cancel = true
   }
   if (!cancel) {
-    let customFns = resolvePath(customFunctions, def.namespace)
-    let customFunctionName = "Form" + value.customFnId
+    let customFns = resolvePath(actions.custom, def.namespace)
+    let customFunctionName = "FormCustom" + value.customFnId
     let customFunction = customFns[customFunctionName]
     let result = ""
     let errCount = 0
@@ -1429,16 +1404,13 @@ export const TableMultipleCustomFunction: OvlAction<{
             success: true,
           }
           let isLast = i === selectedObjects.length - 1
-          await customFunction(
-            k,
-            def,
-            data,
-            isLast,
-            fnResult,
-            state,
-            actions,
-            effects
-          )
+          await customFunction(<FormCustomFn_Type>{
+            rowKey: k,
+            def: def,
+            data: data,
+            isLastOrOnlyOne: isLast,
+            startedFromSelectedResult: fnResult,
+          })
           if (fnResult.msg) {
             result = result + fnResult.msg + "\n"
           }

@@ -15,8 +15,15 @@ import {
   FormCanEdit,
   FormCanMore,
   FormCustomFilter,
+  FieldGetList_ReturnType,
+  FieldGetList_Type,
+  FormCustomFilter_Type,
+  FormCan_ReturnType,
+  FormCan_Type,
+  FormCustomFn,
+  FormCustomFn_Type,
 } from "../../global/hooks"
-import { customFunctions, TableDefIds, ovl, OvlActions } from "../../index"
+import { TableDefIds, ovl, OvlActions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
 import { overlayToRender } from "../Overlay/Overlay"
@@ -56,12 +63,12 @@ export const getDisplayValue = (
     let cachedListKey = namespace + key
     let listFn = cachedListFn.get(cachedListKey)
     if (!listFn) {
-      listFn = resolvePath(customFunctions, namespace)[
+      listFn = resolvePath(ovl.actions.custom, namespace)[
         FieldGetList.replace("%", key)
       ]
       cachedListFn.set(cachedListKey, listFn)
     }
-    let listdata = listFn(row, ovl.state, ovl.actions, ovl.effects)
+    let listdata: FieldGetList_ReturnType = listFn(<FieldGetList_Type>{ row })
     return GetListDisplayValue(col.list, value, listdata)
   }
   let format
@@ -678,7 +685,7 @@ export const TableFilterFn = (
   )
   let customFilterFn = customFilter.reduce((val, k) => {
     let functionName = FormCustomFilter.replace("%", k)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(ovl.actions.custom, def.namespace)
     if (fn && fn[functionName]) {
       val.push(fn[functionName])
       return val
@@ -751,7 +758,7 @@ export const TableFilterFn = (
       let data = tableDataAndDef.data
       let row = data.data[rowKey]
       return !customFilterFn.some(
-        (f) => !f(def, data, row, ovl.state, ovl.actions, ovl.effects)
+        (f) => !f({ def, data, row } as FormCustomFilter_Type)
       )
     })
   }
@@ -820,7 +827,7 @@ export const createDynamicRowFunctions = async (
   isDetailView: boolean
 ) => {
   let rowControlActions: { [key: string]: RowControlAllAction } = {}
-  let fn = resolvePath(customFunctions, def.namespace)
+  let fn = resolvePath(ovl.actions.custom, def.namespace)
 
   let chk = def.dataFetching.useCustomDataFetching
 
@@ -832,12 +839,16 @@ export const createDynamicRowFunctions = async (
       let custom = def.options.customRowActions[k]
       let disabled = false
 
-      let title = T(custom.translationKey)
+      let title: string = T(custom.translationKey)
       let functionName = FormCanCustom.replace("%", k)
 
       if (fn && fn[functionName]) {
         disabled = true
-        title = await fn[functionName](key, def, data, ovl.state, ovl.effects)
+        title = await fn[functionName]({
+          rowKey: key,
+          tableDef: def,
+          tableData: data,
+        } as FormCan_Type)
         if (title) {
           rowControlActions[k] = {
             disabled: disabled,
@@ -1046,9 +1057,9 @@ export const rowControlActionsHandler = async (
   isDetailView: boolean
 ) => {
   if (isCustom) {
-    let customFns = resolvePath(customFunctions, def.namespace)
+    let customFns = resolvePath(ovl.actions.custom, def.namespace)
     if (customFns) {
-      let customFunctionName = "Form" + key
+      let customFunctionName = FormCustomFn + key
       let customFunction = customFns[customFunctionName]
 
       if (customFunction) {
@@ -1058,16 +1069,13 @@ export const rowControlActionsHandler = async (
               key: rowKey,
               def,
             })
-            await customFunction(
+            await customFunction(<FormCustomFn_Type>{
               rowKey,
               def,
               data,
-              true,
-              null,
-              ovl.state,
-              ovl.actions,
-              ovl.effects
-            )
+              isLastOrOnlyOne: true,
+              startedFromSelectedResult: null,
+            })
           }
           ovl.actions.ovl.overlay.CloseOverlay()
         } else {
@@ -1129,7 +1137,7 @@ export const GetRendererFn = (
   let rendererFn
   if (!cachedRenderer) {
     let functionName = hookDef.replace("%", fieldKey)
-    let fn = resolvePath(customFunctions, namespace)
+    let fn = resolvePath(ovl.actions.custom, namespace)
     if (fn && fn[functionName]) {
       rendererFn = fn[functionName]
       cachedRendererFn.set(cachedRendererKey, {

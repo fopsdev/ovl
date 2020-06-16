@@ -8,8 +8,17 @@ import {
   FieldRowCellSelectedHandler,
   ViewHeaderCellClass,
   ViewRowCellClass,
+  FieldHeaderCellSelectedHandler_Type,
+  FieldRowCellSelectedHandler_Type,
+  ViewRowCellClass_ReturnType,
+  ViewRowCellClass_Type,
+  ViewHeaderCellClass_ReturnType,
+  ViewHeaderCellClass_Type,
+  EditGetCaptionRender_Type,
+  FieldIsReadOnly_ReturnType,
+  FieldIsReadOnly_Type,
 } from "../../global/hooks"
-import { customFunctions } from "../../index"
+
 import { DialogResult } from "../actions"
 import { OvlFormElement } from "../forms/OvlFormElement"
 import { SnackAdd } from "../helpers"
@@ -91,35 +100,32 @@ export class TableRowFormBig extends OvlFormElement {
       let def = this.rowData.tableDef
       if (e.target.classList.contains("ovl-formcontrol-label")) {
         let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
-        let fn = resolvePath(customFunctions, def.namespace)
+        let fn = resolvePath(this.actions.custom, def.namespace)
         if (fn && fn[functionName]) {
           if (
-            !(await fn[functionName](
+            !(await fn[functionName](<FieldHeaderCellSelectedHandler_Type>{
               //@ts-ignore
-              e.target.classList,
+              classList: e.target.classList,
               def,
-              <DisplayMode>"Edit",
-              this.state
-            ))
+              displayMode: <DisplayMode>"Edit",
+            }))
           ) {
             return
           }
         }
       } else {
         let functionName = FieldRowCellSelectedHandler.replace("%", key)
-        let fn = resolvePath(customFunctions, def.namespace)
+        let fn = resolvePath(this.actions.custom, def.namespace)
         if (fn && fn[functionName]) {
           if (
-            !(await fn[functionName](
+            !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
               //@ts-ignore
-              e.target.classList,
+              classList: e.target.classList,
               def,
-              this.rowData.data,
-              this.rowData.key,
-              <DisplayMode>"Edit",
-              this.state,
-              this.formState
-            ))
+              data: this.rowData.data,
+              rowKey: this.rowData.key,
+              displayMode: <DisplayMode>"Edit",
+            }))
           ) {
             return
           }
@@ -190,34 +196,31 @@ export class TableRowFormBig extends OvlFormElement {
         acceptEnabled = "fd-button nopointerevents"
       }
 
-      let customRowCellClasses: { [key: string]: CellClass }
+      let customRowCellClasses: ViewRowCellClass_ReturnType
       let functionName = ViewRowCellClass
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
-        customRowCellClasses = fn[functionName](
+        customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
           def,
-          this.rowData.row,
-          this.state.ovl.uiState.isMobile,
-          <DisplayMode>"Edit",
-          this.state,
-          this.formState
-        )
+          row: this.rowData.row,
+          isMobile: this.state.ovl.uiState.isMobile,
+          displayMode: <DisplayMode>"Edit",
+        })
       }
 
       if (!customRowCellClasses) {
         customRowCellClasses = {}
       }
 
-      let customHeaderCellClasses: { [key: string]: CellClass }
+      let customHeaderCellClasses: ViewHeaderCellClass_ReturnType
       let functionName2 = ViewHeaderCellClass
-      let fn2 = resolvePath(customFunctions, def.namespace)
+      let fn2 = resolvePath(this.actions.custom, def.namespace)
       if (fn2 && fn[functionName2]) {
-        customHeaderCellClasses = fn2[functionName2](
+        customHeaderCellClasses = fn2[functionName2](<ViewHeaderCellClass_Type>{
           def,
-          this.state.ovl.uiState.isMobile,
-          <DisplayMode>"Edit",
-          this.state
-        )
+          isMobile: this.state.ovl.uiState.isMobile,
+          displayMode: <DisplayMode>"Edit",
+        })
       }
       if (!customHeaderCellClasses) {
         customHeaderCellClasses = {}
@@ -231,7 +234,7 @@ export class TableRowFormBig extends OvlFormElement {
       // lets see if we have a custom caption renderer
       if (def.options.edit.customCaption) {
         let captionFunctionName = EditGetCaptionRender
-        let captionFn = resolvePath(customFunctions, def.namespace)
+        let captionFn = resolvePath(this.actions.custom, def.namespace)
 
         let captionContent
         let captionTranslated
@@ -255,12 +258,13 @@ export class TableRowFormBig extends OvlFormElement {
           }
         }
         if (captionFn[captionFunctionName]) {
-          captionContent = captionFn[captionFunctionName](
-            captionTranslated,
-            this.rowData,
-            this.rowData.mode,
-            this.state
-          )
+          captionContent = captionFn[captionFunctionName](<
+            EditGetCaptionRender_Type
+          >{
+            caption: captionTranslated,
+            row: this.rowData,
+            mode: this.rowData.mode,
+          })
         } else {
           captionContent = captionTranslated
         }
@@ -309,14 +313,13 @@ export class TableRowFormBig extends OvlFormElement {
               let readonly = col.ui.readonly
               // @@hook
               let functionName = FieldIsReadOnly.replace("%", k)
-              let fn = resolvePath(customFunctions, def.namespace)
+              let fn = resolvePath(this.actions.custom, def.namespace)
               if (fn && fn[functionName]) {
-                readonly = fn[functionName](
-                  this.rowData.key,
+                readonly = fn[functionName](<FieldIsReadOnly_Type>{
+                  rowKey: this.rowData.key,
                   def,
-                  this.rowData.data,
-                  this.state
-                )
+                  data: this.rowData.data,
+                })
               }
               let insertMode = this.rowData.tableDef.database.dbInsertMode
               if (k === "Code") {

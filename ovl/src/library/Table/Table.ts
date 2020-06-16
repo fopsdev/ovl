@@ -7,8 +7,12 @@ import {
   FieldHeaderCellSelectedHandler,
   FieldIsVisible,
   ViewHeaderCellClass,
+  FieldHeaderCellSelectedHandler_Type,
+  ViewHeaderCellClass_ReturnType,
+  ViewHeaderCellClass_Type,
+  FieldIsVisible_Type,
 } from "../../global/hooks"
-import { customFunctions, TableDefIds, Language, ovl } from "../../index"
+import { TableDefIds, Language, ovl } from "../../index"
 import { OvlConfig } from "../../init"
 import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ListState } from "../Forms/Controls/ListControl"
@@ -435,16 +439,15 @@ export class TableHeader extends OvlBaseElement {
     // first start custom event handler (hook)
     //@ts-ignore
     let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(this.actions.custom, def.namespace)
     if (fn && fn[functionName]) {
       if (
-        !(await fn[functionName](
+        !(await fn[functionName](<FieldHeaderCellSelectedHandler_Type>{
           //@ts-ignore
-          e.target.classList,
+          classList: e.target.classList,
           def,
-          <DisplayMode>"Table",
-          this.state
-        ))
+          displayMode: <DisplayMode>"Table",
+        }))
       ) {
         return
       }
@@ -552,16 +555,15 @@ export class TableHeader extends OvlBaseElement {
       let columnsVisible = {}
       let columnsCount = 0
       let isMobile = this.state.ovl.uiState.isMobile
-      let customHeaderCellClasses: { [key: string]: CellClass }
+      let customHeaderCellClasses: ViewHeaderCellClass_ReturnType
       let functionName = ViewHeaderCellClass
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
-        customHeaderCellClasses = fn[functionName](
+        customHeaderCellClasses = fn[functionName](<ViewHeaderCellClass_Type>{
           def,
           isMobile,
-          <DisplayMode>"Table",
-          this.state
-        )
+          displayMode: <DisplayMode>"Table",
+        })
       }
       if (!customHeaderCellClasses) {
         customHeaderCellClasses = {}
@@ -584,14 +586,12 @@ export class TableHeader extends OvlBaseElement {
 
           //@@hook
           let functionName = FieldIsVisible.replace("%", k)
-          let fn = resolvePath(customFunctions, def.namespace)
+          let fn = resolvePath(this.actions.custom, def.namespace)
           if (fn && fn[functionName]) {
-            visible = fn[functionName](
-              this.tabledata,
-              this.state,
-              this.actions,
-              ovl.effects
-            )
+            visible = fn[functionName](<FieldIsVisible_Type>{
+              data: this.tabledata.data,
+              def,
+            })
           }
 
           columnsVisible[k] = visible

@@ -1,11 +1,4 @@
-import {
-  Screen,
-  FormType,
-  customFunctions,
-  OvlState,
-  OvlActions,
-  OvlEffects,
-} from "../index"
+import { Screen, FormType, OvlState, OvlActions, OvlEffects } from "../index"
 import { ovl } from "../index"
 import {
   startTrack,
@@ -112,22 +105,16 @@ export class OvlBaseElement extends HTMLElement {
       //this.track(() => {
       // if there is a screen show function call it
       scrollToLastPosition(this.state)
-      if (customFunctions) {
+      if (this.actions.custom.screens) {
         let screen = this.state.ovl.screens.nav.currentScreen
-        let screensFunctions = customFunctions["screens"]
-        if (screensFunctions) {
-          if (screensFunctions[screen]) {
-            if (screensFunctions[screen]["ScreenShow"]) {
-              screensFunctions[screen]["ScreenShow"](
-                this.state,
-                this.actions,
-                this.effects
-              )
-            }
+        let screensFunctions = this.actions.custom.screens
+
+        if (screensFunctions[screen]) {
+          if (screensFunctions[screen]["ScreenShow"]) {
+            screensFunctions[screen]["ScreenShow"]()
           }
         }
       }
-      //})
     }
   }
 

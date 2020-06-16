@@ -1,15 +1,15 @@
 import { CustomFormType, TableDefIds, Language } from "../../test/src/index"
 import { screens } from "../../test/src/stateScreens"
-import * as customFunctions from "../../test/src/customFunctions"
 import * as portalState from "../../test/src/state"
 import * as portalActions from "../../test/src/actions"
+import * as customActions from "../../test/src/customActions"
 
 import { createDeepProxy } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
 
-export type OvlActionContext = {
+type OvlActionContext = {
   state: OvlState
   actions: OvlActions
   effects: OvlEffects
@@ -32,6 +32,7 @@ let state: OvlState = createDeepProxy(_state)
 let actions = {
   ovl: ovlActions,
   portal: portalActions,
+  custom: customActions,
 }
 
 let effects = {
@@ -92,7 +93,7 @@ export type OvlState = typeof _state
 export type OvlActions = typeof actions
 export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
-export { customFunctions, screens, TableDefIds, Language }
+export { screens, TableDefIds, Language }
 export type Screen = keyof typeof screens
 import { defineElements } from "./registerComponents"
 defineElements()

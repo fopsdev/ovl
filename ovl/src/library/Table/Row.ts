@@ -1,8 +1,12 @@
 import { html } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
 import { resolvePath } from "../../global/globals"
-import { FieldGetValueRender, ViewRowCellClass } from "../../global/hooks"
-import { customFunctions } from "../../index"
+import {
+  FieldGetValueRender,
+  ViewRowCellClass,
+  ViewRowCellClass_ReturnType,
+  ViewRowCellClass_Type,
+} from "../../global/hooks"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { CachedRendererData, getDisplayValue, GetRendererFn } from "./helpers"
 import { TableRowDataDef } from "./RowWrapper"
@@ -44,17 +48,16 @@ export class TableRow extends OvlBaseElement {
       // see if we can gbet custom class names for the row columns
       // eg. to color a cell
       // this will also be used for detailview, differentiating by param isDetail
-      let customRowCellClasses: { [key: string]: CellClass }
+      let customRowCellClasses: ViewRowCellClass_ReturnType
       let functionName = ViewRowCellClass
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
-        customRowCellClasses = fn[functionName](
+        customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
           def,
           row,
           isMobile,
-          <DisplayMode>"Table",
-          this.state
-        )
+          displayMode: <DisplayMode>"Table",
+        })
       }
       if (!customRowCellClasses) {
         customRowCellClasses = {}

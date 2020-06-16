@@ -5,8 +5,9 @@ import {
   MinLength,
 } from "../../../../ovl/src/library/forms/validators"
 import { OvlAction } from "../../../../ovl/src"
+import { FormValidate_Type } from "../../../../ovl/src/global/hooks"
 
-export const FormValidate: OvlAction<ValidateFieldType> = (value) => {
+export const FormValidate: OvlAction<FormValidate_Type> = (value) => {
   switch (value.fieldId) {
     case "pw":
       Mandatory(T("AppLoginPassword"), value.newVal, value.validationResult)

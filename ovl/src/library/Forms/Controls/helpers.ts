@@ -13,8 +13,14 @@ import {
   FieldGetList,
   FieldLookupPostData,
   FieldGetValueRender,
+  FieldLookupPostData_Type,
+  FieldGetList_Type,
+  FieldGetFilteredList_Type,
+  FieldGetFilteredList_ReturnType,
+  FieldGetValueRender_Type,
+  FieldGetValueRender_ReturnType,
 } from "../../../global/hooks"
-import { customFunctions, OvlState, OvlEffects, ovl } from "../../../index"
+import { OvlState, OvlEffects, ovl } from "../../../index"
 import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
 import { CellClass } from "../../Table/Row"
 import {
@@ -73,10 +79,10 @@ export const KeyValueListFromServerFn = async (
       postData.paramList[k] = paramList[k]
     }
   })
-  let fn = resolvePath(customFunctions, namespace)
+  let fn = resolvePath(ovl.actions.custom, namespace)
   let functionName = FieldLookupPostData.replace("%", fieldId)
   if (fn && fn[functionName]) {
-    fn[functionName](postData, row, state, ovl.actions, effects)
+    fn[functionName](<FieldLookupPostData_Type>{ lookupData: postData, row })
   }
 
   let res = await effects.ovl.postRequest(postData.url, {
@@ -114,20 +120,19 @@ export const FilterHitList = (
 ) => {
   let hitLength = {}
   let functionName = FieldGetFilteredList.replace("%", fieldId)
-  let dataList = resolvePath(customFunctions, formState.namespace)[
+  let dataList = resolvePath(ovl.actions.custom, formState.namespace)[
     FieldGetList.replace("%", fieldId)
-  ](GetRowFromFormState(formState), state, ovl.actions, ovl.effects)
+  ](<FieldGetList_Type>{ row: GetRowFromFormState(formState) })
   if (dataList.data) {
     let res = Object.keys(dataList.data)
-    let fn = resolvePath(customFunctions, formState.namespace)
+    let fn = resolvePath(ovl.actions.custom, formState.namespace)
     if (fn && fn[functionName]) {
-      res = fn[functionName](
-        dataList,
+      const res: FieldGetFilteredList_ReturnType = fn[functionName](<
+        FieldGetFilteredList_Type
+      >{
+        list: dataList,
         formState,
-        state,
-        ovl.actions,
-        ovl.effects
-      )
+      })
     }
 
     let lookupTypes = dataList.lookupTypes
@@ -232,16 +237,17 @@ export const GetValueFromCustomFunction = (
     field.fieldKey
   )
   if (rendererFn) {
-    let val = rendererFn(
-      field.fieldKey,
+    let val: FieldGetValueRender_ReturnType = rendererFn(<
+      FieldGetValueRender_Type
+    >{
+      columnKey: field.fieldKey,
 
-      fillReactiveRows(row, formState),
-      formState.namespace,
-      getColumnDefsFromFormState(formState),
+      row: fillReactiveRows(row, formState),
+      namespace: formState.namespace,
+      columnsDef: getColumnDefsFromFormState(formState),
       align,
-      isInline ? <DisplayMode>"EditInline" : <DisplayMode>"Edit",
-      state
-    )
+      displayMode: isInline ? <DisplayMode>"EditInline" : <DisplayMode>"Edit",
+    })
     let d = field.value
     if (val !== undefined) {
       return val

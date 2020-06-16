@@ -3,8 +3,16 @@ import {
   getDecimalValue,
   resolvePath,
 } from "../../global/globals"
-import { FieldGetList, FormChanged, FormValidate } from "../../global/hooks"
-import { customFunctions, FormType, OvlAction } from "../../index"
+import {
+  FieldGetList,
+  FormChanged,
+  FormValidate,
+  FieldGetList_ReturnType,
+  FieldGetList_Type,
+  FormValidate_Type,
+  FormChanged_Type,
+} from "../../global/hooks"
+import { FormType, OvlAction } from "../../index"
 import { ColumnAlign, ListFnReturnValue } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
@@ -323,10 +331,10 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
 
     let functionName = FieldGetList.replace("%", value.fieldId)
 
-    let listdata: ListFnReturnValue
-    let fn = resolvePath(customFunctions, namespace)
+    let listdata: FieldGetList_ReturnType
+    let fn = resolvePath(actions.custom, namespace)
     if (fn && fn[functionName]) {
-      listdata = fn[functionName](row, state, actions, effects)
+      listdata = fn[functionName](<FieldGetList_Type>{ row })
       if (
         Object.keys(listdata.data).filter(
           (rowKey) => rowKey.toString() === value.newVal.toString()
@@ -363,7 +371,7 @@ export const ValidateForm: OvlAction<FormState> = (
       formState: value,
       validationResult: field.validationResult,
     } as ValidateFieldType)
-    let fn = resolvePath(customFunctions, namespace)
+    let fn = resolvePath(actions.custom, namespace)
 
     if (field.validationResult.valid) {
       actions.ovl.internal.ValidateSchema({
@@ -386,35 +394,25 @@ export const ValidateForm: OvlAction<FormState> = (
         }
         if (field.validationResult.valid) {
           if (fn && fn[validationFnName]) {
-            fn[validationFnName](
-              {
-                fieldId: k,
-                oldVal: val,
-                newVal: field.value,
-                formState: value,
-                validationResult: field.validationResult,
-              },
-              state,
-              actions,
-              effects
-            )
+            fn[validationFnName](<FormValidate_Type>{
+              fieldId: k,
+              oldVal: val,
+              newVal: field.value,
+              formState: value,
+              validationResult: field.validationResult,
+            })
           }
         }
       }
     }
     if (!oldValid && field.validationResult.valid) {
       if (fn && fn[FormChanged]) {
-        fn[FormChanged](
-          {
-            fieldId: k,
-            formState: value,
-            oldConvertedVal: val,
-            newConvertedVal: val,
-          } as FieldChanged,
-          state,
-          actions,
-          effects
-        )
+        fn[FormChanged](<FormChanged_Type>{
+          fieldId: k,
+          formState: value,
+          oldConvertedVal: val,
+          newConvertedVal: val,
+        })
       }
     }
   })
@@ -457,7 +455,7 @@ export const InitForm: OvlAction<InitForm> = (
     formState.lastTouchedField = value.initialFocusElementId
 
     // initial validation of all fields
-    let fn = resolvePath(customFunctions, formState.namespace)
+    let fn = resolvePath(actions.custom, formState.namespace)
     Object.keys(formState.fields).forEach((k) => {
       let fieldValue = formState.fields[k]
       fieldValue.validationResult = {
@@ -494,18 +492,13 @@ export const InitForm: OvlAction<InitForm> = (
           }
           if (fieldValue.validationResult.valid) {
             if (fn && fn[FormValidate]) {
-              fn[FormValidate](
-                {
-                  fieldId: k,
-                  formState,
-                  newVal: newVal,
-                  oldVal: oldVal,
-                  validationResult: fieldValue.validationResult,
-                } as ValidateFieldType,
-                state,
-                actions,
-                effects
-              )
+              fn[FormValidate](<FormValidate_Type>{
+                fieldId: k,
+                formState,
+                newVal: newVal,
+                oldVal: oldVal,
+                validationResult: fieldValue.validationResult,
+              })
             }
           }
         }
@@ -596,7 +589,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     validationResult: field.validationResult,
   } as ValidateFieldType)
 
-  let fn = resolvePath(customFunctions, namespace)
+  let fn = resolvePath(actions, namespace)
   if (field.validationResult.valid) {
     actions.ovl.internal.ValidateSchema({
       fieldId: value.fieldId,
@@ -619,18 +612,13 @@ export const ChangeField: OvlAction<ChangeField> = (
       if (field.validationResult.valid) {
         let validationFnName = "FormValidate"
         if (fn && fn[validationFnName]) {
-          fn[validationFnName](
-            {
-              fieldId: value.fieldId,
-              oldVal: oldConvertedVal,
-              newVal: field.value,
-              formState: value.formState,
-              validationResult: field.validationResult,
-            },
-            state,
-            actions,
-            effects
-          )
+          fn[validationFnName](<FormValidate_Type>{
+            fieldId: value.fieldId,
+            oldVal: oldConvertedVal,
+            newVal: field.value,
+            formState: value.formState,
+            validationResult: field.validationResult,
+          })
         }
       }
     }
@@ -648,17 +636,12 @@ export const ChangeField: OvlAction<ChangeField> = (
     field.validationResult.valid
   ) {
     if (fn && fn[FormChanged]) {
-      fn[FormChanged](
-        {
-          fieldId: value.fieldId,
-          formState: value.formState,
-          oldConvertedVal: oldConvertedVal,
-          newConvertedVal: value.formState.fields[value.fieldId].convertedValue,
-        } as FieldChanged,
-        state,
-        actions,
-        effects
-      )
+      fn[FormChanged](<FormChanged_Type>{
+        fieldId: value.fieldId,
+        formState: value.formState,
+        oldConvertedVal: oldConvertedVal,
+        newConvertedVal: value.formState.fields[value.fieldId].convertedValue,
+      })
     }
   }
 

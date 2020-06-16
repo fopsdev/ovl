@@ -1,6 +1,6 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "lit-html/directives/if-defined"
-import { customFunctions, ovl } from "../.."
+import { ovl } from "../.."
 import { api, resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,
@@ -14,6 +14,12 @@ import {
   ViewRowCellClass,
   ViewShow,
   ViewCustomTabRender,
+  FieldHeaderCellSelectedHandler_Type,
+  FieldRowCellSelectedHandler_Type,
+  ViewRowCellClass_ReturnType,
+  ViewRowCellClass_Type,
+  ViewAfterRender_Type,
+  ViewShow_Type,
 } from "../../global/hooks"
 import { SnackAdd } from "../helpers"
 import { overlayToRender } from "../Overlay/Overlay"
@@ -100,34 +106,30 @@ export class TableRowDetailView extends OvlBaseElement {
       let def = this.rowData.tableDef
       if (e.target.classList.contains("ovl-detailview-label")) {
         let functionName = FieldHeaderCellSelectedHandler.replace("%", key)
-        let fn = resolvePath(customFunctions, def.namespace)
+        let fn = resolvePath(this.actions.custom, def.namespace)
         if (fn && fn[functionName]) {
           if (
-            !(await fn[functionName](
-              //@ts-ignore
-              e.target.classList,
+            !(await fn[functionName](<FieldHeaderCellSelectedHandler_Type>{
+              classList: e.target.classList,
               def,
-              <DisplayMode>"Detailview",
-              this.state
-            ))
+              displayMode: <DisplayMode>"Detailview",
+            }))
           ) {
             return
           }
         }
       } else {
         let functionName = FieldRowCellSelectedHandler.replace("%", key)
-        let fn = resolvePath(customFunctions, def.namespace)
+        let fn = resolvePath(this.actions.custom, def.namespace)
         if (fn && fn[functionName]) {
           if (
-            !(await fn[functionName](
-              //@ts-ignore
-              e.target.classList,
+            !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
+              classList: e.target.classList,
               def,
-              this.rowData.data,
-              this.rowData.key,
-              <DisplayMode>"Detailview",
-              this.state
-            ))
+              data: this.rowData.data,
+              rowKey: this.rowData.key,
+              displayMode: <DisplayMode>"Detailview",
+            }))
           ) {
             return
           }
@@ -172,17 +174,16 @@ export class TableRowDetailView extends OvlBaseElement {
         }
       }
       let columns = def.columns
-      let customRowCellClasses: { [key: string]: CellClass }
+      let customRowCellClasses: ViewRowCellClass_ReturnType
       let functionName = ViewRowCellClass
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
-        customRowCellClasses = fn[functionName](
+        customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
           def,
-          this.rowData.row,
-          this.state.ovl.uiState.isMobile,
-          <DisplayMode>"DetailView",
-          this.state
-        )
+          row: this.rowData.row,
+          isMobile: this.state.ovl.uiState.isMobile,
+          displayMode: <DisplayMode>"DetailView",
+        })
       }
       if (!customRowCellClasses) {
         customRowCellClasses = {}
@@ -599,19 +600,18 @@ export class TableRowDetailView extends OvlBaseElement {
         if (this.formShowFn) {
           this.callFormShow()
         } else {
-          if (customFunctions) {
-            let formFunctions = resolvePath(
-              customFunctions,
-              this.rowData.tableDef.namespace
-            )
-            if (formFunctions) {
-              if (formFunctions[ViewShow]) {
-                this.formShowFn = formFunctions[ViewShow]
-                this.callFormShow()
-                return
-              }
+          let formFunctions = resolvePath(
+            this.actions.custom,
+            this.rowData.tableDef.namespace
+          )
+          if (formFunctions) {
+            if (formFunctions[ViewShow]) {
+              this.formShowFn = formFunctions[ViewShow]
+              this.callFormShow()
+              return
             }
           }
+
           this.formShowFn = -1
         }
       }
@@ -623,30 +623,32 @@ export class TableRowDetailView extends OvlBaseElement {
       if (this.formAfterRenderFn) {
         this.callFormAfterRender()
       } else {
-        if (customFunctions) {
-          let formFunctions = resolvePath(
-            customFunctions,
-            this.rowData.tableDef.namespace
-          )
-          if (formFunctions) {
-            if (formFunctions[ViewAfterRender]) {
-              this.formAfterRenderFn = formFunctions[ViewAfterRender]
-              this.callFormAfterRender()
-              return
-            }
+        let formFunctions = resolvePath(
+          this.actions.custom,
+          this.rowData.tableDef.namespace
+        )
+        if (formFunctions) {
+          if (formFunctions[ViewAfterRender]) {
+            this.formAfterRenderFn = formFunctions[ViewAfterRender]
+            this.callFormAfterRender()
+            return
           }
         }
+
         this.formAfterRenderFn = -1
       }
     }
   }
   callFormAfterRender() {
-    this.formAfterRenderFn(this.rowData, this.state, this.actions, ovl.effects)
+    this.formAfterRenderFn(<ViewAfterRender_Type>{
+      view: this.rowData,
+      comp: this,
+    })
   }
 
   callFormShow() {
     setTimeout(() => {
-      this.formShowFn(this.rowData, this.state, this.actions, ovl.effects)
+      this.formShowFn(<ViewShow_Type>{ view: this.rowData, comp: this })
     }, 200)
   }
 }

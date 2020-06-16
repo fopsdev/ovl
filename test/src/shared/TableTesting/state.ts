@@ -24,7 +24,7 @@ export type TblTableTesting = {
 export let tblTableTesting: TableDef = {
   id: "tab1",
   titleTranslationKey: "PortalTitleTable1",
-  namespace: "testtables.tabletesting",
+  namespace: "portal.testtables.tabletesting",
   server: {
     endpoint: "tabletesting",
   },
@@ -140,7 +140,7 @@ export type tab2ViewTabs = keyof typeof tableTesting2Tabs.view.tabs
 export let tblTableTesting2: TableDef = {
   id: "tab2",
   titleTranslationKey: "PortalTitleTable2",
-  namespace: "testtables.tabletesting",
+  namespace: "portal.testtables.tabletesting",
   server: {
     endpoint: "tabletesting",
   },
@@ -333,7 +333,7 @@ export let tblTableTesting2: TableDef = {
 export let tblTableTesting3: TableDef = {
   id: "tab3",
   titleTranslationKey: "PortalTitleTable3",
-  namespace: "testtables.tabletesting",
+  namespace: "portal.testtables.tabletesting",
   server: {
     endpoint: "tabletesting",
   },

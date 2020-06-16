@@ -5,8 +5,15 @@ import {
   FieldRowCellSelectedHandler,
   ViewHeaderCellClass,
   ViewRowCellClass,
+  FieldRowCellSelectedHandler_Type,
+  ViewRowCellClass_Type,
+  ViewRowCellClass_ReturnType,
+  ViewHeaderCellClass_Type,
+  ViewHeaderCellClass_ReturnType,
+  FieldIsReadOnly_ReturnType,
+  FieldIsReadOnly_Type,
 } from "../../global/hooks"
-import { customFunctions, ovl } from "../../index"
+import { ovl } from "../../index"
 import { OvlFormElement } from "../../library/forms/OvlFormElement"
 import { CellClass } from "./Row"
 import { DisplayMode, EditRowDef } from "./Table"
@@ -39,19 +46,17 @@ export class TableRowForm extends OvlFormElement {
     if (key) {
       let def = this.rowData.tableDef
       let functionName = FieldRowCellSelectedHandler.replace("%", key)
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
         if (
-          !(await fn[functionName](
+          !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
             //@ts-ignore
-            e.target.classList,
+            classList: e.target.classList,
             def,
-            this.rowData.data,
-            this.rowData.key,
-            <DisplayMode>"EditInline",
-            this.state,
-            this.formState
-          ))
+            data: this.rowData.data,
+            rowKey: this.rowData.key,
+            displayMode: <DisplayMode>"EditInline",
+          }))
         ) {
           return
         }
@@ -104,34 +109,31 @@ export class TableRowForm extends OvlFormElement {
       let def = this.rowData.tableDef
       let fields = this.formState.fields
 
-      let customRowCellClasses: { [key: string]: CellClass }
+      let customRowCellClasses: ViewRowCellClass_ReturnType
       let functionName = ViewRowCellClass
-      let fn = resolvePath(customFunctions, def.namespace)
+      let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
-        customRowCellClasses = fn[functionName](
+        customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
           def,
-          this.rowData.row,
-          this.state.ovl.uiState.isMobile,
-          <DisplayMode>"EditInline",
-          this.state,
-          this.formState
-        )
+          row: this.rowData.row,
+          isMobile: this.state.ovl.uiState.isMobile,
+          displayMode: <DisplayMode>"EditInline",
+        })
       }
 
       if (!customRowCellClasses) {
         customRowCellClasses = {}
       }
 
-      let customHeaderCellClasses: { [key: string]: CellClass }
+      let customHeaderCellClasses: ViewHeaderCellClass_ReturnType
       let functionName2 = ViewHeaderCellClass
-      let fn2 = resolvePath(customFunctions, def.namespace)
+      let fn2 = resolvePath(this.actions.custom, def.namespace)
       if (fn2 && fn[functionName2]) {
-        customHeaderCellClasses = fn2[functionName2](
+        customHeaderCellClasses = fn2[functionName2](<ViewHeaderCellClass_Type>{
           def,
-          this.state.ovl.uiState.isMobile,
-          <DisplayMode>"EditInline",
-          this.state
-        )
+          isMobile: this.state.ovl.uiState.isMobile,
+          displayMode: <DisplayMode>"EditInline",
+        })
       }
       if (!customHeaderCellClasses) {
         customHeaderCellClasses = {}
@@ -160,19 +162,16 @@ export class TableRowForm extends OvlFormElement {
               controlAlign = "text-align:center;"
             }
           }
-          let readonly = col.ui.readonly
+          let readonly: FieldIsReadOnly_ReturnType = col.ui.readonly
           // @@hook
           let functionName = FieldIsReadOnly.replace("%", k)
-          let fn = resolvePath(customFunctions, def.namespace)
+          let fn = resolvePath(this.actions.custom, def.namespace)
           if (fn && fn[functionName]) {
-            readonly = fn[functionName](
-              this.rowData.key,
-              this.rowData.tableDef,
-              this.rowData.data,
-              this.state,
-              this.actions,
-              ovl.effects
-            )
+            readonly = fn[functionName](<FieldIsReadOnly_Type>{
+              rowKey: this.rowData.key,
+              def: this.rowData.tableDef,
+              data: this.rowData.data,
+            })
           }
           let insertMode = this.rowData.tableDef.database.dbInsertMode
           if (k === "Code") {

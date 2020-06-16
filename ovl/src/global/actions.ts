@@ -1,11 +1,4 @@
-import {
-  customFunctions,
-  Screen,
-  ovl,
-  OvlState,
-  OvlAction,
-  OvlActions,
-} from "../index"
+import { Screen, ovl, OvlState, OvlAction, OvlActions } from "../index"
 import { Init, OvlConfig } from "../init"
 import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
@@ -24,7 +17,11 @@ import {
   saveState,
   ShowFile,
 } from "./globals"
-import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
+import {
+  ScreenNavigateIn,
+  ScreenNavigateOut,
+  ScreenNavigateOut_ReturnType,
+} from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 
 export const SetLastScrollPosition: OvlAction = (_, { state }) => {
@@ -36,15 +33,13 @@ export const NavigateTo: OvlAction<Screen> = async (
   { state, actions, effects }
 ) => {
   if (state.ovl.screens.nav.currentScreen !== value) {
-    let fn = customFunctions["screens"]
+    let fn = actions.custom.screens
     if (fn) {
       let currentScreen = state.ovl.screens.nav.currentScreen
       setLastScrollPosition(state)
       if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
-        let navErrorMessage = await fn[currentScreen][ScreenNavigateOut](
-          state,
-          actions,
-          effects
+        let navErrorMessage = <string>(
+          await fn[currentScreen][ScreenNavigateOut]()
         )
         if (navErrorMessage) {
           if (navErrorMessage.toLowerCase() !== "error") {
@@ -55,11 +50,7 @@ export const NavigateTo: OvlAction<Screen> = async (
       }
     }
     if (fn[value] && fn[value][ScreenNavigateIn]) {
-      let navErrorMessage = await fn[value][ScreenNavigateIn](
-        state,
-        actions,
-        effects
-      )
+      let navErrorMessage = await fn[value][ScreenNavigateIn]()
       if (navErrorMessage) {
         if (navErrorMessage.toLowerCase() !== "error") {
           SnackAdd(navErrorMessage, "Error")
@@ -103,7 +94,7 @@ export const NavigateBack: OvlAction = async (
   { state, actions, effects }
 ) => {
   if (state.ovl.screens.nav.screensHistory.length > 1) {
-    let fn = customFunctions["screens"]
+    let fn = actions.custom.screens
     if (fn) {
       let currentScreen = state.ovl.screens.nav.currentScreen
       if (currentScreen) {
@@ -123,9 +114,7 @@ export const NavigateBack: OvlAction = async (
           o.lastScrollTop = scrollable.scrollTop
         }
         if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
-          let navErrorMessage: string = await fn[currentScreen][
-            ScreenNavigateOut
-          ](state, actions, effects)
+          let navErrorMessage = await fn[currentScreen][ScreenNavigateOut]()
           if (navErrorMessage) {
             if (navErrorMessage.toLowerCase() !== "error") {
               SnackAdd(navErrorMessage, "Error")

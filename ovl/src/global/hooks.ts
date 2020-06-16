@@ -13,6 +13,7 @@ import {
   RowStatus,
   SelectedCustomFunctionResult,
   BeforeSaveParam,
+  FieldVisibility,
 } from "../library/Table/Table"
 import {
   FormState,
@@ -78,7 +79,6 @@ export const FormCopy = "FormCopy"
 
 // gets called when formdata is added
 export type FormAdd_Type = {
-  key: string
   newRow: { [key: string]: {} }
   tableDef: TableDef
   tableData: TableData
@@ -154,7 +154,7 @@ export const FormCustomColumnFn = "FormCustomColumnFn_%"
 
 //Form Field Functions ####################################
 // defines the list of ListControl and Option so far
-export type FieldGetList_Type = { [key: string]: {} }
+export type FieldGetList_Type = { row: { [key: string]: {} } }
 export type FieldGetList_ReturnType = ListFnReturnValue
 export const FieldGetList = "Field_%_GetList"
 
@@ -174,8 +174,20 @@ export type FieldLookupPostData_Type = {
 export const FieldLookupPostData = "Field_%_LookupPostData"
 
 // if a field should be displayed as readonly
+export type FieldIsReadOnly_Type = {
+  rowKey: string
+  def: TableDef
+  data: TableData
+}
+export type FieldIsReadOnly_ReturnType = boolean
 export const FieldIsReadOnly = "Field_%_IsReadOnly"
+
 // if a field should not be displayed. Make sure to return a FieldVisibilty - Type
+export type FieldIsVisible_Type = {
+  def: TableDef
+  data: TableData
+}
+export type FieldIsVisible_ReturnType = FieldVisibility
 export const FieldIsVisible = "Field_%_IsVisible"
 
 // if you would like to do the rendering of a cell value on your own
@@ -294,7 +306,7 @@ export type EditTabHeaderRender_Type = {
 export type EditTabHeaderRender_ReturnType = TemplateResult
 export const EditTabHeaderRender = "EditTab_%_HeaderRender"
 
-// renders a custom header section on tab x
+// renders a custom footer section on tab x
 export type EditTabFooterRender_Type = {
   view: EditRowDef
   comp: OvlBaseElement
@@ -302,7 +314,7 @@ export type EditTabFooterRender_Type = {
 export type EditTabFooterRender_ReturnType = TemplateResult
 export const EditTabFooterRender = "EditTab_%_FooterRender"
 
-// now the eventhandler if the user selected/clicked the cell
+// the eventhandler if the user selected/clicked the cell
 export type FieldRowCellSelectedHandler_Type = {
   classList: DOMTokenList
   def: TableDef
@@ -325,6 +337,12 @@ export const FieldHeaderCellSelectedHandler =
 
 //Form Save/Delete/Postback Functions ####################################
 // provide your complete form postback to server logic here if you don't wanna use the default
+
+export type FormCustomSave_Type = {
+  key: string
+  tableDef: TableDef
+  newData: { [key: string]: {} }
+}
 export const FormCustomSave = "FormCustomSave"
 
 // gets called before the form gets saved/posted back to the server

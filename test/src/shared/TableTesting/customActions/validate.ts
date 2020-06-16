@@ -26,7 +26,9 @@ export const FormChanged: OvlAction<FormChanged_Type> = async (
     case "U_ItmsGrpCod":
       // check if the entry is still in the list
       if (value.newConvertedVal) {
-        let listdata = Field_U_ItemCode_GetList(<FieldGetList_Type>value.row)
+        let listdata = Field_U_ItemCode_GetList(<FieldGetList_Type>{
+          row: value.row,
+        })
         let itemCode = value.formState.fields["U_ItemCode"].value
         if (itemCode) {
           let itemGroup = listdata.data[itemCode]["ItmsGrpCod"]

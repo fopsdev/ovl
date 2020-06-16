@@ -11,17 +11,22 @@ import { OvlAction } from "../../../../ovl/src"
 import {
   FormAfterSave_Type,
   FormAfterDelete_Type,
+  FormShow_Type,
+  FormAfterRender_Type,
+  FormValidate_Type,
 } from "../../../../ovl/src/global/hooks"
 
-export const FormShow: OvlAction<FormState> = async (formState) => {
+export const FormShow: OvlAction<FormShow_Type> = async (value) => {
   console.log("hello from translation formshow hook")
 }
 
-export const FormAfterRender: OvlAction<FormState> = async (formState) => {
+export const FormAfterRender: OvlAction<FormAfterRender_Type> = async (
+  value
+) => {
   console.log("hello from  translation formafterrender hook.")
 }
 
-export const FormValidate: OvlAction<ValidateFieldType> = async (
+export const FormValidate: OvlAction<FormValidate_Type> = async (
   value,
   { state }
 ) => {
