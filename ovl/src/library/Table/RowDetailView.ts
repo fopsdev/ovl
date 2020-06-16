@@ -20,6 +20,8 @@ import {
   ViewRowCellClass_Type,
   ViewAfterRender_Type,
   ViewShow_Type,
+  FieldGetValueRender_Type,
+  FieldGetLabelRender_Type,
 } from "../../global/hooks"
 import { SnackAdd } from "../helpers"
 import { overlayToRender } from "../Overlay/Overlay"
@@ -450,15 +452,14 @@ export class TableRowDetailView extends OvlBaseElement {
       }
       let uiItem
       if (rendererFn) {
-        uiItem = rendererFn(
-          k,
+        uiItem = rendererFn(<FieldGetValueRender_Type>{
+          columnKey: k,
           row,
-          def.namespace,
-          def.columns,
-          this.rowData.columnsAlign[k],
-          <DisplayMode>"Detailview",
-          this.state
-        )
+          namespace: def.namespace,
+          columnsDef: def.columns,
+          align: this.rowData.columnsAlign[k],
+          displayMode: <DisplayMode>"Detailview",
+        })
       } else {
         if (col.control === "checkbox") {
           if (row[k] === col.ui.checkedValue) {
@@ -513,13 +514,12 @@ export class TableRowDetailView extends OvlBaseElement {
         }
         //l = GetLabelText(l, k, def.namespace, this.state)
         if (labelRendererFn) {
-          l = labelRendererFn(
-            k,
-            l,
-            this.rowData.columnsAlign[k],
-            <DisplayMode>"Detailview",
-            this.state
-          )
+          l = labelRendererFn(<FieldGetLabelRender_Type>{
+            columnKey: k,
+            caption: l,
+            align: this.rowData.columnsAlign[k],
+            displayMode: <DisplayMode>"Detailview",
+          })
         }
 
         label = html`<label

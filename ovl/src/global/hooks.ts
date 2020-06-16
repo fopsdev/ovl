@@ -101,7 +101,7 @@ export type FormCustomFn_Type = {
   isLastOrOnlyOne: boolean
   startedFromSelectedResult: SelectedCustomFunctionResult
 }
-export const FormCustomFn = "FormCustomFn%"
+export const FormCustomFn = "FormCustomFn"
 
 // gets called when a form/row is selected and controls the row edit enabled
 // return a string explaining why it can not be done

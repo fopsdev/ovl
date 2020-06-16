@@ -241,7 +241,6 @@ export const GetValueFromCustomFunction = (
       FieldGetValueRender_Type
     >{
       columnKey: field.fieldKey,
-
       row: fillReactiveRows(row, formState),
       namespace: formState.namespace,
       columnsDef: getColumnDefsFromFormState(formState),

@@ -69,7 +69,7 @@ export function createDeepProxy(target) {
           pathToTrack = [...path].join(".")
         } else if (isArray) {
           pathToTrack = [...path, key].join(".")
-          console.log(pathToTrack)
+          //console.log(pathToTrack)
         }
         if (pathToTrack) {
           checkForCallbacks(pathToTrack)

@@ -193,7 +193,7 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
     },
   }
   let loginForm: InitForm = {
-    namespace: "portal.system.user",
+    namespace: "system.user",
     instanceId: "loginform",
     formType: "Login",
     fields,

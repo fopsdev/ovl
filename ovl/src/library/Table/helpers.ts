@@ -877,15 +877,12 @@ export const createDynamicRowFunctions = async (
     // the following path is tracked
     def.dataFetching.useSchema
     if (fn && fn[functionName]) {
-      deleteTitle = await fn[functionName](
-        key,
-        def,
-        data,
-        ovl.state,
+      deleteTitle = await fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
 
-        ovl.effects
-      )
-      //@show christian
       // the following access is NOT (correctly) tracked
       def.database.dataIdField
       deleteDisabled = true
@@ -916,14 +913,11 @@ export const createDynamicRowFunctions = async (
     let functionName = FormCanCopy
 
     if (fn && fn[functionName]) {
-      copyTitle = await fn[functionName](
-        key,
-        def,
-        data,
-        ovl.state,
-
-        ovl.effects
-      )
+      copyTitle = await fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
       copyDisabled = true
       if (copyTitle) {
         rowControlActions["Copy"] = {
@@ -951,7 +945,11 @@ export const createDynamicRowFunctions = async (
     //@@hook
     let functionName = FormCanEdit
     if (fn && fn[functionName]) {
-      editTitle = await fn[functionName](key, def, data, ovl.state, ovl.effects)
+      editTitle = await fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
       editDisabled = true
       if (editTitle) {
         rowControlActions["Edit"] = {
@@ -983,14 +981,11 @@ export const createDynamicRowFunctions = async (
       //@@hook
       let functionName = FormCanDetail
       if (fn && fn[functionName]) {
-        detailTitle = await fn[functionName](
-          key,
-          def,
-          data,
-          ovl.state,
-
-          ovl.effects
-        )
+        detailTitle = await fn[functionName](<FormCan_Type>{
+          rowKey: key,
+          tableDef: def,
+          tableData: data,
+        })
         detailDisabled = true
         if (detailTitle) {
           rowControlActions["View"] = {
@@ -1018,14 +1013,11 @@ export const createDynamicRowFunctions = async (
     //@@hook
     let functionName = FormCanMore
     if (fn && fn[functionName]) {
-      moreTitle = fn[functionName](
-        key,
-        def,
-        data,
-        ovl.state,
-
-        ovl.effects
-      )
+      moreTitle = fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
       moreDisabled = true
       if (moreTitle) {
         rowControlActions["More"] = {
@@ -1079,16 +1071,13 @@ export const rowControlActionsHandler = async (
           }
           ovl.actions.ovl.overlay.CloseOverlay()
         } else {
-          await customFunction(
+          await customFunction(<FormCustomFn_Type>{
             rowKey,
             def,
             data,
-            true,
-            null,
-            ovl.state,
-            ovl.actions,
-            ovl.effects
-          )
+            isLastOrOnlyOne: true,
+            startedFromSelectedResult: null,
+          })
         }
       } else {
         throw Error(

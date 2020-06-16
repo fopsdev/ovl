@@ -46,11 +46,12 @@ let order = {
   SelectOrder,
 }
 
-import * as feedback from "./screens/Feedback/actions"
+import { SaveFeedback } from "./screens/Feedback/actions"
 
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 
 let system = { shellbar, user }
 let testtables = { mobiletimerecording }
+let feedback = { SaveFeedback }
 
 export { system, global, settings, order, feedback, testtables }

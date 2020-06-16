@@ -50,12 +50,12 @@ export class TableRowForm extends OvlFormElement {
       if (fn && fn[functionName]) {
         if (
           !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
-            //@ts-ignore
             classList: e.target.classList,
             def,
             data: this.rowData.data,
             rowKey: this.rowData.key,
             displayMode: <DisplayMode>"EditInline",
+            formState: this.formState,
           }))
         ) {
           return
@@ -118,6 +118,7 @@ export class TableRowForm extends OvlFormElement {
           row: this.rowData.row,
           isMobile: this.state.ovl.uiState.isMobile,
           displayMode: <DisplayMode>"EditInline",
+          formState: this.formState,
         })
       }
 

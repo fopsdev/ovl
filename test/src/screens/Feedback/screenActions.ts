@@ -11,7 +11,7 @@ export const ScreenNavigateIn: OvlAction = async (_, { state, actions }) => {
     },
   }
   let initForm: InitForm = {
-    namespace: "portal.feedback",
+    namespace: "feedback",
     instanceId: state.ovl.screens.screens.Feedback.type,
     formType: "Feedback",
     fields,

@@ -86,7 +86,6 @@ export class TableRowWrapper extends OvlBaseElement {
     if (fn && fn[functionName]) {
       if (
         !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
-          //@ts-ignore
           classList: e.target.classList,
           def,
           data: this.row.data,

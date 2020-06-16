@@ -11,6 +11,8 @@ import {
   ViewHeaderCellClass_ReturnType,
   ViewHeaderCellClass_Type,
   FieldIsVisible_Type,
+  FieldGetValueRender_Type,
+  FieldGetLabelRender_Type,
 } from "../../global/hooks"
 import { TableDefIds, Language, ovl } from "../../index"
 import { OvlConfig } from "../../init"
@@ -683,13 +685,12 @@ export class TableHeader extends OvlBaseElement {
           if (!rendererFn) {
             headerPart = caption
           } else {
-            headerPart = rendererFn(
-              k,
+            headerPart = rendererFn(<FieldGetLabelRender_Type>{
+              columnKey: k,
               caption,
-              align[k],
-              <DisplayMode>"Table",
-              this.state
-            )
+              align: align[k],
+              displayMode: <DisplayMode>"Table",
+            })
           }
 
           let customHeaderCellClass: string = ""

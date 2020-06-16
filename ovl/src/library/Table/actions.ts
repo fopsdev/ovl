@@ -396,7 +396,7 @@ export const TableRefresh: OvlAction<{
       forceServerDataRefresh
     )
   }
-  console.log("tablerebuild")
+  //console.log("tablerebuild")
   def.initialised = true
   let data = dataAndState
   setTimeout(() => {

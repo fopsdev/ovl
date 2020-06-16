@@ -17,6 +17,8 @@ import {
   EditGetCaptionRender_Type,
   FieldIsReadOnly_ReturnType,
   FieldIsReadOnly_Type,
+  FieldGetValueRender_Type,
+  EditGetLabelAndValueRenderer_Type,
 } from "../../global/hooks"
 
 import { DialogResult } from "../actions"
@@ -119,12 +121,12 @@ export class TableRowFormBig extends OvlFormElement {
         if (fn && fn[functionName]) {
           if (
             !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
-              //@ts-ignore
               classList: e.target.classList,
               def,
               data: this.rowData.data,
               rowKey: this.rowData.key,
               displayMode: <DisplayMode>"Edit",
+              formState: this.formState,
             }))
           ) {
             return
@@ -205,6 +207,7 @@ export class TableRowFormBig extends OvlFormElement {
           row: this.rowData.row,
           isMobile: this.state.ovl.uiState.isMobile,
           displayMode: <DisplayMode>"Edit",
+          formState: this.formState,
         })
       }
 
@@ -347,13 +350,13 @@ export class TableRowFormBig extends OvlFormElement {
                 }
               }
               if (rendererFn) {
-                uiItem = rendererFn(
-                  fields[k],
+                uiItem = rendererFn(<EditGetLabelAndValueRenderer_Type>{
+                  field: fields[k],
                   customHeaderCellClass,
                   customRowCellClass,
                   id,
-                  readonly
-                )
+                  readonly,
+                })
               } else {
                 if (!readonly) {
                   //@@todo switch case for the other controltypes (combo, area, check,...)

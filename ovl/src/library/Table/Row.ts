@@ -6,6 +6,7 @@ import {
   ViewRowCellClass,
   ViewRowCellClass_ReturnType,
   ViewRowCellClass_Type,
+  FieldGetValueRender_Type,
 } from "../../global/hooks"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { CachedRendererData, getDisplayValue, GetRendererFn } from "./helpers"
@@ -127,15 +128,14 @@ export class TableRow extends OvlBaseElement {
               rowPart = getDisplayValue(k, col, row, def.namespace)
             }
           } else {
-            rowPart = rendererFn(
-              k,
+            rowPart = rendererFn(<FieldGetValueRender_Type>{
+              columnKey: k,
               row,
-              def.namespace,
-              def.columns,
-              align[k],
-              <DisplayMode>"Table",
-              this.state
-            )
+              namespace: def.namespace,
+              columnsDef: def.columns,
+              align: align[k],
+              displayMode: <DisplayMode>"Table",
+            })
           }
 
           // needs to be ignored to get css white-space: line-wrap work correctly

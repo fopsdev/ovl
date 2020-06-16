@@ -76,6 +76,7 @@ const getMethods = (obj) =>
       if (isAsync) {
         obj[item] = interceptorAsyncFn(obj[item])
       } else {
+        //console.log(obj[item])
         obj[item] = interceptorFn(obj[item])
       }
     } else if (typeof obj[item] === "object") {

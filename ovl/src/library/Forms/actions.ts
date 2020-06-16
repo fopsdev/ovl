@@ -371,6 +371,7 @@ export const ValidateForm: OvlAction<FormState> = (
       formState: value,
       validationResult: field.validationResult,
     } as ValidateFieldType)
+
     let fn = resolvePath(actions.custom, namespace)
 
     if (field.validationResult.valid) {
@@ -589,7 +590,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     validationResult: field.validationResult,
   } as ValidateFieldType)
 
-  let fn = resolvePath(actions, namespace)
+  let fn = resolvePath(actions.custom, namespace)
   if (field.validationResult.valid) {
     actions.ovl.internal.ValidateSchema({
       fieldId: value.fieldId,

@@ -22,7 +22,7 @@ export const ScreenNavigateIn: OvlAction = async (_, { actions }) => {
     },
   }
   let initForm: InitForm = {
-    namespace: "portal.settings",
+    namespace: "settings",
     instanceId: "settingsform",
     formType: "Settings",
     fields,
