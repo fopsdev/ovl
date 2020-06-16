@@ -1,6 +1,7 @@
 
 
 Todos:
+- check timeentry
 - check itemgroup-item selection in form...there is smth missing
 - check the if-defined directive
 - check sort if column is memo_fr, needs language param or some other fast logic
