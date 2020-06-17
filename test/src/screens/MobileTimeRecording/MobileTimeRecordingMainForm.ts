@@ -195,7 +195,9 @@ export class CompMobileTimeEntry extends OvlFormElement {
               let listValue1 = GetListDisplayValue(
                 def.columns.U_TypeId.list,
                 data[k].U_TypeId,
-                Field_U_TypeId_GetList(<FieldGetList_Type>{ row: data[k] })
+                this.actions.custom.testtables.mobiletimerecording.Field_U_TypeId_GetList(
+                  <FieldGetList_Type>{ row: data[k] }
+                )
               )
               let listValue2 =
                 data[k].U_FromTime +

@@ -19,7 +19,6 @@ export const FormChanged: OvlAction<FormChanged_Type> = async (
 ) => {
   switch (value.fieldId) {
     case "U_ItmsGrpCod":
-      debugger
       // check if the entry is still in the list
       if (value.newConvertedVal) {
         let listdata = actions.custom.testtables.tabletesting.Field_U_ItemCode_GetList(
