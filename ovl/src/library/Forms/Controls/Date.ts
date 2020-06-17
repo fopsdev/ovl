@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
@@ -84,7 +84,8 @@ export class OvlDate extends OvlBaseElement {
         res,
         "date",
         align,
-        this.formState
+        this.formState,
+        this
       )
       let type: "date" | "text" = "text"
       if (this.state.ovl.uiState.isMobile) {
@@ -97,7 +98,8 @@ export class OvlDate extends OvlBaseElement {
           ${label}
           <input
             title="${ifDefined(
-              customRowTooltip ? customRowTooltip : undefined
+              customRowTooltip ? customRowTooltip : undefined,
+              this
             )}"
             @focusout=${(e) => this.handleFocusOut(e)}
             @keydown=${(e) => this.handleKeyDown(e)}

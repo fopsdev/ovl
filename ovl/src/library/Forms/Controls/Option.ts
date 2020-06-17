@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { ovl } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import {
@@ -81,7 +81,8 @@ export class OvlOption extends OvlBaseElement {
         res,
         "option",
         align,
-        this.formState
+        this.formState,
+        this
       )
 
       let inline
@@ -98,7 +99,8 @@ export class OvlOption extends OvlBaseElement {
           <div
             tabindex="0"
             title="${ifDefined(
-              customRowTooltip ? customRowTooltip : undefined
+              customRowTooltip ? customRowTooltip : undefined,
+              this
             )}"
             class="fd-form-group ${inline} ${customRowClassName}"
             id="${this.field.field.id}"

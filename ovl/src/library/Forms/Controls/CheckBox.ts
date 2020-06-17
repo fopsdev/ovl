@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
@@ -74,7 +74,8 @@ export class OvlCheckbox extends OvlBaseElement {
         res,
         "checkbox",
         align,
-        this.formState
+        this.formState,
+        this
       )
       return html`
         <div
@@ -85,7 +86,8 @@ export class OvlCheckbox extends OvlBaseElement {
           <div class="fd-form-item">
             <input
               title="${ifDefined(
-                customRowTooltip ? customRowTooltip : undefined
+                customRowTooltip ? customRowTooltip : undefined,
+                this
               )}"
               @change=${(e) => this.handleChange(e)}
               @focusout=${(e) => this.handleFocusOut(e)}

@@ -1,5 +1,5 @@
 import { html, TemplateResult } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 
 import { resolvePath } from "../../../global/globals"
 import {
@@ -474,7 +474,8 @@ export class OvlListControl extends OvlBaseElement {
         res,
         "list",
         align,
-        this.formState
+        this.formState,
+        this
       )
 
       let displayValue = this.displayValue
@@ -516,7 +517,8 @@ export class OvlListControl extends OvlBaseElement {
             >
               <input
                 title="${ifDefined(
-                  customRowTooltip ? customRowTooltip : undefined
+                  customRowTooltip ? customRowTooltip : undefined,
+                  this
                 )}"
                 autocomplete="off"
                 style="${align}"

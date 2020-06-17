@@ -26,6 +26,7 @@ import { CellClass } from "../library/Table/Row"
 import { TableTesting } from "../../../test/src/shared/TableTesting/state"
 import { OvlBaseElement } from "../library/OvlBaseElement"
 import { ViewRendererResult } from "../library/Table/RowDetailView"
+import { Language } from "../../../test/src"
 
 // gets called when user navigates into a screen
 export const ScreenNavigateIn = "ScreenNavigateIn"
@@ -130,6 +131,7 @@ export const FormCanCustom = "FormCan%"
 // custom filter function
 export type FormCustomFilter_Type = {
   def: TableDef
+  lang: Language
   data: TableData
   row: TableTesting
 }
@@ -137,6 +139,8 @@ export type FormCustomFilter_ReturnType = boolean
 export const FormCustomFilter = "FormCustom_%_Filter"
 // custom sort function
 export type FormCustomSort_Type = {
+  def: TableDef
+  lang: Language
   a: string
   b: string
   data: { [key: string]: { [key: string]: {} } }

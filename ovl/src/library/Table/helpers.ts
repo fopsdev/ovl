@@ -663,6 +663,7 @@ export const TableFilterFn = (
 ) => {
   // filter should only operate on rows not in add-mode
   let def = tableDataAndDef.def
+  let lang = ovl.state.ovl.language.language
   let data = tableDataAndDef.data.data
   let columns = def.columns
   let restable = Object.keys(data).filter((f) => f.indexOf(ovltemp) < 0)
@@ -758,7 +759,7 @@ export const TableFilterFn = (
       let data = tableDataAndDef.data
       let row = data.data[rowKey]
       return !customFilterFn.some(
-        (f) => !f({ def, data, row } as FormCustomFilter_Type)
+        (f) => !f({ def, lang, data, row } as FormCustomFilter_Type)
       )
     })
   }

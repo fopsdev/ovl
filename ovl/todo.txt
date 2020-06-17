@@ -1,18 +1,24 @@
 
 
 Todos:
-- check timeentry
-- check itemgroup-item selection in form...there is smth missing
-- check the if-defined directive
-- check sort if column is memo_fr, needs language param or some other fast logic
+
+- reimplement offline hooks
+- Tab Feature for Edit
+- detailview as its own screen (configurable)
+- maybe consider push/pop active elementracker again...
+
+X - simplify acctions export for custom
+X - check sort if column is memo_fr, needs language param or some other fast logic
+X - check timeentry
+X - check itemgroup-item selection in form...there is smth missing
+X - check the if-defined directive
 X - refactor custom functions to actions again...
 X - formafterrender-hooks need parent component as param (this.track....)
 X - Check async issue with  action calling
   (tablerebuild gets calld before tabledata is loaded)
   ( you may enter translations screen to see issue ) 
 
-
-- Tab Feature for Edit and X Detailview
+X- Tabs for Detailview
   Define a set of tabs for edit and detailview
   Add viewTabs to def like
   tabs: {

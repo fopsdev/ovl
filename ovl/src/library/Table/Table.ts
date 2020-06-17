@@ -1,6 +1,6 @@
 import { html } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
-import { repeat } from "../../tracker/myRepeat.js"
+import { ifDefined } from "../../tracker/litdirectives/if-defined"
+import { repeat } from "../../tracker/litdirectives/repeat"
 import { api, ovltemp, resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,
@@ -704,7 +704,7 @@ export class TableHeader extends OvlBaseElement {
           return html`
             <th
               data-col="${k}"
-              title="${ifDefined(tooltip ? tooltip : undefined)}"
+              title="${ifDefined(tooltip ? tooltip : undefined, this)}"
               style="${cellBgColor}"
               class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-table-label-${column.control +
               (column.asset
@@ -824,6 +824,7 @@ export class TableHeader extends OvlBaseElement {
         `
       }
       let alreadyRendered = {}
+
       let rows = repeat(
         dataAndAddRows,
         (k: string) => k,
@@ -853,7 +854,9 @@ export class TableHeader extends OvlBaseElement {
             </ovl-trg>
           `
           return html` ${row} `
-        }
+        },
+        //@ts-ignore
+        this
       )
 
       let maxSizeHint

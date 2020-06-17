@@ -4,7 +4,7 @@ import { Field, FormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ColumnAlign } from "../../Table/Table"
 import { GetLabel, ControlState, GetValueFromCustomFunction } from "./helpers"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 
 export class OvlTextArea extends OvlBaseElement {
   props: any
@@ -73,7 +73,8 @@ export class OvlTextArea extends OvlBaseElement {
         res,
         "textarea",
         align,
-        this.formState
+        this.formState,
+        this
       )
 
       return html`
@@ -83,7 +84,8 @@ export class OvlTextArea extends OvlBaseElement {
           ${label}
           <textarea
             title="${ifDefined(
-              customRowTooltip ? customRowTooltip : undefined
+              customRowTooltip ? customRowTooltip : undefined,
+              this
             )}"
             @keydown=${(e) => this.handleKeyDown(e)}
             @change=${(e) => this.handleChange(e)}

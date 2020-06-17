@@ -416,7 +416,7 @@ export const TableRebuild: OvlAction<{
   let snackId = value.snackId
   let def = <TableDef>value.data.tableDef[value.defId]
   let data = value.data.data
-
+  let lang = state.ovl.language.language
   try {
     let customSortFn = undefined
     let sortCustom = def.options.sortCustom
@@ -441,7 +441,7 @@ export const TableRebuild: OvlAction<{
     restable = restable.sort((a, b) => {
       if (customSortFn !== undefined) {
         return <FormCustomSort_ReturnType>(
-          customSortFn(<FormCustomSort_Type>{ a, b, data })
+          customSortFn(<FormCustomSort_Type>{ def, lang, a, b, data })
         )
       } else {
         let valB = data[b][sortfield]

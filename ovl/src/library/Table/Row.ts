@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../tracker/litdirectives/if-defined"
 import { resolvePath } from "../../global/globals"
 import {
   FieldGetValueRender,
@@ -141,7 +141,7 @@ export class TableRow extends OvlBaseElement {
           // needs to be ignored to get css white-space: line-wrap work correctly
           // prettier-ignore
           return html`
-          <td title="${ifDefined(tooltip ? tooltip : undefined)}" data-col="${k}" class="fd-table__cell ${align[k]} ovl-tableview-rowcell ovl-table-value-${col.control + (col.asset?col.asset.type: "")} ovl-table-value__${k} ${customRowCellClass}">${rowPart}</td>
+          <td title="${ifDefined(tooltip ? tooltip : undefined, this)}" data-col="${k}" class="fd-table__cell ${align[k]} ovl-tableview-rowcell ovl-table-value-${col.control + (col.asset?col.asset.type: "")} ovl-table-value__${k} ${customRowCellClass}">${rowPart}</td>
         `
         })}
       `

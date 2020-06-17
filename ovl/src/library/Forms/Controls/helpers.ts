@@ -1,5 +1,5 @@
 import { html, TemplateResult } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 
 import {
   getDateValue,
@@ -32,6 +32,7 @@ import {
 import { Field, FormState } from "../actions"
 import { ListState } from "./ListControl"
 import { UIValidationObject } from "./uiValidationHelper"
+import { OvlBaseElement } from "../../OvlBaseElement"
 
 export type LookupListPostData = {
   url: string
@@ -287,7 +288,8 @@ export const GetLabel = (
   res: UIValidationObject,
   controltype: ControlType,
   align: string,
-  formState: FormState
+  formState: FormState,
+  comp: OvlBaseElement
 ): TemplateResult => {
   let caption = ""
   let label
@@ -332,7 +334,8 @@ export const GetLabel = (
   label = html`
     <label
       title="${ifDefined(
-        customHeaderTooltip ? customHeaderTooltip : undefined
+        customHeaderTooltip ? customHeaderTooltip : undefined,
+        comp
       )}"
       class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-table-label-${controltype} ovl-table-label__${field.fieldKey} ${customHeaderClassName}"
       aria-required="${res.needsAttention}"
