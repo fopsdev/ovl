@@ -262,7 +262,7 @@ export const TableRefreshDataFromServer: OvlAction<{
       return val
     }, {})
   // console.log("lookupinfo ")
-  // console.log(dataFieldsToLookups)
+  console.log(dataFieldsToLookups)
   keysFromServer.forEach((k) => {
     if (localData[k] === undefined) {
       localData[k] = {}

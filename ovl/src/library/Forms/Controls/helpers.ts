@@ -127,9 +127,7 @@ export const FilterHitList = (
     let res = Object.keys(dataList.data)
     let fn = resolvePath(ovl.actions.custom, formState.namespace)
     if (fn && fn[functionName]) {
-      const res: FieldGetFilteredList_ReturnType = fn[functionName](<
-        FieldGetFilteredList_Type
-      >{
+      res = fn[functionName](<FieldGetFilteredList_Type>{
         list: dataList,
         formState,
       })

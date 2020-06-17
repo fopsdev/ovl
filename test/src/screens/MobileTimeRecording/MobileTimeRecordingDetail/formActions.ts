@@ -19,6 +19,10 @@ import {
 } from "../../../../../ovl/src/library/Table/Table"
 import { TableMobileTimeRecording } from "./state"
 import { OvlAction, OvlState } from "../../../../../ovl/src"
+import {
+  FieldGetList_Type,
+  FieldGetList_ReturnType,
+} from "../../../../../ovl/src/global/hooks"
 
 export const FormShow: OvlAction = async (formState: FormState) => {
   console.log("hello from timeentry formshow hook")
@@ -37,9 +41,9 @@ export const Field_U_Type_GetList: OvlAction = (row: {
 }
 
 export const Field_U_TypeId_GetList: OvlAction<
-  TableMobileTimeRecording,
-  ListFnReturnValue
-> = (row, { state }) => {
+  FieldGetList_Type,
+  FieldGetList_ReturnType
+> = ({ row }: { row: TableMobileTimeRecording }, { state }) => {
   if (row.U_Type === "PROJECT") {
     return state.portal.testtables.lookups.ProjectTypeId
   } else {

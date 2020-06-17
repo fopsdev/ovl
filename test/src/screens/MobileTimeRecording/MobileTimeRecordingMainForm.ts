@@ -18,6 +18,7 @@ import {
   TableMobileTimeRecording,
 } from "./MobileTimeRecordingDetail/state"
 import { ovl } from "../../../../ovl/src"
+import { FieldGetList_Type } from "../../../../ovl/src/global/hooks"
 export class CompMobileTimeEntry extends OvlFormElement {
   init() {
     this.screen = "MobileTimeEntry"
@@ -194,7 +195,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
               let listValue1 = GetListDisplayValue(
                 def.columns.U_TypeId.list,
                 data[k].U_TypeId,
-                Field_U_TypeId_GetList(data[k])
+                Field_U_TypeId_GetList(<FieldGetList_Type>{ row: data[k] })
               )
               let listValue2 =
                 data[k].U_FromTime +

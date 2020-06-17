@@ -18,6 +18,7 @@ import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
 import { getFormFields, ValidationAddError } from "./helper"
 import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
+import { GetRowFromFormState } from "./Controls/helpers"
 export { FillListControl }
 
 export type Field = {
@@ -642,6 +643,7 @@ export const ChangeField: OvlAction<ChangeField> = (
         formState: value.formState,
         oldConvertedVal: oldConvertedVal,
         newConvertedVal: value.formState.fields[value.fieldId].convertedValue,
+        row: GetRowFromFormState(value.formState),
       })
     }
   }

@@ -19,11 +19,14 @@ export const FormChanged: OvlAction<FormChanged_Type> = async (
 ) => {
   switch (value.fieldId) {
     case "U_ItmsGrpCod":
+      debugger
       // check if the entry is still in the list
       if (value.newConvertedVal) {
-        let listdata = Field_U_ItemCode_GetList(<FieldGetList_Type>{
-          row: value.row,
-        })
+        let listdata = actions.custom.testtables.tabletesting.Field_U_ItemCode_GetList(
+          <FieldGetList_Type>{
+            row: value.row,
+          }
+        )
         let itemCode = value.formState.fields["U_ItemCode"].value
         if (itemCode) {
           let itemGroup = listdata.data[itemCode]["ItmsGrpCod"]

@@ -86,7 +86,7 @@ export function createDeepProxy(target) {
           }
           return deleted
         }
-        return false
+        return true
       },
     }
   }

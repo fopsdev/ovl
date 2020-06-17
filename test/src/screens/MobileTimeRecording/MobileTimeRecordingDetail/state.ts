@@ -29,7 +29,7 @@ export type tblMobileTimeRecording = {
 
 export let tblMobileTimeRecording: TableDef = {
   id: "mobiletimerecording1",
-  namespace: "testtables.mobiletimerecordingdetail",
+  namespace: "testtables.mobiletimerecording",
   server: {
     endpoint: "timeentries",
   },
