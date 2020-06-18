@@ -23,10 +23,10 @@ import {
 } from "../library/Forms/actions"
 import { TemplateResult } from "lit-html"
 import { CellClass } from "../library/Table/Row"
-import { TableTesting } from "../../../test/src/shared/TableTesting/state"
+
 import { OvlBaseElement } from "../library/OvlBaseElement"
 import { ViewRendererResult } from "../library/Table/RowDetailView"
-import { Language } from "../../../test/src"
+import { Language } from "../index"
 
 // gets called when user navigates into a screen
 export const ScreenNavigateIn = "ScreenNavigateIn"
@@ -133,7 +133,7 @@ export type FormCustomFilter_Type = {
   def: TableDef
   lang: Language
   data: TableData
-  row: TableTesting
+  row: { [key: string]: {} }
 }
 export type FormCustomFilter_ReturnType = boolean
 export const FormCustomFilter = "FormCustom_%_Filter"
@@ -197,7 +197,7 @@ export const FieldIsVisible = "Field_%_IsVisible"
 // if you would like to do the rendering of a cell value on your own
 export type FieldGetValueRender_Type = {
   columnKey: string
-  row: TableTesting
+  row: { [key: string]: {} }
   namespace: string
   columnsDef: { [key: string]: ColumnDisplayDef }
   align: string
@@ -247,13 +247,13 @@ export const EditGetLabelAndValueRender = "Edit_%_GetLabelAndValueRender"
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set
 export type ViewRowCellClass_Type = {
   def: TableDef
-  row: TableTesting
+  row: { [key: string]: {} }
   isMobile: boolean
   displayMode: DisplayMode
   formState?: FormState
 }
 export type ViewRowCellClass_ReturnType = {
-  [key in keyof TableTesting]?: CellClass
+  [key: string]: CellClass
 }
 export const ViewRowCellClass = "ViewRowCellClass"
 
@@ -263,7 +263,7 @@ export type ViewHeaderCellClass_Type = {
   displayMode: DisplayMode
 }
 export type ViewHeaderCellClass_ReturnType = {
-  [key in keyof TableTesting]?: CellClass
+  [key: string]: CellClass
 }
 export const ViewHeaderCellClass = "ViewHeaderCellClass"
 

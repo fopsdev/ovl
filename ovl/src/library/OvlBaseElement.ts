@@ -195,6 +195,9 @@ export class OvlBaseElement extends HTMLElement {
   connectedCallback() {
     this.init()
     if (this.screen) {
+      if (this.state.ovl.screens.screenState === undefined) {
+        this.state.ovl.screens.screenState = {}
+      }
       if (this.state.ovl.screens.screenState[this.screen] === undefined) {
         this.state.ovl.screens.screenState[this.screen] = {
           visible: false,

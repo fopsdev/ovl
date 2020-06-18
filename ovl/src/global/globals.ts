@@ -179,6 +179,7 @@ let saveReason = ""
 export const saveState = async (force: boolean, reason: string) => {
   if (OvlConfig._system.OfflineMode && !logoutAndClearFlag) {
     saveReason = reason
+    //@ts-ignore
     if (ovl.state.ovl.screens.nav.currentScreen !== "Login") {
       let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
       let ts

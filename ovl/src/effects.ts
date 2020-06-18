@@ -83,6 +83,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
       // unauthorised
 
       snackMessage = T("AppPleaseRelogin")
+      //@ts-ignore
       ovl.actions.ovl.navigation.NavigateTo("Login")
 
       return
