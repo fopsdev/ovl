@@ -42,6 +42,12 @@ export const setLastScrollPosition = (state: OvlState) => {
 
 export const scrollToLastPosition = (state: OvlState) => {
   let screen = state.ovl.screens.nav.currentScreen
+  if (
+    !state.ovl.screens.screenState ||
+    !state.ovl.screens.screenState[screen]
+  ) {
+    return
+  }
   let lastScrollTop = state.ovl.screens.screenState[screen].lastScrollTop
   // set scroll to remembered pos
   let scrollable
