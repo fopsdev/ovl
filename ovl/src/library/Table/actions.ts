@@ -629,6 +629,7 @@ const TableEditSaveRowHelper = async (
         idValue: key,
         insertMode: def.database.dbInsertMode,
         data: newData,
+        customId: ovl.state.ovl.user.customId,
       })
       if (!res.data) {
         // 449 means offline in our context
@@ -983,6 +984,7 @@ export const TableDeleteRow: OvlAction<{
       idField: def.database.dataIdField,
       idValue: key,
       insertMode: def.database.dbInsertMode,
+      customId: ovl.state.ovl.user.customId,
     })
     if (!res.data) {
       // handleError @@hook
