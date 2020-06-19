@@ -85,7 +85,7 @@ export const NavigateTo: OvlAction<Screen> = async (
 
     if (!state.ovl.screens.nav.currentScreen) {
       //@ts-ignore
-      state.ovl.screens.nav.currentScreen = "Login"
+      state.ovl.screens.nav.currentScreen = OvlConfig.initialScreen
       SetVisibleScreen(state, value)
     } else {
       SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)

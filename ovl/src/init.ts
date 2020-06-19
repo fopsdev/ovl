@@ -1,6 +1,8 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
 
+import { Screen } from "./index"
+
 export type Init = {
   customerTestUrlMatch: string
   customerTestUrl: string
@@ -21,6 +23,7 @@ type OvlConfig = {
     PersistStateId: string
     PersistTimestampId: string
   }
+  initialScreen?: Screen
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
@@ -52,6 +55,8 @@ let OvlConfig: OvlConfig = {
     PersistStateId: "ovlstate" + dataVersion,
     PersistTimestampId: "ovltimestamp" + dataVersion,
   },
+  //@ts-ignore
+  initialScreen: "Login",
   apiUrl: undefined,
   requiredActions: undefined,
   saveStateCallback: undefined,

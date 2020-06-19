@@ -63,10 +63,14 @@ let libState = {
   overlay2,
 }
 
+let app = {
+  offline: false,
+}
+
 let screens = {
   screens: screensState,
   nav,
   screenState: undefined,
 }
 
-export { user, language, uiState, apiUrl, libState, screens, forms }
+export { app, user, language, uiState, apiUrl, libState, screens, forms }

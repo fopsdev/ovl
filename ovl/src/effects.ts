@@ -4,6 +4,7 @@ import { OvlConfig } from "./init"
 import { SnackAdd } from "./library/helpers"
 import { SnackType } from "./library/Snack/Snack"
 import { ovl } from "."
+import { AddSnack } from "./library/Snack/actions"
 
 export let lastOfflineMsg
 
@@ -47,6 +48,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
     let reqOptions = {
       method,
       headers,
+      signal: undefined,
     }
     if (method === "POST") {
       reqOptions["body"] = JSON.stringify(data)
@@ -77,7 +79,18 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
       // encode params as url param
       url = urlWithParams.toString()
     }
+
+    const controller = new AbortController()
+    const { signal } = controller
+
+    let timer = setTimeout(() => {
+      controller.abort()
+    }, 5000)
+
+    reqOptions.signal = signal
     const req = await fetch(url, reqOptions)
+    clearTimeout(timer)
+    ovl.state.ovl.app.offline = false
     // with fetch we will have the repsonse status here on req object
     if (req.status === 401) {
       // unauthorised
@@ -111,7 +124,8 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
         let type = res.type
         if (!type) {
           type = ""
-          snackMessage = req.statusText
+          snackMessageType = "Error"
+          snackMessage = "Server Error: " + res.message
         }
 
         return {
@@ -132,15 +146,16 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
         }
       } else {
         // some case we didn't handle yet.... just also go to offline mode
-        let dt: number = Date.now()
-        if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
-          lastOfflineMsg = dt
-          if (OvlConfig._system.OfflineMode) {
-            snackMessage = "Offline Mode"
-          } else {
-            snackMessage = "Server Error. Server offline?"
-          }
-        }
+        ovl.state.ovl.app.offline = true
+        // let dt: number = Date.now()
+        // if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
+        //   lastOfflineMsg = dt
+        //   if (OvlConfig._system.OfflineMode) {
+        //     snackMessage = "Offline Mode"
+        //   } else {
+        //     snackMessage = "Server Error. Server offline?"
+        //   }
+        // }
         return {
           headers: req.headers,
           data: undefined,
@@ -154,14 +169,16 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
     // generic error
     // go to offline mode
     let dt: number = Date.now()
-    if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
-      lastOfflineMsg = dt
-      if (OvlConfig._system.OfflineMode) {
-        snackMessage = "Offline Mode"
-      } else {
-        snackMessage = "Server Error. Server offline?"
-      }
-    }
+    ovl.state.ovl.app.offline = true
+
+    // if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
+    //   lastOfflineMsg = dt
+    //   if (OvlConfig._system.OfflineMode) {
+    //     snackMessage = "Offline Mode"
+    //   } else {
+    //     snackMessage = "Server Error. Server offline?"
+    //   }
+    // }
     return {
       headers: undefined,
       data: undefined,
