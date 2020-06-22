@@ -90,6 +90,10 @@
   white-space: normal !important;
 }
 
+.fd-dialog {
+  z-index: 2;
+}
+
 /* custom styles 
 #############################################################
 */

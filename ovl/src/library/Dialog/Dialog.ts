@@ -114,10 +114,11 @@ export class OvlDialog extends OvlBaseElement {
       let okButton = null
       let cancelButton = null
       if (this.state.ovl.libState.dialog.okText) {
-        okButton = html`
+        okButton = html`<div class="fd-bar__element">
           <button
             @click=${this.handleOkClick}
-            class="fd-button ${this.state.ovl.libState.dialog.okText == ""
+            class="fd-dialog__decisive-button fd-button ${this.state.ovl
+              .libState.dialog.okText == ""
               ? " hide"
               : ""}"
             aria-selected="${this.state.ovl.libState.dialog.default == 1}"
@@ -125,21 +126,24 @@ export class OvlDialog extends OvlBaseElement {
           >
             ${T("AppOk")}
           </button>
-        `
+        </div> `
       }
 
       if (this.state.ovl.libState.dialog.cancelText) {
         cancelButton = html`
-          <button
-            @click=${this.handleCancelClick}
-            class="fd-button ${this.state.ovl.libState.dialog.cancelText == ""
-              ? " hide"
-              : ""}"
-            aria-selected="${this.state.ovl.libState.dialog.default == 2}"
-            id="ovldialogcancel"
-          >
-            ${T("AppCancel")}
-          </button>
+          <div class="fd-bar__element">
+            <button
+              @click=${this.handleCancelClick}
+              class="fd-dialog__decisive-button fd-button ${this.state.ovl
+                .libState.dialog.cancelText == ""
+                ? " hide"
+                : ""}"
+              aria-selected="${this.state.ovl.libState.dialog.default == 2}"
+              id="ovldialogcancel"
+            >
+              ${T("AppCancel")}
+            </button>
+          </div>
         `
       }
       let lines: string[] = this.state.ovl.libState.dialog.text.split(/\r?\n/)
@@ -151,26 +155,32 @@ export class OvlDialog extends OvlBaseElement {
 
       return html`
         <div
-          style="z-index:1007;"
-          class="fd-shell__overlay fd-overlay fd-overlay--modal ${animation}"
-          aria-hidden="false"
+          style="z-index:10;"
+          class="fd-dialog fd-dialog fd-dialog--active ${animation}"
         >
-          <div class="fd-panel" tabindex="0" @keydown=${this.keyHandler}>
-            <div class="fd-modal__content" role="document">
-              <div class="fd-modal__header ">
-                <h3 class="fd-modal__title" style="text-align: center;">
-                  ${T("AppTitle")}
-                </h3>
-              </div>
-              <div class="fd-modal__body ">
-                ${lines.map((e) => html` ${e}<br /> `)}
-              </div>
-              <footer class="fd-modal__footer ">
-                <div class="fd-modal__actions">
-                  ${okButton} ${cancelButton}
+          <div
+            class="fd-dialog__content fd-dialog__content--s"
+            role="dialog"
+            aria-modal="true"
+            @keydown=${this.keyHandler}
+          >
+            <header class="fd-dialog__header fd-bar">
+              <div class="fd-bar__left">
+                <div class="fd-bar__element">
+                  <h3 class="fd-dialog__title">
+                    ${T("AppTitle")}
+                  </h3>
                 </div>
-              </footer>
+              </div>
+            </header>
+            <div class="fd-dialog__body ">
+              ${lines.map((e) => html` ${e}<br /> `)}
             </div>
+            <footer class="fd-dialog__footer fd-bar fd-bar--footer ">
+              <div class="fd-bar__right">
+                ${okButton} ${cancelButton}
+              </div>
+            </footer>
           </div>
         </div>
       `

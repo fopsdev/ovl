@@ -1,8 +1,12 @@
-import { CustomFormType, TableDefIds, Language } from "../../test/src/index"
-import { screens } from "../../test/src/stateScreens"
-import * as portalState from "../../test/src/state"
-import * as portalActions from "../../test/src/actions"
-import * as customActions from "../../test/src/customActions"
+import {
+  CustomFormType,
+  TableDefIds,
+  Language,
+} from "../../../kaltag/src/index"
+import { screens } from "../../../kaltag/src/stateScreens"
+import * as timePortalState from "../../../kaltag/src/state"
+import * as timePortalActions from "../../../kaltag/src/actions"
+import * as customActions from "../../../kaltag/src/customActions"
 
 import { createDeepProxy } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
@@ -24,14 +28,14 @@ export type OvlAction<T = {}, R = void> = (
 
 let _state = {
   ovl: ovlState,
-  portal: portalState,
+  timeportal: timePortalState,
 }
 
 let state: OvlState = createDeepProxy(_state)
 
 let actions = {
   ovl: ovlActions,
-  portal: portalActions,
+  timeportal: timePortalActions,
   custom: customActions,
 }
 
@@ -87,7 +91,16 @@ const getMethods = (obj) =>
 getMethods(actions)
 
 export const logState = () => {
+  console.log("ovl state:")
   console.log(ovl.state)
+}
+export const logActions = () => {
+  console.log("ovl actions:")
+  console.log(ovl.actions)
+}
+export const logEffects = () => {
+  console.log("ovl effects:")
+  console.log(ovl.effects)
 }
 
 export type OvlState = typeof _state

@@ -32,8 +32,10 @@ export const disposeTrack = (cb: OvlBaseElement) => {
 }
 
 export const logTrackingList = () => {
-  console.log("tracking list")
+  console.log("tracking information")
+  console.log("components:")
   console.log(callbacks)
+  console.log("paths:")
   console.log(paths)
 }
 
