@@ -97,7 +97,10 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
 
       snackMessage = T("AppPleaseRelogin")
       //@ts-ignore
-      ovl.actions.ovl.navigation.NavigateTo("Login")
+      ovl.actions.ovl.dialog.DialogOpen({
+        dialogType: "Login",
+        elementIdToFocusAfterClose: "loginformuser",
+      })
 
       return
     } else if (req.status === 404) {

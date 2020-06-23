@@ -142,6 +142,18 @@ export class OvlBaseDialog extends OvlBaseElement {
     }
     this.state.ovl.dialogs[this.dialogType].visible = false
     this.state.ovl.dialogs[this.dialogType].isClosing = false
+
+    // also reset form if necessary
+    if (this.state.ovl.screens.nav.formTypeToReset) {
+      let formTypeToReset = this.state.ovl.screens.nav.formTypeToReset
+      let formIdToReset = this.state.ovl.screens.nav.formIdToReset
+      setTimeout(() => {
+        this.actions.ovl.form.ResetForm(
+          this.state.ovl.forms[formTypeToReset][formIdToReset]
+        )
+      }, 10)
+      this.state.ovl.screens.nav.formTypeToReset = undefined
+    }
   }
   checkDialog = (): TemplateResult | null => {
     if (!this.state.ovl.dialogs[this.dialogType]) {

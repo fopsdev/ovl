@@ -200,5 +200,8 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
     initialFocusElementId: "user",
   }
   actions.ovl.form.InitForm(loginForm)
-  actions.ovl.navigation.NavigateTo("Login")
+  actions.ovl.dialog.DialogOpen({
+    dialogType: "Login",
+    elementIdToFocusAfterOpen: "loginformuser",
+  })
 }

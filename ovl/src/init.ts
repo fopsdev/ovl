@@ -56,7 +56,7 @@ let OvlConfig: OvlConfig = {
     PersistTimestampId: "ovltimestamp" + dataVersion,
   },
   //@ts-ignore
-  initialScreen: "Login",
+  initialScreen: "",
   apiUrl: undefined,
   requiredActions: undefined,
   saveStateCallback: undefined,

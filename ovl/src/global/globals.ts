@@ -180,28 +180,27 @@ export const saveState = async (force: boolean, reason: string) => {
   if (OvlConfig._system.OfflineMode && !logoutAndClearFlag) {
     saveReason = reason
     //@ts-ignore
-    if (ovl.state.ovl.screens.nav.currentScreen !== "Login") {
-      let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
-      let ts
-      if (td !== undefined) {
-        ts = td.getTime()
-      }
-      let dt = Date.now()
-      if (force || ts === undefined || dt - ts > 5000) {
-        await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
-        OvlTimestamp = dt
-        // let refstate = ovl.state
-        let newObj = {}
-        // let dtStart = Date.now()
-        stateCleaner(ovl.state, newObj, "state")
-        // let dtEnd = Date.now()
-        // console.log("stateCleaner " + ((dtEnd - dtStart) / 1000).toString())
-        // dtStart = Date.now()
-        // let t = JSON.stringify(refstate)
-        // dtEnd = Date.now()
-        // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
-        stateStore.set(OvlConfig._system.PersistStateId, newObj)
-      }
+
+    let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
+    let ts
+    if (td !== undefined) {
+      ts = td.getTime()
+    }
+    let dt = Date.now()
+    if (force || ts === undefined || dt - ts > 5000) {
+      await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
+      OvlTimestamp = dt
+      // let refstate = ovl.state
+      let newObj = {}
+      // let dtStart = Date.now()
+      stateCleaner(ovl.state, newObj, "state")
+      // let dtEnd = Date.now()
+      // console.log("stateCleaner " + ((dtEnd - dtStart) / 1000).toString())
+      // dtStart = Date.now()
+      // let t = JSON.stringify(refstate)
+      // dtEnd = Date.now()
+      // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
+      stateStore.set(OvlConfig._system.PersistStateId, newObj)
     }
   }
 }
