@@ -1,12 +1,14 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { TemplateResult, html } from "lit-html"
-import { DialogType } from "../.."
+import { DialogType, FormType } from "../.."
 
 export type DialogsState = {
   elementIdToFocusAfterOpen?: string
   elementIdToFocusAfterClose?: string
   visible: boolean
   isClosing: boolean
+  formType?: FormType
+  formId?: string
 }
 
 export type DialogParts = {
@@ -33,7 +35,6 @@ export class OvlBaseDialog extends OvlBaseElement {
   getDialogTemplate = (dialogParts: DialogParts): TemplateResult => {
     if (!this.opened) {
       let dialogState = this.state.ovl.dialogs[this.dialogType]
-
       if (!dialogState.elementIdToFocusAfterClose) {
         this.elementToFocusAfterClose = document.activeElement
       } else {
@@ -74,7 +75,6 @@ export class OvlBaseDialog extends OvlBaseElement {
           </div>
         `
       }
-
       fullheader = html`
         <header class="fd-dialog__header fd-bar">
           <div class="fd-bar__left">

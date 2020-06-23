@@ -1,10 +1,13 @@
 import { OpenModalDialogState, ResultType } from "./Dialog"
-import { OvlAction, DialogType } from "../../index"
+import { OvlAction, DialogType, FormType } from "../../index"
+import { FormValidate_Type } from "../../global/hooks"
 
 export type OpenDialogOptions = {
   dialogType: DialogType
   elementIdToFocusAfterOpen?: string
   elementIdToFocusAfterClose?: string
+  formType?: FormType
+  formId?: string
 }
 
 export const DialogOpen: OvlAction<OpenDialogOptions> = async (
@@ -20,7 +23,13 @@ export const DialogOpen: OvlAction<OpenDialogOptions> = async (
     wait = 400
   }
   setTimeout(() => {
-    dlgState.elementIdToFocusAfterOpen = value.elementIdToFocusAfterOpen
+    let elFocusId = value.elementIdToFocusAfterOpen
+    if (!elFocusId && value.formType) {
+      elFocusId =
+        value.formId +
+        state.ovl.forms[value.formType][value.formId].lastTouchedField
+    }
+    dlgState.elementIdToFocusAfterOpen = elFocusId
     dlgState.elementIdToFocusAfterClose = value.elementIdToFocusAfterClose
     dlgState.visible = true
     dlgState.isClosing = false
