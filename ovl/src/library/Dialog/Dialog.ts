@@ -149,7 +149,7 @@ export class OvlDialog extends OvlBaseDialog {
         body,
         footer,
         keyHandlerFn: this.keyHandler,
-        title: T("AppDialogCaption"),
+        title: T("AppShortTitle"),
       })
     })
   }
