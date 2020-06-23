@@ -148,7 +148,8 @@ export class OvlDialog extends OvlBaseDialog {
       return this.getDialogTemplate({
         body,
         footer,
-        title: T("AppDialogTitle"),
+        keyHandlerFn: this.keyHandler,
+        title: T("AppDialogCaption"),
       })
     })
   }

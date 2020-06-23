@@ -32,7 +32,7 @@ export class OvlBaseDialog extends OvlBaseElement {
 
   getDialogTemplate = (dialogParts: DialogParts): TemplateResult => {
     if (!this.opened) {
-      let dialogState = this.state.ovl.dialogs.Modal
+      let dialogState = this.state.ovl.dialogs[this.dialogType]
 
       if (!dialogState.elementIdToFocusAfterClose) {
         this.elementToFocusAfterClose = document.activeElement
@@ -122,36 +122,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       el.classList.remove("fadeIn")
       el.classList.add("fadeOut")
     }
-    //this.animation = "animated fadeOut faster"
   }
-  // openDialog = (openDialogOptions?: OpenDialogOptions) => {
-  //   if (!this.opened) {
-  //     let zindex = 2
-  //     this.elementIdToFocusAfterClose = undefined
-  //     this.elementToFocusAfterClose = undefined
-
-  //     if (openDialogOptions) {
-  //       if (!openDialogOptions.elementIdToFocusAfterClose) {
-  //         this.elementToFocusAfterClose = document.activeElement
-  //       } else {
-  //         this.elementIdToFocusAfterClose =
-  //           openDialogOptions.elementIdToFocusAfterClose
-  //       }
-  //       if (openDialogOptions.zIndex) {
-  //         zindex = 2
-  //       }
-  //     }
-  //     this.style.zIndex = zindex.toString()
-  //     if (openDialogOptions && openDialogOptions.elementIdToFocusAfterOpen) {
-  //       setTimeout(() => {
-  //         document
-  //           .getElementById(openDialogOptions.elementIdToFocusAfterOpen)
-  //           .focus()
-  //       }, 200)
-  //     }
-  //   }
-  //   this.opened = true
-  // }
 
   handleAnimationEnd = (e) => {
     if (e.animationName === "fadeOut") {

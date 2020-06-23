@@ -13,16 +13,16 @@ export class OvlTextArea extends OvlBaseElement {
   formState: FormState
 
   handleKeyDown(e: KeyboardEvent) {
-    if (e.key === "Enter") {
-      let event = new CustomEvent("ovlchange", {
-        bubbles: true,
-        detail: {
-          val: this.inputElement.value,
-          id: this.field.field.id,
-        },
-      })
-      this.inputElement.dispatchEvent(event)
-    }
+    //if (e.key === "Enter") {
+    let event = new CustomEvent("ovlchange", {
+      bubbles: true,
+      detail: {
+        val: this.inputElement.value,
+        id: this.field.field.id,
+      },
+    })
+    this.inputElement.dispatchEvent(event)
+    //}
   }
 
   handleFocusOut(e: Event) {

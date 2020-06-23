@@ -32,17 +32,17 @@ export class OvlTextbox extends OvlBaseElement {
     this.inputElement.dispatchEvent(event)
   }
 
-  handleKeyDown(e: KeyboardEvent) {
-    if (e.key === "Enter") {
-      let event = new CustomEvent("ovlchange", {
-        bubbles: true,
-        detail: {
-          val: this.inputElement.value,
-          id: this.field.field.id,
-        },
-      })
-      this.inputElement.dispatchEvent(event)
-    }
+  handleKeyUp(e: KeyboardEvent) {
+    //if (e.key === "Enter") {
+    let event = new CustomEvent("ovlchange", {
+      bubbles: true,
+      detail: {
+        val: this.inputElement.value,
+        id: this.field.field.id,
+      },
+    })
+    this.inputElement.dispatchEvent(event)
+    //}
   }
 
   async getUI() {
@@ -99,7 +99,7 @@ export class OvlTextbox extends OvlBaseElement {
             )}"
             @change=${(e) => this.handleChange(e)}
             @focusout=${(e) => this.handleFocusOut(e)}
-            @keydown=${(e) => this.handleKeyDown(e)}
+            @keyup=${(e) => this.handleKeyUp(e)}
             style="${style} ${align}"
             autocomplete="off"
             inputmode="${inputMode}"

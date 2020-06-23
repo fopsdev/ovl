@@ -51,9 +51,11 @@ import {
   ModalDialogOpen,
   OkDialog,
   OkCancelDialog,
+  DialogOpen,
 } from "./library/Dialog/actions"
 let dialog = {
-  DialogOpen: ModalDialogOpen,
+  DialogOpen,
+  ModalDialogOpen,
   OkDialog,
   OkCancelDialog,
 }
