@@ -1,10 +1,11 @@
 import { FormsState } from "./library/forms/actions"
-import { DialogState } from "./library/Dialog/Dialog"
+import { ModalDialogState } from "./library/Dialog/Dialog"
 import { Translation } from "./global/globals"
 import { ScreensState } from "./library/OvlBaseElement"
 import { OverlayState } from "./library/Overlay/Overlay"
 import { SnackState } from "./library/Snack/Snack"
-import { screens as screensState } from "./index"
+import { screens as screensState, DialogType } from "./index"
+import { DialogsState } from "./library/Dialog/OvlDialogBase"
 
 let forms: FormsState = undefined
 
@@ -15,7 +16,7 @@ let indicator = {
 
 let snacks: { [key: string]: SnackState } = {}
 
-let dialog: DialogState = undefined
+let dialog: ModalDialogState = undefined
 
 let translations: Translation = {}
 let apiUrl = ""
@@ -35,9 +36,10 @@ type User = {
   token: string
   role: string
   customId: string
+  loginCounter: number
 }
 
-let user: User = { token: "", customId: "", role: "" }
+let user: User = { token: "", customId: "", role: "", loginCounter: 0 }
 
 let language = {
   language: "",
@@ -73,5 +75,18 @@ let screens = {
   nav,
   screenState: undefined,
 }
+let dialogs: { [key in DialogType]?: DialogsState } = {
+  Modal: { isClosing: false, visible: false },
+}
 
-export { app, user, language, uiState, apiUrl, libState, screens, forms }
+export {
+  app,
+  user,
+  language,
+  uiState,
+  apiUrl,
+  libState,
+  screens,
+  forms,
+  dialogs,
+}

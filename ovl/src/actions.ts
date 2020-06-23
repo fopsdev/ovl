@@ -47,9 +47,13 @@ import {
   ClearSnack,
 } from "./library/Snack/actions"
 
-import { DialogOpen, OkDialog, OkCancelDialog } from "./library/Dialog/actions"
+import {
+  ModalDialogOpen,
+  OkDialog,
+  OkCancelDialog,
+} from "./library/Dialog/actions"
 let dialog = {
-  DialogOpen,
+  DialogOpen: ModalDialogOpen,
   OkDialog,
   OkCancelDialog,
 }
@@ -63,7 +67,7 @@ let form = {
 
 import {
   DialogChanged,
-  DialogClosed,
+  //DialogClosed,
   DialogDefaultChanged,
   SetIndicatorClose,
   SetIndicatorOpen,
@@ -139,7 +143,7 @@ let internal = {
   AddSnack,
   RemoveSnack,
   DialogChanged,
-  DialogClosed,
+  //DialogClosed,
   DialogDefaultChanged,
   TableSelectHeader,
   TableFilterSelected,

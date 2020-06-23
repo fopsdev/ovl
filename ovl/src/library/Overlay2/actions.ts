@@ -1,6 +1,6 @@
 import { overlay2ToRender, OvlOverlay2 } from "../Overlay2/Overlay2"
 import { TemplateResult } from "lit-html"
-import { dialogAfterClose } from "../Dialog/actions"
+//import { dialogAfterClose } from "../Dialog/actions"
 import { OvlAction } from "../.."
 
 export const OpenOverlay2: OvlAction<{
@@ -49,13 +49,12 @@ export const CloseOverlay2: OvlAction = async (_, { state }) => {
   if (overlay2ToRender.elementToFocusAfterClose) {
     // we need to check if there is a dialog opened whilst closing the overlay
     // because dialogs have their own "focusAfterClose"
-
-    if (state.ovl.libState.dialog && state.ovl.libState.dialog.visible) {
-      dialogAfterClose.elementToFocus =
-        overlay2ToRender.elementToFocusAfterClose
-    } else {
-      //@ts-ignore
-      overlay2ToRender.elementToFocusAfterClose.focus()
-    }
+    // if (state.ovl.libState.dialog && state.ovl.libState.dialog.visible) {
+    //   dialogAfterClose.elementToFocus =
+    //     overlay2ToRender.elementToFocusAfterClose
+    // } else {
+    //   //@ts-ignore
+    //   overlay2ToRender.elementToFocusAfterClose.focus()
+    // }
   }
 }

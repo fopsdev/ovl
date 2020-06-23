@@ -1,6 +1,6 @@
 import { overlayToRender, OvlOverlay } from "../../library/Overlay/Overlay"
 import { TemplateResult } from "lit-html"
-import { dialogAfterClose } from "../Dialog/actions"
+//import { dialogAfterClose } from "../Dialog/actions"
 import { OvlAction } from "../.."
 
 export const OpenOverlay: OvlAction<{
@@ -47,11 +47,11 @@ export const CloseOverlay: OvlAction = async (_, { state }) => {
     overlayToRender.overlayClosedCallback()
   }
   if (overlayToRender.elementToFocusAfterClose) {
-    if (state.ovl.libState.dialog && state.ovl.libState.dialog.visible) {
-      dialogAfterClose.elementToFocus = overlayToRender.elementToFocusAfterClose
-    } else {
-      //@ts-ignore
-      overlayToRender.elementToFocusAfterClose.focus()
-    }
+    // if (state.ovl.libState.dialog && state.ovl.libState.dialog.visible) {
+    //   //dialogAfterClose.elementToFocus = overlayToRender.elementToFocusAfterClose
+    // } else {
+    //   //@ts-ignore
+    //   overlayToRender.elementToFocusAfterClose.focus()
+    // }
   }
 }

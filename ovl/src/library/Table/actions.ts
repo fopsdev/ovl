@@ -112,17 +112,7 @@ export const TableSelectHeader: OvlAction<HeaderClick> = (
   def,
   { actions, state }
 ) => {
-  if (!state.ovl.libState.overlay.closing) {
-    if (def.key !== "") {
-      actions.ovl.overlay.OpenOverlay({
-        templateResult: null,
-        elementToFocusAfterClose: document.activeElement,
-      })
-    } else {
-      actions.ovl.overlay.CloseOverlay()
-    }
-    def.def.uiState.headerSelected = def.key
-  }
+  def.def.uiState.headerSelected = def.key
 }
 
 export const TableSort: OvlAction<SortClick> = (value, { actions }) => {

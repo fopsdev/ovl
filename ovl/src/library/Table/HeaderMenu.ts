@@ -2,17 +2,18 @@ import { html, TemplateResult } from "lit-html"
 import { ovl } from "../.."
 import { resolvePath, T } from "../../global/globals"
 import { FormCustomColumnFn, FormCustomColumnFn_Type } from "../../global/hooks"
-import { overlayToRender } from "../../library/Overlay/Overlay"
-import { OvlBaseElement } from "../OvlBaseElement"
+//import { overlayToRender } from "../../library/Overlay/Overlay"
+//import { OvlBaseElement } from "../OvlBaseElement"
 import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
 import { ColumnFilter, ColumnFilterTypes, TableDataAndDef } from "./Table"
+import { OvlBaseDialog, OpenDialogOptions } from "../Dialog/OvlDialogBase"
 
 export type HeaderMenuDef = {
   def: TableDataAndDef
 }
 
-export class TableHeaderMenu extends OvlBaseElement {
+export class TableHeaderMenu extends OvlBaseDialog {
   props: any
   headerMenu: HeaderMenuDef
   lastTemplateResult: TemplateResult
@@ -92,9 +93,9 @@ export class TableHeaderMenu extends OvlBaseElement {
       data: this.headerMenu.def.data,
       key: "",
     })
-    overlayToRender.overlayClosedCallback = () => {
-      this.actions.ovl.table.TableAddRow(this.headerMenu.def)
-    }
+    //    overlayToRender.overlayClosedCallback = () => {
+    this.actions.ovl.table.TableAddRow(this.headerMenu.def)
+    //    }
   }
 
   handleSelectAllClick = (e: Event, select: boolean) => {
@@ -109,7 +110,6 @@ export class TableHeaderMenu extends OvlBaseElement {
       this.actions.ovl.internal.TableSelectHeader({
         def: this.headerMenu.def.def,
         data: this.headerMenu.def.data,
-
         key: "",
       })
     }
@@ -268,14 +268,14 @@ export class TableHeaderMenu extends OvlBaseElement {
   init() {
     this.headerMenu = this.props()
     this.filterDropDownHidden = true
-    this.focusSet = false
-    overlayToRender.overlayDismissedCallback = () => {
-      this.actions.ovl.internal.TableSelectHeader({
-        def: this.headerMenu.def.def,
-        data: this.headerMenu.def.data,
-        key: "",
-      })
-    }
+    //    this.focusSet = false
+    //    overlayToRender.overlayDismissedCallback = () => {
+    //   this.actions.ovl.internal.TableSelectHeader({
+    //     def: this.headerMenu.def.def,
+    //     data: this.headerMenu.def.data,
+    //     key: "",
+    //   })
+    // }
   }
   async getUI() {
     const handleMainMouseDown = (e: Event) => {
@@ -286,7 +286,13 @@ export class TableHeaderMenu extends OvlBaseElement {
       let def = this.headerMenu.def.def
       if (!def.uiState.headerSelected) {
         // whilst fade out leave the ui as it is
+        this.closeDialog()
         return this.lastTemplateResult
+      } else {
+        let dialogOptions: OpenDialogOptions = {
+          zIndex: 2,
+        }
+        this.openDialog(dialogOptions)
       }
       let columns = def.columns
       let selectedColumn = def.uiState.headerSelected
@@ -953,30 +959,38 @@ export class TableHeaderMenu extends OvlBaseElement {
       }
 
       this.lastTemplateResult = html`
-        <div>
+        <div class="fd-dialog fd-dialog fd-dialog--active">
           <div
-            tabindex="0"
-            id="ovl_headerMenu"
-            style="${headerMenuwidth}"
-            class="fd-panel"
-            @mousedown=${handleMainMouseDown}
-            @click="${(e) => this.handleCloseHeaderMenu(e)}"
-            aria-hidden="false"
+            class="fd-dialog__content fd-dialog__content--s"
+            role="dialog"
+            aria-modal="true"
           >
-            <nav class="fd-menu" id="ovl_headerMenuScroll">
-              ${columnFunctions} ${customSort} ${customFilter}
-              ${selectedFunctions} ${tableFunctions}
-            </nav>
+            <div class="fd-dialog__body ">
+              <div
+                tabindex="0"
+                id="ovl_headerMenu"
+                style="${headerMenuwidth}"
+                class="fd-panel"
+                @mousedown=${handleMainMouseDown}
+                @click="${(e) => this.handleCloseHeaderMenu(e)}"
+                aria-hidden="false"
+              >
+                <nav class="fd-menu" id="ovl_headerMenuScroll">
+                  ${columnFunctions} ${customSort} ${customFilter}
+                  ${selectedFunctions} ${tableFunctions}
+                </nav>
 
-            <div class="fd-panel__footer" style="margin:2px; padding:2px;">
-              <div style="margin-left: -20px;">
-                ${navcontrol}
+                <div class="fd-panel__footer" style="margin:2px; padding:2px;">
+                  <div style="margin-left: -20px;">
+                    ${navcontrol}
+                  </div>
+                  <div style="margin-left:12px;"></div>
+                  <button
+                    title="Abbrechen"
+                    class="fd-button--negative sap-icon--decline"
+                  ></button>
+                </div>
               </div>
-              <div style="margin-left:12px;"></div>
-              <button
-                title="Abbrechen"
-                class="fd-button--negative sap-icon--decline"
-              ></button>
             </div>
           </div>
         </div>
@@ -984,27 +998,27 @@ export class TableHeaderMenu extends OvlBaseElement {
       return this.lastTemplateResult
     })
   }
-  updated() {
-    //only set scrollable if bigger than windowheight
-    let target = document.getElementById("ovl_headerMenu")
-    if (target && !this.focusSet) {
-      target.focus()
-      this.focusSet = true
-    }
-    target = document.getElementById("ovl_headerMenuScroll")
-    var rect = target.getBoundingClientRect()
-    if (rect.height > window.innerHeight) {
-      target.classList.add("scrollableOverlay")
-    }
+  // updated() {
+  //only set scrollable if bigger than windowheight
+  //   let target = document.getElementById("ovl_headerMenu")
+  //   if (target && !this.focusSet) {
+  //     target.focus()
+  //     this.focusSet = true
+  //   }
+  //   target = document.getElementById("ovl_headerMenuScroll")
+  //   var rect = target.getBoundingClientRect()
+  //   if (rect.height > window.innerHeight) {
+  //     target.classList.add("scrollableOverlay")
+  //   }
 
-    let popover = document.getElementById("ovlh0C6A325")
-    if (popover) {
-      let popoverRect = popover.getBoundingClientRect()
-      if (popoverRect.top + popoverRect.height > rect.top + rect.height) {
-        popover.style.height =
-          rect.height - popoverRect.top + rect.top - 32 + "px"
-      }
-    }
-    super.updated()
-  }
+  //   let popover = document.getElementById("ovlh0C6A325")
+  //   if (popover) {
+  //     let popoverRect = popover.getBoundingClientRect()
+  //     if (popoverRect.top + popoverRect.height > rect.top + rect.height) {
+  //       popover.style.height =
+  //         rect.height - popoverRect.top + rect.top - 32 + "px"
+  //     }
+  //   }
+  //   super.updated()
+  // }
 }

@@ -1,9 +1,9 @@
-import { OvlBaseElement } from "../OvlBaseElement"
 import { T } from "../../global/globals"
-import { html, nothing } from "lit-html"
+import { html } from "lit-html"
+import { OvlBaseDialog } from "./OvlDialogBase"
 
 export type DialogChangedParam = {
-  dialogState: DialogState
+  dialogState: ModalDialogState
   result: ResultType
 }
 type OkType = "AppOk" | "AppYes" | "NoButton"
@@ -11,40 +11,30 @@ type CancelType = "AppCancel" | "AppNo" | "NoButton"
 
 export type ResultType = undefined | 1 | 2
 
-export type OpenDialogState = {
+export type OpenModalDialogState = {
   text: string
   ok: OkType
   cancel: CancelType
   default: ResultType
 }
 
-export type DialogState = {
+export type ModalDialogState = {
   text: string
   okText: string
   cancelText: string
-  visible: boolean
-  closing: boolean
   result: ResultType
   default: ResultType
 }
 
-export class OvlDialog extends OvlBaseElement {
+export class OvlDialog extends OvlBaseDialog {
   props: any
-
-  focusSet: boolean
-
-  handleAnimationEnd = (e) => {
-    if (e.animationName === "fadeOut") {
-      this.focusSet = false
-      this.actions.ovl.internal.DialogClosed()
-    }
-  }
 
   handleResult(result: ResultType) {
     this.actions.ovl.internal.DialogChanged({
       dialogState: this.state.ovl.libState.dialog,
       result: result,
     })
+    this.closeDialog()
   }
 
   handleOkClick = () => {
@@ -52,6 +42,7 @@ export class OvlDialog extends OvlBaseElement {
       dialogState: this.state.ovl.libState.dialog,
       result: 1,
     })
+    this.closeDialog()
   }
 
   handleCancelClick = () => {
@@ -59,6 +50,7 @@ export class OvlDialog extends OvlBaseElement {
       dialogState: this.state.ovl.libState.dialog,
       result: 2,
     })
+    this.closeDialog()
   }
 
   handleDefault(def: ResultType) {
@@ -69,10 +61,6 @@ export class OvlDialog extends OvlBaseElement {
       return
     }
     this.actions.ovl.internal.DialogDefaultChanged({ default: def })
-  }
-
-  init() {
-    this.focusSet = false
   }
 
   keyHandler = (e: KeyboardEvent) => {
@@ -101,16 +89,16 @@ export class OvlDialog extends OvlBaseElement {
       }
     }
   }
-
+  init() {
+    this.dialogType = "Modal"
+    this.zIndex = 10
+  }
   async getUI() {
     return this.track(() => {
-      if (
-        !this.state.ovl.libState.dialog ||
-        !this.state.ovl.libState.dialog.visible
-      ) {
-        return null
+      let chk = this.checkDialog()
+      if (chk !== undefined) {
+        return chk
       }
-
       let okButton = null
       let cancelButton = null
       if (this.state.ovl.libState.dialog.okText) {
@@ -148,66 +136,28 @@ export class OvlDialog extends OvlBaseElement {
       }
       let lines: string[] = this.state.ovl.libState.dialog.text.split(/\r?\n/)
 
-      let animation = "animated fadeIn faster"
-      if (this.state.ovl.libState.dialog.closing) {
-        animation = "animated fadeOut faster nopointerevents"
-      }
+      // let animation = "animated fadeIn faster"
+      // if (this.state.ovl.libState.dialog.closing) {
+      //   animation = "animated fadeOut faster nopointerevents"
+      // }
 
-      return html`
-        <div
-          style="z-index:10;"
-          class="fd-dialog fd-dialog fd-dialog--active ${animation}"
-        >
-          <div
-            class="fd-dialog__content fd-dialog__content--s"
-            role="dialog"
-            aria-modal="true"
-            @keydown=${this.keyHandler}
-          >
-            <header class="fd-dialog__header fd-bar">
-              <div class="fd-bar__left">
-                <div class="fd-bar__element">
-                  <h3 class="fd-dialog__title">
-                    ${T("AppTitle")}
-                  </h3>
-                </div>
-              </div>
-            </header>
-            <div class="fd-dialog__body ">
-              ${lines.map((e) => html` ${e}<br /> `)}
-            </div>
-            <footer class="fd-dialog__footer fd-bar fd-bar--footer ">
-              <div class="fd-bar__right">
-                ${okButton} ${cancelButton}
-              </div>
-            </footer>
-          </div>
-        </div>
-      `
+      let body = lines.map((e) => html` ${e}<br /> `)
+
+      let footer = html`${okButton} ${cancelButton}`
+
+      return this.getDialogTemplate({
+        body,
+        footer,
+        title: T("AppDialogTitle"),
+      })
     })
   }
-  updated() {
-    // set focus to default element
-    // workaround because autofocus attribute only works 1st time
-    if (
-      this.state.ovl.libState.dialog &&
-      this.state.ovl.libState.dialog.visible &&
-      !this.focusSet
-    ) {
-      let id = "ovldialogcancel"
-      if (this.state.ovl.libState.dialog.default == 1) {
-        id = "ovldialogok"
-      }
-      document.getElementById(id).focus()
-    }
-    super.updated()
-  }
-  connectedCallback() {
-    this.addEventListener("animationend", this.handleAnimationEnd)
-    super.connectedCallback()
-  }
-  disconnectedCallback() {
-    this.removeEventListener("animationend", this.handleAnimationEnd)
-    super.disconnectedCallback()
-  }
+  // connectedCallback() {
+  //   this.addEventListener("animationend", this.handleAnimationEnd)
+  //   super.connectedCallback()
+  // }
+  // disconnectedCallback() {
+  //   this.removeEventListener("animationend", this.handleAnimationEnd)
+  //   super.disconnectedCallback()
+  // }
 }

@@ -778,17 +778,15 @@ export class TableHeader extends OvlBaseElement {
 
       // put the tablemenu to the ovberlay
 
-      if (overlayToRender.resolve && def.uiState.headerSelected !== "") {
-        overlayToRender.resolve(html`
-          <ovl-tableheadermenu
-            .props=${() => {
-              return <HeaderMenuDef>{
-                def: this.tabledata,
-              }
-            }}
-          ></ovl-tableheadermenu>
-        `)
-      }
+      let tableHeaderMenu = html`
+        <ovl-tableheadermenu
+          .props=${() => {
+            return <HeaderMenuDef>{
+              def: this.tabledata,
+            }
+          }}
+        ></ovl-tableheadermenu>
+      `
 
       // if (def.options.addedRowsPosition === "bottom") {
       //   // add only if on last page
@@ -958,6 +956,7 @@ export class TableHeader extends OvlBaseElement {
             ${rowNavBottom}
           </td>
         </tr>
+        ${tableHeaderMenu}
       `)
     })
   }

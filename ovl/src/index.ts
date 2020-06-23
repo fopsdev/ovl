@@ -1,5 +1,6 @@
 import {
   CustomFormType,
+  CustomDialogType,
   TableDefIds,
   Language,
 } from "../../../kaltag/src/index"
@@ -107,6 +108,7 @@ export type OvlState = typeof _state
 export type OvlActions = typeof actions
 export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
+export type DialogType = CustomDialogType | "Modal"
 export { screens, TableDefIds, Language }
 export type Screen = keyof typeof screens
 import { defineElements } from "./registerComponents"

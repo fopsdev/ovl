@@ -1,13 +1,13 @@
-import { OpenDialogState, ResultType } from "./Dialog"
+import { OpenModalDialogState, ResultType } from "./Dialog"
 import { Screen, OvlAction, OvlActions } from "../../index"
 
 let currentScreen: Screen = undefined
-export let dialogAfterClose = {
-  elementToFocus: undefined,
-  currentScreen,
-}
+// export let dialogAfterClose = {
+//   elementToFocus: undefined,
+//   currentScreen,
+// }
 
-export const DialogOpen: OvlAction<OpenDialogState> = async (
+export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
   value,
   { state, actions }
 ) => {
@@ -15,33 +15,43 @@ export const DialogOpen: OvlAction<OpenDialogState> = async (
     //@ts-ignore
     state.ovl.libState.dialog = {}
   }
-  if (state.ovl.libState.dialog.closing) {
-    await actions.ovl.internal.DialogClosed()
+  if (!state.ovl.dialogs.Modal) {
+    state.ovl.dialogs.Modal = { visible: false, isClosing: false }
   }
-  dialogAfterClose.elementToFocus = document.activeElement
-  dialogAfterClose.currentScreen = state.ovl.screens.nav.currentScreen
-  state.ovl.libState.dialog.default = value.default
-  if (value.cancel !== "NoButton") {
-    state.ovl.libState.dialog.cancelText =
-      state.ovl.language.translations[value.cancel]
-    if (!state.ovl.libState.dialog.cancelText) {
-      state.ovl.libState.dialog.cancelText = "Cancel"
+  let wait = 0
+  if (state.ovl.dialogs.Modal.isClosing) {
+    wait = 400
+  }
+  setTimeout(() => {
+    state.ovl.libState.dialog.default = value.default
+    if (value.cancel !== "NoButton") {
+      state.ovl.libState.dialog.cancelText =
+        state.ovl.language.translations[value.cancel]
+      if (!state.ovl.libState.dialog.cancelText) {
+        state.ovl.libState.dialog.cancelText = "Cancel"
+      }
+    } else {
+      state.ovl.libState.dialog.cancelText = ""
     }
-  } else {
-    state.ovl.libState.dialog.cancelText = ""
-  }
-  if (value.ok !== "NoButton") {
-    state.ovl.libState.dialog.okText = state.ovl.language.translations[value.ok]
-    if (!state.ovl.libState.dialog.okText) {
-      state.ovl.libState.dialog.okText = "Ok"
+    if (value.ok !== "NoButton") {
+      state.ovl.libState.dialog.okText =
+        state.ovl.language.translations[value.ok]
+      if (!state.ovl.libState.dialog.okText) {
+        state.ovl.libState.dialog.okText = "Ok"
+      }
+    } else {
+      state.ovl.libState.dialog.okText = ""
     }
-  } else {
-    state.ovl.libState.dialog.okText = ""
-  }
-  state.ovl.libState.dialog.text = value.text
-  state.ovl.libState.dialog.result = undefined
-  state.ovl.libState.dialog.visible = true
-  state.ovl.libState.dialog.closing = false
+    state.ovl.libState.dialog.text = value.text
+    state.ovl.libState.dialog.result = undefined
+    let elementIdToFocusAfterOpen = "ovldialogcancel"
+    if (state.ovl.libState.dialog.default == 1) {
+      elementIdToFocusAfterOpen = "ovldialogok"
+    }
+    state.ovl.dialogs.Modal.elementIdToFocusAfterOpen = elementIdToFocusAfterOpen
+    state.ovl.dialogs.Modal.visible = true
+    state.ovl.dialogs.Modal.isClosing = false
+  }, wait)
 }
 
 type OkCancelDialog = {

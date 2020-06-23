@@ -2,6 +2,9 @@
 
 Todos:
 
+- dialog base class which takes care of setting a configurable state to visible false (maybe isClosing state is not needed)
+- this base class should be used from system dialogs (OkCancel) from Standalone Fomrs (Login) from Overlays
+
 - reimplement offline hooks
 - Tab Feature for Edit
 - detailview as its own screen (configurable)
