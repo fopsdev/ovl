@@ -76,7 +76,11 @@ let screens = {
   screenState: undefined,
 }
 let dialogs: { [key in DialogType]?: DialogsState } = {
-  Login: { isClosing: false, visible: false },
+  Login: {
+    isClosing: false,
+    visible: false,
+    elementIdToFocusAfterOpen: "loginformuser",
+  },
   Modal: { isClosing: false, visible: false },
   TableHeaderMenu: { isClosing: false, visible: false },
 }
