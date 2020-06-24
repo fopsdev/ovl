@@ -12,7 +12,7 @@ export class OvlTextArea extends OvlBaseElement {
   inputElement: any
   formState: FormState
 
-  handleKeyDown(e: KeyboardEvent) {
+  handleKeyUp(e: KeyboardEvent) {
     //if (e.key === "Enter") {
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
@@ -87,7 +87,7 @@ export class OvlTextArea extends OvlBaseElement {
               customRowTooltip ? customRowTooltip : undefined,
               this
             )}"
-            @keydown=${(e) => this.handleKeyDown(e)}
+            @keyup=${(e) => this.handleKeyUp(e)}
             @change=${(e) => this.handleChange(e)}
             @focusout=${(e) => this.handleFocusOut(e)}
             class="fd-textarea ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-table-value-textarea ovl-table-value__${field.fieldKey} ${customRowClassName}"

@@ -23,11 +23,11 @@ export class OvlDialogHolder extends OvlBaseDialog {
     this.zIndex = this.dialogHolderParams.zIndex
   }
   async getUI() {
+    let chk = this.checkDialog()
+    if (chk != "go on") {
+      return chk
+    }
     return this.track(() => {
-      let chk = this.checkDialog()
-      if (chk !== undefined) {
-        return chk
-      }
       let d = this.dialogHolderParams.dialogParts
       return this.getDialogTemplate({
         title: d.title ? d.title() : undefined,

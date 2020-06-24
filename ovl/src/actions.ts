@@ -52,9 +52,11 @@ import {
   OkDialog,
   OkCancelDialog,
   DialogOpen,
+  DialogClose,
 } from "./library/Dialog/actions"
 let dialog = {
   DialogOpen,
+  DialogClose,
   ModalDialogOpen,
   OkDialog,
   OkCancelDialog,

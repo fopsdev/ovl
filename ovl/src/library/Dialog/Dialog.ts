@@ -96,7 +96,7 @@ export class OvlDialog extends OvlBaseDialog {
   async getUI() {
     return this.track(() => {
       let chk = this.checkDialog()
-      if (chk !== undefined) {
+      if (chk != "go on") {
         return chk
       }
       let okButton = null

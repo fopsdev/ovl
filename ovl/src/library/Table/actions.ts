@@ -113,6 +113,9 @@ export const TableSelectHeader: OvlAction<HeaderClick> = (
   { actions, state }
 ) => {
   def.def.uiState.headerSelected = def.key
+  // if (def.key === "") {
+  //   state.ovl.dialogs.TableHeaderMenu.isClosing = true
+  // }
 }
 
 export const TableSort: OvlAction<SortClick> = (value, { actions }) => {

@@ -76,7 +76,9 @@ let screens = {
   screenState: undefined,
 }
 let dialogs: { [key in DialogType]?: DialogsState } = {
+  Login: { isClosing: false, visible: false },
   Modal: { isClosing: false, visible: false },
+  TableHeaderMenu: { isClosing: false, visible: false },
 }
 
 export {

@@ -117,10 +117,12 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (this.state.ovl.uiState.hasOSReducedMotion) {
       this.removeDialog()
     } else {
-      this.state.ovl.dialogs[this.dialogType].isClosing = true
+      //this.state.ovl.dialogs[this.dialogType].isClosing = true
       let el = this.getElementsByClassName("fd-dialog")[0]
-      el.classList.remove("fadeIn")
-      el.classList.add("fadeOut")
+      if (el) {
+        el.classList.remove("fadeIn")
+        el.classList.add("fadeOut")
+      }
     }
   }
 
@@ -155,19 +157,54 @@ export class OvlBaseDialog extends OvlBaseElement {
       this.state.ovl.screens.nav.formTypeToReset = undefined
     }
   }
-  checkDialog = (): TemplateResult | null => {
+  checkDialog = (): TemplateResult | null | "go on" => {
     if (!this.state.ovl.dialogs[this.dialogType]) {
       return null
     }
     if (!this.state.ovl.dialogs[this.dialogType].visible) {
       return null
     }
+
     if (this.state.ovl.dialogs[this.dialogType].isClosing) {
       this.closeDialog()
-      return this.lastTemplateResult
+      return undefined
     }
-    return undefined
+    return "go on"
   }
+
+  // checkDialog = (isVisibleFn?: any): TemplateResult | null => {
+  //   if (!this.state.ovl.dialogs[this.dialogType]) {
+  //     return null
+  //   }
+  //   debugger
+  //   if (
+  //     !this.state.ovl.dialogs[this.dialogType].visible &&
+  //     !this.state.ovl.dialogs[this.dialogType].isClosing &&
+  //     isVisibleFn &&
+  //     isVisibleFn()
+  //   ) {
+  //     this.state.ovl.dialogs[this.dialogType].visible = true
+  //     return "go_on"
+  //   }
+
+  //   if (!this.state.ovl.dialogs[this.dialogType].visible) {
+  //     return null
+  //   }
+
+  //   if (
+  //     !this.state.ovl.dialogs[this.dialogType].isClosing &&
+  //     isVisibleFn &&
+  //     !isVisibleFn()
+  //   ) {
+  //     this.state.ovl.dialogs[this.dialogType].isClosing = true
+  //   }
+
+  //   if (this.state.ovl.dialogs[this.dialogType].isClosing) {
+  //     this.closeDialog()
+  //     return undefined
+  //   }
+  //   return "go_on"
+  // }
   connectedCallback() {
     if (!this.state.ovl.dialogs[this.dialogType]) {
       this.state.ovl.dialogs[this.dialogType] = {

@@ -10,6 +10,12 @@ export type OpenDialogOptions = {
   formId?: string
 }
 
+export const DialogClose: OvlAction<DialogType> = async (value, { state }) => {
+  if (state.ovl.dialogs[value]) {
+    state.ovl.dialogs[value].isClosing = true
+  }
+}
+
 export const DialogOpen: OvlAction<OpenDialogOptions> = async (
   value,
   { state }

@@ -61,18 +61,20 @@ export function createDeepProxy(target) {
           value = proxify(value, [...path, key])
         }
         target[key] = value
-        let isArray = Array.isArray(target)
-        let pathToTrack
-        if (!isArray) {
-          pathToTrack = [...path, key].join(".")
-        } else if (isArray && key === "length") {
-          pathToTrack = [...path].join(".")
-        } else if (isArray) {
-          pathToTrack = [...path, key].join(".")
-          //console.log(pathToTrack)
-        }
-        if (pathToTrack) {
-          checkForCallbacks(pathToTrack)
+        if (!isTracking()) {
+          let isArray = Array.isArray(target)
+          let pathToTrack
+          if (!isArray) {
+            pathToTrack = [...path, key].join(".")
+          } else if (isArray && key === "length") {
+            pathToTrack = [...path].join(".")
+          } else if (isArray) {
+            pathToTrack = [...path, key].join(".")
+            //console.log(pathToTrack)
+          }
+          if (pathToTrack) {
+            checkForCallbacks(pathToTrack)
+          }
         }
         return true
       },
