@@ -98,6 +98,10 @@
 #############################################################
 */
 
+.ovl-disabled {
+  pointer-events: none;
+}
+
 /* firefox needs this to support breaks inside textarea */
 @supports (-moz-appearance: none) {
   textarea {

@@ -1,6 +1,6 @@
 import { T } from "../../global/globals"
 import { html } from "lit-html"
-import { OvlBaseDialog } from "./OvlDialogBase"
+import { OvlBaseElement } from "../OvlBaseElement"
 
 export type DialogChangedParam = {
   dialogState: ModalDialogState
@@ -26,15 +26,18 @@ export type ModalDialogState = {
   default: ResultType
 }
 
-export class OvlDialog extends OvlBaseDialog {
-  props: any
+import { DialogHolderParams } from "./OvlDialogHolder"
 
+export type LoginFormState = {}
+
+export type FieldId = "pw" | "user"
+
+export class OvlDialog extends OvlBaseElement {
   handleResult(result: ResultType) {
     this.actions.ovl.internal.DialogChanged({
       dialogState: this.state.ovl.libState.dialog,
       result: result,
     })
-    this.closeDialog()
   }
 
   handleOkClick = () => {
@@ -42,7 +45,6 @@ export class OvlDialog extends OvlBaseDialog {
       dialogState: this.state.ovl.libState.dialog,
       result: 1,
     })
-    this.closeDialog()
   }
 
   handleCancelClick = () => {
@@ -50,7 +52,6 @@ export class OvlDialog extends OvlBaseDialog {
       dialogState: this.state.ovl.libState.dialog,
       result: 2,
     })
-    this.closeDialog()
   }
 
   handleDefault(def: ResultType) {
@@ -89,76 +90,74 @@ export class OvlDialog extends OvlBaseDialog {
       }
     }
   }
-  init() {
-    this.dialogType = "Modal"
-    this.zIndex = 10
+  getBody = () => {
+    let lines: string[] = this.state.ovl.libState.dialog.text.split(/\r?\n/)
+    return lines.map((e) => html` ${e}<br /> `)
   }
-  async getUI() {
-    return this.track(() => {
-      let chk = this.checkDialog()
-      if (chk != "go on") {
-        return chk
-      }
-      let okButton = null
-      let cancelButton = null
-      if (this.state.ovl.libState.dialog.okText) {
-        okButton = html`<div class="fd-bar__element">
+  getFooter = () => {
+    let okButton = null
+    let cancelButton = null
+    if (this.state.ovl.libState.dialog.okText) {
+      okButton = html`<div class="fd-bar__element">
+        <button
+          @click=${this.handleOkClick}
+          class="fd-dialog__decisive-button fd-button ${this.state.ovl.libState
+            .dialog.okText == ""
+            ? " hide"
+            : ""}"
+          aria-selected="${this.state.ovl.libState.dialog.default == 1}"
+          id="ovldialogok"
+        >
+          ${T("AppOk")}
+        </button>
+      </div> `
+    }
+
+    if (this.state.ovl.libState.dialog.cancelText) {
+      cancelButton = html`
+        <div class="fd-bar__element">
           <button
-            @click=${this.handleOkClick}
+            @click=${this.handleCancelClick}
             class="fd-dialog__decisive-button fd-button ${this.state.ovl
-              .libState.dialog.okText == ""
+              .libState.dialog.cancelText == ""
               ? " hide"
               : ""}"
-            aria-selected="${this.state.ovl.libState.dialog.default == 1}"
-            id="ovldialogok"
+            aria-selected="${this.state.ovl.libState.dialog.default == 2}"
+            id="ovldialogcancel"
           >
-            ${T("AppOk")}
+            ${T("AppCancel")}
           </button>
-        </div> `
+        </div>
+      `
+    }
+    return html`${okButton} ${cancelButton}`
+  }
+
+  async getUI() {
+    return this.track(() => {
+      let dependsOn = this.state.ovl.dialogs.Modal.visible
+
+      if (!dependsOn) {
+        return null
       }
+      let dialogHolderParams: DialogHolderParams
+      // tracking needs to be recorded on the hiolder object
+      // thats why we use functions here to get the templates
+      // to make it look nicer i even used methods for the different parts
 
-      if (this.state.ovl.libState.dialog.cancelText) {
-        cancelButton = html`
-          <div class="fd-bar__element">
-            <button
-              @click=${this.handleCancelClick}
-              class="fd-dialog__decisive-button fd-button ${this.state.ovl
-                .libState.dialog.cancelText == ""
-                ? " hide"
-                : ""}"
-              aria-selected="${this.state.ovl.libState.dialog.default == 2}"
-              id="ovldialogcancel"
-            >
-              ${T("AppCancel")}
-            </button>
-          </div>
-        `
+      dialogHolderParams = {
+        dialogParts: {
+          title: () => T("AppShortTitle"),
+          body: () => this.getBody(),
+          footer: () => this.getFooter(),
+          keyHandlerFn: this.keyHandler,
+        },
+        zIndex: 10,
+        dialogType: "Modal",
       }
-      let lines: string[] = this.state.ovl.libState.dialog.text.split(/\r?\n/)
-
-      // let animation = "animated fadeIn faster"
-      // if (this.state.ovl.libState.dialog.closing) {
-      //   animation = "animated fadeOut faster nopointerevents"
-      // }
-
-      let body = lines.map((e) => html` ${e}<br /> `)
-
-      let footer = html`${okButton} ${cancelButton}`
-
-      return this.getDialogTemplate({
-        body,
-        footer,
-        keyHandlerFn: this.keyHandler,
-        title: T("AppShortTitle"),
-      })
+      return html`<ovl-dialogholder
+        .dialogHolderParams=${dialogHolderParams}
+      ></ovl-dialogholder>`
     })
   }
-  // connectedCallback() {
-  //   this.addEventListener("animationend", this.handleAnimationEnd)
-  //   super.connectedCallback()
-  // }
-  // disconnectedCallback() {
-  //   this.removeEventListener("animationend", this.handleAnimationEnd)
-  //   super.disconnectedCallback()
-  // }
 }

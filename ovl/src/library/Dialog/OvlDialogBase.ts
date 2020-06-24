@@ -33,8 +33,8 @@ export class OvlBaseDialog extends OvlBaseElement {
   }
 
   getDialogTemplate = (dialogParts: DialogParts): TemplateResult => {
+    let dialogState = this.state.ovl.dialogs[this.dialogType]
     if (!this.opened) {
-      let dialogState = this.state.ovl.dialogs[this.dialogType]
       if (!dialogState.elementIdToFocusAfterClose) {
         this.elementToFocusAfterClose = document.activeElement
       } else {
@@ -75,8 +75,9 @@ export class OvlBaseDialog extends OvlBaseElement {
           </div>
         `
       }
+
       fullheader = html`
-        <header class="fd-dialog__header fd-bar">
+        <header class="fd-dialog__header fd-bar ovl-dialog-header">
           <div class="fd-bar__left">
             ${header} ${title}
           </div>
@@ -85,21 +86,28 @@ export class OvlBaseDialog extends OvlBaseElement {
     }
     let body
     if (dialogParts.body) {
-      body = html`<div class="fd-dialog__body ">${dialogParts.body}</div>`
+      body = html`<div class="fd-dialog__body ovl-dialog-body">
+        ${dialogParts.body}
+      </div>`
     }
 
     let footer
     if (dialogParts.footer) {
-      footer = html`<footer class="fd-dialog__footer fd-bar fd-bar--footer ">
+      footer = html`<footer
+        class="fd-dialog__footer fd-bar fd-bar--footer ovl-dialog-footer"
+      >
         <div class="fd-bar__right">
           ${dialogParts.footer}
         </div>
       </footer>`
     }
-
+    let disableIfClosing = ""
+    if (dialogState.isClosing) {
+      disableIfClosing = "ovl-disabled"
+    }
     this.lastTemplateResult = html`<div
       style="z-index:${this.zIndex};"
-      class="fd-dialog fd-dialog--active animated fadeIn faster"
+      class="fd-dialog ovl-dialog fd-dialog--active animated fadeIn faster ${disableIfClosing} "
     >
       <div
         class="fd-dialog__content fd-dialog__content--s"

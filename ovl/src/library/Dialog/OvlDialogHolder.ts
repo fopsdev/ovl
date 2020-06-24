@@ -28,6 +28,7 @@ export class OvlDialogHolder extends OvlBaseDialog {
       return chk
     }
     return this.track(() => {
+      this.state.ovl.dialogs[this.dialogType].isClosing
       let d = this.dialogHolderParams.dialogParts
       return this.getDialogTemplate({
         title: d.title ? d.title() : undefined,
