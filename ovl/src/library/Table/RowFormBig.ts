@@ -159,7 +159,6 @@ export class TableRowFormBig extends OvlFormElement {
     }
   }
   closeEdit = () => {
-    debugger
     if (this.wasAdd) {
       this.actions.ovl.internal.TableDeleteRowFromData({
         key: this.rowData.key,
@@ -277,9 +276,7 @@ export class TableRowFormBig extends OvlFormElement {
       }
       if (captionContent) {
         caption = html`
-          <div
-            class="fd-layout-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
-          >
+          <div class="ovl-panel__header ovl-detailview-header fd-has-type-1">
             ${captionContent}
           </div>
         `
@@ -491,16 +488,13 @@ export class TableRowFormBig extends OvlFormElement {
                 data-col="${k}"
                 @click="${this.handleClick}"
                 @long-press="${this.handleLongPress}"
-                class="fd-layout-panel__body"
               >
                 ${uiItem}
               </div>
             `
           })}
         </div>
-        <div
-          class="fd-layout-panel__footer ovl-bigedit-footer ovl-panel__footer"
-        >
+        <div class="ovl-bigedit-footer ovl-panel__footer">
           <button
             @click=${handleSave}
             title="Datensatz speichern"

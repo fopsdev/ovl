@@ -109,10 +109,11 @@ export class OvlBaseDialog extends OvlBaseElement {
     }
     this.lastTemplateResult = html`<div
       style="z-index:${this.zIndex};"
-      class="fd-dialog ovl-dialog fd-dialog--active fadeInScreen ${disableIfClosing} "
+      class="fd-dialog fd-dialog--active fadeInScreen ${disableIfClosing} "
     >
       <div
-        class="fd-dialog__content fd-dialog__content--s"
+        class="fd-dialog__content fd-dialog__content--s ovl-dialog ovl-dialog-${this
+          .dialogType}"
         role="dialog"
         aria-modal="true"
         @keydown=${keyHandler}

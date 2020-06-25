@@ -121,7 +121,7 @@
 .ovl-bigeditform,
 .ovl-detailview {
   width: 70vw;
-  height: 98vh;
+  height: 100%;
 }
 
 .ovl-table-textarea-input {
@@ -233,7 +233,7 @@ ovl-table {
   --fd-width-gutter: 8px;
 }
 
-.ovl-panel__header {
+/* .ovl-panel__header {
   margin: 2px;
   padding: 2px;
   justify-content: center;
@@ -243,17 +243,21 @@ ovl-table {
   margin: 2px;
   padding: 2px;
   margin-bottom: 8px;
+} */
+
+.ovl-dialog-EditFormBig {
+  height: 98vw;
 }
 
 .scrollableMobileOverlay {
   overflow-y: auto;
-  height: calc(100vh - 55px);
+  height: 90%;
   -webkit-overflow-scrolling: touch;
 }
 
 .scrollableOverlay {
   overflow-y: auto;
-  height: calc(100vh - 63px);
+  height: 90%;
   -webkit-overflow-scrolling: touch;
 }
 
