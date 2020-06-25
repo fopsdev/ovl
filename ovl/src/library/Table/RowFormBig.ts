@@ -493,28 +493,6 @@ export class TableRowFormBig extends OvlFormElement {
               </div>
             `
           })}
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
-          sacsascscdvd<br />
         </div>
         <div class="fd-layout-panel__footer ovl-bigedit-footer ">
           <button

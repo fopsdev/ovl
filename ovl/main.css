@@ -90,11 +90,6 @@
   white-space: normal !important;
 }
 
-.fd-dialog {
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
 /* custom styles 
 #############################################################
 */
@@ -133,6 +128,10 @@
 }
 .ovl-formcontrol-validation {
   grid-area: validation;
+}
+
+.ovl-editform .ovl-formcontrol-custom {
+  grid-area: custom;
 }
 
 .ovl-inlineeditform .ovl-formcontrol-checkbox-container {
@@ -224,12 +223,14 @@ ovl-table {
 }
 
 .ovl-bigeditform,
+.ovl-tableheadermenu,
 .ovl-detailview {
   width: 70vw;
   height: 92vh;
 }
 
-.ovl-dialog-body {
+.ovl-dialog-TableHeaderMenu .ovl-dialog-body,
+.ovl-dialog-EditFormBig .ovl-dialog-body {
   overflow-y: hidden;
   display: inline-flex;
 }
@@ -367,6 +368,40 @@ body {
   }
   100% {
     opacity: 0;
+  }
+}
+
+.fadeOutDialog {
+  opacity: 0;
+  animation-name: fadeOutDialog;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.25s;
+}
+
+@keyframes fadeOutDialog {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fadeInDialog {
+  opacity: 1;
+  animation-name: fadeInDialog;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.25s;
+}
+
+@keyframes fadeInDialog {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

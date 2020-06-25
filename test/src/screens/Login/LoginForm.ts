@@ -47,10 +47,7 @@ export class CompLoginForm extends OvlFormElement {
         hideForgotPassword = ""
       }
       return html`
-        <div
-          class="ovldialogcentered ${this.animatedClass}"
-          @keydown=${handleKey}
-        >
+        <div class="${this.animatedClass}" @keydown=${handleKey}>
           <div class="fd-modal" tabindex="0" style="z-index:1003;">
             <div class="fd-modal__content" role="document">
               <div

@@ -26,7 +26,7 @@ export class OvlBaseDialog extends OvlBaseElement {
   opened: boolean
   elementIdToFocusAfterClose: string
   elementToFocusAfterClose: Element
-  lastTemplateResult: TemplateResult
+
   closedCallbackFn: any
 
   defaultKeyHandler = (e: Event) => {}
@@ -107,9 +107,9 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (dialogState.isClosing) {
       disableIfClosing = "ovl-disabled"
     }
-    this.lastTemplateResult = html`<div
+    return html`<div
       style="z-index:${this.zIndex};"
-      class="fd-dialog fd-dialog--active fadeInScreen ${disableIfClosing} "
+      class="fd-dialog fd-dialog--active fadeInDialog ${disableIfClosing} "
     >
       <div
         class="fd-dialog__content fd-dialog__content--s ovl-dialog ovl-dialog-${this
@@ -121,7 +121,6 @@ export class OvlBaseDialog extends OvlBaseElement {
         ${fullheader} ${body} ${footer}
       </div>
     </div>`
-    return this.lastTemplateResult
   }
 
   closeDialog = () => {
@@ -131,14 +130,14 @@ export class OvlBaseDialog extends OvlBaseElement {
       //this.state.ovl.dialogs[this.dialogType].isClosing = true
       let el = this.getElementsByClassName("fd-dialog")[0]
       if (el) {
-        el.classList.remove("fadeInScreen")
-        el.classList.add("fadeOutScreen")
+        el.classList.remove("fadeInDialog")
+        el.classList.add("fadeOutDialog")
       }
     }
   }
 
   handleAnimationEnd = (e) => {
-    if (e.animationName === "fadeOutScreen") {
+    if (e.animationName === "fadeOutDialog") {
       this.removeDialog()
     }
   }

@@ -933,48 +933,32 @@ export class TableHeaderMenu extends OvlBaseElement {
         </div>
       `
     }
-    let headerMenuwidth = "width:50vw;"
+
+    let scrollable = "scrollableOverlay"
     if (this.state.ovl.uiState.isMobile) {
-      headerMenuwidth = "width:90vw;"
+      scrollable = "scrollableOverlayMobile"
     }
 
     return html`
-      <div class="fd-dialog fd-dialog fd-dialog--active">
-        <div
-          class="fd-dialog__content fd-dialog__content--s"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div class="fd-dialog__body ">
-            <div
-              tabindex="0"
-              id="ovl_headerMenu"
-              style="${headerMenuwidth}"
-              class="fd-layout-panel"
-              @mousedown=${handleMainMouseDown}
-              @click="${(e) => this.handleCloseHeaderMenu(e)}"
-              aria-hidden="false"
-            >
-              <nav class="fd-menu" id="ovl_headerMenuScroll">
-                ${columnFunctions} ${customSort} ${customFilter}
-                ${selectedFunctions} ${tableFunctions}
-              </nav>
-
-              <div
-                class="fd-layout-panel__footer"
-                style="margin:2px; padding:2px;"
-              >
-                <div style="margin-left: -20px;">
-                  ${navcontrol}
-                </div>
-                <div style="margin-left:12px;"></div>
-                <button
-                  title="Abbrechen"
-                  class="fd-button--negative sap-icon--decline"
-                ></button>
-              </div>
-            </div>
-          </div>
+      <div
+        @mousedown=${handleMainMouseDown}
+        @click="${(e) => this.handleCloseHeaderMenu(e)}"
+        class="ovl-tableheadermenu"
+        aria-hidden="false"
+      >
+        <div class="${scrollable}">
+          <nav class="fd-menu">
+            ${columnFunctions} ${customSort} ${customFilter}
+            ${selectedFunctions} ${tableFunctions}
+          </nav>
+        </div>
+        <div class="fd-layout-panel__footer">
+          ${navcontrol}
+          <button
+            style="margin-left:4px;"
+            title="Abbrechen"
+            class="fd-button fd-button--negative sap-icon--decline"
+          ></button>
         </div>
       </div>
     `
