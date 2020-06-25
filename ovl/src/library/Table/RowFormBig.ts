@@ -278,7 +278,7 @@ export class TableRowFormBig extends OvlFormElement {
       if (captionContent) {
         caption = html`
           <div
-            class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
+            class="fd-layout-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
           >
             ${captionContent}
           </div>
@@ -287,9 +287,9 @@ export class TableRowFormBig extends OvlFormElement {
     }
     return html`
       <div
-        class="fd-panel ovl-table-${def.id} ovl-editform ovl-bigeditform ovl-editform-${def.id}"
+        class="ovl-table-${def.id} ovl-editform ovl-bigeditform ovl-editform-${def.id}"
       >
-        <div class="fd-panel ${scrollable}">
+        <div class="${scrollable}">
           ${caption}
           ${Object.keys(columns).map((k) => {
             let customHeaderCellClass: CellClass = customHeaderCellClasses[k]
@@ -491,14 +491,16 @@ export class TableRowFormBig extends OvlFormElement {
                 data-col="${k}"
                 @click="${this.handleClick}"
                 @long-press="${this.handleLongPress}"
-                class="fd-panel__body"
+                class="fd-layout-panel__body"
               >
                 ${uiItem}
               </div>
             `
           })}
         </div>
-        <div class="fd-panel__footer ovl-bigedit-footer ovl-panel__footer">
+        <div
+          class="fd-layout-panel__footer ovl-bigedit-footer ovl-panel__footer"
+        >
           <button
             @click=${handleSave}
             title="Datensatz speichern"

@@ -33,7 +33,7 @@ OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
 
 import { defineElements } from "./registerComponents"
 defineElements()
-console.log("hi from app index")
+
 ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
 window.scrollTo(0, 1)
 render(
