@@ -103,7 +103,7 @@ export class TableRowControl extends OvlBaseElement {
         >
           <div
             style="margin-top:-1px;"
-            class="fd-button-group animated fadeIn faster"
+            class="fd-segmented-button animated fadeIn faster"
             role="group"
             aria-label="Rowcontrol"
           >
