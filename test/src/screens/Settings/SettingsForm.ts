@@ -43,10 +43,10 @@ export class CompSettingsForm extends OvlFormElement {
       let partner = this.state.portal.partner
 
       return html`
-      <div class="fd-panel ${this.animatedClass} ovldialogcentered">
-        <div class="fd-panel__header">
-          <div class="fd-panel__head">
-            <h3 class="fd-panel__title">
+      <div class="fd-layout-panel ${this.animatedClass} ">
+        <div class="fd-layout-panel__header">
+          <div class="fd-layout-panel__head">
+            <h3 class="fd-layout-panel__title">
             ${T("AppSettings")}
                 ${
                   this.state.portal.user.firstName +
@@ -57,7 +57,7 @@ export class CompSettingsForm extends OvlFormElement {
           </div>
         </div>
 
-            <div class="fd-panel__body fd-has-padding-base fd-has-margin-base">
+            <div class="fd-layout-panel__body fd-has-padding-base fd-has-margin-base">
               <div class="fd-form__group">
                 <div class="fd-form-item ">
                   <ovl-textbox
@@ -86,9 +86,9 @@ export class CompSettingsForm extends OvlFormElement {
               </div>
             </div>
             <div
-              class="fd-panel__footer fd-has-padding-base fd-has-margin-base"
+              class="fd-layout-panel__footer fd-has-padding-base fd-has-margin-base"
             >
-              <div class="fd-panel__actions">
+              <div class="fd-layout-panel__actions">
                 <button
                   ?disabled=${
                     this.state.ovl.libState.indicator.open ||

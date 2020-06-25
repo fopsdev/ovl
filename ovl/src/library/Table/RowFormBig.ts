@@ -195,10 +195,10 @@ export class TableRowFormBig extends OvlFormElement {
       }
     }
 
-    let acceptEnabled = "fd-button--positive sap-icon--accept"
+    let acceptEnabled = "fd-button fd-button--positive sap-icon--accept"
 
     if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
-      acceptEnabled = "fd-button nopointerevents"
+      acceptEnabled = "fd-button ovl-disabled"
     }
 
     let customRowCellClasses: ViewRowCellClass_ReturnType
@@ -493,8 +493,30 @@ export class TableRowFormBig extends OvlFormElement {
               </div>
             `
           })}
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
+          sacsascscdvd<br />
         </div>
-        <div class="ovl-bigedit-footer ovl-panel__footer">
+        <div class="fd-layout-panel__footer ovl-bigedit-footer ">
           <button
             @click=${handleSave}
             title="Datensatz speichern"
@@ -504,7 +526,7 @@ export class TableRowFormBig extends OvlFormElement {
           <button
             @click=${this.handleCancel}
             title="Abbrechen"
-            class="fd-button--negative sap-icon--decline"
+            class="fd-button fd-button--negative sap-icon--decline"
           ></button>
         </div>
       </div>

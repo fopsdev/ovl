@@ -9,15 +9,15 @@ export class CompOrderDetail extends OvlBaseElement {
       let order = this.state.portal.orderDetail.orders[key]
 
       return html`
-        <div class="fd-panel">
-          <div class="fd-panel__header">
-            <div class="fd-panel__head">
-              <h3 class="fd-panel__title">
+        <div class="fd-layout-panel">
+          <div class="fd-layout-panel__header">
+            <div class="fd-layout-panel__head">
+              <h3 class="fd-layout-panel__title">
                 ${T("PortalDetails")}
               </h3>
             </div>
           </div>
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             <div class="cols2">
               <div>
                 ${T("PortalCardCode")}

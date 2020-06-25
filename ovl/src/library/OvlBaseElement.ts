@@ -172,12 +172,12 @@ export class OvlBaseElement extends HTMLElement {
       } else {
         // no complete rerender is necessary
         // just set the animation class accordingly
-        //this.animatedClass = " animated fadeOut faster nopointerevents"
+        //this.animatedClass = " animated fadeOut faster ovl-disabled"
         let els = this.getElementsByClassName("fadeInScreen")
         if (els.length > 0) {
           let el = els[0]
           el.classList.add("fadeOutScreen")
-          el.classList.add("nopointerevents")
+          el.classList.add("ovl-disabled")
           el.classList.remove("fadeInScreen")
           return
         }

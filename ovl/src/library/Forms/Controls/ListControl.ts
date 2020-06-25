@@ -95,7 +95,7 @@ export class OvlListControl extends OvlBaseElement {
       return
     }
     let list = html`
-      <div class="fd-panel">
+      <div class="fd-layout-panel">
         <ovl-hitlist
           .props=${(state) => {
             let listData: FieldGetList_ReturnType = resolvePath(
@@ -116,7 +116,7 @@ export class OvlListControl extends OvlBaseElement {
             }
           }}
         ></ovl-hitlist>
-        <div class="fd-panel__footer" style="margin:2px; padding:2px;">
+        <div class="fd-layout-panel__footer" style="margin:2px; padding:2px;">
           <button
             @click=${this.handleCancel}
             title="Abbrechen"
@@ -408,7 +408,7 @@ export class OvlListControl extends OvlBaseElement {
         //we have a list so present it to the user
         if (document.activeElement === this.inputElement) {
           this.localList = html`
-            <div class="fd-panel">
+            <div class="fd-layout-panel">
               <ovl-hitlist
                 .props=${(state) => {
                   let listData: FieldGetList_ReturnType = resolvePath(

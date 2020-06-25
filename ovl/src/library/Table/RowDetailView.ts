@@ -232,7 +232,7 @@ export class TableRowDetailView extends OvlBaseElement {
         }
         caption = html`
           <div
-            class="fd-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
+            class="fd-layout-panel__header ovl-panel__header ovl-detailview-header fd-has-type-1"
           >
             ${captionContent}
           </div>
@@ -321,7 +321,7 @@ export class TableRowDetailView extends OvlBaseElement {
               )
             }
           }
-          tabbedContent = html`<div class="fd-panel ovl-tab ovl-viewtab">
+          tabbedContent = html`<div class="fd-layout-panel ovl-tab ovl-viewtab">
             <ul class="fd-tabs fd-tabs--l ovl-tabs ovl-viewtabs" role="tablist">
               ${Array.from(tabsFound).map((k) => {
                 let tab = def.options.tabs.view.tabs[k]
@@ -373,24 +373,24 @@ export class TableRowDetailView extends OvlBaseElement {
 
         return html`
           <div
-            class="fd-panel ovl-detailview ovl-table-${def.id} ovl-detailview-${def.id}"
+            class="fd-layout-panel ovl-detailview ovl-table-${def.id} ovl-detailview-${def.id}"
           >
             <div
               tabindex="0"
               id="ovl-detailview-intersectionobserver"
-              class="fd-panel ${scrollable}"
+              class="fd-layout-panel ${scrollable}"
             >
               ${caption}
               <div
                 @click="${this.handleClick}"
                 @long-press="${this.handleLongPress}"
-                class="fd-panel__body ovl-detailview-body-${def.id} ovl-detailview-body"
+                class="fd-layout-panel__body ovl-detailview-body-${def.id} ovl-detailview-body"
               >
                 ${bodyContent}
               </div>
             </div>
             <div
-              class="fd-panel__footer ovl-panel__footer ovl-detailview-footer-${def.id} ovl-detailview-footer"
+              class="fd-layout-panel__footer ovl-panel__footer ovl-detailview-footer-${def.id} ovl-detailview-footer"
             >
               ${rowActions.map((k, i) => {
                 let button = rowControlActions[k]

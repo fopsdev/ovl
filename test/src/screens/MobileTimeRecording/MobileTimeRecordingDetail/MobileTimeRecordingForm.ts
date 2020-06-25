@@ -56,18 +56,18 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
       let duration = N(durationField.convertedValue)
       let acceptEnabled = "fd-button--positive sap-icon--accept"
       if (!this.formState.valid) {
-        acceptEnabled = "fd-button nopointerevents"
+        acceptEnabled = "fd-button ovl-disabled"
       }
       return html`
-        <div class="fd-panel ${this.animatedClass}">
-          <div class="fd-panel__header">
-            <div class="fd-panel__head">
-              <h3 class="fd-panel__title">
+        <div class="fd-layout-panel ${this.animatedClass}">
+          <div class="fd-layout-panel__header">
+            <div class="fd-layout-panel__head">
+              <h3 class="fd-layout-panel__title">
                 Zeit erfassen
               </h3>
             </div>
           </div>
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             <ovl-option
               class="fd-form__item "
               .props="${() => {
@@ -76,7 +76,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
             >
             </ovl-option>
           </div>
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             <ovl-listcontrol
               class="fd-form__item "
               .props="${() => {
@@ -85,7 +85,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
             >
             </ovl-listcontrol>
           </div>
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             <ovl-timebox
               class="fd-form__item "
               .props=${() => {
@@ -95,7 +95,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
             </ovl-timebox>
           </div>
 
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             <ovl-timebox
               class="fd-form__item "
               .props=${() => {
@@ -105,11 +105,11 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
             </ovl-timebox>
           </div>
 
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             Dauer: ${duration}
           </div>
 
-          <div class="fd-panel__footer">
+          <div class="fd-layout-panel__footer">
             <button
               ?disabled=${this.state.ovl.libState.indicator.open ||
               this.screenClosing()}

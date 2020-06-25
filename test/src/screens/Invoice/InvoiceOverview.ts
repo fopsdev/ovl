@@ -54,11 +54,11 @@ export class CompInvoiceOverview extends OvlBaseElement {
           <div>
             <div class="fd-container fd-container--fluid">
               <div class="fd-col--12">
-                <div class="fd-panel">
-                  <div class="fd-panel__header">
-                    <div class="fd-panel__head">
+                <div class="fd-layout-panel">
+                  <div class="fd-layout-panel__header">
+                    <div class="fd-layout-panel__head">
                       <h3
-                        class="sap-icon--receipt sap-icon--xl fd-panel__title fd-has-type-3"
+                        class="sap-icon--receipt sap-icon--xl fd-layout-panel__title fd-has-type-3"
                       >
                         ${T("PortalInvoices")}
                       </h3>
@@ -69,15 +69,15 @@ export class CompInvoiceOverview extends OvlBaseElement {
             </div>
             <div class="fd-container fd-container--fluid">
               <div class="fd-col--12">
-                <div class="fd-panel">
-                  <div class="fd-panel__header fd-has-padding-tiny">
-                    <div class="fd-panel__head">
-                      <h3 class="fd-panel__title">
+                <div class="fd-layout-panel">
+                  <div class="fd-layout-panel__header fd-has-padding-tiny">
+                    <div class="fd-layout-panel__head">
+                      <h3 class="fd-layout-panel__title">
                         ${T("PortalInvoiceListTitle", [detailCount.toString()])}
                       </h3>
                     </div>
                   </div>
-                  <div class="fd-panel__body fd-has-padding-tiny">
+                  <div class="fd-layout-panel__body fd-has-padding-tiny">
                     <table class="fd-table fd-table--striped">
                       <thead class="fd-table__header">
                         <tr class="fd-table__row">

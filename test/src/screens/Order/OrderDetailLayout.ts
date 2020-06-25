@@ -20,7 +20,7 @@ export class CompOrderDetailLayout extends OvlBaseElement {
       <section
           class="fd-section fd-has-type-2" style="text-align: center;"
           <h3
-            class="sap-icon--sales-order sap-icon--xl fd-panel__title"
+            class="sap-icon--sales-order sap-icon--xl fd-layout-panel__title"
           >
             ${T("PortalOrderDetail", [key])}
           </h3>
@@ -54,8 +54,8 @@ export class CompOrderDetailLayout extends OvlBaseElement {
 
         <div class="fd-container fd-container--fluid">
           <div class="fd-col--12">
-            <div class="fd-panel">
-              <div class="fd-panel__body">
+            <div class="fd-layout-panel">
+              <div class="fd-layout-panel__body">
                 <comp-filelist .props=${(s) =>
                   s.portal.orderDetail.orders[key].attachments.files.filter(
                     (f) => f.type === "OrderAttachment"

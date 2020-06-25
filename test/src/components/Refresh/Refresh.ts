@@ -15,7 +15,7 @@ export class OvlRefresh extends OvlBaseElement {
 
     return this.track(() => {
       let buttonInactive = this.state.ovl.libState.indicator.open
-        ? "nopointerevents"
+        ? "ovl-disabled"
         : ""
 
       let refresh

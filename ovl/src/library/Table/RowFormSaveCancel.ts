@@ -66,7 +66,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
       let acceptEnabled = "fd-button--positive sap-icon--accept"
 
       if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
-        acceptEnabled = "fd-button nopointerevents"
+        acceptEnabled = "fd-button ovl-disabled"
       }
       return html`
         <td

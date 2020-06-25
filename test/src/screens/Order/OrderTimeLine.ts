@@ -11,15 +11,15 @@ export class CompOrderTimeLine extends OvlBaseElement {
       return html`
         <div class="fd-container fd-container--fluid">
           <div class="fd-col--3">
-            <div class="fd-panel">
+            <div class="fd-layout-panel">
               <div
-                class="fd-panel__header fd-has-padding-tiny timelinenextarrow"
+                class="fd-layout-panel__header fd-has-padding-tiny timelinenextarrow"
               >
-                <div class="fd-panel__head">
-                  <h3 class="fd-panel__title">
+                <div class="fd-layout-panel__head">
+                  <h3 class="fd-layout-panel__title">
                     ${T("PortalOrderConfirm")}
                   </h3>
-                  <p class="fd-panel__description">
+                  <p class="fd-layout-panel__description">
                     ${order.steps.step1.date !== null
                       ? T("PortalSendDate")
                       : ""}
@@ -27,7 +27,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
                   </p>
                 </div>
               </div>
-              <div class="fd-panel__body fd-has-padding-tiny">
+              <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
                     s.portal.orderDetail.orders[key].steps.step1.attachments
@@ -38,15 +38,15 @@ export class CompOrderTimeLine extends OvlBaseElement {
             </div>
           </div>
           <div class="fd-col--3">
-            <div class="fd-panel">
+            <div class="fd-layout-panel">
               <div
-                class="fd-panel__header fd-has-padding-tiny timelinenextarrow"
+                class="fd-layout-panel__header fd-has-padding-tiny timelinenextarrow"
               >
-                <div class="fd-panel__head">
-                  <h3 class="fd-panel__title">
+                <div class="fd-layout-panel__head">
+                  <h3 class="fd-layout-panel__title">
                     ${T("PortalOrderPrepare")}
                   </h3>
-                  <p class="fd-panel__description">
+                  <p class="fd-layout-panel__description">
                     ${order.steps.step2.date !== null
                       ? T("PortalSendDate")
                       : ""}
@@ -54,7 +54,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
                   </p>
                 </div>
               </div>
-              <div class="fd-panel__body fd-has-padding-tiny">
+              <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
                     s.portal.orderDetail.orders[key].steps.step2.attachments
@@ -65,20 +65,20 @@ export class CompOrderTimeLine extends OvlBaseElement {
             </div>
           </div>
           <div class="fd-col--3">
-            <div class="fd-panel">
+            <div class="fd-layout-panel">
               <div
-                class="fd-panel__header fd-has-padding-tiny timelinenextarrow"
+                class="fd-layout-panel__header fd-has-padding-tiny timelinenextarrow"
               >
-                <div class="fd-panel__head">
-                  <h3 class="fd-panel__title">
+                <div class="fd-layout-panel__head">
+                  <h3 class="fd-layout-panel__title">
                     ${T("PortalOrderProduction")}
                   </h3>
-                  <p class="fd-panel__description">
+                  <p class="fd-layout-panel__description">
                     &nbsp;
                   </p>
                 </div>
               </div>
-              <div class="fd-panel__body fd-has-padding-tiny">
+              <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
                     s.portal.orderDetail.orders[key].steps.step3.attachments
@@ -89,13 +89,13 @@ export class CompOrderTimeLine extends OvlBaseElement {
             </div>
           </div>
           <div class="fd-col--3">
-            <div class="fd-panel">
-              <div class="fd-panel__header fd-has-padding-tiny">
-                <div class="fd-panel__head">
-                  <h3 class="fd-panel__title">
+            <div class="fd-layout-panel">
+              <div class="fd-layout-panel__header fd-has-padding-tiny">
+                <div class="fd-layout-panel__head">
+                  <h3 class="fd-layout-panel__title">
                     ${T("PortalOrderDelivery")}
                   </h3>
-                  <p class="fd-panel__description">
+                  <p class="fd-layout-panel__description">
                     ${order.steps.step4.date !== null
                       ? T("PortalSendDate")
                       : ""}
@@ -103,7 +103,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
                   </p>
                 </div>
               </div>
-              <div class="fd-panel__body fd-has-padding-tiny">
+              <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
                     s.portal.orderDetail.orders[key].steps.step4.attachments

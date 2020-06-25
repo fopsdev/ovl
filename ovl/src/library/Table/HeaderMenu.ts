@@ -950,7 +950,7 @@ export class TableHeaderMenu extends OvlBaseElement {
               tabindex="0"
               id="ovl_headerMenu"
               style="${headerMenuwidth}"
-              class="fd-panel"
+              class="fd-layout-panel"
               @mousedown=${handleMainMouseDown}
               @click="${(e) => this.handleCloseHeaderMenu(e)}"
               aria-hidden="false"
@@ -960,7 +960,10 @@ export class TableHeaderMenu extends OvlBaseElement {
                 ${selectedFunctions} ${tableFunctions}
               </nav>
 
-              <div class="fd-panel__footer" style="margin:2px; padding:2px;">
+              <div
+                class="fd-layout-panel__footer"
+                style="margin:2px; padding:2px;"
+              >
                 <div style="margin-left: -20px;">
                   ${navcontrol}
                 </div>

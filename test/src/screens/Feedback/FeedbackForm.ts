@@ -56,15 +56,15 @@ export class CompFeedbackForm extends OvlFormElement {
       let feedback = this.state.ovl.screens.screens.Feedback
 
       return html`
-        <div class="fd-panel ${this.animatedClass}">
-          <div class="fd-panel__header">
-            <div class="fd-panel__head">
-              <h3 class="fd-panel__title">
+        <div class="fd-layout-panel ${this.animatedClass}">
+          <div class="fd-layout-panel__header">
+            <div class="fd-layout-panel__head">
+              <h3 class="fd-layout-panel__title">
                 ${feedback.title}
               </h3>
             </div>
           </div>
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             <div class="cols2">
               <div>
                 ${T("PortalCardCode")}
@@ -99,7 +99,7 @@ export class CompFeedbackForm extends OvlFormElement {
               </div>
             </div>
           </div>
-          <div class="fd-panel__body">
+          <div class="fd-layout-panel__body">
             <div class="fd-form__set">
               <div class="fd-form__item">
                 <ovl-textarea

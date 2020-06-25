@@ -72,7 +72,7 @@ export class OvlOverlay extends OvlBaseElement {
       let animation = "animated fadeIn faster"
 
       if (this.state.ovl.libState.overlay.closing) {
-        animation = "animated fadeOut faster nopointerevents"
+        animation = "animated fadeOut faster ovl-disabled"
       }
       if (!overlayToRender.template) {
         overlayToRender.template = await overlayToRender.getTemplate()
