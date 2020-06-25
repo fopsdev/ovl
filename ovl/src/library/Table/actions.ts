@@ -30,7 +30,14 @@ import {
   FormCustomFn_Type,
   FormCan_ReturnType,
 } from "../../global/hooks"
-import { TableDefIds, OvlAction, OvlState, OvlActions, ovl } from "../../index"
+import {
+  TableDefIds,
+  OvlAction,
+  OvlState,
+  OvlActions,
+  ovl,
+  logState,
+} from "../../index"
 import { DialogResult } from "../actions"
 import { FormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
@@ -120,6 +127,7 @@ export const TableSelectHeader: OvlAction<HeaderClick> = (
 
 export const TableSort: OvlAction<SortClick> = (value, { actions }) => {
   let def = value.def
+  def.uiState.headerSelected = ""
   def.options.sort.field = value.key
   if (value.ascending) {
     def.options.sort.direction = "asc"
@@ -132,6 +140,7 @@ export const TableSort: OvlAction<SortClick> = (value, { actions }) => {
 
 export const TableFilter: OvlAction<FilterClick> = (value, { actions }) => {
   let def = value.def
+  def.uiState.headerSelected = ""
   def.options.filter.value = value.value
   def.options.filter.showSelected = false
 
@@ -149,6 +158,9 @@ export const TableSelectAll: OvlAction<{
   data: TableData
   select: boolean
 }> = (def, { actions }) => {
+  if (!def.select) {
+    def.tableDef.uiState.headerSelected = ""
+  }
   let selectedRows = def.tableDef.uiState.selectedRow
   Object.keys(selectedRows).forEach((k) => {
     selectedRows[k].selected = false
@@ -255,7 +267,7 @@ export const TableRefreshDataFromServer: OvlAction<{
       return val
     }, {})
   // console.log("lookupinfo ")
-  console.log(dataFieldsToLookups)
+  //console.log(dataFieldsToLookups)
   keysFromServer.forEach((k) => {
     if (localData[k] === undefined) {
       localData[k] = {}
@@ -330,7 +342,6 @@ export const TableRefreshDataFromServer: OvlAction<{
   }
 
   value.data.timestamp = Date.now()
-  console.log("datafromserverloaded")
 }
 let lastRefreshMsg: number = 0
 export const TableRefresh: OvlAction<{
@@ -698,11 +709,6 @@ const TableEditSaveRowHelper = async (
     if (hasFormState) {
       actions.ovl.internal.SetFormUndirty(formState)
     }
-    actions.ovl.table.TableEditClose({
-      key,
-      tableDef: def,
-      data,
-    })
   }
 }
 
@@ -783,9 +789,6 @@ export const TableEditClose: OvlAction<{
     editRow[value.key].selected = false
     editRow[value.key].mode = undefined
   }
-  if (value.tableDef.options.edit.editType === "big") {
-    actions.ovl.overlay.CloseOverlay()
-  }
 }
 
 export const TableEditRow: OvlAction<{
@@ -812,6 +815,7 @@ export const TableEditRow: OvlAction<{
     schema: value.data.schema,
     forceOverwrite: true,
   }
+
   actions.ovl.form.InitForm(initForm)
   let editRow = value.def.uiState.editRow
   editRow[value.key].selected = true
@@ -1090,6 +1094,7 @@ export const TableMultipleDeleteRow: OvlAction<{
     cancel = true
   }
   if (!cancel) {
+    def.uiState.headerSelected = ""
     wait = Promise.all(
       selectedObjects.map(async (k) => {
         await actions.ovl.internal.TableDeleteRow({
@@ -1194,6 +1199,7 @@ export const TableMultipleCopyRow: OvlAction<{
     cancel = true
   }
   if (!cancel) {
+    def.uiState.headerSelected = ""
     wait = Promise.all(
       selectedObjects.map(async (k) => {
         await actions.ovl.internal.TableCopyRow({
@@ -1285,6 +1291,7 @@ export const TableMultipleEditRow: OvlAction<{
     cancel = true
   }
   if (!cancel) {
+    def.uiState.headerSelected = ""
     wait = Promise.all(
       selectedObjects.map(async (k) => {
         def.uiState.editRow[k].mode = "edit"
@@ -1348,7 +1355,7 @@ export const TableMultipleCustomFunction: OvlAction<{
     })
   )
   await wait
-  let customFn = def.options.customRowActions[value.customFnId].selected
+  //let customFn = def.options.customRowActions[value.customFnId].selected
 
   let doMsg =
     "Funktion '" +
@@ -1386,6 +1393,7 @@ export const TableMultipleCustomFunction: OvlAction<{
     cancel = true
   }
   if (!cancel) {
+    def.uiState.headerSelected = ""
     let customFns = resolvePath(actions.custom, def.namespace)
     let customFunctionName = "FormCustom" + value.customFnId
     let customFunction = customFns[customFunctionName]

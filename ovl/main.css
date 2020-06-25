@@ -92,6 +92,7 @@
 
 .fd-dialog {
   z-index: 2;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* custom styles 
@@ -381,7 +382,7 @@ body {
   animation-name: fadeOutScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.5s;
+  animation-duration: 0.25s;
 }
 
 @keyframes fadeOutScreen {
@@ -440,7 +441,7 @@ body {
   animation-name: fadeInScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.3s;
+  animation-duration: 0.25s;
 }
 
 @keyframes fadeInScreen {

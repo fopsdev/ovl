@@ -77,11 +77,11 @@ export class TableHeaderMenu extends OvlBaseElement {
         data: this.headerMenu.def.data,
         value: val,
       })
-      this.actions.ovl.internal.TableSelectHeader({
-        def: this.headerMenu.def.def,
-        data: this.headerMenu.def.data,
-        key: "",
-      })
+      // this.actions.ovl.internal.TableSelectHeader({
+      //   def: this.headerMenu.def.def,
+      //   data: this.headerMenu.def.data,
+      //   key: "",
+      // })
     }
   }
 
@@ -107,13 +107,6 @@ export class TableHeaderMenu extends OvlBaseElement {
       data: this.headerMenu.def.data,
       select,
     })
-    if (!select) {
-      this.actions.ovl.internal.TableSelectHeader({
-        def: this.headerMenu.def.def,
-        data: this.headerMenu.def.data,
-        key: "",
-      })
-    }
   }
 
   handleCloseHeaderMenu = (e: Event) => {
@@ -1018,7 +1011,7 @@ export class TableHeaderMenu extends OvlBaseElement {
         dialogParts: {
           body: () => this.getBody(),
         },
-        zIndex: 2,
+        zIndex: 6,
         dialogType: "TableHeaderMenu",
       }
       return html`<ovl-dialogholder

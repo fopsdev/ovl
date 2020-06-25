@@ -6,10 +6,6 @@ export function createDeepProxy(target) {
   function makeHandler(path) {
     return {
       get(target, key, receiver) {
-        // console.log(path.toString() + " key:" + key.toString())
-        // if (key == 3) {
-        //   debugger
-        // }
         if (isTracking()) {
           let isArray = Array.isArray(target)
           let value = target[key]
@@ -58,6 +54,12 @@ export function createDeepProxy(target) {
         //   window.ovldbg = undefined
         // }
         if (typeof value === "object") {
+          if (preproxy.has(value)) {
+            // if the value already got proxified this means we are trying to save a reference inside state
+            // this is something we avoid because we would like to have a clean serializable and deserializable state
+            // so in that case just create a deep clone of the obj and use that
+            value = JSON.parse(JSON.stringify(value))
+          }
           value = proxify(value, [...path, key])
         }
         target[key] = value
@@ -83,7 +85,7 @@ export function createDeepProxy(target) {
         if (Reflect.has(target, key)) {
           unproxy(target, key)
           let deleted = Reflect.deleteProperty(target, key)
-          if (deleted) {
+          if (deleted && !isTracking()) {
             checkForCallbacks([...path, key].join("."))
           }
           return deleted

@@ -83,6 +83,7 @@ let dialogs: { [key in DialogType]?: DialogsState } = {
   },
   Modal: { isClosing: false, visible: false },
   TableHeaderMenu: { isClosing: false, visible: false },
+  EditFormBig: { isClosing: false, visible: false },
 }
 
 export {

@@ -152,7 +152,7 @@ export class OvlDialog extends OvlBaseElement {
           footer: () => this.getFooter(),
           keyHandlerFn: this.keyHandler,
         },
-        zIndex: 10,
+        zIndex: 1001,
         dialogType: "Modal",
       }
       return html`<ovl-dialogholder

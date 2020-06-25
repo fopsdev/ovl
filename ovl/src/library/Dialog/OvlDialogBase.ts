@@ -17,6 +17,7 @@ export type DialogParts = {
   body?: TemplateResult | TemplateResult[]
   footer?: TemplateResult | TemplateResult[]
   keyHandlerFn?: any
+  closedCallbackFn?: any
 }
 
 export class OvlBaseDialog extends OvlBaseElement {
@@ -26,13 +27,14 @@ export class OvlBaseDialog extends OvlBaseElement {
   elementIdToFocusAfterClose: string
   elementToFocusAfterClose: Element
   lastTemplateResult: TemplateResult
+  closedCallbackFn: any
 
-  defaultKeyHandler = (e: Event) => {
-    e.preventDefault()
-    e.stopPropagation()
-  }
+  defaultKeyHandler = (e: Event) => {}
 
   getDialogTemplate = (dialogParts: DialogParts): TemplateResult => {
+    if (!this.closedCallbackFn && dialogParts.closedCallbackFn) {
+      this.closedCallbackFn = dialogParts.closedCallbackFn
+    }
     let dialogState = this.state.ovl.dialogs[this.dialogType]
     if (!this.opened) {
       if (!dialogState.elementIdToFocusAfterClose) {
@@ -107,7 +109,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     }
     this.lastTemplateResult = html`<div
       style="z-index:${this.zIndex};"
-      class="fd-dialog ovl-dialog fd-dialog--active animated fadeIn faster ${disableIfClosing} "
+      class="fd-dialog ovl-dialog fd-dialog--active fadeInScreen ${disableIfClosing} "
     >
       <div
         class="fd-dialog__content fd-dialog__content--s"
@@ -128,19 +130,22 @@ export class OvlBaseDialog extends OvlBaseElement {
       //this.state.ovl.dialogs[this.dialogType].isClosing = true
       let el = this.getElementsByClassName("fd-dialog")[0]
       if (el) {
-        el.classList.remove("fadeIn")
-        el.classList.add("fadeOut")
+        el.classList.remove("fadeInScreen")
+        el.classList.add("fadeOutScreen")
       }
     }
   }
 
   handleAnimationEnd = (e) => {
-    if (e.animationName === "fadeOut") {
+    if (e.animationName === "fadeOutScreen") {
       this.removeDialog()
     }
   }
   removeDialog = () => {
     this.opened = false
+    if (this.closedCallbackFn) {
+      this.closedCallbackFn()
+    }
     if (this.elementIdToFocusAfterClose) {
       document.getElementById(this.elementIdToFocusAfterClose).focus()
     } else if (this.elementToFocusAfterClose) {
@@ -180,39 +185,6 @@ export class OvlBaseDialog extends OvlBaseElement {
     return "go on"
   }
 
-  // checkDialog = (isVisibleFn?: any): TemplateResult | null => {
-  //   if (!this.state.ovl.dialogs[this.dialogType]) {
-  //     return null
-  //   }
-  //   debugger
-  //   if (
-  //     !this.state.ovl.dialogs[this.dialogType].visible &&
-  //     !this.state.ovl.dialogs[this.dialogType].isClosing &&
-  //     isVisibleFn &&
-  //     isVisibleFn()
-  //   ) {
-  //     this.state.ovl.dialogs[this.dialogType].visible = true
-  //     return "go_on"
-  //   }
-
-  //   if (!this.state.ovl.dialogs[this.dialogType].visible) {
-  //     return null
-  //   }
-
-  //   if (
-  //     !this.state.ovl.dialogs[this.dialogType].isClosing &&
-  //     isVisibleFn &&
-  //     !isVisibleFn()
-  //   ) {
-  //     this.state.ovl.dialogs[this.dialogType].isClosing = true
-  //   }
-
-  //   if (this.state.ovl.dialogs[this.dialogType].isClosing) {
-  //     this.closeDialog()
-  //     return undefined
-  //   }
-  //   return "go_on"
-  // }
   connectedCallback() {
     if (!this.state.ovl.dialogs[this.dialogType]) {
       this.state.ovl.dialogs[this.dialogType] = {

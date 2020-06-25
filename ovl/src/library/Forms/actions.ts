@@ -442,6 +442,7 @@ export const InitForm: OvlAction<InitForm> = (
       value.instanceId,
       value.formType
     )
+
     formInstanceList[value.instanceId] = {
       dirty: false,
       valid: true,

@@ -177,6 +177,7 @@ export class TableRowWrapper extends OvlBaseElement {
 
   async getUI() {
     return this.track(async () => {
+      let editFormBig
       let editSelected = this.row.editSelected
       let viewRow = this.row.viewRow
       let def = this.row.tableDef
@@ -250,26 +251,24 @@ export class TableRowWrapper extends OvlBaseElement {
             ${editRowSC}
           `)
         } else if (def.options.edit.editType === "big") {
-          this.actions.ovl.overlay.OpenOverlay({
-            templateResult: html`
-              <ovl-trowformb
-                id=${"trow" + def.id + key}
-                .props=${() => {
-                  return <EditRowDef>{
-                    tableDef: def,
-                    data: data,
-                    row: row,
-                    key: key,
-                    columnsAlign: this.row.columnsAlign,
-                    columnsVisible: this.row.columnsVisible,
-                    mode: editSelected.mode,
-                  }
-                }}
-              >
-              </ovl-trowformb>
-            `,
-            elementToFocusAfterClose: document.activeElement,
-          })
+          editFormBig = html`
+            <ovl-trowformb
+              id=${"trow" + def.id + key}
+              .props=${() => {
+                return <EditRowDef>{
+                  tableDef: def,
+                  data: data,
+                  row: row,
+                  key: key,
+                  columnsAlign: this.row.columnsAlign,
+                  columnsVisible: this.row.columnsVisible,
+                  mode: editSelected.mode,
+                }
+              }}
+            >
+            </ovl-trowformb>
+          `
+          this.state.ovl.dialogs.EditFormBig.visible = true
         }
       }
       let selected = this.row.selected
@@ -314,6 +313,7 @@ export class TableRowWrapper extends OvlBaseElement {
       }
 
       return html`
+        ${editFormBig}
         <ovl-trow
           @keydown=${(e) => this.handleKeyDown(e)}
           tabindex="0"

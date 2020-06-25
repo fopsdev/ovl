@@ -5,7 +5,7 @@ import { T, ovltemp } from "../../global/globals"
 import { DialogResult } from "../actions"
 import { FormState } from "../forms/actions"
 
-import { dialogAfterClose } from "../Dialog/actions"
+//import { dialogAfterClose } from "../Dialog/actions"
 
 export class TableRowSaveCancel extends OvlBaseElement {
   props: any
