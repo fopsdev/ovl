@@ -1032,6 +1032,11 @@ export class TableHeaderMenu extends OvlBaseElement {
       dialogHolderParams = {
         dialogParts: {
           body: () => this.getBody(),
+          emptySpaceClickHandlerFn: () => {
+            this.filterDropDownHidden = !this.filterDropDownHidden
+            //@ts-ignore
+            this.getElementsByTagName("ovl-dialogholder")[0].doRender()
+          },
           dismissedCallbackFn: () => {
             this.actions.ovl.internal.TableSelectHeader({
               def: this.headerMenu.def.def,

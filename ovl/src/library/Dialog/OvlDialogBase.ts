@@ -20,6 +20,7 @@ export type DialogParts = {
   customClass?: string
   keyHandlerFn?: any
   dismissHandlerFn?: any
+  emptySpaceClickHandlerFn?: any
   closedCallbackFn?: any
 }
 
@@ -64,6 +65,9 @@ export class OvlBaseDialog extends OvlBaseElement {
     let handleTopLevelClick = (e: Event) => {
       e.stopPropagation()
       e.preventDefault()
+      if (dialogParts.emptySpaceClickHandlerFn) {
+        dialogParts.emptySpaceClickHandlerFn()
+      }
     }
 
     let handleDismiss = (e: Event) => {

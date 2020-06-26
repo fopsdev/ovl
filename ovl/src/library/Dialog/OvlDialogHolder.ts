@@ -10,6 +10,7 @@ export type DialogGetParts = {
   keyHandlerFn?: any
   closedCallbackFn?: any
   dismissedCallbackFn?: any
+  emptySpaceClickHandlerFn?: any
   customClass?: () => string
 }
 
@@ -41,6 +42,7 @@ export class OvlDialogHolder extends OvlBaseDialog {
         customClass: d.customClass ? d.customClass() : undefined,
         keyHandlerFn: d.keyHandlerFn,
         dismissHandlerFn: d.dismissedCallbackFn,
+        emptySpaceClickHandlerFn: d.emptySpaceClickHandlerFn,
         closedCallbackFn: d.closedCallbackFn,
       })
     })
