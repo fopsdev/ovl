@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { resolvePath } from "../../global/globals"
+import { resolvePath, SetFocus } from "../../global/globals"
 import {
   FieldIsReadOnly,
   FieldRowCellSelectedHandler,
@@ -92,7 +92,7 @@ export class TableRowForm extends OvlFormElement {
         }
       }
 
-      target.focus()
+      SetFocus(target)
 
       var rect = target.getBoundingClientRect()
       if (rect.bottom > window.innerHeight) {

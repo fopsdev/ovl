@@ -297,6 +297,14 @@ export const stateCleaner = (state: OvlState, newObj, parentKey: string) => {
   })
 }
 
+export const SetFocus = (el: any) => {
+  el.focus()
+  if (el.value && el.setSelectionRange) {
+    let val = el.value
+    el.setSelectionRange(val.length, val.length)
+  }
+}
+
 export const ShowFile = (blob, type, fileName) => {
   // It is necessary to create a new blob object with mime-type explicitly set
   // otherwise only Chrome works like it should

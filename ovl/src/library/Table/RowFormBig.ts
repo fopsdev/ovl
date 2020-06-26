@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { ovltemp, resolvePath, T } from "../../global/globals"
+import { ovltemp, resolvePath, T, SetFocus } from "../../global/globals"
 import {
   EditGetCaptionRender,
   EditGetLabelAndValueRender,
@@ -55,11 +55,14 @@ export class TableRowFormBig extends OvlFormElement {
       !this.focusInit
     ) {
       this.focusInit = true
+
       let el = document.getElementById("ovlRFNFocus_focus")
       if (el) {
         let focusEl: HTMLCollection = el.getElementsByClassName("ovl-focusable")
         if (focusEl.length > 0) {
-          overlayToRender.elementToFocusAfterOpen = focusEl[0]
+          setTimeout(() => {
+            SetFocus(focusEl[0])
+          }, 100)
         }
       }
       //@ts-ignore

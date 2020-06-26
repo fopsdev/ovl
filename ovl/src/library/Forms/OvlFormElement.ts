@@ -1,5 +1,5 @@
 import { FormType, ovl } from "../.."
-import { resolvePath } from "../../global/globals"
+import { resolvePath, SetFocus } from "../../global/globals"
 import {
   FormAfterRender,
   FormShow,
@@ -184,14 +184,7 @@ export class OvlFormElement extends OvlBaseElement {
         if (lastTouchedField) {
           let focusEl = document.getElementById(lastTouchedField.id)
           if (focusEl) {
-            focusEl.focus()
-            //@ts-ignore
-            if (focusEl.value && focusEl.setSelectionRange) {
-              //@ts-ignore
-              let val = focusEl.value
-              //@ts-ignore
-              focusEl.setSelectionRange(val.length, val.length)
-            }
+            SetFocus(focusEl)
           }
         }
 

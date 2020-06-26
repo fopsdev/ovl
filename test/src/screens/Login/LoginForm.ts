@@ -103,11 +103,4 @@ export class CompLoginForm extends OvlFormElement {
       `
     })
   }
-  // updated() {
-  //   let focusEl = document.getElementById("loginformuser")
-  //   if (focusEl) {
-  //     focusEl.focus()
-  //   }
-  //   super.updated()
-  // }
 }

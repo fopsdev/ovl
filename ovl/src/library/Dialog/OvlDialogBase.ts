@@ -1,6 +1,7 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { TemplateResult, html } from "lit-html"
 import { DialogType, FormType } from "../.."
+import { SetFocus } from "../../global/globals"
 
 export type DialogsState = {
   elementIdToFocusAfterOpen?: string
@@ -52,8 +53,8 @@ export class OvlBaseDialog extends OvlBaseElement {
       }
       if (elementToFocus) {
         setTimeout(() => {
-          document.getElementById(elementToFocus).focus()
-        }, 200)
+          SetFocus(document.getElementById(elementToFocus))
+        }, 100)
       }
     }
     this.opened = true
@@ -141,7 +142,7 @@ export class OvlBaseDialog extends OvlBaseElement {
         class="fd-dialog__content ovl-dialog ovl-dialog-${this
           .dialogType} ${customClass}"
         role="dialog"
-        tabindex="0"
+        tabindex="0   "
         aria-modal="true"
         @click="${handleTopLevelClick}"
         @keydown=${keyHandler}

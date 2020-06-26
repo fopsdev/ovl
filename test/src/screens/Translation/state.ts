@@ -23,6 +23,8 @@ export let tblTranslation: TableDef = {
   server: {
     endpoint: "translation",
   },
+  features: { focusToFirstEditableField: true },
+
   columns: {
     U_Group: {
       ui: { labelTranslationKey: "AppColTranslationGroup" },
