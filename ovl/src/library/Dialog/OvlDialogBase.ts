@@ -112,8 +112,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       class="fd-dialog fd-dialog--active fadeInDialog ${disableIfClosing} "
     >
       <div
-        class="fd-dialog__content fd-dialog__content--s ovl-dialog ovl-dialog-${this
-          .dialogType}"
+        class="fd-dialog__content ovl-dialog ovl-dialog-${this.dialogType}"
         role="dialog"
         aria-modal="true"
         @keydown=${keyHandler}

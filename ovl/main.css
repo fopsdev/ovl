@@ -90,6 +90,11 @@
   white-space: normal !important;
 }
 
+.fd-list--dropdown,
+.fd-menu {
+  max-width: 100%;
+}
+
 /* custom styles 
 #############################################################
 */
@@ -218,32 +223,32 @@ ovl-table {
 .ovl-bigeditform-footer,
 .ovl-tableheadermenu-footer {
   margin-top: 3px;
-  margin-bottom: 1px;
+  margin-bottom: 0;
   padding-top: 3px;
-  padding-bottom: 1px;
+  padding-bottom: 0;
 }
 
-.ovl-bigeditform,
-.ovl-detailview {
+.ovl-dialog-EditFormBig,
+.ovl-dialog-TableHeaderMenu {
   width: 70vw;
   height: 92vh;
+  max-width: 70vw;
+  max-height: 92vh;
 }
-.ovl-tableheadermenu {
+
+.ovl-dialog-TableHeaderMenu {
   width: 50vw;
 }
 
-.ovl-tableheadermenu-content,
-.ovl-bigeditform-content,
-.ovl-detailview-content {
-  margin: 8px;
+.ovl-dialog-body {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 0;
 }
 
-.ovl-dialog-TableHeaderMenu .ovl-dialog-body,
-.ovl-dialog-EditFormBig .ovl-dialog-body {
-  overflow-y: hidden;
-  display: inline-flex;
-  margin: 0;
-  padding: 0;
+.ovl-bigdialog-footer {
+  margin-left: -16px;
+  margin-right: -16px;
 }
 
 .scrollableMobileOverlay {
@@ -296,13 +301,6 @@ body {
 }
 
 @media (orientation: portrait) {
-  .ovl-bigeditform,
-  .ovl-detailview,
-  .ovl-tableheadermenu {
-    width: 99vw;
-    height: 92vh;
-  }
-
   .ovlsnackbar {
     width: 100vw;
     position: absolute;

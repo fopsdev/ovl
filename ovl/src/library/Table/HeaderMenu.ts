@@ -189,7 +189,8 @@ export class TableHeaderMenu extends OvlBaseElement {
     e.preventDefault()
     this.filterDropDownHidden = !this.filterDropDownHidden
     // this is an internal state change, thats why we need to rerender manually...
-    this.doRender()
+    //@ts-ignore
+    this.getElementsByTagName("ovl-dialogholder")[0].doRender()
   }
 
   handleFilterDropDownValue = (e: Event, key: ColumnFilterTypes) => {
@@ -202,17 +203,20 @@ export class TableHeaderMenu extends OvlBaseElement {
     let currentFilter = def.columns[def.uiState.headerSelected].filter
 
     if (key === "@@ovl_all" && !currentFilter.enabled) {
-      this.doRender()
+      //@ts-ignore
+      this.getElementsByTagName("ovl-dialogholder")[0].doRender()
       return
     } else if (
       key === "@@ovl_others" &&
       currentFilter.enabled &&
       currentFilter.isOthersSelected
     ) {
-      this.doRender()
+      //@ts-ignore
+      this.getElementsByTagName("ovl-dialogholder")[0].doRender()
       return
     } else if (key === currentFilter.selected) {
-      this.doRender()
+      //@ts-ignore
+      this.getElementsByTagName("ovl-dialogholder")[0].doRender()
       return
     }
 
@@ -272,6 +276,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     // }
   }
   getBody = () => {
+    console.log("GetBody")
     const handleMainMouseDown = (e: Event) => {
       e.stopPropagation()
     }
@@ -457,30 +462,38 @@ export class TableHeaderMenu extends OvlBaseElement {
                 </li>
               `
             }
+
             columnFilter = html`
               <div>
-                <div class="fd-popover">
+                <div class="fd-popover" style="width:80%;">
                   <div
                     @click=${this.handleFilterDropDown}
                     class="fd-popover__control"
                   >
-                    <button
-                      class="fd-button sap-icon--filter"
-                      aria-controls="ovlh0C6A325"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                    >
-                      ${columnFilterSelectValue}
-                    </button>
+                    <div class="fd-select">
+                      <div
+                        class="fd-select__control"
+                        role="button"
+                        tabindex="0"
+                        aria-controls="ovlh0C6A325"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                      >
+                        ${columnFilterSelectValue}
+                        <span
+                          class="fd-button fd-button--transparent sap-icon--slim-arrow-down fd-select__button"
+                        ></span>
+                      </div>
+                    </div>
                   </div>
 
                   <div
-                    class="fd-popover__body fd-popover__body--no-arrow"
+                    class="fd-popover__body fd-popover__body--no-arrow fd-popover__body--dropdown"
                     aria-hidden="${this.filterDropDownHidden}"
                     id="ovlh0C6A325"
-                    style="overflow: auto; "
+                    style="overflow: auto;"
                   >
-                    <ul class="fd-list fd-list--no-border" role="listbox">
+                    <ul class="fd-list fd-list--dropdown" role="listbox">
                       ${all}
                       ${filterKeys.map((k) => {
                         let displayTemplate
@@ -853,7 +866,6 @@ export class TableHeaderMenu extends OvlBaseElement {
     if (def.features.page && dataFilteredAndSorted.length > paging.pageSize) {
       navcontrol = html`
         <ovl-tnavcontrol
-          style="margin-left:24px;"
           .props=${() => {
             return {
               tableData: this.headerMenu.def,
@@ -944,15 +956,16 @@ export class TableHeaderMenu extends OvlBaseElement {
         class="ovl-tableheadermenu"
         aria-hidden="false"
       >
-        <div class="ovl-tableheadermenu-content ${scrollable}">
+        <div
+          class="ovl-bigdialog-content ovl-tableheadermenu-content ${scrollable}"
+        >
           <nav class="fd-menu">
             ${columnFunctions} ${customSort} ${customFilter}
             ${selectedFunctions} ${tableFunctions}
           </nav>
         </div>
         <div
-          class="fd-layout-panel__footer ovl-tableheadermenu-footer"
-          style="margin-left:-24px;"
+          class="fd-layout-panel__footer ovl-bigdialog-footer ovl-tableheadermenu-footer"
         >
           ${navcontrol}
           <button

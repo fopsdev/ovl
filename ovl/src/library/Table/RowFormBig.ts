@@ -494,7 +494,9 @@ export class TableRowFormBig extends OvlFormElement {
             `
           })}
         </div>
-        <div class="fd-layout-panel__footer ovl-bigeditform-footer ">
+        <div
+          class="fd-layout-panel__footer ovl-bigdialog-footer ovl-bigeditform-footer "
+        >
           <button
             @click=${handleSave}
             title="Datensatz speichern"
