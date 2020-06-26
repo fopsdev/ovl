@@ -6,7 +6,7 @@ export class CompTableTesting extends OvlBaseElement {
   }
   async getUI() {
     return html`
-      <div class="${this.animatedClass}">
+      <div class="">
         <div class="fd-layout-panel">
           <ovl-table
             class="fd-table"

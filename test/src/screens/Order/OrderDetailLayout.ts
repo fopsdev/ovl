@@ -16,7 +16,7 @@ export class CompOrderDetailLayout extends OvlBaseElement {
       let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
 
       return html`
-      <div class="${this.animatedClass}">
+      <div class="">
       <section
           class="fd-section fd-has-type-2" style="text-align: center;"
           <h3

@@ -59,7 +59,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         acceptEnabled = "fd-button ovl-disabled"
       }
       return html`
-        <div class="fd-layout-panel ${this.animatedClass}">
+        <div class="fd-layout-panel ">
           <div class="fd-layout-panel__header">
             <div class="fd-layout-panel__head">
               <h3 class="fd-layout-panel__title">

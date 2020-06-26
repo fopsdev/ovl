@@ -69,7 +69,7 @@ export const scrollToLastPosition = (state: OvlState) => {
   }
 }
 
-import { render, TemplateResult } from "lit-html"
+import { render, TemplateResult, html } from "lit-html"
 
 export class OvlBaseElement extends HTMLElement {
   state: OvlState
@@ -77,9 +77,7 @@ export class OvlBaseElement extends HTMLElement {
   effects: OvlEffects
   name: string
   _id: number = 0
-
   screen: string
-  animatedClass: string
   static _counter: number = 0
   screenClosing() {
     if (
@@ -167,20 +165,14 @@ export class OvlBaseElement extends HTMLElement {
 
     this.state.ovl.language.translations
     if (this.screen) {
-      if (!this.screenClosing()) {
-        this.animatedClass = " fadeInScreen"
-      } else {
+      if (this.screenClosing()) {
         // no complete rerender is necessary
         // just set the animation class accordingly
-        //this.animatedClass = " animated fadeOut faster ovl-disabled"
-        let els = this.getElementsByClassName("fadeInScreen")
-        if (els.length > 0) {
-          let el = els[0]
-          el.classList.add("fadeOutScreen")
-          el.classList.add("ovl-disabled")
-          el.classList.remove("fadeInScreen")
-          return
-        }
+        let el = this.firstElementChild
+        el.classList.remove("fadeInScreen")
+        el.classList.add("ovl-disabled")
+        el.classList.add("fadeOutScreen")
+        return
       }
     }
     checkScreen = !this.screen || this.screenVisible()
@@ -189,7 +181,16 @@ export class OvlBaseElement extends HTMLElement {
     if (checkScreen) {
       res = await this.getUI()
     }
+    // wrap screen always in a div
+
     if (res !== undefined) {
+      if (this.screen) {
+        if (!this.screenClosing() && this.screenVisible()) {
+          res = html`<div class="fadeInScreen">${res}</div>`
+        } else {
+          res = html`<div>${res}</div>`
+        }
+      }
       render(res, this)
     }
     this.afterRender()

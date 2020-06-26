@@ -56,7 +56,7 @@ export class CompFeedbackForm extends OvlFormElement {
       let feedback = this.state.ovl.screens.screens.Feedback
 
       return html`
-        <div class="fd-layout-panel ${this.animatedClass}">
+        <div class="fd-layout-panel ">
           <div class="fd-layout-panel__header">
             <div class="fd-layout-panel__head">
               <h3 class="fd-layout-panel__title">

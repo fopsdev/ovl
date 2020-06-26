@@ -125,7 +125,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
         options
       )
       return html`
-        <div class="fd-layout-panel ${this.animatedClass}">
+        <div class="fd-layout-panel ">
           <div class="fd-tile">
             <div class="fd-tile__content fd-has-type-2">
               Zeiterfassung für

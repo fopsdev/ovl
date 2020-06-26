@@ -14,7 +14,7 @@ export class CompDashboard extends OvlBaseElement {
     return this.track(() => {
       let partner = this.state.portal.partner
       return html`
-    <div class="${this.animatedClass}">
+    <div class="">
       <div>
       <div class="fd-container fd-container--fluid">
         <div class="fd-col--12">

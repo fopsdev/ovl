@@ -57,7 +57,7 @@ export class CompQuotationOverview extends OvlBaseElement {
       }
 
       return html`
-        <div @click=${handleRemoveAllPDFPopup} class="${this.animatedClass}">
+        <div @click=${handleRemoveAllPDFPopup} class="">
           <div class="fd-container fd-container--fluid">
             <div class="fd-col--12">
               <div class="fd-layout-panel">

@@ -50,7 +50,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
       }
 
       return html`
-        <div class="${this.animatedClass}" @click=${handleRemoveAllPDFPopup}>
+        <div class="" @click=${handleRemoveAllPDFPopup}>
           <div>
             <div class="fd-container fd-container--fluid">
               <div class="fd-col--12">
