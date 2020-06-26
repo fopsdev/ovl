@@ -215,24 +215,35 @@ ovl-table {
   --fd-width-gutter: 8px;
 }
 
-.ovl-bigedit-footer {
-  margin-top: 4px;
-  margin-bottom: 0px;
-  padding-top: 6px;
-  padding-bottom: 0px;
+.ovl-bigeditform-footer,
+.ovl-tableheadermenu-footer {
+  margin-top: 3px;
+  margin-bottom: 1px;
+  padding-top: 3px;
+  padding-bottom: 1px;
 }
 
 .ovl-bigeditform,
-.ovl-tableheadermenu,
 .ovl-detailview {
   width: 70vw;
   height: 92vh;
+}
+.ovl-tableheadermenu {
+  width: 50vw;
+}
+
+.ovl-tableheadermenu-content,
+.ovl-bigeditform-content,
+.ovl-detailview-content {
+  margin: 8px;
 }
 
 .ovl-dialog-TableHeaderMenu .ovl-dialog-body,
 .ovl-dialog-EditFormBig .ovl-dialog-body {
   overflow-y: hidden;
   display: inline-flex;
+  margin: 0;
+  padding: 0;
 }
 
 .scrollableMobileOverlay {
@@ -286,7 +297,8 @@ body {
 
 @media (orientation: portrait) {
   .ovl-bigeditform,
-  .ovl-detailview {
+  .ovl-detailview,
+  .ovl-tableheadermenu {
     width: 99vw;
     height: 92vh;
   }

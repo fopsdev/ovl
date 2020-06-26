@@ -60,32 +60,15 @@ export const NavigateTo: OvlAction<Screen> = async (
     }
 
     state.ovl.screens.nav.nextScreen = value
-    let user = state.ovl.user
-    // //@ts-ignore
-    // if (value === "Login" && user) {
-    //   user.token = ""
-    // }
-    // make sure that a screen is only once in the history
-    // elsewise we need to handle different state (involves serializing and and and and...) as well
-    //@ts-ignore
-    // if (value !== "Login") {
-    //   let foundIndex = -1
-    //   for (let z = 0; z < state.ovl.screens.nav.screensHistory.length; z++) {
-    //     if (state.ovl.screens.nav.screensHistory[z] === value) {
-    //       foundIndex = z
-    //       break
-    //     }
-    //   }
-    //   if (foundIndex !== -1) {
-    //     state.ovl.screens.nav.screensHistory.splice(foundIndex, 1)
-    //   }
-    //   state.ovl.screens.nav.screensHistory.push(value)
-    // }
+
     document.getElementById("app").focus()
 
     if (!state.ovl.screens.nav.currentScreen) {
       //@ts-ignore
       state.ovl.screens.nav.currentScreen = OvlConfig.initialScreen
+      if (!state.ovl.screens.nav.currentScreen) {
+        state.ovl.screens.nav.currentScreen = value
+      }
       SetVisibleScreen(state, value)
     } else {
       SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)

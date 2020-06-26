@@ -458,24 +458,22 @@ export class TableHeaderMenu extends OvlBaseElement {
               `
             }
             columnFilter = html`
-              <div style="margin-bottom:6px;margin-left:24px;">
-                <span class="sap-icon--filter"></span>
-                <div class="fd-popover" style="width:90%;">
+              <div>
+                <div class="fd-popover">
                   <div
                     @click=${this.handleFilterDropDown}
                     class="fd-popover__control"
                   >
-                    <div class="fd-select">
-                      <button
-                        class="fd-select__control"
-                        aria-controls="ovlh0C6A325"
-                        aria-expanded="false"
-                        aria-haspopup="true"
-                      >
-                        ${columnFilterSelectValue}
-                      </button>
-                    </div>
+                    <button
+                      class="fd-button sap-icon--filter"
+                      aria-controls="ovlh0C6A325"
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                    >
+                      ${columnFilterSelectValue}
+                    </button>
                   </div>
+
                   <div
                     class="fd-popover__body fd-popover__body--no-arrow"
                     aria-hidden="${this.filterDropDownHidden}"
@@ -936,7 +934,7 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     let scrollable = "scrollableOverlay"
     if (this.state.ovl.uiState.isMobile) {
-      scrollable = "scrollableOverlayMobile"
+      scrollable = "scrollableMobileOverlay"
     }
 
     return html`
@@ -946,13 +944,16 @@ export class TableHeaderMenu extends OvlBaseElement {
         class="ovl-tableheadermenu"
         aria-hidden="false"
       >
-        <div class="${scrollable}">
+        <div class="ovl-tableheadermenu-content ${scrollable}">
           <nav class="fd-menu">
             ${columnFunctions} ${customSort} ${customFilter}
             ${selectedFunctions} ${tableFunctions}
           </nav>
         </div>
-        <div class="fd-layout-panel__footer">
+        <div
+          class="fd-layout-panel__footer ovl-tableheadermenu-footer"
+          style="margin-left:-24px;"
+        >
           ${navcontrol}
           <button
             style="margin-left:4px;"

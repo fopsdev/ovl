@@ -378,7 +378,7 @@ export class TableRowDetailView extends OvlBaseElement {
             <div
               tabindex="0"
               id="ovl-detailview-intersectionobserver"
-              class="fd-layout-panel ${scrollable}"
+              class="fd-layout-panel ovl-detailview-content ${scrollable}"
             >
               ${caption}
               <div
