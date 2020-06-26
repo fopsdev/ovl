@@ -9,6 +9,7 @@ export type DialogGetParts = {
   footer?: () => TemplateResult | TemplateResult[]
   keyHandlerFn?: any
   closedCallbackFn?: any
+  customClass?: () => string
 }
 
 export type DialogHolderParams = {
@@ -24,7 +25,6 @@ export class OvlDialogHolder extends OvlBaseDialog {
     this.zIndex = this.dialogHolderParams.zIndex
   }
   async getUI() {
-    console.log("render holder")
     let chk = this.checkDialog()
     if (chk != "go on") {
       return chk
@@ -37,6 +37,7 @@ export class OvlDialogHolder extends OvlBaseDialog {
         body: d.body ? d.body() : undefined,
         header: d.header ? d.header() : undefined,
         footer: d.footer ? d.footer() : undefined,
+        customClass: d.customClass ? d.customClass() : undefined,
         keyHandlerFn: d.keyHandlerFn,
         closedCallbackFn: d.closedCallbackFn,
       })

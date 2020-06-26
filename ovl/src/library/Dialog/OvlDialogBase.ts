@@ -16,6 +16,7 @@ export type DialogParts = {
   title?: string
   body?: TemplateResult | TemplateResult[]
   footer?: TemplateResult | TemplateResult[]
+  customClass?: string
   keyHandlerFn?: any
   closedCallbackFn?: any
 }
@@ -107,12 +108,17 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (dialogState.isClosing) {
       disableIfClosing = "ovl-disabled"
     }
+    let customClass = ""
+    if (dialogParts.customClass) {
+      customClass = dialogParts.customClass
+    }
     return html`<div
       style="z-index:${this.zIndex};"
       class="fd-dialog fd-dialog--active fadeInDialog ${disableIfClosing} "
     >
       <div
-        class="fd-dialog__content ovl-dialog ovl-dialog-${this.dialogType}"
+        class="fd-dialog__content ovl-dialog ovl-dialog-${this
+          .dialogType} ${customClass}"
         role="dialog"
         aria-modal="true"
         @keydown=${keyHandler}

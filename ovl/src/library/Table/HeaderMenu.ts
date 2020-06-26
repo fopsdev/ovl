@@ -418,6 +418,7 @@ export class TableHeaderMenu extends OvlBaseElement {
           filterDef.othersCount = totalCount - count
 
           let filterKeys = result //Object.keys(this.filterDef.filterValues)
+
           if (filterKeys.length > 0) {
             let columnFilterSelectValue = ""
             let defFilter = def.columns[def.uiState.headerSelected].filter
@@ -462,7 +463,6 @@ export class TableHeaderMenu extends OvlBaseElement {
                 </li>
               `
             }
-
             columnFilter = html`
               <div>
                 <div class="fd-popover" style="width:80%;">
@@ -665,14 +665,16 @@ export class TableHeaderMenu extends OvlBaseElement {
       let sortingFunctions
       if (columns[def.uiState.headerSelected].sortable) {
         sortingFunctions = html`
-          <li>
+          <li class="fd-menu__item  ${ascendingDisabled}" role="presentation">
             <a
               href="#"
-              class="fd-menu__item sap-icon--up ${ascendingDisabled}"
+              role="menuitem"
+              class="fd-menu__link"
               @click="${(e) =>
                 this.handleSortClick(e, def.uiState.headerSelected, true)}"
             >
-              Ascending</a
+              <span class="fd-menu__addon-before sap-icon--up"></span>
+              <span class="fd-menu__title">Ascending</span></a
             >
           </li>
           <li>
@@ -951,29 +953,24 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     return html`
       <div
+        class="ovl-bigdialog-content ovl-tableheadermenu-content ${scrollable}"
         @mousedown=${handleMainMouseDown}
         @click="${(e) => this.handleCloseHeaderMenu(e)}"
-        class="ovl-tableheadermenu"
-        aria-hidden="false"
       >
-        <div
-          class="ovl-bigdialog-content ovl-tableheadermenu-content ${scrollable}"
-        >
-          <nav class="fd-menu">
-            ${columnFunctions} ${customSort} ${customFilter}
-            ${selectedFunctions} ${tableFunctions}
-          </nav>
-        </div>
-        <div
-          class="fd-layout-panel__footer ovl-bigdialog-footer ovl-tableheadermenu-footer"
-        >
-          ${navcontrol}
-          <button
-            style="margin-left:4px;"
-            title="Abbrechen"
-            class="fd-button fd-button--negative sap-icon--decline"
-          ></button>
-        </div>
+        <nav class="fd-menu">
+          ${columnFunctions} ${customSort} ${customFilter} ${selectedFunctions}
+          ${tableFunctions}
+        </nav>
+      </div>
+      <div
+        class="fd-layout-panel__footer ovl-bigdialog-footer ovl-tableheadermenu-footer"
+      >
+        ${navcontrol}
+        <button
+          style="margin-left:4px;"
+          title="Abbrechen"
+          class="fd-button fd-button--negative sap-icon--decline"
+        ></button>
       </div>
     `
   }
@@ -1011,6 +1008,10 @@ export class TableHeaderMenu extends OvlBaseElement {
       dialogHolderParams = {
         dialogParts: {
           body: () => this.getBody(),
+          customClass: () => {
+            let def = this.headerMenu.def.def
+            return `ovl-table-${def.id} ovl-tableheadermenu ovl-tableheadermenu-${def.id}`
+          },
         },
         zIndex: 6,
         dialogType: "TableHeaderMenu",
