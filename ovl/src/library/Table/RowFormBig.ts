@@ -139,7 +139,7 @@ export class TableRowFormBig extends OvlFormElement {
     }
   }
 
-  handleCancel = async () => {
+  cancelFn = async () => {
     if (!this.state.ovl.libState.indicator.open) {
       let cancel: boolean = true
       if (this.formState.dirty) {
@@ -157,6 +157,9 @@ export class TableRowFormBig extends OvlFormElement {
         this.actions.ovl.dialog.DialogClose("EditFormBig")
       }
     }
+  }
+  handleCancel = async () => {
+    this.cancelFn()
   }
   closeEdit = () => {
     if (this.wasAdd) {
@@ -525,6 +528,9 @@ export class TableRowFormBig extends OvlFormElement {
           customClass: () => {
             let def = this.rowData.tableDef
             return `ovl-table-${def.id} ovl-editform ovl-bigeditform ovl-editform-${def.id}`
+          },
+          dismissedCallbackFn: () => {
+            this.cancelFn()
           },
         },
         zIndex: 6,

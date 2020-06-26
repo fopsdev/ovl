@@ -9,6 +9,7 @@ export type DialogGetParts = {
   footer?: () => TemplateResult | TemplateResult[]
   keyHandlerFn?: any
   closedCallbackFn?: any
+  dismissedCallbackFn?: any
   customClass?: () => string
 }
 
@@ -39,6 +40,7 @@ export class OvlDialogHolder extends OvlBaseDialog {
         footer: d.footer ? d.footer() : undefined,
         customClass: d.customClass ? d.customClass() : undefined,
         keyHandlerFn: d.keyHandlerFn,
+        dismissHandlerFn: d.dismissedCallbackFn,
         closedCallbackFn: d.closedCallbackFn,
       })
     })

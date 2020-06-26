@@ -90,11 +90,6 @@
   white-space: normal !important;
 }
 
-.fd-list--dropdown,
-.fd-menu {
-  max-width: 100%;
-}
-
 /* custom styles 
 #############################################################
 */
@@ -238,6 +233,12 @@ ovl-table {
 
 .ovl-dialog-TableHeaderMenu {
   width: 50vw;
+}
+
+.ovl-bigdialog-listtitle {
+  font-size: medium;
+  margin-bottom: 7px;
+  box-shadow: 0px 24px 24px 0px #f5f3f3 inset;
 }
 
 .ovl-dialog-body {

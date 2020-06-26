@@ -18,6 +18,7 @@ export type DialogParts = {
   footer?: TemplateResult | TemplateResult[]
   customClass?: string
   keyHandlerFn?: any
+  dismissHandlerFn?: any
   closedCallbackFn?: any
 }
 
@@ -29,6 +30,7 @@ export class OvlBaseDialog extends OvlBaseElement {
   elementToFocusAfterClose: Element
 
   closedCallbackFn: any
+  dismissCallbackFn: any
 
   defaultKeyHandler = (e: Event) => {}
 
@@ -36,6 +38,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (!this.closedCallbackFn && dialogParts.closedCallbackFn) {
       this.closedCallbackFn = dialogParts.closedCallbackFn
     }
+
     let dialogState = this.state.ovl.dialogs[this.dialogType]
     if (!this.opened) {
       if (!dialogState.elementIdToFocusAfterClose) {
@@ -43,16 +46,33 @@ export class OvlBaseDialog extends OvlBaseElement {
       } else {
         this.elementIdToFocusAfterClose = dialogState.elementIdToFocusAfterClose
       }
-
-      if (dialogState.elementIdToFocusAfterOpen) {
+      let elementToFocus = dialogState.elementIdToFocusAfterOpen
+      if (!elementToFocus) {
+        elementToFocus = "ovl-dialog"
+      }
+      if (elementToFocus) {
         setTimeout(() => {
-          document.getElementById(dialogState.elementIdToFocusAfterOpen).focus()
+          document.getElementById(elementToFocus).focus()
         }, 200)
       }
     }
     this.opened = true
 
     // now put together the template
+
+    let handleTopLevelClick = (e: Event) => {
+      e.stopPropagation()
+      e.preventDefault()
+    }
+
+    let handleDismiss = (e: Event) => {
+      e.stopPropagation()
+      e.preventDefault()
+
+      if (dialogParts.dismissHandlerFn) {
+        dialogParts.dismissHandlerFn()
+      }
+    }
     let keyHandler = this.defaultKeyHandler
     if (dialogParts.keyHandlerFn) {
       keyHandler = dialogParts.keyHandlerFn
@@ -115,13 +135,17 @@ export class OvlBaseDialog extends OvlBaseElement {
     return html`<div
       style="z-index:${this.zIndex};"
       class="fd-dialog fd-dialog--active fadeInDialog ${disableIfClosing} "
+      @click="${handleDismiss}"
     >
       <div
         class="fd-dialog__content ovl-dialog ovl-dialog-${this
           .dialogType} ${customClass}"
         role="dialog"
+        tabindex="0"
         aria-modal="true"
+        @click="${handleTopLevelClick}"
         @keydown=${keyHandler}
+        id="ovl-dialog"
       >
         ${fullheader} ${body} ${footer}
       </div>

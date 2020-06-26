@@ -151,6 +151,7 @@ export class OvlDialog extends OvlBaseElement {
           body: () => this.getBody(),
           footer: () => this.getFooter(),
           keyHandlerFn: this.keyHandler,
+          dismissedCallbackFn: this.handleCancelClick,
         },
         zIndex: 1001,
         dialogType: "Modal",
