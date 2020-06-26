@@ -255,7 +255,7 @@ ovl-table {
 
 .scrollable {
   overflow-y: auto;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 50px);
   -webkit-overflow-scrolling: touch;
 }
 
