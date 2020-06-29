@@ -1,5 +1,5 @@
 import { OvlBaseDialog, DialogParts } from "./OvlDialogBase"
-import { DialogType } from "../.."
+import { OvlDialog } from "../.."
 import { TemplateResult } from "lit-html"
 
 export type DialogGetParts = {
@@ -16,7 +16,7 @@ export type DialogGetParts = {
 
 export type DialogHolderParams = {
   dialogParts: DialogGetParts
-  dialogType: DialogType
+  dialogType: OvlDialog
   zIndex: number
 }
 export class OvlDialogHolder extends OvlBaseDialog {
@@ -32,7 +32,7 @@ export class OvlDialogHolder extends OvlBaseDialog {
       return chk
     }
     return this.track(() => {
-      this.state.ovl.dialogs[this.dialogType].isClosing
+      this.state.ovl.dialogs[this.dialogType].closing
       let d = this.dialogHolderParams.dialogParts
       return this.getDialogTemplate({
         title: d.title ? d.title() : undefined,

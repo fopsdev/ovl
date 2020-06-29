@@ -22,7 +22,7 @@ export class CompShellbar extends OvlBaseElement {
     const mainMenuClick = (e: Event) => {
       e.stopPropagation()
       this.actions.portal.system.shellbar.CloseUserMenu()
-      if (this.state.ovl.screens.screens.Shellbar.mainMenuExpanded) {
+      if (this.state.timeportal.screens.shellbar.mainMenuExpanded) {
         this.actions.portal.system.shellbar.CloseMainMenu()
       } else {
         this.actions.portal.system.shellbar.OpenMainMenu()
@@ -32,7 +32,7 @@ export class CompShellbar extends OvlBaseElement {
     const userMenuClick = (e: Event) => {
       e.stopPropagation()
       this.actions.portal.system.shellbar.CloseMainMenu()
-      if (this.state.ovl.screens.screens.Shellbar.userMenuExpanded) {
+      if (this.state.timeportal.screens.shellbar.userMenuExpanded) {
         this.actions.portal.system.shellbar.CloseUserMenu()
       } else {
         this.actions.portal.system.shellbar.OpenUserMenu()
@@ -62,10 +62,10 @@ export class CompShellbar extends OvlBaseElement {
 
     const handleTopLevelClick = (e: Event) => {
       e.stopPropagation()
-      if (this.state.ovl.screens.screens.Shellbar.mainMenuExpanded) {
+      if (this.state.timeportal.screens.shellbar.mainMenuExpanded) {
         this.actions.portal.system.shellbar.CloseMainMenu()
       }
-      if (this.state.ovl.screens.screens.Shellbar.userMenuExpanded) {
+      if (this.state.timeportal.screens.shellbar.userMenuExpanded) {
         this.actions.portal.system.shellbar.CloseUserMenu()
       }
     }
@@ -123,7 +123,7 @@ export class CompShellbar extends OvlBaseElement {
 
     return this.track(() => {
       let feedbackForm = null
-      let screenState = this.state.ovl.screens.screenState
+      let screenState = this.state.ovl.screens.screens
       if (
         screenState &&
         screenState["Feedback"] &&
@@ -440,7 +440,7 @@ export class CompShellbar extends OvlBaseElement {
                         @click=${handleMainMenuLevelClick}
                         style="width:280px;"
                         class="fd-popover__body fd-popover__body--right"
-                        aria-hidden="${!this.state.ovl.screens.screens.Shellbar
+                        aria-hidden="${!this.state.timeportal.screens.shellbar
                           .mainMenuExpanded}"
                         id="CWaGX278"
                       >
@@ -474,7 +474,7 @@ export class CompShellbar extends OvlBaseElement {
                         aria-label=""
                         @click=${userMenuClick}
                         aria-controls="DD35G276"
-                        aria-expanded="${this.state.ovl.screens.screens.Shellbar
+                        aria-expanded="${this.state.timeportal.screens.shellbar
                           .userMenuExpanded}"
                         aria-haspopup="true"
                       >
@@ -487,7 +487,7 @@ export class CompShellbar extends OvlBaseElement {
                       @click=${handleUserMenuLevelClick}
                       style="width:280px;"
                       class="fd-popover__body fd-popover__body--right"
-                      aria-hidden="${!this.state.ovl.screens.screens.Shellbar
+                      aria-hidden="${!this.state.timeportal.screens.shellbar
                         .userMenuExpanded}"
                       id="DD35G276"
                     >

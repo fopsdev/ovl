@@ -26,8 +26,8 @@ OvlConfig.apiUrl = {
 OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
   return (
     !state.ovl.uiState.isIOS &&
-    !state.ovl.screens.screens.Shellbar.mainMenuExpanded &&
-    !state.ovl.screens.screens.Shellbar.userMenuExpanded
+    !state.timeportal.screens.shellbar.mainMenuExpanded &&
+    !state.timeportal.screens.shellbar.userMenuExpanded
   )
 }
 

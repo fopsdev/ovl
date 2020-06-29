@@ -1,7 +1,7 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
 
-import { Screen } from "./index"
+import { OvlScreen } from "./index"
 
 export type Init = {
   customerTestUrlMatch: string
@@ -23,7 +23,7 @@ type OvlConfig = {
     PersistStateId: string
     PersistTimestampId: string
   }
-  initialScreen?: Screen
+  initialScreen?: OvlScreen
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {

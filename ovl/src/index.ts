@@ -1,10 +1,10 @@
 import {
+  timePortalScreens,
+  timePortalDialogs,
   CustomFormType,
-  CustomDialogType,
   TableDefIds,
   Language,
-} from "../../../kaltag/src/index"
-import { screens } from "../../../kaltag/src/stateScreens"
+} from "../../../kaltag/src/appDef"
 import * as timePortalState from "../../../kaltag/src/state"
 import * as timePortalActions from "../../../kaltag/src/actions"
 import * as customActions from "../../../kaltag/src/customActions"
@@ -13,6 +13,8 @@ import { createDeepProxy } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
+
+import { baseScreens, baseDialogs } from "./screensAndDialogs"
 
 type OvlActionContext = {
   state: OvlState
@@ -31,6 +33,31 @@ let _state = {
   ovl: ovlState,
   timeportal: timePortalState,
 }
+
+// prepare screens state
+//@ts-ignore
+_state.ovl.screens.screens = {}
+Object.keys(timePortalScreens)
+  .concat(Object.keys(baseScreens))
+  .forEach((k) => {
+    _state.ovl.screens.screens[k] = {
+      visible: false,
+      closing: false,
+      lastScrollTop: undefined,
+    }
+  })
+
+// prepare dialogs state
+//@ts-ignore
+_state.ovl.dialogs = {}
+Object.keys(timePortalDialogs)
+  .concat(Object.keys(baseDialogs))
+  .forEach((k) => {
+    _state.ovl.dialogs[k] = {
+      visible: false,
+      closing: false,
+    }
+  })
 
 let state: OvlState = createDeepProxy(_state)
 
@@ -108,12 +135,14 @@ export type OvlState = typeof _state
 export type OvlActions = typeof actions
 export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
-export type DialogType =
-  | CustomDialogType
-  | "Modal"
-  | "TableHeaderMenu"
-  | "EditFormBig"
-export { screens, TableDefIds, Language }
-export type Screen = keyof typeof screens
+export type OvlDialog =
+  | keyof typeof baseDialogs
+  | keyof typeof timePortalDialogs
+
+export { TableDefIds, Language }
+export type OvlScreen =
+  | keyof typeof baseScreens
+  | keyof typeof timePortalScreens
+
 import { defineElements } from "./registerComponents"
 defineElements()

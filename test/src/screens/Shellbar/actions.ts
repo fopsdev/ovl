@@ -1,15 +1,15 @@
 import { OvlAction } from "../../../../ovl/src"
 
 export const CloseMainMenu: OvlAction = (_, { state }) => {
-  state.ovl.screens.screens.Shellbar.mainMenuExpanded = false
+  state.timeportal.screens.shellbar.mainMenuExpanded = false
 }
 export const OpenMainMenu: OvlAction = (_, { state }) => {
-  state.ovl.screens.screens.Shellbar.mainMenuExpanded = true
+  state.timeportal.screens.shellbar.mainMenuExpanded = true
 }
 
 export const CloseUserMenu: OvlAction = (_, { state }) => {
-  state.ovl.screens.screens.Shellbar.userMenuExpanded = false
+  state.timeportal.screens.shellbar.userMenuExpanded = false
 }
 export const OpenUserMenu: OvlAction = (_, { state }) => {
-  state.ovl.screens.screens.Shellbar.userMenuExpanded = true
+  state.timeportal.screens.shellbar.userMenuExpanded = true
 }

@@ -1,4 +1,4 @@
-import { Screen, FormType, OvlState, OvlActions, OvlEffects } from "../index"
+import { OvlScreen, FormType, OvlState, OvlActions, OvlEffects } from "../index"
 import { ovl } from "../index"
 import {
   startTrack,
@@ -9,11 +9,22 @@ import {
   callbacks,
 } from "../tracker/tracker"
 
-type ScreensHistory = Screen[]
+type ScreensHistory = OvlScreen[]
 
 export type ScreensState = {
-  nextScreen: Screen
-  currentScreen: Screen
+  screens: {
+    [key in OvlScreen]: {
+      visible: boolean
+      closing: boolean
+      lastScrollTop: number
+    }
+  }
+  nav: NavState
+}
+
+export type NavState = {
+  nextScreen: OvlScreen
+  currentScreen: OvlScreen
   screensHistory: ScreensHistory
   formTypeToReset: FormType
   formIdToReset: string
@@ -23,7 +34,7 @@ export const setLastScrollPosition = (state: OvlState) => {
   let currentScreen = state.ovl.screens.nav.currentScreen
   if (currentScreen) {
     // get the first scrollable class of the doc
-    let o = state.ovl.screens.screenState[currentScreen]
+    let o = state.ovl.screens.screens[currentScreen]
     let scrollable
     if (state.ovl.uiState.isMobile) {
       scrollable = document.querySelector(".scrollableMobile")
@@ -42,13 +53,10 @@ export const setLastScrollPosition = (state: OvlState) => {
 
 export const scrollToLastPosition = (state: OvlState) => {
   let screen = state.ovl.screens.nav.currentScreen
-  if (
-    !state.ovl.screens.screenState ||
-    !state.ovl.screens.screenState[screen]
-  ) {
+  if (!state.ovl.screens.screens || !state.ovl.screens.screens[screen]) {
     return
   }
-  let lastScrollTop = state.ovl.screens.screenState[screen].lastScrollTop
+  let lastScrollTop = state.ovl.screens.screens[screen].lastScrollTop
   // set scroll to remembered pos
   let scrollable
   if (state.ovl.uiState.isMobile) {
@@ -77,31 +85,14 @@ export class OvlBaseElement extends HTMLElement {
   effects: OvlEffects
   name: string
   _id: number = 0
-  screen: string
+  screen: OvlScreen
   static _counter: number = 0
   screenClosing() {
-    if (
-      this.state.ovl.screens &&
-      this.state.ovl.screens.screenState &&
-      this.state.ovl.screens.screenState[this.screen] !== undefined
-    ) {
-      return this.track(() => {
-        this.state.ovl.screens.screenState[this.screen]
-        return this.state.ovl.screens.screenState[this.screen].closing === true
-      })
-    }
-
-    return false
+    return this.track(() => this.state.ovl.screens.screens[this.screen].closing)
   }
 
   screenVisible() {
-    return this.track(() => {
-      this.state.ovl.screens.screenState[this.screen]
-      let visible =
-        this.state.ovl.screens.screenState[this.screen].visible === true
-      //logTrackingList()
-      return visible
-    })
+    return this.track(() => this.state.ovl.screens.screens[this.screen].visible)
   }
 
   handleAnimationStart = (e) => {
@@ -202,17 +193,6 @@ export class OvlBaseElement extends HTMLElement {
 
   connectedCallback() {
     this.init()
-    if (this.screen) {
-      if (this.state.ovl.screens.screenState === undefined) {
-        this.state.ovl.screens.screenState = {}
-      }
-      if (this.state.ovl.screens.screenState[this.screen] === undefined) {
-        this.state.ovl.screens.screenState[this.screen] = {
-          visible: false,
-          isClosing: false,
-        }
-      }
-    }
 
     this.doRender()
     if (this.screen) {

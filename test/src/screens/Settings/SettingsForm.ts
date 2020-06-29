@@ -92,7 +92,7 @@ export class CompSettingsForm extends OvlFormElement {
                 <button
                   ?disabled=${
                     this.state.ovl.libState.indicator.open ||
-                    this.state.ovl.screens.screenState[this.screen].closing
+                    this.state.ovl.screens.screens[this.screen].closing
                   }
                   @click=${handleSave}
                   class="fd-button"

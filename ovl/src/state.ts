@@ -4,7 +4,7 @@ import { Translation } from "./global/globals"
 import { ScreensState } from "./library/OvlBaseElement"
 import { OverlayState } from "./library/Overlay/Overlay"
 import { SnackState } from "./library/Snack/Snack"
-import { screens as screensState, DialogType } from "./index"
+import { OvlDialog } from "./index"
 import { DialogsState } from "./library/Dialog/OvlDialogBase"
 
 let forms: FormsState = undefined
@@ -21,12 +21,16 @@ let dialog: ModalDialogState = undefined
 let translations: Translation = {}
 let apiUrl = ""
 
-let nav: ScreensState = {
-  nextScreen: undefined,
-  currentScreen: undefined,
-  screensHistory: [],
-  formTypeToReset: undefined,
-  formIdToReset: undefined,
+let screens: ScreensState = {
+  // screens prop will be prepared from script
+  screens: undefined,
+  nav: {
+    nextScreen: undefined,
+    currentScreen: undefined,
+    screensHistory: [],
+    formTypeToReset: undefined,
+    formIdToReset: undefined,
+  },
 }
 
 let overlay: OverlayState = { open: false, closing: false }
@@ -70,21 +74,7 @@ let app = {
   offline: false,
 }
 
-let screens = {
-  screens: screensState,
-  nav,
-  screenState: undefined,
-}
-let dialogs: { [key in DialogType]?: DialogsState } = {
-  Login: {
-    isClosing: false,
-    visible: false,
-    elementIdToFocusAfterOpen: "loginformuser",
-  },
-  Modal: { isClosing: false, visible: false },
-  TableHeaderMenu: { isClosing: false, visible: false },
-  EditFormBig: { isClosing: false, visible: false },
-}
+let dialogs: { [key in OvlDialog]?: DialogsState } = {}
 
 export {
   app,

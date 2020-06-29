@@ -1,31 +1,26 @@
 import { OpenModalDialogState, ResultType } from "./Dialog"
-import { OvlAction, DialogType, FormType } from "../../index"
+import { OvlAction, OvlDialog, FormType } from "../../index"
 import { FormValidate_Type } from "../../global/hooks"
 
 export type OpenDialogOptions = {
-  dialogType: DialogType
+  dialogType: OvlDialog
   elementIdToFocusAfterOpen?: string
   elementIdToFocusAfterClose?: string
   formType?: FormType
   formId?: string
 }
 
-export const DialogClose: OvlAction<DialogType> = async (value, { state }) => {
-  if (state.ovl.dialogs[value]) {
-    state.ovl.dialogs[value].isClosing = true
-  }
+export const DialogClose: OvlAction<OvlDialog> = async (value, { state }) => {
+  state.ovl.dialogs[value].closing = true
 }
 
 export const DialogOpen: OvlAction<OpenDialogOptions> = async (
   value,
   { state }
 ) => {
-  if (!state.ovl.dialogs[value.dialogType]) {
-    state.ovl.dialogs[value.dialogType] = { visible: false, isClosing: false }
-  }
   let wait = 0
   let dlgState = state.ovl.dialogs[value.dialogType]
-  if (dlgState.isClosing) {
+  if (dlgState.closing) {
     wait = 400
   }
   setTimeout(() => {
@@ -38,7 +33,7 @@ export const DialogOpen: OvlAction<OpenDialogOptions> = async (
     dlgState.elementIdToFocusAfterOpen = elFocusId
     dlgState.elementIdToFocusAfterClose = value.elementIdToFocusAfterClose
     dlgState.visible = true
-    dlgState.isClosing = false
+    dlgState.closing = false
   }, wait)
 }
 

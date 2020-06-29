@@ -77,7 +77,7 @@ export const DialogChanged: OvlAction<DialogChangedParam> = (
   value,
   { state, actions }
 ) => {
-  state.ovl.dialogs.Modal.isClosing = true
+  state.ovl.dialogs.Modal.closing = true
   value.dialogState.result = value.result
   if (dialogResolver) {
     dialogResolver(value.result)

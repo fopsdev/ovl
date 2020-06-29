@@ -1,4 +1,4 @@
-import { Screen, ovl, OvlState, OvlAction, OvlActions } from "../index"
+import { OvlScreen, ovl, OvlState, OvlAction, OvlActions } from "../index"
 import { Init, OvlConfig } from "../init"
 import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
@@ -28,7 +28,7 @@ export const SetLastScrollPosition: OvlAction = (_, { state }) => {
   setLastScrollPosition(state)
 }
 
-export const NavigateTo: OvlAction<Screen> = async (
+export const NavigateTo: OvlAction<OvlScreen> = async (
   value,
   { state, actions, effects }
 ) => {
@@ -86,7 +86,7 @@ export const NavigateBack: OvlAction = async (
       let currentScreen = state.ovl.screens.nav.currentScreen
       if (currentScreen) {
         // get the first scrollable class of the doc
-        let o = state.ovl.screens.screenState[currentScreen]
+        let o = state.ovl.screens.screens[currentScreen]
 
         let scrollable
 
@@ -147,49 +147,28 @@ export const NavigateBack: OvlAction = async (
 const SetClosingScreen = (
   actions: OvlActions,
   state: OvlState,
-  value: string
+  value: OvlScreen
 ) => {
   if (value !== undefined) {
-    let o = state.ovl.screens.screenState[value]
-    if (o === undefined) {
-      o = state.ovl.screens.screenState[value] = {}
+    if (!state.ovl.uiState.hasOSReducedMotion) {
+      state.ovl.screens.screens[value].closing = true
     } else {
-      if (!state.ovl.uiState.hasOSReducedMotion) {
-        o.closing = true
-      } else {
-        actions.ovl.internal.SetVisibleFalse(value)
-      }
+      actions.ovl.internal.SetVisibleFalse(value)
     }
   }
 }
 
-const SetVisibleScreen = async (state: OvlState, value: string) => {
-  if (!state.ovl.screens.screenState) {
-    state.ovl.screens.screenState = {}
-  }
-  let o = state.ovl.screens.screenState[value]
-  if (o === undefined) {
-    state.ovl.screens.screenState[value] = { visible: true, closing: false }
-  } else {
-    o.visible = true
-    o.closing = false
-  }
+const SetVisibleScreen = async (state: OvlState, value: OvlScreen) => {
+  state.ovl.screens.screens[value].visible = true
+  state.ovl.screens.screens[value].closing = false
 }
 
-export const SetVisibleFalse: OvlAction<string> = (
+export const SetVisibleFalse: OvlAction<OvlScreen> = (
   value,
   { state, actions }
 ) => {
-  if (!state.ovl.screens.screenState) {
-    state.ovl.screens.screenState = {}
-  }
-  let o = state.ovl.screens.screenState[value]
-  if (o === undefined) {
-    o = state.ovl.screens.screenState[value] = {}
-    //console.log(state.ovl.screens.screenState[value])
-  }
-  o.visible = false
-  o.closing = false
+  state.ovl.screens.screens[value].visible = false
+  state.ovl.screens.screens[value].closing = false
   state.ovl.screens.nav.currentScreen = state.ovl.screens.nav.nextScreen
   // check if there is a form to reset
   if (state.ovl.screens.nav.formTypeToReset) {
@@ -258,20 +237,6 @@ export const PrepareApp: OvlAction = async (_, { actions, state, effects }) => {
   if (!screenToGo) {
     screenToGo = state.ovl.screens.nav.currentScreen
   }
-  let screenState = state.ovl.screens.screenState
-  if (!screenState[screenToGo]) {
-    screenState[screenToGo] = { visible: true, closing: false }
-  }
-  Object.keys(screenState).forEach((k) => {
-    let screen = screenState[k]
-    if (k === screenToGo) {
-      screen.visible = true
-      screen.closing = false
-    } else {
-      screen.visible = false
-      screen.closing = false
-    }
-  })
   state.ovl.screens.nav.currentScreen = screenToGo
   state.ovl.screens.nav.nextScreen = undefined
   //actions.ovl.navigation.NavigateTo(screenToGo)

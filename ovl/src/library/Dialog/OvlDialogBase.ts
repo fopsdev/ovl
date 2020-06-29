@@ -1,13 +1,13 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { TemplateResult, html } from "lit-html"
-import { DialogType, FormType } from "../.."
+import { OvlDialog, FormType } from "../.."
 import { SetFocus } from "../../global/globals"
 
 export type DialogsState = {
   elementIdToFocusAfterOpen?: string
   elementIdToFocusAfterClose?: string
   visible: boolean
-  isClosing: boolean
+  closing: boolean
   formType?: FormType
   formId?: string
 }
@@ -25,7 +25,7 @@ export type DialogParts = {
 }
 
 export class OvlBaseDialog extends OvlBaseElement {
-  dialogType: DialogType
+  dialogType: OvlDialog
   zIndex: number
   opened: boolean
   elementIdToFocusAfterClose: string
@@ -130,7 +130,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       </footer>`
     }
     let disableIfClosing = ""
-    if (dialogState.isClosing) {
+    if (dialogState.closing) {
       disableIfClosing = "ovl-disabled"
     }
     let customClass = ""
@@ -190,7 +190,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       }
     }
     this.state.ovl.dialogs[this.dialogType].visible = false
-    this.state.ovl.dialogs[this.dialogType].isClosing = false
+    this.state.ovl.dialogs[this.dialogType].closing = false
 
     // also reset form if necessary
     if (this.state.ovl.screens.nav.formTypeToReset) {
@@ -212,7 +212,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       return null
     }
 
-    if (this.state.ovl.dialogs[this.dialogType].isClosing) {
+    if (this.state.ovl.dialogs[this.dialogType].closing) {
       this.closeDialog()
       return undefined
     }
@@ -223,7 +223,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (!this.state.ovl.dialogs[this.dialogType]) {
       this.state.ovl.dialogs[this.dialogType] = {
         visible: false,
-        isClosing: false,
+        closing: false,
       }
     }
 

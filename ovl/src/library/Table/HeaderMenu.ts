@@ -22,6 +22,9 @@ export class TableHeaderMenu extends OvlBaseElement {
   filterDropDownHidden: boolean
   focusSet: boolean
   handleSortClick = (e: Event, key: string, ascending: boolean) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     this.actions.ovl.table.TableSort({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -31,9 +34,11 @@ export class TableHeaderMenu extends OvlBaseElement {
   }
 
   handleFilterSetClick = (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     //@ts-ignore
     let val = e.target.previousElementSibling.value
-
     this.actions.ovl.table.TableFilter({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -41,8 +46,9 @@ export class TableHeaderMenu extends OvlBaseElement {
     })
   }
   handleFilterUnSetClick = (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
     //@ts-ignore
-
     this.actions.ovl.table.TableFilter({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -51,10 +57,16 @@ export class TableHeaderMenu extends OvlBaseElement {
   }
 
   handleFilterSelectedClick = (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     this.actions.ovl.internal.TableFilterSelected(this.headerMenu.def)
   }
 
   handleCustomColumnFunctionClick = (e: Event, key: string, name: string) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     let def = this.headerMenu.def.def
     let fnName = FormCustomColumnFn.replace("%", key)
     let fn = resolvePath(this.actions.custom, def.namespace)
@@ -68,6 +80,9 @@ export class TableHeaderMenu extends OvlBaseElement {
   }
 
   handleCustomSelectedClick = (e: Event, key: string, name: string) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     this.actions.ovl.internal.TableMultipleCustomFunction({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -1014,7 +1029,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       dlgState.visible = true
     }
     if (dlgState.visible && !dependsOn) {
-      dlgState.isClosing = true
+      dlgState.closing = true
     }
   }
 
