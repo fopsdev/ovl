@@ -2,6 +2,8 @@
 
 Todos:
 
+- unify dialog and screens state . rethink tying of screen state (not the visible/isClosing stuff) to ovl.screens
+
 - go after the JSON.stringifies in Code... They are not more necessary because its handled by the proxifier now
 
 X - dialog HeaderMenuTable... closing doesn not work. Maybe return a nothing so lit-html for sure makes nothing

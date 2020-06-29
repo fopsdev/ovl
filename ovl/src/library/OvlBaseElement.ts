@@ -181,11 +181,12 @@ export class OvlBaseElement extends HTMLElement {
     if (checkScreen) {
       res = await this.getUI()
     }
-    // wrap screen always in a div
 
     if (res !== undefined) {
       if (this.screen) {
         if (!this.screenClosing() && this.screenVisible()) {
+          // wrap screen always in a div
+          // because animations didn't work on custom element top level
           res = html`<div class="fadeInScreen">${res}</div>`
         } else {
           res = html`<div>${res}</div>`
