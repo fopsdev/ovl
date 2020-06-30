@@ -1,6 +1,8 @@
 import { OpenModalDialogState, ResultType } from "./Dialog"
 import { OvlAction, OvlDialog, FormType } from "../../index"
 import { FormValidate_Type } from "../../global/hooks"
+import { modalDialog } from "../../global/globals"
+import { TemplateResult } from "lit-html"
 
 export type OpenDialogOptions = {
   dialogType: OvlDialog
@@ -63,7 +65,7 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
   } else {
     state.ovl.libState.dialog.okText = ""
   }
-  state.ovl.libState.dialog.text = value.text
+  modalDialog.text = value.text
   state.ovl.libState.dialog.result = undefined
   let elementIdToFocusAfterOpen = "ovldialogcancel"
   if (state.ovl.libState.dialog.default == 1) {
@@ -76,19 +78,20 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
 }
 
 type OkCancelDialog = {
-  text: string
+  text: string | TemplateResult
   default: ResultType
 }
 export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   value,
   { actions }
-) =>
+) => {
   await actions.ovl.dialog.ModalDialogOpen({
     cancel: "AppCancel",
     ok: "AppOk",
     text: value.text,
     default: value.default,
   })
+}
 
 export const OkDialog: OvlAction<{ text: string }> = async (
   value,

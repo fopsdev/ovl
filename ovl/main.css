@@ -98,6 +98,10 @@
   pointer-events: none;
 }
 
+.ovl-dialog-Modal .ovl-dialog-body {
+  padding: 12px;
+}
+
 /* firefox needs this to support breaks inside textarea */
 @supports (-moz-appearance: none) {
   textarea {

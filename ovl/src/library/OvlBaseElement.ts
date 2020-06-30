@@ -168,27 +168,28 @@ export class OvlBaseElement extends HTMLElement {
     }
     checkScreen = !this.screen || this.screenVisible()
 
-    let res = null
+    let res
     if (checkScreen) {
       res = await this.getUI()
-    }
-
-    if (res !== undefined) {
-      if (this.screen) {
-        if (!this.screenClosing() && this.screenVisible()) {
-          // wrap screen always in a div
-          // because animations didn't work on custom element top level
-          res = html`<div class="fadeInScreen">${res}</div>`
-        } else {
-          res = html`<div>${res}</div>`
+      if (res !== undefined) {
+        if (this.screen) {
+          if (!this.screenClosing() && this.screenVisible()) {
+            // wrap screen always in a div
+            // because animations didn't work on custom element top level
+            res = html`<div class="fadeInScreen">${res}</div>`
+          } else {
+            res = html`<div>${res}</div>`
+          }
         }
+        render(res, this)
+        this.afterRender()
+        setTimeout(() => {
+          this.updated()
+        }, 50)
       }
+    } else {
       render(res, this)
     }
-    this.afterRender()
-    setTimeout(() => {
-      this.updated()
-    }, 50)
   }
 
   connectedCallback() {

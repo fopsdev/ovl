@@ -2,9 +2,10 @@ import { SnackType } from "./Snack/Snack"
 import { ResultType } from "./Dialog/Dialog"
 import { DialogResult } from "./actions"
 import { ovl } from ".."
+import { TemplateResult } from "lit-html"
 
 export const DialogOkCancel = async (
-  text: string,
+  text: TemplateResult | string,
   defaultButton: ResultType = 1
 ) => {
   ovl.actions.ovl.dialog.OkCancelDialog({

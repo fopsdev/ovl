@@ -2,8 +2,6 @@ import { html, TemplateResult } from "lit-html"
 import { ovl } from "../.."
 import { resolvePath, T } from "../../global/globals"
 import { FormCustomColumnFn, FormCustomColumnFn_Type } from "../../global/hooks"
-//import { overlayToRender } from "../../library/Overlay/Overlay"
-//import { OvlBaseElement } from "../OvlBaseElement"
 import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
 import { ColumnFilter, ColumnFilterTypes, TableDataAndDef } from "./Table"
@@ -101,11 +99,6 @@ export class TableHeaderMenu extends OvlBaseElement {
         data: this.headerMenu.def.data,
         value: val,
       })
-      // this.actions.ovl.internal.TableSelectHeader({
-      //   def: this.headerMenu.def.def,
-      //   data: this.headerMenu.def.data,
-      //   key: "",
-      // })
     }
   }
 
@@ -289,14 +282,6 @@ export class TableHeaderMenu extends OvlBaseElement {
   init() {
     this.headerMenu = this.props()
     this.filterDropDownHidden = true
-    //    this.focusSet = false
-    //    overlayToRender.overlayDismissedCallback = () => {
-    //   this.actions.ovl.internal.TableSelectHeader({
-    //     def: this.headerMenu.def.def,
-    //     data: this.headerMenu.def.data,
-    //     key: "",
-    //   })
-    // }
   }
   getBody = () => {
     const handleMainMouseDown = (e: Event) => {

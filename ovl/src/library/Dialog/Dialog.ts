@@ -1,5 +1,5 @@
-import { T } from "../../global/globals"
-import { html } from "lit-html"
+import { T, modalDialog } from "../../global/globals"
+import { html, TemplateResult } from "lit-html"
 import { OvlBaseElement } from "../OvlBaseElement"
 
 export type DialogChangedParam = {
@@ -12,14 +12,21 @@ type CancelType = "AppCancel" | "AppNo" | "NoButton"
 export type ResultType = undefined | 1 | 2
 
 export type OpenModalDialogState = {
-  text: string
+  type:
+    | "standard"
+    | "confirmation"
+    | "error"
+    | "success"
+    | "warning"
+    | "information"
+  text: string | TemplateResult
   ok: OkType
   cancel: CancelType
   default: ResultType
 }
 
 export type ModalDialogState = {
-  text: string
+  text: string | TemplateResult
   okText: string
   cancelText: string
   result: ResultType
@@ -91,8 +98,14 @@ export class OvlDialog extends OvlBaseElement {
     }
   }
   getBody = () => {
-    let lines: string[] = this.state.ovl.libState.dialog.text.split(/\r?\n/)
-    return lines.map((e) => html` ${e}<br /> `)
+    let lines
+    if (typeof modalDialog.text === "string") {
+      lines = modalDialog.text.split(/\r?\n/)
+      return lines.map((e) => html` ${e}<br /> `)
+    } else {
+      lines = modalDialog.text
+    }
+    return lines
   }
   getFooter = () => {
     let okButton = null

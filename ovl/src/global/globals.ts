@@ -4,11 +4,19 @@ import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
 import { ovl, OvlState } from ".."
+import { TemplateResult } from "lit-html"
 
 export let api = { url: "" }
 export let translations: Translations = { t: {} }
+
+export let modalDialog: GlobalModalDialogState = { text: undefined }
 export let translationData = {}
 export const ovltemp = "_ovltmp"
+
+type GlobalModalDialogState = {
+  text: string | TemplateResult
+}
+
 //@ts-ignore
 export let OvlTimestamp = 0
 export const uuidv4 = () => {
