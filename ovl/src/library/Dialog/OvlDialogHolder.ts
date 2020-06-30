@@ -1,4 +1,4 @@
-import { OvlBaseDialog, DialogParts } from "./OvlDialogBase"
+import { OvlBaseDialog, DialogParts, DialogType } from "./OvlDialogBase"
 import { OvlDialog } from "../.."
 import { TemplateResult } from "lit-html"
 
@@ -11,6 +11,7 @@ export type DialogGetParts = {
   closedCallbackFn?: any
   dismissedCallbackFn?: any
   emptySpaceClickHandlerFn?: any
+  type?: DialogType
   customClass?: () => string
 }
 
@@ -40,6 +41,7 @@ export class OvlDialogHolder extends OvlBaseDialog {
         header: d.header ? d.header() : undefined,
         footer: d.footer ? d.footer() : undefined,
         customClass: d.customClass ? d.customClass() : undefined,
+        type: d.type ? d.type : undefined,
         keyHandlerFn: d.keyHandlerFn,
         dismissHandlerFn: d.dismissedCallbackFn,
         emptySpaceClickHandlerFn: d.emptySpaceClickHandlerFn,

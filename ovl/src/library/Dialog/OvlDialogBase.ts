@@ -12,6 +12,14 @@ export type DialogsState = {
   formId?: string
 }
 
+export type DialogType =
+  | "standard"
+  | "confirmation"
+  | "error"
+  | "success"
+  | "warning"
+  | "information"
+
 export type DialogParts = {
   header?: TemplateResult | TemplateResult[]
   title?: string
@@ -22,6 +30,7 @@ export type DialogParts = {
   dismissHandlerFn?: any
   emptySpaceClickHandlerFn?: any
   closedCallbackFn?: any
+  type?: DialogType
 }
 
 export class OvlBaseDialog extends OvlBaseElement {
@@ -89,7 +98,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       if (dialogParts.title) {
         title = html`
           <div class="fd-bar__element">
-            <h3 class="fd-dialog__title">
+            <h3 class="fd-message-box__title">
               ${dialogParts.title}
             </h3>
           </div>
@@ -105,7 +114,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       }
 
       fullheader = html`
-        <header class="fd-dialog__header fd-bar ovl-dialog-header">
+        <header class="fd-message-box__header fd-bar ovl-dialog-header">
           <div class="fd-bar__left">
             ${header} ${title}
           </div>
@@ -114,7 +123,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     }
     let body
     if (dialogParts.body) {
-      body = html`<div class="fd-dialog__body ovl-dialog-body">
+      body = html`<div class="fd-message-box__body ovl-dialog-body">
         ${dialogParts.body}
       </div>`
     }
@@ -122,7 +131,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     let footer
     if (dialogParts.footer) {
       footer = html`<footer
-        class="fd-dialog__footer fd-bar fd-bar--footer ovl-dialog-footer"
+        class="fd-message-box__footer fd-bar fd-bar--footer ovl-dialog-footer"
       >
         <div class="fd-bar__right">
           ${dialogParts.footer}
@@ -137,13 +146,18 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (dialogParts.customClass) {
       customClass = dialogParts.customClass
     }
+    let typeClass = ""
+    if (dialogParts.type) {
+      typeClass = "fd-message-box--" + dialogParts.type
+    }
+
     return html`<div
       style="z-index:${this.zIndex};"
-      class="fd-dialog fd-dialog--active fadeInDialog ${disableIfClosing} "
+      class="fd-message-box ${typeClass} fd-message-box--active fadeInDialog ${disableIfClosing} "
       @click="${handleDismiss}"
     >
       <div
-        class="fd-dialog__content ovl-dialog ovl-dialog-${this
+        class="fd-message-box__content ovl-dialog ovl-dialog-${this
           .dialogType} ${customClass}"
         role="dialog"
         tabindex="0   "
@@ -162,7 +176,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       this.removeDialog()
     } else {
       //this.state.ovl.dialogs[this.dialogType].isClosing = true
-      let el = this.getElementsByClassName("fd-dialog")[0]
+      let el = this.getElementsByClassName("fd-message-box")[0]
       if (el) {
         el.classList.remove("fadeInDialog")
         el.classList.add("fadeOutDialog")

@@ -12,13 +12,8 @@ type CancelType = "AppCancel" | "AppNo" | "NoButton"
 export type ResultType = undefined | 1 | 2
 
 export type OpenModalDialogState = {
-  type:
-    | "standard"
-    | "confirmation"
-    | "error"
-    | "success"
-    | "warning"
-    | "information"
+  customClass: string
+  type: DialogType
   text: string | TemplateResult
   ok: OkType
   cancel: CancelType
@@ -26,6 +21,8 @@ export type OpenModalDialogState = {
 }
 
 export type ModalDialogState = {
+  customClass: string
+  type: DialogType
   text: string | TemplateResult
   okText: string
   cancelText: string
@@ -34,6 +31,7 @@ export type ModalDialogState = {
 }
 
 import { DialogHolderParams } from "./OvlDialogHolder"
+import { DialogType } from "./OvlDialogBase"
 
 export type LoginFormState = {}
 
@@ -165,6 +163,8 @@ export class OvlDialog extends OvlBaseElement {
           footer: () => this.getFooter(),
           keyHandlerFn: this.keyHandler,
           dismissedCallbackFn: this.handleCancelClick,
+          type: this.state.ovl.libState.dialog.type,
+          customClass: () => this.state.ovl.libState.dialog.customClass,
         },
         zIndex: 1001,
         dialogType: "Modal",

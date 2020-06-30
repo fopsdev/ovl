@@ -3,6 +3,7 @@ import { OvlAction, OvlDialog, FormType } from "../../index"
 import { FormValidate_Type } from "../../global/hooks"
 import { modalDialog } from "../../global/globals"
 import { TemplateResult } from "lit-html"
+import { DialogType } from "./OvlDialogBase"
 
 export type OpenDialogOptions = {
   dialogType: OvlDialog
@@ -47,6 +48,8 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
     //@ts-ignore
     state.ovl.libState.dialog = {}
   }
+  state.ovl.libState.dialog.type = value.type
+  state.ovl.libState.dialog.customClass = value.customClass
   state.ovl.libState.dialog.default = value.default
   if (value.cancel !== "NoButton") {
     state.ovl.libState.dialog.cancelText =
@@ -80,12 +83,29 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
 type OkCancelDialog = {
   text: string | TemplateResult
   default: ResultType
+  type?: DialogType
+  customClass?: string
+}
+type OkDialog = {
+  text: string | TemplateResult
+  type?: DialogType
+  customClass?: string
 }
 export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   value,
   { actions }
 ) => {
+  let type: DialogType = "standard"
+  if (value.type) {
+    type = value.type
+  }
+  let customClass = ""
+  if (value.customClass) {
+    customClass = value.customClass
+  }
   await actions.ovl.dialog.ModalDialogOpen({
+    customClass,
+    type,
     cancel: "AppCancel",
     ok: "AppOk",
     text: value.text,
@@ -93,11 +113,19 @@ export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   })
 }
 
-export const OkDialog: OvlAction<{ text: string }> = async (
-  value,
-  { actions }
-) => {
-  actions.ovl.dialog.ModalDialogOpen({
+export const OkDialog: OvlAction<OkDialog> = async (value, { actions }) => {
+  let type: DialogType = "standard"
+  if (value.type) {
+    type = value.type
+  }
+  let customClass = ""
+  if (value.customClass) {
+    customClass = value.customClass
+  }
+
+  await actions.ovl.dialog.ModalDialogOpen({
+    customClass,
+    type,
     cancel: "NoButton",
     ok: "AppOk",
     text: value.text,
