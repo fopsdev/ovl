@@ -176,6 +176,7 @@ export const setTableRow = (
     }
   } else {
     if (isAdd) {
+      //newData[def.database.dataIdField] = newId
       if (def.uiState.dataFilteredAndSorted.indexOf(newId) < 0) {
         def.uiState.currentlyAddingKey = newId
         def.uiState.dataFilteredAndSorted.push(newId)
@@ -208,16 +209,18 @@ export const setTableRow = (
   // do aproperty wise update so the ui gets notified properly
   // if the defiitive one is already occupied (rows[newId]) that means that the row was deleted from somewhere else
   // so we just overwrite it and that case should been handled well
-  let newKeys = Object.keys(newData)
-  if (newKeys.length > 0) {
-    if (rows[newId] === undefined) {
-      rows[newId] = {}
-    }
-  }
-  let destRow = rows[newId]
-  newKeys.forEach((k) => {
-    destRow[k] = newData[k]
-  })
+  // let newKeys = Object.keys(newData)
+  // if (newKeys.length > 0) {
+  //   if (rows[newId] === undefined) {
+  //     rows[newId] = {}
+  //   }
+  // }
+  // window.ovldbg = true
+  //let destRow = rows[newId]
+  rows[newId] = newData
+  // newKeys.forEach((k) => {
+  //   rows[newId][k] = newData[k]
+  // })
   if (isAdd && !isSwitcher) {
     actions.ovl.table.TableEditRow({ key: newId, def, data: data })
   }

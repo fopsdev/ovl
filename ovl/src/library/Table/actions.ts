@@ -29,6 +29,12 @@ import {
   FormCan_Type,
   FormCustomFn_Type,
   FormCan_ReturnType,
+  FormSaveOffline,
+  FormSaveOffline_Type,
+  FormSaveOffline_ReturnType,
+  FormDeleteOffline,
+  FormDeleteOffline_ReturnType,
+  FormDeleteOffline_Type,
 } from "../../global/hooks"
 import {
   TableDefIds,
@@ -521,6 +527,9 @@ export const TableDirectSaveRow: OvlAction<{
   let data = value.data
   let def = data.tableDef[value.defId]
   let rowToSave = value.rowToSave
+  if (!rowToSave[def.database.dataIdField]) {
+    rowToSave[def.database.dataIdField] = undefined
+  }
   let key = rowToSave[def.database.dataIdField]
   if (!def.initialised) {
     initTableState(def, data, value.defId, state.ovl.uiState.isMobile)
@@ -528,10 +537,12 @@ export const TableDirectSaveRow: OvlAction<{
   if (key === undefined) {
     key = ovltemp + uuidv4()
   }
+
   if (key.indexOf(ovltemp) > -1) {
     data.data[key] = JSON.parse(JSON.stringify(rowToSave))
   }
   delete rowToSave[def.database.dataIdField]
+
   await TableEditSaveRowHelper(
     key,
     def,
@@ -635,40 +646,61 @@ const TableEditSaveRowHelper = async (
         data: newData,
         customId: ovl.state.ovl.user.customId,
       })
+
       if (!res.data) {
+        debugger
         // 449 means offline in our context
         if (res.status === 449) {
+          let saveOfflineFnName = FormSaveOffline
+          // handle FormSaveOffline @@hook
+          let fn = resolvePath(actions.custom, def.namespace)
+          if (fn && fn[saveOfflineFnName]) {
+            let resOff: FormSaveOffline_ReturnType = await fn[
+              saveOfflineFnName
+            ](<FormSaveOffline_Type>{
+              key,
+              def,
+              data,
+              res,
+              fetchParams: res.fetchParams,
+            })
+            if (!resOff) {
+              return
+            }
+          } else {
+            return
+          }
+        } else {
+          let saveErrorFnName = FormSaveError
+          // handleError @@hook
+          let fn = resolvePath(actions.custom, def.namespace)
+          if (fn && fn[saveErrorFnName]) {
+            await fn[saveErrorFnName](<FormSaveError_Type>{
+              key,
+              def,
+              data,
+              res,
+            })
+          } else {
+            if (hasFormState) {
+              formState.valid = false
+            }
+            if (!noSnack) {
+              SnackAdd(res.message, "Error", 10000)
+            }
+            if (
+              (hasFormState && res.type === "UDTNameEmpty") ||
+              res.type === "UDTNameUnique"
+            ) {
+              ValidationAddError(
+                "UniqueKeyViolation",
+                res.message,
+                formState.fields["Name"].validationResult
+              )
+            }
+          }
           return
         }
-        let saveErrorFnName = FormSaveError
-        // handleError @@hook
-        let fn = resolvePath(actions.custom, def.namespace)
-        if (fn && fn[saveErrorFnName]) {
-          await fn[saveErrorFnName](<FormSaveError_Type>{
-            key,
-            def,
-            data,
-            res,
-          })
-        } else {
-          if (hasFormState) {
-            formState.valid = false
-          }
-          if (!noSnack) {
-            SnackAdd(res.message, "Error", 10000)
-          }
-          if (
-            (hasFormState && res.type === "UDTNameEmpty") ||
-            res.type === "UDTNameUnique"
-          ) {
-            ValidationAddError(
-              "UniqueKeyViolation",
-              res.message,
-              formState.fields["Name"].validationResult
-            )
-          }
-        }
-        return
       }
 
       def.uiState.currentlyAddingKey = undefined
@@ -678,6 +710,7 @@ const TableEditSaveRowHelper = async (
       if (isAdd) {
         // get the definitive id
         // update/create necessary objects for the table to work
+
         setTableRow({ def, data }, key, newId, res.data, false, actions)
         setRefresh({ def, data }, isAdd, res.data, key, null)
       } else {
@@ -938,6 +971,7 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
       newRow["Name"] = ""
     }
   }
+
   setTableRow(value, undefined, undefined, newRow, true, actions, false)
   if (def.features.page) {
     let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
@@ -984,17 +1018,39 @@ export const TableDeleteRow: OvlAction<{
       customId: ovl.state.ovl.user.customId,
     })
     if (!res.data) {
-      // handleError @@hook
-      let fn = resolvePath(actions.custom, def.namespace)
-      let deleteErrorFnName = FormDeleteError
-      if (fn && fn[deleteErrorFnName]) {
-        await fn[deleteErrorFnName](<FormDeleteError_Type>{
-          key,
-          tableDef: def,
-          res: res.data,
-        })
+      // 449 means offline in our context
+      if (res.status === 449) {
+        let deleteOfflineFnName = FormDeleteOffline
+        // handle FormSaveOffline @@hook
+        let fn = resolvePath(actions.custom, def.namespace)
+        if (fn && fn[deleteOfflineFnName]) {
+          let resOff: FormDeleteOffline_ReturnType = await fn[
+            deleteOfflineFnName
+          ](<FormDeleteOffline_Type>{
+            key,
+            tableDef: def,
+            res: res.data,
+            fetchParams: res.fetchParams,
+          })
+          if (!resOff) {
+            return
+          }
+        } else {
+          return
+        }
+      } else {
+        // handleError @@hook
+        let fn = resolvePath(actions.custom, def.namespace)
+        let deleteErrorFnName = FormDeleteError
+        if (fn && fn[deleteErrorFnName]) {
+          await fn[deleteErrorFnName](<FormDeleteError_Type>{
+            key,
+            tableDef: def,
+            res: res.data,
+          })
+        }
+        return
       }
-      return
     }
     deleteTableRow({ def: def, data: value.data }, key)
 

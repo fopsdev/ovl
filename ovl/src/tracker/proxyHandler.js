@@ -66,7 +66,9 @@ export function createDeepProxy(target) {
         if (!isTracking()) {
           let isArray = Array.isArray(target)
           let pathToTrack
+          let pathToTrackParent
           if (!isArray) {
+            pathToTrackParent = [...path].join(".")
             pathToTrack = [...path, key].join(".")
           } else if (isArray && key === "length") {
             pathToTrack = [...path].join(".")
@@ -76,6 +78,9 @@ export function createDeepProxy(target) {
           }
           if (pathToTrack) {
             checkForCallbacks(pathToTrack)
+          }
+          if (pathToTrackParent) {
+            checkForCallbacks(pathToTrackParent)
           }
         }
         return true

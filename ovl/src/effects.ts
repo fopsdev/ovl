@@ -32,6 +32,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
   let res
   let snackMessage = ""
   let snackMessageType: SnackType = "Information"
+  let reqOptions
   try {
     ovl.actions.ovl.indicator.SetIndicatorOpen()
     // Create request to api service
@@ -45,7 +46,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
     if (user && user.token) {
       headers["Authorization"] = "Bearer " + ovl.state.ovl.user.token
     }
-    let reqOptions = {
+    reqOptions = {
       method,
       headers,
       signal: undefined,
@@ -106,6 +107,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
     } else if (req.status === 404) {
       snackMessage = "Not found"
       return {
+        fetchParams: { url, reqOptions },
         headers: req.headers,
         data: undefined,
         status: 404,
@@ -132,6 +134,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
         }
 
         return {
+          fetchParams: { url, reqOptions },
           headers: req.headers,
           data: undefined,
           status: 400,
@@ -160,6 +163,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
         //   }
         // }
         return {
+          fetchParams: { url, reqOptions },
           headers: req.headers,
           data: undefined,
           status: 449,
@@ -183,6 +187,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
     //   }
     // }
     return {
+      fetchParams: { url, reqOptions },
       headers: undefined,
       data: undefined,
       status: 449,
@@ -192,6 +197,9 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
   } finally {
     ovl.actions.ovl.indicator.SetIndicatorClose()
     if (snackMessage) {
+      if (snackMessageType === "Error") {
+        console.log("Fetch Error: " + snackMessage)
+      }
       SnackAdd(snackMessage, snackMessageType)
     }
   }

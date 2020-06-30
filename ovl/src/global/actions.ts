@@ -212,13 +212,7 @@ export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
 }
 
 export const Logout: OvlAction = async (_, { state, actions }) => {
-  if (
-    (await DialogOkCancel(
-      "Wollen Sie sich wirklich abmelden?",
-      1,
-      "confirmation"
-    )) === 1
-  ) {
+  if ((await DialogOkCancel("Wollen Sie sich wirklich abmelden?", 1)) === 1) {
     state.ovl.user.token = ""
     logout()
   }

@@ -12,6 +12,7 @@ export let translations: Translations = { t: {} }
 export let modalDialog: GlobalModalDialogState = { text: undefined }
 export let translationData = {}
 export const ovltemp = "_ovltmp"
+export const ovloffline = "_ovloff"
 
 type GlobalModalDialogState = {
   text: string | TemplateResult

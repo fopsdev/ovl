@@ -8,7 +8,7 @@ import { DialogType } from "./Dialog/OvlDialogBase"
 export const DialogOkCancel = async (
   text: TemplateResult | string,
   defaultButton: ResultType = 1,
-  type?: DialogType,
+  type: DialogType = "confirmation",
   customClass?: string
 ) => {
   ovl.actions.ovl.dialog.OkCancelDialog({
@@ -23,7 +23,7 @@ export const DialogOkCancel = async (
 export const DialogOk = async (
   text: TemplateResult | string,
 
-  type?: DialogType,
+  type: DialogType = "information",
   customClass?: string
 ) => {
   ovl.actions.ovl.dialog.OkDialog({

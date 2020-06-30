@@ -353,6 +353,17 @@ export const FormCustomSave = "FormCustomSave"
 export type FormBeforeSave_Type = BeforeSaveParam
 export const FormBeforeSave = "FormBeforeSave"
 
+// if you would like to process online mode
+export type FormSaveOffline_ReturnType = boolean
+export type FormSaveOffline_Type = {
+  key: string
+  def: TableDef
+  data: TableData
+  res: any
+  fetchParams: any
+}
+export const FormSaveOffline = "FormSaveOffline"
+
 // if you would like to process save errors yourself
 export type FormSaveError_Type = {
   key: string
@@ -370,6 +381,16 @@ export type FormAfterSave_Type = {
   res: any
 }
 export const FormAfterSave = "FormAfterSave"
+
+// if you would like to process delete offline mode yourself
+export type FormDeleteOffline_Type = {
+  key: string
+  tableDef: TableDef
+  res: TableData
+  fetchParams: any
+}
+export type FormDeleteOffline_ReturnType = boolean
+export const FormDeleteOffline = "FormDeleteOffline"
 
 // if you would like to process delete errors yourself
 export type FormDeleteError_Type = {
