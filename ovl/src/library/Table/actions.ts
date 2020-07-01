@@ -274,12 +274,24 @@ export const TableRefreshDataFromServer: OvlAction<{
     }, {})
   // console.log("lookupinfo ")
   //console.log(dataFieldsToLookups)
+
+  if (res.data.schema && Object.keys(res.data.schema).length > 0) {
+    value.data.schema = res.data.schema
+  }
+  schema = value.data.schema
   keysFromServer.forEach((k) => {
     if (localData[k] === undefined) {
       localData[k] = {}
     }
     Object.keys(serverData[k]).forEach((c) => {
       localData[k][c] = serverData[k][c]
+      if (schema && schema[c] && schema[c].type === "decimal") {
+        var num = localData[k][c]
+        if (c === "U_BreakDuration") {
+          debugger
+        }
+        localData[k][c] = Math.round(localData[k][c] * 1000000) / 1000000
+      }
       // check for lookups which needs to be refreshed/reloaded
       if (dataFieldsToLookups[c]) {
         // its a lookup column, also check if lookup description is available
@@ -342,10 +354,6 @@ export const TableRefreshDataFromServer: OvlAction<{
 
   // don't ever do that. would result in a new refernece and all the existing comps uisng some state from it are lost
   //value.data.data = res.data.data
-
-  if (res.data.schema && Object.keys(res.data.schema).length > 0) {
-    value.data.schema = res.data.schema
-  }
 
   value.data.timestamp = Date.now()
 }
@@ -542,7 +550,6 @@ export const TableDirectSaveRow: OvlAction<{
     data.data[key] = JSON.parse(JSON.stringify(rowToSave))
   }
   delete rowToSave[def.database.dataIdField]
-
   await TableEditSaveRowHelper(
     key,
     def,
@@ -638,17 +645,20 @@ const TableEditSaveRowHelper = async (
           row: newData,
         })
       }
-      res = await postRequest(api.url + def.server.endpoint + "/" + mode, {
-        lang: state.ovl.language.language,
-        idField: def.database.dataIdField,
-        idValue: key,
-        insertMode: def.database.dbInsertMode,
-        data: newData,
-        customId: ovl.state.ovl.user.customId,
-      })
-
+      res = await postRequest(
+        api.url + def.server.endpoint + "/" + mode,
+        {
+          lang: state.ovl.language.language,
+          idField: def.database.dataIdField,
+          idValue: key,
+          insertMode: def.database.dbInsertMode,
+          data: newData,
+          customId: ovl.state.ovl.user.customId,
+        },
+        false,
+        noSnack
+      )
       if (!res.data) {
-        debugger
         // 449 means offline in our context
         if (res.status === 449) {
           let saveOfflineFnName = FormSaveOffline
@@ -685,9 +695,9 @@ const TableEditSaveRowHelper = async (
             if (hasFormState) {
               formState.valid = false
             }
-            if (!noSnack) {
-              SnackAdd(res.message, "Error", 10000)
-            }
+            // if (!noSnack) {
+            //   SnackAdd(res.message, "Error", 10000)
+            // }
             if (
               (hasFormState && res.type === "UDTNameEmpty") ||
               res.type === "UDTNameUnique"
@@ -697,6 +707,13 @@ const TableEditSaveRowHelper = async (
                 res.message,
                 formState.fields["Name"].validationResult
               )
+            }
+            // if you don't like the error to be throwed use your own savehandler...
+
+            throw {
+              status: res.status,
+              message: res.message,
+              key,
             }
           }
           return

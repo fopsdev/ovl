@@ -2,9 +2,9 @@
 
 Todos:
 
-- set trap for object keys. just do parent checking there...could be enough
+X - set trap for parent in set handler. 
 
-- unify dialog and screens state . rethink tying of screen state (not the visible/isClosing stuff) to ovl.screens
+X - unify dialog and screens state . rethink tying of screen state (not the visible/isClosing stuff) to ovl.screens
 
 - go after the JSON.stringifies in Code... They are not more necessary because its handled by the proxifier now
 

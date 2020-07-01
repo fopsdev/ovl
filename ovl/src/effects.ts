@@ -8,8 +8,13 @@ import { AddSnack } from "./library/Snack/actions"
 
 export let lastOfflineMsg
 
-export const postRequest = async (url, data, isBlob?: boolean) => {
-  return ovlFetch(url, data, "POST", isBlob)
+export const postRequest = async (
+  url,
+  data,
+  isBlob?: boolean,
+  noSnack?: boolean
+) => {
+  return ovlFetch(url, data, "POST", isBlob, noSnack)
 }
 
 export type GETRequestParams = {
@@ -23,12 +28,19 @@ export type GETRequestParams = {
 export const getRequest = async (
   url,
   data: GETRequestParams,
-  isBlob?: boolean
+  isBlob?: boolean,
+  noSnack?: boolean
 ) => {
-  return ovlFetch(url, data, "GET", isBlob)
+  return ovlFetch(url, data, "GET", isBlob, noSnack)
 }
 
-export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
+export const ovlFetch = async (
+  url,
+  data,
+  method: string,
+  isBlob?: boolean,
+  noSnack?: boolean
+) => {
   let res
   let snackMessage = ""
   let snackMessageType: SnackType = "Information"
@@ -107,7 +119,6 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
     } else if (req.status === 404) {
       snackMessage = "Not found"
       return {
-        fetchParams: { url, reqOptions },
         headers: req.headers,
         data: undefined,
         status: 404,
@@ -125,23 +136,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
         }
       }
 
-      if (req.status === 400) {
-        let type = res.type
-        if (!type) {
-          type = ""
-          snackMessageType = "Error"
-          snackMessage = "Server Error: " + res.message
-        }
-
-        return {
-          fetchParams: { url, reqOptions },
-          headers: req.headers,
-          data: undefined,
-          status: 400,
-          message: res.message,
-          type,
-        }
-      } else if (req.ok) {
+      if (req.ok) {
         // ok all good
         return {
           headers: req.headers,
@@ -151,41 +146,35 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
           type: "",
         }
       } else {
-        // some case we didn't handle yet.... just also go to offline mode
-        ovl.state.ovl.app.offline = true
-        // let dt: number = Date.now()
-        // if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
-        //   lastOfflineMsg = dt
-        //   if (OvlConfig._system.OfflineMode) {
-        //     snackMessage = "Offline Mode"
-        //   } else {
-        //     snackMessage = "Server Error. Server offline?"
-        //   }
-        // }
+        let type
+        let message
+        if (res) {
+          type = res.type
+          message = res.message
+        }
+        if (!type) {
+          type = ""
+          snackMessageType = "Error"
+          if (!message) {
+            message = req.status
+          }
+          snackMessage = "Server Error: " + message
+        }
         return {
           fetchParams: { url, reqOptions },
           headers: req.headers,
           data: undefined,
-          status: 449,
-          message: req.statusText,
-          type: "",
+          status: req.status,
+          message,
+          type,
         }
       }
     }
   } catch (err) {
-    // generic error
-    // go to offline mode
-    let dt: number = Date.now()
+    console.log(err)
+    // connection error
+    // well...  go to offline mode
     ovl.state.ovl.app.offline = true
-
-    // if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
-    //   lastOfflineMsg = dt
-    //   if (OvlConfig._system.OfflineMode) {
-    //     snackMessage = "Offline Mode"
-    //   } else {
-    //     snackMessage = "Server Error. Server offline?"
-    //   }
-    // }
     return {
       fetchParams: { url, reqOptions },
       headers: undefined,
@@ -196,7 +185,7 @@ export const ovlFetch = async (url, data, method: string, isBlob?: boolean) => {
     }
   } finally {
     ovl.actions.ovl.indicator.SetIndicatorClose()
-    if (snackMessage) {
+    if (!noSnack && snackMessage) {
       if (snackMessageType === "Error") {
         console.log("Fetch Error: " + snackMessage)
       }
