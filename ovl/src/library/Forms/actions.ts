@@ -16,7 +16,7 @@ import { FormType, OvlAction } from "../../index"
 import { ColumnAlign, ListFnReturnValue } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
-import { getFormFields, ValidationAddError, setDecimalValue } from "./helper"
+import { getFormFields, ValidationAddError } from "./helper"
 import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
 import { GetRowFromFormState } from "./Controls/helpers"
 export { FillListControl }
@@ -258,7 +258,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
         if (parsedVal || parsedVal == 0) {
           field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
           // we need to to that so it gets transmitted for sure as decimal. elsewise it could end up as an int for the deserialzer backend
-          field.convertedValue = setDecimalValue(parsedVal)
+          field.convertedValue = parsedVal
         } else {
           ValidationAddError(validatorId, "invalid number format", res)
         }

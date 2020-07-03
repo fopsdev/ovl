@@ -134,7 +134,8 @@ export function createDeepProxy(target) {
       // console.log("tracked mutation on: " + path)
       // console.log("update will be called on:")
       cbs.forEach((key) => {
-        //console.log(key.name)
+        // console.log("added for rerender:")
+        // console.log(key.name)
         callbacksToCall.add(key)
       })
       // console.log(
@@ -149,11 +150,16 @@ export function createDeepProxy(target) {
   }
   function callCallbacks() {
     // call onUpdate method of affected component
-    callbacksToCall.forEach(async (k) => {
-      disposeTrack(k)
-      k.doRender()
-    })
-    callbacksToCall = new Set()
+    if (!window.blocked) {
+      callbacksToCall.forEach(async (k) => {
+        disposeTrack(k)
+        //console.log("rerender: " + k.name)
+        k.doRender()
+      })
+      callbacksToCall = new Set()
+    } else {
+      window.requestAnimationFrame(callCallbacks)
+    }
   }
   return proxify(target, [])
 }

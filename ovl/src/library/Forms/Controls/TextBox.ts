@@ -133,7 +133,9 @@ export class OvlTextbox extends OvlBaseElement {
   }
   afterRender() {
     this.inputElement = document.getElementById(this.field.field.id)
-    this.inputElement.value = this.field.field.value
+    if (this.inputElement) {
+      this.inputElement.value = this.field.field.value
+    }
   }
   getDisplayValue() {}
 }

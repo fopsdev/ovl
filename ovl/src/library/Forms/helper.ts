@@ -1,9 +1,12 @@
 import { FieldValueMap, ValidateFieldResult } from "./actions"
 import { Schema, FormFields } from "./OvlFormElement"
 import { getDateValue } from "../../global/globals"
-export const setDecimalValue = (val: any): number => {
-  return Math.round(val * 1000000) / 1000000 + 0.0000001
-}
+// export const setDecimalValue = (val: any): number => {
+//   if (val == 0) {
+//     val = 0.0
+//   }
+//   return Math.round(val * 1000000) / 1000000 + 0.0000001
+// }
 
 export const getFormFields = (
   schema: { [key: string]: Schema },

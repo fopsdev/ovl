@@ -285,10 +285,10 @@ export const TableRefreshDataFromServer: OvlAction<{
     }
     Object.keys(serverData[k]).forEach((c) => {
       localData[k][c] = serverData[k][c]
-      if (schema && schema[c] && schema[c].type === "decimal") {
-        var num = localData[k][c]
-        localData[k][c] = Math.round(localData[k][c] * 1000000) / 1000000
-      }
+      // if (schema && schema[c] && schema[c].type === "decimal") {
+      //   var num = localData[k][c]
+      //   localData[k][c] = Math.round(localData[k][c] * 1000000) / 1000000
+      // }
       // check for lookups which needs to be refreshed/reloaded
       if (dataFieldsToLookups[c]) {
         // its a lookup column, also check if lookup description is available

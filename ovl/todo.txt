@@ -2,6 +2,9 @@
 
 Todos:
 
+- check decimal serializing/deserializing issue workarounds. could be that only backend update - method is the culprit
+  -> js doesn't car and always saves numbers as floats internally!
+
 X - set trap for parent in set handler. 
 
 X - unify dialog and screens state . rethink tying of screen state (not the visible/isClosing stuff) to ovl.screens
