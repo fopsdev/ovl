@@ -89,11 +89,15 @@ export class OvlBaseElement extends HTMLElement {
   screen: OvlScreen
   static _counter: number = 0
   screenClosing() {
-    return this.track(() => this.state.ovl.screens.screens[this.screen].closing)
+    return this.screen
+      ? this.track(() => this.state.ovl.screens.screens[this.screen].closing)
+      : false
   }
 
   screenVisible() {
-    return this.track(() => this.state.ovl.screens.screens[this.screen].visible)
+    return this.screen
+      ? this.track(() => this.state.ovl.screens.screens[this.screen].visible)
+      : false
   }
 
   handleAnimationStart = (e) => {
