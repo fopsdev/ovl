@@ -39,11 +39,11 @@ let overlay2: OverlayState = { open: false, closing: false }
 type User = {
   token: string
   role: string
-  customId: string
+  clientId: string
   loginCounter: number
 }
 
-let user: User = { token: "", customId: "", role: "", loginCounter: 0 }
+let user: User = { token: "", clientId: "", role: "", loginCounter: 0 }
 
 let language = {
   language: "",
