@@ -5,6 +5,7 @@ import {
   resolvePath,
   T,
   uuidv4,
+  ovloffline,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -105,7 +106,8 @@ export const setTableRow = (
   newData: any,
   editMode: boolean,
   actions: OvlActions,
-  copy?: boolean
+  copy?: boolean,
+  isOfflineRetry?: boolean
 ) => {
   let def = tableDataAndDef.def
   let data = tableDataAndDef.data
@@ -116,8 +118,12 @@ export const setTableRow = (
   let isAdd = false
 
   if (
-    (newId && newId.indexOf(ovltemp) > -1) ||
-    (tempId && tempId.indexOf(ovltemp) > -1)
+    (newId &&
+      (newId.indexOf(ovltemp) > -1 ||
+        (isOfflineRetry && newId.indexOf(ovloffline) > -1))) ||
+    (tempId &&
+      (tempId.indexOf(ovltemp) > -1 ||
+        (isOfflineRetry && tempId.indexOf(ovloffline) > -1)))
   ) {
     isAdd = true
   }
@@ -209,18 +215,18 @@ export const setTableRow = (
   // do aproperty wise update so the ui gets notified properly
   // if the defiitive one is already occupied (rows[newId]) that means that the row was deleted from somewhere else
   // so we just overwrite it and that case should been handled well
-  // let newKeys = Object.keys(newData)
-  // if (newKeys.length > 0) {
-  //   if (rows[newId] === undefined) {
-  //     rows[newId] = {}
-  //   }
-  // }
-  // window.ovldbg = true
-  //let destRow = rows[newId]
-  rows[newId] = newData
-  // newKeys.forEach((k) => {
-  //   rows[newId][k] = newData[k]
-  // })
+  let newKeys = Object.keys(newData)
+  if (newKeys.length > 0) {
+    if (rows[newId] === undefined) {
+      rows[newId] = {}
+    }
+  }
+  //window.ovldbg = true
+  let destRow = rows[newId]
+  //rows[newId] = newData
+  newKeys.forEach((k) => {
+    destRow[k] = newData[k]
+  })
   if (isAdd && !isSwitcher) {
     actions.ovl.table.TableEditRow({ key: newId, def, data: data })
   }

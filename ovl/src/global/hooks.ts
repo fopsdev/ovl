@@ -346,8 +346,18 @@ export type FormCustomSave_Type = {
   key: string
   tableDef: TableDef
   newData: { [key: string]: {} }
+  isOfflineRetry: boolean
 }
 export const FormCustomSave = "FormCustomSave"
+
+// gets called at the very top of the form save process to make sure offline data is handled before new save
+export type FormOfflineRetry_Type = {
+  key: string
+}
+export type FormOfflineRetry_ReturnType = Promise<{
+  newKey: string
+}>
+export const FormOfflineRetry = "FormOfflineRetry"
 
 // gets called before the form gets saved/posted back to the server
 export type FormBeforeSave_Type = BeforeSaveParam
@@ -360,7 +370,8 @@ export type FormSaveOffline_Type = {
   def: TableDef
   data: TableData
   res: any
-  fetchParams: any
+  saveData: any
+  isOfflineRetry: boolean
 }
 export const FormSaveOffline = "FormSaveOffline"
 
@@ -370,6 +381,7 @@ export type FormSaveError_Type = {
   def: TableDef
   data: TableData
   res: any
+  isOfflineRetry: boolean
 }
 export const FormSaveError = "FormSaveError"
 
@@ -379,6 +391,7 @@ export type FormAfterSave_Type = {
   def: TableDef
   data: TableData
   res: any
+  isOfflineRetry: boolean
 }
 export const FormAfterSave = "FormAfterSave"
 
@@ -387,7 +400,7 @@ export type FormDeleteOffline_Type = {
   key: string
   tableDef: TableDef
   res: TableData
-  fetchParams: any
+  isOfflineRetry: boolean
 }
 export type FormDeleteOffline_ReturnType = boolean
 export const FormDeleteOffline = "FormDeleteOffline"
@@ -397,6 +410,7 @@ export type FormDeleteError_Type = {
   key: string
   tableDef: TableDef
   res: TableData
+  isOfflineRetry: boolean
 }
 export type FormDeleteError_ReturnType = string
 export const FormDeleteError = "FormDeleteError"
@@ -407,5 +421,6 @@ export type FormAfterDelete_Type = {
   def: TableDef
   data: TableData
   res: any
+  isOfflineRetry: boolean
 }
 export const FormAfterDelete = "FormAfterDelete"

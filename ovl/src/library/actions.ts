@@ -31,6 +31,8 @@ import {
   TableRefreshDataFromServer,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableOfflineRetryDeleteRow,
+  TableOfflineRetrySaveRow,
 } from "./Table/actions"
 //import { dialogAfterClose } from "./Dialog/actions"
 import { OvlAction } from ".."
@@ -66,6 +68,8 @@ export {
   TableSelectCustomSort,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableOfflineRetrySaveRow,
+  TableOfflineRetryDeleteRow,
 }
 
 export type DialogChangedParam = {

@@ -1,5 +1,12 @@
 import { postRequest } from "../../effects"
-import { api, ovltemp, resolvePath, T, uuidv4 } from "../../global/globals"
+import {
+  api,
+  ovltemp,
+  resolvePath,
+  T,
+  uuidv4,
+  ovloffline,
+} from "../../global/globals"
 import {
   FieldGetList,
   FormAdd,
@@ -35,6 +42,10 @@ import {
   FormDeleteOffline,
   FormDeleteOffline_ReturnType,
   FormDeleteOffline_Type,
+  FormAfterSave_Type,
+  FormOfflineRetry,
+  FormOfflineRetry_Type,
+  FormOfflineRetry_ReturnType,
 } from "../../global/hooks"
 import {
   TableDefIds,
@@ -523,6 +534,34 @@ export const TableRebuild: OvlAction<{
   }
 }
 
+export const TableOfflineRetrySaveRow: OvlAction<
+  {
+    data: TableData
+    defId: TableDefIds
+    rowToSave: {}
+  },
+  Promise<string>
+> = async (value, { state, actions }) => {
+  let data = value.data
+  let def = data.tableDef[value.defId]
+  let rowToSave = value.rowToSave
+  let key = rowToSave[def.database.dataIdField]
+  // if (key === undefined) {
+  //   debugger
+  // }
+  return await TableEditSaveRowHelper(
+    key,
+    def,
+    data,
+    null,
+    state,
+    actions,
+    rowToSave,
+    true,
+    true
+  )
+}
+
 export const TableDirectSaveRow: OvlAction<{
   data: TableData
   defId: TableDefIds
@@ -583,13 +622,43 @@ const TableEditSaveRowHelper = async (
   state: OvlState,
   actions: OvlActions,
   rowToSave?: {},
-  noSnack?: boolean
-) => {
+  noSnack?: boolean,
+  isOfflineRetry?: boolean
+): Promise<string> => {
   let rows = data.data
   let row = rows[key]
+
+  // first of all we need to send all offline data if any and do the cleanup/key fixup
+  let fn = resolvePath(actions.custom, def.namespace)
+  let offlineRetryFnName = FormOfflineRetry
+  if (!isOfflineRetry && fn && fn[offlineRetryFnName]) {
+    // ok there is a offlineRetry - Function
+    let res: FormOfflineRetry_ReturnType = await fn[offlineRetryFnName](<
+      FormOfflineRetry_Type
+    >{
+      key,
+    })
+
+    // if ((await res).newKey) {
+    //   // key could have changed becaus it was an offline entry
+    //   // so the further processing should use the new key
+    //   key = (await res).newKey
+    // }
+  }
+  if (isOfflineRetry) {
+    console.log(state.timeportal.tables)
+    debugger
+  }
+
   // lets check if its an add or an update
   // we will only send updated cols in case of update
-  let isAdd = key.startsWith(ovltemp)
+
+  // if (key === undefined) {
+  //   debugger
+  // }
+
+  let isAdd =
+    key.startsWith(ovltemp) || (isOfflineRetry && key.startsWith(ovloffline))
   let hasFormState = formState !== null
   let newData
   if (hasFormState) {
@@ -607,8 +676,9 @@ const TableEditSaveRowHelper = async (
   } else {
     newData = rowToSave
   }
+  let newId
   let res: any = {}
-  let fn = resolvePath(actions.custom, def.namespace)
+
   let saveRowFnName = FormCustomSave
   if (fn && fn[saveRowFnName]) {
     // ok there is a customSaveRow - Function
@@ -616,6 +686,7 @@ const TableEditSaveRowHelper = async (
       key,
       tableDef: def,
       newData,
+      isOfflineRetry,
     })
   } else {
     if (Object.keys(newData).length > 0) {
@@ -640,8 +711,10 @@ const TableEditSaveRowHelper = async (
           mode,
           tableDef: { def, data },
           row: newData,
+          isOfflineRetry,
         })
       }
+
       res = await postRequest(
         api.url + def.server.endpoint + "/" + mode,
         {
@@ -650,11 +723,12 @@ const TableEditSaveRowHelper = async (
           idValue: key,
           insertMode: def.database.dbInsertMode,
           data: newData,
-          customId: ovl.state.ovl.user.customId,
+          customId: ovl.state.ovl.user.clientId,
         },
         false,
         noSnack
       )
+
       if (!res.data) {
         // 449 means offline in our context
         if (res.status === 449) {
@@ -669,7 +743,8 @@ const TableEditSaveRowHelper = async (
               def,
               data,
               res,
-              fetchParams: res.fetchParams,
+              saveData: newData,
+              isOfflineRetry,
             })
             if (!resOff) {
               return
@@ -687,6 +762,7 @@ const TableEditSaveRowHelper = async (
               def,
               data,
               res,
+              isOfflineRetry,
             })
           } else {
             if (hasFormState) {
@@ -720,18 +796,37 @@ const TableEditSaveRowHelper = async (
       def.uiState.currentlyAddingKey = undefined
 
       // handle the result dance
-      let newId = res.data[def.database.dataIdField]
+      newId = res.data[def.database.dataIdField]
       if (isAdd) {
         // get the definitive id
         // update/create necessary objects for the table to work
 
-        setTableRow({ def, data }, key, newId, res.data, false, actions)
+        debugger
+        setTableRow(
+          { def, data },
+          key,
+          newId,
+          res.data,
+          false,
+          actions,
+          false,
+          isOfflineRetry
+        )
         setRefresh({ def, data }, isAdd, res.data, key, null)
       } else {
         // just update the table data with all returned columns
         // set Refresh needs to be before setTableRow becuase it compares old/new data
         setRefresh({ def, data }, isAdd, res.data, key, null)
-        setTableRow({ def, data }, key, newId, res.data, false, actions)
+        setTableRow(
+          { def, data },
+          key,
+          newId,
+          res.data,
+          false,
+          actions,
+          false,
+          isOfflineRetry
+        )
       }
       if (!noSnack) {
         SnackAdd("Datensatz gespeichert", "Success")
@@ -740,22 +835,19 @@ const TableEditSaveRowHelper = async (
       // afterSave @@hook
       let afterSaveFnName = FormAfterSave
       if (fn && fn[afterSaveFnName]) {
-        await fn[afterSaveFnName](
-          {
-            key,
-            def,
-            data,
-            res: res.data,
-          },
-          state,
-          actions,
-          ovl.effects
-        )
+        await fn[afterSaveFnName]({
+          key,
+          def,
+          data,
+          res: res.data,
+          isOfflineRetry,
+        } as FormAfterSave_Type)
       }
     }
     if (hasFormState) {
       actions.ovl.internal.SetFormUndirty(formState)
     }
+    return newId
   }
 }
 
@@ -1004,17 +1096,40 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
   }
 }
 
-export const TableDeleteRow: OvlAction<{
-  key: string
-  def: TableDef
-  data: TableData
-  isMass?: boolean
-}> = async (value, { actions, state, effects }) => {
+export const TableOfflineRetryDeleteRow: OvlAction<
+  {
+    data: TableData
+    defId: TableDefIds
+    key: string
+  },
+  Promise<boolean>
+> = async (value, { actions }) => {
+  let data = value.data
+  let def = data.tableDef[value.defId]
+
+  return await actions.ovl.table.TableDeleteRow({
+    key: value.key,
+    def,
+    data,
+    isOfflineRetry: true,
+  })
+}
+
+export const TableDeleteRow: OvlAction<
+  {
+    key: string
+    def: TableDef
+    data: TableData
+    isMass?: boolean
+    isOfflineRetry?: boolean
+  },
+  Promise<boolean>
+> = async (value, { actions, state, effects }) => {
   let def = value.def
   let key = value.key
   let cancel: boolean = false
 
-  if (!value.isMass) {
+  if (!value.isMass && !value.isOfflineRetry) {
     actions.ovl.dialog.OkCancelDialog({
       text: "Datensatz löschen?",
       default: 1,
@@ -1029,7 +1144,7 @@ export const TableDeleteRow: OvlAction<{
       idField: def.database.dataIdField,
       idValue: key,
       insertMode: def.database.dbInsertMode,
-      customId: ovl.state.ovl.user.customId,
+      customId: ovl.state.ovl.user.clientId,
     })
     if (!res.data) {
       // 449 means offline in our context
@@ -1045,6 +1160,7 @@ export const TableDeleteRow: OvlAction<{
             tableDef: def,
             res: res.data,
             fetchParams: res.fetchParams,
+            isOfflineRetry: value.isOfflineRetry,
           })
           if (!resOff) {
             return
@@ -1061,6 +1177,7 @@ export const TableDeleteRow: OvlAction<{
             key,
             tableDef: def,
             res: res.data,
+            isOfflineRetry: value.isOfflineRetry,
           })
         }
         return
@@ -1068,12 +1185,11 @@ export const TableDeleteRow: OvlAction<{
     }
     deleteTableRow({ def: def, data: value.data }, key)
 
-    if (!value.isMass) {
+    if (!value.isMass && !value.isOfflineRetry) {
       SnackAdd("Datensatz gelöscht", "Success")
     }
-    if (!value.isMass) {
+    if (!value.isMass && !value.isOfflineRetry) {
       selectLatestRow(def, value.data)
-      let rows = value.data.data
       setPage(value.data)
     }
 
@@ -1086,8 +1202,10 @@ export const TableDeleteRow: OvlAction<{
         def: def,
         data: value.data,
         res: res.data,
+        isOfflineRetry: value.isOfflineRetry,
       })
     }
+    return true
   }
 }
 

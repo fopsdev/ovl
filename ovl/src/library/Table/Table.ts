@@ -58,6 +58,7 @@ export type BeforeSaveParam = {
   mode: SaveMode
   tableDef: TableDataAndDef
   row: { [key: string]: {} }
+  isOfflineRetry: boolean
 }
 
 type SortDirection = "asc" | "desc"
