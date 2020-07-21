@@ -190,7 +190,7 @@ export class TableRowForm extends OvlFormElement {
               insertMode === "UDTAutoNumberBoth" ||
               insertMode === "UDTAutoGUIDBoth"
             ) {
-              readonly = false
+              readonly = true
             }
           }
           if (!readonly) {

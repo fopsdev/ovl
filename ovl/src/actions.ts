@@ -108,6 +108,7 @@ import {
   TableSetViewTab,
   TableOfflineRetryDeleteRow,
   TableOfflineRetrySaveRow,
+  TableOfflineHandler,
 } from "./library/actions"
 
 let navigation = { NavigateBack, NavigateTo }
@@ -136,8 +137,6 @@ let table = {
   TableAddRow,
   TableDirectSaveRow,
   TableSetViewTab,
-  TableOfflineRetryDeleteRow,
-  TableOfflineRetrySaveRow,
 }
 
 let internal = {
@@ -174,6 +173,9 @@ let internal = {
   TableSelectCustomSort,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableOfflineRetryDeleteRow,
+  TableOfflineRetrySaveRow,
+  TableOfflineHandler,
   InitApp,
   RehydrateAndUpdateApp,
   GetFile,

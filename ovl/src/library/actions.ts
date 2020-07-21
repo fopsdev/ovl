@@ -33,6 +33,7 @@ import {
   TableSelectColumnFilter,
   TableOfflineRetryDeleteRow,
   TableOfflineRetrySaveRow,
+  TableOfflineHandler,
 } from "./Table/actions"
 //import { dialogAfterClose } from "./Dialog/actions"
 import { OvlAction } from ".."
@@ -70,6 +71,7 @@ export {
   TableSelectColumnFilter,
   TableOfflineRetrySaveRow,
   TableOfflineRetryDeleteRow,
+  TableOfflineHandler,
 }
 
 export type DialogChangedParam = {
