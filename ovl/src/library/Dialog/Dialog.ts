@@ -158,7 +158,7 @@ export class OvlDialog extends OvlBaseElement {
 
       dialogHolderParams = {
         dialogParts: {
-          title: () => T("AppShortTitle"),
+          title: () => "Zeiterfassung",
           body: () => this.getBody(),
           footer: () => this.getFooter(),
           keyHandlerFn: this.keyHandler,
