@@ -79,7 +79,6 @@ export let ovl = {
 
 const interceptorAsyncFn = (originalFn) => {
   return async (value) => {
-    //console.log(originalFn.name + " called...")
     let res = await originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
@@ -91,7 +90,6 @@ const interceptorAsyncFn = (originalFn) => {
 
 const interceptorFn = (originalFn) => {
   return (value) => {
-    //console.log(originalFn.name + " called...")
     let res = originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
@@ -108,7 +106,6 @@ const getMethods = (obj) =>
       if (isAsync) {
         obj[item] = interceptorAsyncFn(obj[item])
       } else {
-        //console.log(obj[item])
         obj[item] = interceptorFn(obj[item])
       }
     } else if (typeof obj[item] === "object") {
