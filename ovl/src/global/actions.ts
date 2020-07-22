@@ -385,7 +385,6 @@ export const InitApp: OvlAction<Init> = async (
   state.ovl.language.language = res.data.lang
   localStorage.setItem("PortalLanguage", res.data.lang)
   state.ovl.language.translations = res.data.translations
-
   if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
     OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
       res.data

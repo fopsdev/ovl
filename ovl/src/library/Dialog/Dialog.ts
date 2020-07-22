@@ -12,6 +12,7 @@ type CancelType = "AppCancel" | "AppNo" | "NoButton"
 export type ResultType = undefined | 1 | 2
 
 export type OpenModalDialogState = {
+  title: string
   customClass: string
   type: DialogType
   text: string | TemplateResult
@@ -21,6 +22,7 @@ export type OpenModalDialogState = {
 }
 
 export type ModalDialogState = {
+  title: string
   customClass: string
   type: DialogType
   text: string | TemplateResult
@@ -158,7 +160,7 @@ export class OvlDialog extends OvlBaseElement {
 
       dialogHolderParams = {
         dialogParts: {
-          title: () => "Zeiterfassung",
+          title: () => this.state.ovl.libState.dialog.title,
           body: () => this.getBody(),
           footer: () => this.getFooter(),
           keyHandlerFn: this.keyHandler,

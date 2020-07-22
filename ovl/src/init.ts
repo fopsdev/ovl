@@ -1,7 +1,7 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
 
-import { OvlScreen } from "./index"
+import { OvlScreen, TableDefIds } from "./index"
 
 export type Init = {
   customerTestUrlMatch: string
@@ -38,6 +38,7 @@ type OvlConfig = {
      thats why we have a check function to check if they should be enabled
   */
   stickyHeaderEnabled: (state: OvlState) => {}
+  defaultDialogTitle?: string
 }
 
 import { OvlState, OvlAction } from "./index"

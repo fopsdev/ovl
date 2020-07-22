@@ -1,9 +1,10 @@
 import { OpenModalDialogState, ResultType } from "./Dialog"
 import { OvlAction, OvlDialog, FormType } from "../../index"
 import { FormValidate_Type } from "../../global/hooks"
-import { modalDialog } from "../../global/globals"
+import { modalDialog, T } from "../../global/globals"
 import { TemplateResult } from "lit-html"
 import { DialogType } from "./OvlDialogBase"
+import { OvlConfig } from "../../init"
 
 export type OpenDialogOptions = {
   dialogType: OvlDialog
@@ -50,6 +51,7 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
   }
   state.ovl.libState.dialog.type = value.type
   state.ovl.libState.dialog.customClass = value.customClass
+  state.ovl.libState.dialog.title = value.title
   state.ovl.libState.dialog.default = value.default
   if (value.cancel !== "NoButton") {
     state.ovl.libState.dialog.cancelText =
@@ -85,25 +87,35 @@ type OkCancelDialog = {
   default: ResultType
   type?: DialogType
   customClass?: string
+  title?: string
 }
 type OkDialog = {
   text: string | TemplateResult
   type?: DialogType
   customClass?: string
+  title?: string
 }
 export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   value,
-  { actions }
+  { actions, state }
 ) => {
   let type: DialogType = "standard"
   if (value.type) {
     type = value.type
+  }
+  let title = T("AppTitle")
+  if (OvlConfig.defaultDialogTitle) {
+    title = T(OvlConfig.defaultDialogTitle)
+  }
+  if (value.title) {
+    title = value.title
   }
   let customClass = ""
   if (value.customClass) {
     customClass = value.customClass
   }
   await actions.ovl.dialog.ModalDialogOpen({
+    title,
     customClass,
     type,
     cancel: "AppCancel",
@@ -123,7 +135,16 @@ export const OkDialog: OvlAction<OkDialog> = async (value, { actions }) => {
     customClass = value.customClass
   }
 
+  let title = T("AppTitle")
+  if (OvlConfig.defaultDialogTitle) {
+    title = T(OvlConfig.defaultDialogTitle)
+  }
+  if (value.title) {
+    title = value.title
+  }
+
   await actions.ovl.dialog.ModalDialogOpen({
+    title,
     customClass,
     type,
     cancel: "NoButton",
