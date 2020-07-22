@@ -626,46 +626,26 @@ const TableEditSaveRowHelper = async (
   let rows = data.data
   let row = rows[key]
 
-  // first of all we need to send all offline data if any and do the cleanup/key fixup
   let fn = resolvePath(actions.custom, def.namespace)
-  // let offlineRetryFnName = FormOfflineRetry
-  // if (!isOfflineRetry && fn && fn[offlineRetryFnName]) {
-  //   // ok there is a offlineRetry - Function
-  //   let res: FormOfflineRetry_ReturnType = await fn[offlineRetryFnName](<
-  //     FormOfflineRetry_Type
-  //   >{
-  //     key,
-  //   })
-
-  // if ((await res).newKey) {
-  //   // key could have changed becaus it was an offline entry
-  //   // so the further processing should use the new key
-  //   key = (await res).newKey
-  // }
-  //}
-
-  // lets check if its an add or an update
-  // we will only send updated cols in case of update
-
-  // if (key === undefined) {
-  //   debugger
-  // }
-
+  // first of all we need to send all offline data if any and do the cleanup/key fixup
   if (!isOfflineRetry && 1 === 1 /*OvlConfig._system.OfflineMode*/) {
     let res = await actions.ovl.internal.TableOfflineHandler({
       data,
       defId: def.id,
       key,
     })
-    console.log("offline handled")
     if (res.newKey) {
       key = res.newKey
+      if (rowToSave) {
+        // rowtosave could be a clone thats why we should add the keys here as well
+        rowToSave[def.database.dataIdField] = key
+        if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
+          rowToSave["Name"] = key
+        }
+      }
     }
   }
 
-  if (isOfflineRetry) {
-    debugger
-  }
   let isAdd = !!(
     key.indexOf(ovltemp) > -1 ||
     (isOfflineRetry && key.indexOf(ovloffline) > -1)
@@ -753,14 +733,14 @@ const TableEditSaveRowHelper = async (
                 let newKey = key.replace(ovltemp, ovloffline)
                 res.data[def.database.dataIdField] = newKey
                 if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
-                  res.data.Name = key
+                  res.data.Name = newKey
                 }
                 let addedKeys = data.offline.addedKeys
                 addedKeys[newKey] = true
               } else {
                 // its an update
                 // so just flag the used columns
-                res.data[def.database.dataIdField] = key
+                //res.data[def.database.dataIdField] = key
                 let updatedKeys = data.offline.updatedKeys
                 // if its an offline key it will be handled by add already
                 if (key.indexOf(ovloffline) < 0) {
@@ -861,7 +841,11 @@ const TableEditSaveRowHelper = async (
           isOfflineRetry
         )
       }
-      console.log("row added")
+      if (isOfflineRetry) {
+        console.log(state.timeportal.tables.effort.data)
+        console.log("offline handled")
+        debugger
+      }
       if (!noSnack) {
         SnackAdd("Datensatz gespeichert", "Success")
       }
@@ -918,8 +902,7 @@ export const TableOfflineHandler: OvlAction<
         defId,
         rowToSave: data.data[k],
       })
-      console.log("reskey")
-      console.log(resKey)
+
       if (resKey) {
         if (k === key && k !== resKey) {
           // key changed
