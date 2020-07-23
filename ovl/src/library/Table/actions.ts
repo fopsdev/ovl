@@ -731,7 +731,12 @@ const TableEditSaveRowHelper = async (
           // handle offline
           if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
             if (!isOfflineRetry) {
-              res.data = JSON.parse(JSON.stringify(data.data[key]))
+              try {
+                res.data = JSON.parse(JSON.stringify(data.data[key]))
+              } catch (e) {
+                console.log(e)
+                debugger
+              }
               Object.keys(newData).forEach((k) => {
                 res.data[k] = newData[k]
               })

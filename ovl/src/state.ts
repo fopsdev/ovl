@@ -49,6 +49,7 @@ let language = {
   language: "",
   translations,
   showTranslationKeys: false,
+  isReady: false,
 }
 
 let uiState = {
