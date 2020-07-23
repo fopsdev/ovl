@@ -72,6 +72,7 @@ let libState = {
 
 let app = {
   offline: false,
+  discCacheVersion: Date.now(),
 }
 
 let dialogs: { [key in OvlDialog]?: DialogsState } = {}

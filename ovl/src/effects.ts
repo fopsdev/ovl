@@ -88,9 +88,11 @@ export const ovlFetch = async (
       if (data.mode) {
         urlWithParams.searchParams.append("mode", data.mode)
       }
-      if (data.v) {
-        urlWithParams.searchParams.append("v", data.v)
-      }
+      // get requests will always use a diskCache version which is persisted in state and recreated if page reload
+      urlWithParams.searchParams.append(
+        "v",
+        ovl.state.ovl.app.discCacheVersion.toString()
+      )
 
       // encode params as url param
       url = urlWithParams.toString()
