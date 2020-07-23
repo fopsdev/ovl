@@ -87,6 +87,7 @@ export class OvlBaseElement extends HTMLElement {
   name: string
   _id: number = 0
   screen: OvlScreen
+  screenCloseBehaviour: "remove" | "hide"
   static _counter: number = 0
   screenClosing() {
     return this.screen
@@ -171,17 +172,21 @@ export class OvlBaseElement extends HTMLElement {
         return
       }
     }
-    checkScreen = !this.screen || this.screenVisible()
+    checkScreen =
+      !this.screen ||
+      this.screenVisible() ||
+      this.screenCloseBehaviour === "hide"
 
     let res
     if (checkScreen) {
       res = await this.getUI()
       if (res !== undefined) {
         if (this.screen) {
-          if (!this.screenClosing() && this.screenVisible()) {
+          let screenHide = !this.screenVisible() ? "hide" : ""
+          if (!this.screenClosing()) {
             // wrap screen always in a div
             // because animations didn't work on custom element top level
-            res = html`<div class="fadeInScreen">${res}</div>`
+            res = html`<div class="fadeInScreen ${screenHide}">${res}</div>`
           } else {
             res = html`<div>${res}</div>`
           }

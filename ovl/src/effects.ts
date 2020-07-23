@@ -88,6 +88,9 @@ export const ovlFetch = async (
       if (data.mode) {
         urlWithParams.searchParams.append("mode", data.mode)
       }
+      if (data.v) {
+        urlWithParams.searchParams.append("v", data.v)
+      }
 
       // encode params as url param
       url = urlWithParams.toString()

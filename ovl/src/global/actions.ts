@@ -391,7 +391,6 @@ export const InitApp: OvlAction<Init> = async (
     )
   }
 
-  state.ovl.uiState.isReady = true
   if (OvlConfig.requiredActions.customInitActionPath) {
     OvlConfig.requiredActions.customInitActionPath(res.data)
   }

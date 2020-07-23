@@ -104,6 +104,7 @@ export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
     type = value.type
   }
   let title = T("AppTitle")
+
   if (OvlConfig.defaultDialogTitle) {
     title = T(OvlConfig.defaultDialogTitle)
   }
