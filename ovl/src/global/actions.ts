@@ -358,7 +358,10 @@ export const InitApp: OvlAction<Init> = async (
   state.ovl.uiState.isTouch = isTouch()
   state.ovl.uiState.isIOS =
     /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-  let currentLocation = window.location.hostname.toLowerCase()
+  let currentLocation =
+    window.location.hostname.toLowerCase() +
+    ":" +
+    window.location.port.toLowerCase()
   if (currentLocation.indexOf(value.customerTestUrlMatch) > -1) {
     state.ovl.uiState.isDemo = true
     state.ovl.apiUrl = value.customerTestUrl
