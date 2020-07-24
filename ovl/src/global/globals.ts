@@ -18,6 +18,11 @@ type GlobalModalDialogState = {
   text: string | TemplateResult
 }
 
+export const getLocalTimestampString = (): string => {
+  var tzoffset = new Date().getTimezoneOffset() * 60000 //offset in milliseconds
+  return new Date(Date.now() - tzoffset).toISOString().slice(0, -1)
+}
+
 //@ts-ignore
 export let OvlTimestamp = 0
 export const uuidv4 = () => {
