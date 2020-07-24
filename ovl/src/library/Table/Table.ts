@@ -202,7 +202,7 @@ export type TableDef = {
     add?: boolean
     delete?: boolean
     filter?: boolean
-
+    headerMenu?: boolean
     // put a 0 if it always should be refreshed, put a -1 if never, other numbers > 0 are considered as seconds
     // this is taken into account when the refresh button is clicked
     forceFreshServerDataIfOlderThan?: number
@@ -458,10 +458,11 @@ export class TableHeader extends OvlBaseElement {
     }
 
     if (
-      def.features.add ||
-      def.features.filter ||
-      def.features.multiselect ||
-      def.columns[key].sortable
+      def.features.headerMenu &&
+      (def.features.add ||
+        def.features.filter ||
+        def.features.multiselect ||
+        def.columns[key].sortable)
     ) {
       //@ts-ignore
       if (e.target.innerHTML.indexOf(" menuDisabled") < 0) {

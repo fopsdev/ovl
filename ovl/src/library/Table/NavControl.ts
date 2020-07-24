@@ -133,7 +133,8 @@ export class TableNavControl extends OvlBaseElement {
       if (
         this.nav.type === "row" &&
         !feature.noButtonsAtTheBottom &&
-        (feature.filter || feature.multiselect)
+        (feature.filter || feature.multiselect) &&
+        feature.headerMenu
       ) {
         more = html`
           <button

@@ -414,7 +414,10 @@ export const initTableState = (
       options.maxRows = { maxRows: -1, showHint: true }
     }
     if (options.filter === undefined) {
-      options.filter = { showSelected: false, value: "" }
+      options.filter = { showSelected: false, value: "", static: {} }
+    }
+    if (options.filter.static === undefined) {
+      options.filter.static = {}
     }
 
     if (options.sort === undefined) {
@@ -515,6 +518,10 @@ export const initTableState = (
 
     if (features.detailView === undefined) {
       features.detailView = "None"
+    }
+
+    if (features.headerMenu === undefined) {
+      features.headerMenu = true
     }
 
     if (features.add === undefined) {
@@ -681,14 +688,16 @@ export const TableFilterFn = (
   // 1. staticFilter gets applied (for master - details scenarios)
   // 2. temp rows in add mode get filtered out (they are handled in addRwos array)
   // 3. rows which point to null gets filtered out (eg. delete => sets em to null)
-  if (staticFilter) {
-    let filterKeys = Object.keys(staticFilter)
+
+  let filterKeys = Object.keys(staticFilter)
+  if (filterKeys.length > 0) {
     restable = restable.filter((v) =>
       filterKeys.some((m) => {
         return data[v][m] === staticFilter[m]
       })
     )
   }
+
   let filterCustom = def.options.filterCustom
   let customFilter = Object.keys(filterCustom).filter(
     (k) => filterCustom[k].active
@@ -1016,7 +1025,7 @@ export const createDynamicRowFunctions = async (
       }
     }
   }
-  if (!isDetailView) {
+  if (!isDetailView && def.features.headerMenu) {
     // more
     let moreDisabled = false
     let moreTitle = ""
