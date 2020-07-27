@@ -62,6 +62,9 @@ export function createDeepProxy(target) {
           }
           value = proxify(value, [...path, key])
         }
+        // console.log("set proxy value:")
+        // console.log(path)
+        // console.log(value)
         target[key] = value
         if (!isTracking()) {
           let isArray = Array.isArray(target)

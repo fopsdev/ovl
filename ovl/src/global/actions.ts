@@ -218,30 +218,33 @@ export const Logout: OvlAction = async (_, { state, actions }) => {
   }
 }
 
-export const PrepareApp: OvlAction = async (_, { actions, state, effects }) => {
-  state.ovl.uiState.isReady = false
+export const AfterRehydrateApp: OvlAction = async (
+  _,
+  { actions, state, effects }
+) => {
+  // state.ovl.uiState.isReady = false
   state.ovl.libState.indicator.refCounter = 0
 
   // most of the following code is necessary because we still have some component state which is not handled by overmind
   // lession learned: use ovl.state wherever possible...
-  if (state.ovl.libState.overlay2.open) {
-    await actions.ovl.internal.CloseOverlay2()
-  }
-  if (state.ovl.libState.overlay.open) {
-    await actions.ovl.internal.CloseOverlay()
-  }
+  // if (state.ovl.libState.overlay2.open) {
+  //   await actions.ovl.internal.CloseOverlay2()
+  // }
+  // if (state.ovl.libState.overlay.open) {
+  //   await actions.ovl.internal.CloseOverlay()
+  // }
 
   state.ovl.libState.snacks = {}
   // set current screen visible, others false, just to be sure we are not in the middle of an animation
-  let screenToGo = state.ovl.screens.nav.nextScreen
-  if (!screenToGo) {
-    screenToGo = state.ovl.screens.nav.currentScreen
-  }
-  state.ovl.screens.nav.currentScreen = screenToGo
-  state.ovl.screens.nav.nextScreen = undefined
+  // let screenToGo = state.ovl.screens.nav.nextScreen
+  // if (!screenToGo) {
+  //   screenToGo = state.ovl.screens.nav.currentScreen
+  // }
+  // state.ovl.screens.nav.currentScreen = screenToGo
+  // state.ovl.screens.nav.nextScreen = undefined
   //actions.ovl.navigation.NavigateTo(screenToGo)
-  if (OvlConfig.requiredActions.customPrepareActionPath) {
-    OvlConfig.requiredActions.customPrepareActionPath(undefined)
+  if (OvlConfig.requiredActions.customAfterRehydrateActionPath) {
+    OvlConfig.requiredActions.customAfterRehydrateActionPath(undefined)
   }
 }
 
@@ -318,12 +321,10 @@ export const RehydrateAndUpdateApp: OvlAction = async (
         Object.keys(persistedState).forEach((k) => {
           state[k] = persistedState[k]
         })
-        await actions.ovl.internal.PrepareApp()
+        await actions.ovl.internal.AfterRehydrateApp()
         api.url = state.ovl.apiUrl
-        state.ovl.uiState.isReady = true
-
         let updateCheck = await effects.ovl.getRequest(
-          "./updatecheck/ovlnocache" + OvlConfig._system.DataVersion + ".js",
+          "./ovlnocache/" + OvlConfig._system.Version + ".js",
           undefined
         )
         if (updateCheck.status === 404) {
@@ -350,7 +351,11 @@ export const InitApp: OvlAction<Init> = async (
     history.pushState(null, null, document.URL)
   })
   // rehydrate state from indexeddb/check if update is needed
+  //debugger
   await actions.ovl.internal.RehydrateAndUpdateApp()
+  if (state.ovl.uiState.isReady) {
+    return
+  }
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
   // @ts-ignore
@@ -388,6 +393,7 @@ export const InitApp: OvlAction<Init> = async (
   state.ovl.language.language = res.data.lang
   localStorage.setItem("PortalLanguage", res.data.lang)
   state.ovl.language.translations = res.data.translations
+  state.ovl.language.isReady = true
   if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
     OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
       res.data

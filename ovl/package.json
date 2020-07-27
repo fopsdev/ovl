@@ -22,9 +22,7 @@
   },
   "dependencies": {
     "idb": "5.0.1",
-    "lit-html": "1.1.2",
-    "workbox-routing": "5.0.0",
-    "workbox-strategies": "5.0.0"
+    "lit-html": "1.1.2"
   },
   "devDependencies": {
     "browserslist": "4.8.5",

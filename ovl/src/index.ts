@@ -1,3 +1,5 @@
+export { OvlVersion } from "../../../kaltag/sw"
+
 import {
   timePortalScreens,
   timePortalDialogs,

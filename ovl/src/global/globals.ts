@@ -196,13 +196,18 @@ export const saveState = async (force: boolean, reason: string) => {
     saveReason = reason
     //@ts-ignore
 
-    let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
-    let ts
-    if (td !== undefined) {
-      ts = td.getTime()
+    let diff = 0
+    let dt
+    if (!force) {
+      let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
+      let ts
+      if (td !== undefined) {
+        ts = td.getTime()
+      }
+      dt = Date.now()
+      diff = dt - ts
     }
-    let dt = Date.now()
-    if (force || ts === undefined || dt - ts > 5000) {
+    if (force || diff > 5000) {
       await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
       OvlTimestamp = dt
       // let refstate = ovl.state
@@ -219,8 +224,8 @@ export const saveState = async (force: boolean, reason: string) => {
     }
   }
 }
-let logoutAndClearFlag = false
-let gotoFileFlag = false
+export let logoutAndClearFlag = false
+export let gotoFileFlag = false
 
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
@@ -240,9 +245,11 @@ export const logout = async () => {
       }
       // 2. get rid of any indexeddb state
       await stateStore.clear()
+
       // 3. get rid of any cached static assets
-      let cacheKeys = await caches.keys()
-      await Promise.all(cacheKeys.map((cacheName) => caches.delete(cacheName)))
+      // this is no more necessary since serviceworker iutsel deletes the cache
+      // let cacheKeys = await caches.keys()
+      // await Promise.all(cacheKeys.map((cacheName) => caches.delete(cacheName)))
     } catch (e) {}
   }
 

@@ -880,54 +880,69 @@ export const TableOfflineHandler: OvlAction<
   let defId = value.defId
   let key = value.key
   let deletedKeys = data.offline.deletedKeys
-  Object.keys(deletedKeys).forEach(async (k) => {
-    if (
-      await actions.ovl.internal.TableOfflineRetryDeleteRow({
-        data,
-        defId,
-        key,
-      })
-    ) {
-      delete deletedKeys[k]
-    }
-  })
-
-  let addedKeys = data.offline.addedKeys
   let newKey
-  await Promise.all(
-    Object.keys(addedKeys).map(async (k) => {
+
+  try {
+    Object.keys(deletedKeys).forEach(async (k) => {
+      if (
+        await actions.ovl.internal.TableOfflineRetryDeleteRow({
+          data,
+          defId,
+          key,
+        })
+      ) {
+        delete deletedKeys[k]
+      } else {
+        console.log("throw deletedKeys")
+        throw "Retry failed"
+      }
+    })
+
+    let addedKeys = data.offline.addedKeys
+    await Promise.all(
+      Object.keys(addedKeys).map(async (k) => {
+        let resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
+          data,
+          defId,
+          rowToSave: data.data[k],
+        })
+
+        if (resKey) {
+          if (k === key && k !== resKey) {
+            // key changed
+            newKey = resKey
+          }
+          delete addedKeys[k]
+        } else {
+          console.log("throw addedKeys")
+          throw "Retry failed"
+        }
+      })
+    )
+
+    let updatedKeys = state.timeportal.tables.effort.offline.updatedKeys
+
+    Object.keys(updatedKeys).forEach(async (k) => {
+      let rowToSave = { Code: k }
+      Object.keys(updatedKeys[k]).forEach((f) => {
+        rowToSave[f] = data.data[k][f]
+      })
       let resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
         data,
         defId,
-        rowToSave: data.data[k],
+        rowToSave,
       })
-
       if (resKey) {
-        if (k === key && k !== resKey) {
-          // key changed
-          newKey = resKey
-        }
-        delete addedKeys[k]
+        delete updatedKeys[k]
+      } else {
+        console.log("throw updatedKeys")
+        throw "Retry failed"
       }
     })
-  )
-
-  let updatedKeys = state.timeportal.tables.effort.offline.updatedKeys
-
-  Object.keys(updatedKeys).forEach(async (k) => {
-    let rowToSave = { Code: k }
-    Object.keys(updatedKeys[k]).forEach((f) => {
-      rowToSave[f] = data.data[k][f]
-    })
-    let resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
-      data,
-      defId,
-      rowToSave,
-    })
-    if (resKey) {
-      delete updatedKeys[k]
-    }
-  })
+  } catch (e) {
+    console.log("Offline Retry failed...")
+    newKey = false
+  }
   return { newKey }
 }
 

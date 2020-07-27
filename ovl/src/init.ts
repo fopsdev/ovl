@@ -1,7 +1,6 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
-
-import { OvlScreen, TableDefIds } from "./index"
+import { OvlScreen, OvlVersion } from "./index"
 
 export type Init = {
   customerTestUrlMatch: string
@@ -18,7 +17,6 @@ type OvlConfig = {
     Version: string
     IsDev: boolean
     OfflineMode: boolean
-    DataVersion: string
     ShowSaveOrigin: boolean
     PersistStateId: string
     PersistTimestampId: string
@@ -28,7 +26,7 @@ type OvlConfig = {
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
     customInitActionPath: OvlAction
-    customPrepareActionPath: OvlAction
+    customAfterRehydrateActionPath: OvlAction
     handleAdditionalTranslationResultActionPath: OvlAction
     handleGlobalRefreshActionPath: OvlAction
   }
@@ -45,16 +43,14 @@ import { OvlState, OvlAction } from "./index"
 
 // #####################################################################################################################################
 
-let dataVersion = "1"
 let OvlConfig: OvlConfig = {
   _system: {
     Version: "0.5",
     IsDev: false,
     OfflineMode: false,
-    DataVersion: dataVersion,
     ShowSaveOrigin: true,
-    PersistStateId: "ovlstate" + dataVersion,
-    PersistTimestampId: "ovltimestamp" + dataVersion,
+    PersistStateId: "ovlstate",
+    PersistTimestampId: "ovltimestamp",
   },
   //@ts-ignore
   initialScreen: "",
@@ -84,13 +80,10 @@ if (window.OvlShowSaveOrigin) {
   //@ts-ignore
   OvlConfig._system.ShowSaveOrigin = window.OvlShowSaveOrigin
 }
-//@ts-ignore
-if (window.OvlVersion) {
-  //@ts-ignore
-  OvlConfig._system.Version = window.OvlVersion
-}
-OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.DataVersion
+console.log("set config Version")
+console.log(OvlVersion)
+OvlConfig._system.Version = OvlVersion
+OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.Version
 OvlConfig._system.PersistTimestampId =
-  "ovltimestamp" + OvlConfig._system.DataVersion
-
+  "ovltimestamp" + OvlConfig._system.Version
 export { OvlConfig }
