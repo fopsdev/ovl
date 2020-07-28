@@ -321,8 +321,8 @@ export const RehydrateAndUpdateApp: OvlAction = async (
         Object.keys(persistedState).forEach((k) => {
           state[k] = persistedState[k]
         })
-        await actions.ovl.internal.AfterRehydrateApp()
         api.url = state.ovl.apiUrl
+        await actions.ovl.internal.AfterRehydrateApp()
         let updateCheck = await effects.ovl.getRequest(
           "./ovlnocache/" + OvlConfig._system.Version + ".js",
           undefined
@@ -352,10 +352,7 @@ export const InitApp: OvlAction<Init> = async (
   })
   // rehydrate state from indexeddb/check if update is needed
   //debugger
-  await actions.ovl.internal.RehydrateAndUpdateApp()
-  if (state.ovl.uiState.isReady) {
-    return
-  }
+
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
   // @ts-ignore
@@ -367,6 +364,7 @@ export const InitApp: OvlAction<Init> = async (
     window.location.hostname.toLowerCase() +
     ":" +
     window.location.port.toLowerCase()
+
   if (currentLocation.indexOf(value.customerTestUrlMatch) > -1) {
     state.ovl.uiState.isDemo = true
     state.ovl.apiUrl = value.customerTestUrl
@@ -379,6 +377,7 @@ export const InitApp: OvlAction<Init> = async (
     state.ovl.apiUrl = value.devServer
   }
   api.url = state.ovl.apiUrl
+
   // prepare login form
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
@@ -388,6 +387,10 @@ export const InitApp: OvlAction<Init> = async (
   })
 
   if (!res || !res.data) {
+    await actions.ovl.internal.RehydrateAndUpdateApp()
+    if (state.ovl.uiState.isReady) {
+      return
+    }
     return
   }
   state.ovl.language.language = res.data.lang

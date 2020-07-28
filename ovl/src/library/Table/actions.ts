@@ -6,6 +6,7 @@ import {
   T,
   uuidv4,
   ovloffline,
+  saveState,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -760,6 +761,7 @@ const TableEditSaveRowHelper = async (
                   })
                 }
               }
+              saveState(true, "OffMode")
             } else {
               // if its offlineRetry don't do anything in case of offline error (elsewise the same data will be tried to be added again for offline handling)
               return
@@ -876,13 +878,16 @@ export const TableOfflineHandler: OvlAction<
   { data: TableData; defId: TableDefIds; key: string },
   Promise<{ newKey: string }>
 > = async (value, { state, actions }) => {
-  let data = value.data
-  let defId = value.defId
-  let key = value.key
-  let deletedKeys = data.offline.deletedKeys
+  let lastRetry = state.ovl.app.offlineLastRetry
   let newKey
+  let dn = Date.now()
+  if (!state.ovl.app.offline || !lastRetry || dn - lastRetry > 40000) {
+    state.ovl.app.offlineLastRetry = dn
+    let data = value.data
+    let defId = value.defId
+    let key = value.key
+    let deletedKeys = data.offline.deletedKeys
 
-  try {
     Object.keys(deletedKeys).forEach(async (k) => {
       if (
         await actions.ovl.internal.TableOfflineRetryDeleteRow({
@@ -892,9 +897,6 @@ export const TableOfflineHandler: OvlAction<
         })
       ) {
         delete deletedKeys[k]
-      } else {
-        console.log("throw deletedKeys")
-        throw "Retry failed"
       }
     })
 
@@ -913,9 +915,6 @@ export const TableOfflineHandler: OvlAction<
             newKey = resKey
           }
           delete addedKeys[k]
-        } else {
-          console.log("throw addedKeys")
-          throw "Retry failed"
         }
       })
     )
@@ -934,14 +933,8 @@ export const TableOfflineHandler: OvlAction<
       })
       if (resKey) {
         delete updatedKeys[k]
-      } else {
-        console.log("throw updatedKeys")
-        throw "Retry failed"
       }
     })
-  } catch (e) {
-    console.log("Offline Retry failed...")
-    newKey = false
   }
   return { newKey }
 }
@@ -1263,6 +1256,7 @@ export const TableDeleteRow: OvlAction<
           // its a recod that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
           delete value.data.offline.addedKeys[key]
         }
+        saveState(true, "OffMode")
       } else {
         // handleError @@hook
         let fn = resolvePath(actions.custom, def.namespace)

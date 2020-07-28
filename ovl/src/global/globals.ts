@@ -192,7 +192,11 @@ export const visibilityChange = async (event) => {
 let saveReason = ""
 export const saveState = async (force: boolean, reason: string) => {
   console.log("save state")
-  if (OvlConfig._system.OfflineMode && !logoutAndClearFlag) {
+  if (
+    OvlConfig._system.OfflineMode &&
+    !logoutAndClearFlag &&
+    ovl.state.ovl.uiState.isReady
+  ) {
     saveReason = reason
     //@ts-ignore
 
