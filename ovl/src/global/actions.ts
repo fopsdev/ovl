@@ -324,7 +324,7 @@ export const RehydrateAndUpdateApp: OvlAction = async (
         api.url = state.ovl.apiUrl
         await actions.ovl.internal.AfterRehydrateApp()
         let updateCheck = await effects.ovl.getRequest(
-          "./ovlnocache/" + OvlConfig._system.Version + ".js",
+          "./ovlnocache/" + OvlConfig._system.Version.replace(".", "_") + ".js",
           undefined
         )
         if (updateCheck.status === 404) {
