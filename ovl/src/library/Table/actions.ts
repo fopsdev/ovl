@@ -94,6 +94,7 @@ import {
   TableDataAndDef,
   TableDef,
   Tabs,
+  SelectedEditRow,
 } from "./Table"
 import { OvlConfig } from "../../init"
 
@@ -246,20 +247,29 @@ export const TableRefreshDataFromServer: OvlAction<{
   if (!res.data) {
     return
   }
-  let serverData = res.data.data
-  let keysFromServer = Object.keys(serverData)
+
+  let idfield = def.database.dataIdField
+  let serverData: [] = res.data.data
+  // create hashsets for faster processing...
+  let keysFromServer = new Map<string, number>()
+  serverData.forEach((f, i) => {
+    keysFromServer.set(f[idfield], i)
+  })
   let localData = value.data.data
-  let localKeys = Object.keys(localData)
+  let localKeys = new Map<string, string>()
+
+  Object.keys(localData).forEach((f) => {
+    localKeys.set(localData[f][idfield], f)
+  })
   let needsRefresh = false
   // check if rows were added meanwhile
-  needsRefresh = keysFromServer.some((k) => localData[k] === undefined)
-
+  let keysArrayFromServer = Array.from(keysFromServer.keys())
+  needsRefresh = keysArrayFromServer.some((k) => !localKeys.has(k))
   // delete check is not needed its handled by design
-
   // check if rows were deleted meanwhile
   let rowsDeleted = false
-  localKeys.forEach((k) => {
-    if (serverData[k] === undefined) {
+  Array.from(localKeys.keys()).forEach((k) => {
+    if (!keysFromServer.has(k)) {
       rowsDeleted = true
       deleteTableRow({ def: value.def, data: value.data }, k)
     }
@@ -292,16 +302,19 @@ export const TableRefreshDataFromServer: OvlAction<{
     value.data.schema = res.data.schema
   }
   schema = value.data.schema
-  keysFromServer.forEach((k) => {
-    if (localData[k] === undefined) {
-      localData[k] = {}
+
+  keysArrayFromServer.forEach((k) => {
+    let dataKey = localKeys.get(k)
+    if (!dataKey) {
+      dataKey = uuidv4()
+      localData[dataKey] = {}
     }
-    Object.keys(serverData[k]).forEach((c) => {
-      localData[k][c] = serverData[k][c]
-      // if (schema && schema[c] && schema[c].type === "decimal") {
-      //   var num = localData[k][c]
-      //   localData[k][c] = Math.round(localData[k][c] * 1000000) / 1000000
-      // }
+    let i = keysFromServer.get(k)
+    // add a copy of the code field as well... (to support case when user changes db idfield)
+    let sd = serverData[i]
+    localData[dataKey]["_ovl" + idfield] = sd[idfield]
+    Object.keys(sd).forEach((c) => {
+      localData[dataKey][c] = serverData[i][c]
       // check for lookups which needs to be refreshed/reloaded
       if (dataFieldsToLookups[c]) {
         // its a lookup column, also check if lookup description is available
@@ -534,13 +547,14 @@ export const TableOfflineRetrySaveRow: OvlAction<
     data: TableData
     defId: TableDefIds
     rowToSave: {}
+    key: string
   },
   Promise<string>
 > = async (value, { state, actions }) => {
   let data = value.data
   let def = data.tableDef[value.defId]
   let rowToSave = value.rowToSave
-  let key = rowToSave[def.database.dataIdField]
+  let key = value.key
 
   return await TableEditSaveRowHelper(
     key,
@@ -625,6 +639,7 @@ const TableEditSaveRowHelper = async (
   noSnack?: boolean,
   isOfflineRetry?: boolean
 ): Promise<string> => {
+  debugger
   let rows = data.data
   let row = rows[key]
 
@@ -640,21 +655,21 @@ const TableEditSaveRowHelper = async (
       defId: def.id,
       key,
     })
-    if (res.newKey) {
-      key = res.newKey
-      if (rowToSave) {
-        // rowtosave could be a clone thats why we should add the keys here as well
-        rowToSave[def.database.dataIdField] = key
-        if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
-          rowToSave["Name"] = key
-        }
-      }
-    }
+    // if (res.newKey) {
+    //   if (rowToSave) {
+    //     // rowtosave could be a clone thats why we should add the keys here as well
+    //     rowToSave[def.database.dataIdField] = res.newKey
+    //     if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
+    //       rowToSave["Name"] = res.newKey
+    //     }
+    //   }
+    // }
   }
 
+  let rowid = data.data[key]["_ovl" + def.database.dataIdField]
   let isAdd = !!(
-    key.indexOf(ovltemp) > -1 ||
-    (isOfflineRetry && key.indexOf(ovloffline) > -1)
+    rowid.indexOf(ovltemp) > -1 ||
+    (isOfflineRetry && rowid.indexOf(ovloffline) > -1)
   )
   let hasFormState = formState !== null
   let newData
@@ -672,6 +687,10 @@ const TableEditSaveRowHelper = async (
       }, {})
   } else {
     newData = rowToSave
+  }
+  newData[def.database.dataIdField] = rowid
+  if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
+    newData.Name = rowid
   }
   let newId
   let res: any = {}
@@ -711,13 +730,14 @@ const TableEditSaveRowHelper = async (
           isOfflineRetry,
         })
       }
-
+      let rowCopy = JSON.parse(JSON.stringify(newData))
+      delete newData["_ovl" + def.database.dataIdField]
       res = await postRequest(
         api.url + def.server.endpoint + "/" + mode,
         {
           lang: state.ovl.language.language,
           idField: def.database.dataIdField,
-          idValue: key,
+          idValue: rowid,
           insertMode: def.database.dbInsertMode,
           data: newData,
           customId: ovl.state.ovl.user.clientId,
@@ -732,21 +752,22 @@ const TableEditSaveRowHelper = async (
           // handle offline
           if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
             if (!isOfflineRetry) {
-              res.data = JSON.parse(JSON.stringify(data.data[key]))
+              res.data = rowCopy
               Object.keys(newData).forEach((k) => {
                 res.data[k] = newData[k]
               })
               TableOfflineEnsureState(data)
               if (isAdd) {
                 // its an add
-                let newKey = key.replace(ovltemp, ovloffline)
-                res.data[def.database.dataIdField] = newKey
+                let newRowId = rowid.replace(ovltemp, ovloffline)
+                res.data[def.database.dataIdField] = newRowId
+                res.data["_ovl" + def.database.dataIdField] = newRowId
                 if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
-                  res.data.Name = newKey
+                  res.data.Name = newRowId
                 }
 
                 let addedKeys = data.offline.addedKeys
-                addedKeys[newKey] = true
+                addedKeys[key] = true
               } else {
                 // its an update
                 // so just flag the used columns
@@ -820,37 +841,46 @@ const TableEditSaveRowHelper = async (
       def.uiState.currentlyAddingKey = undefined
 
       // handle the result dance
-      newId = res.data[def.database.dataIdField]
-      if (isAdd) {
-        // get the definitive id
-        // update/create necessary objects for the table to work
+      //newId = res.data[def.database.dataIdField]
 
-        setTableRow(
-          { def, data },
-          key,
-          newId,
-          res.data,
-          false,
-          actions,
-          false,
-          isOfflineRetry
-        )
-        setRefresh({ def, data }, isAdd, res.data, key, null)
-      } else {
-        // just update the table data with all returned columns
-        // set Refresh needs to be before setTableRow becuase it compares old/new data
-        setRefresh({ def, data }, isAdd, res.data, key, null)
-        setTableRow(
-          { def, data },
-          key,
-          newId,
-          res.data,
-          false,
-          actions,
-          false,
-          isOfflineRetry
-        )
-      }
+      let destRow = data.data[key]
+      //rows[newId] = newData
+      Object.keys(res.data).forEach((k) => {
+        destRow[k] = res.data[k]
+      })
+      destRow["_ovl" + def.database.dataIdField] =
+        res.data[def.database.dataIdField]
+
+      // if (isAdd) {
+      //   // get the definitive id
+      //   // update/create necessary objects for the table to work
+
+      //   setTableRow(
+      //     { def, data },
+      //     key,
+      //     newId,
+      //     res.data,
+      //     false,
+      //     actions,
+      //     false,
+      //     isOfflineRetry
+      //   )
+      //   setRefresh({ def, data }, isAdd, res.data, key, null)
+      // } else {
+      //   // just update the table data with all returned columns
+      //   // set Refresh needs to be before setTableRow becuase it compares old/new data
+      //   setRefresh({ def, data }, isAdd, res.data, key, null)
+      //   setTableRow(
+      //     { def, data },
+      //     key,
+      //     newId,
+      //     res.data,
+      //     false,
+      //     actions,
+      //     false,
+      //     isOfflineRetry
+      //   )
+      // }
       if (!noSnack) {
         SnackAdd("Datensatz gespeichert", "Success")
       }
@@ -878,6 +908,9 @@ export const TableOfflineHandler: OvlAction<
   { data: TableData; defId: TableDefIds; key: string },
   Promise<{ newKey: string }>
 > = async (value, { state, actions }) => {
+  if (!value.data.offline || !value.data.tableDef[value.defId].initialised) {
+    return
+  }
   let lastRetry = state.ovl.app.offlineLastRetry
   let newKey
   let dn = Date.now()
@@ -893,7 +926,7 @@ export const TableOfflineHandler: OvlAction<
         await actions.ovl.internal.TableOfflineRetryDeleteRow({
           data,
           defId,
-          key,
+          key: deletedKeys[k],
         })
       ) {
         delete deletedKeys[k]
@@ -907,13 +940,9 @@ export const TableOfflineHandler: OvlAction<
           data,
           defId,
           rowToSave: data.data[k],
+          key: k,
         })
-
         if (resKey) {
-          if (k === key && k !== resKey) {
-            // key changed
-            newKey = resKey
-          }
           delete addedKeys[k]
         }
       })
@@ -930,6 +959,7 @@ export const TableOfflineHandler: OvlAction<
         data,
         defId,
         rowToSave,
+        key,
       })
       if (resKey) {
         delete updatedKeys[k]
@@ -1157,16 +1187,32 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
     })
   }
   let insertMode = value.def.database.dbInsertMode
+  let newId = uuidv4()
   if (insertMode !== "Manual") {
-    newRow[def.database.dataIdField] = ""
+    newRow[def.database.dataIdField] = ovltemp + newId
   }
+  newRow["_ovl" + def.database.dataIdField] = newRow[def.database.dataIdField]
   if (insertMode === "UDTAutoGUIDBoth" || insertMode === "UDTAutoNumberBoth") {
     if (!newRow["Name"]) {
-      newRow["Name"] = ""
+      newRow["Name"] = newRow[def.database.dataIdField]
     }
   }
-
-  setTableRow(value, undefined, undefined, newRow, true, actions, false)
+  value.data.data[newId] = newRow
+  def.uiState.dataFilteredAndSorted.push(newId)
+  Object.keys(value.data.tableDef).forEach((k) => {
+    let d: TableDef = value.data.tableDef[k]
+    d.uiState.editRow[newId] = { selected: false, mode: "add" }
+    d.uiState.selectedRow[newId] = {
+      selected: false,
+      showNav: false,
+      timestamp: 0,
+    }
+    d.uiState.viewRow[newId] = { selected: false }
+  })
+  actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  // let editRow: SelectedEditRow = { mode: "add", selected: true }
+  // def.uiState.editRow[newId] = editRow
+  //setTableRow(value, undefined, undefined, newRow, true, actions, false)
   if (def.features.page) {
     let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
     let count = dataFilteredAndSorted.length
@@ -1193,12 +1239,15 @@ export const TableOfflineRetryDeleteRow: OvlAction<
   Promise<boolean>
 > = async (value, { actions }) => {
   let data = value.data
+
   let def = data.tableDef[value.defId]
+  let offlineKey = value.key
   return await actions.ovl.table.TableDeleteRow({
     key: value.key,
     def,
     data,
     isOfflineRetry: true,
+    offlineKey,
   })
 }
 
@@ -1209,6 +1258,7 @@ export const TableDeleteRow: OvlAction<
     data: TableData
     isMass?: boolean
     isOfflineRetry?: boolean
+    offlineKey?: string
   },
   Promise<boolean>
 > = async (value, { actions, state, effects }) => {
@@ -1236,28 +1286,41 @@ export const TableDeleteRow: OvlAction<
       cancel = true
     }
   }
+  let idValue = value.offlineKey
+  if (!idValue) {
+    idValue = value.data.data[key]["_ovl" + def.database.dataIdField]
+  }
+
   if (!cancel) {
     let res = await postRequest(api.url + def.server.endpoint + "/delete", {
       lang: state.ovl.language.language,
       idField: def.database.dataIdField,
-      idValue: key,
+      idValue,
       insertMode: def.database.dbInsertMode,
       customId: ovl.state.ovl.user.clientId,
     })
     if (!res.data) {
       // 449 means offline in our context
       if (res.status === 449) {
-        TableOfflineEnsureState(value.data)
-        let deletedKeys = value.data.offline.deletedKeys
-        // if its an offline key it will be handled by add already
-        if (key.indexOf(ovloffline) < 0) {
-          deletedKeys[key] = true
+        if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
+          if (!value.isOfflineRetry) {
+            TableOfflineEnsureState(value.data)
+            let deletedKeys = value.data.offline.deletedKeys
+            // if its an offline key it will be handled by add already
+
+            if (idValue.indexOf(ovloffline) < 0) {
+              deletedKeys[idValue] = key
+            }
+            // its a record that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
+            delete value.data.offline.addedKeys[key]
+            // any offline updates are now obsolete as well
+            delete value.data.offline.updatedKeys[key]
+
+            saveState(true, "OffMode")
+          } else {
+            return
+          }
         }
-        // its a recod that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
-        delete value.data.offline.addedKeys[key]
-        // any offline updates are now obsolete as well
-        delete value.data.offline.updatedKeys[key]
-        saveState(true, "OffMode")
       } else {
         // handleError @@hook
         let fn = resolvePath(actions.custom, def.namespace)
@@ -1273,7 +1336,9 @@ export const TableDeleteRow: OvlAction<
         return
       }
     }
-    deleteTableRow({ def: def, data: value.data }, key)
+    if (!value.isOfflineRetry) {
+      deleteTableRow({ def: def, data: value.data }, key)
+    }
 
     if (!value.isMass && !value.isOfflineRetry) {
       SnackAdd("Datensatz gelöscht", "Success")
