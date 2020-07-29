@@ -324,9 +324,12 @@ export const RehydrateAndUpdateApp: OvlAction = async (
         api.url = state.ovl.apiUrl
         await actions.ovl.internal.AfterRehydrateApp()
         let updateCheck = await effects.ovl.getRequest(
-          "./ovlnocache/" + OvlConfig._system.Version.replace(".", "_") + ".js",
+          "./ovlnocache/" +
+            OvlConfig._system.Version.split(".").join("_") +
+            ".js",
           undefined
         )
+        debugger
         if (updateCheck.status === 404) {
           // we need an update
           await DialogOk("Update erforderlich!\n Bitte neu anmelden!")

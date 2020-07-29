@@ -1252,10 +1252,11 @@ export const TableDeleteRow: OvlAction<
         // if its an offline key it will be handled by add already
         if (key.indexOf(ovloffline) < 0) {
           deletedKeys[key] = true
-        } else {
-          // its a recod that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
-          delete value.data.offline.addedKeys[key]
         }
+        // its a recod that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
+        delete value.data.offline.addedKeys[key]
+        // any offline updates are now obsolete as well
+        delete value.data.offline.updatedKeys[key]
         saveState(true, "OffMode")
       } else {
         // handleError @@hook
