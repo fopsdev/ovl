@@ -639,7 +639,6 @@ const TableEditSaveRowHelper = async (
   noSnack?: boolean,
   isOfflineRetry?: boolean
 ): Promise<string> => {
-  debugger
   let rows = data.data
   let row = rows[key]
 
@@ -655,15 +654,6 @@ const TableEditSaveRowHelper = async (
       defId: def.id,
       key,
     })
-    // if (res.newKey) {
-    //   if (rowToSave) {
-    //     // rowtosave could be a clone thats why we should add the keys here as well
-    //     rowToSave[def.database.dataIdField] = res.newKey
-    //     if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
-    //       rowToSave["Name"] = res.newKey
-    //     }
-    //   }
-    // }
   }
 
   let rowid = data.data[key]["_ovl" + def.database.dataIdField]
@@ -771,7 +761,6 @@ const TableEditSaveRowHelper = async (
                 if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
                   res.data.Name = newRowId
                 }
-
                 let addedKeys = data.offline.addedKeys
                 addedKeys[key] = true
               } else {
@@ -1295,6 +1284,16 @@ export const TableDeleteRow: OvlAction<
 
   if (!cancel) {
     let idValue = value.data.data[key]["_ovl" + def.database.dataIdField]
+    // doesn't need to hit the server it is only an offline row
+
+    //let res = { data: undefined, status: undefined }
+    if (idValue.indexOf(ovloffline) > -1) {
+      delete value.data.offline.addedKeys[key]
+      // any offline updates are now obsolete as well
+      delete value.data.offline.updatedKeys[key]
+      deleteTableRow({ def: def, data: value.data }, key)
+      return true
+    }
     let res = await postRequest(api.url + def.server.endpoint + "/delete", {
       lang: state.ovl.language.language,
       idField: def.database.dataIdField,
@@ -1302,6 +1301,7 @@ export const TableDeleteRow: OvlAction<
       insertMode: def.database.dbInsertMode,
       customId: ovl.state.ovl.user.clientId,
     })
+
     let wasOffline = false
     if (!res.data) {
       // 449 means offline in our context
@@ -1311,9 +1311,9 @@ export const TableDeleteRow: OvlAction<
             TableOfflineEnsureState(value.data)
             let deletedKeys = value.data.offline.deletedKeys
             // if its an offline key it will be handled by add already
-            if (idValue.indexOf(ovloffline) < 0) {
-              deletedKeys[key] = true
-            }
+            //            if (idValue.indexOf(ovloffline) < 0) {
+            deletedKeys[key] = true
+            //            }
             // its a record that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
             delete value.data.offline.addedKeys[key]
             // any offline updates are now obsolete as well
@@ -1443,13 +1443,14 @@ export const TableMultipleDeleteRow: OvlAction<{
     def.uiState.headerSelected = ""
     wait = Promise.all(
       selectedObjects.map(async (k) => {
-        await actions.ovl.internal.TableDeleteRow({
-          key: k,
-          def: def,
-          data: value.data,
-          isMass: true,
-        })
-        if (!rows[k]) {
+        if (
+          await actions.ovl.internal.TableDeleteRow({
+            key: k,
+            def: def,
+            data: value.data,
+            isMass: true,
+          })
+        ) {
           deletedCounter++
         }
       })

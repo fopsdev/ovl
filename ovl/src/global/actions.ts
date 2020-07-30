@@ -329,7 +329,6 @@ export const RehydrateAndUpdateApp: OvlAction = async (
             ".js",
           undefined
         )
-        debugger
         if (updateCheck.status === 404) {
           // we need an update
           await DialogOk("Update erforderlich!\n Bitte neu anmelden!")

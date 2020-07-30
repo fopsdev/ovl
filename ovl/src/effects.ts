@@ -122,12 +122,34 @@ export const ovlFetch = async (
       ovl.state.ovl.user.token = ""
       return
     } else if (req.status === 404) {
-      snackMessage = "Not found"
       return {
         headers: req.headers,
         data: undefined,
         status: 404,
-        message: "",
+        message: "Not Found",
+        type: "",
+      }
+    } else if (req.status === 400) {
+      snackMessage = req.statusText
+      snackMessageType = "Error"
+      return {
+        headers: req.headers,
+        data: undefined,
+        status: 400,
+        message: req.statusText,
+        type: "",
+      }
+    } else if (req.status === 422) {
+      debugger
+      let msg = await req.json()
+      snackMessage = msg.errormessage
+      snackMessageType = "Error"
+
+      return {
+        headers: req.headers,
+        data: undefined,
+        status: 422,
+        message: msg.errormessage,
         type: "",
       }
     } else {

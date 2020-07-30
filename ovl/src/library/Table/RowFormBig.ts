@@ -186,9 +186,9 @@ export class TableRowFormBig extends OvlFormElement {
     let columns = def.columns
     let firstEditable = false
 
-    let handleSave = () => {
+    let handleSave = async () => {
       if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
-        this.actions.ovl.internal.TableEditSaveRow({
+        await this.actions.ovl.internal.TableEditSaveRow({
           key: this.rowData.key,
           def: this.rowData.tableDef,
           data: this.rowData.data,
