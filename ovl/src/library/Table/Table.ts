@@ -824,16 +824,23 @@ export class TableHeader extends OvlBaseElement {
           ></ovl-tnavcontrol>
         `
       }
-      let alreadyRendered = {}
-
+      let doNotRender = {}
+      if (dataAndSchema.offline) {
+        let delKeys = dataAndSchema.offline.deletedKeys
+        if (delKeys) {
+          Object.keys(delKeys).forEach((f) => {
+            doNotRender[f] = true
+          })
+        }
+      }
       let rows = repeat(
         dataAndAddRows,
         (k: string) => k,
         (k) => {
-          if (alreadyRendered[k]) {
+          if (doNotRender[k]) {
             return null
           }
-          alreadyRendered[k] = true
+          doNotRender[k] = true
           let row = html`
             <ovl-trg
               class="fd-table__body ovl-tableview-row"

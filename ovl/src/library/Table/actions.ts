@@ -688,7 +688,12 @@ const TableEditSaveRowHelper = async (
   } else {
     newData = rowToSave
   }
-  newData[def.database.dataIdField] = rowid
+  if (!newData[def.database.dataIdField]) {
+    newData[def.database.dataIdField] = rowid
+  }
+  if (!newData["_ovl" + def.database.dataIdField]) {
+    newData["_ovl" + def.database.dataIdField] = rowid
+  }
   if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
     newData.Name = rowid
   }
@@ -745,7 +750,8 @@ const TableEditSaveRowHelper = async (
         false,
         noSnack
       )
-
+      newData["_ovl" + def.database.dataIdField] =
+        newData[def.database.dataIdField]
       if (!res.data) {
         // 449 means offline in our context
         if (res.status === 449) {
@@ -785,6 +791,8 @@ const TableEditSaveRowHelper = async (
               saveState(true, "OffMode")
             } else {
               // if its offlineRetry don't do anything in case of offline error (elsewise the same data will be tried to be added again for offline handling)
+              // data.data["_ovl" + def.database.dataIdField] =
+              //   data.data[def.database.dataIdField]
               return
             }
           } else {
@@ -792,6 +800,8 @@ const TableEditSaveRowHelper = async (
             if (hasFormState) {
               formState.valid = false
             }
+            // data.data["_ovl" + def.database.dataIdField] =
+            //   data.data[def.database.dataIdField]
             return
           }
         }
@@ -848,8 +858,6 @@ const TableEditSaveRowHelper = async (
       Object.keys(res.data).forEach((k) => {
         destRow[k] = res.data[k]
       })
-      destRow["_ovl" + def.database.dataIdField] =
-        res.data[def.database.dataIdField]
 
       // if (isAdd) {
       //   // get the definitive id
@@ -1241,13 +1249,12 @@ export const TableOfflineRetryDeleteRow: OvlAction<
   let data = value.data
 
   let def = data.tableDef[value.defId]
-  let offlineKey = value.key
+
   return await actions.ovl.table.TableDeleteRow({
     key: value.key,
     def,
     data,
     isOfflineRetry: true,
-    offlineKey,
   })
 }
 
@@ -1258,7 +1265,6 @@ export const TableDeleteRow: OvlAction<
     data: TableData
     isMass?: boolean
     isOfflineRetry?: boolean
-    offlineKey?: string
   },
   Promise<boolean>
 > = async (value, { actions, state, effects }) => {
@@ -1286,12 +1292,9 @@ export const TableDeleteRow: OvlAction<
       cancel = true
     }
   }
-  let idValue = value.offlineKey
-  if (!idValue) {
-    idValue = value.data.data[key]["_ovl" + def.database.dataIdField]
-  }
 
   if (!cancel) {
+    let idValue = value.data.data[key]["_ovl" + def.database.dataIdField]
     let res = await postRequest(api.url + def.server.endpoint + "/delete", {
       lang: state.ovl.language.language,
       idField: def.database.dataIdField,
@@ -1299,6 +1302,7 @@ export const TableDeleteRow: OvlAction<
       insertMode: def.database.dbInsertMode,
       customId: ovl.state.ovl.user.clientId,
     })
+    let wasOffline = false
     if (!res.data) {
       // 449 means offline in our context
       if (res.status === 449) {
@@ -1307,15 +1311,14 @@ export const TableDeleteRow: OvlAction<
             TableOfflineEnsureState(value.data)
             let deletedKeys = value.data.offline.deletedKeys
             // if its an offline key it will be handled by add already
-
             if (idValue.indexOf(ovloffline) < 0) {
-              deletedKeys[idValue] = key
+              deletedKeys[key] = true
             }
             // its a record that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
             delete value.data.offline.addedKeys[key]
             // any offline updates are now obsolete as well
             delete value.data.offline.updatedKeys[key]
-
+            wasOffline = true
             saveState(true, "OffMode")
           } else {
             return
@@ -1336,7 +1339,7 @@ export const TableDeleteRow: OvlAction<
         return
       }
     }
-    if (!value.isOfflineRetry) {
+    if (!wasOffline) {
       deleteTableRow({ def: def, data: value.data }, key)
     }
 
