@@ -1025,7 +1025,7 @@ export const TableOfflineHandler: OvlAction<
         Object.keys(updatedKeys[k]).forEach((f) => {
           rowToSave[f] = data.data[k][f]
         })
-        let resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
+        resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
           data,
           defId,
           rowToSave,
