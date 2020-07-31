@@ -300,15 +300,25 @@ export class TableRowWrapper extends OvlBaseElement {
       let rowStatusMsg = ""
       let fn = resolvePath(this.actions.custom, def.namespace)
       let fnName = FormStatus
-      if (fn && fn[fnName]) {
-        let status = await fn[fnName](<FormStatus_Type>{
-          rowKey: key,
-          tableDef: this.row.tableDef,
-          tableData: data,
+      // also display offline save errors in rowstatus
+      if (data.offline && data.offline.errors[key]) {
+        let msgSet = data.offline.errors[key]
+        debugger
+        rowStatus = "fd-table__row--error"
+        msgSet.forEach((m) => {
+          rowStatusMsg += " " + m
         })
-        if (status) {
-          rowStatus = "fd-table__row--" + status.status
-          rowStatusMsg = status.msg
+      } else {
+        if (fn && fn[fnName]) {
+          let status = await fn[fnName](<FormStatus_Type>{
+            rowKey: key,
+            tableDef: this.row.tableDef,
+            tableData: data,
+          })
+          if (status) {
+            rowStatus = "fd-table__row--" + status.status
+            rowStatusMsg = status.msg
+          }
         }
       }
 

@@ -14,7 +14,7 @@ export const postRequest = async (
   isBlob?: boolean,
   noSnack?: boolean
 ) => {
-  return ovlFetch(url, data, "POST", isBlob, noSnack)
+  return await ovlFetch(url, data, "POST", isBlob, noSnack)
 }
 
 export type GETRequestParams = {
@@ -98,16 +98,17 @@ export const ovlFetch = async (
       url = urlWithParams.toString()
     }
 
-    const controller = new AbortController()
-    const { signal } = controller
+    // const controller = new AbortController()
+    // const { signal } = controller
 
-    let timer = setTimeout(() => {
-      controller.abort()
-    }, 5000)
+    // let timer = setTimeout(() => {
+    //   controller.abort()
+    // }, 5000)
 
-    reqOptions.signal = signal
+    //reqOptions.signal = signal
+
     const req = await fetch(url, reqOptions)
-    clearTimeout(timer)
+    //clearTimeout(timer)
     ovl.state.ovl.app.offline = false
     // with fetch we will have the repsonse status here on req object
     if (req.status === 401) {
@@ -140,11 +141,9 @@ export const ovlFetch = async (
         type: "",
       }
     } else if (req.status === 422) {
-      debugger
       let msg = await req.json()
       snackMessage = msg.errormessage
       snackMessageType = "Error"
-
       return {
         headers: req.headers,
         data: undefined,
@@ -212,11 +211,13 @@ export const ovlFetch = async (
     }
   } finally {
     ovl.actions.ovl.indicator.SetIndicatorClose()
-    if (!noSnack && snackMessage) {
-      if (snackMessageType === "Error") {
-        console.log("Fetch Error: " + snackMessage)
+    if (snackMessage) {
+      if (!noSnack || snackMessageType === "Error") {
+        if (snackMessageType === "Error") {
+          console.log("Fetch Error: " + snackMessage)
+        }
+        SnackAdd(snackMessage, snackMessageType)
       }
-      SnackAdd(snackMessage, snackMessageType)
     }
   }
 }

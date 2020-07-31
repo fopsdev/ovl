@@ -624,8 +624,51 @@ const TableOfflineEnsureState = (data: TableData) => {
       addedKeys: {},
       updatedKeys: {},
       deletedKeys: {},
+      errors: {},
     }
   }
+}
+
+const EditSaveRowOfflineHelper = (
+  def: TableDef,
+  data: TableData,
+  rowCopy: any,
+  res: any,
+  newData: any,
+  isAdd: boolean,
+  rowid: string,
+  key: string
+) => {
+  res.data = rowCopy
+  Object.keys(newData).forEach((k) => {
+    res.data[k] = newData[k]
+  })
+  TableOfflineEnsureState(data)
+  if (isAdd) {
+    // its an add
+    let newRowId = rowid.replace(ovltemp, ovloffline)
+    res.data[def.database.dataIdField] = newRowId
+    res.data["_ovl" + def.database.dataIdField] = newRowId
+    if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
+      res.data.Name = newRowId
+    }
+    let addedKeys = data.offline.addedKeys
+    addedKeys[key] = true
+  } else {
+    // its an update
+    // so just flag the used columns
+    let updatedKeys = data.offline.updatedKeys
+    // if its an offline key it will be handled by add already
+    if (key.indexOf(ovloffline) < 0) {
+      if (!updatedKeys[key]) {
+        updatedKeys[key] = {}
+      }
+      Object.keys(newData).forEach((k) => {
+        updatedKeys[key][k] = true
+      })
+    }
+  }
+  saveState(true, "OffMode")
 }
 
 const TableEditSaveRowHelper = async (
@@ -641,26 +684,32 @@ const TableEditSaveRowHelper = async (
 ): Promise<string> => {
   let rows = data.data
   let row = rows[key]
-
   let fn = resolvePath(actions.custom, def.namespace)
   // first of all we need to send all offline data if any and do the cleanup/key fixup
-  if (
-    !isOfflineRetry &&
-    data.offline &&
-    1 === 1 /*OvlConfig._system.OfflineMode*/
-  ) {
-    let res = await actions.ovl.internal.TableOfflineHandler({
-      data,
-      defId: def.id,
-      key,
-    })
-  }
+  // if (
+  //   !isOfflineRetry &&
+  //   data.offline &&
+  //   1 === 1 /*OvlConfig._system.OfflineMode*/
+  // ) {
+  //   let res = await actions.ovl.internal.TableOfflineHandler({
+  //     data,
+  //     defId: def.id,
+  //     key,
+  //   })
+  // }
 
   let rowid = data.data[key]["_ovl" + def.database.dataIdField]
   let isAdd = !!(
     rowid.indexOf(ovltemp) > -1 ||
     (isOfflineRetry && rowid.indexOf(ovloffline) > -1)
   )
+
+  if (!isOfflineRetry) {
+    if (data.offline) {
+      delete data.offline.errors[key]
+    }
+  }
+
   let hasFormState = formState !== null
   let newData
   if (hasFormState) {
@@ -725,159 +774,163 @@ const TableEditSaveRowHelper = async (
           isOfflineRetry,
         })
       }
-      let rowCopy = JSON.parse(JSON.stringify(newData))
+
       delete newData["_ovl" + def.database.dataIdField]
-      res = await postRequest(
-        api.url + def.server.endpoint + "/" + mode,
-        {
-          lang: state.ovl.language.language,
-          idField: def.database.dataIdField,
-          idValue: rowid,
-          insertMode: def.database.dbInsertMode,
-          data: newData,
-          customId: ovl.state.ovl.user.clientId,
-        },
-        false,
-        noSnack
-      )
-      newData["_ovl" + def.database.dataIdField] =
-        newData[def.database.dataIdField]
-      if (!res.data) {
-        // 449 means offline in our context
-        if (res.status === 449) {
-          // handle offline
-          if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
-            if (!isOfflineRetry) {
-              res.data = rowCopy
-              Object.keys(newData).forEach((k) => {
-                res.data[k] = newData[k]
-              })
-              TableOfflineEnsureState(data)
-              if (isAdd) {
-                // its an add
-                let newRowId = rowid.replace(ovltemp, ovloffline)
-                res.data[def.database.dataIdField] = newRowId
-                res.data["_ovl" + def.database.dataIdField] = newRowId
-                if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
-                  res.data.Name = newRowId
-                }
-                let addedKeys = data.offline.addedKeys
-                addedKeys[key] = true
-              } else {
-                // its an update
-                // so just flag the used columns
-                let updatedKeys = data.offline.updatedKeys
-                // if its an offline key it will be handled by add already
-                if (key.indexOf(ovloffline) < 0) {
-                  if (!updatedKeys[key]) {
-                    updatedKeys[key] = {}
-                  }
-                  Object.keys(newData).forEach((k) => {
-                    updatedKeys[key][k] = true
-                  })
-                }
-              }
-              saveState(true, "OffMode")
-            } else {
-              // if its offlineRetry don't do anything in case of offline error (elsewise the same data will be tried to be added again for offline handling)
-              // data.data["_ovl" + def.database.dataIdField] =
-              //   data.data[def.database.dataIdField]
-              return
-            }
-          } else {
-            // if it has no offline handling
+      let offlineHandled = false
+      if (!isAdd && rowid.indexOf(ovloffline) > -1) {
+        // its an update on a offline row so just ignore the server part
+        // the offline handler will take car on addinge the row with all the updates
+        let destRow = data.data[key]
+        //rows[newId] = newData
+        Object.keys(newData).forEach((k) => {
+          destRow[k] = newData[k]
+        })
+        offlineHandled = true
+        if (
+          1 === 1 /*OvlConfig._system.OfflineMode*/ &&
+          !isOfflineRetry &&
+          data.offline &&
+          !state.ovl.app.offline
+        ) {
+          let res = await actions.ovl.internal.TableOfflineHandler({
+            data,
+            defId: def.id,
+            key,
+          })
+          // if this row now has an offline error just return
+          if (data.offline.errors[key]) {
             if (hasFormState) {
               formState.valid = false
             }
-            // data.data["_ovl" + def.database.dataIdField] =
-            //   data.data[def.database.dataIdField]
             return
           }
         }
-
-        //}
-        else {
-          let saveErrorFnName = FormSaveError
-          // handleError @@hook
-          let fn = resolvePath(actions.custom, def.namespace)
-          if (fn && fn[saveErrorFnName]) {
-            await fn[saveErrorFnName](<FormSaveError_Type>{
-              key,
-              def,
-              data,
-              res,
-              isOfflineRetry,
-            })
-          } else {
-            if (hasFormState) {
-              formState.valid = false
+      }
+      if (!offlineHandled) {
+        let rowCopy = JSON.parse(JSON.stringify(newData))
+        if (
+          state.ovl.app.offline &&
+          1 === 1 /*OvlConfig._system.OfflineMode*/ &&
+          !isOfflineRetry
+        ) {
+          EditSaveRowOfflineHelper(
+            def,
+            data,
+            rowCopy,
+            res,
+            newData,
+            isAdd,
+            rowid,
+            key
+          )
+        } else {
+          res = await postRequest(
+            api.url + def.server.endpoint + "/" + mode,
+            {
+              lang: state.ovl.language.language,
+              idField: def.database.dataIdField,
+              idValue: rowid,
+              insertMode: def.database.dbInsertMode,
+              data: newData,
+              customId: ovl.state.ovl.user.clientId,
+            },
+            false,
+            noSnack
+          )
+          if (res.data) {
+            state.ovl.app.offline = false
+            newId = res.data[def.database.dataIdField]
+          }
+          newData["_ovl" + def.database.dataIdField] =
+            newData[def.database.dataIdField]
+          if (!res.data) {
+            // 449 means offline in our context
+            if (res.status === 449) {
+              // handle offline
+              if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
+                if (!isOfflineRetry) {
+                  EditSaveRowOfflineHelper(
+                    def,
+                    data,
+                    rowCopy,
+                    res,
+                    newData,
+                    isAdd,
+                    rowid,
+                    key
+                  )
+                } else {
+                  // if its offlineRetry don't do anything in case of offline error (elsewise the same data will be tried to be added again for offline handling)
+                  // data.data["_ovl" + def.database.dataIdField] =
+                  //   data.data[def.database.dataIdField]
+                  return
+                }
+              } else {
+                // if it has no offline handling
+                if (hasFormState) {
+                  formState.valid = false
+                }
+                // data.data["_ovl" + def.database.dataIdField] =
+                //   data.data[def.database.dataIdField]
+                return
+              }
             }
-            // if (!noSnack) {
-            //   SnackAdd(res.message, "Error", 10000)
-            // }
-            if (
-              (hasFormState && res.type === "UDTNameEmpty") ||
-              res.type === "UDTNameUnique"
-            ) {
-              ValidationAddError(
-                "UniqueKeyViolation",
-                res.message,
-                formState.fields["Name"].validationResult
-              )
-            }
-            // if you don't like the error to be throwed use your own savehandler...
 
-            throw {
-              status: res.status,
-              message: res.message,
-              key,
+            //}
+            else {
+              let saveErrorFnName = FormSaveError
+              // handleError @@hook
+              let fn = resolvePath(actions.custom, def.namespace)
+              if (fn && fn[saveErrorFnName]) {
+                await fn[saveErrorFnName](<FormSaveError_Type>{
+                  key,
+                  def,
+                  data,
+                  res,
+                  isOfflineRetry,
+                })
+              } else {
+                if (hasFormState) {
+                  formState.valid = false
+                }
+                // if (!noSnack) {
+                //   SnackAdd(res.message, "Error", 10000)
+                // }
+                if (
+                  (hasFormState && res.type === "UDTNameEmpty") ||
+                  res.type === "UDTNameUnique"
+                ) {
+                  ValidationAddError(
+                    "UniqueKeyViolation",
+                    res.message,
+                    formState.fields["Name"].validationResult
+                  )
+                }
+                // if you don't like the error to be throwed use your own savehandler...
+
+                throw {
+                  status: res.status,
+                  message: res.message,
+                  key,
+                }
+              }
+              return
             }
           }
-          return
         }
+        // handle the result dance
+        //newId = res.data[def.database.dataIdField]
+
+        let destRow = data.data[key]
+        //rows[newId] = newData
+        Object.keys(res.data).forEach((k) => {
+          destRow[k] = res.data[k]
+        })
+        destRow["_ovl" + def.database.dataIdField] =
+          res.data[def.database.dataIdField]
+
+        def.uiState.currentlyAddingKey = undefined
       }
-
-      def.uiState.currentlyAddingKey = undefined
-
-      // handle the result dance
-      //newId = res.data[def.database.dataIdField]
-
-      let destRow = data.data[key]
-      //rows[newId] = newData
-      Object.keys(res.data).forEach((k) => {
-        destRow[k] = res.data[k]
-      })
-
-      // if (isAdd) {
-      //   // get the definitive id
-      //   // update/create necessary objects for the table to work
-
-      //   setTableRow(
-      //     { def, data },
-      //     key,
-      //     newId,
-      //     res.data,
-      //     false,
-      //     actions,
-      //     false,
-      //     isOfflineRetry
-      //   )
-      //   setRefresh({ def, data }, isAdd, res.data, key, null)
-      // } else {
-      //   // just update the table data with all returned columns
-      //   // set Refresh needs to be before setTableRow becuase it compares old/new data
-      //   setRefresh({ def, data }, isAdd, res.data, key, null)
-      //   setTableRow(
-      //     { def, data },
-      //     key,
-      //     newId,
-      //     res.data,
-      //     false,
-      //     actions,
-      //     false,
-      //     isOfflineRetry
-      //   )
-      // }
       if (!noSnack) {
         SnackAdd("Datensatz gespeichert", "Success")
       }
@@ -911,59 +964,95 @@ export const TableOfflineHandler: OvlAction<
   let lastRetry = state.ovl.app.offlineLastRetry
   let newKey
   let dn = Date.now()
-  if (!state.ovl.app.offline || !lastRetry || dn - lastRetry > 40000) {
+  if (!state.ovl.app.offline /* || !lastRetry || dn - lastRetry > 40000 */) {
     state.ovl.app.offlineLastRetry = dn
     let data = value.data
     let defId = value.defId
     let key = value.key
     let deletedKeys = data.offline.deletedKeys
+    let errors = data.offline.errors
 
-    Object.keys(deletedKeys).forEach(async (k) => {
-      if (
-        await actions.ovl.internal.TableOfflineRetryDeleteRow({
-          data,
-          defId,
-          key: deletedKeys[k],
-        })
-      ) {
-        delete deletedKeys[k]
+    let deletedKeysKeys = Object.keys(deletedKeys)
+    let i = 0
+    while (i < deletedKeysKeys.length) {
+      let k = deletedKeysKeys[i]
+      try {
+        if (
+          await actions.ovl.internal.TableOfflineRetryDeleteRow({
+            data,
+            defId,
+            key: k,
+          })
+        ) {
+          delete deletedKeys[k]
+        }
+      } catch (e) {
+        OfflineHandlerErrorHelper(e, errors)
       }
-    })
+      i++
+    }
 
     let addedKeys = data.offline.addedKeys
-    await Promise.all(
-      Object.keys(addedKeys).map(async (k) => {
-        let resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
+    let addedKeysKeys = Object.keys(addedKeys)
+    i = 0
+    while (i < addedKeysKeys.length) {
+      let k = addedKeysKeys[i]
+      let resKey
+      try {
+        resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
           data,
           defId,
           rowToSave: data.data[k],
           key: k,
         })
-        if (resKey) {
-          delete addedKeys[k]
-        }
-      })
-    )
+      } catch (e) {
+        OfflineHandlerErrorHelper(e, errors)
+      }
+      if (resKey) {
+        delete addedKeys[k]
+      }
+      i++
+    }
 
     let updatedKeys = state.timeportal.tables.effort.offline.updatedKeys
-
-    Object.keys(updatedKeys).forEach(async (k) => {
-      let rowToSave = { Code: k }
-      Object.keys(updatedKeys[k]).forEach((f) => {
-        rowToSave[f] = data.data[k][f]
-      })
-      let resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
-        data,
-        defId,
-        rowToSave,
-        key,
-      })
+    let updatedKeysKeys = Object.keys(updatedKeys)
+    i = 0
+    while (i < updatedKeysKeys.length) {
+      let k = updatedKeysKeys[i]
+      let resKey
+      try {
+        let rowToSave = { Code: k }
+        Object.keys(updatedKeys[k]).forEach((f) => {
+          rowToSave[f] = data.data[k][f]
+        })
+        let resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
+          data,
+          defId,
+          rowToSave,
+          key,
+        })
+      } catch (e) {
+        OfflineHandlerErrorHelper(e, errors)
+      }
       if (resKey) {
         delete updatedKeys[k]
       }
-    })
+      i++
+    }
   }
   return { newKey }
+}
+
+const OfflineHandlerErrorHelper = (e: any, errors: any) => {
+  let err: [] = errors[e.key]
+  let msg: string = e.message
+  if (!err) {
+    err = []
+    errors[e.key] = err
+  }
+  if (err.indexOf(<never>msg) < 0) {
+    err.push(<never>msg)
+  }
 }
 
 export const TableSelectCustomSort: OvlAction<{
@@ -1238,13 +1327,34 @@ export const TableOfflineRetryDeleteRow: OvlAction<
   let data = value.data
 
   let def = data.tableDef[value.defId]
+  let offlineKey = value.key
+  let key = value.data.offline.deletedKeys[offlineKey]
 
   return await actions.ovl.table.TableDeleteRow({
-    key: value.key,
+    key,
     def,
     data,
     isOfflineRetry: true,
+    offlineKey,
   })
+}
+
+const DeleteRowOfflineHelper = (
+  data: TableData,
+  idValue: string,
+  key: string
+) => {
+  TableOfflineEnsureState(data)
+  let deletedKeys = data.offline.deletedKeys
+  // if its an offline key no delete necessary
+  if (idValue.indexOf(ovloffline) < 0) {
+    deletedKeys[idValue] = key
+  }
+  // its a record that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
+  delete data.offline.addedKeys[key]
+  // any offline updates are now obsolete as well
+  delete data.offline.updatedKeys[key]
+  saveState(true, "OffMode")
 }
 
 export const TableDeleteRow: OvlAction<
@@ -1254,6 +1364,7 @@ export const TableDeleteRow: OvlAction<
     data: TableData
     isMass?: boolean
     isOfflineRetry?: boolean
+    offlineKey?: string
   },
   Promise<boolean>
 > = async (value, { actions, state, effects }) => {
@@ -1261,17 +1372,17 @@ export const TableDeleteRow: OvlAction<
   let key = value.key
   let cancel: boolean = false
 
-  if (
-    !value.isOfflineRetry &&
-    value.data.offline &&
-    1 === 1 /*OvlConfig._system.OfflineMode*/
-  ) {
-    let res = await actions.ovl.internal.TableOfflineHandler({
-      data: value.data,
-      defId: def.id,
-      key,
-    })
-  }
+  // if (
+  //   !value.isOfflineRetry &&
+  //   value.data.offline &&
+  //   1 === 1 /*OvlConfig._system.OfflineMode*/
+  // ) {
+  //   let res = await actions.ovl.internal.TableOfflineHandler({
+  //     data: value.data,
+  //     defId: def.id,
+  //     key,
+  //   })
+  // }
   if (!value.isMass && !value.isOfflineRetry) {
     actions.ovl.dialog.OkCancelDialog({
       text: "Datensatz löschen?",
@@ -1283,63 +1394,66 @@ export const TableDeleteRow: OvlAction<
   }
 
   if (!cancel) {
-    let idValue = value.data.data[key]["_ovl" + def.database.dataIdField]
-    // doesn't need to hit the server it is only an offline row
-
-    //let res = { data: undefined, status: undefined }
-    if (idValue.indexOf(ovloffline) > -1) {
-      delete value.data.offline.addedKeys[key]
-      // any offline updates are now obsolete as well
-      delete value.data.offline.updatedKeys[key]
-      deleteTableRow({ def: def, data: value.data }, key)
-      return true
+    let idValue = value.offlineKey
+    if (!idValue) {
+      idValue = value.data.data[key]["_ovl" + def.database.dataIdField]
     }
-    let res = await postRequest(api.url + def.server.endpoint + "/delete", {
-      lang: state.ovl.language.language,
-      idField: def.database.dataIdField,
-      idValue,
-      insertMode: def.database.dbInsertMode,
-      customId: ovl.state.ovl.user.clientId,
-    })
 
-    let wasOffline = false
-    if (!res.data) {
-      // 449 means offline in our context
-      if (res.status === 449) {
-        if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
-          if (!value.isOfflineRetry) {
-            TableOfflineEnsureState(value.data)
-            let deletedKeys = value.data.offline.deletedKeys
-            // if its an offline key it will be handled by add already
-            //            if (idValue.indexOf(ovloffline) < 0) {
-            deletedKeys[key] = true
-            //            }
-            // its a record that was added before in offline mode...so just remove it from the add list (did not hit the server yet)
-            delete value.data.offline.addedKeys[key]
-            // any offline updates are now obsolete as well
-            delete value.data.offline.updatedKeys[key]
-            wasOffline = true
-            saveState(true, "OffMode")
+    // if id values is a offilione key...cleanup offline state and just return
+    let offlineState = value.data.offline
+    let offlineHandled = false
+    if (idValue.indexOf(ovloffline) > -1 && offlineState) {
+      delete offlineState.addedKeys[key]
+      delete offlineState.updatedKeys[key]
+      offlineHandled = true
+    }
+    let res = { data: undefined, status: undefined }
+    if (!offlineHandled) {
+      if (
+        1 === 1 /*OvlConfig._system.OfflineMode*/ &&
+        !value.isOfflineRetry &&
+        state.ovl.app.offline
+      ) {
+        DeleteRowOfflineHelper(value.data, idValue, key)
+      } else {
+        res = await postRequest(api.url + def.server.endpoint + "/delete", {
+          lang: state.ovl.language.language,
+          idField: def.database.dataIdField,
+          idValue,
+          insertMode: def.database.dbInsertMode,
+          customId: ovl.state.ovl.user.clientId,
+        })
+        if (res.data) {
+          state.ovl.app.offline = false
+        }
+        if (!res.data) {
+          // 449 means offline in our context
+          if (res.status === 449) {
+            if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
+              if (!value.isOfflineRetry) {
+                DeleteRowOfflineHelper(value.data, idValue, key)
+              } else {
+                return
+              }
+            }
           } else {
+            // handleError @@hook
+            let fn = resolvePath(actions.custom, def.namespace)
+            let deleteErrorFnName = FormDeleteError
+            if (fn && fn[deleteErrorFnName]) {
+              await fn[deleteErrorFnName](<FormDeleteError_Type>{
+                key,
+                tableDef: def,
+                res: res.data,
+                isOfflineRetry: value.isOfflineRetry,
+              })
+            }
             return
           }
         }
-      } else {
-        // handleError @@hook
-        let fn = resolvePath(actions.custom, def.namespace)
-        let deleteErrorFnName = FormDeleteError
-        if (fn && fn[deleteErrorFnName]) {
-          await fn[deleteErrorFnName](<FormDeleteError_Type>{
-            key,
-            tableDef: def,
-            res: res.data,
-            isOfflineRetry: value.isOfflineRetry,
-          })
-        }
-        return
       }
     }
-    if (!wasOffline) {
+    if (!value.isOfflineRetry) {
       deleteTableRow({ def: def, data: value.data }, key)
     }
 
