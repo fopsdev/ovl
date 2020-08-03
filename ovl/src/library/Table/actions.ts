@@ -575,18 +575,32 @@ export const TableDirectSaveRow: OvlAction<{
   rowToSave: {}
   noSnack?: boolean
 }> = async (value, { state, actions }) => {
+  debugger
   let data = value.data
   let def = data.tableDef[value.defId]
   let rowToSave = value.rowToSave
-  let key = rowToSave[def.database.dataIdField]
-  if (key === undefined) {
-    key = ovltemp + uuidv4()
+  let rowId = rowToSave[def.database.dataIdField]
+  let key
+  if (rowId === undefined) {
+    key = uuidv4()
+    rowId = ovltemp + key
+    rowToSave[def.database.dataIdField] = rowId
+    rowToSave["_ovl" + def.database.dataIdField] = rowId
   }
-  rowToSave[def.database.dataIdField] = key
+  let rows = data.data
+  if (!key) {
+    key = Object.keys(rows).filter(
+      (f) => rows[f][def.database.dataIdField] === rowId
+    )[0]
+  }
+  if (!rowToSave["_ovl" + def.database.dataIdField]) {
+    rowToSave["_ovl" + def.database.dataIdField] =
+      rowToSave[def.database.dataIdField]
+  }
   if (!def.initialised) {
     initTableState(def, data, value.defId, state.ovl.uiState.isMobile)
   }
-  if (key.indexOf(ovltemp) > -1) {
+  if (rowId.indexOf(ovltemp) > -1) {
     data.data[key] = JSON.parse(JSON.stringify(rowToSave))
   }
   //delete rowToSave[def.database.dataIdField]
