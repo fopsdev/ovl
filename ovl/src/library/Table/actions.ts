@@ -958,7 +958,11 @@ export const TableOfflineHandler: OvlAction<
   { data: TableData; defId: TableDefIds; key: string },
   Promise<{ newKey: string }>
 > = async (value, { state, actions }) => {
-  if (!value.data.offline || !value.data.tableDef[value.defId].initialised) {
+  if (
+    !state.ovl.uiState.isReady ||
+    !value.data.offline ||
+    !value.data.tableDef[value.defId].initialised
+  ) {
     return
   }
   let lastRetry = state.ovl.app.offlineLastRetry
@@ -1014,14 +1018,19 @@ export const TableOfflineHandler: OvlAction<
       i++
     }
 
-    let updatedKeys = state.timeportal.tables.effort.offline.updatedKeys
+    let updatedKeys = data.offline.updatedKeys
     let updatedKeysKeys = Object.keys(updatedKeys)
     i = 0
     while (i < updatedKeysKeys.length) {
       let k = updatedKeysKeys[i]
       let resKey
       try {
-        let rowToSave = { Code: k }
+        let def = data.tableDef[defId]
+        let rowToSave = {}
+        // rowToSave[def.database.dataIdField] =
+        //   data.data[k][def.database.dataIdField]
+        // rowToSave["_ovl" + def.database.dataIdField] =
+        //   rowToSave[def.database.dataIdField]
         Object.keys(updatedKeys[k]).forEach((f) => {
           rowToSave[f] = data.data[k][f]
         })
@@ -1029,7 +1038,7 @@ export const TableOfflineHandler: OvlAction<
           data,
           defId,
           rowToSave,
-          key,
+          key: k,
         })
       } catch (e) {
         OfflineHandlerErrorHelper(e, errors)
