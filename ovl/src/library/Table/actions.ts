@@ -950,7 +950,6 @@ const TableEditSaveRowHelper = async (
       let rowId2 = data.data[key]["_ovl" + def.database.dataIdField]
       if (rowId !== rowId2) {
         // key changed so lets update index
-        debugger
         delete data.index[rowId]
       }
       data.index[rowId2] = key
