@@ -313,6 +313,7 @@ export const TableRefreshDataFromServer: OvlAction<{
     // add a copy of the code field as well... (to support case when user changes db idfield)
     let sd = serverData[i]
     localData[dataKey]["_ovl" + idfield] = sd[idfield]
+    value.data.index[sd[idfield] as string] = dataKey
     Object.keys(sd).forEach((c) => {
       localData[dataKey][c] = serverData[i][c]
       // check for lookups which needs to be refreshed/reloaded
@@ -575,7 +576,6 @@ export const TableDirectSaveRow: OvlAction<{
   rowToSave: {}
   noSnack?: boolean
 }> = async (value, { state, actions }) => {
-  debugger
   let data = value.data
   let def = data.tableDef[value.defId]
   let rowToSave = value.rowToSave
@@ -632,16 +632,16 @@ export const TableEditSaveRow: OvlAction<{
   )
 }
 
-const TableOfflineEnsureState = (data: TableData) => {
-  if (!data.offline) {
-    data.offline = {
-      addedKeys: {},
-      updatedKeys: {},
-      deletedKeys: {},
-      errors: {},
-    }
-  }
-}
+// const TableOfflineEnsureState = (data: TableData) => {
+//   if (!data.offline) {
+//     data.offline = {
+//       addedKeys: {},
+//       updatedKeys: {},
+//       deletedKeys: {},
+//       errors: {},
+//     }
+//   }
+// }
 
 const EditSaveRowOfflineHelper = (
   def: TableDef,
@@ -657,7 +657,7 @@ const EditSaveRowOfflineHelper = (
   Object.keys(newData).forEach((k) => {
     res.data[k] = newData[k]
   })
-  TableOfflineEnsureState(data)
+  //TableOfflineEnsureState(data)
   if (isAdd) {
     // its an add
     let newRowId = rowid.replace(ovltemp, ovloffline)
@@ -712,10 +712,10 @@ const TableEditSaveRowHelper = async (
   //   })
   // }
 
-  let rowid = data.data[key]["_ovl" + def.database.dataIdField]
+  let rowId = data.data[key]["_ovl" + def.database.dataIdField]
   let isAdd = !!(
-    rowid.indexOf(ovltemp) > -1 ||
-    (isOfflineRetry && rowid.indexOf(ovloffline) > -1)
+    rowId.indexOf(ovltemp) > -1 ||
+    (isOfflineRetry && rowId.indexOf(ovloffline) > -1)
   )
 
   if (!isOfflineRetry) {
@@ -742,13 +742,13 @@ const TableEditSaveRowHelper = async (
     newData = rowToSave
   }
   if (!newData[def.database.dataIdField]) {
-    newData[def.database.dataIdField] = rowid
+    newData[def.database.dataIdField] = rowId
   }
   if (!newData["_ovl" + def.database.dataIdField]) {
-    newData["_ovl" + def.database.dataIdField] = rowid
+    newData["_ovl" + def.database.dataIdField] = rowId
   }
   if (def.database.dbInsertMode.lastIndexOf("Both") > -1) {
-    newData.Name = rowid
+    newData.Name = rowId
   }
   let newId
   let res: any = {}
@@ -791,7 +791,7 @@ const TableEditSaveRowHelper = async (
 
       delete newData["_ovl" + def.database.dataIdField]
       let offlineHandled = false
-      if (!isAdd && rowid.indexOf(ovloffline) > -1) {
+      if (!isAdd && rowId.indexOf(ovloffline) > -1) {
         // its an update on a offline row so just ignore the server part
         // the offline handler will take car on addinge the row with all the updates
         let destRow = data.data[key]
@@ -834,7 +834,7 @@ const TableEditSaveRowHelper = async (
             res,
             newData,
             isAdd,
-            rowid,
+            rowId,
             key
           )
         } else {
@@ -843,7 +843,7 @@ const TableEditSaveRowHelper = async (
             {
               lang: state.ovl.language.language,
               idField: def.database.dataIdField,
-              idValue: rowid,
+              idValue: rowId,
               insertMode: def.database.dbInsertMode,
               data: newData,
               customId: ovl.state.ovl.user.clientId,
@@ -870,7 +870,7 @@ const TableEditSaveRowHelper = async (
                     res,
                     newData,
                     isAdd,
-                    rowid,
+                    rowId,
                     key
                   )
                 } else {
@@ -945,6 +945,16 @@ const TableEditSaveRowHelper = async (
 
         def.uiState.currentlyAddingKey = undefined
       }
+      // keep index up to date
+
+      let rowId2 = data.data[key]["_ovl" + def.database.dataIdField]
+      if (rowId !== rowId2) {
+        // key changed so lets update index
+        debugger
+        delete data.index[rowId]
+      }
+      data.index[rowId2] = key
+
       if (!noSnack) {
         SnackAdd("Datensatz gespeichert", "Success")
       }
@@ -1367,7 +1377,7 @@ const DeleteRowOfflineHelper = (
   idValue: string,
   key: string
 ) => {
-  TableOfflineEnsureState(data)
+  //TableOfflineEnsureState(data)
   let deletedKeys = data.offline.deletedKeys
   // if its an offline key no delete necessary
   if (idValue.indexOf(ovloffline) < 0) {

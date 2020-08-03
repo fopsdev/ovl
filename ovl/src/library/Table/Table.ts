@@ -74,6 +74,7 @@ export type TableData = {
   lookupDef2?: { [key: string]: LookupDef }
   lookupDef3?: { [key: string]: LookupDef }
   offline?: { addedKeys: {}; updatedKeys: {}; deletedKeys: {}; errors: {} }
+  index?: {}
 }
 
 export type TableDataAndDef = {

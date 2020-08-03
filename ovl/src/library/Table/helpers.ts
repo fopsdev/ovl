@@ -237,18 +237,22 @@ export const deleteTableRow = (
   key: string
 ) => {
   Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
-    let def = tableDataAndDef.data.tableDef[k]
+    let def = tableDataAndDef.data.tableDef[k] as TableDef
     let editRows = def.uiState.editRow
     let selectRows = def.uiState.selectedRow
-
     delete editRows[key]
     delete selectRows[key]
+
     let i = def.uiState.dataFilteredAndSorted.indexOf(key)
     if (i > -1) {
       def.uiState.dataFilteredAndSorted.splice(i, 1)
     }
   })
-  delete tableDataAndDef.data.data[key]
+  let data = tableDataAndDef.data
+  let index = data.index
+  let rowId = data.data[key][tableDataAndDef.def.database.dataIdField]
+  delete index[rowId]
+  delete data.data[key]
 }
 
 export const selectLatestRow = (def: TableDef, data: TableData) => {
@@ -371,6 +375,18 @@ export const initTableState = (
 
     if (data.schema === undefined) {
       data.schema = {}
+    }
+
+    if (data.offline === undefined) {
+      data.offline = {
+        addedKeys: {},
+        deletedKeys: {},
+        errors: {},
+        updatedKeys: {},
+      }
+    }
+    if (data.index === undefined) {
+      data.index = {}
     }
 
     if (!def.database.dataIdField) {

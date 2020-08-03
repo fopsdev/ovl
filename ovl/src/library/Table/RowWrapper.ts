@@ -303,7 +303,7 @@ export class TableRowWrapper extends OvlBaseElement {
       // also display offline save errors in rowstatus
       if (data.offline && data.offline.errors[key]) {
         let msgSet = data.offline.errors[key]
-        debugger
+
         rowStatus = "fd-table__row--error"
         msgSet.forEach((m) => {
           rowStatusMsg += " " + m
