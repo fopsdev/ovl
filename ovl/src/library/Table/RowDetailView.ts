@@ -1,7 +1,7 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "../../tracker/litdirectives/if-defined"
 import { ovl } from "../.."
-import { api, resolvePath, T } from "../../global/globals"
+import { resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,
   FieldGetValueRender,
@@ -563,7 +563,7 @@ export class TableRowDetailView extends OvlBaseElement {
               //@ts-ignore
               let params = entry.target.dataLinkObject
               let res = await ovl.effects.ovl.getRequest(
-                api.url + "assets/get",
+                this.state.ovl.apiUrl + "assets/get",
                 params,
                 true
               )

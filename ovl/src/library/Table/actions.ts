@@ -1,6 +1,5 @@
 import { postRequest } from "../../effects"
 import {
-  api,
   ovltemp,
   resolvePath,
   T,
@@ -682,7 +681,8 @@ const EditSaveRowOfflineHelper = (
       })
     }
   }
-  saveState(true, "OffMode")
+
+  //saveState(true, "OffMode")
 }
 
 const TableEditSaveRowHelper = async (
@@ -712,7 +712,7 @@ const TableEditSaveRowHelper = async (
   //   })
   // }
 
-  let rowId = data.data[key]["_ovl" + def.database.dataIdField]
+  let rowId = row["_ovl" + def.database.dataIdField]
   let isAdd = !!(
     rowId.indexOf(ovltemp) > -1 ||
     (isOfflineRetry && rowId.indexOf(ovloffline) > -1)
@@ -788,8 +788,6 @@ const TableEditSaveRowHelper = async (
           isOfflineRetry,
         })
       }
-
-      delete newData["_ovl" + def.database.dataIdField]
       let offlineHandled = false
       if (!isAdd && rowId.indexOf(ovloffline) > -1) {
         // its an update on a offline row so just ignore the server part
@@ -838,8 +836,9 @@ const TableEditSaveRowHelper = async (
             key
           )
         } else {
+          delete newData["_ovl" + def.database.dataIdField]
           res = await postRequest(
-            api.url + def.server.endpoint + "/" + mode,
+            state.ovl.apiUrl + def.server.endpoint + "/" + mode,
             {
               lang: state.ovl.language.language,
               idField: def.database.dataIdField,
@@ -1386,7 +1385,8 @@ const DeleteRowOfflineHelper = (
   delete data.offline.addedKeys[key]
   // any offline updates are now obsolete as well
   delete data.offline.updatedKeys[key]
-  saveState(true, "OffMode")
+
+  //saveState(true, "OffMode")
 }
 
 export const TableDeleteRow: OvlAction<
@@ -1448,13 +1448,16 @@ export const TableDeleteRow: OvlAction<
       ) {
         DeleteRowOfflineHelper(value.data, idValue, key)
       } else {
-        res = await postRequest(api.url + def.server.endpoint + "/delete", {
-          lang: state.ovl.language.language,
-          idField: def.database.dataIdField,
-          idValue,
-          insertMode: def.database.dbInsertMode,
-          customId: ovl.state.ovl.user.clientId,
-        })
+        res = await postRequest(
+          state.ovl.apiUrl + def.server.endpoint + "/delete",
+          {
+            lang: state.ovl.language.language,
+            idField: def.database.dataIdField,
+            idValue,
+            insertMode: def.database.dbInsertMode,
+            customId: ovl.state.ovl.user.clientId,
+          }
+        )
         if (res.data) {
           state.ovl.app.offline = false
         }

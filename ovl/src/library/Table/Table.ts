@@ -1,7 +1,7 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../tracker/litdirectives/if-defined"
 import { repeat } from "../../tracker/litdirectives/repeat"
-import { api, ovltemp, resolvePath, T } from "../../global/globals"
+import { ovltemp, resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,
   FieldHeaderCellSelectedHandler,
@@ -507,7 +507,7 @@ export class TableHeader extends OvlBaseElement {
             let params = entry.target.dataLinkObject
             params["mode"] = "Thumb"
             let res = await ovl.effects.ovl.getRequest(
-              api.url + "assets/get",
+              this.state.ovl.apiUrl + "assets/get",
               params,
               true
             )

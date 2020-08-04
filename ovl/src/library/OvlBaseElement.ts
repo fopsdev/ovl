@@ -166,10 +166,12 @@ export class OvlBaseElement extends HTMLElement {
         // no complete rerender is necessary
         // just set the animation class accordingly
         let el = this.firstElementChild
-        el.classList.remove("fadeInScreen")
-        el.classList.add("ovl-disabled")
-        el.classList.add("fadeOutScreen")
-        return
+        if (el) {
+          el.classList.remove("fadeInScreen")
+          el.classList.add("ovl-disabled")
+          el.classList.add("fadeOutScreen")
+          return
+        }
       }
     }
     checkScreen =
@@ -192,6 +194,7 @@ export class OvlBaseElement extends HTMLElement {
           }
         }
         render(res, this)
+
         this.afterRender()
         setTimeout(() => {
           this.updated()

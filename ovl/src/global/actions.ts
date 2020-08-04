@@ -9,7 +9,6 @@ import {
   stateStore,
 } from "../offlineStorage"
 import {
-  api,
   isMobile,
   isTouch,
   logout,
@@ -23,6 +22,7 @@ import {
   ScreenNavigateOut_ReturnType,
 } from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
+import { createDeepProxy } from "../tracker/proxyHandler"
 
 export const SetLastScrollPosition: OvlAction = (_, { state }) => {
   setLastScrollPosition(state)
@@ -193,9 +193,12 @@ export const SetLanguage: OvlAction<string> = async (
   { state, actions, effects }
 ) => {
   let lang = value
-  let res = await effects.ovl.postRequest(api.url + "users/translations", {
-    language: lang,
-  })
+  let res = await effects.ovl.postRequest(
+    state.ovl.apiUrl + "users/translations",
+    {
+      language: lang,
+    }
+  )
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
@@ -212,6 +215,13 @@ export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
 }
 
 export const Logout: OvlAction = async (_, { state, actions }) => {
+  if (state.ovl.app.offline) {
+    SnackAdd(
+      "Abmelden und Neuinitialisierung nur im Onlinemodus möglich!",
+      "Error"
+    )
+    return
+  }
   if ((await DialogOkCancel("Wollen Sie sich wirklich abmelden?", 1)) === 1) {
     state.ovl.user.token = ""
     logout()
@@ -243,8 +253,8 @@ export const AfterRehydrateApp: OvlAction = async (
   // state.ovl.screens.nav.currentScreen = screenToGo
   // state.ovl.screens.nav.nextScreen = undefined
   //actions.ovl.navigation.NavigateTo(screenToGo)
-  if (OvlConfig.requiredActions.customAfterRehydrateActionPath) {
-    OvlConfig.requiredActions.customAfterRehydrateActionPath(undefined)
+  if (OvlConfig.requiredActions.customRehydrateActionPath) {
+    OvlConfig.requiredActions.customRehydrateActionPath(undefined)
   }
 }
 
@@ -304,7 +314,7 @@ export const GetFile: OvlAction<{
   }
 }
 
-export const RehydrateAndUpdateApp: OvlAction = async (
+export const RehydrateAndUpdateApp: OvlAction<any, Promise<boolean>> = async (
   _,
   { actions, state, effects }
 ) => {
@@ -318,27 +328,42 @@ export const RehydrateAndUpdateApp: OvlAction = async (
         stateStore.clear()
       } else {
         // go through 1st level keys and assign them
+
+        //state = createDeepProxy(persistedState)
+
         Object.keys(persistedState).forEach((k) => {
           state[k] = persistedState[k]
         })
-        api.url = state.ovl.apiUrl
-        await actions.ovl.internal.AfterRehydrateApp()
-        let updateCheck = await effects.ovl.getRequest(
-          "./ovlnocache/" +
-            OvlConfig._system.Version.split(".").join("_") +
-            ".js",
-          undefined
-        )
-        if (updateCheck.status === 404) {
-          // we need an update
-          await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
-          logout()
-        }
-        return
+        state.ovl.libState.indicator.open = false
+        state.ovl.libState.indicator.refCounter = 0
+        state.ovl.uiState.isInitialised = true
+        // state.timeportal.logic.selectedRessource =
+        //   persistedState.timeportal.logic.selectedRessource
+
+        // console.log("after rehydrate")
+        // console.log(persistedState.timeportal.logic.selectedRessource)
+        // console.log(state)
+        //await actions.ovl.internal.AfterRehydrateApp()
+        try {
+          let updateCheck = await effects.ovl.getRequest(
+            "./ovlnocache/" +
+              OvlConfig._system.Version.split(".").join("_") +
+              ".js",
+            undefined
+          )
+          if (updateCheck.status === 404) {
+            // we need an update
+            await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
+            logout()
+          }
+        } catch (e) {}
+
+        return true
       }
     } catch (e) {
       console.error("Persisted Offlinedata could not be restored: ")
       console.error(e)
+      return false
     }
   }
 }
@@ -352,8 +377,15 @@ export const InitApp: OvlAction<Init> = async (
     ovl.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
-  // rehydrate state from indexeddb/check if update is needed
-  //debugger
+
+  try {
+    if (await actions.ovl.internal.RehydrateAndUpdateApp()) {
+      if (OvlConfig.requiredActions.customRehydrateActionPath) {
+        OvlConfig.requiredActions.customRehydrateActionPath()
+      }
+      return
+    }
+  } catch (e) {}
 
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
@@ -378,24 +410,27 @@ export const InitApp: OvlAction<Init> = async (
     state.ovl.uiState.isDemo = true
     state.ovl.apiUrl = value.devServer
   }
-  api.url = state.ovl.apiUrl
 
   // prepare login form
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
-  let lang = localStorage.getItem("PortalLanguage")
-  let res = await effects.ovl.postRequest(api.url + "users/translations", {
-    language: lang,
-  })
 
-  if (!res || !res.data) {
-    await actions.ovl.internal.RehydrateAndUpdateApp()
-    if (state.ovl.uiState.isReady) {
-      return
+  state.ovl.uiState.isInitialised = true
+
+  let lang = localStorage.getItem("PortalLanguage")
+  let res = await effects.ovl.postRequest(
+    state.ovl.apiUrl + "users/translations",
+    {
+      language: lang,
     }
+  )
+  if (!res || !res.data) {
+    SnackAdd("No Api-Server Connection!", "Error")
     return
   }
+
   state.ovl.language.language = res.data.lang
+
   localStorage.setItem("PortalLanguage", res.data.lang)
   state.ovl.language.translations = res.data.translations
   state.ovl.language.isReady = true
@@ -404,8 +439,7 @@ export const InitApp: OvlAction<Init> = async (
       res.data
     )
   }
-
   if (OvlConfig.requiredActions.customInitActionPath) {
-    OvlConfig.requiredActions.customInitActionPath(res.data)
+    OvlConfig.requiredActions.customInitActionPath()
   }
 }

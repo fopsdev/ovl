@@ -6,7 +6,7 @@ import { displayFormats } from "./displayFormats"
 import { ovl, OvlState } from ".."
 import { TemplateResult } from "lit-html"
 
-export let api = { url: "" }
+// export let api = { url: "" }
 export let translations: Translations = { t: {} }
 
 export let modalDialog: GlobalModalDialogState = { text: undefined }
@@ -125,7 +125,7 @@ export const GetWeekNr = (dt: Date) => {
 export const addGlobalPersistEventListeners = () => {
   // its all about saving state to restore it when needed
   // ...
-  window.addEventListener("beforeunload", (e) => beforeUnload(e))
+  //window.addEventListener("beforeunload", (e) => beforeUnload(e))
   // window.addEventListener("pagehide", e => pageHide(e))
   // window.addEventListener("unload", e => pageHide(e))
   document.addEventListener("visibilitychange", visibilityChange)
@@ -147,23 +147,23 @@ export const focusOut = async (event) => {
   }
 }
 
-export const beforeUnload = async (event) => {
-  if (
-    !OvlConfig._system.IsDev &&
-    OvlConfig._system.OfflineMode &&
-    !logoutAndClearFlag &&
-    !gotoFileFlag
-  ) {
-    event.preventDefault()
-    let dt = Date.now()
-    let st: number = OvlTimestamp
-    if (dt - st > 5000) {
-      event.returnValue = translations.t.AppQuitMessage
-    }
-    await saveState(false, "unload")
-    SnackAdd("Sie können das Fenster jetzt schliessen...", "Information", 3000)
-  }
-}
+// export const beforeUnload = async (event) => {
+//   if (
+//     !OvlConfig._system.IsDev &&
+//     OvlConfig._system.OfflineMode &&
+//     !logoutAndClearFlag &&
+//     !gotoFileFlag
+//   ) {
+//     event.preventDefault()
+//     let dt = Date.now()
+//     let st: number = OvlTimestamp
+//     if (dt - st > 5000) {
+//       event.returnValue = translations.t.AppQuitMessage
+//     }
+//     await saveState(false, "unload")
+//     SnackAdd("Sie können das Fenster jetzt schliessen...", "Information", 3000)
+//   }
+// }
 
 export const visibilityChange = async (event) => {
   if (OvlConfig._system.OfflineMode) {
@@ -189,42 +189,45 @@ export const visibilityChange = async (event) => {
 }
 
 //export let ovlstatetimestamp: number = 0
-let saveReason = ""
+
 export const saveState = async (force: boolean, reason: string) => {
-  console.log("save state")
   if (
     OvlConfig._system.OfflineMode &&
     !logoutAndClearFlag &&
     ovl.state.ovl.uiState.isReady
   ) {
-    saveReason = reason
+    console.log("save state")
     //@ts-ignore
 
     let diff = 0
-    let dt
+    let dt = Date.now()
     if (!force) {
       let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
-      let ts
+      let ts = 0
       if (td !== undefined) {
         ts = td.getTime()
       }
-      dt = Date.now()
       diff = dt - ts
     }
     if (force || diff > 5000) {
       await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
       OvlTimestamp = dt
       // let refstate = ovl.state
-      let newObj = {}
-      // let dtStart = Date.now()
-      stateCleaner(ovl.state, newObj, "state")
+      let newObj: OvlState = JSON.parse(JSON.stringify(ovl.state))
+      newObj.ovl.uiState.stateSavedReason = reason
+      newObj.ovl.uiState.isInitialised = false
+      // // let dtStart = Date.now()
+      // stateCleaner(ovl.state, newObj, "state")
       // let dtEnd = Date.now()
       // console.log("stateCleaner " + ((dtEnd - dtStart) / 1000).toString())
       // dtStart = Date.now()
       // let t = JSON.stringify(refstate)
       // dtEnd = Date.now()
       // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
-      stateStore.set(OvlConfig._system.PersistStateId, newObj)
+      if (OvlConfig.saveStateCallback) {
+        OvlConfig.saveStateCallback(newObj)
+      }
+      return stateStore.set(OvlConfig._system.PersistStateId, newObj)
     }
   }
 }
@@ -235,7 +238,7 @@ export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
   ovl.actions.ovl.indicator.SetIndicatorOpen()
   if (OvlConfig._system.OfflineMode) {
-    window.removeEventListener("beforeunload", (e) => beforeUnload(e))
+    //window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))
     document.removeEventListener("visibilitychange", visibilityChange)
@@ -262,66 +265,66 @@ export const logout = async () => {
   window.location.reload()
 }
 
-export const stateCleaner = (state: OvlState, newObj, parentKey: string) => {
-  let cb
-  let hasCb = false
-  if (OvlConfig.saveStateCallback) {
-    cb = OvlConfig.saveStateCallback
-    hasCb = true
-  }
+// export const stateCleaner = (state: OvlState, newObj, parentKey: string) => {
+//   let cb
+//   let hasCb = false
+//   if (OvlConfig.saveStateCallback) {
+//     cb = OvlConfig.saveStateCallback
+//     hasCb = true
+//   }
 
-  Object.keys(state).forEach((key) => {
-    // Get this value and its type
-    let value = state[key]
-    let valuetype = typeof value
-    if (value !== undefined) {
-      //<IGNORES>
-      // we don't want huge audit data in local storage (but we want the def)
-      if (key === "audit" && value.data) {
-        newObj[key] = {
-          data: {},
-          schema: {},
-          // do stringify here because it also strips out symbols..
-          tableDef: JSON.parse(JSON.stringify(value.tableDef)),
-        }
-        return
-      } else if (parentKey === "uiState" && key === "isReady") {
-        newObj[key] = false
-        return
-      } else if (parentKey === "uiState" && key === "headerSelected") {
-        newObj[key] = ""
-        return
-      } else if (parentKey === "uiState" && key === "stateSavedReason") {
-        newObj[key] = saveReason
-        return
-      } else if (hasCb === true) {
-        cb(parentKey, key, newObj)
-        return
-      }
-    }
-    // we don't want symbols (causes troubles anyway with indexeddb serializer in some cases)
-    if (valuetype === "symbol") {
-      return
-    }
-    //</IGNORES>
+//   Object.keys(state).forEach((key) => {
+//     // Get this value and its type
+//     let value = state[key]
+//     let valuetype = typeof value
+//     if (value !== undefined) {
+//       //<IGNORES>
+//       // we don't want huge audit data in local storage (but we want the def)
+//       if (key === "audit" && value.data) {
+//         newObj[key] = {
+//           data: {},
+//           schema: {},
+//           // do stringify here because it also strips out symbols..
+//           tableDef: JSON.parse(JSON.stringify(value.tableDef)),
+//         }
+//         return
+//       } else if (parentKey === "uiState" && key === "isReady") {
+//         newObj[key] = false
+//         return
+//       } else if (parentKey === "uiState" && key === "headerSelected") {
+//         newObj[key] = ""
+//         return
+//       } else if (parentKey === "uiState" && key === "stateSavedReason") {
+//         newObj[key] = saveReason
+//         return
+//       } else if (hasCb === true) {
+//         cb(parentKey, key, newObj)
+//         return
+//       }
+//     }
+//     // we don't want symbols (causes troubles anyway with indexeddb serializer in some cases)
+//     if (valuetype === "symbol") {
+//       return
+//     }
+//     //</IGNORES>
 
-    if (valuetype === "object") {
-      if (value !== null) {
-        let no
-        if (Array.isArray(value)) {
-          no = newObj[key] = []
-        } else {
-          no = newObj[key] = {}
-        }
-        stateCleaner(value, no, key)
-      } else {
-        newObj[key] = null
-      }
-    } else {
-      newObj[key] = value
-    }
-  })
-}
+//     if (valuetype === "object") {
+//       if (value !== null) {
+//         let no
+//         if (Array.isArray(value)) {
+//           no = newObj[key] = []
+//         } else {
+//           no = newObj[key] = {}
+//         }
+//         stateCleaner(value, no, key)
+//       } else {
+//         newObj[key] = null
+//       }
+//     } else {
+//       newObj[key] = value
+//     }
+//   })
+// }
 
 export const SetFocus = (el: any) => {
   el.focus()

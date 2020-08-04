@@ -26,12 +26,12 @@ type OvlConfig = {
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
     customInitActionPath: OvlAction
-    customAfterRehydrateActionPath: OvlAction
+    customRehydrateActionPath: OvlAction
     handleAdditionalTranslationResultActionPath: OvlAction
     handleGlobalRefreshActionPath: OvlAction
   }
   /*check stateCleaner in ovl global to see the possibilities of this fn*/
-  saveStateCallback: (parentKey: string, key: string, obj: any) => {}
+  saveStateCallback: (stateToPersist: OvlState) => void
   /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
      thats why we have a check function to check if they should be enabled
   */

@@ -1,4 +1,4 @@
-import { T } from "./global/globals"
+import { T, saveState } from "./global/globals"
 
 import { OvlConfig } from "./init"
 import { SnackAdd } from "./library/helpers"
@@ -198,6 +198,7 @@ export const ovlFetch = async (
     }
   } catch (err) {
     console.log(err)
+
     // connection error
     // well...  go to offline mode
     ovl.state.ovl.app.offline = true
@@ -211,6 +212,9 @@ export const ovlFetch = async (
     }
   } finally {
     ovl.actions.ovl.indicator.SetIndicatorClose()
+    // if (method === "POST") {
+    //   saveState(true, "fetchpost")
+    // }
     if (snackMessage) {
       if (!noSnack || snackMessageType === "Error") {
         if (snackMessageType === "Error") {

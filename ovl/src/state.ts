@@ -59,6 +59,7 @@ let uiState = {
   isTouch: false,
   isIOS: false,
   isReady: false,
+  isInitialised: false,
   stateSavedReason: "",
   tableNeedsRebuild: false,
 }
