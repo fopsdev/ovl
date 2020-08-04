@@ -336,7 +336,7 @@ export const RehydrateAndUpdateApp: OvlAction<any, Promise<boolean>> = async (
         })
         state.ovl.libState.indicator.open = false
         state.ovl.libState.indicator.refCounter = 0
-        state.ovl.uiState.isInitialised = true
+
         // state.timeportal.logic.selectedRessource =
         //   persistedState.timeportal.logic.selectedRessource
 
@@ -414,8 +414,6 @@ export const InitApp: OvlAction<Init> = async (
   // prepare login form
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
-
-  state.ovl.uiState.isInitialised = true
 
   let lang = localStorage.getItem("PortalLanguage")
   let res = await effects.ovl.postRequest(

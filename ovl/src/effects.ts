@@ -109,7 +109,9 @@ export const ovlFetch = async (
 
     const req = await fetch(url, reqOptions)
     //clearTimeout(timer)
-    ovl.state.ovl.app.offline = false
+    if (method === "POST") {
+      ovl.state.ovl.app.offline = false
+    }
     // with fetch we will have the repsonse status here on req object
     if (req.status === 401) {
       // unauthorised
