@@ -98,14 +98,14 @@ export const ovlFetch = async (
       url = urlWithParams.toString()
     }
 
-    // const controller = new AbortController()
-    // const { signal } = controller
+    const controller = new AbortController()
+    const { signal } = controller
 
-    // let timer = setTimeout(() => {
-    //   controller.abort()
-    // }, 5000)
+    let timer = setTimeout(() => {
+      controller.abort()
+    }, 5000)
 
-    //reqOptions.signal = signal
+    reqOptions.signal = signal
 
     const req = await fetch(url, reqOptions)
     //clearTimeout(timer)
