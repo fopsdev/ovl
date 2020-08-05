@@ -399,9 +399,6 @@ export const TableRefreshDataFromServer: OvlAction<{
     setPage(value.data)
   }
 
-  // don't ever do that. would result in a new refernece and all the existing comps uisng some state from it are lost
-  //value.data.data = res.data.data
-
   value.data.timestamp = Date.now()
 }
 let lastRefreshMsg: number = 0

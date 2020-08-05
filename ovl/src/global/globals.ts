@@ -215,7 +215,6 @@ export const saveState = async (force: boolean, reason: string) => {
       // let refstate = ovl.state
       let newObj: OvlState = JSON.parse(JSON.stringify(ovl.state))
       newObj.ovl.uiState.stateSavedReason = reason
-      newObj.ovl.uiState.isInitialised = false
       // // let dtStart = Date.now()
       // stateCleaner(ovl.state, newObj, "state")
       // let dtEnd = Date.now()
@@ -241,28 +240,33 @@ export const logout = async () => {
     //window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))
-    document.removeEventListener("visibilitychange", visibilityChange)
-    document.removeEventListener("focusout", (e) => focusOut(e))
+    // document.removeEventListener("visibilitychange", visibilityChange)
+    // document.removeEventListener("focusout", (e) => focusOut(e))
 
+    logoutAndClearFlag = true
     try {
       // 1. unregister sw
       let regs = await navigator.serviceWorker.getRegistrations()
       if (regs) {
-        await Promise.all(regs.map(async (reg) => reg.unregister()))
+        await Promise.all(regs.map(async (reg) => await reg.unregister()))
       }
       // 2. get rid of any indexeddb state
       await stateStore.clear()
 
       // 3. get rid of any cached static assets
       // this is no more necessary since serviceworker iutsel deletes the cache
-      // let cacheKeys = await caches.keys()
-      // await Promise.all(cacheKeys.map((cacheName) => caches.delete(cacheName)))
+      let cacheKeys = await caches.keys()
+      await Promise.all(
+        cacheKeys.map(async (cacheName) => await caches.delete(cacheName))
+      )
     } catch (e) {}
   }
-
-  logoutAndClearFlag = true
   //@ts-ignore
+  //setTimeout(() => {
   window.location.reload()
+  //}, 5000)
+
+  //window.location.reload(true)
 }
 
 // export const stateCleaner = (state: OvlState, newObj, parentKey: string) => {

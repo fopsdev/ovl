@@ -81,8 +81,6 @@ if (window.OvlShowSaveOrigin) {
   //@ts-ignore
   OvlConfig._system.ShowSaveOrigin = window.OvlShowSaveOrigin
 }
-console.log("set config Version")
-console.log(OvlVersion)
 OvlConfig._system.Version = OvlVersion
 OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.Version
 OvlConfig._system.PersistTimestampId =
