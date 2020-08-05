@@ -228,6 +228,30 @@ export const TableRefreshDataFromServer: OvlAction<{
 }> = async (value, { state, actions, effects }) => {
   let def = value.def
   let data = value.data.data
+
+  // try {
+  //   actions.ovl.internal.TableOfflineHandler({
+  //     data: value.data,
+  //     defId: value.def.id,
+  //     key: undefined,
+  //   })
+  // } catch (e) {
+  //   SnackAdd(
+  //     "Data could not be refreshed for table: " +
+  //       def.id +
+  //       ", because there was offline data which could not be saved",
+  //     "Error"
+  //   )
+  //   return
+  // }
+
+  // offline flag is handled separately
+  // so as long as we are offline there will be no refresh
+  // thats a good idea because there could be offline data which first needs to be persisted back before refreshing data
+  if (state.ovl.app.offline) {
+    return
+  }
+
   let schema = value.data.schema
 
   let getSchema = false
