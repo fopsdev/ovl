@@ -377,23 +377,14 @@ export const InitApp: OvlAction<Init> = async (
     ovl.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
-
-  try {
-    if (await actions.ovl.internal.RehydrateAndUpdateApp()) {
-      if (OvlConfig.requiredActions.customRehydrateActionPath) {
-        OvlConfig.requiredActions.customRehydrateActionPath()
-      }
+  console.log(OvlConfig.offlineFirstOnReload)
+  if (OvlConfig.offlineFirstOnReload) {
+    console.log("Try Offline first...")
+    if (await Rehydrate()) {
+      console.log("Offline first. Got offline data...")
       return
     }
-  } catch (e) {}
-
-  state.ovl.libState.indicator.open = false
-  state.ovl.libState.indicator.refCounter = 0
-  // @ts-ignore
-  state.ovl.uiState.isMobile = isMobile()
-  state.ovl.uiState.isTouch = isTouch()
-  state.ovl.uiState.isIOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+  }
   let currentLocation =
     window.location.hostname.toLowerCase() +
     ":" +
@@ -411,10 +402,6 @@ export const InitApp: OvlAction<Init> = async (
     state.ovl.apiUrl = value.devServer
   }
 
-  // prepare login form
-  const query = "(prefers-reduced-motion: reduce)"
-  state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
-
   let lang = localStorage.getItem("PortalLanguage")
   let res = await effects.ovl.postRequest(
     state.ovl.apiUrl + "users/translations",
@@ -422,9 +409,19 @@ export const InitApp: OvlAction<Init> = async (
       language: lang,
     }
   )
+
   if (!res || !res.data) {
-    SnackAdd("No Api-Server Connection!", "Error")
-    return
+    if (!OvlConfig.offlineFirstOnReload) {
+      if (!(await Rehydrate())) {
+        SnackAdd("No Api-Connection and no Offline data found!", "Error")
+        return
+      }
+      console.log("Network start failed. Got offline data...")
+      return
+    } else {
+      SnackAdd("No Api-Connection!", "Error")
+      return
+    }
   }
 
   state.ovl.language.language = res.data.lang
@@ -437,7 +434,35 @@ export const InitApp: OvlAction<Init> = async (
       res.data
     )
   }
+
+  state.ovl.libState.indicator.open = false
+  state.ovl.libState.indicator.refCounter = 0
+  // @ts-ignore
+  state.ovl.uiState.isMobile = isMobile()
+  state.ovl.uiState.isTouch = isTouch()
+  state.ovl.uiState.isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+
+  // prepare login form
+  const query = "(prefers-reduced-motion: reduce)"
+  state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
+
   if (OvlConfig.requiredActions.customInitActionPath) {
     OvlConfig.requiredActions.customInitActionPath()
   }
+}
+export const Rehydrate = async (): Promise<boolean> => {
+  try {
+    if (await ovl.actions.ovl.internal.RehydrateAndUpdateApp()) {
+      if (OvlConfig.requiredActions.customRehydrateActionPath) {
+        await OvlConfig.requiredActions.customRehydrateActionPath()
+      }
+      return true
+    }
+  } catch (e) {
+    console.log("Rehydrate Error:")
+    console.log(e)
+    return false
+  }
+  return false
 }

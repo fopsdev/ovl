@@ -37,6 +37,7 @@ type OvlConfig = {
   */
   stickyHeaderEnabled: (state: OvlState) => {}
   defaultDialogTitle?: string
+  offlineFirstOnReload?: boolean
 }
 
 import { OvlState, OvlAction } from "./index"
