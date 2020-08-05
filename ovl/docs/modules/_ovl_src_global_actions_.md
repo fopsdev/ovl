@@ -6,275 +6,275 @@
 
 ### Functions
 
-* [GetFile](_ovl_src_global_actions_.md#const-getfile)
-* [InitApp](_ovl_src_global_actions_.md#const-initapp)
-* [Logout](_ovl_src_global_actions_.md#const-logout)
-* [NavigateBack](_ovl_src_global_actions_.md#const-navigateback)
-* [NavigateTo](_ovl_src_global_actions_.md#const-navigateto)
-* [PrepareApp](_ovl_src_global_actions_.md#const-prepareapp)
-* [RehydrateAndUpdateApp](_ovl_src_global_actions_.md#const-rehydrateandupdateapp)
-* [SetClosingScreen](_ovl_src_global_actions_.md#const-setclosingscreen)
-* [SetLanguage](_ovl_src_global_actions_.md#const-setlanguage)
-* [SetVisibleFalse](_ovl_src_global_actions_.md#const-setvisiblefalse)
-* [SetVisibleScreen](_ovl_src_global_actions_.md#const-setvisiblescreen)
-* [isMobile](_ovl_src_global_actions_.md#ismobile)
-* [isTouch](_ovl_src_global_actions_.md#istouch)
+- [GetFile](_ovl_src_global_actions_.md#const-getfile)
+- [InitApp](_ovl_src_global_actions_.md#const-initapp)
+- [Logout](_ovl_src_global_actions_.md#const-logout)
+- [NavigateBack](_ovl_src_global_actions_.md#const-navigateback)
+- [NavigateTo](_ovl_src_global_actions_.md#const-navigateto)
+- [PrepareApp](_ovl_src_global_actions_.md#const-prepareapp)
+- [RehydrateApp](_ovl_src_global_actions_.md#const-RehydrateApp)
+- [SetClosingScreen](_ovl_src_global_actions_.md#const-setclosingscreen)
+- [SetLanguage](_ovl_src_global_actions_.md#const-setlanguage)
+- [SetVisibleFalse](_ovl_src_global_actions_.md#const-setvisiblefalse)
+- [SetVisibleScreen](_ovl_src_global_actions_.md#const-setvisiblescreen)
+- [isMobile](_ovl_src_global_actions_.md#ismobile)
+- [isTouch](_ovl_src_global_actions_.md#istouch)
 
 ## Functions
 
 ### `Const` GetFile
 
-▸ **GetFile**(`__namedParameters`: object, `value`: object): *Promise‹void›*
+▸ **GetFile**(`__namedParameters`: object, `value`: object): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:303](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L303)*
+_Defined in [ovl/src/global/actions.ts:303](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L303)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`docNum` | string |
-`fileName` | string |
-`fileType` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docNum`   | string |
+| `fileName` | string |
+| `fileType` | string |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
 ### `Const` InitApp
 
-▸ **InitApp**(`__namedParameters`: object, `value`: object): *Promise‹void›*
+▸ **InitApp**(`__namedParameters`: object, `value`: object): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:392](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L392)*
+_Defined in [ovl/src/global/actions.ts:392](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L392)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`customerRealUrl` | string |
-`customerRealUrlMatch` | string |
-`customerTestUrl` | string |
-`customerTestUrlMatch` | string |
-`devServer` | string |
-`itfliesServerUrl` | string |
-`itfliesServerUrlMatch` | string |
+| Name                    | Type   |
+| ----------------------- | ------ |
+| `customerRealUrl`       | string |
+| `customerRealUrlMatch`  | string |
+| `customerTestUrl`       | string |
+| `customerTestUrlMatch`  | string |
+| `devServer`             | string |
+| `itfliesServerUrl`      | string |
+| `itfliesServerUrlMatch` | string |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
 ### `Const` Logout
 
-▸ **Logout**(`__namedParameters`: object): *Promise‹void›*
+▸ **Logout**(`__namedParameters`: object): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:251](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L251)*
+_Defined in [ovl/src/global/actions.ts:251](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L251)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`state` | object |
+| Name      | Type   |
+| --------- | ------ |
+| `actions` | object |
+| `state`   | object |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
 ### `Const` NavigateBack
 
-▸ **NavigateBack**(`__namedParameters`: object): *Promise‹void›*
+▸ **NavigateBack**(`__namedParameters`: object): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:112](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L112)*
+_Defined in [ovl/src/global/actions.ts:112](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L112)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
 ### `Const` NavigateTo
 
-▸ **NavigateTo**(`__namedParameters`: object, `value`: "Feedback" | "Settings" | "Login" | "MobileTimeEntry" | "Shellbar" | "Audit" | "Translation" | "Dashboard" | "Quotation" | "Order" | "Orderdetail" | "Invoice" | "TableTesting" | "MobileTimeEntryForm"): *Promise‹void›*
+▸ **NavigateTo**(`__namedParameters`: object, `value`: "Feedback" | "Settings" | "Login" | "MobileTimeEntry" | "Shellbar" | "Audit" | "Translation" | "Dashboard" | "Quotation" | "Order" | "Orderdetail" | "Invoice" | "TableTesting" | "MobileTimeEntryForm"): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:44](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L44)*
+_Defined in [ovl/src/global/actions.ts:44](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L44)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *"Feedback" | "Settings" | "Login" | "MobileTimeEntry" | "Shellbar" | "Audit" | "Translation" | "Dashboard" | "Quotation" | "Order" | "Orderdetail" | "Invoice" | "TableTesting" | "MobileTimeEntryForm"*
+▪ **value**: _"Feedback" | "Settings" | "Login" | "MobileTimeEntry" | "Shellbar" | "Audit" | "Translation" | "Dashboard" | "Quotation" | "Order" | "Orderdetail" | "Invoice" | "TableTesting" | "MobileTimeEntryForm"_
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
 ### `Const` PrepareApp
 
-▸ **PrepareApp**(`__namedParameters`: object): *Promise‹void›*
+▸ **PrepareApp**(`__namedParameters`: object): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:258](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L258)*
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
-
-**Returns:** *Promise‹void›*
-
-___
-
-### `Const` RehydrateAndUpdateApp
-
-▸ **RehydrateAndUpdateApp**(`__namedParameters`: object): *Promise‹void›*
-
-*Defined in [ovl/src/global/actions.ts:353](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L353)*
+_Defined in [ovl/src/global/actions.ts:258](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L258)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
+
+### `Const` RehydrateApp
+
+▸ **RehydrateApp**(`__namedParameters`: object): _Promise‹void›_
+
+_Defined in [ovl/src/global/actions.ts:353](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L353)_
+
+**Parameters:**
+
+▪ **\_\_namedParameters**: _object_
+
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
+
+**Returns:** _Promise‹void›_
+
+---
 
 ### `Const` SetClosingScreen
 
-▸ **SetClosingScreen**(`actions`: any, `state`: typeof state, `value`: string): *void*
+▸ **SetClosingScreen**(`actions`: any, `state`: typeof state, `value`: string): _void_
 
-*Defined in [ovl/src/global/actions.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L169)*
+_Defined in [ovl/src/global/actions.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L169)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`actions` | any |
-`state` | typeof state |
-`value` | string |
+| Name      | Type         |
+| --------- | ------------ |
+| `actions` | any          |
+| `state`   | typeof state |
+| `value`   | string       |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` SetLanguage
 
-▸ **SetLanguage**(`__namedParameters`: object, `value`: string): *Promise‹void›*
+▸ **SetLanguage**(`__namedParameters`: object, `value`: string): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:232](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L232)*
+_Defined in [ovl/src/global/actions.ts:232](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L232)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *string*
+▪ **value**: _string_
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
 ### `Const` SetVisibleFalse
 
-▸ **SetVisibleFalse**(`__namedParameters`: object, `value`: string): *void*
+▸ **SetVisibleFalse**(`__namedParameters`: object, `value`: string): _void_
 
-*Defined in [ovl/src/global/actions.ts:204](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L204)*
+_Defined in [ovl/src/global/actions.ts:204](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L204)_
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`state` | object |
+| Name      | Type   |
+| --------- | ------ |
+| `actions` | object |
+| `state`   | object |
 
-▪ **value**: *string*
+▪ **value**: _string_
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` SetVisibleScreen
 
-▸ **SetVisibleScreen**(`state`: typeof state, `value`: string): *Promise‹void›*
+▸ **SetVisibleScreen**(`state`: typeof state, `value`: string): _Promise‹void›_
 
-*Defined in [ovl/src/global/actions.ts:188](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L188)*
+_Defined in [ovl/src/global/actions.ts:188](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L188)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`state` | typeof state |
-`value` | string |
+| Name    | Type         |
+| ------- | ------------ |
+| `state` | typeof state |
+| `value` | string       |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
-###  isMobile
+### isMobile
 
-▸ **isMobile**(): *boolean*
+▸ **isMobile**(): _boolean_
 
-*Defined in [ovl/src/global/actions.ts:27](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L27)*
+_Defined in [ovl/src/global/actions.ts:27](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L27)_
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  isTouch
+### isTouch
 
-▸ **isTouch**(): *boolean*
+▸ **isTouch**(): _boolean_
 
-*Defined in [ovl/src/global/actions.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L23)*
+_Defined in [ovl/src/global/actions.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/global/actions.ts#L23)_
 
-**Returns:** *boolean*
+**Returns:** _boolean_

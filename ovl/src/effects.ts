@@ -45,6 +45,7 @@ export const ovlFetch = async (
   let snackMessage = ""
   let snackMessageType: SnackType = "Information"
   let reqOptions
+  let timer
   try {
     ovl.actions.ovl.indicator.SetIndicatorOpen()
     // Create request to api service
@@ -101,14 +102,14 @@ export const ovlFetch = async (
     const controller = new AbortController()
     const { signal } = controller
 
-    let timer = setTimeout(() => {
+    timer = setTimeout(() => {
       controller.abort()
     }, 5000)
 
     reqOptions.signal = signal
 
     const req = await fetch(url, reqOptions)
-    clearTimeout(timer)
+
     if (method === "POST") {
       ovl.state.ovl.app.offline = false
     }
@@ -213,6 +214,9 @@ export const ovlFetch = async (
       type: "",
     }
   } finally {
+    if (timer) {
+      clearTimeout(timer)
+    }
     ovl.actions.ovl.indicator.SetIndicatorClose()
     // if (method === "POST") {
     //   saveState(true, "fetchpost")

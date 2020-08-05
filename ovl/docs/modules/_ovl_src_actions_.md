@@ -180,9 +180,9 @@ _Defined in [ovl/src/actions.ts:121](https://github.com/fopsdev/ovl/blob/f9b6194
 
 _Defined in [ovl/src/actions.ts:149](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L149)_
 
-### RehydrateAndUpdateApp
+### RehydrateApp
 
-• **RehydrateAndUpdateApp**: _OvlAction‹void, void›_
+• **RehydrateApp**: _OvlAction‹void, void›_
 
 _Defined in [ovl/src/actions.ts:147](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/actions.ts#L147)_
 
@@ -490,7 +490,7 @@ _Defined in [ovl/src/actions.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194
 
 - **PrepareApp**: _OvlAction‹void, void›_
 
-- **RehydrateAndUpdateApp**: _OvlAction‹void, void›_
+- **RehydrateApp**: _OvlAction‹void, void›_
 
 - **RemoveSnack**: _OvlAction‹string, void›_
 

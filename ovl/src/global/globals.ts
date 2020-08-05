@@ -183,7 +183,7 @@ export const visibilityChange = async (event) => {
     }
     if (ovl.state.ovl.uiState.isIOS && document.visibilityState === "visible") {
       // rehydrate state here on ios. eg. switching from standalone app to a downloaded doc and back needs to rehydrate on ios (not on android,chrome)
-      await ovl.actions.ovl.internal.RehydrateAndUpdateApp()
+      await ovl.actions.ovl.internal.RehydrateApp()
     }
   }
 }

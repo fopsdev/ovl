@@ -314,9 +314,9 @@ export const GetFile: OvlAction<{
   }
 }
 
-export const RehydrateAndUpdateApp: OvlAction<any, Promise<boolean>> = async (
+export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
   _,
-  { actions, state, effects }
+  { state }
 ) => {
   if (OvlConfig._system.OfflineMode) {
     try {
@@ -328,36 +328,11 @@ export const RehydrateAndUpdateApp: OvlAction<any, Promise<boolean>> = async (
         stateStore.clear()
       } else {
         // go through 1st level keys and assign them
-
-        //state = createDeepProxy(persistedState)
-
         Object.keys(persistedState).forEach((k) => {
           state[k] = persistedState[k]
         })
         state.ovl.libState.indicator.open = false
         state.ovl.libState.indicator.refCounter = 0
-
-        // state.timeportal.logic.selectedRessource =
-        //   persistedState.timeportal.logic.selectedRessource
-
-        // console.log("after rehydrate")
-        // console.log(persistedState.timeportal.logic.selectedRessource)
-        // console.log(state)
-        //await actions.ovl.internal.AfterRehydrateApp()
-        try {
-          let updateCheck = await effects.ovl.getRequest(
-            "./ovlnocache/" +
-              OvlConfig._system.Version.split(".").join("_") +
-              ".js",
-            undefined
-          )
-          if (updateCheck.status === 404) {
-            // we need an update
-            await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
-            logout()
-          }
-        } catch (e) {}
-
         return true
       }
     } catch (e) {
@@ -377,14 +352,7 @@ export const InitApp: OvlAction<Init> = async (
     ovl.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
-  console.log(OvlConfig.offlineFirstOnReload)
-  if (OvlConfig.offlineFirstOnReload) {
-    console.log("Try Offline first...")
-    if (await Rehydrate()) {
-      console.log("Offline first. Got offline data...")
-      return
-    }
-  }
+
   let currentLocation =
     window.location.hostname.toLowerCase() +
     ":" +
@@ -402,6 +370,14 @@ export const InitApp: OvlAction<Init> = async (
     state.ovl.apiUrl = value.devServer
   }
 
+  UpdateCheck()
+  if (OvlConfig.offlineFirstOnReload) {
+    console.log("Try Offline first...")
+    if (await Rehydrate()) {
+      console.log("Offline first. Got offline data...")
+      return
+    }
+  }
   let lang = localStorage.getItem("PortalLanguage")
   let res = await effects.ovl.postRequest(
     state.ovl.apiUrl + "users/translations",
@@ -451,9 +427,28 @@ export const InitApp: OvlAction<Init> = async (
     OvlConfig.requiredActions.customInitActionPath()
   }
 }
+
+export const UpdateCheck = async () => {
+  if (OvlConfig._system.OfflineMode) {
+    try {
+      let updateCheck = await ovl.effects.ovl.getRequest(
+        "./ovlnocache/" +
+          OvlConfig._system.Version.split(".").join("_") +
+          ".js",
+        undefined
+      )
+      if (updateCheck.status === 404) {
+        // we need an update
+        await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
+        logout()
+      }
+    } catch (e) {}
+  }
+}
+
 export const Rehydrate = async (): Promise<boolean> => {
   try {
-    if (await ovl.actions.ovl.internal.RehydrateAndUpdateApp()) {
+    if (await ovl.actions.ovl.internal.RehydrateApp()) {
       if (OvlConfig.requiredActions.customRehydrateActionPath) {
         await OvlConfig.requiredActions.customRehydrateActionPath()
       }
