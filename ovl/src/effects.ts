@@ -108,7 +108,7 @@ export const ovlFetch = async (
     reqOptions.signal = signal
 
     const req = await fetch(url, reqOptions)
-    //clearTimeout(timer)
+    clearTimeout(timer)
     if (method === "POST") {
       ovl.state.ovl.app.offline = false
     }
