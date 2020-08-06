@@ -914,15 +914,24 @@ const TableEditSaveRowHelper = async (
             else {
               let saveErrorFnName = FormSaveError
               // handleError @@hook
+              console.log("calling error hook")
               let fn = resolvePath(actions.custom, def.namespace)
               if (fn && fn[saveErrorFnName]) {
-                await fn[saveErrorFnName](<FormSaveError_Type>{
-                  key,
-                  def,
-                  data,
-                  res,
-                  isOfflineRetry,
-                })
+                if (
+                  await fn[saveErrorFnName](<FormSaveError_Type>{
+                    key,
+                    def,
+                    data,
+                    res,
+                    formState,
+                    isAdd,
+                    isOfflineRetry,
+                  })
+                ) {
+                  // return true means its handled
+                  // so just return
+                  return
+                }
               } else {
                 if (hasFormState) {
                   formState.valid = false

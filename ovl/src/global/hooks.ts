@@ -371,16 +371,20 @@ export type FormSaveOffline_Type = {
   data: TableData
   res: any
   saveData: any
+
   isOfflineRetry: boolean
 }
 export const FormSaveOffline = "FormSaveOffline"
 
 // if you would like to process save errors yourself
+export type FormSaveError_ReturnType = Promise<boolean>
 export type FormSaveError_Type = {
   key: string
   def: TableDef
   data: TableData
   res: any
+  formState: FormState
+  isAdd: boolean
   isOfflineRetry: boolean
 }
 export const FormSaveError = "FormSaveError"
