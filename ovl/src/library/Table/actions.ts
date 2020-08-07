@@ -859,26 +859,36 @@ const TableEditSaveRowHelper = async (
             key
           )
         } else {
+          let oldid = newData["_ovl" + def.database.dataIdField]
           delete newData["_ovl" + def.database.dataIdField]
-          res = await postRequest(
-            state.ovl.apiUrl + def.server.endpoint + "/" + mode,
-            {
-              lang: state.ovl.language.language,
-              idField: def.database.dataIdField,
-              idValue: rowId,
-              insertMode: def.database.dbInsertMode,
-              data: newData,
-              customId: ovl.state.ovl.user.clientId,
-            },
-            false,
-            noSnack
-          )
+          try {
+            res = await postRequest(
+              state.ovl.apiUrl + def.server.endpoint + "/" + mode,
+              {
+                lang: state.ovl.language.language,
+                idField: def.database.dataIdField,
+                idValue: rowId,
+                insertMode: def.database.dbInsertMode,
+                data: newData,
+                customId: ovl.state.ovl.user.clientId,
+              },
+              false,
+              noSnack
+            )
+          } catch (e) {
+            newData["_ovl" + def.database.dataIdField] = oldid
+            throw e
+          }
           if (res.data) {
             state.ovl.app.offline = false
             newId = res.data[def.database.dataIdField]
           }
-          newData["_ovl" + def.database.dataIdField] =
-            newData[def.database.dataIdField]
+          let idtowrite = newId
+          if (!idtowrite) {
+            idtowrite = oldid
+          }
+          newData["_ovl" + def.database.dataIdField] = idtowrite
+
           if (!res.data) {
             // 449 means offline in our context
             if (res.status === 449) {
