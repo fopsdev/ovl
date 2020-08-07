@@ -260,6 +260,7 @@ export const logout = async () => {
         cacheKeys.map(async (cacheName) => await caches.delete(cacheName))
       )
     } catch (e) {}
+    ovl.state.ovl.user.token = ""
   }
   //@ts-ignore
   //setTimeout(() => {
