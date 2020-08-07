@@ -64,6 +64,9 @@ export const ovlFetch = async (
       headers,
       signal: undefined,
     }
+    if (data) {
+      data.clientId = ovl.state.ovl.user.clientId
+    }
     if (method === "POST") {
       reqOptions["body"] = JSON.stringify(data)
     } else if (data) {
@@ -94,6 +97,7 @@ export const ovlFetch = async (
         "v",
         ovl.state.ovl.app.discCacheVersion.toString()
       )
+      urlWithParams.searchParams.append("clientId", ovl.state.ovl.user.clientId)
 
       // encode params as url param
       url = urlWithParams.toString()

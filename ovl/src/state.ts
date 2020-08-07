@@ -74,7 +74,7 @@ let libState = {
 
 let app = {
   offline: false,
-  offlineLastRetry: 0,
+
   discCacheVersion: Date.now(),
 }
 

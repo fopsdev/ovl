@@ -687,7 +687,8 @@ const EditSaveRowOfflineHelper = (
       res.data.Name = newRowId
     }
     let addedKeys = data.offline.addedKeys
-    addedKeys[key] = true
+    data.offlineSeq++
+    addedKeys[key] = data.offlineSeq
   } else {
     // its an update
     // so just flag the used columns
@@ -695,10 +696,11 @@ const EditSaveRowOfflineHelper = (
     // if its an offline key it will be handled by add already
     if (key.indexOf(ovloffline) < 0) {
       if (!updatedKeys[key]) {
-        updatedKeys[key] = {}
+        data.offlineSeq++
+        updatedKeys[key] = { columns: {}, timestamp: data.offlineSeq }
       }
       Object.keys(newData).forEach((k) => {
-        updatedKeys[key][k] = true
+        updatedKeys[key].columns[k] = true
       })
     }
   }
@@ -1017,11 +1019,11 @@ export const TableOfflineHandler: OvlAction<
   ) {
     return
   }
-  let lastRetry = state.ovl.app.offlineLastRetry
+  //let lastRetry = state.ovl.app.offlineLastRetry
   let newKey
   let dn = Date.now()
   if (!state.ovl.app.offline /* || !lastRetry || dn - lastRetry > 40000 */) {
-    state.ovl.app.offlineLastRetry = dn
+    //state.ovl.app.offlineLastRetry = dn
     let data = value.data
     let defId = value.defId
     let key = value.key
@@ -1050,53 +1052,66 @@ export const TableOfflineHandler: OvlAction<
 
     let addedKeys = data.offline.addedKeys
     let addedKeysKeys = Object.keys(addedKeys)
-    i = 0
-    while (i < addedKeysKeys.length) {
-      let k = addedKeysKeys[i]
-      let resKey
-      try {
-        resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
-          data,
-          defId,
-          rowToSave: data.data[k],
-          key: k,
-        })
-      } catch (e) {
-        OfflineHandlerErrorHelper(e, errors)
-      }
-      if (resKey) {
-        delete addedKeys[k]
-      }
-      i++
-    }
-
     let updatedKeys = data.offline.updatedKeys
     let updatedKeysKeys = Object.keys(updatedKeys)
+    let addAndUpdateSequence: {
+      type: string
+      key: string
+      timestamp: number
+    }[] = []
+    addedKeysKeys.forEach((f) => {
+      addAndUpdateSequence.push({
+        type: "add",
+        key: f,
+        timestamp: addedKeys[f],
+      })
+    })
+    updatedKeysKeys.forEach((f) => {
+      addAndUpdateSequence.push({
+        type: "update",
+        key: f,
+        timestamp: updatedKeys[f].timestamp,
+      })
+    })
+    addAndUpdateSequence.sort((a, b) => a.timestamp - b.timestamp)
     i = 0
-    while (i < updatedKeysKeys.length) {
-      let k = updatedKeysKeys[i]
-      let resKey
-      try {
-        let def = data.tableDef[defId]
-        let rowToSave = {}
-        // rowToSave[def.database.dataIdField] =
-        //   data.data[k][def.database.dataIdField]
-        // rowToSave["_ovl" + def.database.dataIdField] =
-        //   rowToSave[def.database.dataIdField]
-        Object.keys(updatedKeys[k]).forEach((f) => {
-          rowToSave[f] = data.data[k][f]
-        })
-        resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
-          data,
-          defId,
-          rowToSave,
-          key: k,
-        })
-      } catch (e) {
-        OfflineHandlerErrorHelper(e, errors)
-      }
-      if (resKey) {
-        delete updatedKeys[k]
+    while (i < addAndUpdateSequence.length) {
+      let e = addAndUpdateSequence[i]
+      let k = e.key
+      if (e.type === "add") {
+        let resKey
+        try {
+          resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
+            data,
+            defId,
+            rowToSave: data.data[k],
+            key: k,
+          })
+        } catch (e) {
+          OfflineHandlerErrorHelper(e, errors)
+        }
+        if (resKey) {
+          delete addedKeys[k]
+        }
+      } else {
+        let resKey
+        try {
+          let rowToSave = {}
+          Object.keys(updatedKeys[k].columns).forEach((f) => {
+            rowToSave[f] = data.data[k][f]
+          })
+          resKey = await actions.ovl.internal.TableOfflineRetrySaveRow({
+            data,
+            defId,
+            rowToSave,
+            key: k,
+          })
+        } catch (e) {
+          OfflineHandlerErrorHelper(e, errors)
+        }
+        if (resKey) {
+          delete updatedKeys[k]
+        }
       }
       i++
     }

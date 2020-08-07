@@ -378,6 +378,7 @@ export const initTableState = (
     }
 
     if (data.offline === undefined) {
+      data.offlineSeq = 0
       data.offline = {
         addedKeys: {},
         deletedKeys: {},
