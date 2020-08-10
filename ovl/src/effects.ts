@@ -138,18 +138,33 @@ export const ovlFetch = async (
         type: "",
       }
     } else if (req.status === 400) {
-      snackMessage = req.statusText
+      let msg = await req.json()
+      let type = ""
+      if (msg) {
+        if (msg.message && !msg.type) {
+          snackMessage = msg.message
+        } else if (!msg.type) {
+          snackMessage = req.statusText
+        }
+        if (msg.type) {
+          type = msg.type
+        }
+      }
       snackMessageType = "Error"
       return {
         headers: req.headers,
         data: undefined,
         status: 400,
         message: req.statusText,
-        type: "",
+        type: type,
       }
     } else if (req.status === 422) {
       let msg = await req.json()
-      snackMessage = msg.errormessage
+      if (msg && msg.message) {
+        snackMessage = msg.message
+      } else {
+        snackMessage = req.statusText
+      }
       snackMessageType = "Error"
       return {
         headers: req.headers,

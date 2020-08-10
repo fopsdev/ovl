@@ -385,12 +385,6 @@ export const InitApp: OvlAction<Init> = async (
     }
   )
 
-  state.ovl.language.language = res.data.lang
-
-  localStorage.setItem("PortalLanguage", res.data.lang)
-  state.ovl.language.translations = res.data.translations
-  state.ovl.language.isReady = true
-
   if (!res || !res.data) {
     if (!OvlConfig.offlineFirstOnReload) {
       if (!(await Rehydrate())) {
@@ -404,6 +398,12 @@ export const InitApp: OvlAction<Init> = async (
       return
     }
   }
+
+  state.ovl.language.language = res.data.lang
+
+  localStorage.setItem("PortalLanguage", res.data.lang)
+  state.ovl.language.translations = res.data.translations
+  state.ovl.language.isReady = true
 
   if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
     OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
