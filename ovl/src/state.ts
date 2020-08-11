@@ -7,7 +7,7 @@ import { SnackState } from "./library/Snack/Snack"
 import { OvlDialog } from "./index"
 import { DialogsState } from "./library/Dialog/OvlDialogBase"
 
-let forms: FormsState = {}
+let forms: FormsState = undefined
 
 let indicator = {
   open: true,
