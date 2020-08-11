@@ -30,7 +30,7 @@ export const FormValidate: OvlAction<FormValidate_Type> = async (
   value,
   { state }
 ) => {
-  let def: TableDef = state.portal.tables.translation.tableDef.translation
+  let def: TableDef = state.demoApp.tables.translation.tableDef.translation
   switch (value.fieldId as TblTranslationColumn) {
     case "U_Group":
       Mandatory(

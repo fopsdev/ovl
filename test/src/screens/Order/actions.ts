@@ -10,7 +10,7 @@ export const PreparePositiveFeedback: OvlAction<OrderFeedbackState> = (
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
-  let order = state.portal.orderDetail.orders[key]
+  let order = state.demoApp.orderDetail.orders[key]
   state.ovl.screens.screens.Feedback.cardCode = order.cardCode
   state.ovl.screens.screens.Feedback.refNum = order.refNum
   state.ovl.screens.screens.Feedback.message = value.message
@@ -28,7 +28,7 @@ export const PrepareNegativeFeedback: OvlAction<OrderFeedbackState> = (
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
-  let order = state.portal.orderDetail.orders[key]
+  let order = state.demoApp.orderDetail.orders[key]
   state.ovl.screens.screens.Feedback.cardCode = order.cardCode
   state.ovl.screens.screens.Feedback.refNum = order.refNum
   state.ovl.screens.screens.Feedback.message = value.message
@@ -46,7 +46,7 @@ export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
-  let order = state.portal.orderDetail.orders[key]
+  let order = state.demoApp.orderDetail.orders[key]
   state.ovl.screens.screens.Feedback.cardCode = order.cardCode
   state.ovl.screens.screens.Feedback.refNum = order.refNum
   state.ovl.screens.screens.Feedback.message = value.message

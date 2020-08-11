@@ -41,7 +41,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
 
     return this.track(() => {
       let detailCount = Object.keys(
-        this.state.portal.dpInvoiceDetail.dpInvoices
+        this.state.demoApp.dpInvoiceDetail.dpInvoices
       ).length
       if (detailCount === 0) {
         return null
@@ -101,10 +101,10 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                     </tr>
                   </thead>
                   <tbody class="fd-table__body">
-                    ${Object.keys(this.state.portal.dpInvoiceDetail.dpInvoices)
+                    ${Object.keys(this.state.demoApp.dpInvoiceDetail.dpInvoices)
                       .sort((a, b) => parseInt(b) - parseInt(a))
                       .map((k) => {
-                        let o = this.state.portal.dpInvoiceDetail.dpInvoices[k]
+                        let o = this.state.demoApp.dpInvoiceDetail.dpInvoices[k]
                         let files = o.attachments.files
                         let bgColor = "fd-has-background-color-background-5"
                         let dueDate = new Date(o.docDueDate)
@@ -136,14 +136,14 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                                   aria-hidden="${k !==
                                     this.state.ovl.screens.screens.Invoice
                                       .activeFilePopup ||
-                                  this.state.portal.dpInvoiceDetail.dpInvoices[
+                                  this.state.demoApp.dpInvoiceDetail.dpInvoices[
                                     k
                                   ].attachments.files.length === 0}"
                                   id="pQqQR219${k}"
                                 >
                                   <nav class="fd-menu">
                                     <ul class="fd-menu__list">
-                                      ${this.state.portal.dpInvoiceDetail.dpInvoices[
+                                      ${this.state.demoApp.dpInvoiceDetail.dpInvoices[
                                         k
                                       ].attachments.files.map((f) => {
                                         return html`

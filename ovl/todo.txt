@@ -2,8 +2,10 @@
 
 Todos:
 
-- check decimal serializing/deserializing issue workarounds. could be that only backend update - method is the culprit
-  -> js doesn't car and always saves numbers as floats internally!
+- check duplicate/copy table function
+- transaltion add doesn't add it to the internal list thus needs a refresh so the trans can be used
+- fix all dialogs
+- remove overlay
 
 X - set trap for parent in set handler. 
 

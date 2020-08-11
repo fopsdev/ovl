@@ -26,8 +26,8 @@ export class OvlAudit extends OvlBaseElement {
               class="fd-table"
               .props=${(state: OvlState) => {
                 return {
-                  def: state.portal.tables.audit.tableDef.audit,
-                  data: state.portal.tables.audit,
+                  def: state.demoApp.tables.audit.tableDef.audit,
+                  data: state.demoApp.tables.audit,
                 }
               }}
             >

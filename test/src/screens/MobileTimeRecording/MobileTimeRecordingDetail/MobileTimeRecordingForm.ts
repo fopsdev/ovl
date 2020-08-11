@@ -15,13 +15,13 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
     super.init()
   }
   async handleSave(e) {
-    let def = this.state.portal.testtables.timeentries.tableDef
+    let def = this.state.demoApp.testtables.timeentries.tableDef
       .mobiletimerecording1
     if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
       await this.actions.ovl.internal.TableEditSaveRow({
         key: def.uiState.currentlyAddingKey,
         def,
-        data: this.state.portal.testtables.timeentries,
+        data: this.state.demoApp.testtables.timeentries,
         formState: this.formState,
       })
     }
@@ -46,7 +46,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
   }
   async getUI() {
     return this.track(() => {
-      let def = this.state.portal.testtables.timeentries.tableDef
+      let def = this.state.demoApp.testtables.timeentries.tableDef
         .mobiletimerecording1
       let typeField = this.formState.fields["U_Type"]
       let typeIdField = this.formState.fields["U_TypeId"]

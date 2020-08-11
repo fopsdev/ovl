@@ -1,4 +1,4 @@
-import { LookupDef } from "../../ovl/src/library/forms/OvlFormElement"
+import { LookupDef as demoAppState } from "../../ovl/src/library/forms/OvlFormElement"
 import { ListFnReturnValue, TableData } from "../../ovl/src/library/Table/Table"
 import { File } from "./components/FileList/FileList"
 import { tblAudit } from "./screens/Audit/state"
@@ -9,6 +9,59 @@ import {
   tblTableTesting2,
   tblTableTesting3,
 } from "./shared/TableTesting/state"
+
+import { SettingsFormState } from "./screens/Settings/SettingsForm"
+import { OrderOverviewState } from "./screens/Order/OrderOverview"
+import { QuotationOverviewState } from "./screens/Quotation/QuotationOverview"
+import { InvoiceOverviewState } from "./screens/Invoice/InvoiceOverview"
+
+import { OrderDetailFormState } from "./screens/Order/OrderDetailLayout"
+import { FeedbackFormState } from "./screens/Feedback/FeedbackForm"
+import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/MobileTimeRecordingForm"
+import { DashboardState } from "./screens/Dashboard/Dashboard"
+import { ShellbarState } from "./screens/Shellbar/Shellbar"
+
+let shellbar: ShellbarState = {
+  mainMenuExpanded: false,
+  userMenuExpanded: false,
+}
+
+let audit = {}
+
+let settings: SettingsFormState = {}
+
+let feedback: FeedbackFormState = {
+  cardCode: undefined,
+  dirty: undefined,
+  message: undefined,
+  orderDate: undefined,
+  orderDeliveryDate: undefined,
+  orderNum: undefined,
+  refNum: undefined,
+  title: undefined,
+  type: undefined,
+}
+
+let dashboard: DashboardState = {}
+
+let orderOverview: OrderOverviewState = {
+  activeFilePopup: "",
+}
+
+let quotationOverview: QuotationOverviewState = {
+  activeFilePopup: "",
+}
+
+let invoiceOverview: InvoiceOverviewState = {
+  activeFilePopup: "",
+}
+
+let orderDetailFormState: OrderDetailFormState = {
+  selectedOrder: "",
+}
+
+let mobileTimeEntryFormState: MobileTimeEntryFormState = { rowKey: undefined }
+let mobileTimeEntry = { selectedDate: "" }
 
 export type FileList = {
   files: File[]
@@ -164,8 +217,8 @@ let tableTesting: TableData = {
     tab2: tblTableTesting2,
     tab3: tblTableTesting3,
   },
-  lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
-  lookupDef2: <{ [key: string]: LookupDef }>{
+  lookupDef: <{ [key: string]: demoAppState }>{ U_Alpha: { type: "text" } },
+  lookupDef2: <{ [key: string]: demoAppState }>{
     U_Alpha: { type: "text" },
     U_Date: { type: "date" },
   },
@@ -229,7 +282,25 @@ let tables = {
   },
 }
 
+let screens = {
+  /* base screens */
+  shellbar: shellbar,
+  audit: audit,
+  translation: {},
+  settings: settings,
+  dashboard: dashboard,
+  quotation: quotationOverview,
+  order: orderOverview,
+  orderdetail: orderDetail,
+  invoice: invoiceOverview,
+  feedback: feedback,
+  tableTesting: tableTesting,
+  mobileTimeEntry: mobileTimeEntry,
+  mobileTimeEntryForm: mobileTimeEntryFormState,
+}
+
 export {
+  screens,
   user,
   orderDetail,
   chartData,

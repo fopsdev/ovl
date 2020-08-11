@@ -44,7 +44,7 @@ export class CompQuotationOverview extends OvlBaseElement {
     }
     return this.track(() => {
       let detailCount = Object.keys(
-        this.state.portal.quotationDetail.quotations
+        this.state.demoApp.quotationDetail.quotations
       ).length
       if (detailCount === 0) {
         return null
@@ -119,14 +119,14 @@ export class CompQuotationOverview extends OvlBaseElement {
                     </thead>
                     <tbody class="fd-table__body">
                       ${Object.keys(
-                        this.state.portal.quotationDetail.quotations
+                        this.state.demoApp.quotationDetail.quotations
                       )
                         .sort((a, b) => parseInt(b) - parseInt(a))
                         .map((k) => {
-                          let o = this.state.portal.quotationDetail.quotations[
+                          let o = this.state.demoApp.quotationDetail.quotations[
                             k
                           ]
-                          let files = this.state.portal.quotationDetail
+                          let files = this.state.demoApp.quotationDetail
                             .quotations[k].attachments.files
 
                           return html`
@@ -152,14 +152,14 @@ export class CompQuotationOverview extends OvlBaseElement {
                                     aria-hidden="${k !==
                                       this.state.ovl.screens.screens.Quotation
                                         .activeFilePopup ||
-                                    this.state.portal.quotationDetail
+                                    this.state.demoApp.quotationDetail
                                       .quotations[k].attachments.files
                                       .length === 0}"
                                     id="pQqQR214${k}"
                                   >
                                     <nav class="fd-menu">
                                       <ul class="fd-menu__list">
-                                        ${this.state.portal.quotationDetail.quotations[
+                                        ${this.state.demoApp.quotationDetail.quotations[
                                           k
                                         ].attachments.files.map((f) => {
                                           return html`

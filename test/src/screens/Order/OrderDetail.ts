@@ -6,7 +6,7 @@ export class CompOrderDetail extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
       let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
-      let order = this.state.portal.orderDetail.orders[key]
+      let order = this.state.demoApp.orderDetail.orders[key]
 
       return html`
         <div class="fd-layout-panel">

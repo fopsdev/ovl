@@ -12,7 +12,7 @@ export class CompDashboard extends OvlBaseElement {
 
   async getUI() {
     return this.track(() => {
-      let partner = this.state.portal.partner
+      let partner = this.state.demoApp.partner
       return html`
     <div class="">
       <div>
@@ -23,8 +23,8 @@ export class CompDashboard extends OvlBaseElement {
               <div class="fd-layout-panel__head">
                 <p class="fd-layout-panel__title fd-has-type-2">
                 ${T("PortalWelcome", [
-                  this.state.portal.user.firstName,
-                  this.state.portal.user.lastName,
+                  this.state.demoApp.user.firstName,
+                  this.state.demoApp.user.lastName,
                   partner.cardName,
                 ])} 
                 </p>
@@ -62,7 +62,7 @@ export class CompDashboard extends OvlBaseElement {
             </div>
             <div class="fd-layout-panel__body fd-has-padding-tiny fd-has-margin-tiny">
               <img style="border-radius:10px;" width="100vw" src="data:image/jpg;base64,${
-                this.state.portal.pics.salesContact
+                this.state.demoApp.pics.salesContact
               }"></img>
 
               <p class="fd-layout-panel__description">
@@ -89,7 +89,7 @@ export class CompDashboard extends OvlBaseElement {
             </div>
             <div class="fd-layout-panel__body fd-has-padding-tiny fd-has-margin-tiny">
               <img style="border-radius:10px;" width="100vw" src="data:image/jpg;base64,${
-                this.state.portal.pics.technicalContact
+                this.state.demoApp.pics.technicalContact
               }"></img>
 
               <p class="fd-layout-panel__description">

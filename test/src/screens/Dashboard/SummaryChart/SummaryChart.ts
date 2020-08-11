@@ -26,17 +26,17 @@ export class CompSummaryChart extends OvlBaseElement {
     //@ts-ignore
     let color = Chart.helpers.color
     return {
-      labels: this.state.portal.chartData.labels.map(
+      labels: this.state.demoApp.chartData.labels.map(
         (m, i) =>
           T("AppMonth" + m.toString()) +
           " " +
-          this.state.portal.chartData.labels_ext[i].toString()
+          this.state.demoApp.chartData.labels_ext[i].toString()
       ),
       datasets: [
         {
           label: T("PortalCurrentYear"),
           data: JSON.parse(
-            JSON.stringify(this.state.portal.chartData.values_1)
+            JSON.stringify(this.state.demoApp.chartData.values_1)
           ),
           //@ts-ignore
           backgroundColor: color("rgb(255, 0, 0)").alpha(0.5).rgbString(),
@@ -47,7 +47,7 @@ export class CompSummaryChart extends OvlBaseElement {
         {
           label: T("PortalLastYear"),
           data: JSON.parse(
-            JSON.stringify(this.state.portal.chartData.values_2)
+            JSON.stringify(this.state.demoApp.chartData.values_2)
           ),
           //@ts-ignore
           backgroundColor: color("rgb(54, 162, 235)").alpha(0.5).rgbString(),

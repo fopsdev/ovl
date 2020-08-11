@@ -13,7 +13,7 @@ export const ScreenShow: OvlAction = async (_) => {
 /* main form functions */
 export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
   let defId: TableDefIds = "mobiletimerecording1"
-  let data = state.portal.testtables.timeentries
+  let data = state.demoApp.testtables.timeentries
   await actions.ovl.table.TableRefresh({
     defId,
     data,

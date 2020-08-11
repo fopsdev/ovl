@@ -1,15 +1,15 @@
 export { OvlVersion } from "../../../kaltag/sw"
 
 import {
-  timePortalScreens,
-  timePortalDialogs,
+  demoAppScreens,
+  demoAppDialogs,
   CustomFormType,
   TableDefIds,
   Language,
-} from "../../../kaltag/src/appDef"
-import * as timePortalState from "../../../kaltag/src/state"
-import * as timePortalActions from "../../../kaltag/src/actions"
-import * as customActions from "../../../kaltag/src/customActions"
+} from "../../test/src/appDef"
+import * as demoAppState from "../../test/src/state"
+import * as demoAppActions from "../../test/src/actions"
+import * as customActions from "../../test/src/customActions"
 
 import { createDeepProxy } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
@@ -33,13 +33,13 @@ export type OvlAction<T = {}, R = void> = (
 
 let _state = {
   ovl: ovlState,
-  timeportal: timePortalState,
+  demoApp: demoAppState,
 }
 
 // prepare screens state
 //@ts-ignore
 _state.ovl.screens.screens = {}
-Object.keys(timePortalScreens)
+Object.keys(demoAppScreens)
   .concat(Object.keys(baseScreens))
   .forEach((k) => {
     _state.ovl.screens.screens[k] = {
@@ -52,7 +52,7 @@ Object.keys(timePortalScreens)
 // prepare dialogs state
 //@ts-ignore
 _state.ovl.dialogs = {}
-Object.keys(timePortalDialogs)
+Object.keys(demoAppDialogs)
   .concat(Object.keys(baseDialogs))
   .forEach((k) => {
     _state.ovl.dialogs[k] = {
@@ -65,7 +65,7 @@ let state: OvlState = createDeepProxy(_state)
 
 let actions = {
   ovl: ovlActions,
-  timeportal: timePortalActions,
+  demoApp: demoAppActions,
   custom: customActions,
 }
 
@@ -134,14 +134,10 @@ export type OvlState = typeof _state
 export type OvlActions = typeof actions
 export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
-export type OvlDialog =
-  | keyof typeof baseDialogs
-  | keyof typeof timePortalDialogs
+export type OvlDialog = keyof typeof baseDialogs | keyof typeof demoAppDialogs
 
 export { TableDefIds, Language }
-export type OvlScreen =
-  | keyof typeof baseScreens
-  | keyof typeof timePortalScreens
+export type OvlScreen = keyof typeof baseScreens | keyof typeof demoAppScreens
 
 import { defineElements } from "./registerComponents"
 defineElements()

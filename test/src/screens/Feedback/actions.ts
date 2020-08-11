@@ -12,15 +12,18 @@ export const SaveFeedback: OvlAction<FormState> = async (
 ) => {
   actions.ovl.form.ValidateForm(value)
   if (value.valid) {
-    let res = await effects.ovl.postRequest(api.url + "data/savefeedback", {
-      language: state.ovl.language.language,
-      message: value.fields["msg"].value,
-      orderDate: state.ovl.screens.screens.Feedback.orderDate,
-      orderNum: state.ovl.screens.screens.Feedback.orderNum,
-      refNum: state.ovl.screens.screens.Feedback.refNum,
-      assignedTo: state.portal.partner.salesContact.id,
-      feedbackType: state.ovl.screens.screens.Feedback.type,
-    })
+    let res = await effects.ovl.postRequest(
+      state.ovl.apiUrl + "data/savefeedback",
+      {
+        language: state.ovl.language.language,
+        message: value.fields["msg"].value,
+        orderDate: state.ovl.screens.screens.Feedback.orderDate,
+        orderNum: state.ovl.screens.screens.Feedback.orderNum,
+        refNum: state.ovl.screens.screens.Feedback.refNum,
+        assignedTo: state.demoApp.partner.salesContact.id,
+        feedbackType: state.ovl.screens.screens.Feedback.type,
+      }
+    )
 
     if (res.status !== 200) {
       return

@@ -170,7 +170,7 @@ export class CompShellbar extends OvlBaseElement {
       let hideAllMenus = ""
       let user = this.state.ovl.user
       let portal = this.state.portal
-      let partner = this.state.portal.partner
+      let partner = this.state.demoApp.partner
       // if user not logged in or a form is dirty hide menus
       let quotationMainMenu
       let quotationListMenu
@@ -191,9 +191,9 @@ export class CompShellbar extends OvlBaseElement {
         hideAllMenus = "hide"
       } else {
         userName =
-          this.state.portal.user.firstName +
+          this.state.demoApp.user.firstName +
           " " +
-          this.state.portal.user.lastName +
+          this.state.demoApp.user.lastName +
           ", " +
           partner.cardName
         if (
@@ -289,7 +289,7 @@ export class CompShellbar extends OvlBaseElement {
           langtitle = T("AppLangFR")
         }
 
-        if (this.state.portal.user.role === "Admin") {
+        if (this.state.demoApp.user.role === "Admin") {
           languageTableMenu = html`
             <li>
               <a
@@ -304,8 +304,8 @@ export class CompShellbar extends OvlBaseElement {
         }
 
         if (
-          this.state.portal.user.role === "Admin" &&
-          this.state.portal.user.userName === "info@itflies.ch"
+          this.state.demoApp.user.role === "Admin" &&
+          this.state.demoApp.user.userName === "info@itflies.ch"
         ) {
           testTableMenu = html`
             <li>
@@ -342,7 +342,7 @@ export class CompShellbar extends OvlBaseElement {
           `
         }
 
-        if (this.state.portal.user.role === "Admin") {
+        if (this.state.demoApp.user.role === "Admin") {
           auditMenu = html`
             <li>
               <a

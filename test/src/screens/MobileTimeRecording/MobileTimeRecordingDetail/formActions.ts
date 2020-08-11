@@ -45,9 +45,9 @@ export const Field_U_TypeId_GetList: OvlAction<
   FieldGetList_ReturnType
 > = ({ row }: { row: TableMobileTimeRecording }, { state }) => {
   if (row.U_Type === "PROJECT") {
-    return state.portal.testtables.lookups.ProjectTypeId
+    return state.demoApp.testtables.lookups.ProjectTypeId
   } else {
-    return state.portal.testtables.lookups.AbsenceTypeId
+    return state.demoApp.testtables.lookups.AbsenceTypeId
   }
 }
 
@@ -96,11 +96,11 @@ export const FormValidate: OvlAction<ValidateFieldType> = async (
 }
 
 const CheckExistingTimeRange = (state: OvlState, value: ValidateFieldType) => {
-  let def = state.portal.testtables.timeentries.tableDef.mobiletimerecording1
+  let def = state.demoApp.testtables.timeentries.tableDef.mobiletimerecording1
   let keysToCheck = def.uiState.dataFilteredAndSorted.filter(
     (k) => k.indexOf(ovltemp) < 0
   )
-  let data = state.portal.testtables.timeentries.data
+  let data = state.demoApp.testtables.timeentries.data
   keysToCheck.some((k) => {
     if (value.newVal > data[k].U_FromTime && value.newVal < data[k].U_ToTime) {
       ValidationAddError(
@@ -192,7 +192,7 @@ export const FormBeforeSave: OvlAction<BeforeSaveParam> = async (
   let newRow = <TableMobileTimeRecording>value.row
   let dt = new Date(newRow.U_Date)
   newRow.U_WeekNr = GetWeekNr(dt)
-  newRow.U_User = state.portal.user.userName
+  newRow.U_User = state.demoApp.user.userName
 }
 
 export const FormAdd: OvlAction<{

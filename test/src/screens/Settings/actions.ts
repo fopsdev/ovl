@@ -20,7 +20,7 @@ export const SaveSettings: OvlAction<FormState> = async (
   if (value.valid) {
     let pw = value.fields["pw"].value
     let pw1 = value.fields["pw1"].value
-    let res = await postRequest(api.url + "users/changepw", {
+    let res = await postRequest(state.ovl.apiUrl + "users/changepw", {
       password: pw,
       passwordNew: pw1,
       language: state.ovl.language.language,

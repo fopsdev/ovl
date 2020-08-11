@@ -1,16 +1,15 @@
 import { Screen, OvlAction } from "../../../ovl/src/index"
 
-import { api, T, uuidv4 } from "../../../ovl/src/global/globals"
+import { T, uuidv4 } from "../../../ovl/src/global/globals"
 import {
   FormState,
   GetFormValidationErrors,
   ValidateFieldType,
   InitForm,
 } from "../../../ovl/src/library/forms/actions"
-import { Email, Mandatory } from "../../../ovl/src/library/forms/validators"
 
 import { TogglePDFPopupState } from "../components/FileList/FileList"
-import { FieldId } from "../screens/Login/LoginForm"
+
 import { FormFields } from "../../../ovl/src/library/forms/OvlFormElement"
 import {
   DialogOkCancel,
@@ -30,11 +29,14 @@ export const Login: OvlAction<FormState> = async (
     let pw = value.fields["pw"].value
     SnackTrackedAdd("Login", "Success", "AppLogin")
     try {
-      let res = await effects.ovl.postRequest(api.url + "users/authenticate", {
-        email: user,
-        password: pw,
-        language: state.ovl.language.language,
-      })
+      let res = await effects.ovl.postRequest(
+        state.ovl.apiUrl + "users/authenticate",
+        {
+          email: user,
+          password: pw,
+          language: state.ovl.language.language,
+        }
+      )
       if (!res.data) {
         if (res.type === "InvalidCredentials") {
           SnackAdd(T("AppLoginValidationInvalidPassword"), "Error")
@@ -42,33 +44,33 @@ export const Login: OvlAction<FormState> = async (
         return
       }
       state.ovl.user.token = res.data.partner.user.token
-      state.portal.user = res.data.partner.user
-      state.portal.chartData = res.data.data.chartData
-      state.portal.partner = res.data.partner
-      state.portal.orderDetail = {
+      state.demoApp.user = res.data.partner.user
+      state.demoApp.chartData = res.data.data.chartData
+      state.demoApp.partner = res.data.partner
+      state.demoApp.orderDetail = {
         orders: res.data.data.orderDetail,
       }
-      state.portal.quotationDetail = {
+      state.demoApp.quotationDetail = {
         quotations: res.data.data.quotationDetail,
       }
-      state.portal.invoiceDetail = {
+      state.demoApp.invoiceDetail = {
         invoices: res.data.data.invoiceDetail,
       }
-      state.portal.dpInvoiceDetail = {
+      state.demoApp.dpInvoiceDetail = {
         dpInvoices: res.data.data.dpInvoiceDetail,
       }
-      state.portal.partner.attachments = res.data.data.attachments
+      state.demoApp.partner.attachments = res.data.data.attachments
 
       //init lookup values
-      res = await effects.ovl.postRequest(api.url + "lookup", {
+      res = await effects.ovl.postRequest(state.ovl.apiUrl + "lookup", {
         lang: state.ovl.language.language,
         lookupType: "initial",
       })
-      state.portal.testtables.lookups.U_ItemCode = res.data.item
-      state.portal.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
+      state.demoApp.testtables.lookups.U_ItemCode = res.data.item
+      state.demoApp.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
 
-      state.portal.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
-      state.portal.testtables.lookups.ProjectTypeId = res.data.timeProjects
+      state.demoApp.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
+      state.demoApp.testtables.lookups.ProjectTypeId = res.data.timeProjects
 
       if (state.ovl.screens.nav.screensHistory.length > 1) {
         actions.ovl.navigation.NavigateBack()
@@ -102,10 +104,13 @@ export const ForgotPw: OvlAction<FormState> = async (
 ) => {
   if ((await DialogOkCancel(T("AppLoginForgotPasswordConfirm"), 2)) === 1) {
     let user = value.fields["user"].value
-    let res = await effects.ovl.postRequest(api.url + "users/requestresetpw", {
-      user,
-      language: state.ovl.language.language,
-    })
+    let res = await effects.ovl.postRequest(
+      state.ovl.apiUrl + "users/requestresetpw",
+      {
+        user,
+        language: state.ovl.language.language,
+      }
+    )
     if (res.status !== 200) {
       return
     }
@@ -117,16 +122,16 @@ export const HandleAdditionalLanguageResult: OvlAction<any> = async (
   value,
   { state }
 ) => {
-  state.portal.pics = {
+  state.demoApp.pics = {
     salesContact: value.salesPic,
     technicalContact: value.technicianPic,
   }
-  if (!state.portal.partner) {
+  if (!state.demoApp.partner) {
     //@ts-ignore
-    state.portal.partner = {}
+    state.demoApp.partner = {}
   }
-  state.portal.partner.technicalContact = value.technician
-  state.portal.partner.salesContact = value.sales
+  state.demoApp.partner.technicalContact = value.technician
+  state.demoApp.partner.salesContact = value.sales
 }
 
 export const TogglePDFPopup: OvlAction<TogglePDFPopupState> = (value) => {
@@ -146,22 +151,22 @@ export const HandleRefresh: OvlAction = async (
 
   try {
     // 1st get global data to be refreshed
-    let res = await effects.ovl.postRequest(api.url + "data/getdata", {
-      features: state.portal.user.features,
+    let res = await effects.ovl.postRequest(state.ovl.apiUrl + "data/getdata", {
+      features: state.demoApp.user.features,
       language: state.ovl.language.language,
     })
     if (!res.data) {
       return
     }
-    state.portal.partner.attachments = res.data.attachments
+    state.demoApp.partner.attachments = res.data.attachments
 
-    state.portal.chartData = res.data.chartData
-    state.portal.quotationDetail = {
+    state.demoApp.chartData = res.data.chartData
+    state.demoApp.quotationDetail = {
       quotations: res.data.quotationDetail,
     }
-    state.portal.orderDetail = { orders: res.data.orderDetail }
-    state.portal.invoiceDetail = { invoices: res.data.invoiceDetail }
-    state.portal.dpInvoiceDetail = {
+    state.demoApp.orderDetail = { orders: res.data.orderDetail }
+    state.demoApp.invoiceDetail = { invoices: res.data.invoiceDetail }
+    state.demoApp.dpInvoiceDetail = {
       dpInvoices: res.data.dpInvoiceDetail,
     }
 

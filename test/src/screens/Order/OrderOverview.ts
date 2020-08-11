@@ -58,7 +58,8 @@ export class CompOrderOverview extends OvlBaseElement {
       })
     }
     return this.track(() => {
-      let detailCount = Object.keys(this.state.portal.orderDetail.orders).length
+      let detailCount = Object.keys(this.state.demoApp.orderDetail.orders)
+        .length
       if (detailCount === 0) {
         return null
       }
@@ -111,10 +112,10 @@ export class CompOrderOverview extends OvlBaseElement {
                       </tr>
                     </thead>
                     <tbody class="fd-table__body">
-                      ${Object.keys(this.state.portal.orderDetail.orders)
+                      ${Object.keys(this.state.demoApp.orderDetail.orders)
                         .sort((a, b) => parseInt(b) - parseInt(a))
                         .map((k) => {
-                          let order = this.state.portal.orderDetail.orders[k]
+                          let order = this.state.demoApp.orderDetail.orders[k]
                           //console.log(order)
                           let files = order.steps["step2"].attachments.files
                           return html`
@@ -143,7 +144,7 @@ export class CompOrderOverview extends OvlBaseElement {
                                     aria-hidden="${k !==
                                       this.state.ovl.screens.screens.Order
                                         .activeFilePopup ||
-                                    this.state.portal.orderDetail.orders[
+                                    this.state.demoApp.orderDetail.orders[
                                       k
                                     ].steps["step2"].attachments.files.filter(
                                       (m) => m.type === "Order"
@@ -152,7 +153,7 @@ export class CompOrderOverview extends OvlBaseElement {
                                   >
                                     <nav class="fd-menu">
                                       <ul class="fd-menu__list">
-                                        ${this.state.portal.orderDetail.orders[
+                                        ${this.state.demoApp.orderDetail.orders[
                                           k
                                         ].attachments.files
                                           .filter((m) => m.type === "Order")

@@ -43,7 +43,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
       })
     }
     return this.track(() => {
-      let detailCount = Object.keys(this.state.portal.invoiceDetail.invoices)
+      let detailCount = Object.keys(this.state.demoApp.invoiceDetail.invoices)
         .length
       if (detailCount === 0) {
         return null
@@ -99,10 +99,10 @@ export class CompInvoiceOverview extends OvlBaseElement {
                         </tr>
                       </thead>
                       <tbody class="fd-table__body">
-                        ${Object.keys(this.state.portal.invoiceDetail.invoices)
+                        ${Object.keys(this.state.demoApp.invoiceDetail.invoices)
                           .sort((a, b) => parseInt(b) - parseInt(a))
                           .map((k) => {
-                            let o = this.state.portal.invoiceDetail.invoices[k]
+                            let o = this.state.demoApp.invoiceDetail.invoices[k]
                             let files = o.attachments.files
                             let bgColor = "fd-has-background-color-background-5"
                             let dueDate = new Date(o.docDueDate)
@@ -136,14 +136,14 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                       aria-hidden="${k !==
                                         this.state.ovl.screens.screens.Invoice
                                           .activeFilePopup ||
-                                      this.state.portal.invoiceDetail.invoices[
+                                      this.state.demoApp.invoiceDetail.invoices[
                                         k
                                       ].attachments.files.length === 0}"
                                       id="pQqQR213${k}"
                                     >
                                       <nav class="fd-menu">
                                         <ul class="fd-menu__list">
-                                          ${this.state.portal.invoiceDetail.invoices[
+                                          ${this.state.demoApp.invoiceDetail.invoices[
                                             k
                                           ].attachments.files.map((f) => {
                                             return html`

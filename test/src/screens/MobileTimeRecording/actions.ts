@@ -11,7 +11,7 @@ export const MarkAsSynced: OvlAction<string[]> = (
   value,
   { state, actions }
 ) => {
-  let data = state.portal.testtables.timeentries
+  let data = state.demoApp.testtables.timeentries
   let nd = new Date()
   value.forEach((f) => {
     data.data[f].U_Synced = nd.toUTCString()
@@ -23,8 +23,8 @@ export const SetMobileTimeEntrySelectedDate: OvlAction<{
 }> = async (value, { state, actions }) => {
   // value.def.options.filter.static.U_Date = value.selected
   // state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
-  let data = state.portal.testtables.timeentries
-  let def = state.portal.testtables.timeentries.tableDef.mobiletimerecording1
+  let data = state.demoApp.testtables.timeentries
+  let def = state.demoApp.testtables.timeentries.tableDef.mobiletimerecording1
   def.options.filter.static.U_Date = value.selected
 
   await actions.ovl.table.TableRefresh({
@@ -50,7 +50,7 @@ export const CreateTestEntries: OvlAction = async (_, { state, actions }) => {
       }
       testEntry.Code = undefined
       await actions.ovl.table.TableDirectSaveRow({
-        data: state.portal.testtables.timeentries,
+        data: state.demoApp.testtables.timeentries,
         defId: "mobiletimerecording1",
         rowToSave: testEntry,
         noSnack: true,

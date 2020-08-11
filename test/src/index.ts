@@ -2,15 +2,21 @@ import { html, render } from "../../ovl/node_modules/lit-html"
 
 import { CustomFormType, TableDefIds, Language } from "./state"
 import { OvlConfig } from "../../ovl/src/init"
-import { OvlState, ovl } from "../../ovl/src/index"
+import {
+  OvlState,
+  ovl,
+  logState,
+  logActions,
+  logEffects,
+} from "../../ovl/src/index"
 export { TableDefIds, CustomFormType, Language }
 
 OvlConfig.requiredActions = {
-  customPrepareActionPath: undefined,
-  customInitActionPath: ovl.actions.portal.system.user.CustomInit,
+  customRehydrateActionPath: undefined,
+  customInitActionPath: ovl.actions.demoApp.system.user.CustomInit,
   handleAdditionalTranslationResultActionPath:
-    ovl.actions.portal.system.user.HandleAdditionalLanguageResult,
-  handleGlobalRefreshActionPath: ovl.actions.portal.global.HandleRefresh,
+    ovl.actions.demoApp.system.user.HandleAdditionalLanguageResult,
+  handleGlobalRefreshActionPath: ovl.actions.demoApp.global.HandleRefresh,
 }
 
 OvlConfig.apiUrl = {
@@ -26,8 +32,8 @@ OvlConfig.apiUrl = {
 OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
   return (
     !state.ovl.uiState.isIOS &&
-    !state.timeportal.screens.shellbar.mainMenuExpanded &&
-    !state.timeportal.screens.shellbar.userMenuExpanded
+    !state.demoApp.screens.shellbar.mainMenuExpanded &&
+    !state.demoApp.screens.shellbar.userMenuExpanded
   )
 }
 
@@ -37,11 +43,14 @@ import { defineElements } from "./registerComponents"
 defineElements()
 
 ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
-window.scrollTo(0, 1)
-render(
-  html`
-    <ovl-shellbar></ovl-shellbar>
-    <ovl-snack> </ovl-snack>
-  `,
-  document.getElementById("app")
-)
+logState()
+logActions()
+logEffects()
+// window.scrollTo(0, 1)
+// render(
+//   html`
+//     <ovl-shellbar></ovl-shellbar>
+//     <ovl-snack> </ovl-snack>
+//   `,
+//   document.getElementById("app")
+// )

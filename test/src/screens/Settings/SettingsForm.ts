@@ -40,7 +40,7 @@ export class CompSettingsForm extends OvlFormElement {
       let pwField = fields["pw"]
       let pw1Field = fields["pw1"]
       let pw2Field = fields["pw2"]
-      let partner = this.state.portal.partner
+      let partner = this.state.demoApp.partner
 
       return html`
       <div class="fd-layout-panel  ">
@@ -49,9 +49,9 @@ export class CompSettingsForm extends OvlFormElement {
             <h3 class="fd-layout-panel__title">
             ${T("AppSettings")}
                 ${
-                  this.state.portal.user.firstName +
+                  this.state.demoApp.user.firstName +
                   " " +
-                  this.state.portal.user.lastName
+                  this.state.demoApp.user.lastName
                 }
             </h3>
           </div>
