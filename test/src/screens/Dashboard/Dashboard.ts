@@ -46,7 +46,7 @@ export class CompDashboard extends OvlBaseElement {
             </div>
         <div class="fd-layout-panel__body fd-has-padding-tiny fd-has-margin-tiny">
         <comp-filelist  .props=${(s: OvlState) =>
-          s.portal.partner.attachments.files}></comp-filelist>
+          s.demoApp.partner.attachments.files}></comp-filelist>
         </div>
         </div>
       </div>

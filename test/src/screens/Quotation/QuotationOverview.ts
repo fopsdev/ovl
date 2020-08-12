@@ -29,7 +29,7 @@ export class CompQuotationOverview extends OvlBaseElement {
         if (this.state.ovl.screens.screens.Quotation.activeFilePopup === id) {
           id = ""
         }
-        this.actions.portal.global.TogglePDFPopup({
+        this.actions.demoApp.global.TogglePDFPopup({
           key: id,
           obj: this.state.ovl.screens.screens.Quotation,
         })
@@ -37,7 +37,7 @@ export class CompQuotationOverview extends OvlBaseElement {
     }
 
     const handleRemoveAllPDFPopup = (e) => {
-      this.actions.portal.global.TogglePDFPopup({
+      this.actions.demoApp.global.TogglePDFPopup({
         key: "",
         obj: this.state.ovl.screens.screens.Quotation,
       })

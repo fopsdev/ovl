@@ -285,16 +285,16 @@ let tables = {
 let screens = {
   /* base screens */
   shellbar: shellbar,
-  audit: audit,
+  audit: {},
   translation: {},
   settings: settings,
   dashboard: dashboard,
   quotation: quotationOverview,
   order: orderOverview,
-  orderdetail: orderDetail,
+  orderdetail: orderDetailFormState,
   invoice: invoiceOverview,
   feedback: feedback,
-  tableTesting: tableTesting,
+  tableTesting: {},
   mobileTimeEntry: mobileTimeEntry,
   mobileTimeEntryForm: mobileTimeEntryFormState,
 }

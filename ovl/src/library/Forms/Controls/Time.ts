@@ -73,6 +73,14 @@ export class OvlTime extends OvlBaseElement {
       if (this.state.ovl.uiState.isMobile) {
         type = "time"
       }
+      let customValue = GetValueFromCustomFunction(
+        this.field.row,
+        field,
+        this.formState,
+        align,
+        this.field.isInline,
+        this.state
+      )
       return html`
         <div
           class="ovl-formcontrol-container ovl-container-time ovl-container__${field.fieldKey} ${customRowClassContainerName}"
@@ -93,16 +101,11 @@ export class OvlTime extends OvlBaseElement {
           />
         </div>
         <span
-          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-time-custom ovl-formcontrol-custom__${field.fieldKey}"
+          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-time-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
+            ? ""
+            : "hide"}"
         >
-          ${GetValueFromCustomFunction(
-            this.field.row,
-            field,
-            this.formState,
-            align,
-            this.field.isInline,
-            this.state
-          )}
+          ${customValue}
         </span>
 
         <span

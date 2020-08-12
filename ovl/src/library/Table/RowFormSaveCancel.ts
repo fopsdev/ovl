@@ -18,14 +18,15 @@ export class TableRowSaveCancel extends OvlBaseElement {
     ]
   }
   async getUI() {
-    let handleSave = () => {
+    let handleSave = async () => {
       if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
-        this.actions.ovl.internal.TableEditSaveRow({
+        await this.actions.ovl.internal.TableEditSaveRow({
           key: this.rowData.key,
           def: this.rowData.tableDef,
           data: this.rowData.data,
           formState: this.formState,
         })
+        this.rowData.tableDef.uiState.editRow[this.rowData.key].selected = false
       }
     }
 
@@ -63,7 +64,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
       }
     }
     return this.track(() => {
-      let acceptEnabled = "fd-button--positive sap-icon--accept"
+      let acceptEnabled = "fd-button fd-button--positive sap-icon--accept"
 
       if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
         acceptEnabled = "fd-button ovl-disabled"
@@ -75,7 +76,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
           style="margin:0;padding:0;"
         >
           <div
-            class="fd-button-group animated fadeIn faster"
+            class="fd-segmented-button animated fadeIn faster"
             role="group"
             aria-label="RowSaveCancel"
             style="margin-top:-2px;"
@@ -92,7 +93,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
               @click=${handleCancel}
               title="Abbrechen"
               style="border-top-right-radius: 0px; border-right: 2px solid #0cd7ed; border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-left:none;"
-              class="fd-button--negative sap-icon--decline"
+              class="fd-button fd-button--negative sap-icon--decline"
             ></button>
           </div>
         </td>

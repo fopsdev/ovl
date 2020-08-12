@@ -6,13 +6,13 @@ import { OvlAction } from "../../../../ovl/src"
 export const ScreenNavigateIn: OvlAction = async (_, { state, actions }) => {
   let fields: { [key: string]: FormFields } = {
     msg: {
-      value: state.ovl.screens.screens.Feedback.message,
+      value: state.demoApp.screens.feedback.message,
       ui: { labelTranslationKey: T("PortalFeedbackPleaseEnterText") },
     },
   }
   let initForm: InitForm = {
     namespace: "feedback",
-    instanceId: state.ovl.screens.screens.Feedback.type,
+    instanceId: state.demoApp.screens.feedback.type,
     formType: "Feedback",
     fields,
   }

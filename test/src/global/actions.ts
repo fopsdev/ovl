@@ -1,4 +1,4 @@
-import { Screen, OvlAction } from "../../../ovl/src/index"
+import { OvlScreen, OvlAction, logState } from "../../../ovl/src/index"
 
 import { T, uuidv4 } from "../../../ovl/src/global/globals"
 import {
@@ -44,6 +44,7 @@ export const Login: OvlAction<FormState> = async (
         return
       }
       state.ovl.user.token = res.data.partner.user.token
+      state.ovl.user.role = res.data.partner.user.role
       state.demoApp.user = res.data.partner.user
       state.demoApp.chartData = res.data.data.chartData
       state.demoApp.partner = res.data.partner
@@ -72,20 +73,22 @@ export const Login: OvlAction<FormState> = async (
       state.demoApp.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
       state.demoApp.testtables.lookups.ProjectTypeId = res.data.timeProjects
 
+      state.ovl.uiState.isReady = true
+
       if (state.ovl.screens.nav.screensHistory.length > 1) {
         actions.ovl.navigation.NavigateBack()
       } else {
         // see if we have a target url and move directly to that screen
         // also possible to move to detail providing "o" = docnum param
         let url = new URL(window.location.href)
-        let screen = <Screen>url.searchParams.get("s")
+        let screen = <OvlScreen>url.searchParams.get("s")
         let orderNum = url.searchParams.get("o")
-        let command: Screen = "Dashboard"
+        let command: OvlScreen = "Dashboard"
         if (screen) {
           command = screen
         }
         if (orderNum) {
-          state.ovl.screens.screens.Orderdetail.selectedOrder = orderNum
+          state.demoApp.screens.orderdetail.selectedOrder = orderNum
         }
         actions.ovl.navigation.NavigateTo(command)
       }
@@ -191,9 +194,12 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
     return
   }
   let fields: { [key: string]: FormFields } = {
-    user: { value: "", ui: { labelTranslationKey: "AppLoginUser" } },
+    user: {
+      value: "info@itflies.ch",
+      ui: { labelTranslationKey: "AppLoginUser" },
+    },
     pw: {
-      value: "",
+      value: "Test1234",
       ui: { labelTranslationKey: "AppLoginPassword", isPassword: true },
     },
   }
@@ -204,9 +210,7 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
     fields,
     initialFocusElementId: "user",
   }
-  actions.ovl.form.InitForm(loginForm)
-  // actions.ovl.dialog.DialogOpen({
-  //   dialogType: "Login",
-  //   elementIdToFocusAfterOpen: "loginformuser",
-  // })
+  await actions.ovl.form.InitForm(loginForm)
+  await actions.demoApp.system.user.Login(state.ovl.forms.Login.loginform)
+  actions.ovl.navigation.NavigateTo("Translation")
 }

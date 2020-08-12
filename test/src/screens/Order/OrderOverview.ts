@@ -28,7 +28,7 @@ export class CompOrderOverview extends OvlBaseElement {
       //@ts-ignore
       e.target.localName === "button"
     ) {
-      this.actions.portal.order.SelectOrder(key)
+      this.actions.demoApp.order.SelectOrder(key)
       this.actions.ovl.navigation.NavigateTo("Orderdetail")
       e.stopPropagation()
     }
@@ -44,7 +44,7 @@ export class CompOrderOverview extends OvlBaseElement {
         if (this.state.ovl.screens.screens.Order.activeFilePopup === id) {
           id = ""
         }
-        this.actions.portal.global.TogglePDFPopup({
+        this.actions.demoApp.global.TogglePDFPopup({
           key: id,
           obj: this.state.ovl.screens.screens.Order,
         })
@@ -52,7 +52,7 @@ export class CompOrderOverview extends OvlBaseElement {
     }
 
     const handleRemoveAllPDFPopup = (e) => {
-      this.actions.portal.global.TogglePDFPopup({
+      this.actions.demoApp.global.TogglePDFPopup({
         key: "",
         obj: this.state.ovl.screens.screens.Order,
       })

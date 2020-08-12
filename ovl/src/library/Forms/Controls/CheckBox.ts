@@ -77,6 +77,14 @@ export class OvlCheckbox extends OvlBaseElement {
         this.formState,
         this
       )
+      let customValue = GetValueFromCustomFunction(
+        this.field.row,
+        field,
+        this.formState,
+        align,
+        this.field.isInline,
+        this.state
+      )
       return html`
         <div
           class="ovl-formcontrol-container ovl-container-checkbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
@@ -105,16 +113,11 @@ export class OvlCheckbox extends OvlBaseElement {
             </label>
           </div>
           <span
-            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey}"
+            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
+              ? ""
+              : "hide"}"
           >
-            ${GetValueFromCustomFunction(
-              this.field.row,
-              field,
-              this.formState,
-              align,
-              this.field.isInline,
-              this.state
-            )}
+            ${customValue}
           </span>
 
           <span

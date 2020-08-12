@@ -53,7 +53,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
       guids
     )
     // tag data as synched
-    this.actions.portal.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
+    this.actions.demoApp.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
 
     SnackTrackedRemove(snackUid)
     SnackAdd("Zeit(en) erfolgreich übermittelt.")

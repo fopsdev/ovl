@@ -504,7 +504,14 @@ export class OvlListControl extends OvlBaseElement {
         ></button>
       `
       //}
-
+      let customValue = GetValueFromCustomFunction(
+        this.field.row,
+        field,
+        this.formState,
+        align,
+        this.field.isInline,
+        this.state
+      )
       return html`
         <div @focusout=${(e) => this.handleFocusOut(e)}>
           <div
@@ -547,16 +554,11 @@ export class OvlListControl extends OvlBaseElement {
             </div>
 
             <span
-              class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey}"
+              class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
+                ? ""
+                : "hide"}"
             >
-              ${GetValueFromCustomFunction(
-                this.field.row,
-                field,
-                this.formState,
-                align,
-                this.field.isInline,
-                this.state
-              )}
+              ${customValue}
             </span>
 
             <span

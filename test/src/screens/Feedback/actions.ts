@@ -17,11 +17,11 @@ export const SaveFeedback: OvlAction<FormState> = async (
       {
         language: state.ovl.language.language,
         message: value.fields["msg"].value,
-        orderDate: state.ovl.screens.screens.Feedback.orderDate,
-        orderNum: state.ovl.screens.screens.Feedback.orderNum,
-        refNum: state.ovl.screens.screens.Feedback.refNum,
+        orderDate: state.demoApp.screens.feedback.orderDate,
+        orderNum: state.demoApp.screens.feedback.orderNum,
+        refNum: state.demoApp.screens.feedback.refNum,
         assignedTo: state.demoApp.partner.salesContact.id,
-        feedbackType: state.ovl.screens.screens.Feedback.type,
+        feedbackType: state.demoApp.screens.feedback.type,
       }
     )
 

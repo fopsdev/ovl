@@ -25,7 +25,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
         if (this.state.ovl.screens.screens.Invoice.activeFilePopup === id) {
           id = ""
         }
-        this.actions.portal.global.TogglePDFPopup({
+        this.actions.demoApp.global.TogglePDFPopup({
           key: id,
           obj: this.state.ovl.screens.screens.Invoice,
         })
@@ -33,7 +33,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
     }
 
     const handleRemoveAllPDFPopup = (e) => {
-      this.actions.portal.global.TogglePDFPopup({
+      this.actions.demoApp.global.TogglePDFPopup({
         key: "",
         obj: this.state.ovl.screens.screens.Invoice,
       })

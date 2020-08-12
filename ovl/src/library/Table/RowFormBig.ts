@@ -44,9 +44,6 @@ export class TableRowFormBig extends OvlFormElement {
     this.focusInit = false
     this.rowData = this.props()
     this.formType = "TableRowEdit"
-    overlayToRender.overlayDismissedCallback = () => {
-      this.handleCancel()
-    }
     super.init()
   }
   updated() {

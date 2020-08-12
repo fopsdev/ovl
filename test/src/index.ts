@@ -43,14 +43,11 @@ import { defineElements } from "./registerComponents"
 defineElements()
 
 ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
-logState()
-logActions()
-logEffects()
-// window.scrollTo(0, 1)
-// render(
-//   html`
-//     <ovl-shellbar></ovl-shellbar>
-//     <ovl-snack> </ovl-snack>
-//   `,
-//   document.getElementById("app")
-// )
+window.scrollTo(0, 1)
+render(
+  html`
+    <ovl-shellbar></ovl-shellbar>
+    <ovl-snack> </ovl-snack>
+  `,
+  document.getElementById("app")
+)

@@ -42,7 +42,7 @@ export const MinLengthOrEmpty = (
       "MinLengthOrEmpty",
       T("AppValidationMinLengthOrEmpty", [
         displayFieldName,
-        minLength.toString()
+        minLength.toString(),
       ]),
       res
     )

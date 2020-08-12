@@ -28,7 +28,7 @@ export const defineElements = () => {
   customElements.define("ovl-audit", OvlAudit)
   customElements.define("ovl-translation", CompTranslation)
   customElements.define("ovl-shellbar", CompShellbar)
-  customElements.define("ovl-loginform", CompLoginForm)
+  customElements.define("ovl-login", CompLoginForm)
   customElements.define("ovl-indicator", OvlIndicator)
   customElements.define("ovl-backbutton", OvlBackButton)
   customElements.define("ovl-refresh", OvlRefresh)

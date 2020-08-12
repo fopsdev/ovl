@@ -11,15 +11,15 @@ export const PreparePositiveFeedback: OvlAction<OrderFeedbackState> = (
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
   let order = state.demoApp.orderDetail.orders[key]
-  state.ovl.screens.screens.Feedback.cardCode = order.cardCode
-  state.ovl.screens.screens.Feedback.refNum = order.refNum
-  state.ovl.screens.screens.Feedback.message = value.message
-  state.ovl.screens.screens.Feedback.title =
+  state.demoApp.screens.feedback.cardCode = order.cardCode
+  state.demoApp.screens.feedback.refNum = order.refNum
+  state.demoApp.screens.feedback.message = value.message
+  state.demoApp.screens.feedback.title =
     T("PortalOrderFeedback") + " " + T("PortalPositiveFeedback")
-  state.ovl.screens.screens.Feedback.orderDate = order.docDate
-  state.ovl.screens.screens.Feedback.orderDeliveryDate = order.deliveryDate
-  state.ovl.screens.screens.Feedback.orderNum = key
-  state.ovl.screens.screens.Feedback.type = "OrderPositive"
+  state.demoApp.screens.feedback.orderDate = order.docDate
+  state.demoApp.screens.feedback.orderDeliveryDate = order.deliveryDate
+  state.demoApp.screens.feedback.orderNum = key
+  state.demoApp.screens.feedback.type = "OrderPositive"
 }
 
 export const PrepareNegativeFeedback: OvlAction<OrderFeedbackState> = (
@@ -29,15 +29,15 @@ export const PrepareNegativeFeedback: OvlAction<OrderFeedbackState> = (
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
   let order = state.demoApp.orderDetail.orders[key]
-  state.ovl.screens.screens.Feedback.cardCode = order.cardCode
-  state.ovl.screens.screens.Feedback.refNum = order.refNum
-  state.ovl.screens.screens.Feedback.message = value.message
-  state.ovl.screens.screens.Feedback.title =
+  state.demoApp.screens.feedback.cardCode = order.cardCode
+  state.demoApp.screens.feedback.refNum = order.refNum
+  state.demoApp.screens.feedback.message = value.message
+  state.demoApp.screens.feedback.title =
     T("PortalOrderFeedback") + " " + T("PortalNegativeFeedback")
-  state.ovl.screens.screens.Feedback.orderDate = order.docDate
-  state.ovl.screens.screens.Feedback.orderDeliveryDate = order.deliveryDate
-  state.ovl.screens.screens.Feedback.orderNum = key
-  state.ovl.screens.screens.Feedback.type = "OrderNegative"
+  state.demoApp.screens.feedback.orderDate = order.docDate
+  state.demoApp.screens.feedback.orderDeliveryDate = order.deliveryDate
+  state.demoApp.screens.feedback.orderNum = key
+  state.demoApp.screens.feedback.type = "OrderNegative"
 }
 
 export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
@@ -47,15 +47,15 @@ export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
   // if feedback is left "" empty it shouldn't be displayed
   let key = state.ovl.screens.screens.Orderdetail.selectedOrder
   let order = state.demoApp.orderDetail.orders[key]
-  state.ovl.screens.screens.Feedback.cardCode = order.cardCode
-  state.ovl.screens.screens.Feedback.refNum = order.refNum
-  state.ovl.screens.screens.Feedback.message = value.message
-  state.ovl.screens.screens.Feedback.title =
+  state.demoApp.screens.feedback.cardCode = order.cardCode
+  state.demoApp.screens.feedback.refNum = order.refNum
+  state.demoApp.screens.feedback.message = value.message
+  state.demoApp.screens.feedback.title =
     T("PortalOrderFeedback") + " " + T("PortalDeliveryDateFeedback")
-  state.ovl.screens.screens.Feedback.orderDate = order.docDate
-  state.ovl.screens.screens.Feedback.orderDeliveryDate = order.deliveryDate
-  state.ovl.screens.screens.Feedback.orderNum = key
-  state.ovl.screens.screens.Feedback.type = "DeliveryDate"
+  state.demoApp.screens.feedback.orderDate = order.docDate
+  state.demoApp.screens.feedback.orderDeliveryDate = order.deliveryDate
+  state.demoApp.screens.feedback.orderNum = key
+  state.demoApp.screens.feedback.type = "DeliveryDate"
 }
 
 export const SelectOrder: OvlAction<string> = (value, { state }) => {

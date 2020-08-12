@@ -34,7 +34,7 @@ export class CompFeedbackForm extends OvlFormElement {
 
       let handleOk = () => {
         if (!this.state.ovl.libState.indicator.open) {
-          this.actions.portal.feedback.SaveFeedback(this.formState)
+          this.actions.demoApp.feedback.SaveFeedback(this.formState)
         }
       }
       let handleCancel = async () => {
@@ -53,7 +53,7 @@ export class CompFeedbackForm extends OvlFormElement {
         }
       }
 
-      let feedback = this.state.ovl.screens.screens.Feedback
+      let feedback = this.state.demoApp.screens.feedback
 
       return html`
         <div class="fd-layout-panel ">

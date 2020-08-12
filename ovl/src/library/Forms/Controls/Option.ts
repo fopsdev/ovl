@@ -89,7 +89,14 @@ export class OvlOption extends OvlBaseElement {
       if (field.ui && field.ui.inline) {
         inline = "fd-form-group--inline"
       }
-
+      let customValue = GetValueFromCustomFunction(
+        this.field.row,
+        field,
+        this.formState,
+        align,
+        this.field.isInline,
+        this.state
+      )
       return html`
         <div
           class="ovl-formcontrol-container ovl-container-option ovl-container__${field.fieldKey} ${customRowClassContainerName}"
@@ -140,16 +147,11 @@ export class OvlOption extends OvlBaseElement {
           </div>
         </div>
         <span
-          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-option-custom ovl-formcontrol-custom__${field.fieldKey}"
+          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-option-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
+            ? ""
+            : "hide"}"
         >
-          ${GetValueFromCustomFunction(
-            this.field.row,
-            field,
-            this.formState,
-            align,
-            this.field.isInline,
-            this.state
-          )}
+          ${customValue}
         </span>
 
         <span
