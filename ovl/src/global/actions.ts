@@ -61,6 +61,18 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
 
     state.ovl.screens.nav.nextScreen = value
 
+    let foundIndex = -1
+    for (let z = 0; z < state.ovl.screens.nav.screensHistory.length; z++) {
+      if (state.ovl.screens.nav.screensHistory[z] === value) {
+        foundIndex = z
+        break
+      }
+    }
+    if (foundIndex !== -1) {
+      state.ovl.screens.nav.screensHistory.splice(foundIndex, 1)
+    }
+    state.ovl.screens.nav.screensHistory.push(value)
+
     document.getElementById("app").focus()
 
     if (!state.ovl.screens.nav.currentScreen) {
