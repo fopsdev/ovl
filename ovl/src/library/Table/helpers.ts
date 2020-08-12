@@ -280,7 +280,7 @@ export const selectLatestRow = (def: TableDef, data: TableData) => {
 export const addRowDefInit = (tableDef, newId, mode: EditMode) => {
   Object.keys(tableDef).forEach((k) => {
     let d: TableDef = tableDef[k]
-    d.uiState.editRow[newId] = { selected: false, mode: "copy" }
+    d.uiState.editRow[newId] = { selected: false, mode }
     d.uiState.selectedRow[newId] = {
       selected: false,
       showNav: false,

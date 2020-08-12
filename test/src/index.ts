@@ -37,8 +37,6 @@ OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
   )
 }
 
-OvlConfig.defaultDialogTitle = "TimePortalDialogTitle"
-
 import { defineElements } from "./registerComponents"
 defineElements()
 

@@ -155,7 +155,11 @@ export class TableNavControl extends OvlBaseElement {
         if (count > paging.pageSize) {
           let pages = Math.ceil(count / paging.pageSize)
           tablenav = html`
-            <div class="fd-button-group" role="group" aria-label="Tablecontrol">
+            <div
+              class="fd-segmented-button"
+              role="group"
+              aria-label="Tablecontrol"
+            >
               <button
                 title="Erster Datensatz"
                 ?disabled=${paging.page === 0 || pages === 1}

@@ -1148,6 +1148,7 @@ export const TableSelectCustomSort: OvlAction<{
   id: string
   def: TableDef
 }> = (value) => {
+  value.def.uiState.headerSelected = ""
   if (value.def.options.sortCustom.selected !== value.id) {
     value.def.options.sortCustom.selected = value.id
   } else {
@@ -1194,6 +1195,7 @@ export const TableSelectCustomFilter: OvlAction<{
   let def = value.def
   let id = value.id
   let filterCustom = def.options.filterCustom
+  def.uiState.headerSelected = ""
   if (!filterCustom[id].active) {
     let isSingle = filterCustom[id].type === "single"
     // make sure only one filter in the "single" group is active

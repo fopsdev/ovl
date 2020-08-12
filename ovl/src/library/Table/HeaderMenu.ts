@@ -189,14 +189,15 @@ export class TableHeaderMenu extends OvlBaseElement {
       id,
       def,
     })
+    // this.actions.ovl.internal.TableSelectHeader({
+    //   def: this.headerMenu.def.def,
+    //   data: this.headerMenu.def.data,
+    //   key: "",
+    // })
+
     this.actions.ovl.table.TableRefresh({
       defId: this.headerMenu.def.def.id,
       data: this.headerMenu.def.data,
-    })
-    this.actions.ovl.internal.TableSelectHeader({
-      def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data,
-      key: "",
     })
   }
 
@@ -272,11 +273,11 @@ export class TableHeaderMenu extends OvlBaseElement {
       defId: this.headerMenu.def.def.id,
       data: this.headerMenu.def.data,
     })
-    this.actions.ovl.internal.TableSelectHeader({
-      def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data,
-      key: "",
-    })
+    // this.actions.ovl.internal.TableSelectHeader({
+    //   def: this.headerMenu.def.def,
+    //   data: this.headerMenu.def.data,
+    //   key: "",
+    // })
   }
 
   init() {
@@ -719,15 +720,20 @@ export class TableHeaderMenu extends OvlBaseElement {
         if (!fnName) {
           fnName = k
         }
+        let icon = "fd-list__icon sap-icon--table-column "
+        if (customFn.icon) {
+          icon = "fd-list__icon " + customFn.icon
+        }
         return html`
-          <li>
+          <li class="fd-list__item fd-list__item--link" role="listitem">
             <a
               href="#"
-              class="fd-menu__item ${customFn.icon}"
+              class="fd-list__link"
               @click="${(e) =>
                 this.handleCustomColumnFunctionClick(e, k, fnName)}"
             >
-              ${fnName}</a
+              <span class="${icon}"></span>
+              <span class="fd-list__title">${fnName}</span></a
             >
           </li>
         `
@@ -765,40 +771,35 @@ export class TableHeaderMenu extends OvlBaseElement {
 
         if (sortCustom.selected === k) {
           return html`
-            <li>
-              <div class="container" href="#">
-                <a href="#" id="sortCustomOption_${k}" class="fd-menu__item">
-                  <span class="fd-menu__addon-before sap-icon--accept"></span
-                  >${optionText}
-                </a>
-              </div>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="sortCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__icon sap-icon--accept"></span>
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         } else {
           return html`
-            <li>
-              <a href="#" id="sortCustomOption_${k}" class="fd-menu__item">
-                <span class="fd-menu__addon-before"></span>
-                ${optionText}
-              </a>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="sortCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         }
       })
 
       customSort = html`
-        <div class="fd-menu__group">
-          <div class="ovl-bigdialog-listtitle">
-            Generelle Sortierung
-          </div>
-          <nav
+        <div class="ovl-bigdialog-listtitle">
+          Generelle Sortierung
+
+          <ul
+            class="fd-list fd-list--navigation"
+            role="list"
             @click=${this.handleCustomSortClick}
-            class="fd-menu fd-menu--addon-before"
           >
-            <ul class="fd-menu__list fd-menu__list--seperated">
-              ${options}
-            </ul>
-          </nav>
+            ${options}
+          </ul>
         </div>
       `
     }
@@ -814,40 +815,35 @@ export class TableHeaderMenu extends OvlBaseElement {
 
         if (filterCustom[k].active) {
           return html`
-            <li>
-              <div class="container" href="#">
-                <a href="#" id="filterCustomOption_${k}" class="fd-menu__item">
-                  <span class="fd-menu__addon-before sap-icon--accept"></span
-                  >${optionText}
-                </a>
-              </div>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="filterCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__icon sap-icon--accept"></span>
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         } else {
           return html`
-            <li>
-              <a href="#" id="filterCustomOption_${k}" class="fd-menu__item">
-                <span class="fd-menu__addon-before"></span>
-                ${optionText}
-              </a>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="filterCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         }
       })
 
       customFilter = html`
-        <div class="fd-menu__group">
-          <div class="ovl-bigdialog-listtitle">
-            Generelle Filter
-          </div>
-          <nav
+        <div class="ovl-bigdialog-listtitle">
+          Generelle Filter
+
+          <ul
+            class="fd-list fd-list--navigation"
+            role="list"
             @click=${this.handleCustomFilterClick}
-            class="fd-menu fd-menu--addon-before"
           >
-            <ul class="fd-menu__list fd-menu__list--seperated">
-              ${options}
-            </ul>
-          </nav>
+            ${options}
+          </ul>
         </div>
       `
     }

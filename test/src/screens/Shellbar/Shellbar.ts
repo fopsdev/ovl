@@ -114,9 +114,8 @@ export class CompShellbar extends OvlBaseElement {
           <div class="${scrollable}">
             <ovl-audit> </ovl-audit>
             <ovl-translation> </ovl-translation>
-            <ovl-efforttable> </ovl-efforttable>
             <comp-dashboard> </comp-dashboard>
-            <comp-worklist> </comp-worklist>
+            <comp-tabletesting> </comp-tabletesting>
           </div>
         `
       }
