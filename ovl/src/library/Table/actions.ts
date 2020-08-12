@@ -75,8 +75,10 @@ import {
   setRefresh,
   TableFilterFn,
   TableRefreshServerData,
+  addRowPage,
+  addRowDefInit,
 } from "../Table/helpers"
-import { deleteTableRow, setTableRow } from "./Helpers"
+import { deleteTableRow /*setTableRow*/ } from "./Helpers"
 import {
   BeforeSaveParam,
   ColumnFilterTypes,
@@ -275,6 +277,7 @@ export const TableRefreshDataFromServer: OvlAction<{
   let serverData: [] = res.data.data
   // create hashsets for faster processing...
   let keysFromServer = new Map<string, number>()
+
   serverData.forEach((f, i) => {
     keysFromServer.set(f[idfield], i)
   })
@@ -358,7 +361,7 @@ export const TableRefreshDataFromServer: OvlAction<{
           row: serverData[k],
         } as FieldGetList_Type)
 
-        let value = localData[k][c]
+        let value = localData[dataKey][c]
         let listValueFound = true
         if (listdata.data && value && !listdata.data[value]) {
           listValueFound = false
@@ -1309,22 +1312,19 @@ export const TableCopyRow: OvlAction<{
     })
   }
   let insertMode = value.def.database.dbInsertMode
+  let newId = uuidv4()
   if (insertMode !== "Manual") {
-    newRow[def.database.dataIdField] = ""
+    newRow[def.database.dataIdField] = ovltemp + newId
   }
+  newRow["_ovl" + def.database.dataIdField] = newRow[def.database.dataIdField]
+  def.uiState.dataFilteredAndSorted.push(newId)
   if (insertMode === "UDTAutoGUIDBoth" || insertMode === "UDTAutoNumberBoth") {
-    newRow["Name"] = ""
+    newRow["Name"] = newRow[def.database.dataIdField]
   }
-
-  setTableRow(
-    { def: def, data: value.data },
-    undefined,
-    undefined,
-    newRow,
-    true,
-    actions,
-    true
-  )
+  value.data.data[newId] = newRow
+  addRowDefInit(value.data.tableDef, newId, "copy")
+  actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  addRowPage(def)
 }
 
 export const TableAddRow: OvlAction<TableDataAndDef> = async (
@@ -1371,35 +1371,12 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
   }
   value.data.data[newId] = newRow
   def.uiState.dataFilteredAndSorted.push(newId)
-  Object.keys(value.data.tableDef).forEach((k) => {
-    let d: TableDef = value.data.tableDef[k]
-    d.uiState.editRow[newId] = { selected: false, mode: "add" }
-    d.uiState.selectedRow[newId] = {
-      selected: false,
-      showNav: false,
-      timestamp: 0,
-    }
-    d.uiState.viewRow[newId] = { selected: false }
-  })
+  addRowDefInit(value.data.tableDef, newId, "add")
   actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
   // let editRow: SelectedEditRow = { mode: "add", selected: true }
   // def.uiState.editRow[newId] = editRow
   //setTableRow(value, undefined, undefined, newRow, true, actions, false)
-  if (def.features.page) {
-    let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
-    let count = dataFilteredAndSorted.length
-    def.uiState.rowsCount = count
-    let paging = def.options.paging
-    if (def.options.addedRowsPosition === "bottom") {
-      let pages = Math.ceil(count / paging.pageSize) - 1
-      paging.page = pages
-      if (paging.page < 0) {
-        paging.page = 0
-      }
-    } else {
-      paging.page = 0
-    }
-  }
+  addRowPage(def)
 }
 
 export const TableOfflineRetryDeleteRow: OvlAction<

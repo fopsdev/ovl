@@ -29,7 +29,13 @@ import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
 import { overlayToRender } from "../Overlay/Overlay"
 import { RowControlAllAction } from "./RowControl"
-import { ColumnDisplayDef, TableData, TableDataAndDef, TableDef } from "./Table"
+import {
+  ColumnDisplayDef,
+  TableData,
+  TableDataAndDef,
+  TableDef,
+  EditMode,
+} from "./Table"
 import { TableRowDetailView } from "./RowDetailView"
 
 export const getTextSort = (valA: string, valB: string): number => {
@@ -99,138 +105,138 @@ export const getDisplayValue = (
 // should be used as well from customSaveRows...
 // provide tempId if coming from an db add operation and now the definbitve key is known
 // this code is super complex. pls do not just adjust it without thinking all the use cases through
-export const setTableRow = (
-  tableDataAndDef: TableDataAndDef,
-  tempId: string,
-  newId: string,
-  newData: any,
-  editMode: boolean,
-  actions: OvlActions,
-  copy?: boolean,
-  isOfflineRetry?: boolean
-) => {
-  let def = tableDataAndDef.def
-  let data = tableDataAndDef.data
-  let rows = data.data
-  if (newId === undefined) {
-    newId = ovltemp + uuidv4()
-  }
-  let isAdd = false
+// export const setTableRow = (
+//   tableDataAndDef: TableDataAndDef,
+//   tempId: string,
+//   newId: string,
+//   newData: any,
+//   editMode: boolean,
+//   actions: OvlActions,
+//   copy?: boolean,
+//   isOfflineRetry?: boolean
+// ) => {
+//   let def = tableDataAndDef.def
+//   let data = tableDataAndDef.data
+//   let rows = data.data
+//   if (newId === undefined) {
+//     newId = ovltemp + uuidv4()
+//   }
+//   let isAdd = false
 
-  if (
-    (newId &&
-      (newId.indexOf(ovltemp) > -1 ||
-        (isOfflineRetry && newId.indexOf(ovloffline) > -1))) ||
-    (tempId &&
-      (tempId.indexOf(ovltemp) > -1 ||
-        (isOfflineRetry && tempId.indexOf(ovloffline) > -1)))
-  ) {
-    isAdd = true
-  }
-  let isSwitcher = false
+//   if (
+//     (newId &&
+//       (newId.indexOf(ovltemp) > -1 ||
+//         (isOfflineRetry && newId.indexOf(ovloffline) > -1))) ||
+//     (tempId &&
+//       (tempId.indexOf(ovltemp) > -1 ||
+//         (isOfflineRetry && tempId.indexOf(ovloffline) > -1)))
+//   ) {
+//     isAdd = true
+//   }
+//   let isSwitcher = false
 
-  if (tempId || tempId === "") {
-    if ((newId || newId === "") && newId !== tempId) {
-      // its a temporary row which now is saved as a definitve one
-      // so exchange the key in the current tabledef
-      isSwitcher = true
-      let i = def.uiState.dataFilteredAndSorted.indexOf(tempId)
+//   if (tempId || tempId === "") {
+//     if ((newId || newId === "") && newId !== tempId) {
+//       // its a temporary row which now is saved as a definitve one
+//       // so exchange the key in the current tabledef
+//       isSwitcher = true
+//       let i = def.uiState.dataFilteredAndSorted.indexOf(tempId)
 
-      if (def.uiState.dataFilteredAndSorted.indexOf(newId) < 0) {
-        if (i > -1) {
-          def.uiState.dataFilteredAndSorted.splice(i, 1)
-        }
-        def.uiState.dataFilteredAndSorted.push(newId)
-      } else if (i > -1) {
-        def.uiState.dataFilteredAndSorted.splice(i, 1)
-      }
-      def.uiState.currentlyAddingKey = undefined
-      delete def.uiState.selectedRow[tempId]
-      delete def.uiState.editRow[tempId]
-      delete def.uiState.viewRow[tempId]
-      if (!def.uiState.selectedRow[newId]) {
-        def.uiState.selectedRow[newId] = {
-          selected: false,
-          showNav: false,
-          timestamp: 0,
-        }
-        def.uiState.editRow[newId] = { selected: false, mode: undefined }
-        def.uiState.viewRow[newId] = { selected: false }
-      }
-      Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
-        // for the other tabledefs
-        if (k !== def.id) {
-          let cdef = tableDataAndDef.data.tableDef[k]
-          let selectedRow = cdef.uiState.selectedRow
-          let editRow = cdef.uiState.editRow
-          if (!selectedRow[newId]) {
-            selectedRow[newId] = {
-              selected: false,
-              showNav: false,
-              timestamp: 0,
-            }
-            editRow[newId] = { selected: false, mode: undefined }
-          }
-          let dataFilteredAndSorted = cdef.uiState.dataFilteredAndSorted
-          // its now a "good" one so also push it to the displayed lists
-          if (dataFilteredAndSorted.indexOf(newId) < 0) {
-            dataFilteredAndSorted.push(newId)
-          }
-        }
-      })
-      delete rows[tempId]
-    }
-  } else {
-    if (isAdd) {
-      //newData[def.database.dataIdField] = newId
-      if (def.uiState.dataFilteredAndSorted.indexOf(newId) < 0) {
-        def.uiState.currentlyAddingKey = newId
-        def.uiState.dataFilteredAndSorted.push(newId)
-      }
-      def.uiState.selectedRow[newId] = {
-        selected: false,
-        showNav: false,
-        timestamp: 0,
-      }
-      let mode: any = "add"
-      if (copy) {
-        mode = "copy"
-      }
-      def.uiState.editRow[newId] = { selected: false, mode }
-      def.uiState.viewRow[newId] = { selected: false }
-      let paging = def.options.paging
-      let rowsCount = def.uiState.dataFilteredAndSorted.length
-      if (def.options.addedRowsPosition === "bottom") {
-        if (def.features.page) {
-          paging.page = Math.ceil(rowsCount / paging.pageSize - 1)
-        }
-      } else {
-        if (def.features.page) {
-          paging.page = 0
-        }
-      }
-    }
-  }
+//       if (def.uiState.dataFilteredAndSorted.indexOf(newId) < 0) {
+//         if (i > -1) {
+//           def.uiState.dataFilteredAndSorted.splice(i, 1)
+//         }
+//         def.uiState.dataFilteredAndSorted.push(newId)
+//       } else if (i > -1) {
+//         def.uiState.dataFilteredAndSorted.splice(i, 1)
+//       }
+//       def.uiState.currentlyAddingKey = undefined
+//       delete def.uiState.selectedRow[tempId]
+//       delete def.uiState.editRow[tempId]
+//       delete def.uiState.viewRow[tempId]
+//       if (!def.uiState.selectedRow[newId]) {
+//         def.uiState.selectedRow[newId] = {
+//           selected: false,
+//           showNav: false,
+//           timestamp: 0,
+//         }
+//         def.uiState.editRow[newId] = { selected: false, mode: undefined }
+//         def.uiState.viewRow[newId] = { selected: false }
+//       }
+//       Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
+//         // for the other tabledefs
+//         if (k !== def.id) {
+//           let cdef = tableDataAndDef.data.tableDef[k]
+//           let selectedRow = cdef.uiState.selectedRow
+//           let editRow = cdef.uiState.editRow
+//           if (!selectedRow[newId]) {
+//             selectedRow[newId] = {
+//               selected: false,
+//               showNav: false,
+//               timestamp: 0,
+//             }
+//             editRow[newId] = { selected: false, mode: undefined }
+//           }
+//           let dataFilteredAndSorted = cdef.uiState.dataFilteredAndSorted
+//           // its now a "good" one so also push it to the displayed lists
+//           if (dataFilteredAndSorted.indexOf(newId) < 0) {
+//             dataFilteredAndSorted.push(newId)
+//           }
+//         }
+//       })
+//       delete rows[tempId]
+//     }
+//   } else {
+//     if (isAdd) {
+//       //newData[def.database.dataIdField] = newId
+//       if (def.uiState.dataFilteredAndSorted.indexOf(newId) < 0) {
+//         def.uiState.currentlyAddingKey = newId
+//         def.uiState.dataFilteredAndSorted.push(newId)
+//       }
+//       def.uiState.selectedRow[newId] = {
+//         selected: false,
+//         showNav: false,
+//         timestamp: 0,
+//       }
+//       let mode: any = "add"
+//       if (copy) {
+//         mode = "copy"
+//       }
+//       def.uiState.editRow[newId] = { selected: false, mode }
+//       def.uiState.viewRow[newId] = { selected: false }
+//       let paging = def.options.paging
+//       let rowsCount = def.uiState.dataFilteredAndSorted.length
+//       if (def.options.addedRowsPosition === "bottom") {
+//         if (def.features.page) {
+//           paging.page = Math.ceil(rowsCount / paging.pageSize - 1)
+//         }
+//       } else {
+//         if (def.features.page) {
+//           paging.page = 0
+//         }
+//       }
+//     }
+//   }
 
-  // do aproperty wise update so the ui gets notified properly
-  // if the defiitive one is already occupied (rows[newId]) that means that the row was deleted from somewhere else
-  // so we just overwrite it and that case should been handled well
-  let newKeys = Object.keys(newData)
-  if (newKeys.length > 0) {
-    if (rows[newId] === undefined) {
-      rows[newId] = {}
-    }
-  }
-  //window.ovldbg = true
-  let destRow = rows[newId]
-  //rows[newId] = newData
-  newKeys.forEach((k) => {
-    destRow[k] = newData[k]
-  })
-  if (isAdd && !isSwitcher) {
-    actions.ovl.table.TableEditRow({ key: newId, def, data: data })
-  }
-}
+//   // do aproperty wise update so the ui gets notified properly
+//   // if the defiitive one is already occupied (rows[newId]) that means that the row was deleted from somewhere else
+//   // so we just overwrite it and that case should been handled well
+//   let newKeys = Object.keys(newData)
+//   if (newKeys.length > 0) {
+//     if (rows[newId] === undefined) {
+//       rows[newId] = {}
+//     }
+//   }
+//   //window.ovldbg = true
+//   let destRow = rows[newId]
+//   //rows[newId] = newData
+//   newKeys.forEach((k) => {
+//     destRow[k] = newData[k]
+//   })
+//   if (isAdd && !isSwitcher) {
+//     actions.ovl.table.TableEditRow({ key: newId, def, data: data })
+//   }
+// }
 // same applies to this method...use it from your customdeleters
 export const deleteTableRow = (
   tableDataAndDef: TableDataAndDef,
@@ -267,6 +273,37 @@ export const selectLatestRow = (def: TableDef, data: TableData) => {
       if (!def.features.multiselect) {
         selRows[selectedAndSortedKeys[i]].selected = false
       }
+    }
+  }
+}
+
+export const addRowDefInit = (tableDef, newId, mode: EditMode) => {
+  Object.keys(tableDef).forEach((k) => {
+    let d: TableDef = tableDef[k]
+    d.uiState.editRow[newId] = { selected: false, mode: "copy" }
+    d.uiState.selectedRow[newId] = {
+      selected: false,
+      showNav: false,
+      timestamp: 0,
+    }
+    d.uiState.viewRow[newId] = { selected: false }
+  })
+}
+
+export const addRowPage = (def: TableDef) => {
+  if (def.features.page) {
+    let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
+    let count = dataFilteredAndSorted.length
+    def.uiState.rowsCount = count
+    let paging = def.options.paging
+    if (def.options.addedRowsPosition === "bottom") {
+      let pages = Math.ceil(count / paging.pageSize) - 1
+      paging.page = pages
+      if (paging.page < 0) {
+        paging.page = 0
+      }
+    } else {
+      paging.page = 0
     }
   }
 }

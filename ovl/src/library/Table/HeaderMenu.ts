@@ -554,35 +554,37 @@ export class TableHeaderMenu extends OvlBaseElement {
 
       let editSelectedRows
       if (def.features.edit && def.options.edit.editType === "inline") {
-        editSelectedRows = html`
-          <li>
-            <a
-              @click=${(e) => {
-                this.handleEdit(e)
-              }}
-              href="#"
-              class="fd-menu__item sap-icon--edit"
-            >
-              Ändern selektierte Datensätze</a
-            >
-          </li>
-        `
+        editSelectedRows = html`<li
+          role="listitem"
+          class="fd-list__item fd-list__item--link"
+        >
+          <a
+            href="#"
+            class="fd-list__link"
+            @click="${(e) => this.handleEdit(e)}"
+          >
+            <span class="fd-list__icon sap-icon--edit"></span>
+            <span class="fd-list__title">Ändern selektierte Datensätze</span></a
+          >
+        </li>`
       }
       let copySelectedRows
       if (def.features.add && def.options.edit.editType === "inline") {
-        copySelectedRows = html`
-          <li>
-            <a
-              @click=${(e) => {
-                this.handleCopy(e)
-              }}
-              href="#"
-              class="fd-menu__item sap-icon--copy"
-            >
-              Duplizieren selektierte Datensätze</a
-            >
-          </li>
-        `
+        copySelectedRows = html`<li
+          role="listitem"
+          class="fd-list__item fd-list__item--link"
+        >
+          <a
+            href="#"
+            class="fd-list__link"
+            @click="${(e) => this.handleCopy(e)}"
+          >
+            <span class="fd-list__icon sap-icon--copy"></span>
+            <span class="fd-list__title"
+              >Duplizieren selektierte Datensätze</span
+            ></a
+          >
+        </li> `
       }
       let deleteSelectedRows
       if (def.features.delete) {

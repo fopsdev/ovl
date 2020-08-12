@@ -8,7 +8,6 @@ export class OvlBackButton extends OvlBaseElement {
       this.actions.ovl.navigation.NavigateBack()
     }
     return this.track(() => {
-      debugger
       if (
         this.state.ovl.uiState.isReady &&
         this.state.ovl.screens.nav.screensHistory.length > 1

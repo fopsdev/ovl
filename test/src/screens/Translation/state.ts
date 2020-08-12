@@ -18,7 +18,7 @@ export let tblTranslation: TableDef = {
   namespace: "system.translations",
   database: {
     dataIdField: "Code",
-    dbInsertMode: "UDTAutoGUID",
+    dbInsertMode: "UDTAutoGUIDBoth",
   },
   server: {
     endpoint: "translation",
