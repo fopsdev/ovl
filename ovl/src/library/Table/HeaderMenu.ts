@@ -273,11 +273,6 @@ export class TableHeaderMenu extends OvlBaseElement {
       defId: this.headerMenu.def.def.id,
       data: this.headerMenu.def.data,
     })
-    // this.actions.ovl.internal.TableSelectHeader({
-    //   def: this.headerMenu.def.def,
-    //   data: this.headerMenu.def.data,
-    //   key: "",
-    // })
   }
 
   init() {
@@ -650,15 +645,20 @@ export class TableHeaderMenu extends OvlBaseElement {
           if (!fnMultipleName) {
             fnMultipleName = k
           }
+          let icon = "fd-list__icon sap-icon--wrench"
+          if (customFn.icon) {
+            icon = "fd-list__icon " + customFn.icon
+          }
           return html`
-            <li>
+            <li role="listitem" class="fd-list__item fd-list__item--link">
               <a
                 href="#"
-                class="fd-menu__item ${customFn.icon}"
+                class="fd-list__link"
                 @click="${(e) =>
                   this.handleCustomSelectedClick(e, k, fnMultipleName)}"
               >
-                ${fnMultipleName}</a
+                <span class="${icon}"></span>
+                <span class="fd-list__title">${fnMultipleName}</span></a
               >
             </li>
           `
