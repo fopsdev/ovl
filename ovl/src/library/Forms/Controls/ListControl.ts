@@ -53,9 +53,7 @@ export class OvlListControl extends OvlBaseElement {
 
   formState: FormState
   // handleClearFilter(e: Event) {}
-  handleCancel = () => {
-    this.actions.ovl.overlay.CloseOverlay2()
-  }
+  handleCancel = () => {}
 
   async handleListPopup(e: Event) {
     e.stopPropagation()
@@ -126,14 +124,14 @@ export class OvlListControl extends OvlBaseElement {
       </div>
     `
     await this.resetLocalList()
-    this.actions.ovl.overlay.OpenOverlay2({
-      templateResult: list,
-      elementToFocusAfterClose: this.searchElement,
-    })
+    // this.actions.ovl.overlay.OpenOverlay2({
+    //   templateResult: list,
+    //   elementToFocusAfterClose: this.searchElement,
+    // })
   }
 
   selectedCallback = async (selectedKey: string) => {
-    this.actions.ovl.overlay.CloseOverlay2()
+    //this.actions.ovl.overlay.CloseOverlay2()
     let field = this.field.field
 
     if (this.localList !== null) {
@@ -496,12 +494,12 @@ export class OvlListControl extends OvlBaseElement {
       let deleteButton
       //if (this.state.ovl.uiState.isMobile) {
       deleteButton = html`
-        <button
+        <span
           tabindex="-9999"
           id="delete${field.id}"
           @click=${(e) => this.handleDelete(e)}
-          class="fd-input-group__button fd-button--light sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
-        ></button>
+          class="fd-input-group__addon sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
+        ></span>
       `
       //}
       let customValue = GetValueFromCustomFunction(
@@ -538,19 +536,13 @@ export class OvlListControl extends OvlBaseElement {
                 @keydown=${(e) => this.handleKeyDown(e)}
               />
 
-              <div
-                class="fd-button-group"
-                role="group"
-                aria-label="Group label"
-              >
-                ${deleteButton}
-                <button
-                  id="search${field.id}"
-                  @click=${(e) => this.handleListPopup(e)}
-                  @touchend=${(e) => this.handleListPopup(e)}
-                  class="fd-input-group__button fd-button--light sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
-                ></button>
-              </div>
+              ${deleteButton}
+              <span
+                id="search${field.id}"
+                @click=${(e) => this.handleListPopup(e)}
+                @touchend=${(e) => this.handleListPopup(e)}
+                class="fd-input-group__addon sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
+              ></span>
             </div>
 
             <span
@@ -567,9 +559,8 @@ export class OvlListControl extends OvlBaseElement {
               ${field.validationResult.validationMsg}
             </span>
           </div>
-          <div style="margin-top:-3px;">
-            ${this.localList}
-          </div>
+          ${this.localList}
+          <div></div>
         </div>
       `
     })

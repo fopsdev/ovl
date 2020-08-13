@@ -19,6 +19,7 @@ import {
   FieldGetFilteredList_ReturnType,
   FieldGetValueRender_Type,
   FieldGetValueRender_ReturnType,
+  FieldGetLabelRender_Type,
 } from "../../../global/hooks"
 import { OvlState, OvlEffects, ovl } from "../../../index"
 import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
@@ -322,13 +323,13 @@ export const GetLabel = (
   )
 
   if (rendererFn) {
-    caption = rendererFn(
-      field.fieldKey,
+    caption = rendererFn(<FieldGetLabelRender_Type>{
+      columnKey: field.fieldKey,
       caption,
       align,
-      <DisplayMode>"Edit",
-      state
-    )
+      displayMode: <DisplayMode>"Edit",
+      state,
+    })
   }
 
   label = html`

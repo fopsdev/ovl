@@ -42,6 +42,12 @@
   padding-bottom: 4px;
   margin: 0px;
 }
+.ovl-formcontrol-container,
+.ovl-formcontrol-input {
+  margin: 0;
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
 
 @media screen and (max-width: 992px) {
   .ovl-tab {
