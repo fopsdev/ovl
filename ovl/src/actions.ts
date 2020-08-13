@@ -1,16 +1,4 @@
 import {
-  CloseOverlay,
-  OpenOverlay,
-  StartCloseOverlay,
-} from "./library/Overlay/actions"
-
-import {
-  CloseOverlay2,
-  OpenOverlay2,
-  StartCloseOverlay2,
-} from "./library/Overlay2/actions"
-
-import {
   InitForm,
   ChangeField,
   SetField,
@@ -113,13 +101,6 @@ import {
 
 let navigation = { NavigateBack, NavigateTo }
 
-let overlay = {
-  OpenOverlay,
-  OpenOverlay2,
-  CloseOverlay: StartCloseOverlay,
-  CloseOverlay2: StartCloseOverlay2,
-}
-
 let indicator = { SetIndicatorOpen, SetIndicatorClose }
 
 let table = {
@@ -140,9 +121,6 @@ let table = {
 }
 
 let internal = {
-  CloseOverlay,
-
-  CloseOverlay2,
   SetTableNeedsRebuild,
   SetLastScrollPosition,
   PlaceSnack,
@@ -195,4 +173,4 @@ let internal = {
 
 let user = { Logout }
 
-export { indicator, navigation, overlay, internal, dialog, form, table, user }
+export { indicator, navigation, internal, dialog, form, table, user }

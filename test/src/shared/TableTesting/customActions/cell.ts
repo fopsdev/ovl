@@ -113,10 +113,13 @@ export const Field_U_Alpha_GetValueRender: OvlAction<
   { columnKey, row, namespace, columnsDef, align, displayMode },
   { state }
 ) => {
-  let u_alpha = row.U_Alpha
+  let u_alpha: string = <string>row.U_Alpha
   let additionalComment = ""
   if (u_alpha && u_alpha.toLowerCase().indexOf("todo") > -1) {
     additionalComment = "(hat todos)"
+  }
+  if (!additionalComment) {
+    return null
   }
   if (displayMode.startsWith("Edit")) {
     return html`<b>${additionalComment}</b>`

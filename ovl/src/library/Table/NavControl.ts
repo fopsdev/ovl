@@ -1,7 +1,6 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { TableDataAndDef } from "./Table"
-import { overlayToRender } from "../Overlay/Overlay"
 
 type NavType = "header" | "row"
 
@@ -53,9 +52,7 @@ export class TableNavControl extends OvlBaseElement {
         data: this.nav.tableData.data,
         key: "",
       })
-      overlayToRender.overlayClosedCallback = () => {
-        this.actions.ovl.table.TableAddRow(this.nav.tableData)
-      }
+      this.actions.ovl.table.TableAddRow(this.nav.tableData)
     }
   }
 

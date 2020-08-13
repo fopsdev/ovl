@@ -1319,11 +1319,12 @@ export const TableCopyRow: OvlAction<{
     newRow[def.database.dataIdField] = ovltemp + newId
   }
   newRow["_ovl" + def.database.dataIdField] = newRow[def.database.dataIdField]
-  def.uiState.dataFilteredAndSorted.push(newId)
+
   if (insertMode === "UDTAutoGUIDBoth" || insertMode === "UDTAutoNumberBoth") {
     newRow["Name"] = newRow[def.database.dataIdField]
   }
   value.data.data[newId] = newRow
+  def.uiState.dataFilteredAndSorted.push(newId)
   addRowDefInit(value.data.tableDef, newId, "copy")
   actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
   addRowPage(def)

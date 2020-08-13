@@ -33,6 +33,16 @@
   margin-left: -15px;
 }
 
+.ovl-formcontrol-custom,
+.ovl-formcontrol-validation {
+  width: 100;
+  max-width: 100%;
+  box-shadow: none;
+  padding-top: 2px;
+  padding-bottom: 4px;
+  margin: 0px;
+}
+
 @media screen and (max-width: 992px) {
   .ovl-tab {
     margin-left: -15px;

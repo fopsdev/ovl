@@ -24,7 +24,7 @@ import {
   FieldGetLabelRender_Type,
 } from "../../global/hooks"
 import { SnackAdd } from "../helpers"
-import { overlayToRender } from "../Overlay/Overlay"
+
 import { OvlBaseElement } from "../OvlBaseElement"
 import {
   CachedRendererData,
@@ -68,12 +68,10 @@ export class TableRowDetailView extends OvlBaseElement {
 
   init() {
     this.rowData = this.props()
-    overlayToRender.overlayClosedCallback = () => {
-      this.actions.ovl.internal.TableCloseViewRow({
-        key: this.rowData.key,
-        def: this.rowData.tableDef,
-      })
-    }
+    this.actions.ovl.internal.TableCloseViewRow({
+      key: this.rowData.key,
+      def: this.rowData.tableDef,
+    })
 
     super.init()
   }
@@ -89,9 +87,7 @@ export class TableRowDetailView extends OvlBaseElement {
       true
     )
   }
-  handleClose = () => {
-    this.actions.ovl.overlay.CloseOverlay()
-  }
+  handleClose = () => {}
 
   handleTabClick = (e: Event, key: string | number) => {
     e.preventDefault()
@@ -549,9 +545,9 @@ export class TableRowDetailView extends OvlBaseElement {
   afterRender() {
     this.handleAfterRenderCustomHook()
 
-    overlayToRender.elementToFocusAfterOpen = document.getElementById(
-      "ovl-detailview-intersectionobserver"
-    )
+    // overlayToRender.elementToFocusAfterOpen = document.getElementById(
+    //   "ovl-detailview-intersectionobserver"
+    // )
 
     if (this.hasLazyImage && !this.intersectionObserver) {
       this.intersectionObserver = new IntersectionObserver(

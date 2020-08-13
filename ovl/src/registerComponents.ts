@@ -8,8 +8,6 @@ import { OvlHitList } from "./library/Forms/Controls/Parts/HitList"
 import { OvlTextArea } from "./library/Forms/Controls/TextArea"
 import { OvlTextbox } from "./library/Forms/Controls/TextBox"
 import { OvlTime } from "./library/Forms/Controls/Time"
-import { OvlOverlay } from "./library/Overlay/Overlay"
-import { OvlOverlay2 } from "./library/Overlay2/Overlay2"
 import { OvlSnack } from "./library/Snack/Snack"
 import { TableHeaderMenu } from "./library/Table/HeaderMenu"
 import { TableNavControl } from "./library/Table/NavControl"
@@ -44,7 +42,4 @@ export const defineElements = () => {
   customElements.define("ovl-dialog", OvlDialog)
   customElements.define("ovl-dialogholder", OvlDialogHolder)
   customElements.define("ovl-snack", OvlSnack)
-
-  customElements.define("ovl-overlay", OvlOverlay)
-  customElements.define("ovl-overlay2", OvlOverlay2)
 }

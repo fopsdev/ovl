@@ -27,7 +27,6 @@ import {
 import { TableDefIds, ovl, OvlActions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
-import { overlayToRender } from "../Overlay/Overlay"
 import { RowControlAllAction } from "./RowControl"
 import {
   ColumnDisplayDef,
@@ -1129,20 +1128,17 @@ export const rowControlActionsHandler = async (
 
       if (customFunction) {
         if (isDetailView) {
-          overlayToRender.overlayClosedCallback = async () => {
-            ovl.actions.ovl.internal.TableCloseViewRow({
-              key: rowKey,
-              def,
-            })
-            await customFunction(<FormCustomFn_Type>{
-              rowKey,
-              def,
-              data,
-              isLastOrOnlyOne: true,
-              startedFromSelectedResult: null,
-            })
-          }
-          ovl.actions.ovl.overlay.CloseOverlay()
+          ovl.actions.ovl.internal.TableCloseViewRow({
+            key: rowKey,
+            def,
+          })
+          await customFunction(<FormCustomFn_Type>{
+            rowKey,
+            def,
+            data,
+            isLastOrOnlyOne: true,
+            startedFromSelectedResult: null,
+          })
         } else {
           await customFunction(<FormCustomFn_Type>{
             rowKey,
@@ -1161,19 +1157,16 @@ export const rowControlActionsHandler = async (
   } else {
     let actionName = "Table" + key + "Row"
     if (isDetailView) {
-      overlayToRender.overlayClosedCallback = async () => {
-        await ovl.actions.ovl.internal.TableCloseViewRow({
-          key: rowKey,
-          def,
-        })
+      await ovl.actions.ovl.internal.TableCloseViewRow({
+        key: rowKey,
+        def,
+      })
 
-        await ovl.actions.ovl.internal[actionName]({
-          key: rowKey,
-          def,
-          data,
-        })
-      }
-      ovl.actions.ovl.overlay.CloseOverlay()
+      await ovl.actions.ovl.internal[actionName]({
+        key: rowKey,
+        def,
+        data,
+      })
     } else {
       await ovl.actions.ovl.internal[actionName]({
         key: rowKey,
