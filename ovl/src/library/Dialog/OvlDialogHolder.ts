@@ -12,6 +12,7 @@ export type DialogGetParts = {
   dismissedCallbackFn?: any
   emptySpaceClickHandlerFn?: any
   updatedHandlerFn?: any
+  afterRenderHandlerFn?: any
   type?: DialogType
   customClass?: () => string
 }
@@ -34,6 +35,14 @@ export class OvlDialogHolder extends OvlBaseDialog {
     }
     super.updated()
   }
+
+  afterRender() {
+    if (this.dialogHolderParams.dialogParts.afterRenderHandlerFn) {
+      this.dialogHolderParams.dialogParts.afterRenderHandlerFn()
+    }
+    super.afterRender()
+  }
+
   async getUI() {
     let chk = this.checkDialog()
     if (chk != "go on") {

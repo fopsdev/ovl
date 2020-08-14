@@ -527,7 +527,7 @@ export class TableRowFormBig extends OvlFormElement {
 
       dialogHolderParams = {
         dialogParts: {
-          updatedHandlerFn: () => {
+          afterRenderHandlerFn: () => {
             // workaround because cellstyle gets not rerendered on textbox itself
             this.textBoxesToRerender.forEach((k) => {
               let renderEl = document.getElementById(k)

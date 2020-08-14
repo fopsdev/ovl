@@ -64,16 +64,7 @@ export class TableRowForm extends OvlFormElement {
       }
     }
   }
-
-  updated() {
-    // if (this.state.ovl.libState.overlay.closing) {
-    //   overlayToRender.overlayClosedCallback = () => {
-    //     this.setFocus()
-    //   }
-    // } else {
-    this.setFocus()
-    //}
-
+  afterRender() {
     // workaround because cellstyle gets not rerendered on textbox itself
     this.textBoxesToRerender.forEach((k) => {
       let renderEl = document.getElementById(k)
@@ -83,6 +74,18 @@ export class TableRowForm extends OvlFormElement {
       }
     })
     this.textBoxesToRerender = []
+
+    super.afterRender()
+  }
+  updated() {
+    // if (this.state.ovl.libState.overlay.closing) {
+    //   overlayToRender.overlayClosedCallback = () => {
+    //     this.setFocus()
+    //   }
+    // } else {
+    this.setFocus()
+    //}
+
     // if there is a custom afterrender
     super.updated()
   }
