@@ -154,7 +154,12 @@ export class TableRowFormBig extends OvlFormElement {
           cancel = false
         }
       }
-      this.wasAdd = this.rowData.key.indexOf(ovltemp) > -1
+      //this.wasAdd = this.rowData.key.indexOf(ovltemp) > -1
+      this.wasAdd =
+        this.rowData.data.data[this.rowData.key][
+          this.rowData.tableDef.database.dataIdField
+        ].indexOf(ovltemp) > -1
+
       if (cancel) {
         this.actions.ovl.form.ResetForm(this.formState)
         this.actions.ovl.dialog.DialogClose("EditFormBig")

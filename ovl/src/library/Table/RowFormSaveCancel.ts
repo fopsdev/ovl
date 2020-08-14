@@ -45,7 +45,11 @@ export class TableRowSaveCancel extends OvlBaseElement {
           //   dialogAfterClose.elementToFocus = undefined
           // }
         }
-        let isAdd = this.rowData.key.indexOf(ovltemp) > -1
+        let isAdd =
+          this.rowData.data.data[this.rowData.key][
+            this.rowData.tableDef.database.dataIdField
+          ].indexOf(ovltemp) > -1
+
         if (cancel || isAdd) {
           if (isAdd) {
             this.actions.ovl.internal.TableDeleteRowFromData({
