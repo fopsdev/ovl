@@ -119,7 +119,7 @@ getMethods(actions)
 
 export const logState = () => {
   console.log("ovl state:")
-  console.log(ovl.state)
+  console.log(JSON.parse(JSON.stringify(ovl.state)))
 }
 export const logActions = () => {
   console.log("ovl actions:")

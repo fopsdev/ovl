@@ -1,6 +1,6 @@
 import { html, TemplateResult } from "lit-html"
 import { ovl } from "../.."
-import { resolvePath, T } from "../../global/globals"
+import { resolvePath, T, stringifyReplacer } from "../../global/globals"
 import { FormCustomColumnFn, FormCustomColumnFn_Type } from "../../global/hooks"
 import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
@@ -343,7 +343,10 @@ export class TableHeaderMenu extends OvlBaseElement {
           let emptyText = "(leer)"
           let alreadyProcessed: Set<string> = new Set()
           let columnDef = columns[selectedColumn]
-          this.filterDef = JSON.parse(JSON.stringify(columnDef.filter))
+          this.filterDef = JSON.parse(
+            JSON.stringify(columnDef.filter),
+            stringifyReplacer
+          )
           let filterDef = this.filterDef
           let result1: {
             [key: string]: { val: any; displayVal: string; count: number }

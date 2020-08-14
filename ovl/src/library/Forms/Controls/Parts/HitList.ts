@@ -3,7 +3,7 @@ import { html } from "lit-html"
 import { getDisplayValue } from "../../../Table/helpers"
 import { ListFnReturnValue } from "../../../Table/Table"
 import { ListState } from "../ListControl"
-import { T } from "../../../../global/globals"
+import { T, stringifyReplacer } from "../../../../global/globals"
 
 export type HitListState = {
   fieldId: string
@@ -110,7 +110,7 @@ export class OvlHitList extends OvlBaseElement {
         list.displayValueField === false
       ) {
         // we have to clone it in order to remove an entry...its proxified thats why
-        lookupTypes = JSON.parse(JSON.stringify(lookupTypes))
+        lookupTypes = JSON.parse(JSON.stringify(lookupTypes), stringifyReplacer)
         delete lookupTypes[list.valueField]
       }
 

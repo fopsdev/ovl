@@ -1,4 +1,4 @@
-import { T, saveState } from "./global/globals"
+import { T, saveState, stringifyReplacer } from "./global/globals"
 
 import { OvlConfig } from "./init"
 import { SnackAdd } from "./library/helpers"
@@ -68,7 +68,7 @@ export const ovlFetch = async (
       data.clientId = ovl.state.ovl.user.clientId
     }
     if (method === "POST") {
-      reqOptions["body"] = JSON.stringify(data)
+      reqOptions["body"] = JSON.stringify(data, stringifyReplacer)
     } else if (data) {
       // encode data as url param
       const UrlCreator = window.URL || window.webkitURL

@@ -2,6 +2,7 @@ import {
   getDateValue,
   getDecimalValue,
   resolvePath,
+  stringifyReplacer,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -94,7 +95,7 @@ export type FormsState = { [key in FormType]: FormStatePerInstance }
 
 export const ResetForm: OvlAction<FormState> = (value) => {
   value.dirty = false
-  value.fields = JSON.parse(JSON.stringify(value.initFields))
+  value.fields = JSON.parse(JSON.stringify(value.initFields, stringifyReplacer))
   value.valid = true
   value.lastTouchedField = undefined
 }
@@ -511,7 +512,7 @@ export const InitForm: OvlAction<InitForm> = (
     actions.ovl.internal.SetFormValid(formState)
     // save a copy of validationresults (as well of fields, see json(..) above)
     // because when resetting the form, this should be inital state and there will be no re-initing
-    formState.initFields = JSON.parse(JSON.stringify(fields))
+    formState.initFields = JSON.parse(JSON.stringify(fields), stringifyReplacer)
   }
 }
 

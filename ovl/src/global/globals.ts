@@ -164,7 +164,8 @@ export const focusOut = async (event) => {
 //     SnackAdd("Sie können das Fenster jetzt schliessen...", "Information", 3000)
 //   }
 // }
-
+export const stringifyReplacer = (key, value) =>
+  typeof value === "undefined" ? null : value
 export const visibilityChange = async (event) => {
   if (OvlConfig._system.OfflineMode) {
     // console.log(document.visibilityState)
@@ -213,7 +214,10 @@ export const saveState = async (force: boolean, reason: string) => {
       await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
       OvlTimestamp = dt
       // let refstate = ovl.state
-      let newObj: OvlState = JSON.parse(JSON.stringify(ovl.state))
+      let newObj: OvlState = JSON.parse(
+        JSON.stringify(ovl.state),
+        stringifyReplacer
+      )
       newObj.ovl.uiState.stateSavedReason = reason
       // // let dtStart = Date.now()
       // stateCleaner(ovl.state, newObj, "state")

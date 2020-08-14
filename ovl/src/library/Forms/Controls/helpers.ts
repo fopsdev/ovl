@@ -6,6 +6,7 @@ import {
   getDecimalValue,
   resolvePath,
   T,
+  stringifyReplacer,
 } from "../../../global/globals"
 import {
   FieldGetFilteredList,
@@ -259,7 +260,7 @@ const fillReactiveRows = (
   originalRow: { [key: string]: {} },
   formState: FormState
 ): { [key: string]: {} } => {
-  let row = JSON.parse(JSON.stringify(originalRow))
+  let row = JSON.parse(JSON.stringify(originalRow), stringifyReplacer)
   Object.keys(formState.fields).forEach((f) => {
     let field = formState.fields[f]
     row[field.fieldKey] = field.convertedValue

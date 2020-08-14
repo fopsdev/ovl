@@ -1,6 +1,6 @@
 import { OvlBaseElement } from "../../../../../ovl/src/library/OvlBaseElement"
 import { html } from "../../../../../ovl/node_modules/lit-html"
-import { T } from "../../../../../ovl/src/global/globals"
+import { T, stringifyReplacer } from "../../../../../ovl/src/global/globals"
 
 export class CompSummaryChart extends OvlBaseElement {
   chart: any
@@ -36,7 +36,10 @@ export class CompSummaryChart extends OvlBaseElement {
         {
           label: T("PortalCurrentYear"),
           data: JSON.parse(
-            JSON.stringify(this.state.demoApp.chartData.values_1)
+            JSON.stringify(
+              this.state.demoApp.chartData.values_1,
+              stringifyReplacer
+            )
           ),
           //@ts-ignore
           backgroundColor: color("rgb(255, 0, 0)").alpha(0.5).rgbString(),
@@ -47,7 +50,10 @@ export class CompSummaryChart extends OvlBaseElement {
         {
           label: T("PortalLastYear"),
           data: JSON.parse(
-            JSON.stringify(this.state.demoApp.chartData.values_2)
+            JSON.stringify(
+              this.state.demoApp.chartData.values_2,
+              stringifyReplacer
+            )
           ),
           //@ts-ignore
           backgroundColor: color("rgb(54, 162, 235)").alpha(0.5).rgbString(),

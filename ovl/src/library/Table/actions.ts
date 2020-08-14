@@ -6,6 +6,7 @@ import {
   uuidv4,
   ovloffline,
   saveState,
+  stringifyReplacer,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -624,7 +625,7 @@ export const TableDirectSaveRow: OvlAction<{
     initTableState(def, data, value.defId, state.ovl.uiState.isMobile)
   }
   if (rowId.indexOf(ovltemp) > -1) {
-    data.data[key] = JSON.parse(JSON.stringify(rowToSave))
+    data.data[key] = JSON.parse(JSON.stringify(rowToSave), stringifyReplacer)
   }
   //delete rowToSave[def.database.dataIdField]
   await TableEditSaveRowHelper(
@@ -849,7 +850,7 @@ const TableEditSaveRowHelper = async (
         }
       }
       if (!offlineHandled) {
-        let rowCopy = JSON.parse(JSON.stringify(newData))
+        let rowCopy = JSON.parse(JSON.stringify(newData), stringifyReplacer)
         if (
           state.ovl.app.offline &&
           1 === 1 /*OvlConfig._system.OfflineMode*/ &&
@@ -1299,7 +1300,7 @@ export const TableCopyRow: OvlAction<{
   let key = value.key
   let rows = value.data.data
   let row = rows[value.key]
-  let newRow = JSON.parse(JSON.stringify(row))
+  let newRow = JSON.parse(JSON.stringify(row), stringifyReplacer)
   Object.keys(def.options.copyColumnsIgnore).forEach((c) => {
     newRow[c] = null
   })

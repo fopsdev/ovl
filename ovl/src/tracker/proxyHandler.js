@@ -1,5 +1,6 @@
 import { paths, isTracking, addTrackedPath, disposeTrack } from "./tracker"
 import { SnackTrackedRemove } from "../library/helpers"
+import { stringifyReplacer } from "../global/globals"
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
   let callbacksToCall = new Set()
@@ -58,7 +59,7 @@ export function createDeepProxy(target) {
             // if the value already got proxified this means we are trying to save a reference inside state
             // this is something we avoid because we would like to have a clean serializable and deserializable state
             // so in that case just create a deep clone of the obj and use that
-            value = JSON.parse(JSON.stringify(value))
+            value = JSON.parse(JSON.stringify(value), stringifyReplacer)
           }
           value = proxify(value, [...path, key])
         }

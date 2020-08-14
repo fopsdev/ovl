@@ -6,6 +6,7 @@ import {
   T,
   uuidv4,
   ovloffline,
+  stringifyReplacer,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -880,9 +881,15 @@ export const getFormFieldsFromColumns = (
     formFields[k] = {
       type,
       value: dispVal,
-      list: col.list ? JSON.parse(JSON.stringify(col.list)) : undefined,
-      ui: col.ui ? JSON.parse(JSON.stringify(col.ui)) : undefined,
-      asset: col.asset ? JSON.parse(JSON.stringify(col.asset)) : undefined,
+      list: col.list
+        ? JSON.parse(JSON.stringify(col.list), stringifyReplacer)
+        : undefined,
+      ui: col.ui
+        ? JSON.parse(JSON.stringify(col.ui), stringifyReplacer)
+        : undefined,
+      asset: col.asset
+        ? JSON.parse(JSON.stringify(col.asset), stringifyReplacer)
+        : undefined,
     }
     if (!formFields[k].ui) {
       formFields[k].ui = {}
@@ -930,7 +937,10 @@ export const createDynamicRowFunctions = async (
           }
         }
       } else {
-        rowControlActions[k] = JSON.parse(JSON.stringify(custom))
+        rowControlActions[k] = JSON.parse(
+          JSON.stringify(custom),
+          stringifyReplacer
+        )
         rowControlActions[k].disabled = false
         rowControlActions[k].name = title
         rowControlActions[k].custom = true
