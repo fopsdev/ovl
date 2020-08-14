@@ -83,6 +83,7 @@ export class OvlFormElement extends OvlBaseElement {
         formState: this.formState,
         value: e.detail.val,
         isInit: false,
+        isInnerEvent: e.detail.isInnerEvent === true,
       })
     }
   }

@@ -118,10 +118,10 @@ export const Field_U_Alpha_GetValueRender: OvlAction<
   if (u_alpha && u_alpha.toLowerCase().indexOf("todo") > -1) {
     additionalComment = "(hat todos)"
   }
-  if (!additionalComment) {
-    return null
-  }
   if (displayMode.startsWith("Edit")) {
+    if (!additionalComment) {
+      return null
+    }
     return html`<b>${additionalComment}</b>`
   } else {
     return html`${u_alpha} <b>${additionalComment}</b>`
@@ -165,10 +165,11 @@ export const ViewRowCellClass: OvlAction<
   let val
   if (displayMode.startsWith("Edit")) {
     val = formState.fields["U_Decimal"].convertedValue
-    formState.fields["U_Decimal"].value
+    //  formState.fields["U_Decimal"].value
   } else {
     val = row.U_Decimal
   }
+
   if (val > 100) {
     return {
       U_Decimal: {

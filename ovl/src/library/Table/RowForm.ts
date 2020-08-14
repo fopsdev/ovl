@@ -22,12 +22,13 @@ export class TableRowForm extends OvlFormElement {
   props: any
   rowData: EditRowDef
   focusInit: boolean
-
+  textBoxesToRerender: string[]
   init() {
     this.focusInit = false
     this.rowData = this.props()
     // <form init>
     this.formType = "TableRowEdit"
+    this.textBoxesToRerender = []
     super.init()
     // </form init>
   }
@@ -73,6 +74,15 @@ export class TableRowForm extends OvlFormElement {
     this.setFocus()
     //}
 
+    // workaround because cellstyle gets not rerendered on textbox itself
+    this.textBoxesToRerender.forEach((k) => {
+      let renderEl = document.getElementById(k)
+      if (renderEl) {
+        //@ts-ignore
+        renderEl.doRender()
+      }
+    })
+    this.textBoxesToRerender = []
     // if there is a custom afterrender
     super.updated()
   }
@@ -201,6 +211,7 @@ export class TableRowForm extends OvlFormElement {
             //@@todo switch case for the other controltypes (combo, area, check,...)
             switch (col.control) {
               case "text":
+                this.textBoxesToRerender.push(id)
                 uiItem = html`
                   <ovl-textbox
                     id="${id}"

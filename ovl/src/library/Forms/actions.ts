@@ -256,7 +256,9 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           parsedVal = val
         }
         if (parsedVal || parsedVal == 0) {
-          field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
+          if (!value.isInnerEvent) {
+            field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
+          }
           // we need to to that so it gets transmitted for sure as decimal. elsewise it could end up as an int for the deserialzer backend
           field.convertedValue = parsedVal
         } else {
@@ -533,6 +535,7 @@ export type ValidateFieldType = {
   oldVal: string
   newVal: string
   formState: FormState
+  isInnerEvent: boolean
 }
 
 export type ChangeField = {
@@ -540,6 +543,7 @@ export type ChangeField = {
   fieldId: string
   value: any
   isInit?: boolean
+  isInnerEvent?: boolean
 }
 
 export type FieldChanged = {
@@ -548,6 +552,7 @@ export type FieldChanged = {
   newConvertedVal: string
   oldConvertedVal: string
   row: any
+  isInnerEvent?: boolean
 }
 
 export type TouchField = {
@@ -589,6 +594,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     newVal: newVal,
     formState: value.formState,
     validationResult: field.validationResult,
+    isInnerEvent: value.isInnerEvent,
   } as ValidateFieldType)
 
   let fn = resolvePath(actions.custom, namespace)
@@ -620,6 +626,7 @@ export const ChangeField: OvlAction<ChangeField> = (
             newVal: field.value,
             formState: value.formState,
             validationResult: field.validationResult,
+            isInnerEvent: value.isInnerEvent,
           })
         }
       }

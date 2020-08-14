@@ -754,12 +754,16 @@ const TableEditSaveRowHelper = async (
   let newData
   if (hasFormState) {
     newData = Object.keys(formState.fields)
-      .filter(
-        (k) =>
+      .filter((k) => {
+        if (formState.fields[k].fieldKey === "U_Decimal") {
+          debugger
+        }
+        return (
           (formState.fields[k].dirty &&
             formState.fields[k].convertedValue !== row[k]) ||
           isAdd
-      )
+        )
+      })
       .reduce((val: {}, k, i) => {
         val[k] = formState.fields[k].convertedValue
         return val

@@ -24,7 +24,7 @@ import {
 import { DialogResult } from "../actions"
 import { OvlFormElement } from "../forms/OvlFormElement"
 import { SnackAdd } from "../helpers"
-import { overlayToRender } from "../Overlay/Overlay"
+
 import { CachedRendererData, GetRendererFn } from "./helpers"
 import { CellClass } from "./Row"
 import { DisplayMode, EditRowDef } from "./Table"
@@ -39,11 +39,13 @@ export class TableRowFormBig extends OvlFormElement {
   rowData: EditRowDef
   focusInit: boolean
   wasAdd: boolean
+  textBoxesToRerender: string[]
 
   init() {
     this.focusInit = false
     this.rowData = this.props()
     this.formType = "TableRowEdit"
+    this.textBoxesToRerender = []
     super.init()
   }
   updated() {
@@ -65,6 +67,7 @@ export class TableRowFormBig extends OvlFormElement {
       //@ts-ignore
       //focusEl.firstElementChild.focus()
     }
+
     super.updated()
   }
 
@@ -362,6 +365,7 @@ export class TableRowFormBig extends OvlFormElement {
               //@@todo switch case for the other controltypes (combo, area, check,...)
               switch (col.control) {
                 case "text":
+                  this.textBoxesToRerender.push(id)
                   uiItem = html`
                     <ovl-textbox
                       id="${id}"
@@ -523,6 +527,17 @@ export class TableRowFormBig extends OvlFormElement {
 
       dialogHolderParams = {
         dialogParts: {
+          updatedHandlerFn: () => {
+            // workaround because cellstyle gets not rerendered on textbox itself
+            this.textBoxesToRerender.forEach((k) => {
+              let renderEl = document.getElementById(k)
+              if (renderEl) {
+                //@ts-ignore
+                renderEl.doRender()
+              }
+            })
+            this.textBoxesToRerender = []
+          },
           body: () => this.getBody(),
           closedCallbackFn: this.closeEdit,
           customClass: () => {

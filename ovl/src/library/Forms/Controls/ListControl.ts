@@ -560,7 +560,6 @@ export class OvlListControl extends OvlBaseElement {
             </span>
           </div>
           ${this.localList}
-          <div></div>
         </div>
       `
     })

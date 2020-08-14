@@ -39,6 +39,7 @@ export class OvlTextbox extends OvlBaseElement {
       detail: {
         val: this.inputElement.value,
         id: this.field.field.id,
+        isInnerEvent: true,
       },
     })
     this.inputElement.dispatchEvent(event)
