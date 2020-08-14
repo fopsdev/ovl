@@ -21,6 +21,7 @@ import {
 import { getUIValidationObject } from "./uiValidationHelper"
 import { FormState } from "../actions"
 import { OvlState, OvlActions, OvlEffects, ovl } from "../../.."
+import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 
 type ListFunction = (
   row: { [key: string]: {} },
@@ -45,7 +46,7 @@ export class OvlListControl extends OvlBaseElement {
   searchElement: any
   deleteElement: any
   localList: TemplateResult
-
+  hitListDialogBody: TemplateResult
   displayValue: any
   writeBackValue: any
   lastDisplayValue: any
@@ -92,42 +93,38 @@ export class OvlListControl extends OvlBaseElement {
       SnackAdd("Keine passenden Einträge gefunden", "Warning", 3000)
       return
     }
-    let list = html`
-      <div class="fd-layout-panel">
-        <ovl-hitlist
-          .props=${(state) => {
-            let listData: FieldGetList_ReturnType = resolvePath(
-              this.actions.custom,
-              formState.namespace
-            )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-              row: GetRowFromFormState(formState),
-            })
 
-            return {
-              fieldId: field.id,
-              list: field.list,
-              listData,
-              filterValue,
-              filteredKeys,
-              type: "overlay",
-              selectedCallback: this.selectedCallback,
-            }
-          }}
-        ></ovl-hitlist>
-        <div class="fd-layout-panel__footer" style="margin:2px; padding:2px;">
-          <button
-            @click=${this.handleCancel}
-            title="Abbrechen"
-            class="fd-button--negative sap-icon--decline"
-          ></button>
-        </div>
+    this.hitListDialogBody = html`
+      <ovl-hitlist
+        .props=${(state) => {
+          let listData: FieldGetList_ReturnType = resolvePath(
+            this.actions.custom,
+            formState.namespace
+          )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+            row: GetRowFromFormState(formState),
+          })
+
+          return {
+            fieldId: field.id,
+            list: field.list,
+            listData,
+            filterValue,
+            filteredKeys,
+            type: "overlay",
+            selectedCallback: this.selectedCallback,
+          }
+        }}
+      ></ovl-hitlist>
+      <div class="fd-layout-panel__footer" style="margin:2px; padding:2px;">
+        <button
+          @click=${this.handleCancel}
+          title="Abbrechen"
+          class="fd-button--negative sap-icon--decline"
+        ></button>
       </div>
     `
     await this.resetLocalList()
-    // this.actions.ovl.overlay.OpenOverlay2({
-    //   templateResult: list,
-    //   elementToFocusAfterClose: this.searchElement,
-    // })
+    this.actions.ovl.dialog.DialogOpen({ dialogType: "HitListDialog" })
   }
 
   selectedCallback = async (selectedKey: string) => {
@@ -510,7 +507,30 @@ export class OvlListControl extends OvlBaseElement {
         this.field.isInline,
         this.state
       )
+      let hitListDialog
+      if (
+        this.state.ovl.dialogs.HitListDialog.visible &&
+        this.hitListDialogBody
+      ) {
+        let dialogHolderParams: DialogHolderParams
+        // tracking needs to be recorded on the hiolder object
+        // thats why we use functions here to get the templates
+        // to make it look nicer i even used methods for the different parts
+
+        dialogHolderParams = {
+          dialogParts: {
+            body: () => this.hitListDialogBody,
+          },
+          zIndex: 7,
+          dialogType: "HitListDialog",
+        }
+        hitListDialog = html`<ovl-dialogholder
+          .dialogHolderParams=${dialogHolderParams}
+        ></ovl-dialogholder>`
+      }
+
       return html`
+        ${hitListDialog}
         <div @focusout=${(e) => this.handleFocusOut(e)}>
           <div
             class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"

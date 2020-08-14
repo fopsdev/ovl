@@ -50,6 +50,11 @@
   padding-right: 2px;
 }
 
+.ovl-dialog-HitListDialog .ovl-dialog-body {
+  padding: 0;
+  margin: 0;
+}
+
 @media screen and (max-width: 992px) {
   .ovl-tab {
     margin-left: -15px;

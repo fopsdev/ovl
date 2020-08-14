@@ -119,7 +119,7 @@ getMethods(actions)
 
 export const logState = () => {
   console.log("ovl state:")
-  console.log(JSON.parse(JSON.stringify(ovl.state)))
+  console.log(JSON.parse(JSON.stringify(ovl.state), stringifyReplacer))
 }
 export const logActions = () => {
   console.log("ovl actions:")
@@ -140,4 +140,5 @@ export { TableDefIds, Language }
 export type OvlScreen = keyof typeof baseScreens | keyof typeof demoAppScreens
 
 import { defineElements } from "./registerComponents"
+import { stringifyReplacer } from "./global/globals"
 defineElements()

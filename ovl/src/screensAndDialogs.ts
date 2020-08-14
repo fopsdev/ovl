@@ -3,4 +3,5 @@ export let baseDialogs = {
   Modal: {},
   TableHeaderMenu: {},
   EditFormBig: {},
+  HitListDialog: {},
 }

@@ -144,14 +144,10 @@ export class OvlHitList extends OvlBaseElement {
       return html`
         <div
           id="ovlhitlist"
-          style="padding-right:2px;"
           @keydown=${(e) => this.handleMainKeyDown(e)}
           class="${scrollable} localList"
         >
-          <table
-            class="fd-table ${animation}"
-            style="margin:2px; margin-bottom:0; padding:2px;padding-bottom:0px;"
-          >
+          <table class="fd-table ${animation}">
             ${thead}
             <tbody class="fd-table__body">
               ${filteredKeys.map((rowKey) => {
@@ -219,15 +215,15 @@ export class OvlHitList extends OvlBaseElement {
   }
   updated() {
     //only set scrollable if bigger than windowheight
-    if (!this.focusSet && this.controlState.type === "overlay") {
-      this.focusSet = true
-      //@@workaround
+    // if (!this.focusSet && this.controlState.type === "overlay") {
+    //   this.focusSet = true
+    //   //@@workaround
 
-      let el2 = document.getElementById("ovlhitlist")
-      el2.style.width = (el2.offsetWidth + 16).toString() + "px"
+    //   let el2 = document.getElementById("ovlhitlist")
+    //   el2.style.width = (el2.offsetWidth + 16).toString() + "px"
 
-      // somehow it renders too small (maybe scrollbar issue). consider this as a workaround
-    }
+    //   // somehow it renders too small (maybe scrollbar issue). consider this as a workaround
+    // }
     super.updated()
   }
 }
