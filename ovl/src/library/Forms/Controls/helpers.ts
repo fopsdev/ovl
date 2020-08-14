@@ -158,22 +158,26 @@ export const FilterHitList = (
       let checkRow = dataList.data[f]
       return Object.keys(lookupTypes).some((c) => {
         let checkVal = checkRow[c]
-        let typ = lookupTypes[c]
-        if (typ === "date") {
-          checkVal = getDateValue(checkVal)
-        } else if (typ === "decimal") {
-          checkVal = getDecimalValue(checkVal)
-        }
+        if (checkVal !== undefined) {
+          let typ = lookupTypes[c]
+          if (typ === "date") {
+            checkVal = getDateValue(checkVal)
+          } else if (typ === "decimal") {
+            checkVal = getDecimalValue(checkVal)
+          }
 
-        if (checkVal === null) {
-          checkVal = ""
-        }
-        if (
-          checkVal.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >
-          -1
-        ) {
-          hitLength[f] = checkRow[c].length - filterValue.length
-          return true
+          if (checkVal === null) {
+            checkVal = ""
+          }
+          if (
+            checkVal
+              .toString()
+              .toLowerCase()
+              .indexOf(filterValue.toLowerCase()) > -1
+          ) {
+            hitLength[f] = checkRow[c].length - filterValue.length
+            return true
+          }
         }
       })
     })
