@@ -211,6 +211,10 @@ export class OvlListControl extends OvlBaseElement {
     e.stopPropagation()
     e.preventDefault()
   }
+
+  handleGotFocusSearch(e: Event) {
+    this.resetLocalList()
+  }
   // // same here
   async handleFocusOut(e: Event) {
     let field = this.field.field
@@ -582,6 +586,7 @@ export class OvlListControl extends OvlBaseElement {
                 @click=${(e) => this.handleListPopup(e)}
                 @touchend=${(e) => this.handleListPopup(e)}
                 @keydown=${(e) => this.handleSearchKeyDown(e)}
+                @focus=${(e) => this.handleGotFocusSearch(e)}
                 class="fd-input-group__addon sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
               ></span>
             </div>
