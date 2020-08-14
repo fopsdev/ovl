@@ -184,7 +184,8 @@ export class OvlBaseDialog extends OvlBaseElement {
     }
   }
 
-  handleAnimationEnd = (e) => {
+  handleAnimationEnd = (e: AnimationEvent) => {
+    e.stopPropagation()
     if (e.animationName === "fadeOutDialog") {
       this.removeDialog()
     }

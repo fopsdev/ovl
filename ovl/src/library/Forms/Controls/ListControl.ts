@@ -54,11 +54,14 @@ export class OvlListControl extends OvlBaseElement {
 
   formState: FormState
   // handleClearFilter(e: Event) {}
-  handleCancel = () => {}
+  handleCancel = (e: Event) => {
+    this.actions.ovl.dialog.DialogClose("HitListDialog")
+  }
 
   async handleListPopup(e: Event) {
     e.stopPropagation()
     e.preventDefault()
+
     let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
@@ -115,20 +118,27 @@ export class OvlListControl extends OvlBaseElement {
           }
         }}
       ></ovl-hitlist>
-      <div class="fd-layout-panel__footer" style="margin:2px; padding:2px;">
+      <div class="fd-layout-panel__footer  ovl-hitlistdialog-footer">
         <button
           @click=${this.handleCancel}
           title="Abbrechen"
-          class="fd-button--negative sap-icon--decline"
+          class="fd-button fd-button--negative sap-icon--decline"
         ></button>
       </div>
     `
     await this.resetLocalList()
-    this.actions.ovl.dialog.DialogOpen({ dialogType: "HitListDialog" })
+
+    this.actions.ovl.dialog.DialogOpen({
+      dialogType: "HitListDialog",
+      elementIdToFocusAfterOpen: this.field.field.id + "overlayovlhl_1",
+    })
   }
 
   selectedCallback = async (selectedKey: string) => {
     //this.actions.ovl.overlay.CloseOverlay2()
+    if (this.state.ovl.dialogs.HitListDialog.visible) {
+      this.actions.ovl.dialog.DialogClose("HitListDialog")
+    }
     let field = this.field.field
 
     if (this.localList !== null) {
@@ -336,6 +346,11 @@ export class OvlListControl extends OvlBaseElement {
     }
     this.inputElement.focus()
   }
+  handleSearchKeyDown(e: KeyboardEvent) {
+    if (e.key === "ArrowDown" || e.key === "Enter") {
+      this.handleListPopup(e)
+    }
+  }
   handleKeyDown(e: KeyboardEvent) {
     if (
       e.key === "Shift" ||
@@ -520,7 +535,11 @@ export class OvlListControl extends OvlBaseElement {
         dialogHolderParams = {
           dialogParts: {
             body: () => this.hitListDialogBody,
+            closedCallbackFn: () => {
+              this.hitListDialogBody = undefined
+            },
           },
+
           zIndex: 7,
           dialogType: "HitListDialog",
         }
@@ -558,9 +577,11 @@ export class OvlListControl extends OvlBaseElement {
 
               ${deleteButton}
               <span
+                tabindex="0"
                 id="search${field.id}"
                 @click=${(e) => this.handleListPopup(e)}
                 @touchend=${(e) => this.handleListPopup(e)}
+                @keydown=${(e) => this.handleSearchKeyDown(e)}
                 class="fd-input-group__addon sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
               ></span>
             </div>
