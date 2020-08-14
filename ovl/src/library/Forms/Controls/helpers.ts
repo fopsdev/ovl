@@ -139,14 +139,17 @@ export const FilterHitList = (
     let lookupTypes = dataList.lookupTypes
 
     if (!lookupTypes) {
+      lookupTypes = {}
+      lookupTypes[list.displayField] = "text"
+      lookupTypes[list.valueField] = "text"
       // get the types from the data and assume its text
-      let keys = Object.keys(dataList.data)
-      if (keys.length > 0) {
-        lookupTypes = Object.keys(dataList.data[keys[0]]).reduce((val, k) => {
-          val[k] = "text"
-          return val
-        }, {})
-      }
+      // let keys = Object.keys(dataList.data)
+      // if (keys.length > 0) {
+      //   lookupTypes = Object.keys(dataList.data[keys[0]]).reduce((val, k) => {
+      //     val[k] = "text"
+      //     return val
+      //   }, {})
+      // }
     }
     if (!filterValue) {
       filterValue = ""

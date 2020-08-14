@@ -231,7 +231,7 @@ export class OvlListControl extends OvlBaseElement {
     if (relatedTarget) {
       idToCheck = relatedTarget.id
     }
-    //if (!this.state.ovl.libState.overlay2.open) {
+    //if (!this.state.ovl.libState.overlay2.ope) {
     if (relatedTarget === null) {
       movedOut = true
     } else {
