@@ -542,6 +542,9 @@ export class OvlListControl extends OvlBaseElement {
             closedCallbackFn: () => {
               this.hitListDialogBody = undefined
             },
+            dismissedCallbackFn: (e) => {
+              this.handleCancel(e)
+            },
           },
 
           zIndex: 7,
