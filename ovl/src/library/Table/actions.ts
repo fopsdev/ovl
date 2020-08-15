@@ -640,13 +640,16 @@ export const TableDirectSaveRow: OvlAction<{
   )
 }
 
-export const TableEditSaveRow: OvlAction<{
-  key: string
-  def: TableDef
-  data: TableData
-  formState: FormState
-}> = async (value, { actions, state }) => {
-  await TableEditSaveRowHelper(
+export const TableEditSaveRow: OvlAction<
+  {
+    key: string
+    def: TableDef
+    data: TableData
+    formState: FormState
+  },
+  Promise<string>
+> = async (value, { actions, state }) => {
+  return await TableEditSaveRowHelper(
     value.key,
     value.def,
     value.data,
@@ -655,17 +658,6 @@ export const TableEditSaveRow: OvlAction<{
     actions
   )
 }
-
-// const TableOfflineEnsureState = (data: TableData) => {
-//   if (!data.offline) {
-//     data.offline = {
-//       addedKeys: {},
-//       updatedKeys: {},
-//       deletedKeys: {},
-//       errors: {},
-//     }
-//   }
-// }
 
 const EditSaveRowOfflineHelper = (
   def: TableDef,
@@ -827,7 +819,7 @@ const TableEditSaveRowHelper = async (
         })
         offlineHandled = true
         if (
-          1 === 1 /*OvlConfig._system.OfflineMode*/ &&
+          OvlConfig._system.OfflineMode &&
           !isOfflineRetry &&
           data.offline &&
           !state.ovl.app.offline
@@ -850,7 +842,7 @@ const TableEditSaveRowHelper = async (
         let rowCopy = JSON.parse(JSON.stringify(newData), stringifyReplacer)
         if (
           state.ovl.app.offline &&
-          1 === 1 /*OvlConfig._system.OfflineMode*/ &&
+          OvlConfig._system.OfflineMode &&
           !isOfflineRetry
         ) {
           EditSaveRowOfflineHelper(
@@ -898,7 +890,7 @@ const TableEditSaveRowHelper = async (
             // 449 means offline in our context
             if (res.status === 449) {
               // handle offline
-              if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
+              if (OvlConfig._system.OfflineMode) {
                 if (!isOfflineRetry) {
                   EditSaveRowOfflineHelper(
                     def,
@@ -917,10 +909,11 @@ const TableEditSaveRowHelper = async (
                   return
                 }
               } else {
+                SnackAdd("No Server Connection!", "Warning")
                 // if it has no offline handling
-                if (hasFormState) {
-                  formState.valid = false
-                }
+                // if (hasFormState) {
+                //   formState.valid = false
+                // }
                 // data.data["_ovl" + def.database.dataIdField] =
                 //   data.data[def.database.dataIdField]
                 return
@@ -1441,17 +1434,6 @@ export const TableDeleteRow: OvlAction<
   let key = value.key
   let cancel: boolean = false
 
-  // if (
-  //   !value.isOfflineRetry &&
-  //   value.data.offline &&
-  //   1 === 1 /*OvlConfig._system.OfflineMode*/
-  // ) {
-  //   let res = await actions.ovl.internal.TableOfflineHandler({
-  //     data: value.data,
-  //     defId: def.id,
-  //     key,
-  //   })
-  // }
   if (!value.isMass && !value.isOfflineRetry) {
     actions.ovl.dialog.OkCancelDialog({
       text: "Datensatz löschen?",
@@ -1479,7 +1461,7 @@ export const TableDeleteRow: OvlAction<
     let res = { data: undefined, status: undefined }
     if (!offlineHandled) {
       if (
-        1 === 1 /*OvlConfig._system.OfflineMode*/ &&
+        OvlConfig._system.OfflineMode &&
         !value.isOfflineRetry &&
         state.ovl.app.offline
       ) {
@@ -1501,12 +1483,15 @@ export const TableDeleteRow: OvlAction<
         if (!res.data) {
           // 449 means offline in our context
           if (res.status === 449) {
-            if (1 === 1 /*OvlConfig._system.OfflineMode*/) {
+            if (OvlConfig._system.OfflineMode) {
               if (!value.isOfflineRetry) {
                 DeleteRowOfflineHelper(value.data, idValue, key)
               } else {
                 return
               }
+            } else {
+              SnackAdd("No Server connection!", "Warning")
+              return false
             }
           } else {
             // handleError @@hook

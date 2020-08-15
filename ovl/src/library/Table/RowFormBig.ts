@@ -193,15 +193,18 @@ export class TableRowFormBig extends OvlFormElement {
 
     let handleSave = async () => {
       if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
-        await this.actions.ovl.internal.TableEditSaveRow({
-          key: this.rowData.key,
-          def: this.rowData.tableDef,
-          data: this.rowData.data,
-          formState: this.formState,
-        })
-        // meanwhile save could have changed formState.valid because of save error
-        if (this.formState.valid) {
-          this.actions.ovl.dialog.DialogClose("EditFormBig")
+        if (
+          await this.actions.ovl.internal.TableEditSaveRow({
+            key: this.rowData.key,
+            def: this.rowData.tableDef,
+            data: this.rowData.data,
+            formState: this.formState,
+          })
+        ) {
+          // meanwhile save could have changed formState.valid because of save error
+          if (this.formState.valid) {
+            this.actions.ovl.dialog.DialogClose("EditFormBig")
+          }
         }
       }
     }
