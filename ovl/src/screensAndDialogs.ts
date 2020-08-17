@@ -4,4 +4,5 @@ export let baseDialogs = {
   TableHeaderMenu: {},
   EditFormBig: {},
   HitListDialog: {},
+  DetailView: {},
 }

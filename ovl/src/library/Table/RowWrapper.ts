@@ -188,27 +188,23 @@ export class TableRowWrapper extends OvlBaseElement {
       if (!row) {
         return null
       }
-
+      let detailView
       if (viewRow && viewRow.selected) {
-        this.actions.ovl.overlay.OpenOverlay({
-          templateResult: html`
-            <ovl-trowdetailview
-              id=${"trow" + def.id + key}
-              .props=${() => {
-                return <ViewRowDef>{
-                  tableDef: def,
-                  data: data,
-                  row: row,
-                  key: key,
-                  columnsAlign: this.row.columnsAlign,
-                  columnsVisible: this.row.columnsVisible,
-                }
-              }}
-            >
-            </ovl-trowdetailview>
-          `,
-          elementToFocusAfterClose: document.activeElement,
-        })
+        detailView = html` <ovl-trowdetailview
+          id=${"trow" + def.id + key}
+          .props=${() => {
+            return <ViewRowDef>{
+              tableDef: def,
+              data: data,
+              row: row,
+              key: key,
+              columnsAlign: this.row.columnsAlign,
+              columnsVisible: this.row.columnsVisible,
+            }
+          }}
+        >
+        </ovl-trowdetailview>`
+        this.state.ovl.dialogs.DetailView.visible = true
       }
 
       if (editSelected && editSelected.selected) {
@@ -321,9 +317,8 @@ export class TableRowWrapper extends OvlBaseElement {
           }
         }
       }
-
       return html`
-        ${editFormBig}
+        ${detailView} ${editFormBig}
         <ovl-trow
           @keydown=${(e) => this.handleKeyDown(e)}
           tabindex="0"

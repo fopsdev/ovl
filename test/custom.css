@@ -29,10 +29,6 @@
   grid-template-columns: 110px 1fr;
 }
 
-.ovl-tab-header {
-  margin-left: -15px;
-}
-
 .ovl-formcontrol-custom,
 .ovl-formcontrol-validation {
   width: 100;
@@ -54,8 +50,31 @@
   padding: 0;
   margin: 0;
 }
+
+.ovl-dialog-body {
+  padding-left: 6px;
+  padding-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
 .ovl-hitlistdialog-footer {
   padding: 2px;
+}
+
+.ovl-dialog-footer .fd-bar__right {
+  justify-content: center;
+}
+
+.ovl-dialog-DetailView,
+.ovl-dialog-EditFormBig,
+.ovl-dialog-TableHeaderMenu {
+  width: 70vw;
+  max-width: 70vw;
+}
+
+.ovl-dialog-TableHeaderMenu {
+  width: 50vw;
 }
 
 @media screen and (max-width: 992px) {

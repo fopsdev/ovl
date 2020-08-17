@@ -3,10 +3,10 @@ import { OvlDialog } from "../.."
 import { TemplateResult } from "lit-html"
 
 export type DialogGetParts = {
-  header?: () => TemplateResult | TemplateResult[]
+  header?: () => TemplateResult | TemplateResult[] | Promise<any>
   title?: () => string
-  body?: () => TemplateResult | TemplateResult[]
-  footer?: () => TemplateResult | TemplateResult[]
+  body?: () => TemplateResult | TemplateResult[] | Promise<any>
+  footer?: () => TemplateResult | TemplateResult[] | Promise<any>
   keyHandlerFn?: any
   closedCallbackFn?: any
   dismissedCallbackFn?: any
@@ -48,14 +48,14 @@ export class OvlDialogHolder extends OvlBaseDialog {
     if (chk != "go on") {
       return chk
     }
-    return this.track(() => {
+    return this.track(async () => {
       this.state.ovl.dialogs[this.dialogType].closing
       let d = this.dialogHolderParams.dialogParts
       return this.getDialogTemplate({
-        title: d.title ? d.title() : undefined,
-        body: d.body ? d.body() : undefined,
-        header: d.header ? d.header() : undefined,
-        footer: d.footer ? d.footer() : undefined,
+        title: d.title ? await d.title() : undefined,
+        body: d.body ? await d.body() : undefined,
+        header: d.header ? await d.header() : undefined,
+        footer: d.footer ? await d.footer() : undefined,
         customClass: d.customClass ? d.customClass() : undefined,
         type: d.type ? d.type : undefined,
         keyHandlerFn: d.keyHandlerFn,

@@ -191,30 +191,6 @@ export class TableRowFormBig extends OvlFormElement {
     let columns = def.columns
     let firstEditable = false
 
-    let handleSave = async () => {
-      if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
-        if (
-          await this.actions.ovl.internal.TableEditSaveRow({
-            key: this.rowData.key,
-            def: this.rowData.tableDef,
-            data: this.rowData.data,
-            formState: this.formState,
-          })
-        ) {
-          // meanwhile save could have changed formState.valid because of save error
-          if (this.formState.valid) {
-            this.actions.ovl.dialog.DialogClose("EditFormBig")
-          }
-        }
-      }
-    }
-
-    let acceptEnabled = "fd-button fd-button--positive sap-icon--accept"
-
-    if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
-      acceptEnabled = "fd-button ovl-disabled"
-    }
-
     let customRowCellClasses: ViewRowCellClass_ReturnType
     let functionName = ViewRowCellClass
     let fn = resolvePath(this.actions.custom, def.namespace)
@@ -245,12 +221,219 @@ export class TableRowFormBig extends OvlFormElement {
     if (!customHeaderCellClasses) {
       customHeaderCellClasses = {}
     }
-    let scrollable = "scrollableOverlay"
-    if (this.state.ovl.uiState.isMobile) {
-      scrollable = "scrollableMobileOverlay"
-    }
 
     let caption
+    return html`
+      ${Object.keys(columns).map((k) => {
+        let customHeaderCellClass: CellClass = customHeaderCellClasses[k]
+        let customRowCellClass: CellClass = customRowCellClasses[k]
+        let col = columns[k]
+        let columnsVisible = this.rowData.columnsVisible
+        if (columnsVisible[k].indexOf("Edit") < 0) {
+          return null
+        }
+        let rendererFn = GetRendererFn(
+          def.namespace,
+          cachedRendererFn,
+          EditGetLabelAndValueRender,
+          k
+        )
+        let uiItem
+        let id = "ovlRFNFocus_" + k
+        // let controlAlign = ""
+        // if (this.rowData.columnsAlign[k]) {
+        //   let align: string = this.rowData.columnsAlign[k]
+        //   if (align.indexOf("right") > -1) {
+        //     controlAlign = "text-align:right;"
+        //   } else if (align.indexOf("center") > -1) {
+        //     controlAlign = "text-align:center;"
+        //   }
+        // }
+        let readonly = col.ui.readonly
+        // @@hook
+        let functionName = FieldIsReadOnly.replace("%", k)
+        let fn = resolvePath(this.actions.custom, def.namespace)
+        if (fn && fn[functionName]) {
+          readonly = fn[functionName](<FieldIsReadOnly_Type>{
+            rowKey: this.rowData.key,
+            def,
+            data: this.rowData.data,
+          })
+        }
+        let insertMode = this.rowData.tableDef.database.dbInsertMode
+        if (k === "Code") {
+          if (
+            insertMode === "UDTAutoNumber" ||
+            insertMode === "UDTAutoGUID" ||
+            insertMode === "UDTAutoNumberBoth" ||
+            insertMode === "UDTAutoGUIDBoth"
+          ) {
+            readonly = true
+          }
+        }
+        if (k === "Name") {
+          if (
+            insertMode === "UDTAutoNumberBoth" ||
+            insertMode === "UDTAutoGUIDBoth"
+          ) {
+            readonly = true
+          }
+        }
+        if (!readonly) {
+          if (def.features.focusToFirstEditableField && !firstEditable) {
+            id = "ovlRFNFocus_focus"
+            firstEditable = true
+          }
+        }
+        if (rendererFn) {
+          uiItem = rendererFn(<EditGetLabelAndValueRenderer_Type>{
+            field: fields[k],
+            customHeaderCellClass,
+            customRowCellClass,
+            id,
+            readonly,
+          })
+        } else {
+          if (!readonly) {
+            //@@todo switch case for the other controltypes (combo, area, check,...)
+            switch (col.control) {
+              case "text":
+                this.textBoxesToRerender.push(id)
+                uiItem = html`
+                  <ovl-textbox
+                    id="${id}"
+                    class="fd-form__item "
+                    .props=${() => {
+                      return {
+                        field: fields[k],
+                        customHeaderCellClass,
+                        customRowCellClass,
+                        row: this.rowData.row,
+                        isInline: false,
+                      }
+                    }}
+                  >
+                  </ovl-textbox>
+                `
+                break
+
+              case "date":
+                uiItem = html`
+                  <ovl-datebox
+                    id="${id}"
+                    class="fd-form__item "
+                    .props=${() => {
+                      return {
+                        field: fields[k],
+                        customHeaderCellClass,
+                        customRowCellClass,
+                        row: this.rowData.row,
+                        isInline: false,
+                      }
+                    }}
+                  >
+                  </ovl-datebox>
+                `
+                break
+
+              case "time":
+                uiItem = html`
+                  <ovl-timebox
+                    id="${id}"
+                    class="fd-form__item "
+                    .props=${() => {
+                      return {
+                        field: fields[k],
+                        customHeaderCellClass,
+                        customRowCellClass,
+                        row: this.rowData.row,
+                        isInline: false,
+                      }
+                    }}
+                  >
+                  </ovl-timebox>
+                `
+                break
+
+              case "textarea":
+                uiItem = html`
+                  <ovl-textarea
+                    id="${id}"
+                    class="fd-form__item "
+                    .props=${() => {
+                      return {
+                        field: fields[k],
+                        customHeaderCellClass,
+                        customRowCellClass,
+                        row: this.rowData.row,
+                        isInline: false,
+                      }
+                    }}
+                  >
+                  </ovl-textarea>
+                `
+                break
+
+              case "list":
+                {
+                  uiItem = html`
+                    <ovl-listcontrol
+                      id="${id}"
+                      class="fd-form__item "
+                      .props=${() => {
+                        return {
+                          field: fields[k],
+                          customHeaderCellClass,
+                          customRowCellClass,
+                          row: this.rowData.row,
+                          isInline: false,
+                        }
+                      }}
+                    >
+                    </ovl-listcontrol>
+                  `
+                }
+                break
+              case "checkbox":
+                {
+                  uiItem = html`
+                    <ovl-checkbox
+                      id="${id}"
+                      class="fd-form__item "
+                      .props=${() => {
+                        return {
+                          field: fields[k],
+                          customHeaderCellClass,
+                          customRowCellClass,
+                          row: this.rowData.row,
+                          isInline: false,
+                        }
+                      }}
+                    >
+                    </ovl-checkbox>
+                  `
+                }
+                break
+            }
+          } else {
+            uiItem = fields[k].value
+          }
+        }
+
+        return html`
+          <div
+            data-col="${k}"
+            @click="${this.handleClick}"
+            @long-press="${this.handleLongPress}"
+          >
+            ${uiItem}
+          </div>
+        `
+      })}
+    `
+  }
+  getHeader() {
+    let def = this.rowData.tableDef
     // lets see if we have a custom caption renderer
     if (def.options.edit.customCaption) {
       let captionFunctionName = EditGetCaptionRender
@@ -277,6 +460,7 @@ export class TableRowFormBig extends OvlFormElement {
             break
         }
       }
+
       if (captionFn[captionFunctionName]) {
         captionContent = captionFn[captionFunctionName](<
           EditGetCaptionRender_Type
@@ -289,238 +473,54 @@ export class TableRowFormBig extends OvlFormElement {
         captionContent = captionTranslated
       }
       if (captionContent) {
-        caption = html`
+        return html`
           <div class="ovl-panel__header ovl-detailview-header fd-has-type-1">
             ${captionContent}
           </div>
         `
       }
+    } else {
+      return null
     }
+  }
+
+  getFooter() {
+    let handleSave = async () => {
+      if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
+        if (
+          await this.actions.ovl.internal.TableEditSaveRow({
+            key: this.rowData.key,
+            def: this.rowData.tableDef,
+            data: this.rowData.data,
+            formState: this.formState,
+          })
+        ) {
+          // meanwhile save could have changed formState.valid because of save error
+          if (this.formState.valid) {
+            this.actions.ovl.dialog.DialogClose("EditFormBig")
+          }
+        }
+      }
+    }
+
+    let acceptEnabled = "fd-button fd-button--positive sap-icon--accept"
+
+    if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
+      acceptEnabled = "fd-button ovl-disabled"
+    }
+
     return html`
-      <div class="ovl-bigeditform-content ${scrollable}">
-        ${caption}
-        ${Object.keys(columns).map((k) => {
-          let customHeaderCellClass: CellClass = customHeaderCellClasses[k]
-          let customRowCellClass: CellClass = customRowCellClasses[k]
-          let col = columns[k]
-          let columnsVisible = this.rowData.columnsVisible
-          if (columnsVisible[k].indexOf("Edit") < 0) {
-            return null
-          }
-          let rendererFn = GetRendererFn(
-            def.namespace,
-            cachedRendererFn,
-            EditGetLabelAndValueRender,
-            k
-          )
-          let uiItem
-          let id = "ovlRFNFocus_" + k
-          // let controlAlign = ""
-          // if (this.rowData.columnsAlign[k]) {
-          //   let align: string = this.rowData.columnsAlign[k]
-          //   if (align.indexOf("right") > -1) {
-          //     controlAlign = "text-align:right;"
-          //   } else if (align.indexOf("center") > -1) {
-          //     controlAlign = "text-align:center;"
-          //   }
-          // }
-          let readonly = col.ui.readonly
-          // @@hook
-          let functionName = FieldIsReadOnly.replace("%", k)
-          let fn = resolvePath(this.actions.custom, def.namespace)
-          if (fn && fn[functionName]) {
-            readonly = fn[functionName](<FieldIsReadOnly_Type>{
-              rowKey: this.rowData.key,
-              def,
-              data: this.rowData.data,
-            })
-          }
-          let insertMode = this.rowData.tableDef.database.dbInsertMode
-          if (k === "Code") {
-            if (
-              insertMode === "UDTAutoNumber" ||
-              insertMode === "UDTAutoGUID" ||
-              insertMode === "UDTAutoNumberBoth" ||
-              insertMode === "UDTAutoGUIDBoth"
-            ) {
-              readonly = true
-            }
-          }
-          if (k === "Name") {
-            if (
-              insertMode === "UDTAutoNumberBoth" ||
-              insertMode === "UDTAutoGUIDBoth"
-            ) {
-              readonly = true
-            }
-          }
-          if (!readonly) {
-            if (def.features.focusToFirstEditableField && !firstEditable) {
-              id = "ovlRFNFocus_focus"
-              firstEditable = true
-            }
-          }
-          if (rendererFn) {
-            uiItem = rendererFn(<EditGetLabelAndValueRenderer_Type>{
-              field: fields[k],
-              customHeaderCellClass,
-              customRowCellClass,
-              id,
-              readonly,
-            })
-          } else {
-            if (!readonly) {
-              //@@todo switch case for the other controltypes (combo, area, check,...)
-              switch (col.control) {
-                case "text":
-                  this.textBoxesToRerender.push(id)
-                  uiItem = html`
-                    <ovl-textbox
-                      id="${id}"
-                      class="fd-form__item "
-                      .props=${() => {
-                        return {
-                          field: fields[k],
-                          customHeaderCellClass,
-                          customRowCellClass,
-                          row: this.rowData.row,
-                          isInline: false,
-                        }
-                      }}
-                    >
-                    </ovl-textbox>
-                  `
-                  break
-
-                case "date":
-                  uiItem = html`
-                    <ovl-datebox
-                      id="${id}"
-                      class="fd-form__item "
-                      .props=${() => {
-                        return {
-                          field: fields[k],
-                          customHeaderCellClass,
-                          customRowCellClass,
-                          row: this.rowData.row,
-                          isInline: false,
-                        }
-                      }}
-                    >
-                    </ovl-datebox>
-                  `
-                  break
-
-                case "time":
-                  uiItem = html`
-                    <ovl-timebox
-                      id="${id}"
-                      class="fd-form__item "
-                      .props=${() => {
-                        return {
-                          field: fields[k],
-                          customHeaderCellClass,
-                          customRowCellClass,
-                          row: this.rowData.row,
-                          isInline: false,
-                        }
-                      }}
-                    >
-                    </ovl-timebox>
-                  `
-                  break
-
-                case "textarea":
-                  uiItem = html`
-                    <ovl-textarea
-                      id="${id}"
-                      class="fd-form__item "
-                      .props=${() => {
-                        return {
-                          field: fields[k],
-                          customHeaderCellClass,
-                          customRowCellClass,
-                          row: this.rowData.row,
-                          isInline: false,
-                        }
-                      }}
-                    >
-                    </ovl-textarea>
-                  `
-                  break
-
-                case "list":
-                  {
-                    uiItem = html`
-                      <ovl-listcontrol
-                        id="${id}"
-                        class="fd-form__item "
-                        .props=${() => {
-                          return {
-                            field: fields[k],
-                            customHeaderCellClass,
-                            customRowCellClass,
-                            row: this.rowData.row,
-                            isInline: false,
-                          }
-                        }}
-                      >
-                      </ovl-listcontrol>
-                    `
-                  }
-                  break
-                case "checkbox":
-                  {
-                    uiItem = html`
-                      <ovl-checkbox
-                        id="${id}"
-                        class="fd-form__item "
-                        .props=${() => {
-                          return {
-                            field: fields[k],
-                            customHeaderCellClass,
-                            customRowCellClass,
-                            row: this.rowData.row,
-                            isInline: false,
-                          }
-                        }}
-                      >
-                      </ovl-checkbox>
-                    `
-                  }
-                  break
-              }
-            } else {
-              uiItem = fields[k].value
-            }
-          }
-
-          return html`
-            <div
-              data-col="${k}"
-              @click="${this.handleClick}"
-              @long-press="${this.handleLongPress}"
-            >
-              ${uiItem}
-            </div>
-          `
-        })}
-      </div>
-      <div
-        class="fd-layout-panel__footer ovl-bigdialog-footer ovl-bigeditform-footer "
-      >
-        <button
-          @click=${handleSave}
-          title="Datensatz speichern"
-          class="${acceptEnabled}"
-        ></button>
-        <div style="margin-left:100px;"></div>
-        <button
-          @click=${this.handleCancel}
-          title="Abbrechen"
-          class="fd-button fd-button--negative sap-icon--decline"
-        ></button>
-      </div>
+      <button
+        @click=${handleSave}
+        title="Datensatz speichern"
+        class="${acceptEnabled}"
+      ></button>
+      <div style="margin-left:100px;"></div>
+      <button
+        @click=${this.handleCancel}
+        title="Abbrechen"
+        class="fd-button fd-button--negative sap-icon--decline"
+      ></button>
     `
   }
   async getUI() {
@@ -546,7 +546,9 @@ export class TableRowFormBig extends OvlFormElement {
             })
             this.textBoxesToRerender = []
           },
+          header: () => this.getHeader(),
           body: () => this.getBody(),
+          footer: () => this.getFooter(),
           closedCallbackFn: this.closeEdit,
           customClass: () => {
             let def = this.rowData.tableDef

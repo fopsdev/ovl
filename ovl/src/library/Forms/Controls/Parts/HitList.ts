@@ -88,10 +88,6 @@ export class OvlHitList extends OvlBaseElement {
       if (this.controlState.animation) {
         animation = "animated fadeIn faster"
       }
-      let scrollable = ""
-      if (this.controlState.type === "overlay") {
-        scrollable = "scrollableOverlay"
-      }
       let lookupTypes = listData.lookupDef
 
       if (!lookupTypes) {
@@ -142,11 +138,7 @@ export class OvlHitList extends OvlBaseElement {
       }
 
       return html`
-        <div
-          id="ovlhitlist"
-          @keydown=${(e) => this.handleMainKeyDown(e)}
-          class="${scrollable} localList"
-        >
+        <div id="ovlhitlist" @keydown=${(e) => this.handleMainKeyDown(e)}>
           <table class="fd-table ${animation}">
             ${thead}
             <tbody class="fd-table__body">
@@ -207,23 +199,5 @@ export class OvlHitList extends OvlBaseElement {
         </div>
       `
     })
-  }
-  afterRender() {
-    // overlay2ToRender.elementToFocusAfterOpen = document.getElementById(
-    //   this.controlState.fieldId + this.controlState.type + "ovlhl_1"
-    // )
-  }
-  updated() {
-    //only set scrollable if bigger than windowheight
-    // if (!this.focusSet && this.controlState.type === "overlay") {
-    //   this.focusSet = true
-    //   //@@workaround
-
-    //   let el2 = document.getElementById("ovlhitlist")
-    //   el2.style.width = (el2.offsetWidth + 16).toString() + "px"
-
-    //   // somehow it renders too small (maybe scrollbar issue). consider this as a workaround
-    // }
-    super.updated()
   }
 }

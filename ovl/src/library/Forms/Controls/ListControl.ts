@@ -47,6 +47,7 @@ export class OvlListControl extends OvlBaseElement {
   deleteElement: any
   localList: TemplateResult
   hitListDialogBody: TemplateResult
+  hitListDialogFooter: TemplateResult
   displayValue: any
   writeBackValue: any
   lastDisplayValue: any
@@ -97,6 +98,13 @@ export class OvlListControl extends OvlBaseElement {
       return
     }
 
+    this.hitListDialogFooter = html`
+      <button
+        @click=${this.handleCancel}
+        title="Abbrechen"
+        class="fd-button fd-button--negative sap-icon--decline"
+      ></button>
+    `
     this.hitListDialogBody = html`
       <ovl-hitlist
         .props=${(state) => {
@@ -118,13 +126,6 @@ export class OvlListControl extends OvlBaseElement {
           }
         }}
       ></ovl-hitlist>
-      <div class="fd-layout-panel__footer  ovl-hitlistdialog-footer">
-        <button
-          @click=${this.handleCancel}
-          title="Abbrechen"
-          class="fd-button fd-button--negative sap-icon--decline"
-        ></button>
-      </div>
     `
     await this.resetLocalList()
 
@@ -538,6 +539,7 @@ export class OvlListControl extends OvlBaseElement {
 
         dialogHolderParams = {
           dialogParts: {
+            footer: () => this.hitListDialogFooter,
             body: () => this.hitListDialogBody,
             closedCallbackFn: () => {
               this.hitListDialogBody = undefined

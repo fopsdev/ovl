@@ -121,9 +121,16 @@ export class OvlBaseDialog extends OvlBaseElement {
         </header>
       `
     }
+    let scrollable = "scrollableOverlay"
+    if (this.state.ovl.uiState.isMobile) {
+      scrollable = "scrollableMobileOverlay"
+    }
+
     let body
     if (dialogParts.body) {
-      body = html`<div class="fd-message-box__body ovl-dialog-body">
+      body = html`<div
+        class="fd-message-box__body ovl-dialog-body ${scrollable}"
+      >
         ${dialogParts.body}
       </div>`
     }
