@@ -14,6 +14,7 @@ export type Init = {
 
 type OvlConfig = {
   _system: {
+    fetchTimeout: number
     Version: string
     IsDev: boolean
     OfflineMode: boolean
@@ -46,6 +47,7 @@ import { OvlState, OvlAction } from "./index"
 
 let OvlConfig: OvlConfig = {
   _system: {
+    fetchTimeout: 5000,
     Version: "0.5",
     IsDev: false,
     OfflineMode: false,

@@ -108,7 +108,7 @@ export const ovlFetch = async (
 
     timer = setTimeout(() => {
       controller.abort()
-    }, 5000)
+    }, OvlConfig._system.fetchTimeout)
 
     reqOptions.signal = signal
 

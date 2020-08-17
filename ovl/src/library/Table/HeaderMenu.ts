@@ -918,13 +918,14 @@ export class TableHeaderMenu extends OvlBaseElement {
     let refresh = null
     if (this.headerMenu.def.def.uiState.needsRefresh === true) {
       refresh = html`
-        <li>
+        <li role="listitem" class="fd-list__item fd-list__item--link">
           <a
             @click="${(e) => this.handleRefreshTableClick(e)}"
             href="#"
-            class="fd-menu__item sap-icon--refresh"
+            class="fd-list__link"
           >
-            Ansicht aktualisieren</a
+            <span class="fd-list__icon sap-icon--refresh"></span>
+            <span class="fd-list__title">Ansicht aktualisieren</span></a
           >
         </li>
       `

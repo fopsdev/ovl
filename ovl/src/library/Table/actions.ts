@@ -700,8 +700,22 @@ const EditSaveRowOfflineHelper = (
       })
     }
   }
-
+  TablesNeedsRefresh(data)
   //saveState(true, "OffMode")
+}
+
+const TablesNeedsRefresh = (data: TableData) => {
+  let tableDef = data.tableDef
+  Object.keys(tableDef).forEach((k) => {
+    let d: TableDef = tableDef[k]
+    if (
+      d.options.sort.field ||
+      d.options.sortCustom.selected ||
+      d.options.filter.value ||
+      Object.keys(d.options.filterCustom).length > 0
+    )
+      d.uiState.needsRefresh = true
+  })
 }
 
 const TableEditSaveRowHelper = async (
@@ -718,19 +732,6 @@ const TableEditSaveRowHelper = async (
   let rows = data.data
   let row = rows[key]
   let fn = resolvePath(actions.custom, def.namespace)
-  // first of all we need to send all offline data if any and do the cleanup/key fixup
-  // if (
-  //   !isOfflineRetry &&
-  //   data.offline &&
-  //   1 === 1 /*OvlConfig._system.OfflineMode*/
-  // ) {
-  //   let res = await actions.ovl.internal.TableOfflineHandler({
-  //     data,
-  //     defId: def.id,
-  //     key,
-  //   })
-  // }
-
   let rowId = row["_ovl" + def.database.dataIdField]
   let isAdd = !!(
     rowId.indexOf(ovltemp) > -1 ||
@@ -824,7 +825,7 @@ const TableEditSaveRowHelper = async (
           data.offline &&
           !state.ovl.app.offline
         ) {
-          let res = await actions.ovl.internal.TableOfflineHandler({
+          await actions.ovl.internal.TableOfflineHandler({
             data,
             defId: def.id,
             key,
@@ -904,18 +905,10 @@ const TableEditSaveRowHelper = async (
                   )
                 } else {
                   // if its offlineRetry don't do anything in case of offline error (elsewise the same data will be tried to be added again for offline handling)
-                  // data.data["_ovl" + def.database.dataIdField] =
-                  //   data.data[def.database.dataIdField]
                   return
                 }
               } else {
                 SnackAdd("No Server Connection!", "Warning")
-                // if it has no offline handling
-                // if (hasFormState) {
-                //   formState.valid = false
-                // }
-                // data.data["_ovl" + def.database.dataIdField] =
-                //   data.data[def.database.dataIdField]
                 return
               }
             }
@@ -924,7 +917,6 @@ const TableEditSaveRowHelper = async (
             else {
               let saveErrorFnName = FormSaveError
               // handleError @@hook
-              console.log("calling error hook")
               let fn = resolvePath(actions.custom, def.namespace)
               if (fn && fn[saveErrorFnName]) {
                 if (
@@ -992,6 +984,8 @@ const TableEditSaveRowHelper = async (
         delete data.index[rowId]
       }
       data.index[rowId2] = key
+
+      TablesNeedsRefresh(data)
 
       if (!noSnack) {
         SnackAdd("Datensatz gespeichert", "Success")
@@ -1319,7 +1313,7 @@ export const TableCopyRow: OvlAction<{
     newRow["Name"] = newRow[def.database.dataIdField]
   }
   value.data.data[newId] = newRow
-  def.uiState.dataFilteredAndSorted.push(newId)
+
   addRowDefInit(value.data.tableDef, newId, "copy")
   actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
   addRowPage(def)
@@ -1368,12 +1362,9 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
     }
   }
   value.data.data[newId] = newRow
-  def.uiState.dataFilteredAndSorted.push(newId)
+
   addRowDefInit(value.data.tableDef, newId, "add")
   actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
-  // let editRow: SelectedEditRow = { mode: "add", selected: true }
-  // def.uiState.editRow[newId] = editRow
-  //setTableRow(value, undefined, undefined, newRow, true, actions, false)
   addRowPage(def)
 }
 
