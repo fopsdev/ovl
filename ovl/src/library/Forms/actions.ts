@@ -129,7 +129,6 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
 
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
-
   switch (type) {
     case "text":
       field.convertedValue = val
@@ -587,7 +586,9 @@ export const ChangeField: OvlAction<ChangeField> = (
   field.watched = !value.isInit
   let newVal = value.value
   let namespace = value.formState.namespace
-
+  console.log("change field")
+  console.log(field.fieldKey)
+  console.log(value.value)
   field.value = newVal
   actions.ovl.internal.ValidateDataType({
     fieldId: value.fieldId,

@@ -26,7 +26,7 @@ export const FormChanged: OvlAction<FormChanged_Type> = async (
             row: value.row,
           }
         )
-        let itemCode = value.formState.fields["U_ItemCode"].value
+        let itemCode = value.formState.fields["U_ItemCode"].convertedValue
         if (itemCode) {
           let itemGroup = listdata.data[itemCode]["ItmsGrpCod"]
 

@@ -29,6 +29,7 @@ export let tblTableTesting: TableDef = {
     endpoint: "tabletesting",
   },
   options: {
+    edit: { editType: "big" },
     customRowActions: {
       Select: {
         icon: "sap-icon--travel-expense",
@@ -59,17 +60,17 @@ export let tblTableTesting: TableDef = {
     detailView: "Enabled",
   },
   columns: {
-    U_Alpha: {
-      sortable: true,
+    // U_Alpha: {
+    //   sortable: true,
 
-      width: 1,
-    },
-    U_Memo: {
-      sortable: true,
+    //   width: 1,
+    // },
+    // U_Memo: {
+    //   sortable: true,
 
-      control: "textarea",
-      width: 2,
-    },
+    //   control: "textarea",
+    //   width: 2,
+    // },
     U_ItmsGrpCod: {
       sortable: true,
       control: "list",
@@ -95,26 +96,26 @@ export let tblTableTesting: TableDef = {
       },
       width: 10,
     },
-    U_Checked: {
-      sortable: true,
-      control: "checkbox",
-      width: 1,
-      ui: { checkedValue: "Y", align: "center" },
-    },
+    // U_Checked: {
+    //   sortable: true,
+    //   control: "checkbox",
+    //   width: 1,
+    //   ui: { checkedValue: "Y", align: "center" },
+    // },
 
-    U_Date: {
-      sortable: true,
-      control: "date",
-      width: 2,
-    },
-    U_Int: {
-      sortable: true,
-      width: 1,
-    },
-    U_Decimal: {
-      sortable: true,
-      width: 1,
-    },
+    // U_Date: {
+    //   sortable: true,
+    //   control: "date",
+    //   width: 2,
+    // },
+    // U_Int: {
+    //   sortable: true,
+    //   width: 1,
+    // },
+    // U_Decimal: {
+    //   sortable: true,
+    //   width: 1,
+    // },
   },
 }
 

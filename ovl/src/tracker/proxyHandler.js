@@ -135,11 +135,11 @@ export function createDeepProxy(target) {
     let cbs = paths.get(path)
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0
-      // console.log("tracked mutation on: " + path)
-      // console.log("update will be called on:")
+      console.log("tracked mutation on: " + path)
+      console.log("update will be called on:")
       cbs.forEach((key) => {
         // console.log("added for rerender:")
-        // console.log(key.name)
+        console.log(key.name)
         callbacksToCall.add(key)
       })
       // console.log(
@@ -157,10 +157,12 @@ export function createDeepProxy(target) {
     if (!window.blocked) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
-        //console.log("rerender: " + k.name)
+        //console.log(callbacksToCall)
+        console.log("rerender: " + k.name)
         k.doRender()
+        callbacksToCall.delete(k)
       })
-      callbacksToCall = new Set()
+      //callbacksToCall = new Set()
     } else {
       window.requestAnimationFrame(callCallbacks)
     }

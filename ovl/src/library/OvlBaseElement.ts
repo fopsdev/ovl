@@ -193,9 +193,9 @@ export class OvlBaseElement extends HTMLElement {
             res = html`<div>${res}</div>`
           }
         }
-        render(res, this)
+        await render(res, this)
 
-        this.afterRender()
+        await this.afterRender()
         setTimeout(() => {
           this.updated()
         }, 50)

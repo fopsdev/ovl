@@ -138,7 +138,7 @@ export class OvlDate extends OvlBaseElement {
   afterRender() {
     // place picker under date with picker on the right just visible
     this.inputElement = document.getElementById(this.field.field.id)
-    if (this.inputElement) {
+    if (this.inputElement && this.field.field.convertedValue) {
       if (this.state.ovl.uiState.isMobile) {
         this.inputElement.value = this.field.field.convertedValue.substring(
           0,
