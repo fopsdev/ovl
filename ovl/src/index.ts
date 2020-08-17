@@ -11,7 +11,7 @@ import * as demoAppState from "../../test/src/state"
 import * as demoAppActions from "../../test/src/actions"
 import * as customActions from "../../test/src/customActions"
 
-import { createDeepProxy } from "./tracker/proxyHandler"
+import { createDeepProxy, rerender } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
@@ -81,22 +81,26 @@ export let ovl = {
 
 const interceptorAsyncFn = (originalFn) => {
   return async (value) => {
+    rerender.blocked = true
     let res = await originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
+    rerender.blocked = false
     return res
   }
 }
 
 const interceptorFn = (originalFn) => {
   return (value) => {
+    rerender.blocked = true
     let res = originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
+    rerender.blocked = false
     return res
   }
 }

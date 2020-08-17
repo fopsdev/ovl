@@ -1,6 +1,7 @@
 import { paths, isTracking, addTrackedPath, disposeTrack } from "./tracker"
 import { SnackTrackedRemove } from "../library/helpers"
 import { stringifyReplacer } from "../global/globals"
+export let rerender = { blocked: false }
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
   let callbacksToCall = new Set()
@@ -154,7 +155,7 @@ export function createDeepProxy(target) {
   }
   function callCallbacks() {
     // call onUpdate method of affected component
-    if (!window.blocked) {
+    if (!rerender.blocked) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
         //console.log(callbacksToCall)

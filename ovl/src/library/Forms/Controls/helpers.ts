@@ -35,6 +35,8 @@ import { Field, FormState } from "../actions"
 import { ListState } from "./ListControl"
 import { UIValidationObject } from "./uiValidationHelper"
 import { OvlBaseElement } from "../../OvlBaseElement"
+import { OvlConfig } from "../../../init"
+import { SnackAdd } from "../../helpers"
 
 export type LookupListPostData = {
   url: string
@@ -110,6 +112,8 @@ export const KeyValueListFromServerFn = async (
       })
     })
     listData.lookupDef = res.data.lookupDef
+  } else if (!OvlConfig._system.OfflineMode) {
+    SnackAdd("No Server Connection", "Warning")
   }
 }
 
