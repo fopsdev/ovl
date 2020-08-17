@@ -170,7 +170,6 @@ export class OvlListControl extends OvlBaseElement {
       this.inputElement.dispatchEvent(event)
       //this.writeBackValue = undefined
 
-      this.localList = null
       await this.resetLocalList()
       if (this.deleteElement) {
         this.deleteElement.classList.remove("hide")
@@ -252,9 +251,7 @@ export class OvlListControl extends OvlBaseElement {
         })
         await this.inputElement.dispatchEvent(event)
         this.writeBackValue = undefined
-
-        this.localList = null
-        await this.doRender()
+        await this.resetLocalList()
 
         return
       } else {
@@ -268,8 +265,7 @@ export class OvlListControl extends OvlBaseElement {
         })
         await this.inputElement.dispatchEvent(event)
         this.writeBackValue = undefined
-        this.localList = null
-        await this.doRender()
+        await this.resetLocalList()
         return
       }
     }
@@ -417,14 +413,14 @@ export class OvlListControl extends OvlBaseElement {
         let wasAlreadyOpen = false
         if (this.localList !== null) {
           wasAlreadyOpen = true
-          this.localList = null
-          await this.doRender()
+          await this.resetLocalList()
         }
         //we have a list so present it to the user
         if (document.activeElement === this.inputElement) {
           this.localList = html`
             <div class="fd-layout-panel">
               <ovl-hitlist
+                id="ovl-hitlist"
                 .props=${(state) => {
                   let listData: FieldGetList_ReturnType = resolvePath(
                     this.actions.custom,
@@ -661,6 +657,9 @@ export class OvlListControl extends OvlBaseElement {
   }
   async resetLocalList() {
     this.localList = null
-    await this.doRender()
+    let hitlistEl = document.getElementById("ovl-hitlist")
+    if (hitlistEl) {
+      await hitlistEl.doRender()
+    }
   }
 }
