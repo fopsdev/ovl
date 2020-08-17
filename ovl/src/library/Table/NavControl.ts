@@ -68,9 +68,9 @@ export class TableNavControl extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
       let compact = ""
-      // if (this.state.ovl.uiState.isMobile || this.nav.type === "row") {
-      //   compact = "fd-button--compact"
-      // }
+      if (this.nav.type === "row") {
+        compact = "fd-button--compact"
+      }
       let tableDef = this.nav.tableData.def
       let feature = tableDef.features
 

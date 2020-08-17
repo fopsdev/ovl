@@ -547,7 +547,7 @@ export class OvlListControl extends OvlBaseElement {
             },
           },
 
-          zIndex: 7,
+          zIndex: 8,
           dialogType: "HitListDialog",
         }
         hitListDialog = html`<ovl-dialogholder

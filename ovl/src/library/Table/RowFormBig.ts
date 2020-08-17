@@ -556,7 +556,7 @@ export class TableRowFormBig extends OvlFormElement {
             this.cancelFn()
           },
         },
-        zIndex: 6,
+        zIndex: 7,
         dialogType: "EditFormBig",
       }
       return html`<ovl-dialogholder
