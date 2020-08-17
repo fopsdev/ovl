@@ -73,7 +73,7 @@ export class OvlBaseDialog extends OvlBaseElement {
 
     let handleTopLevelClick = (e: Event) => {
       e.stopPropagation()
-      e.preventDefault()
+      //e.preventDefault()
       if (dialogParts.emptySpaceClickHandlerFn) {
         dialogParts.emptySpaceClickHandlerFn()
       }
@@ -161,7 +161,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     return html`<div
       style="z-index:${this.zIndex};"
       class="fd-message-box ${typeClass} fd-message-box--active fadeInDialog ${disableIfClosing} "
-      @click="${handleDismiss}"
+      @mousedown="${handleDismiss}"
     >
       <div
         class="fd-message-box__content ovl-dialog ovl-dialog-${this
@@ -169,7 +169,7 @@ export class OvlBaseDialog extends OvlBaseElement {
         role="dialog"
         tabindex="0   "
         aria-modal="true"
-        @click="${handleTopLevelClick}"
+        @mousedown="${handleTopLevelClick}"
         @keydown=${keyHandler}
         id="ovl-dialog"
       >
