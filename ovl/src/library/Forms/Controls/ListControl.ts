@@ -451,7 +451,7 @@ export class OvlListControl extends OvlBaseElement {
               ></ovl-hitlist>
             </div>
           `
-          console.log("open locl")
+
           await this.doRender()
         }
         if (openLocalList) {
@@ -465,11 +465,6 @@ export class OvlListControl extends OvlBaseElement {
       }
     }, waitTime)
   }
-  // handleTopLevelClick(e: Event) {
-  //   e.stopPropagation()
-  //   e.preventDefault()
-  //   debugger
-  //}
   async getUI() {
     return this.track(() => {
       this.field = this.props(this.state)
