@@ -33,8 +33,9 @@ export const ViewAfterRender: OvlAction<ViewAfterRender_Type> = async ({
     "hello from tabletesting view afterrender hook. you may do some crazy stuff in here. why not add a chart?"
   )
   let mainViewEl: HTMLCollection = document.getElementsByClassName(
-    "ovl-detailview-body"
+    "ovl-dialog-body"
   )
+
   if (mainViewEl.length > 0) {
     let div
     div = document.getElementById("customViewChart")

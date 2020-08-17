@@ -73,6 +73,10 @@
   max-width: 70vw;
 }
 
+.ovl-dialog-DetailView {
+  height: 100%;
+}
+
 .ovl-dialog-TableHeaderMenu {
   width: 50vw;
 }
