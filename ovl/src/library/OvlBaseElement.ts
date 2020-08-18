@@ -79,6 +79,7 @@ export const scrollToLastPosition = (state: OvlState) => {
 }
 
 import { render, TemplateResult, html } from "lit-html"
+import { actionTracking } from "../tracker/proxyHandler"
 
 export class OvlBaseElement extends HTMLElement {
   state: OvlState
@@ -159,7 +160,7 @@ export class OvlBaseElement extends HTMLElement {
   async doRender() {
     //console.log("render " + this.name)
     let checkScreen
-
+    actionTracking.lastActionName = "Component " + this.name
     this.state.ovl.language.translations
     if (this.screen) {
       if (this.screenClosing()) {

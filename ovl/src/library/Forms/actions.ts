@@ -585,9 +585,6 @@ export const ChangeField: OvlAction<ChangeField> = (
   field.watched = !value.isInit
   let newVal = value.value
   let namespace = value.formState.namespace
-  console.log("change field")
-  console.log(field.fieldKey)
-  console.log(value.value)
   field.value = newVal
   actions.ovl.internal.ValidateDataType({
     fieldId: value.fieldId,

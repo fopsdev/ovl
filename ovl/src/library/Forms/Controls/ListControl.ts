@@ -397,7 +397,7 @@ export class OvlListControl extends OvlBaseElement {
     this.timer = setTimeout(async () => {
       //@ts-ignore
       let filterValue = this.inputElement.value
-      console.log(filterValue)
+
       this.setValues(undefined, filterValue)
 
       let filteredKeys = FilterHitList(
@@ -565,14 +565,6 @@ export class OvlListControl extends OvlBaseElement {
         this.lastDisplayValue = field.value
       }
 
-      console.log(
-        "render : " +
-          this.name +
-          " / " +
-          this.field.field.fieldKey +
-          " value: " +
-          this.lastDisplayValue
-      )
       return html`
         ${hitListDialog}
         <div @focusout=${(e) => this.handleFocusOut(e)}>
@@ -646,15 +638,6 @@ export class OvlListControl extends OvlBaseElement {
       }
     }
     if (this.inputElement) {
-      console.log(
-        "after render " +
-          this.name +
-          " / " +
-          this.field.field.fieldKey +
-          " value: " +
-          this.lastDisplayValue
-      )
-
       this.inputElement.value = this.lastDisplayValue
       if (this.state.ovl.uiState.isMobile && this.localList) {
         this.inputElement.scrollIntoView(true)

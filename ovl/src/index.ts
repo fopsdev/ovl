@@ -11,7 +11,7 @@ import * as demoAppState from "../../test/src/state"
 import * as demoAppActions from "../../test/src/actions"
 import * as customActions from "../../test/src/customActions"
 
-import { createDeepProxy, currentAction } from "./tracker/proxyHandler"
+import { createDeepProxy, actionTracking } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
@@ -81,26 +81,28 @@ export let ovl = {
 
 const interceptorAsyncFn = (originalFn, key) => {
   return async (value) => {
-    currentAction.name = key
+    actionTracking.lastActionName = key
+    actionTracking.actionRunning = true
     let res = await originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
-    currentAction.name = undefined
+    actionTracking.actionRunning = false
     return res
   }
 }
 
 const interceptorFn = (originalFn, key) => {
   return (value) => {
-    currentAction.name = key
+    actionTracking.lastActionName = key
+    actionTracking.actionRunning = true
     let res = originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
-    currentAction.name = undefined
+    actionTracking.actionRunning = false
     return res
   }
 }

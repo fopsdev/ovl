@@ -883,21 +883,6 @@ export class TableHeaderMenu extends OvlBaseElement {
       `
     }
 
-    let paging = this.headerMenu.def.def.options.paging
-    let navcontrol
-    if (def.features.page && dataFilteredAndSorted.length > paging.pageSize) {
-      navcontrol = html`
-        <ovl-tnavcontrol
-          .props=${() => {
-            return {
-              tableData: this.headerMenu.def,
-              type: "header",
-            } as NavDef
-          }}
-        ></ovl-tnavcontrol>
-      `
-    }
-
     let addRow
 
     if (def.features.add) {
@@ -973,42 +958,15 @@ export class TableHeaderMenu extends OvlBaseElement {
       `
     }
 
-    let scrollable = "scrollableOverlay"
-    if (this.state.ovl.uiState.isMobile) {
-      scrollable = "scrollableMobileOverlay"
-    }
-
     return html`
-      <div
-        class="ovl-bigdialog-content ovl-tableheadermenu-content ${scrollable}"
-      >
+      <div class="ovl-bigdialog-content ovl-tableheadermenu-content">
         <div>
           ${columnFunctions} ${customSort} ${customFilter} ${selectedFunctions}
           ${tableFunctions}
         </div>
       </div>
-      <div
-        class="fd-layout-panel__footer ovl-bigdialog-footer ovl-tableheadermenu-footer"
-      >
-        ${navcontrol}
-        <button
-          @click="${(e) => this.handleCloseHeaderMenu(e)}"
-          style="margin-left:4px;"
-          title="Abbrechen"
-          class="fd-button fd-button--negative sap-icon--decline"
-        ></button>
-      </div>
     `
   }
-  // isVisible = (): boolean => {
-  //   let def = this.headerMenu.def.def
-  //   let res =
-  //     def.uiState.headerSelected !== "" ||
-  //     this.state.ovl.dialogs.TableHeaderMenu.isClosing
-  //   // this.state.ovl.dialogs.TableHeaderMenu.visible
-
-  //   return res
-  // }
 
   visibleHandling = (dependsOn: any) => {
     let dlgState = this.state.ovl.dialogs.TableHeaderMenu
@@ -1019,7 +977,34 @@ export class TableHeaderMenu extends OvlBaseElement {
       dlgState.closing = true
     }
   }
+  async getFooter() {
+    let navcontrol
+    let def = this.headerMenu.def.def
+    let paging = this.headerMenu.def.def.options.paging
+    if (
+      def.features.page &&
+      def.uiState.dataFilteredAndSorted.length > paging.pageSize
+    ) {
+      navcontrol = html`
+        <ovl-tnavcontrol
+          .props=${() => {
+            return {
+              tableData: this.headerMenu.def,
+              type: "header",
+            } as NavDef
+          }}
+        ></ovl-tnavcontrol>
+      `
+    }
 
+    return html` ${navcontrol}
+      <button
+        @click="${(e) => this.handleCloseHeaderMenu(e)}"
+        style="margin-left:4px;"
+        title="Abbrechen"
+        class="fd-button fd-button--negative sap-icon--decline"
+      ></button>`
+  }
   async getUI() {
     return this.track(() => {
       let dependsOn = this.headerMenu.def.def.uiState.headerSelected
@@ -1033,6 +1018,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       // to make it look nicer i even used methods for the different parts
       dialogHolderParams = {
         dialogParts: {
+          footer: () => this.getFooter(),
           body: () => this.getBody(),
           emptySpaceClickHandlerFn: () => {
             this.filterDropDownHidden = !this.filterDropDownHidden

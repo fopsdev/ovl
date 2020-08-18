@@ -11,7 +11,7 @@ import {
 } from "../../ovl/src/index"
 export { TableDefIds, CustomFormType, Language }
 
-//OvlConfig._system.debugTracking = true
+OvlConfig._system.debugTracking = true
 
 OvlConfig.requiredActions = {
   customRehydrateActionPath: undefined,

@@ -85,6 +85,7 @@ export class TableRowDetailView extends OvlBaseElement {
   }
   handleClose = () => {
     this.actions.ovl.dialog.DialogClose("DetailView")
+    this.actions.ovl.internal.TableCloseViewRow()
   }
 
   handleTabClick = (e: Event, key: string | number) => {

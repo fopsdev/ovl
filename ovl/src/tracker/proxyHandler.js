@@ -2,7 +2,7 @@ import { paths, isTracking, addTrackedPath, disposeTrack } from "./tracker"
 import { SnackTrackedRemove } from "../library/helpers"
 import { stringifyReplacer } from "../global/globals"
 import { OvlConfig } from "../init"
-export let currentAction = { name: undefined }
+export let actionTracking = { actionRunning: false, lastActionName: undefined }
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
   let callbacksToCall = new Set()
@@ -138,7 +138,9 @@ export function createDeepProxy(target) {
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0
       if (OvlConfig._system.debugTracking) {
-        console.log("action: " + currentAction.name + " mutated: " + path)
+        console.log(
+          "action: " + actionTracking.lastActionName + " mutated: " + path
+        )
         console.log("affected components:")
       }
       let debugInfo = []
@@ -159,7 +161,7 @@ export function createDeepProxy(target) {
   function callCallbacks() {
     // call onUpdate method of affected component
     // but only when actions are finished (currentAction)
-    if (currentAction.name === undefined) {
+    if (!actionTracking.actionRunning) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
         if (OvlConfig._system.debugTracking) {
