@@ -27,9 +27,25 @@ export const FormCanDelete: OvlAction<
   FormCan_ReturnType
 > = async ({ rowKey, tableData }) => {
   let row = <TableTesting>tableData.data[rowKey]
-  return row.U_Alpha && row.U_Alpha.indexOf("nodelete") > -1
-    ? 'Löschen nicht möglich da Text "nodelete" enthält!'
-    : ""
+  if (row.U_Alpha && row.U_Alpha.indexOf("nodelete") > -1) {
+    return 'Löschen nicht möglich da Text "nodelete" enthält!'
+  }
+  // check if the key is linked to another row (parentkeys)
+
+  let keyToCheck = row.Code
+  let data = tableData.data
+  let affectedRows = Object.keys(data).filter((k) => {
+    let d: TableTesting = data[k]
+    return d.U_ParentCode === keyToCheck || d.U_ParentCode2 === keyToCheck
+  })
+  let msg = ""
+  affectedRows.forEach((k) => {
+    let d: TableTesting = data[k]
+    msg = msg + `Code ${d.Code}, U_Alpha ${d.U_Alpha} /`
+  })
+  if (msg) {
+    return "Verlinkt in: " + msg
+  }
 }
 
 export const FormStatus: OvlAction<

@@ -639,9 +639,9 @@ export class OvlListControl extends OvlBaseElement {
     }
     if (this.inputElement) {
       this.inputElement.value = this.lastDisplayValue
-      if (this.state.ovl.uiState.isMobile && this.localList) {
-        this.inputElement.scrollIntoView(true)
-      }
+      // if (this.state.ovl.uiState.isMobile && this.localList) {
+      //   this.inputElement.scrollIntoView(true)
+      // }
     }
   }
   setValues(val: string, dispVal: string) {

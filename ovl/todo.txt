@@ -2,6 +2,8 @@
 
 Todos:
 
+X - ParentCode GetList... Try add a new Parent in EditForm and save and reload
+
 X - tabletesting u_decimal cannot be entered
 X - check duplicate/copy table function
 X - transaltion add doesn't add it to the internal list thus needs a refresh so the trans can be used
