@@ -108,10 +108,29 @@ export const KeyValueListFromServerFn = async (
         localListState[k] = {}
       }
       Object.keys(serverData[k]).forEach((c) => {
-        localListState[k][c] = serverData[k][c]
+        if (localListState[k][c] !== serverData[k][c]) {
+          localListState[k][c] = serverData[k][c]
+        }
       })
     })
-    listData.lookupDef = res.data.lookupDef
+    let lookupDef = res.data.lookupDef
+    if (lookupDef) {
+      Object.keys(lookupDef).forEach((k) => {
+        if (!listData.lookupDef[k]) {
+          listData.lookupDef[k] = { type: "text" }
+        }
+
+        if (lookupDef[k]) {
+          Object.keys(lookupDef[k]).forEach((c) => {
+            if (listData.lookupDef[k][c] !== lookupDef[k][c]) {
+              listData.lookupDef[k][c] = lookupDef[k][c]
+            }
+          })
+        }
+      })
+    }
+
+    //listData.lookupDef = res.data.lookupDef
   } else if (!OvlConfig._system.OfflineMode) {
     SnackAdd("No Server Connection", "Warning")
   }

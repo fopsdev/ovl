@@ -99,7 +99,7 @@ export class CompLoginForm extends OvlFormElement {
           footer: () => this.getFooter(),
           keyHandlerFn: handleKey,
         },
-        zIndex: 2,
+        zIndex: 12,
         dialogType: "Login",
       }
       return html`<ovl-dialogholder

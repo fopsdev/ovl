@@ -11,7 +11,7 @@ import * as demoAppState from "../../test/src/state"
 import * as demoAppActions from "../../test/src/actions"
 import * as customActions from "../../test/src/customActions"
 
-import { createDeepProxy, rerender } from "./tracker/proxyHandler"
+import { createDeepProxy, currentAction } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
@@ -79,28 +79,28 @@ export let ovl = {
   effects,
 }
 
-const interceptorAsyncFn = (originalFn) => {
+const interceptorAsyncFn = (originalFn, key) => {
   return async (value) => {
-    rerender.blocked = true
+    currentAction.name = key
     let res = await originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
-    rerender.blocked = false
+    currentAction.name = undefined
     return res
   }
 }
 
-const interceptorFn = (originalFn) => {
+const interceptorFn = (originalFn, key) => {
   return (value) => {
-    rerender.blocked = true
+    currentAction.name = key
     let res = originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
-    rerender.blocked = false
+    currentAction.name = undefined
     return res
   }
 }
@@ -110,9 +110,9 @@ const getMethods = (obj) =>
     if (typeof obj[item] === "function") {
       let isAsync = obj[item].toString().startsWith("async")
       if (isAsync) {
-        obj[item] = interceptorAsyncFn(obj[item])
+        obj[item] = interceptorAsyncFn(obj[item], item)
       } else {
-        obj[item] = interceptorFn(obj[item])
+        obj[item] = interceptorFn(obj[item], item)
       }
     } else if (typeof obj[item] === "object") {
       getMethods(obj[item])

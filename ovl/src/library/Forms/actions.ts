@@ -126,7 +126,6 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
   }
   let val = value.newVal
   let res = value.validationResult
-
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
   switch (type) {

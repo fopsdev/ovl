@@ -1,7 +1,8 @@
 import { paths, isTracking, addTrackedPath, disposeTrack } from "./tracker"
 import { SnackTrackedRemove } from "../library/helpers"
 import { stringifyReplacer } from "../global/globals"
-export let rerender = { blocked: false }
+import { OvlConfig } from "../init"
+export let currentAction = { name: undefined }
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
   let callbacksToCall = new Set()
@@ -136,18 +137,20 @@ export function createDeepProxy(target) {
     let cbs = paths.get(path)
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0
-      console.log("tracked mutation on: " + path)
-      console.log("update will be called on:")
+      if (OvlConfig._system.debugTracking) {
+        console.log("action: " + currentAction.name + " mutated: " + path)
+        console.log("affected components:")
+      }
+      let debugInfo = []
       cbs.forEach((key) => {
-        // console.log("added for rerender:")
-        console.log(key.name)
+        debugInfo.push(key)
         callbacksToCall.add(key)
       })
-      // console.log(
-      //   "Submitting for rAF: callbacksToCall Count: " +
-      //     callbacksToCall.size.toString()
-      // )
-
+      if (OvlConfig._system.debugTracking) {
+        debugInfo.forEach((d) => {
+          console.log(d)
+        })
+      }
       if (freshQueueToRender) {
         window.requestAnimationFrame(callCallbacks)
       }
@@ -155,11 +158,13 @@ export function createDeepProxy(target) {
   }
   function callCallbacks() {
     // call onUpdate method of affected component
-    if (!rerender.blocked) {
+    // but only when actions are finished (currentAction)
+    if (currentAction.name === undefined) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
-        //console.log(callbacksToCall)
-        console.log("rerender: " + k.name)
+        if (OvlConfig._system.debugTracking) {
+          console.log("rerender: " + k.name)
+        }
         k.doRender()
         callbacksToCall.delete(k)
       })
