@@ -1,4 +1,4 @@
-import { LookupDef as demoAppState } from "../../ovl/src/library/forms/OvlFormElement"
+import { LookupDef } from "../../ovl/src/library/forms/OvlFormElement"
 import { ListFnReturnValue, TableData } from "../../ovl/src/library/Table/Table"
 import { File } from "./components/FileList/FileList"
 import { tblAudit } from "./screens/Audit/state"
@@ -217,8 +217,8 @@ let tableTesting: TableData = {
     tab2: tblTableTesting2,
     tab3: tblTableTesting3,
   },
-  lookupDef: <{ [key: string]: demoAppState }>{ U_Alpha: { type: "text" } },
-  lookupDef2: <{ [key: string]: demoAppState }>{
+  lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
+  lookupDef2: <{ [key: string]: LookupDef }>{
     U_Alpha: { type: "text" },
     U_Date: { type: "date" },
   },
