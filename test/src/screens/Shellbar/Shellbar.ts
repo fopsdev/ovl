@@ -116,6 +116,10 @@ export class CompShellbar extends OvlBaseElement {
             <ovl-translation> </ovl-translation>
             <comp-dashboard> </comp-dashboard>
             <comp-tabletesting> </comp-tabletesting>
+            <comp-mobiletimeentry id="mobiletimerecordingmain1">
+            </comp-mobiletimeentry>
+            <comp-mobiletimeentryform id="mobiletimerecording1">
+            </comp-mobiletimeentryform>
           </div>
         `
       }
