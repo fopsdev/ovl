@@ -12,18 +12,18 @@ export class OvlTextArea extends OvlBaseElement {
   inputElement: any
   formState: FormState
 
-  handleKeyUp(e: KeyboardEvent) {
-    //if (e.key === "Enter") {
-    let event = new CustomEvent("ovlchange", {
-      bubbles: true,
-      detail: {
-        val: this.inputElement.value,
-        id: this.field.field.id,
-      },
-    })
-    this.inputElement.dispatchEvent(event)
-    //}
-  }
+  // handleKeyUp(e: KeyboardEvent) {
+  //   //if (e.key === "Enter") {
+  //   let event = new CustomEvent("ovlchange", {
+  //     bubbles: true,
+  //     detail: {
+  //       val: this.inputElement.value,
+  //       id: this.field.field.id,
+  //     },
+  //   })
+  //   this.inputElement.dispatchEvent(event)
+  //   //}
+  // }
 
   handleFocusOut(e: Event) {
     e.stopPropagation()
@@ -96,7 +96,6 @@ export class OvlTextArea extends OvlBaseElement {
               customRowTooltip ? customRowTooltip : undefined,
               this
             )}"
-            @keyup=${(e) => this.handleKeyUp(e)}
             @change=${(e) => this.handleChange(e)}
             @focusout=${(e) => this.handleFocusOut(e)}
             class="fd-textarea ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input  ovl-table-value-textarea ovl-table-value__${field.fieldKey} ${customRowClassName}"

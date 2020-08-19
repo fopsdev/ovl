@@ -197,7 +197,7 @@ export const FilterHitList = (
               .toLowerCase()
               .indexOf(filterValue.toLowerCase()) > -1
           ) {
-            hitLength[f] = checkRow[c].length - filterValue.length
+            hitLength[f] = checkVal.length - filterValue.length
             return true
           }
         }

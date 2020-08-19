@@ -133,7 +133,7 @@ export type FormCustomFilter_Type = {
   def: TableDef
   lang: Language
   data: TableData
-  row: { [key: string]: {} }
+  row: any
 }
 export type FormCustomFilter_ReturnType = boolean
 export const FormCustomFilter = "FormCustom_%_Filter"

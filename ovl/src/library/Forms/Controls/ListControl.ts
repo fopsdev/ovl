@@ -451,6 +451,9 @@ export class OvlListControl extends OvlBaseElement {
           dataList
         )
         this.writeBackValue = singleValue
+        if (this.localList) {
+          this.forceCloseLocalHitList()
+        }
       } else {
         let wasAlreadyOpen = false
         if (this.localList !== null) {
