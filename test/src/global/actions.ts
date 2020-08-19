@@ -212,5 +212,5 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
   }
   await actions.ovl.form.InitForm(loginForm)
   await actions.demoApp.system.user.Login(state.ovl.forms.Login.loginform)
-  actions.ovl.navigation.NavigateTo("TableTesting")
+  actions.ovl.navigation.NavigateTo("MobileTimeEntry")
 }

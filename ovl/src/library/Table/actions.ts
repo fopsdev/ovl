@@ -359,7 +359,7 @@ export const TableRefreshDataFromServer: OvlAction<{
           )
         }
         let listdata: FieldGetList_ReturnType = fn[functionName]({
-          row: serverData[k],
+          row: serverData[i],
         } as FieldGetList_Type)
 
         let value = localData[dataKey][c]
@@ -1276,6 +1276,7 @@ export const TableCloseViewRow: OvlAction<{
   def: TableDef
 }> = (value) => {
   let def = value.def
+
   def.uiState.viewRow[value.key].selected = false
 }
 

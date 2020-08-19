@@ -31,12 +31,13 @@ export const FormShow: OvlAction = async (formState: FormState) => {
 
 export const Field_U_Type_GetList: OvlAction = (row: {
   [key: string]: {}
-}): ListFnReturnValue => {
+}): FieldGetList_ReturnType => {
   return {
     data: {
       Prj: { Code: "PROJECT", Description: "Projekt" },
       Abs: { Code: "ABSENCE", Description: "Absenz" },
     },
+    index: undefined,
   }
 }
 

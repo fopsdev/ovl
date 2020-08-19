@@ -85,7 +85,6 @@ export class TableRowDetailView extends OvlBaseElement {
   }
   handleClose = () => {
     this.actions.ovl.dialog.DialogClose("DetailView")
-    this.actions.ovl.internal.TableCloseViewRow()
   }
 
   handleTabClick = (e: Event, key: string | number) => {
@@ -471,6 +470,12 @@ export class TableRowDetailView extends OvlBaseElement {
             }
           },
           dismissedCallbackFn: () => this.handleClose(),
+          closedCallbackFn: () => {
+            this.actions.ovl.internal.TableCloseViewRow({
+              def: this.rowData.tableDef,
+              key: this.rowData.key,
+            })
+          },
           body: () => this.getBody(),
           footer: async () => await this.getFooter(),
           header: () => this.getHeader(),
