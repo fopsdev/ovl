@@ -294,6 +294,7 @@ export let tblTableTesting2: TableDef = {
         acceptOnlyListValues: false,
         valueField: "Code",
         displayField: "U_Alpha",
+        displayValueField: false,
       },
       ui: {
         visibility: "TableNotMobile_Edit_View",

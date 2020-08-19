@@ -762,6 +762,10 @@ const TableEditSaveRowHelper = async (
   } else {
     newData = rowToSave
   }
+  if (!newData || Object.keys(newData).length === 0) {
+    // there is nothing to update...
+    return key
+  }
   if (!newData[def.database.dataIdField]) {
     newData[def.database.dataIdField] = rowId
   }

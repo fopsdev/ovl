@@ -217,7 +217,10 @@ let tableTesting: TableData = {
     tab2: tblTableTesting2,
     tab3: tblTableTesting3,
   },
-  lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
+  lookupDef: <{ [key: string]: LookupDef }>{
+    Code: { type: "text" },
+    U_Alpha: { type: "text" },
+  },
   lookupDef2: <{ [key: string]: LookupDef }>{
     U_Alpha: { type: "text" },
     U_Date: { type: "date" },

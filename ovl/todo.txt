@@ -2,7 +2,12 @@
 
 Todos:
 
- - ParentCode GetList... Try add a new Parent in EditForm and save and reload
+- Lookup: DisplayValueField not working
+- Lookup: If users enters code directly and it is a index data then returns "Keine Einträge gefunde..." which is wrong
+  -> Maybe: Adjust FilterHitlist do also do a direct search if list is empty
+==> Rethink both points: Maybe by adding the Code field as well to the lookups both are solved.
+
+X - ParentCode GetList... Try add a new Parent in EditForm and save and reload
 
 X - tabletesting u_decimal cannot be entered
 X - check duplicate/copy table function

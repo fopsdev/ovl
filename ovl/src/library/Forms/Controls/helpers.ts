@@ -21,6 +21,7 @@ import {
   FieldGetValueRender_Type,
   FieldGetValueRender_ReturnType,
   FieldGetLabelRender_Type,
+  FieldGetList_ReturnType,
 } from "../../../global/hooks"
 import { OvlState, OvlEffects, ovl } from "../../../index"
 import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
@@ -146,9 +147,12 @@ export const FilterHitList = (
 ) => {
   let hitLength = {}
   let functionName = FieldGetFilteredList.replace("%", fieldId)
-  let dataList = resolvePath(ovl.actions.custom, formState.namespace)[
-    FieldGetList.replace("%", fieldId)
-  ](<FieldGetList_Type>{ row: GetRowFromFormState(formState) })
+  let dataList: FieldGetList_ReturnType = resolvePath(
+    ovl.actions.custom,
+    formState.namespace
+  )[FieldGetList.replace("%", fieldId)](<FieldGetList_Type>{
+    row: GetRowFromFormState(formState),
+  })
   if (dataList.data) {
     let res = Object.keys(dataList.data)
     let fn = resolvePath(ovl.actions.custom, formState.namespace)
@@ -159,20 +163,12 @@ export const FilterHitList = (
       })
     }
 
-    let lookupTypes = dataList.lookupTypes
+    let lookupTypes = dataList.lookupDef
 
     if (!lookupTypes) {
       lookupTypes = {}
-      lookupTypes[list.displayField] = "text"
-      lookupTypes[list.valueField] = "text"
-      // get the types from the data and assume its text
-      // let keys = Object.keys(dataList.data)
-      // if (keys.length > 0) {
-      //   lookupTypes = Object.keys(dataList.data[keys[0]]).reduce((val, k) => {
-      //     val[k] = "text"
-      //     return val
-      //   }, {})
-      // }
+      lookupTypes[list.displayField] = { type: "text" }
+      lookupTypes[list.valueField] = { type: "text" }
     }
     if (!filterValue) {
       filterValue = ""
@@ -185,7 +181,7 @@ export const FilterHitList = (
       return Object.keys(lookupTypes).some((c) => {
         let checkVal = checkRow[c]
         if (checkVal !== undefined) {
-          let typ = lookupTypes[c]
+          let typ = lookupTypes[c].type
           if (typ === "date") {
             checkVal = getDateValue(checkVal)
           } else if (typ === "decimal") {
@@ -213,6 +209,12 @@ export const FilterHitList = (
     if (top) {
       res.splice(top)
     }
+
+    // if (dataList.index) {
+    //   res = res.map((m) => {
+    //     return dataList.data[m][list.valueField]
+    //   })
+    // }
     return res
   }
   return []

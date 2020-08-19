@@ -1,7 +1,7 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 
-import { resolvePath } from "../../../global/globals"
+import { resolvePath, getDecimalValue } from "../../../global/globals"
 import {
   FieldGetList,
   FieldGetList_Type,
@@ -197,7 +197,6 @@ export class OvlListControl extends OvlBaseElement {
         10
       )
       if (filteredKeys.length === 1) {
-        debugger
         let dataList: FieldGetList_ReturnType = resolvePath(
           this.actions.custom,
           formState.namespace
@@ -205,6 +204,9 @@ export class OvlListControl extends OvlBaseElement {
           row: GetRowFromFormState(formState),
         })
         let singleValue = filteredKeys[0]
+        if (dataList.index) {
+          singleValue = dataList.data[singleValue][field.list.valueField]
+        }
         this.displayValue = GetListDisplayValue(
           field.list,
           singleValue,
@@ -303,6 +305,9 @@ export class OvlListControl extends OvlBaseElement {
             row: GetRowFromFormState(formState),
           })
           singleValue = filteredKeys[0]
+          if (listData.index) {
+            singleValue = listData.data[singleValue][field.list.valueField]
+          }
           val = GetListDisplayValue(field.list, singleValue, listData)
         }
         // if it allow non list values also send a change
@@ -326,9 +331,9 @@ export class OvlListControl extends OvlBaseElement {
           )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
             row: GetRowFromFormState(formState),
           })
-          if (listData.data[singleValue]) {
-            val = listData.data[singleValue][field.list.displayField]
-          }
+
+          val = GetListDisplayValue(field.list, singleValue, listData)
+
           if (singleValue !== formState.fields[foundId].convertedValue) {
             this.writeBackValue = singleValue
             let event = new CustomEvent("ovlchange", {
@@ -415,6 +420,7 @@ export class OvlListControl extends OvlBaseElement {
       )
 
       if (filteredKeys.length < 1) {
+        // maybe the user added directly a code and we have a index
         if (this.deleteElement) {
           this.deleteElement.classList.remove("hide")
         }
