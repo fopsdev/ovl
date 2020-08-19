@@ -1,3 +1,56 @@
+@font-face {
+  font-family: "72Condensed";
+  src: url(fonts/72/72-Condensed.woff2) format("woff2");
+
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "72Condensed";
+  src: url(fonts/72/72-CondensedBold.woff2) format("woff2");
+
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "72";
+  src: url(fonts/72/72-Regular.woff2) format("woff2");
+
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "72";
+  src: url(fonts/72/72-Italic.woff2) format("woff2");
+
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "72";
+  src: url(fonts/72/72-Light.woff2) format("woff2");
+
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "72";
+  src: url(fonts/72/72-Bold.woff2) format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "72";
+  src: url(fonts/72/72-BoldItalic.woff2) format("woff2");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: SAP-icons;
+  src: url(icons/SAP-icons.woff2) format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
 /* some overwritten fundamental styles
 #############################################################
 */
@@ -33,7 +86,7 @@
 }
 
 .fd-form-message {
-  padding: 0;
+  padding: 12 0 0 0;
   white-space: normal !important;
 }
 
@@ -41,27 +94,30 @@
 #############################################################
 */
 
-.ovl-bigeditform,
-.ovl-detailview {
-  width: 70vw;
-  height: 98vh;
+.ovl-disabled {
+  pointer-events: none;
 }
 
-@media screen and (max-width: 992px) {
-  .ovl-bigeditform,
-  .ovl-detailview {
-    width: 99vw;
-    height: 98vh;
+.ovl-dialog-Modal .ovl-dialog-body {
+  padding: 12px;
+}
+
+/* firefox needs this to support breaks inside textarea */
+@supports (-moz-appearance: none) {
+  textarea {
+    white-space: pre-wrap !important;
   }
 }
 
-.ovl-value-view {
-  margin-top: -18px;
-  margin-bottom: 12px;
-  white-space: pre-line;
+.ovl-table-value-textarea {
+  white-space: pre-wrap;
 }
 
-.ovl-formcontrol-textarea-input {
+.ovl-detailview-container {
+  margin-bottom: 1em;
+}
+
+.ovl-table-textarea-input {
   height: 70px;
 }
 
@@ -71,8 +127,15 @@
 .ovl-formcontrol-value {
   grid-area: value;
 }
+.ovl-formcontrol-custom {
+  grid-area: custom;
+}
 .ovl-formcontrol-validation {
   grid-area: validation;
+}
+
+.ovl-editform .ovl-formcontrol-custom {
+  grid-area: custom;
 }
 
 .ovl-inlineeditform .ovl-formcontrol-checkbox-container {
@@ -99,7 +162,20 @@
   grid-template-areas:
     "label"
     "value"
+    "custom"
     "validation";
+}
+
+.ovl-tableview-rowcell {
+  vertical-align: middle;
+}
+
+.ovl-tableview-rowcell-LinkImage img {
+  width: 128px;
+}
+
+.ovl-detailview-value-LinkImage img {
+  width: 100%;
 }
 
 .menuDisabled {
@@ -113,7 +189,6 @@
   z-index: 5;
   background: #fff;
 }
-
 ovl-trg {
   display: table-row-group;
 }
@@ -144,39 +219,33 @@ ovl-table {
   --fd-width-gutter: 8px;
 }
 
-.ovl-panel__header {
-  margin: 2px;
-  padding: 2px;
-  justify-content: center;
-}
-
-.ovl-panel__footer {
-  margin: 2px;
-  padding: 2px;
-  margin-bottom: 8px;
+.ovl-bigdialog-listtitle {
+  font-size: medium;
+  margin-bottom: 7px;
+  box-shadow: 0px 24px 24px 0px #f5f3f3 inset;
 }
 
 .scrollableMobileOverlay {
   overflow-y: auto;
-  height: calc(100vh - 55px);
+  max-height: calc(92vh - 60px);
   -webkit-overflow-scrolling: touch;
 }
 
 .scrollableOverlay {
   overflow-y: auto;
-  height: calc(100vh - 63px);
+  max-height: calc(92vh - 60px);
   -webkit-overflow-scrolling: touch;
 }
 
 .scrollableMobile {
   overflow-y: auto;
-  height: calc(100vh - 50px);
+  max-height: calc(100vh - 50px);
   -webkit-overflow-scrolling: touch;
 }
 
 .scrollable {
   overflow-y: auto;
-  height: calc(100vh - 47px);
+  max-height: calc(100vh - 50px);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -196,57 +265,7 @@ body {
   }
 }
 
-.nopointerevents {
-  pointer-events: none;
-}
-
-.cols2080 {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(100px, 1fr) minmax(200px, 2fr)
-  );
-  grid-template-rows: auto;
-}
-
-.evenCols2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  grid-template-rows: auto;
-}
-
-.dateInputCols2 {
-  display: grid;
-  grid-template-columns: 93% 7%;
-  grid-gap: 0px;
-  grid-template-rows: auto;
-}
-
-.evenCols3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 10px;
-  grid-template-rows: auto;
-}
-.evenCols4 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
-  grid-template-rows: auto;
-}
-
 @media (orientation: landscape) {
-  .ovldialogcentered {
-    width: 350px;
-    position: absolute;
-    top: 43%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1007;
-  }
-
   .ovlsnackbar {
     width: 40vw;
     position: absolute;
@@ -256,15 +275,6 @@ body {
 }
 
 @media (orientation: portrait) {
-  .ovldialogcentered {
-    width: 300px;
-    position: absolute;
-    top: 43%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 7;
-  }
-
   .ovlsnackbar {
     width: 100vw;
     position: absolute;
@@ -275,30 +285,12 @@ body {
   .chartwidth {
     width: 93vw;
   }
-}
-
-@media (max-width: 600px) {
-  .timelinenextarrow {
-  }
-  .timelinenextarrowdown {
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAVFBMVEVHcEzn5/zm5vzj4//n5/zm5vzp6f/o6Pvm5v3n5/zk5P/o6Pz////n5/zn5/zn5/z////o6P/n5/zk5P/n5/zn5/ro6P/p6fvn5/zn5/zn5/vn5/w6apjbAAAAG3RSTlMA/VMJysUij3DpE00D9/zdAhbsJrM1Czqs9Nnog9ijAAAA3UlEQVRo3u3VRxLCQAxE0SHOkHP0/e/J3jioNWLF7wPoF9ivnBJjzLimYwQIECBAgAABAgQIECBAgAABAgT+JZAb17I5cHx67l+39p8wW+j353flT1q/1fuHk/YYlivt/vmiPujbS7m/e+iv0mZvvz+Zel7WYg+UH3PITm9WDgoADwcNgM5BBaBy0AFoHDwAFA4+AAKHEvGxyfEArBz8AGwcagBYONQBGOdQC2CMQz2AYQ4RAAY5lBS+HA+gn0MUgD4OcQC6OUQC6OIQC+CbQzSANod4AC0OJTHG1H0Aez/DkbfNSeMAAAAASUVORK5CYII=");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    margin-bottom: -4%;
+  .ovl-tableview-rowcell-LinkImage img {
+    width: 80px;
   }
 }
 
 @media (min-width: 600px) {
-  .timelinenextarrow {
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAe1BMVEVHcEzl5/3l6Pzl6Pzp6f/l5/vl6Pzl6Pzl6Pzl6fzl6Pzj4//l6Pzm5vrl6vrV1f/k6Pzl5/zm6fzk6Pzo6P/f3//m6Pzl6Pzl6Pzn5//m6fz////k5/zn5//m6P3m5v/l6PzM///l6Pzl6Pzl6Pzq6v/l6Pzm5vrl6PzvVNhEAAAAKHRSTlMAd/5OF4Dy/PPjmwnEMjEG3cNRTBYI3MeoKlABSxVvKfQFnOTFGKYz5KqByAAAAMxJREFUaN7tmFkOggAMBVGQxV1w3xBcePc/oZ5AQ3QSNW/+ySQU2r4GgTHGGGOMeZsrLTg3sECnHBao29uxAmk9gAVaRbBA2QgWKN3CgkepYYF0W8ACXSJYoGwMC5SGsEBJBxZI9QQWaDhv+UBrphtYoLiABc9LrY/Qr2CBZgdYoGUJCxTvYYGS448L6FdEF5n+TOEfjW4VdLN70a7xgfPlI5Me+vTaQi9e9OoIL7/0+k4HEDpC0SEQjrF0EKdPCfgxBD/nGGOMMcb8EXe0290rHhvFpQAAAABJRU5ErkJggg==");
-    background-repeat: no-repeat;
-    background-position-x: 110%;
-    background-size: 50% 100%;
-  }
-  .timelinenextarrowdown {
-    display: none;
-  }
-
   .chartwidth {
     width: 95vw;
   }
@@ -351,7 +343,7 @@ body {
   animation-name: fadeOutScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.5s;
+  animation-duration: 0.25s;
 }
 
 @keyframes fadeOutScreen {
@@ -360,6 +352,40 @@ body {
   }
   100% {
     opacity: 0;
+  }
+}
+
+.fadeOutDialog {
+  opacity: 0;
+  animation-name: fadeOutDialog;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.25s;
+}
+
+@keyframes fadeOutDialog {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fadeInDialog {
+  opacity: 1;
+  animation-name: fadeInDialog;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.25s;
+}
+
+@keyframes fadeInDialog {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -410,7 +436,7 @@ body {
   animation-name: fadeInScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.3s;
+  animation-duration: 0.25s;
 }
 
 @keyframes fadeInScreen {

@@ -1,26 +1,57 @@
-import { Action, AsyncAction } from "overmind"
-import { OpenDialogState, ResultType } from "./Dialog"
-import { Screen } from "../../index"
+import { OpenModalDialogState, ResultType } from "./Dialog"
+import { OvlAction, OvlDialog, FormType } from "../../index"
+import { FormValidate_Type } from "../../global/hooks"
+import { modalDialog, T } from "../../global/globals"
+import { TemplateResult } from "lit-html"
+import { DialogType } from "./OvlDialogBase"
+import { OvlConfig } from "../../init"
 
-let currentScreen: Screen = undefined
-export let dialogAfterClose = {
-  elementToFocus: undefined,
-  currentScreen,
+export type OpenDialogOptions = {
+  dialogType: OvlDialog
+  elementIdToFocusAfterOpen?: string
+  elementIdToFocusAfterClose?: string
+  formType?: FormType
+  formId?: string
 }
 
-export const DialogOpen: AsyncAction<OpenDialogState> = async (
-  { state, actions },
-  value
+export const DialogClose: OvlAction<OvlDialog> = async (value, { state }) => {
+  state.ovl.dialogs[value].closing = true
+}
+
+export const DialogOpen: OvlAction<OpenDialogOptions> = async (
+  value,
+  { state }
+) => {
+  let wait = 0
+  let dlgState = state.ovl.dialogs[value.dialogType]
+  if (dlgState.closing) {
+    wait = 400
+  }
+  setTimeout(() => {
+    let elFocusId = value.elementIdToFocusAfterOpen
+    if (!elFocusId && value.formType) {
+      elFocusId =
+        value.formId +
+        state.ovl.forms[value.formType][value.formId].lastTouchedField
+    }
+    dlgState.elementIdToFocusAfterOpen = elFocusId
+    dlgState.elementIdToFocusAfterClose = value.elementIdToFocusAfterClose
+    dlgState.visible = true
+    dlgState.closing = false
+  }, wait)
+}
+
+export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
+  value,
+  { state, actions }
 ) => {
   if (!state.ovl.libState.dialog) {
     //@ts-ignore
     state.ovl.libState.dialog = {}
   }
-  if (state.ovl.libState.dialog.closing) {
-    await actions.ovl.internal.DialogClosed()
-  }
-  dialogAfterClose.elementToFocus = document.activeElement
-  dialogAfterClose.currentScreen = state.ovl.screens.nav.currentScreen
+  state.ovl.libState.dialog.type = value.type
+  state.ovl.libState.dialog.customClass = value.customClass
+  state.ovl.libState.dialog.title = value.title
   state.ovl.libState.dialog.default = value.default
   if (value.cancel !== "NoButton") {
     state.ovl.libState.dialog.cancelText =
@@ -39,32 +70,84 @@ export const DialogOpen: AsyncAction<OpenDialogState> = async (
   } else {
     state.ovl.libState.dialog.okText = ""
   }
-  state.ovl.libState.dialog.text = value.text
+  modalDialog.text = value.text
   state.ovl.libState.dialog.result = undefined
-  state.ovl.libState.dialog.visible = true
-  state.ovl.libState.dialog.closing = false
+  let elementIdToFocusAfterOpen = "ovldialogcancel"
+  if (state.ovl.libState.dialog.default == 1) {
+    elementIdToFocusAfterOpen = "ovldialogok"
+  }
+  actions.ovl.dialog.DialogOpen({
+    dialogType: "Modal",
+    elementIdToFocusAfterOpen,
+  })
 }
 
 type OkCancelDialog = {
-  text: string
+  text: string | TemplateResult
   default: ResultType
+  type?: DialogType
+  customClass?: string
+  title?: string
 }
-export const OkCancelDialog: AsyncAction<OkCancelDialog> = async (
-  { actions },
-  value
-) =>
-  await actions.ovl.dialog.DialogOpen({
+type OkDialog = {
+  text: string | TemplateResult
+  type?: DialogType
+  customClass?: string
+  title?: string
+}
+export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
+  value,
+  { actions, state }
+) => {
+  let type: DialogType = "standard"
+  if (value.type) {
+    type = value.type
+  }
+  let title = T("AppTitle")
+
+  if (OvlConfig.defaultDialogTitle) {
+    title = T(OvlConfig.defaultDialogTitle)
+  }
+  if (value.title) {
+    title = value.title
+  }
+  let customClass = ""
+  if (value.customClass) {
+    customClass = value.customClass
+  }
+  await actions.ovl.dialog.ModalDialogOpen({
+    title,
+    customClass,
+    type,
     cancel: "AppCancel",
     ok: "AppOk",
     text: value.text,
     default: value.default,
   })
+}
 
-export const OkDialog: AsyncAction<{ text: string }> = async (
-  { actions },
-  value
-) => {
-  actions.ovl.dialog.DialogOpen({
+export const OkDialog: OvlAction<OkDialog> = async (value, { actions }) => {
+  let type: DialogType = "standard"
+  if (value.type) {
+    type = value.type
+  }
+  let customClass = ""
+  if (value.customClass) {
+    customClass = value.customClass
+  }
+
+  let title = T("AppTitle")
+  if (OvlConfig.defaultDialogTitle) {
+    title = T(OvlConfig.defaultDialogTitle)
+  }
+  if (value.title) {
+    title = value.title
+  }
+
+  await actions.ovl.dialog.ModalDialogOpen({
+    title,
+    customClass,
+    type,
     cancel: "NoButton",
     ok: "AppOk",
     text: value.text,

@@ -1,5 +1,3 @@
-import { overmind } from "../.."
-import { TableDefIds } from "../../../../test/src"
 import {
   getDateValue,
   getDecimalValue,
@@ -7,6 +5,9 @@ import {
   resolvePath,
   T,
   uuidv4,
+  ovloffline,
+  stringifyReplacer,
+  D,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -17,14 +18,26 @@ import {
   FormCanEdit,
   FormCanMore,
   FormCustomFilter,
+  FieldGetList_ReturnType,
+  FieldGetList_Type,
+  FormCustomFilter_Type,
+  FormCan_ReturnType,
+  FormCan_Type,
+  FormCustomFn,
+  FormCustomFn_Type,
 } from "../../global/hooks"
-import { customFunctions } from "../../index"
-import { state } from "../../state"
+import { TableDefIds, ovl, OvlActions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
-import { overlayToRender } from "../Overlay/Overlay"
 import { RowControlAllAction } from "./RowControl"
-import { ColumnDisplayDef, TableData, TableDataAndDef, TableDef } from "./Table"
+import {
+  ColumnDisplayDef,
+  TableData,
+  TableDataAndDef,
+  TableDef,
+  EditMode,
+} from "./Table"
+import { TableRowDetailView } from "./RowDetailView"
 
 export const getTextSort = (valA: string, valB: string): number => {
   if (valA === null) {
@@ -58,17 +71,12 @@ export const getDisplayValue = (
     let cachedListKey = namespace + key
     let listFn = cachedListFn.get(cachedListKey)
     if (!listFn) {
-      listFn = resolvePath(customFunctions, namespace)[
+      listFn = resolvePath(ovl.actions.custom, namespace)[
         FieldGetList.replace("%", key)
       ]
       cachedListFn.set(cachedListKey, listFn)
     }
-    let listdata = listFn(
-      row,
-      overmind.state,
-      overmind.actions,
-      overmind.effects
-    )
+    let listdata: FieldGetList_ReturnType = listFn(<FieldGetList_Type>{ row })
     return GetListDisplayValue(col.list, value, listdata)
   }
   let format
@@ -94,152 +102,28 @@ export const getDisplayValue = (
   }
 }
 
-// some housekeeping if a new row gets added or the key changes
-// should be used as well from customSaveRows...
-// provide tempId if coming from an db add operation and now the definbitve key is known
-// this code is super complex. pls do not just adjust it without thinking all the use cases through
-export const setTableRow = (
-  tableDataAndDef: TableDataAndDef,
-  tempId: string,
-  newId: string,
-  newData: any,
-  editMode: boolean,
-  actions: typeof overmind.actions,
-  copy?: boolean
-) => {
-  let def = tableDataAndDef.def
-  let data = tableDataAndDef.data
-  let rows = data.data
-  if (newId === undefined) {
-    newId = ovltemp + uuidv4()
-  }
-  let isAdd = false
-
-  if (
-    (newId && newId.indexOf(ovltemp) > -1) ||
-    (tempId && tempId.indexOf(ovltemp) > -1)
-  ) {
-    isAdd = true
-  }
-  let isSwitcher = false
-
-  if (tempId || tempId === "") {
-    if ((newId || newId === "") && newId !== tempId) {
-      // its a temporary row which now is saved as a definitve one
-      // so exchange the key in the current tabledef
-      isSwitcher = true
-      let i = def.uiState.dataFilteredAndSorted.indexOf(tempId)
-
-      if (def.uiState.dataFilteredAndSorted.indexOf(newId) < 0) {
-        if (i > -1) {
-          def.uiState.dataFilteredAndSorted.splice(i, 1)
-        }
-        def.uiState.dataFilteredAndSorted.push(newId)
-      } else if (i > -1) {
-        def.uiState.dataFilteredAndSorted.splice(i, 1)
-      }
-      def.uiState.currentlyAddingKey = undefined
-      delete def.uiState.selectedRow[tempId]
-      delete def.uiState.editRow[tempId]
-      delete def.uiState.viewRow[tempId]
-      if (!def.uiState.selectedRow[newId]) {
-        def.uiState.selectedRow[newId] = {
-          selected: false,
-          showNav: false,
-          timestamp: 0,
-        }
-        def.uiState.editRow[newId] = { selected: false, mode: undefined }
-        def.uiState.viewRow[newId] = { selected: false }
-      }
-      Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
-        // for the other tabledefs
-        if (k !== def.id) {
-          let cdef = tableDataAndDef.data.tableDef[k]
-          let selectedRow = cdef.uiState.selectedRow
-          let editRow = cdef.uiState.editRow
-          if (!selectedRow[newId]) {
-            selectedRow[newId] = {
-              selected: false,
-              showNav: false,
-              timestamp: 0,
-            }
-            editRow[newId] = { selected: false, mode: undefined }
-          }
-          let dataFilteredAndSorted = cdef.uiState.dataFilteredAndSorted
-          // its now a "good" one so also push it to the displayed lists
-          if (dataFilteredAndSorted.indexOf(newId) < 0) {
-            dataFilteredAndSorted.push(newId)
-          }
-        }
-      })
-      delete rows[tempId]
-    }
-  } else {
-    if (isAdd) {
-      if (def.uiState.dataFilteredAndSorted.indexOf(newId) < 0) {
-        def.uiState.currentlyAddingKey = newId
-        def.uiState.dataFilteredAndSorted.push(newId)
-      }
-      def.uiState.selectedRow[newId] = {
-        selected: false,
-        showNav: false,
-        timestamp: 0,
-      }
-      let mode: any = "add"
-      if (copy) {
-        mode = "copy"
-      }
-      def.uiState.editRow[newId] = { selected: false, mode }
-      def.uiState.viewRow[newId] = { selected: false }
-      let paging = def.options.paging
-      let rowsCount = def.uiState.dataFilteredAndSorted.length
-      if (def.options.addedRowsPosition === "bottom") {
-        if (def.features.page) {
-          paging.page = Math.ceil(rowsCount / paging.pageSize - 1)
-        }
-      } else {
-        if (def.features.page) {
-          paging.page = 0
-        }
-      }
-    }
-  }
-
-  // do aproperty wise update so the ui gets notified properly
-  // if the defiitive one is already occupied (rows[newId]) that means that the row was deleted from somewhere else
-  // so we just overwrite it and that case should been handled well
-  let newKeys = Object.keys(newData)
-  if (newKeys.length > 0) {
-    if (rows[newId] === undefined) {
-      rows[newId] = {}
-    }
-  }
-  let destRow = rows[newId]
-  newKeys.forEach((k) => {
-    destRow[k] = newData[k]
-  })
-  if (isAdd && !isSwitcher) {
-    actions.ovl.table.TableEditRow({ key: newId, def, data: data })
-  }
-}
 // same applies to this method...use it from your customdeleters
 export const deleteTableRow = (
   tableDataAndDef: TableDataAndDef,
   key: string
 ) => {
   Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
-    let def = tableDataAndDef.data.tableDef[k]
+    let def = tableDataAndDef.data.tableDef[k] as TableDef
     let editRows = def.uiState.editRow
     let selectRows = def.uiState.selectedRow
-
     delete editRows[key]
     delete selectRows[key]
+
     let i = def.uiState.dataFilteredAndSorted.indexOf(key)
     if (i > -1) {
       def.uiState.dataFilteredAndSorted.splice(i, 1)
     }
   })
-  delete tableDataAndDef.data.data[key]
+  let data = tableDataAndDef.data
+  let index = data.index
+  let rowId = data.data[key][tableDataAndDef.def.database.dataIdField]
+  delete index[rowId]
+  delete data.data[key]
 }
 
 export const selectLatestRow = (def: TableDef, data: TableData) => {
@@ -258,7 +142,39 @@ export const selectLatestRow = (def: TableDef, data: TableData) => {
   }
 }
 
-export const setPage = (def: TableDef, data: TableData, rows: {}) => {
+export const addRowDefInit = (tableDef, newId, mode: EditMode) => {
+  Object.keys(tableDef).forEach((k) => {
+    let d: TableDef = tableDef[k]
+    d.uiState.editRow[newId] = { selected: false, mode }
+    d.uiState.selectedRow[newId] = {
+      selected: false,
+      showNav: false,
+      timestamp: 0,
+    }
+    d.uiState.viewRow[newId] = { selected: false }
+    d.uiState.dataFilteredAndSorted.push(newId)
+  })
+}
+
+export const addRowPage = (def: TableDef) => {
+  if (def.features.page) {
+    let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
+    let count = dataFilteredAndSorted.length
+    def.uiState.rowsCount = count
+    let paging = def.options.paging
+    if (def.options.addedRowsPosition === "bottom") {
+      let pages = Math.ceil(count / paging.pageSize) - 1
+      paging.page = pages
+      if (paging.page < 0) {
+        paging.page = 0
+      }
+    } else {
+      paging.page = 0
+    }
+  }
+}
+
+export const setPage = (data: TableData) => {
   Object.keys(data.tableDef).forEach((k) => {
     let def = data.tableDef[k]
     if (def.features.page) {
@@ -364,6 +280,19 @@ export const initTableState = (
       data.schema = {}
     }
 
+    if (data.offline === undefined) {
+      data.offlineSeq = 0
+      data.offline = {
+        addedKeys: {},
+        deletedKeys: {},
+        errors: {},
+        updatedKeys: {},
+      }
+    }
+    if (data.index === undefined) {
+      data.index = {}
+    }
+
     if (!def.database.dataIdField) {
       if (def.database.dbInsertMode.indexOf("UDT") > -1) {
         def.database.dataIdField = "Code"
@@ -375,6 +304,9 @@ export const initTableState = (
     }
     let options = def.options
 
+    // if (options.tabs) {
+
+    // }
     // if (def.translationGroup === undefined) {
     //   // assume tranlsation group is the same as namespace first group if not defined
     //   let firstGroup = def.namespace.split(".")[0]
@@ -402,7 +334,10 @@ export const initTableState = (
       options.maxRows = { maxRows: -1, showHint: true }
     }
     if (options.filter === undefined) {
-      options.filter = { showSelected: false, value: "" }
+      options.filter = { showSelected: false, value: "", static: {} }
+    }
+    if (options.filter.static === undefined) {
+      options.filter.static = {}
     }
 
     if (options.sort === undefined) {
@@ -505,6 +440,10 @@ export const initTableState = (
       features.detailView = "None"
     }
 
+    if (features.headerMenu === undefined) {
+      features.headerMenu = true
+    }
+
     if (features.add === undefined) {
       features.add = true
     }
@@ -576,6 +515,11 @@ export const initTableState = (
       if (col.ui.visibility === undefined) {
         col.ui.visibility = "Table_Edit_View"
       }
+      if (col.ui.language) {
+        if (col.ui.translationVisibility === undefined) {
+          col.ui.translationVisibility = "Edit"
+        }
+      }
       if (col.ui.showLabelIfNoValueInView === undefined) {
         col.ui.showLabelIfNoValueInView = true
       }
@@ -625,11 +569,12 @@ export const initTableState = (
 export const TableRefreshServerData = async (
   def: TableDef,
   data: TableData,
-  actions: typeof overmind.actions,
+  actions: OvlActions,
   forceServerDataRefresh?: boolean
 ) => {
   if (!data.timestamp || !!forceServerDataRefresh) {
     // now if there is no data do a get request
+
     await actions.ovl.table.TableRefreshDataFromServer({
       def,
       data,
@@ -654,6 +599,7 @@ export const TableFilterFn = (
 ) => {
   // filter should only operate on rows not in add-mode
   let def = tableDataAndDef.def
+  let lang = ovl.state.ovl.language.language
   let data = tableDataAndDef.data.data
   let columns = def.columns
   let restable = Object.keys(data).filter((f) => f.indexOf(ovltemp) < 0)
@@ -662,21 +608,23 @@ export const TableFilterFn = (
   // 1. staticFilter gets applied (for master - details scenarios)
   // 2. temp rows in add mode get filtered out (they are handled in addRwos array)
   // 3. rows which point to null gets filtered out (eg. delete => sets em to null)
-  if (staticFilter) {
-    let filterKeys = Object.keys(staticFilter)
+
+  let filterKeys = Object.keys(staticFilter)
+  if (filterKeys.length > 0) {
     restable = restable.filter((v) =>
       filterKeys.some((m) => {
         return data[v][m] === staticFilter[m]
       })
     )
   }
+
   let filterCustom = def.options.filterCustom
   let customFilter = Object.keys(filterCustom).filter(
     (k) => filterCustom[k].active
   )
   let customFilterFn = customFilter.reduce((val, k) => {
     let functionName = FormCustomFilter.replace("%", k)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(ovl.actions.custom, def.namespace)
     if (fn && fn[functionName]) {
       val.push(fn[functionName])
       return val
@@ -693,7 +641,7 @@ export const TableFilterFn = (
   )
 
   let visibleColumns = Object.keys(columns).filter(
-    (f) => columns[f].ui.visibility === "Table_Edit_View"
+    (f) => columns[f].ui.visibility.indexOf("Table") > -1
   )
 
   // restable is now filtered by static filter already, thats fine and our starting point for the next 4 filters
@@ -749,7 +697,7 @@ export const TableFilterFn = (
       let data = tableDataAndDef.data
       let row = data.data[rowKey]
       return !customFilterFn.some(
-        (f) => !f(def, data, row, state, overmind.actions, overmind.effects)
+        (f) => !f({ def, lang, data, row } as FormCustomFilter_Type)
       )
     })
   }
@@ -799,8 +747,15 @@ export const getFormFieldsFromColumns = (
     formFields[k] = {
       type,
       value: dispVal,
-      list: col.list,
-      ui: JSON.parse(JSON.stringify(col.ui)),
+      list: col.list
+        ? JSON.parse(JSON.stringify(col.list), stringifyReplacer)
+        : undefined,
+      ui: col.ui
+        ? JSON.parse(JSON.stringify(col.ui), stringifyReplacer)
+        : undefined,
+      asset: col.asset
+        ? JSON.parse(JSON.stringify(col.asset), stringifyReplacer)
+        : undefined,
     }
     if (!formFields[k].ui) {
       formFields[k].ui = {}
@@ -817,41 +772,47 @@ export const createDynamicRowFunctions = async (
   isDetailView: boolean
 ) => {
   let rowControlActions: { [key: string]: RowControlAllAction } = {}
-  let fn = resolvePath(customFunctions, def.namespace)
-  // first all custom ones
-  if (def.options.customRowActions) {
-    let wait = Promise.all(
-      Object.keys(def.options.customRowActions).map(async (k) => {
-        let custom = def.options.customRowActions[k]
-        let disabled = false
+  let fn = resolvePath(ovl.actions.custom, def.namespace)
 
-        let title = T(custom.translationKey)
-        let functionName = FormCanCustom.replace("%", k)
-        if (fn && fn[functionName]) {
-          disabled = true
-          title = await fn[functionName](
-            key,
-            <TableDataAndDef>{ def, data },
-            overmind.state,
-            overmind.effects
-          )
-          if (title) {
-            rowControlActions[k] = {
-              disabled: disabled,
-              icon: custom.icon,
-              custom: true,
-              name: title,
-            }
+  let chk = def.dataFetching.useCustomDataFetching
+
+  // first all custom ones
+
+  if (def.options.customRowActions) {
+    //await Promise.all(
+    Object.keys(def.options.customRowActions).map(async (k) => {
+      let custom = def.options.customRowActions[k]
+      let disabled = false
+
+      let title: string = T(custom.translationKey)
+      let functionName = FormCanCustom.replace("%", k)
+
+      if (fn && fn[functionName]) {
+        disabled = true
+        title = await fn[functionName]({
+          rowKey: key,
+          tableDef: def,
+          tableData: data,
+        } as FormCan_Type)
+        if (title) {
+          rowControlActions[k] = {
+            disabled: disabled,
+            icon: custom.icon,
+            custom: true,
+            name: title,
           }
-        } else {
-          rowControlActions[k] = JSON.parse(JSON.stringify(custom))
-          rowControlActions[k].disabled = false
-          rowControlActions[k].name = title
-          rowControlActions[k].custom = true
         }
-      })
-    )
-    await wait
+      } else {
+        rowControlActions[k] = JSON.parse(
+          JSON.stringify(custom),
+          stringifyReplacer
+        )
+        rowControlActions[k].disabled = false
+        rowControlActions[k].name = title
+        rowControlActions[k].custom = true
+      }
+    })
+    //)
   }
 
   // then add the default ones
@@ -860,15 +821,18 @@ export const createDynamicRowFunctions = async (
     let deleteDisabled = false
     let deleteTitle = ""
     let functionName = FormCanDelete
-
+    //@show christian
+    // the following path is tracked
+    def.dataFetching.useSchema
     if (fn && fn[functionName]) {
-      deleteTitle = await fn[functionName](
-        key,
-        <TableDataAndDef>{ def, data },
-        overmind.state,
+      deleteTitle = await fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
 
-        overmind.effects
-      )
+      // the following access is NOT (correctly) tracked
+      def.database.dataIdField
       deleteDisabled = true
       if (deleteTitle) {
         rowControlActions["Delete"] = {
@@ -897,13 +861,11 @@ export const createDynamicRowFunctions = async (
     let functionName = FormCanCopy
 
     if (fn && fn[functionName]) {
-      copyTitle = await fn[functionName](
-        key,
-        <TableDataAndDef>{ def, data },
-        overmind.state,
-
-        overmind.effects
-      )
+      copyTitle = await fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
       copyDisabled = true
       if (copyTitle) {
         rowControlActions["Copy"] = {
@@ -931,12 +893,11 @@ export const createDynamicRowFunctions = async (
     //@@hook
     let functionName = FormCanEdit
     if (fn && fn[functionName]) {
-      editTitle = await fn[functionName](
-        key,
-        <TableDataAndDef>{ def, data },
-        overmind.state,
-        overmind.effects
-      )
+      editTitle = await fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
       editDisabled = true
       if (editTitle) {
         rowControlActions["Edit"] = {
@@ -960,7 +921,7 @@ export const createDynamicRowFunctions = async (
   if (!isDetailView) {
     if (
       def.features.detailView === "Enabled" ||
-      (overmind.state.ovl.uiState.isMobile &&
+      (ovl.state.ovl.uiState.isMobile &&
         def.features.detailView === "EnabledOnlyMobile")
     ) {
       let detailDisabled = false
@@ -968,13 +929,11 @@ export const createDynamicRowFunctions = async (
       //@@hook
       let functionName = FormCanDetail
       if (fn && fn[functionName]) {
-        detailTitle = await fn[functionName](
-          key,
-          <TableDataAndDef>{ def, data },
-          overmind.state,
-
-          overmind.effects
-        )
+        detailTitle = await fn[functionName](<FormCan_Type>{
+          rowKey: key,
+          tableDef: def,
+          tableData: data,
+        })
         detailDisabled = true
         if (detailTitle) {
           rowControlActions["View"] = {
@@ -995,20 +954,18 @@ export const createDynamicRowFunctions = async (
       }
     }
   }
-  if (!isDetailView) {
+  if (!isDetailView && def.features.headerMenu) {
     // more
     let moreDisabled = false
     let moreTitle = ""
     //@@hook
     let functionName = FormCanMore
     if (fn && fn[functionName]) {
-      moreTitle = fn[functionName](
-        key,
-        <TableDataAndDef>{ def, data },
-        overmind.state,
-
-        overmind.effects
-      )
+      moreTitle = fn[functionName](<FormCan_Type>{
+        rowKey: key,
+        tableDef: def,
+        tableData: data,
+      })
       moreDisabled = true
       if (moreTitle) {
         rowControlActions["More"] = {
@@ -1040,41 +997,32 @@ export const rowControlActionsHandler = async (
   isDetailView: boolean
 ) => {
   if (isCustom) {
-    let customFns = resolvePath(customFunctions, def.namespace)
+    let customFns = resolvePath(ovl.actions.custom, def.namespace)
     if (customFns) {
-      let customFunctionName = "Form" + key
+      let customFunctionName = FormCustomFn + key
       let customFunction = customFns[customFunctionName]
 
       if (customFunction) {
         if (isDetailView) {
-          overlayToRender.overlayClosedCallback = async () => {
-            overmind.actions.ovl.internal.TableCloseViewRow({
-              key: rowKey,
-              def,
-            })
-            await customFunction(
-              rowKey,
-              def,
-              data,
-              true,
-              null,
-              overmind.state,
-              overmind.actions,
-              overmind.effects
-            )
-          }
-          overmind.actions.ovl.overlay.CloseOverlay()
-        } else {
-          await customFunction(
+          ovl.actions.ovl.internal.TableCloseViewRow({
+            key: rowKey,
+            def,
+          })
+          await customFunction(<FormCustomFn_Type>{
             rowKey,
             def,
             data,
-            true,
-            null,
-            overmind.state,
-            overmind.actions,
-            overmind.effects
-          )
+            isLastOrOnlyOne: true,
+            startedFromSelectedResult: null,
+          })
+        } else {
+          await customFunction(<FormCustomFn_Type>{
+            rowKey,
+            def,
+            data,
+            isLastOrOnlyOne: true,
+            startedFromSelectedResult: null,
+          })
         }
       } else {
         throw Error(
@@ -1084,22 +1032,19 @@ export const rowControlActionsHandler = async (
     }
   } else {
     let actionName = "Table" + key + "Row"
-    if (isDetailView) {
-      overlayToRender.overlayClosedCallback = async () => {
-        overmind.actions.ovl.internal.TableCloseViewRow({
-          key: rowKey,
-          def,
-        })
+    if (isDetailView && key !== "Edit") {
+      await ovl.actions.ovl.internal.TableCloseViewRow({
+        key: rowKey,
+        def,
+      })
 
-        await overmind.actions.ovl.internal[actionName]({
-          key: rowKey,
-          def,
-          data,
-        })
-      }
-      overmind.actions.ovl.overlay.CloseOverlay()
+      await ovl.actions.ovl.internal[actionName]({
+        key: rowKey,
+        def,
+        data,
+      })
     } else {
-      await overmind.actions.ovl.internal[actionName]({
+      await ovl.actions.ovl.internal[actionName]({
         key: rowKey,
         def,
         data,
@@ -1123,7 +1068,7 @@ export const GetRendererFn = (
   let rendererFn
   if (!cachedRenderer) {
     let functionName = hookDef.replace("%", fieldKey)
-    let fn = resolvePath(customFunctions, namespace)
+    let fn = resolvePath(ovl.actions.custom, namespace)
     if (fn && fn[functionName]) {
       rendererFn = fn[functionName]
       cachedRendererFn.set(cachedRendererKey, {

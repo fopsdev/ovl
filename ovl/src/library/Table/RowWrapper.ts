@@ -1,7 +1,13 @@
 import { html } from "lit-html"
 import { resolvePath } from "../../global/globals"
-import { FieldRowCellSelectedHandler, FormStatus } from "../../global/hooks"
-import { customFunctions, overmind } from "../../index"
+import {
+  FieldRowCellSelectedHandler,
+  FormStatus,
+  FieldRowCellSelectedHandler_Type,
+  FormStatus_Type,
+  FormStatus_ReturnType,
+} from "../../global/hooks"
+import { ovl } from "../../index"
 import { SnackAdd } from "../helpers"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { NavProps } from "./RowControl"
@@ -28,6 +34,7 @@ export type TableRowDef = {
   columnsVisible: {}
   columnsCount: number
   key: string
+  intersectionObserver: IntersectionObserver
 }
 
 export type TableRowDataDef = {
@@ -36,11 +43,13 @@ export type TableRowDataDef = {
   key: string
   columnsAlign: {}
   columnsVisible: {}
+  intersectionObserver: IntersectionObserver
 }
 
 export class TableRowWrapper extends OvlBaseElement {
   props: any
   row: TableRowDef
+  columnsVisible: {}
 
   handleRowLongPress = (e) => {
     // if on touch device also display row status message as a snack
@@ -73,18 +82,16 @@ export class TableRowWrapper extends OvlBaseElement {
     }
     // first start custom event handler (hook)
     let functionName = FieldRowCellSelectedHandler.replace("%", key)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(this.actions.custom, def.namespace)
     if (fn && fn[functionName]) {
       if (
-        !(await fn[functionName](
-          //@ts-ignore
-          e.target.classList,
+        !(await fn[functionName](<FieldRowCellSelectedHandler_Type>{
+          classList: e.target.classList,
           def,
-          this.row.data,
-          this.row.key,
-          <DisplayMode>"Table",
-          this.state
-        ))
+          data: this.row.data,
+          rowKey: this.row.key,
+          displayMode: <DisplayMode>"Table",
+        }))
       ) {
         return
       }
@@ -166,85 +173,81 @@ export class TableRowWrapper extends OvlBaseElement {
 
   init() {
     this.row = this.props()
-    this.async = true
   }
 
-  async getUIAsync() {
-    let editSelected = this.row.editSelected
-    let viewRow = this.row.viewRow
-    let def = this.row.tableDef
-    let key = this.row.key
-    let data = this.row.data
-    let rows = data.data
-    let row = rows[key]
-    if (!row) {
-      return null
-    }
+  async getUI() {
+    return this.track(async () => {
+      let editFormBig
+      let editSelected = this.row.editSelected
+      let viewRow = this.row.viewRow
+      let def = this.row.tableDef
+      let key = this.row.key
+      let data = this.row.data
+      let rows = data.data
+      let row = rows[key]
+      if (!row) {
+        return null
+      }
+      let detailView
+      if (viewRow && viewRow.selected) {
+        detailView = html` <ovl-trowdetailview
+          id=${"trow" + def.id + key}
+          .props=${() => {
+            return <ViewRowDef>{
+              tableDef: def,
+              data: data,
+              row: row,
+              key: key,
+              columnsAlign: this.row.columnsAlign,
+              columnsVisible: this.row.columnsVisible,
+            }
+          }}
+        >
+        </ovl-trowdetailview>`
+        this.state.ovl.dialogs.DetailView.visible = true
+      }
 
-    if (viewRow.selected) {
-      this.actions.ovl.overlay.OpenOverlay({
-        templateResult: html`
-          <ovl-trowdetailview
-            id=${"trow" + def.id + key}
-            .props=${() => {
-              return <ViewRowDef>{
-                tableDef: def,
-                data: data,
-                row: row,
-                key: key,
-                columnsAlign: this.row.columnsAlign,
-                columnsVisible: this.row.columnsVisible,
-              }
-            }}
-          >
-          </ovl-trowdetailview>
-        `,
-        elementToFocusAfterClose: document.activeElement,
-      })
-    }
+      if (editSelected && editSelected.selected) {
+        if (def.options.edit.editType === "inline") {
+          let editRowSC = html`
+            <ovl-trowsc
+              class="fd-table__row"
+              style="border-top: 2px solid #0cd7ed;border-bottom: 0px;"
+              .props=${() => {
+                return <EditRowSaveCancelDef>{
+                  tableDef: def,
+                  row: row,
+                  data: data,
+                  key: key,
+                  columnsCount: this.row.columnsCount,
+                }
+              }}
+            >
+            </ovl-trowsc>
+          `
 
-    if (editSelected && editSelected.selected) {
-      if (def.options.edit.editType === "inline") {
-        let editRowSC = html`
-          <ovl-trowsc
-            class="fd-table__row"
-            style="border-top: 2px solid #0cd7ed;border-bottom: 0px;"
-            .props=${() => {
-              return <EditRowSaveCancelDef>{
-                tableDef: def,
-                row: row,
-                data: data,
-                key: key,
-                columnsCount: this.row.columnsCount,
-              }
-            }}
-          >
-          </ovl-trowsc>
-        `
-
-        return Promise.resolve(html`
-          <ovl-trowform
-            class="fd-table__row ovl-inlineeditform"
-            style="border-top:2px solid #0cd7ed; border-bottom:2px solid #0cd7ed; "
-            id=${"trow" + def.id + key}
-            .props=${() => {
-              return <EditRowDef>{
-                tableDef: def,
-                data: data,
-                row: row,
-                key: key,
-                columnsAlign: this.row.columnsAlign,
-                columnsVisible: this.row.columnsVisible,
-                mode: editSelected.mode,
-              }
-            }}
-          >
-          </ovl-trowform>
-          ${editRowSC}
-        `)
-      } else if (def.options.edit.editType === "big") {
-        this.actions.ovl.overlay.OpenOverlay({
-          templateResult: html`
+          return Promise.resolve(html`
+            <ovl-trowform
+              class="fd-table__row ovl-table-${def.id} ovl-editform ovl-inlineeditform ovl-editform-${def.id}"
+              style="border-top:2px solid #0cd7ed; border-bottom:2px solid #0cd7ed; "
+              id=${"trow" + def.id + key}
+              .props=${() => {
+                return <EditRowDef>{
+                  tableDef: def,
+                  data: data,
+                  row: row,
+                  key: key,
+                  columnsAlign: this.row.columnsAlign,
+                  columnsVisible: this.row.columnsVisible,
+                  mode: editSelected.mode,
+                }
+              }}
+            >
+            </ovl-trowform>
+            ${editRowSC}
+          `)
+        } else if (def.options.edit.editType === "big") {
+          editFormBig = html`
             <ovl-trowformb
               id=${"trow" + def.id + key}
               .props=${() => {
@@ -260,76 +263,86 @@ export class TableRowWrapper extends OvlBaseElement {
               }}
             >
             </ovl-trowformb>
-          `,
-          elementToFocusAfterClose: document.activeElement,
-        })
+          `
+          this.state.ovl.dialogs.EditFormBig.visible = true
+        }
       }
-    }
-    let selected = this.row.selected
-    let nav
-    let selectedRowBg = ""
-    if (selected) {
-      if (selected.selected) {
-        selectedRowBg = "background-color: var(--fd-color-accent-7)"
+      let selected = this.row.selected
+      let nav
+      let selectedRowBg = ""
+      if (selected) {
+        if (selected.selected) {
+          selectedRowBg = "background-color: var(--fd-color-accent-7)"
+        }
+        if (selected.showNav) {
+          nav = html`
+            <ovl-trowcontrol
+              class="fd-table__row"
+              style="border-bottom: 0px;"
+              .props=${() => {
+                return <NavProps>{
+                  tableDef: def,
+                  data: data,
+                  key: key,
+                  columnsCount: this.row.columnsCount,
+                }
+              }}
+            >
+            </ovl-trowcontrol>
+          `
+        }
       }
-      if (selected.showNav) {
-        nav = html`
-          <ovl-trowcontrol
-            class="fd-table__row"
-            style="border-bottom: 0px;"
-            .props=${() => {
-              return <NavProps>{
-                tableDef: def,
-                data: data,
-                key: key,
-                columnsCount: this.row.columnsCount,
-              }
-            }}
-          >
-          </ovl-trowcontrol>
-        `
-      }
-    }
-    let rowStatus = ""
-    let rowStatusMsg = ""
-    let fn = resolvePath(customFunctions, def.namespace)
-    let fnName = FormStatus
-    if (fn && fn[fnName]) {
-      let status = await fn[fnName](
-        key,
-        this.row.tableDef,
-        data,
-        this.state,
-        overmind.effects
-      )
-      if (status) {
-        rowStatus = "fd-table__row--" + status.status
-        rowStatusMsg = status.msg
-      }
-    }
+      let rowStatus = ""
+      let rowStatusMsg = ""
+      let fn = resolvePath(this.actions.custom, def.namespace)
+      let fnName = FormStatus
+      // also display offline save errors in rowstatus
+      if (data.offline && data.offline.errors[key]) {
+        let msgSet = data.offline.errors[key]
 
-    return html`
-      <ovl-trow
-        @keydown=${(e) => this.handleKeyDown(e)}
-        tabindex="0"
-        style="${selectedRowBg}"
-        class="fd-table__row ${rowStatus}  animated fadeIn faster"
-        title="${rowStatusMsg}"
-        data-rowkey="${key}"
-        @click="${this.handleRowClick}"
-        @long-press="${this.handleRowLongPress}"
-        .props=${() => {
-          return <TableRowDataDef>{
-            row: row,
-            key: key,
-            tableDef: def,
-            columnsAlign: this.row.columnsAlign,
-            columnsVisible: this.row.columnsVisible,
+        rowStatus = "fd-table__row--error"
+        msgSet.forEach((m) => {
+          rowStatusMsg += " " + m
+        })
+      } else {
+        if (fn && fn[fnName]) {
+          let status = await fn[fnName](<FormStatus_Type>{
+            rowKey: key,
+            tableDef: this.row.tableDef,
+            tableData: data,
+          })
+          if (status) {
+            rowStatus = "fd-table__row--" + status.status
+            rowStatusMsg = status.msg
           }
-        }}
-      >
-      </ovl-trow>
-      ${nav}
-    `
+        }
+      }
+      return html`
+        ${detailView} ${editFormBig}
+        <ovl-trow
+          @keydown=${(e) => this.handleKeyDown(e)}
+          tabindex="0"
+          style="${selectedRowBg}"
+          class="fd-table__row ${rowStatus}  animated fadeIn faster"
+          title="${rowStatusMsg}"
+          data-rowkey="${key}"
+          @click="${this.handleRowClick}"
+          @long-press="${this.handleRowLongPress}"
+          .props=${() => {
+            return <TableRowDataDef>{
+              row: row,
+              key: key,
+              tableDef: def,
+              columnsAlign: this.row.columnsAlign,
+              columnsVisible: this.row.columnsVisible,
+              intersectionObserver: this.row.intersectionObserver,
+            }
+          }}
+          .columnsVisible=${this.columnsVisible}
+        >
+        </ovl-trow>
+        ${nav}
+      `
+    })
   }
 }

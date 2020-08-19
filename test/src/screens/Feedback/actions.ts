@@ -1,29 +1,29 @@
-import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
 import { T, api } from "../../../../ovl/src/global/globals"
 import {
   FormState,
   GetFormValidationErrors,
-  ValidateFieldType,
 } from "../../../../ovl/src/library/forms/actions"
-import { Mandatory } from "../../../../ovl/src/library/forms/validators"
-import { FieldId } from "./FeedbackForm"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
+import { OvlAction } from "../../../../ovl/src"
 
-export const SaveFeedback: AsyncAction<FormState> = async (
-  { state, actions, effects },
-  value
+export const SaveFeedback: OvlAction<FormState> = async (
+  value,
+  { state, actions, effects }
 ) => {
   actions.ovl.form.ValidateForm(value)
   if (value.valid) {
-    let res = await effects.postRequest(api.url + "data/savefeedback", {
-      language: state.ovl.language.language,
-      message: value.fields["msg"].value,
-      orderDate: state.ovl.screens.screens.Feedback.orderDate,
-      orderNum: state.ovl.screens.screens.Feedback.orderNum,
-      refNum: state.ovl.screens.screens.Feedback.refNum,
-      assignedTo: state.portal.partner.salesContact.id,
-      feedbackType: state.ovl.screens.screens.Feedback.type,
-    })
+    let res = await effects.ovl.postRequest(
+      state.ovl.apiUrl + "data/savefeedback",
+      {
+        language: state.ovl.language.language,
+        message: value.fields["msg"].value,
+        orderDate: state.demoApp.screens.feedback.orderDate,
+        orderNum: state.demoApp.screens.feedback.orderNum,
+        refNum: state.demoApp.screens.feedback.refNum,
+        assignedTo: state.demoApp.partner.salesContact.id,
+        feedbackType: state.demoApp.screens.feedback.type,
+      }
+    )
 
     if (res.status !== 200) {
       return

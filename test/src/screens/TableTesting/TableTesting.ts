@@ -4,16 +4,16 @@ export class CompTableTesting extends OvlBaseElement {
   init() {
     this.screen = "TableTesting"
   }
-  getUI() {
+  async getUI() {
     return html`
-      <div class="${this.animatedClass}">
-        <div class="fd-panel">
+      <div class="">
+        <div class="fd-layout-panel">
           <ovl-table
             class="fd-table"
             .props=${(state) => {
               return {
-                def: state.testtables.tableTesting.tableDef.tab1,
-                data: state.testtables.tableTesting,
+                def: state.demoApp.testtables.tableTesting.tableDef.tab1,
+                data: state.demoApp.testtables.tableTesting,
               }
             }}
           >
@@ -22,13 +22,13 @@ export class CompTableTesting extends OvlBaseElement {
         <br />
         <br />
         <br />
-        <div class="fd-panel">
+        <div class="fd-layout-panel">
           <ovl-table
             class="fd-table"
             .props=${(state) => {
               return {
-                def: state.testtables.tableTesting.tableDef.tab2,
-                data: state.testtables.tableTesting,
+                def: state.demoApp.testtables.tableTesting.tableDef.tab2,
+                data: state.demoApp.testtables.tableTesting,
               }
             }}
           >
@@ -38,13 +38,13 @@ export class CompTableTesting extends OvlBaseElement {
         <br />
         <br />
         <br />
-        <div class="fd-panel">
+        <div class="fd-layout-panel">
           <ovl-table
             class="fd-table"
             .props=${(state) => {
               return {
-                def: state.testtables.tableTesting.tableDef.tab3,
-                data: state.testtables.tableTesting,
+                def: state.demoApp.testtables.tableTesting.tableDef.tab3,
+                data: state.demoApp.testtables.tableTesting,
               }
             }}
           >

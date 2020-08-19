@@ -1,5 +1,6 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
+import { OvlScreen, OvlVersion } from "./index"
 
 export type Init = {
   customerTestUrlMatch: string
@@ -13,59 +14,51 @@ export type Init = {
 
 type OvlConfig = {
   _system: {
+    debugTracking: boolean
+    fetchTimeout: number
     Version: string
     IsDev: boolean
     OfflineMode: boolean
-    DataVersion: string
     ShowSaveOrigin: boolean
     PersistStateId: string
     PersistTimestampId: string
   }
+  initialScreen?: OvlScreen
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
-    customInitActionPath: AsyncAction
-    customPrepareActionPath: AsyncAction
-    handleAdditionalTranslationResultActionPath: AsyncAction
-    handleGlobalRefreshActionPath: AsyncAction
+    customInitActionPath: OvlAction
+    customRehydrateActionPath: OvlAction
+    handleAdditionalTranslationResultActionPath: OvlAction
+    handleGlobalRefreshActionPath: OvlAction
   }
   /*check stateCleaner in ovl global to see the possibilities of this fn*/
-  saveStateCallback: (parentKey: string, key: string, obj: any) => {}
+  saveStateCallback: (stateToPersist: OvlState) => void
   /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
      thats why we have a check function to check if they should be enabled
   */
-  stickyHeaderEnabled: (state: typeof overmind.state) => {}
+  stickyHeaderEnabled: (state: OvlState) => {}
+  defaultDialogTitle?: string
+  offlineFirstOnReload?: boolean
 }
 
-import { state } from "./state"
-import * as actions from "./actions"
-export { actions }
-import * as effects from "./effects"
-import onInitialize from "./onInitialize"
-import { defineElements } from "./registerComponents"
-import { AsyncAction, Overmind } from "overmind"
-import { overmind } from "."
+import { OvlState, OvlAction } from "./index"
 
-defineElements()
+// #####################################################################################################################################
 
-export const baseOvermindConfig = {
-  onInitialize,
-  state,
-  actions,
-  effects,
-}
-
-let dataVersion = "1"
 let OvlConfig: OvlConfig = {
   _system: {
+    debugTracking: false,
+    fetchTimeout: 5000,
     Version: "0.5",
     IsDev: false,
     OfflineMode: false,
-    DataVersion: dataVersion,
     ShowSaveOrigin: true,
-    PersistStateId: "ovlstate" + dataVersion,
-    PersistTimestampId: "ovltimestamp" + dataVersion,
+    PersistStateId: "ovlstate",
+    PersistTimestampId: "ovltimestamp",
   },
+  //@ts-ignore
+  initialScreen: "",
   apiUrl: undefined,
   requiredActions: undefined,
   saveStateCallback: undefined,
@@ -92,13 +85,8 @@ if (window.OvlShowSaveOrigin) {
   //@ts-ignore
   OvlConfig._system.ShowSaveOrigin = window.OvlShowSaveOrigin
 }
-//@ts-ignore
-if (window.OvlVersion) {
-  //@ts-ignore
-  OvlConfig._system.Version = window.OvlVersion
-}
-OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.DataVersion
+OvlConfig._system.Version = OvlVersion
+OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.Version
 OvlConfig._system.PersistTimestampId =
-  "ovltimestamp" + OvlConfig._system.DataVersion
-// #####################################################################################################################################
+  "ovltimestamp" + OvlConfig._system.Version
 export { OvlConfig }

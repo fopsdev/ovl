@@ -12,10 +12,10 @@ export class CompSettingsForm extends OvlFormElement {
     this.screen = "Settings"
     super.init()
   }
-  getUI() {
+  async getUI() {
     let handleSave = () => {
       if (!this.state.ovl.libState.indicator.open) {
-        this.actions.portal.settings.SaveSettings(this.formState)
+        this.actions.demoApp.settings.SaveSettings(this.formState)
       }
     }
 
@@ -33,30 +33,31 @@ export class CompSettingsForm extends OvlFormElement {
         }
       }
     }
-    // this is just a helper fn to get typed ids
+    return this.track(() => {
+      // this is just a helper fn to get typed ids
 
-    let fields = this.formState.fields
-    let pwField = fields["pw"]
-    let pw1Field = fields["pw1"]
-    let pw2Field = fields["pw2"]
-    let partner = this.state.portal.partner
+      let fields = this.formState.fields
+      let pwField = fields["pw"]
+      let pw1Field = fields["pw1"]
+      let pw2Field = fields["pw2"]
+      let partner = this.state.demoApp.partner
 
-    return html`
-      <div class="fd-panel ${this.animatedClass} ovldialogcentered">
-        <div class="fd-panel__header">
-          <div class="fd-panel__head">
-            <h3 class="fd-panel__title">
+      return html`
+      <div class="fd-layout-panel  ">
+        <div class="fd-layout-panel__header">
+          <div class="fd-layout-panel__head">
+            <h3 class="fd-layout-panel__title">
             ${T("AppSettings")}
                 ${
-                  this.state.portal.user.firstName +
+                  this.state.demoApp.user.firstName +
                   " " +
-                  this.state.portal.user.lastName
+                  this.state.demoApp.user.lastName
                 }
             </h3>
           </div>
         </div>
 
-            <div class="fd-panel__body fd-has-padding-base fd-has-margin-base">
+            <div class="fd-layout-panel__body fd-has-padding-base fd-has-margin-base">
               <div class="fd-form__group">
                 <div class="fd-form-item ">
                   <ovl-textbox
@@ -85,13 +86,13 @@ export class CompSettingsForm extends OvlFormElement {
               </div>
             </div>
             <div
-              class="fd-panel__footer fd-has-padding-base fd-has-margin-base"
+              class="fd-layout-panel__footer fd-has-padding-base fd-has-margin-base"
             >
-              <div class="fd-panel__actions">
+              <div class="fd-layout-panel__actions">
                 <button
                   ?disabled=${
                     this.state.ovl.libState.indicator.open ||
-                    this.state.ovl.screens.screenState[this.screen].closing
+                    this.state.ovl.screens.screens[this.screen].closing
                   }
                   @click=${handleSave}
                   class="fd-button"
@@ -114,5 +115,6 @@ export class CompSettingsForm extends OvlFormElement {
         </div>
       
     `
+    })
   }
 }

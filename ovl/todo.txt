@@ -1,4 +1,82 @@
+
+
 Todos:
+
+- Lookup: DisplayValueField not working
+- Lookup: If users enters code directly and it is a index data then returns "Keine Einträge gefunde..." which is wrong
+  -> Maybe: Adjust FilterHitlist do also do a direct search if list is empty
+==> Rethink both points: Maybe by adding the Code field as well to the lookups both are solved.
+
+X - ParentCode GetList... Try add a new Parent in EditForm and save and reload
+
+X - tabletesting u_decimal cannot be entered
+X - check duplicate/copy table function
+X - transaltion add doesn't add it to the internal list thus needs a refresh so the trans can be used
+- fix all dialogs
+X - remove overlay
+
+X - set trap for parent in set handler. 
+
+X - unify dialog and screens state . rethink tying of screen state (not the visible/isClosing stuff) to ovl.screens
+
+- go after the JSON.stringifies in Code... They are not more necessary because its handled by the proxifier now
+
+X - dialog HeaderMenuTable... closing doesn not work. Maybe return a nothing so lit-html for sure makes nothing
+
+X - dialog base class which takes care of setting a configurable state to visible false (maybe isClosing state is not needed)
+X - this base class should be used from system dialogs (OkCancel) from Standalone Fomrs (Login) from Overlays
+
+- reimplement offline hooks
+- Tab Feature for Edit
+- detailview as its own screen (configurable)
+- maybe consider push/pop active elementracker again...
+
+X - simplify acctions export for custom
+X - check sort if column is memo_fr, needs language param or some other fast logic
+X - check timeentry
+X - check itemgroup-item selection in form...there is smth missing
+X - check the if-defined directive
+X - refactor custom functions to actions again...
+X - formafterrender-hooks need parent component as param (this.track....)
+X - Check async issue with  action calling
+  (tablerebuild gets calld before tabledata is loaded)
+  ( you may enter translations screen to see issue ) 
+
+X- Tabs for Detailview
+  Define a set of tabs for edit and detailview
+  Add viewTabs to def like
+  tabs: {
+   tab1: {translationKey: ...}
+   tab2: {translationKey: ...}
+   ... 
+  }
+  The order of this entries should also be the order of the tabs in the ui
+  Then add those tab-keys to the fields
+  columndef: {
+    ...
+    ...
+    viewTab: "tab1"
+    editTab: "tab1"
+  }
+- TabContent-Hook
+- Custom Tabs
+
+
+X - Rethink Translation Display. Maybe isntead of setting to "none" for translatable fields which are not in the ui use a different value.
+  -> solved by having a separate translationVisibilty which will be used if UI lang !== col.language
+
+X - Concept for Translations of Columns. Maybe add a "translatable: true" to the columndef. This would need some work on the backend as well
+  And the Questions when working inside Translations-Table. Should there be all translations (Lets say as well Item-Translations) or just the one from the App UI?
+  Well the more i think de easier it would be just to put like x_DE x_FR x_.. for the column Names and just show the one in table- and detailview which corresponds 
+  to the current user language. Still those columns need to have a Indication in the ColumnDef which language Code it is. But thats super simple and fast :) 
+  This would leave the translations as they are for the UI only. And doesn't need additional backend logic.
+  For the Assets description we should always use a separate Text Column (Which could be translatable like indicated above as well) 
+
+  - Currently implemented but missing refresh. Looks like visbleColumns Object doesn't get tgransfered correctly to childs. Need check. 
+    -> Sequence of rendering is undefined, so no way to pass parent props. Its possibly due of async rendering (not sure)
+    -> Solve by using a TableNeedsRfresh flag in state which repaints the whole table if needed
+
+X - Check Focus Setting... In Live KaltAg you can see on the loginform after pasting in the username
 
 X - Custom Column Functions
 X - Custom Functions for Multiple Selected Rows

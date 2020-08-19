@@ -1,6 +1,11 @@
-import { customFunctions, FormType, overmind } from "../.."
-import { resolvePath } from "../../global/globals"
-import { FormAfterRender, FormShow } from "../../global/hooks"
+import { FormType, ovl } from "../.."
+import { resolvePath, SetFocus } from "../../global/globals"
+import {
+  FormAfterRender,
+  FormShow,
+  FormAfterRender_Type,
+  FormShow_Type,
+} from "../../global/hooks"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { ColumnAlign } from "../Table/Table"
 import { FormState } from "./actions"
@@ -33,6 +38,11 @@ export type FormFields = {
     readonly?: boolean
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
+  }
+  asset?: {
+    validFileExtensions: string[]
+    validCategories: string[]
+    idColumns: string[]
   }
 }
 
@@ -73,6 +83,7 @@ export class OvlFormElement extends OvlBaseElement {
         formState: this.formState,
         value: e.detail.val,
         isInit: false,
+        isInnerEvent: e.detail.isInnerEvent === true,
       })
     }
   }
@@ -134,17 +145,15 @@ export class OvlFormElement extends OvlBaseElement {
         if (this.formAfterRenderFn) {
           this.callFormAfterRender()
         } else {
-          if (customFunctions) {
-            let formFunctions = resolvePath(
-              customFunctions,
-              this.formState.namespace
-            )
-            if (formFunctions) {
-              if (formFunctions[FormAfterRender]) {
-                this.formAfterRenderFn = formFunctions[FormAfterRender]
-                this.callFormAfterRender()
-                return
-              }
+          let formFunctions = resolvePath(
+            this.actions.custom,
+            this.formState.namespace
+          )
+          if (formFunctions) {
+            if (formFunctions[FormAfterRender]) {
+              this.formAfterRenderFn = formFunctions[FormAfterRender]
+              this.callFormAfterRender()
+              return
             }
           }
           this.formAfterRenderFn = -1
@@ -172,10 +181,11 @@ export class OvlFormElement extends OvlBaseElement {
         let lastTouchedField = this.formState.fields[
           this.formState.lastTouchedField
         ]
+
         if (lastTouchedField) {
           let focusEl = document.getElementById(lastTouchedField.id)
           if (focusEl) {
-            focusEl.focus()
+            SetFocus(focusEl)
           }
         }
 
@@ -184,17 +194,15 @@ export class OvlFormElement extends OvlBaseElement {
           if (this.formShowFn) {
             this.callFormShow()
           } else {
-            if (customFunctions) {
-              let formFunctions = resolvePath(
-                customFunctions,
-                this.formState.namespace
-              )
-              if (formFunctions) {
-                if (formFunctions[FormShow]) {
-                  this.formShowFn = formFunctions[FormShow]
-                  this.callFormShow()
-                  return
-                }
+            let formFunctions = resolvePath(
+              this.actions.custom,
+              this.formState.namespace
+            )
+            if (formFunctions) {
+              if (formFunctions[FormShow]) {
+                this.formShowFn = formFunctions[FormShow]
+                this.callFormShow()
+                return
               }
             }
             this.formShowFn = -1
@@ -205,21 +213,14 @@ export class OvlFormElement extends OvlBaseElement {
   }
 
   callFormAfterRender() {
-    this.formAfterRenderFn(
-      this.formState,
-      this.state,
-      this.actions,
-      overmind.effects
-    )
+    this.formAfterRenderFn(<FormAfterRender_Type>{
+      formState: this.formState,
+      comp: this,
+    })
   }
   callFormShow() {
     setTimeout(() => {
-      this.formShowFn(
-        this.formState,
-        this.state,
-        this.actions,
-        overmind.effects
-      )
+      this.formShowFn(<FormShow_Type>{ formState: this.formState, comp: this })
     }, 200)
   }
 }

@@ -4,1081 +4,1081 @@
 
 ## Hierarchy
 
-  ↳ [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md)
+↳ [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md)
 
-  ↳ **OvlTime**
+↳ **OvlTime**
 
 ## Index
 
 ### Constructors
 
-* [constructor](_ovl_src_library_forms_controls_time_.ovltime.md#constructor)
+- [constructor](_ovl_src_library_forms_controls_time_.ovltime.md#constructor)
 
 ### Properties
 
-* [ATTRIBUTE_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#attribute_node)
-* [CDATA_SECTION_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#cdata_section_node)
-* [COMMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#comment_node)
-* [DOCUMENT_FRAGMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#document_fragment_node)
-* [DOCUMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#document_node)
-* [DOCUMENT_POSITION_CONTAINED_BY](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_contained_by)
-* [DOCUMENT_POSITION_CONTAINS](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_contains)
-* [DOCUMENT_POSITION_DISCONNECTED](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_disconnected)
-* [DOCUMENT_POSITION_FOLLOWING](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_following)
-* [DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_implementation_specific)
-* [DOCUMENT_POSITION_PRECEDING](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_preceding)
-* [DOCUMENT_TYPE_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#document_type_node)
-* [ELEMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#element_node)
-* [ENTITY_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#entity_node)
-* [ENTITY_REFERENCE_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#entity_reference_node)
-* [NOTATION_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#notation_node)
-* [PROCESSING_INSTRUCTION_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#processing_instruction_node)
-* [TEXT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#text_node)
-* [_flushId](_ovl_src_library_forms_controls_time_.ovltime.md#_flushid)
-* [_id](_ovl_src_library_forms_controls_time_.ovltime.md#_id)
-* [accessKey](_ovl_src_library_forms_controls_time_.ovltime.md#accesskey)
-* [accessKeyLabel](_ovl_src_library_forms_controls_time_.ovltime.md#accesskeylabel)
-* [actions](_ovl_src_library_forms_controls_time_.ovltime.md#actions)
-* [animatedClass](_ovl_src_library_forms_controls_time_.ovltime.md#animatedclass)
-* [assignedSlot](_ovl_src_library_forms_controls_time_.ovltime.md#assignedslot)
-* [async](_ovl_src_library_forms_controls_time_.ovltime.md#async)
-* [attributes](_ovl_src_library_forms_controls_time_.ovltime.md#attributes)
-* [autocapitalize](_ovl_src_library_forms_controls_time_.ovltime.md#autocapitalize)
-* [autofocus](_ovl_src_library_forms_controls_time_.ovltime.md#autofocus)
-* [baseURI](_ovl_src_library_forms_controls_time_.ovltime.md#baseuri)
-* [childElementCount](_ovl_src_library_forms_controls_time_.ovltime.md#childelementcount)
-* [childNodes](_ovl_src_library_forms_controls_time_.ovltime.md#childnodes)
-* [children](_ovl_src_library_forms_controls_time_.ovltime.md#children)
-* [classList](_ovl_src_library_forms_controls_time_.ovltime.md#classlist)
-* [className](_ovl_src_library_forms_controls_time_.ovltime.md#classname)
-* [clientHeight](_ovl_src_library_forms_controls_time_.ovltime.md#clientheight)
-* [clientLeft](_ovl_src_library_forms_controls_time_.ovltime.md#clientleft)
-* [clientTop](_ovl_src_library_forms_controls_time_.ovltime.md#clienttop)
-* [clientWidth](_ovl_src_library_forms_controls_time_.ovltime.md#clientwidth)
-* [contentEditable](_ovl_src_library_forms_controls_time_.ovltime.md#contenteditable)
-* [controlState](_ovl_src_library_forms_controls_time_.ovltime.md#controlstate)
-* [dataset](_ovl_src_library_forms_controls_time_.ovltime.md#dataset)
-* [dir](_ovl_src_library_forms_controls_time_.ovltime.md#dir)
-* [draggable](_ovl_src_library_forms_controls_time_.ovltime.md#draggable)
-* [firstChild](_ovl_src_library_forms_controls_time_.ovltime.md#firstchild)
-* [firstElementChild](_ovl_src_library_forms_controls_time_.ovltime.md#firstelementchild)
-* [hidden](_ovl_src_library_forms_controls_time_.ovltime.md#hidden)
-* [id](_ovl_src_library_forms_controls_time_.ovltime.md#id)
-* [innerHTML](_ovl_src_library_forms_controls_time_.ovltime.md#innerhtml)
-* [innerText](_ovl_src_library_forms_controls_time_.ovltime.md#innertext)
-* [inputElement](_ovl_src_library_forms_controls_time_.ovltime.md#inputelement)
-* [inputMode](_ovl_src_library_forms_controls_time_.ovltime.md#inputmode)
-* [isConnected](_ovl_src_library_forms_controls_time_.ovltime.md#isconnected)
-* [isContentEditable](_ovl_src_library_forms_controls_time_.ovltime.md#iscontenteditable)
-* [lang](_ovl_src_library_forms_controls_time_.ovltime.md#lang)
-* [lastChild](_ovl_src_library_forms_controls_time_.ovltime.md#lastchild)
-* [lastElementChild](_ovl_src_library_forms_controls_time_.ovltime.md#lastelementchild)
-* [localName](_ovl_src_library_forms_controls_time_.ovltime.md#localname)
-* [name](_ovl_src_library_forms_controls_time_.ovltime.md#name)
-* [namespaceURI](_ovl_src_library_forms_controls_time_.ovltime.md#namespaceuri)
-* [nextElementSibling](_ovl_src_library_forms_controls_time_.ovltime.md#nextelementsibling)
-* [nextSibling](_ovl_src_library_forms_controls_time_.ovltime.md#nextsibling)
-* [nodeName](_ovl_src_library_forms_controls_time_.ovltime.md#nodename)
-* [nodeType](_ovl_src_library_forms_controls_time_.ovltime.md#nodetype)
-* [nodeValue](_ovl_src_library_forms_controls_time_.ovltime.md#nodevalue)
-* [nonce](_ovl_src_library_forms_controls_time_.ovltime.md#optional-nonce)
-* [offsetHeight](_ovl_src_library_forms_controls_time_.ovltime.md#offsetheight)
-* [offsetLeft](_ovl_src_library_forms_controls_time_.ovltime.md#offsetleft)
-* [offsetParent](_ovl_src_library_forms_controls_time_.ovltime.md#offsetparent)
-* [offsetTop](_ovl_src_library_forms_controls_time_.ovltime.md#offsettop)
-* [offsetWidth](_ovl_src_library_forms_controls_time_.ovltime.md#offsetwidth)
-* [onabort](_ovl_src_library_forms_controls_time_.ovltime.md#onabort)
-* [onanimationcancel](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationcancel)
-* [onanimationend](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationend)
-* [onanimationiteration](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationiteration)
-* [onanimationstart](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationstart)
-* [onauxclick](_ovl_src_library_forms_controls_time_.ovltime.md#onauxclick)
-* [onblur](_ovl_src_library_forms_controls_time_.ovltime.md#onblur)
-* [oncancel](_ovl_src_library_forms_controls_time_.ovltime.md#oncancel)
-* [oncanplay](_ovl_src_library_forms_controls_time_.ovltime.md#oncanplay)
-* [oncanplaythrough](_ovl_src_library_forms_controls_time_.ovltime.md#oncanplaythrough)
-* [onchange](_ovl_src_library_forms_controls_time_.ovltime.md#onchange)
-* [onclick](_ovl_src_library_forms_controls_time_.ovltime.md#onclick)
-* [onclose](_ovl_src_library_forms_controls_time_.ovltime.md#onclose)
-* [oncontextmenu](_ovl_src_library_forms_controls_time_.ovltime.md#oncontextmenu)
-* [oncopy](_ovl_src_library_forms_controls_time_.ovltime.md#oncopy)
-* [oncuechange](_ovl_src_library_forms_controls_time_.ovltime.md#oncuechange)
-* [oncut](_ovl_src_library_forms_controls_time_.ovltime.md#oncut)
-* [ondblclick](_ovl_src_library_forms_controls_time_.ovltime.md#ondblclick)
-* [ondrag](_ovl_src_library_forms_controls_time_.ovltime.md#ondrag)
-* [ondragend](_ovl_src_library_forms_controls_time_.ovltime.md#ondragend)
-* [ondragenter](_ovl_src_library_forms_controls_time_.ovltime.md#ondragenter)
-* [ondragexit](_ovl_src_library_forms_controls_time_.ovltime.md#ondragexit)
-* [ondragleave](_ovl_src_library_forms_controls_time_.ovltime.md#ondragleave)
-* [ondragover](_ovl_src_library_forms_controls_time_.ovltime.md#ondragover)
-* [ondragstart](_ovl_src_library_forms_controls_time_.ovltime.md#ondragstart)
-* [ondrop](_ovl_src_library_forms_controls_time_.ovltime.md#ondrop)
-* [ondurationchange](_ovl_src_library_forms_controls_time_.ovltime.md#ondurationchange)
-* [onemptied](_ovl_src_library_forms_controls_time_.ovltime.md#onemptied)
-* [onended](_ovl_src_library_forms_controls_time_.ovltime.md#onended)
-* [onerror](_ovl_src_library_forms_controls_time_.ovltime.md#onerror)
-* [onfocus](_ovl_src_library_forms_controls_time_.ovltime.md#onfocus)
-* [onfullscreenchange](_ovl_src_library_forms_controls_time_.ovltime.md#onfullscreenchange)
-* [onfullscreenerror](_ovl_src_library_forms_controls_time_.ovltime.md#onfullscreenerror)
-* [ongotpointercapture](_ovl_src_library_forms_controls_time_.ovltime.md#ongotpointercapture)
-* [oninput](_ovl_src_library_forms_controls_time_.ovltime.md#oninput)
-* [oninvalid](_ovl_src_library_forms_controls_time_.ovltime.md#oninvalid)
-* [onkeydown](_ovl_src_library_forms_controls_time_.ovltime.md#onkeydown)
-* [onkeypress](_ovl_src_library_forms_controls_time_.ovltime.md#onkeypress)
-* [onkeyup](_ovl_src_library_forms_controls_time_.ovltime.md#onkeyup)
-* [onload](_ovl_src_library_forms_controls_time_.ovltime.md#onload)
-* [onloadeddata](_ovl_src_library_forms_controls_time_.ovltime.md#onloadeddata)
-* [onloadedmetadata](_ovl_src_library_forms_controls_time_.ovltime.md#onloadedmetadata)
-* [onloadstart](_ovl_src_library_forms_controls_time_.ovltime.md#onloadstart)
-* [onlostpointercapture](_ovl_src_library_forms_controls_time_.ovltime.md#onlostpointercapture)
-* [onmousedown](_ovl_src_library_forms_controls_time_.ovltime.md#onmousedown)
-* [onmouseenter](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseenter)
-* [onmouseleave](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseleave)
-* [onmousemove](_ovl_src_library_forms_controls_time_.ovltime.md#onmousemove)
-* [onmouseout](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseout)
-* [onmouseover](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseover)
-* [onmouseup](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseup)
-* [onpaste](_ovl_src_library_forms_controls_time_.ovltime.md#onpaste)
-* [onpause](_ovl_src_library_forms_controls_time_.ovltime.md#onpause)
-* [onplay](_ovl_src_library_forms_controls_time_.ovltime.md#onplay)
-* [onplaying](_ovl_src_library_forms_controls_time_.ovltime.md#onplaying)
-* [onpointercancel](_ovl_src_library_forms_controls_time_.ovltime.md#onpointercancel)
-* [onpointerdown](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerdown)
-* [onpointerenter](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerenter)
-* [onpointerleave](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerleave)
-* [onpointermove](_ovl_src_library_forms_controls_time_.ovltime.md#onpointermove)
-* [onpointerout](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerout)
-* [onpointerover](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerover)
-* [onpointerup](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerup)
-* [onprogress](_ovl_src_library_forms_controls_time_.ovltime.md#onprogress)
-* [onratechange](_ovl_src_library_forms_controls_time_.ovltime.md#onratechange)
-* [onreset](_ovl_src_library_forms_controls_time_.ovltime.md#onreset)
-* [onresize](_ovl_src_library_forms_controls_time_.ovltime.md#onresize)
-* [onscroll](_ovl_src_library_forms_controls_time_.ovltime.md#onscroll)
-* [onsecuritypolicyviolation](_ovl_src_library_forms_controls_time_.ovltime.md#onsecuritypolicyviolation)
-* [onseeked](_ovl_src_library_forms_controls_time_.ovltime.md#onseeked)
-* [onseeking](_ovl_src_library_forms_controls_time_.ovltime.md#onseeking)
-* [onselect](_ovl_src_library_forms_controls_time_.ovltime.md#onselect)
-* [onselectionchange](_ovl_src_library_forms_controls_time_.ovltime.md#onselectionchange)
-* [onselectstart](_ovl_src_library_forms_controls_time_.ovltime.md#onselectstart)
-* [onstalled](_ovl_src_library_forms_controls_time_.ovltime.md#onstalled)
-* [onsubmit](_ovl_src_library_forms_controls_time_.ovltime.md#onsubmit)
-* [onsuspend](_ovl_src_library_forms_controls_time_.ovltime.md#onsuspend)
-* [ontimeupdate](_ovl_src_library_forms_controls_time_.ovltime.md#ontimeupdate)
-* [ontoggle](_ovl_src_library_forms_controls_time_.ovltime.md#ontoggle)
-* [ontouchcancel](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchcancel)
-* [ontouchend](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchend)
-* [ontouchmove](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchmove)
-* [ontouchstart](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchstart)
-* [ontransitioncancel](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitioncancel)
-* [ontransitionend](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitionend)
-* [ontransitionrun](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitionrun)
-* [ontransitionstart](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitionstart)
-* [onvolumechange](_ovl_src_library_forms_controls_time_.ovltime.md#onvolumechange)
-* [onwaiting](_ovl_src_library_forms_controls_time_.ovltime.md#onwaiting)
-* [onwheel](_ovl_src_library_forms_controls_time_.ovltime.md#onwheel)
-* [outerHTML](_ovl_src_library_forms_controls_time_.ovltime.md#outerhtml)
-* [ownerDocument](_ovl_src_library_forms_controls_time_.ovltime.md#ownerdocument)
-* [parentElement](_ovl_src_library_forms_controls_time_.ovltime.md#parentelement)
-* [parentNode](_ovl_src_library_forms_controls_time_.ovltime.md#parentnode)
-* [prefix](_ovl_src_library_forms_controls_time_.ovltime.md#prefix)
-* [previousElementSibling](_ovl_src_library_forms_controls_time_.ovltime.md#previouselementsibling)
-* [previousSibling](_ovl_src_library_forms_controls_time_.ovltime.md#previoussibling)
-* [props](_ovl_src_library_forms_controls_time_.ovltime.md#props)
-* [screen](_ovl_src_library_forms_controls_time_.ovltime.md#screen)
-* [scrollHeight](_ovl_src_library_forms_controls_time_.ovltime.md#scrollheight)
-* [scrollLeft](_ovl_src_library_forms_controls_time_.ovltime.md#scrollleft)
-* [scrollTop](_ovl_src_library_forms_controls_time_.ovltime.md#scrolltop)
-* [scrollWidth](_ovl_src_library_forms_controls_time_.ovltime.md#scrollwidth)
-* [shadowRoot](_ovl_src_library_forms_controls_time_.ovltime.md#shadowroot)
-* [slot](_ovl_src_library_forms_controls_time_.ovltime.md#slot)
-* [spellcheck](_ovl_src_library_forms_controls_time_.ovltime.md#spellcheck)
-* [state](_ovl_src_library_forms_controls_time_.ovltime.md#state)
-* [style](_ovl_src_library_forms_controls_time_.ovltime.md#style)
-* [tabIndex](_ovl_src_library_forms_controls_time_.ovltime.md#tabindex)
-* [tagName](_ovl_src_library_forms_controls_time_.ovltime.md#tagname)
-* [textContent](_ovl_src_library_forms_controls_time_.ovltime.md#textcontent)
-* [title](_ovl_src_library_forms_controls_time_.ovltime.md#title)
-* [trackedTree](_ovl_src_library_forms_controls_time_.ovltime.md#trackedtree)
-* [translate](_ovl_src_library_forms_controls_time_.ovltime.md#translate)
-* [_counter](_ovl_src_library_forms_controls_time_.ovltime.md#static-_counter)
+- [ATTRIBUTE_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#attribute_node)
+- [CDATA_SECTION_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#cdata_section_node)
+- [COMMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#comment_node)
+- [DOCUMENT_FRAGMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#document_fragment_node)
+- [DOCUMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#document_node)
+- [DOCUMENT_POSITION_CONTAINED_BY](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_contained_by)
+- [DOCUMENT_POSITION_CONTAINS](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_contains)
+- [DOCUMENT_POSITION_DISCONNECTED](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_disconnected)
+- [DOCUMENT_POSITION_FOLLOWING](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_following)
+- [DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_implementation_specific)
+- [DOCUMENT_POSITION_PRECEDING](_ovl_src_library_forms_controls_time_.ovltime.md#document_position_preceding)
+- [DOCUMENT_TYPE_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#document_type_node)
+- [ELEMENT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#element_node)
+- [ENTITY_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#entity_node)
+- [ENTITY_REFERENCE_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#entity_reference_node)
+- [NOTATION_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#notation_node)
+- [PROCESSING_INSTRUCTION_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#processing_instruction_node)
+- [TEXT_NODE](_ovl_src_library_forms_controls_time_.ovltime.md#text_node)
+- [\_flushId](_ovl_src_library_forms_controls_time_.ovltime.md#_flushid)
+- [\_id](_ovl_src_library_forms_controls_time_.ovltime.md#_id)
+- [accessKey](_ovl_src_library_forms_controls_time_.ovltime.md#accesskey)
+- [accessKeyLabel](_ovl_src_library_forms_controls_time_.ovltime.md#accesskeylabel)
+- [actions](_ovl_src_library_forms_controls_time_.ovltime.md#actions)
+- [animatedClass](_ovl_src_library_forms_controls_time_.ovltime.md#animatedclass)
+- [assignedSlot](_ovl_src_library_forms_controls_time_.ovltime.md#assignedslot)
+- [async](_ovl_src_library_forms_controls_time_.ovltime.md#async)
+- [attributes](_ovl_src_library_forms_controls_time_.ovltime.md#attributes)
+- [autocapitalize](_ovl_src_library_forms_controls_time_.ovltime.md#autocapitalize)
+- [autofocus](_ovl_src_library_forms_controls_time_.ovltime.md#autofocus)
+- [baseURI](_ovl_src_library_forms_controls_time_.ovltime.md#baseuri)
+- [childElementCount](_ovl_src_library_forms_controls_time_.ovltime.md#childelementcount)
+- [childNodes](_ovl_src_library_forms_controls_time_.ovltime.md#childnodes)
+- [children](_ovl_src_library_forms_controls_time_.ovltime.md#children)
+- [classList](_ovl_src_library_forms_controls_time_.ovltime.md#classlist)
+- [className](_ovl_src_library_forms_controls_time_.ovltime.md#classname)
+- [clientHeight](_ovl_src_library_forms_controls_time_.ovltime.md#clientheight)
+- [clientLeft](_ovl_src_library_forms_controls_time_.ovltime.md#clientleft)
+- [clientTop](_ovl_src_library_forms_controls_time_.ovltime.md#clienttop)
+- [clientWidth](_ovl_src_library_forms_controls_time_.ovltime.md#clientwidth)
+- [contentEditable](_ovl_src_library_forms_controls_time_.ovltime.md#contenteditable)
+- [controlState](_ovl_src_library_forms_controls_time_.ovltime.md#controlstate)
+- [dataset](_ovl_src_library_forms_controls_time_.ovltime.md#dataset)
+- [dir](_ovl_src_library_forms_controls_time_.ovltime.md#dir)
+- [draggable](_ovl_src_library_forms_controls_time_.ovltime.md#draggable)
+- [firstChild](_ovl_src_library_forms_controls_time_.ovltime.md#firstchild)
+- [firstElementChild](_ovl_src_library_forms_controls_time_.ovltime.md#firstelementchild)
+- [hidden](_ovl_src_library_forms_controls_time_.ovltime.md#hidden)
+- [id](_ovl_src_library_forms_controls_time_.ovltime.md#id)
+- [innerHTML](_ovl_src_library_forms_controls_time_.ovltime.md#innerhtml)
+- [innerText](_ovl_src_library_forms_controls_time_.ovltime.md#innertext)
+- [inputElement](_ovl_src_library_forms_controls_time_.ovltime.md#inputelement)
+- [inputMode](_ovl_src_library_forms_controls_time_.ovltime.md#inputmode)
+- [isConnected](_ovl_src_library_forms_controls_time_.ovltime.md#isconnected)
+- [isContentEditable](_ovl_src_library_forms_controls_time_.ovltime.md#iscontenteditable)
+- [lang](_ovl_src_library_forms_controls_time_.ovltime.md#lang)
+- [lastChild](_ovl_src_library_forms_controls_time_.ovltime.md#lastchild)
+- [lastElementChild](_ovl_src_library_forms_controls_time_.ovltime.md#lastelementchild)
+- [localName](_ovl_src_library_forms_controls_time_.ovltime.md#localname)
+- [name](_ovl_src_library_forms_controls_time_.ovltime.md#name)
+- [namespaceURI](_ovl_src_library_forms_controls_time_.ovltime.md#namespaceuri)
+- [nextElementSibling](_ovl_src_library_forms_controls_time_.ovltime.md#nextelementsibling)
+- [nextSibling](_ovl_src_library_forms_controls_time_.ovltime.md#nextsibling)
+- [nodeName](_ovl_src_library_forms_controls_time_.ovltime.md#nodename)
+- [nodeType](_ovl_src_library_forms_controls_time_.ovltime.md#nodetype)
+- [nodeValue](_ovl_src_library_forms_controls_time_.ovltime.md#nodevalue)
+- [nonce](_ovl_src_library_forms_controls_time_.ovltime.md#optional-nonce)
+- [offsetHeight](_ovl_src_library_forms_controls_time_.ovltime.md#offsetheight)
+- [offsetLeft](_ovl_src_library_forms_controls_time_.ovltime.md#offsetleft)
+- [offsetParent](_ovl_src_library_forms_controls_time_.ovltime.md#offsetparent)
+- [offsetTop](_ovl_src_library_forms_controls_time_.ovltime.md#offsettop)
+- [offsetWidth](_ovl_src_library_forms_controls_time_.ovltime.md#offsetwidth)
+- [onabort](_ovl_src_library_forms_controls_time_.ovltime.md#onabort)
+- [onanimationcancel](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationcancel)
+- [onanimationend](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationend)
+- [onanimationiteration](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationiteration)
+- [onanimationstart](_ovl_src_library_forms_controls_time_.ovltime.md#onanimationstart)
+- [onauxclick](_ovl_src_library_forms_controls_time_.ovltime.md#onauxclick)
+- [onblur](_ovl_src_library_forms_controls_time_.ovltime.md#onblur)
+- [oncancel](_ovl_src_library_forms_controls_time_.ovltime.md#oncancel)
+- [oncanplay](_ovl_src_library_forms_controls_time_.ovltime.md#oncanplay)
+- [oncanplaythrough](_ovl_src_library_forms_controls_time_.ovltime.md#oncanplaythrough)
+- [onchange](_ovl_src_library_forms_controls_time_.ovltime.md#onchange)
+- [onclick](_ovl_src_library_forms_controls_time_.ovltime.md#onclick)
+- [onclose](_ovl_src_library_forms_controls_time_.ovltime.md#onclose)
+- [oncontextmenu](_ovl_src_library_forms_controls_time_.ovltime.md#oncontextmenu)
+- [oncopy](_ovl_src_library_forms_controls_time_.ovltime.md#oncopy)
+- [oncuechange](_ovl_src_library_forms_controls_time_.ovltime.md#oncuechange)
+- [oncut](_ovl_src_library_forms_controls_time_.ovltime.md#oncut)
+- [ondblclick](_ovl_src_library_forms_controls_time_.ovltime.md#ondblclick)
+- [ondrag](_ovl_src_library_forms_controls_time_.ovltime.md#ondrag)
+- [ondragend](_ovl_src_library_forms_controls_time_.ovltime.md#ondragend)
+- [ondragenter](_ovl_src_library_forms_controls_time_.ovltime.md#ondragenter)
+- [ondragexit](_ovl_src_library_forms_controls_time_.ovltime.md#ondragexit)
+- [ondragleave](_ovl_src_library_forms_controls_time_.ovltime.md#ondragleave)
+- [ondragover](_ovl_src_library_forms_controls_time_.ovltime.md#ondragover)
+- [ondragstart](_ovl_src_library_forms_controls_time_.ovltime.md#ondragstart)
+- [ondrop](_ovl_src_library_forms_controls_time_.ovltime.md#ondrop)
+- [ondurationchange](_ovl_src_library_forms_controls_time_.ovltime.md#ondurationchange)
+- [onemptied](_ovl_src_library_forms_controls_time_.ovltime.md#onemptied)
+- [onended](_ovl_src_library_forms_controls_time_.ovltime.md#onended)
+- [onerror](_ovl_src_library_forms_controls_time_.ovltime.md#onerror)
+- [onfocus](_ovl_src_library_forms_controls_time_.ovltime.md#onfocus)
+- [onfullscreenchange](_ovl_src_library_forms_controls_time_.ovltime.md#onfullscreenchange)
+- [onfullscreenerror](_ovl_src_library_forms_controls_time_.ovltime.md#onfullscreenerror)
+- [ongotpointercapture](_ovl_src_library_forms_controls_time_.ovltime.md#ongotpointercapture)
+- [oninput](_ovl_src_library_forms_controls_time_.ovltime.md#oninput)
+- [oninvalid](_ovl_src_library_forms_controls_time_.ovltime.md#oninvalid)
+- [onkeydown](_ovl_src_library_forms_controls_time_.ovltime.md#onkeydown)
+- [onkeypress](_ovl_src_library_forms_controls_time_.ovltime.md#onkeypress)
+- [onkeyup](_ovl_src_library_forms_controls_time_.ovltime.md#onkeyup)
+- [onload](_ovl_src_library_forms_controls_time_.ovltime.md#onload)
+- [onloadeddata](_ovl_src_library_forms_controls_time_.ovltime.md#onloadeddata)
+- [onloadedmetadata](_ovl_src_library_forms_controls_time_.ovltime.md#onloadedmetadata)
+- [onloadstart](_ovl_src_library_forms_controls_time_.ovltime.md#onloadstart)
+- [onlostpointercapture](_ovl_src_library_forms_controls_time_.ovltime.md#onlostpointercapture)
+- [onmousedown](_ovl_src_library_forms_controls_time_.ovltime.md#onmousedown)
+- [onmouseenter](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseenter)
+- [onmouseleave](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseleave)
+- [onmousemove](_ovl_src_library_forms_controls_time_.ovltime.md#onmousemove)
+- [onmouseout](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseout)
+- [onmouseover](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseover)
+- [onmouseup](_ovl_src_library_forms_controls_time_.ovltime.md#onmouseup)
+- [onpaste](_ovl_src_library_forms_controls_time_.ovltime.md#onpaste)
+- [onpause](_ovl_src_library_forms_controls_time_.ovltime.md#onpause)
+- [onplay](_ovl_src_library_forms_controls_time_.ovltime.md#onplay)
+- [onplaying](_ovl_src_library_forms_controls_time_.ovltime.md#onplaying)
+- [onpointercancel](_ovl_src_library_forms_controls_time_.ovltime.md#onpointercancel)
+- [onpointerdown](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerdown)
+- [onpointerenter](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerenter)
+- [onpointerleave](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerleave)
+- [onpointermove](_ovl_src_library_forms_controls_time_.ovltime.md#onpointermove)
+- [onpointerout](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerout)
+- [onpointerover](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerover)
+- [onpointerup](_ovl_src_library_forms_controls_time_.ovltime.md#onpointerup)
+- [onprogress](_ovl_src_library_forms_controls_time_.ovltime.md#onprogress)
+- [onratechange](_ovl_src_library_forms_controls_time_.ovltime.md#onratechange)
+- [onreset](_ovl_src_library_forms_controls_time_.ovltime.md#onreset)
+- [onresize](_ovl_src_library_forms_controls_time_.ovltime.md#onresize)
+- [onscroll](_ovl_src_library_forms_controls_time_.ovltime.md#onscroll)
+- [onsecuritypolicyviolation](_ovl_src_library_forms_controls_time_.ovltime.md#onsecuritypolicyviolation)
+- [onseeked](_ovl_src_library_forms_controls_time_.ovltime.md#onseeked)
+- [onseeking](_ovl_src_library_forms_controls_time_.ovltime.md#onseeking)
+- [onselect](_ovl_src_library_forms_controls_time_.ovltime.md#onselect)
+- [onselectionchange](_ovl_src_library_forms_controls_time_.ovltime.md#onselectionchange)
+- [onselectstart](_ovl_src_library_forms_controls_time_.ovltime.md#onselectstart)
+- [onstalled](_ovl_src_library_forms_controls_time_.ovltime.md#onstalled)
+- [onsubmit](_ovl_src_library_forms_controls_time_.ovltime.md#onsubmit)
+- [onsuspend](_ovl_src_library_forms_controls_time_.ovltime.md#onsuspend)
+- [ontimeupdate](_ovl_src_library_forms_controls_time_.ovltime.md#ontimeupdate)
+- [ontoggle](_ovl_src_library_forms_controls_time_.ovltime.md#ontoggle)
+- [ontouchcancel](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchcancel)
+- [ontouchend](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchend)
+- [ontouchmove](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchmove)
+- [ontouchstart](_ovl_src_library_forms_controls_time_.ovltime.md#optional-ontouchstart)
+- [ontransitioncancel](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitioncancel)
+- [ontransitionend](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitionend)
+- [ontransitionrun](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitionrun)
+- [ontransitionstart](_ovl_src_library_forms_controls_time_.ovltime.md#ontransitionstart)
+- [onvolumechange](_ovl_src_library_forms_controls_time_.ovltime.md#onvolumechange)
+- [onwaiting](_ovl_src_library_forms_controls_time_.ovltime.md#onwaiting)
+- [onwheel](_ovl_src_library_forms_controls_time_.ovltime.md#onwheel)
+- [outerHTML](_ovl_src_library_forms_controls_time_.ovltime.md#outerhtml)
+- [ownerDocument](_ovl_src_library_forms_controls_time_.ovltime.md#ownerdocument)
+- [parentElement](_ovl_src_library_forms_controls_time_.ovltime.md#parentelement)
+- [parentNode](_ovl_src_library_forms_controls_time_.ovltime.md#parentnode)
+- [prefix](_ovl_src_library_forms_controls_time_.ovltime.md#prefix)
+- [previousElementSibling](_ovl_src_library_forms_controls_time_.ovltime.md#previouselementsibling)
+- [previousSibling](_ovl_src_library_forms_controls_time_.ovltime.md#previoussibling)
+- [props](_ovl_src_library_forms_controls_time_.ovltime.md#props)
+- [screen](_ovl_src_library_forms_controls_time_.ovltime.md#screen)
+- [scrollHeight](_ovl_src_library_forms_controls_time_.ovltime.md#scrollheight)
+- [scrollLeft](_ovl_src_library_forms_controls_time_.ovltime.md#scrollleft)
+- [scrollTop](_ovl_src_library_forms_controls_time_.ovltime.md#scrolltop)
+- [scrollWidth](_ovl_src_library_forms_controls_time_.ovltime.md#scrollwidth)
+- [shadowRoot](_ovl_src_library_forms_controls_time_.ovltime.md#shadowroot)
+- [slot](_ovl_src_library_forms_controls_time_.ovltime.md#slot)
+- [spellcheck](_ovl_src_library_forms_controls_time_.ovltime.md#spellcheck)
+- [state](_ovl_src_library_forms_controls_time_.ovltime.md#state)
+- [style](_ovl_src_library_forms_controls_time_.ovltime.md#style)
+- [tabIndex](_ovl_src_library_forms_controls_time_.ovltime.md#tabindex)
+- [tagName](_ovl_src_library_forms_controls_time_.ovltime.md#tagname)
+- [textContent](_ovl_src_library_forms_controls_time_.ovltime.md#textcontent)
+- [title](_ovl_src_library_forms_controls_time_.ovltime.md#title)
+- [trackedTree](_ovl_src_library_forms_controls_time_.ovltime.md#trackedtree)
+- [translate](_ovl_src_library_forms_controls_time_.ovltime.md#translate)
+- [\_counter](_ovl_src_library_forms_controls_time_.ovltime.md#static-_counter)
 
 ### Methods
 
-* [addEventListener](_ovl_src_library_forms_controls_time_.ovltime.md#addeventlistener)
-* [after](_ovl_src_library_forms_controls_time_.ovltime.md#after)
-* [afterRender](_ovl_src_library_forms_controls_time_.ovltime.md#afterrender)
-* [animate](_ovl_src_library_forms_controls_time_.ovltime.md#animate)
-* [append](_ovl_src_library_forms_controls_time_.ovltime.md#append)
-* [appendChild](_ovl_src_library_forms_controls_time_.ovltime.md#appendchild)
-* [attachShadow](_ovl_src_library_forms_controls_time_.ovltime.md#attachshadow)
-* [before](_ovl_src_library_forms_controls_time_.ovltime.md#before)
-* [blur](_ovl_src_library_forms_controls_time_.ovltime.md#blur)
-* [click](_ovl_src_library_forms_controls_time_.ovltime.md#click)
-* [cloneNode](_ovl_src_library_forms_controls_time_.ovltime.md#clonenode)
-* [closest](_ovl_src_library_forms_controls_time_.ovltime.md#closest)
-* [compareDocumentPosition](_ovl_src_library_forms_controls_time_.ovltime.md#comparedocumentposition)
-* [connectedCallback](_ovl_src_library_forms_controls_time_.ovltime.md#connectedcallback)
-* [contains](_ovl_src_library_forms_controls_time_.ovltime.md#contains)
-* [disconnectedCallback](_ovl_src_library_forms_controls_time_.ovltime.md#disconnectedcallback)
-* [dispatchEvent](_ovl_src_library_forms_controls_time_.ovltime.md#dispatchevent)
-* [doRender](_ovl_src_library_forms_controls_time_.ovltime.md#dorender)
-* [focus](_ovl_src_library_forms_controls_time_.ovltime.md#focus)
-* [getAnimations](_ovl_src_library_forms_controls_time_.ovltime.md#getanimations)
-* [getAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#getattribute)
-* [getAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#getattributens)
-* [getAttributeNames](_ovl_src_library_forms_controls_time_.ovltime.md#getattributenames)
-* [getAttributeNode](_ovl_src_library_forms_controls_time_.ovltime.md#getattributenode)
-* [getAttributeNodeNS](_ovl_src_library_forms_controls_time_.ovltime.md#getattributenodens)
-* [getBoundingClientRect](_ovl_src_library_forms_controls_time_.ovltime.md#getboundingclientrect)
-* [getClientRects](_ovl_src_library_forms_controls_time_.ovltime.md#getclientrects)
-* [getElementsByClassName](_ovl_src_library_forms_controls_time_.ovltime.md#getelementsbyclassname)
-* [getElementsByTagName](_ovl_src_library_forms_controls_time_.ovltime.md#getelementsbytagname)
-* [getElementsByTagNameNS](_ovl_src_library_forms_controls_time_.ovltime.md#getelementsbytagnamens)
-* [getRootNode](_ovl_src_library_forms_controls_time_.ovltime.md#getrootnode)
-* [getUI](_ovl_src_library_forms_controls_time_.ovltime.md#getui)
-* [getUIAsync](_ovl_src_library_forms_controls_time_.ovltime.md#getuiasync)
-* [handleAnimationEnd](_ovl_src_library_forms_controls_time_.ovltime.md#handleanimationend)
-* [handleChange](_ovl_src_library_forms_controls_time_.ovltime.md#handlechange)
-* [handleFocusOut](_ovl_src_library_forms_controls_time_.ovltime.md#handlefocusout)
-* [hasAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#hasattribute)
-* [hasAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#hasattributens)
-* [hasAttributes](_ovl_src_library_forms_controls_time_.ovltime.md#hasattributes)
-* [hasChildNodes](_ovl_src_library_forms_controls_time_.ovltime.md#haschildnodes)
-* [hasPointerCapture](_ovl_src_library_forms_controls_time_.ovltime.md#haspointercapture)
-* [init](_ovl_src_library_forms_controls_time_.ovltime.md#init)
-* [insertAdjacentElement](_ovl_src_library_forms_controls_time_.ovltime.md#insertadjacentelement)
-* [insertAdjacentHTML](_ovl_src_library_forms_controls_time_.ovltime.md#insertadjacenthtml)
-* [insertAdjacentText](_ovl_src_library_forms_controls_time_.ovltime.md#insertadjacenttext)
-* [insertBefore](_ovl_src_library_forms_controls_time_.ovltime.md#insertbefore)
-* [isDefaultNamespace](_ovl_src_library_forms_controls_time_.ovltime.md#isdefaultnamespace)
-* [isEqualNode](_ovl_src_library_forms_controls_time_.ovltime.md#isequalnode)
-* [isSameNode](_ovl_src_library_forms_controls_time_.ovltime.md#issamenode)
-* [lookupNamespaceURI](_ovl_src_library_forms_controls_time_.ovltime.md#lookupnamespaceuri)
-* [lookupPrefix](_ovl_src_library_forms_controls_time_.ovltime.md#lookupprefix)
-* [matches](_ovl_src_library_forms_controls_time_.ovltime.md#matches)
-* [msGetRegionContent](_ovl_src_library_forms_controls_time_.ovltime.md#msgetregioncontent)
-* [normalize](_ovl_src_library_forms_controls_time_.ovltime.md#normalize)
-* [onUpdate](_ovl_src_library_forms_controls_time_.ovltime.md#onupdate)
-* [prepend](_ovl_src_library_forms_controls_time_.ovltime.md#prepend)
-* [querySelector](_ovl_src_library_forms_controls_time_.ovltime.md#queryselector)
-* [querySelectorAll](_ovl_src_library_forms_controls_time_.ovltime.md#queryselectorall)
-* [releasePointerCapture](_ovl_src_library_forms_controls_time_.ovltime.md#releasepointercapture)
-* [remove](_ovl_src_library_forms_controls_time_.ovltime.md#remove)
-* [removeAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#removeattribute)
-* [removeAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#removeattributens)
-* [removeAttributeNode](_ovl_src_library_forms_controls_time_.ovltime.md#removeattributenode)
-* [removeChild](_ovl_src_library_forms_controls_time_.ovltime.md#removechild)
-* [removeEventListener](_ovl_src_library_forms_controls_time_.ovltime.md#removeeventlistener)
-* [removePathsFromTracking](_ovl_src_library_forms_controls_time_.ovltime.md#removepathsfromtracking)
-* [replaceChild](_ovl_src_library_forms_controls_time_.ovltime.md#replacechild)
-* [replaceWith](_ovl_src_library_forms_controls_time_.ovltime.md#replacewith)
-* [requestFullscreen](_ovl_src_library_forms_controls_time_.ovltime.md#requestfullscreen)
-* [requestPointerLock](_ovl_src_library_forms_controls_time_.ovltime.md#requestpointerlock)
-* [screenClosing](_ovl_src_library_forms_controls_time_.ovltime.md#screenclosing)
-* [screenVisible](_ovl_src_library_forms_controls_time_.ovltime.md#screenvisible)
-* [scroll](_ovl_src_library_forms_controls_time_.ovltime.md#scroll)
-* [scrollBy](_ovl_src_library_forms_controls_time_.ovltime.md#scrollby)
-* [scrollIntoView](_ovl_src_library_forms_controls_time_.ovltime.md#scrollintoview)
-* [scrollTo](_ovl_src_library_forms_controls_time_.ovltime.md#scrollto)
-* [setAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#setattribute)
-* [setAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#setattributens)
-* [setAttributeNode](_ovl_src_library_forms_controls_time_.ovltime.md#setattributenode)
-* [setAttributeNodeNS](_ovl_src_library_forms_controls_time_.ovltime.md#setattributenodens)
-* [setPointerCapture](_ovl_src_library_forms_controls_time_.ovltime.md#setpointercapture)
-* [setUI](_ovl_src_library_forms_controls_time_.ovltime.md#setui)
-* [toggleAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#toggleattribute)
-* [webkitMatchesSelector](_ovl_src_library_forms_controls_time_.ovltime.md#webkitmatchesselector)
+- [addEventListener](_ovl_src_library_forms_controls_time_.ovltime.md#addeventlistener)
+- [after](_ovl_src_library_forms_controls_time_.ovltime.md#after)
+- [afterRender](_ovl_src_library_forms_controls_time_.ovltime.md#afterrender)
+- [animate](_ovl_src_library_forms_controls_time_.ovltime.md#animate)
+- [append](_ovl_src_library_forms_controls_time_.ovltime.md#append)
+- [appendChild](_ovl_src_library_forms_controls_time_.ovltime.md#appendchild)
+- [attachShadow](_ovl_src_library_forms_controls_time_.ovltime.md#attachshadow)
+- [before](_ovl_src_library_forms_controls_time_.ovltime.md#before)
+- [blur](_ovl_src_library_forms_controls_time_.ovltime.md#blur)
+- [click](_ovl_src_library_forms_controls_time_.ovltime.md#click)
+- [cloneNode](_ovl_src_library_forms_controls_time_.ovltime.md#clonenode)
+- [closest](_ovl_src_library_forms_controls_time_.ovltime.md#closest)
+- [compareDocumentPosition](_ovl_src_library_forms_controls_time_.ovltime.md#comparedocumentposition)
+- [connectedCallback](_ovl_src_library_forms_controls_time_.ovltime.md#connectedcallback)
+- [contains](_ovl_src_library_forms_controls_time_.ovltime.md#contains)
+- [disconnectedCallback](_ovl_src_library_forms_controls_time_.ovltime.md#disconnectedcallback)
+- [dispatchEvent](_ovl_src_library_forms_controls_time_.ovltime.md#dispatchevent)
+- [doRender](_ovl_src_library_forms_controls_time_.ovltime.md#dorender)
+- [focus](_ovl_src_library_forms_controls_time_.ovltime.md#focus)
+- [getAnimations](_ovl_src_library_forms_controls_time_.ovltime.md#getanimations)
+- [getAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#getattribute)
+- [getAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#getattributens)
+- [getAttributeNames](_ovl_src_library_forms_controls_time_.ovltime.md#getattributenames)
+- [getAttributeNode](_ovl_src_library_forms_controls_time_.ovltime.md#getattributenode)
+- [getAttributeNodeNS](_ovl_src_library_forms_controls_time_.ovltime.md#getattributenodens)
+- [getBoundingClientRect](_ovl_src_library_forms_controls_time_.ovltime.md#getboundingclientrect)
+- [getClientRects](_ovl_src_library_forms_controls_time_.ovltime.md#getclientrects)
+- [getElementsByClassName](_ovl_src_library_forms_controls_time_.ovltime.md#getelementsbyclassname)
+- [getElementsByTagName](_ovl_src_library_forms_controls_time_.ovltime.md#getelementsbytagname)
+- [getElementsByTagNameNS](_ovl_src_library_forms_controls_time_.ovltime.md#getelementsbytagnamens)
+- [getRootNode](_ovl_src_library_forms_controls_time_.ovltime.md#getrootnode)
+- [getUI](_ovl_src_library_forms_controls_time_.ovltime.md#getui)
+- [getUI](_ovl_src_library_forms_controls_time_.ovltime.md#getUI)
+- [handleAnimationEnd](_ovl_src_library_forms_controls_time_.ovltime.md#handleanimationend)
+- [handleChange](_ovl_src_library_forms_controls_time_.ovltime.md#handlechange)
+- [handleFocusOut](_ovl_src_library_forms_controls_time_.ovltime.md#handlefocusout)
+- [hasAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#hasattribute)
+- [hasAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#hasattributens)
+- [hasAttributes](_ovl_src_library_forms_controls_time_.ovltime.md#hasattributes)
+- [hasChildNodes](_ovl_src_library_forms_controls_time_.ovltime.md#haschildnodes)
+- [hasPointerCapture](_ovl_src_library_forms_controls_time_.ovltime.md#haspointercapture)
+- [init](_ovl_src_library_forms_controls_time_.ovltime.md#init)
+- [insertAdjacentElement](_ovl_src_library_forms_controls_time_.ovltime.md#insertadjacentelement)
+- [insertAdjacentHTML](_ovl_src_library_forms_controls_time_.ovltime.md#insertadjacenthtml)
+- [insertAdjacentText](_ovl_src_library_forms_controls_time_.ovltime.md#insertadjacenttext)
+- [insertBefore](_ovl_src_library_forms_controls_time_.ovltime.md#insertbefore)
+- [isDefaultNamespace](_ovl_src_library_forms_controls_time_.ovltime.md#isdefaultnamespace)
+- [isEqualNode](_ovl_src_library_forms_controls_time_.ovltime.md#isequalnode)
+- [isSameNode](_ovl_src_library_forms_controls_time_.ovltime.md#issamenode)
+- [lookupNamespaceURI](_ovl_src_library_forms_controls_time_.ovltime.md#lookupnamespaceuri)
+- [lookupPrefix](_ovl_src_library_forms_controls_time_.ovltime.md#lookupprefix)
+- [matches](_ovl_src_library_forms_controls_time_.ovltime.md#matches)
+- [msGetRegionContent](_ovl_src_library_forms_controls_time_.ovltime.md#msgetregioncontent)
+- [normalize](_ovl_src_library_forms_controls_time_.ovltime.md#normalize)
+- [onUpdate](_ovl_src_library_forms_controls_time_.ovltime.md#onupdate)
+- [prepend](_ovl_src_library_forms_controls_time_.ovltime.md#prepend)
+- [querySelector](_ovl_src_library_forms_controls_time_.ovltime.md#queryselector)
+- [querySelectorAll](_ovl_src_library_forms_controls_time_.ovltime.md#queryselectorall)
+- [releasePointerCapture](_ovl_src_library_forms_controls_time_.ovltime.md#releasepointercapture)
+- [remove](_ovl_src_library_forms_controls_time_.ovltime.md#remove)
+- [removeAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#removeattribute)
+- [removeAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#removeattributens)
+- [removeAttributeNode](_ovl_src_library_forms_controls_time_.ovltime.md#removeattributenode)
+- [removeChild](_ovl_src_library_forms_controls_time_.ovltime.md#removechild)
+- [removeEventListener](_ovl_src_library_forms_controls_time_.ovltime.md#removeeventlistener)
+- [removePathsFromTracking](_ovl_src_library_forms_controls_time_.ovltime.md#removepathsfromtracking)
+- [replaceChild](_ovl_src_library_forms_controls_time_.ovltime.md#replacechild)
+- [replaceWith](_ovl_src_library_forms_controls_time_.ovltime.md#replacewith)
+- [requestFullscreen](_ovl_src_library_forms_controls_time_.ovltime.md#requestfullscreen)
+- [requestPointerLock](_ovl_src_library_forms_controls_time_.ovltime.md#requestpointerlock)
+- [screenClosing](_ovl_src_library_forms_controls_time_.ovltime.md#screenclosing)
+- [screenVisible](_ovl_src_library_forms_controls_time_.ovltime.md#screenvisible)
+- [scroll](_ovl_src_library_forms_controls_time_.ovltime.md#scroll)
+- [scrollBy](_ovl_src_library_forms_controls_time_.ovltime.md#scrollby)
+- [scrollIntoView](_ovl_src_library_forms_controls_time_.ovltime.md#scrollintoview)
+- [scrollTo](_ovl_src_library_forms_controls_time_.ovltime.md#scrollto)
+- [setAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#setattribute)
+- [setAttributeNS](_ovl_src_library_forms_controls_time_.ovltime.md#setattributens)
+- [setAttributeNode](_ovl_src_library_forms_controls_time_.ovltime.md#setattributenode)
+- [setAttributeNodeNS](_ovl_src_library_forms_controls_time_.ovltime.md#setattributenodens)
+- [setPointerCapture](_ovl_src_library_forms_controls_time_.ovltime.md#setpointercapture)
+- [setUI](_ovl_src_library_forms_controls_time_.ovltime.md#setui)
+- [toggleAttribute](_ovl_src_library_forms_controls_time_.ovltime.md#toggleattribute)
+- [webkitMatchesSelector](_ovl_src_library_forms_controls_time_.ovltime.md#webkitmatchesselector)
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new OvlTime**(): *[OvlTime](_ovl_src_library_forms_controls_time_.ovltime.md)*
+\+ **new OvlTime**(): _[OvlTime](_ovl_src_library_forms_controls_time_.ovltime.md)_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[constructor](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#constructor)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[constructor](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#constructor)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:90](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L90)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:90](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L90)_
 
-**Returns:** *[OvlTime](_ovl_src_library_forms_controls_time_.ovltime.md)*
+**Returns:** _[OvlTime](_ovl_src_library_forms_controls_time_.ovltime.md)_
 
 ## Properties
 
-###  ATTRIBUTE_NODE
+### ATTRIBUTE_NODE
 
-• **ATTRIBUTE_NODE**: *number*
+• **ATTRIBUTE_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ATTRIBUTE_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#attribute_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ATTRIBUTE_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#attribute_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11083
 
-___
+---
 
-###  CDATA_SECTION_NODE
+### CDATA_SECTION_NODE
 
-• **CDATA_SECTION_NODE**: *number*
+• **CDATA_SECTION_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[CDATA_SECTION_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#cdata_section_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[CDATA_SECTION_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#cdata_section_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11087
 
 node is a CDATASection node.
 
-___
+---
 
-###  COMMENT_NODE
+### COMMENT_NODE
 
-• **COMMENT_NODE**: *number*
+• **COMMENT_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[COMMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#comment_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[COMMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#comment_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11091
 
 node is a Comment node.
 
-___
+---
 
-###  DOCUMENT_FRAGMENT_NODE
+### DOCUMENT_FRAGMENT_NODE
 
-• **DOCUMENT_FRAGMENT_NODE**: *number*
+• **DOCUMENT_FRAGMENT_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_FRAGMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_fragment_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_FRAGMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_fragment_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11095
 
 node is a DocumentFragment node.
 
-___
+---
 
-###  DOCUMENT_NODE
+### DOCUMENT_NODE
 
-• **DOCUMENT_NODE**: *number*
+• **DOCUMENT_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11099
 
 node is a document.
 
-___
+---
 
-###  DOCUMENT_POSITION_CONTAINED_BY
+### DOCUMENT_POSITION_CONTAINED_BY
 
-• **DOCUMENT_POSITION_CONTAINED_BY**: *number*
+• **DOCUMENT_POSITION_CONTAINED_BY**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_CONTAINED_BY](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_contained_by)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_CONTAINED_BY](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_contained_by)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11103
 
 Set when other is a descendant of node.
 
-___
+---
 
-###  DOCUMENT_POSITION_CONTAINS
+### DOCUMENT_POSITION_CONTAINS
 
-• **DOCUMENT_POSITION_CONTAINS**: *number*
+• **DOCUMENT_POSITION_CONTAINS**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_CONTAINS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_contains)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_CONTAINS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_contains)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11107
 
 Set when other is an ancestor of node.
 
-___
+---
 
-###  DOCUMENT_POSITION_DISCONNECTED
+### DOCUMENT_POSITION_DISCONNECTED
 
-• **DOCUMENT_POSITION_DISCONNECTED**: *number*
+• **DOCUMENT_POSITION_DISCONNECTED**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_DISCONNECTED](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_disconnected)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_DISCONNECTED](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_disconnected)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11111
 
 Set when node and other are not in the same tree.
 
-___
+---
 
-###  DOCUMENT_POSITION_FOLLOWING
+### DOCUMENT_POSITION_FOLLOWING
 
-• **DOCUMENT_POSITION_FOLLOWING**: *number*
+• **DOCUMENT_POSITION_FOLLOWING**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_FOLLOWING](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_following)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_FOLLOWING](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_following)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11115
 
 Set when other is following node.
 
-___
+---
 
-###  DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC
+### DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC
 
-• **DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC**: *number*
+• **DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_implementation_specific)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_implementation_specific)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11116
 
-___
+---
 
-###  DOCUMENT_POSITION_PRECEDING
+### DOCUMENT_POSITION_PRECEDING
 
-• **DOCUMENT_POSITION_PRECEDING**: *number*
+• **DOCUMENT_POSITION_PRECEDING**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_PRECEDING](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_preceding)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_POSITION_PRECEDING](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_position_preceding)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11120
 
 Set when other is preceding node.
 
-___
+---
 
-###  DOCUMENT_TYPE_NODE
+### DOCUMENT_TYPE_NODE
 
-• **DOCUMENT_TYPE_NODE**: *number*
+• **DOCUMENT_TYPE_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_TYPE_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_type_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[DOCUMENT_TYPE_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#document_type_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11124
 
 node is a doctype.
 
-___
+---
 
-###  ELEMENT_NODE
+### ELEMENT_NODE
 
-• **ELEMENT_NODE**: *number*
+• **ELEMENT_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ELEMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#element_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ELEMENT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#element_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11128
 
 node is an element.
 
-___
+---
 
-###  ENTITY_NODE
+### ENTITY_NODE
 
-• **ENTITY_NODE**: *number*
+• **ENTITY_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ENTITY_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#entity_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ENTITY_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#entity_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11129
 
-___
+---
 
-###  ENTITY_REFERENCE_NODE
+### ENTITY_REFERENCE_NODE
 
-• **ENTITY_REFERENCE_NODE**: *number*
+• **ENTITY_REFERENCE_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ENTITY_REFERENCE_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#entity_reference_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ENTITY_REFERENCE_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#entity_reference_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11130
 
-___
+---
 
-###  NOTATION_NODE
+### NOTATION_NODE
 
-• **NOTATION_NODE**: *number*
+• **NOTATION_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[NOTATION_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#notation_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[NOTATION_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#notation_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11131
 
-___
+---
 
-###  PROCESSING_INSTRUCTION_NODE
+### PROCESSING_INSTRUCTION_NODE
 
-• **PROCESSING_INSTRUCTION_NODE**: *number*
+• **PROCESSING_INSTRUCTION_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[PROCESSING_INSTRUCTION_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#processing_instruction_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[PROCESSING_INSTRUCTION_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#processing_instruction_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11135
 
 node is a ProcessingInstruction node.
 
-___
+---
 
-###  TEXT_NODE
+### TEXT_NODE
 
-• **TEXT_NODE**: *number*
+• **TEXT_NODE**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[TEXT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#text_node)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[TEXT_NODE](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#text_node)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11139
 
 node is a Text node.
 
-___
+---
 
-###  _flushId
+### \_flushId
 
-• **_flushId**: *number*
+• **\_flushId**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[_flushId](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#_flushid)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[\_flushId](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#_flushid)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:20](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L20)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:20](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L20)_
 
-___
+---
 
-###  _id
+### \_id
 
-• **_id**: *number*
+• **\_id**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[_id](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#_id)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[\_id](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#_id)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L19)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:19](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L19)_
 
-___
+---
 
-###  accessKey
+### accessKey
 
-• **accessKey**: *string*
+• **accessKey**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[accessKey](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#accesskey)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[accessKey](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#accesskey)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6738
 
-___
+---
 
-###  accessKeyLabel
+### accessKeyLabel
 
-• **accessKeyLabel**: *string*
+• **accessKeyLabel**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[accessKeyLabel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#accesskeylabel)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[accessKeyLabel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#accesskeylabel)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6739
 
-___
+---
 
-###  actions
+### actions
 
-• **actions**: *typeof actions*
+• **actions**: _typeof actions_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[actions](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#actions)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[actions](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#actions)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L22)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:22](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L22)_
 
-___
+---
 
-###  animatedClass
+### animatedClass
 
-• **animatedClass**: *string*
+• **animatedClass**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[animatedClass](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#animatedclass)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[animatedClass](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#animatedclass)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L26)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L26)_
 
-___
+---
 
-###  assignedSlot
+### assignedSlot
 
-• **assignedSlot**: *HTMLSlotElement | null*
+• **assignedSlot**: _HTMLSlotElement | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[assignedSlot](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#assignedslot)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[assignedSlot](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#assignedslot)_
 
-*Overrides void*
+_Overrides void_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5252
 
-___
+---
 
-###  async
+### async
 
-• **async**: *boolean*
+• **async**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[async](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#async)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[async](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#async)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:18](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L18)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:18](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L18)_
 
-___
+---
 
-###  attributes
+### attributes
 
-• **attributes**: *NamedNodeMap*
+• **attributes**: _NamedNodeMap_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[attributes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#attributes)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[attributes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#attributes)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5253
 
-___
+---
 
-###  autocapitalize
+### autocapitalize
 
-• **autocapitalize**: *string*
+• **autocapitalize**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[autocapitalize](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#autocapitalize)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[autocapitalize](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#autocapitalize)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6740
 
-___
+---
 
-###  autofocus
+### autofocus
 
-• **autofocus**: *boolean*
+• **autofocus**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[autofocus](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#autofocus)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[autofocus](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#autofocus)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:8207
 
-___
+---
 
-###  baseURI
+### baseURI
 
-• **baseURI**: *string*
+• **baseURI**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[baseURI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#baseuri)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[baseURI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#baseuri)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:10998
 
 Returns node's node document's document base URL.
 
-___
+---
 
-###  childElementCount
+### childElementCount
 
-• **childElementCount**: *number*
+• **childElementCount**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[childElementCount](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#childelementcount)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[childElementCount](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#childelementcount)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11555
 
-___
+---
 
-###  childNodes
+### childNodes
 
-• **childNodes**: *NodeListOf‹ChildNode›*
+• **childNodes**: _NodeListOf‹ChildNode›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[childNodes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#childnodes)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[childNodes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#childnodes)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11002
 
 Returns the children.
 
-___
+---
 
-###  children
+### children
 
-• **children**: *HTMLCollection*
+• **children**: _HTMLCollection_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[children](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#children)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[children](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#children)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11559
 
 Returns the child elements.
 
-___
+---
 
-###  classList
+### classList
 
-• **classList**: *DOMTokenList*
+• **classList**: _DOMTokenList_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[classList](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#classlist)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[classList](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#classlist)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5257
 
 Allows for manipulation of element's class content attribute as a set of whitespace-separated tokens through a DOMTokenList object.
 
-___
+---
 
-###  className
+### className
 
-• **className**: *string*
+• **className**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[className](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#classname)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[className](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#classname)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5261
 
 Returns the value of element's class content attribute. Can be set to change it.
 
-___
+---
 
-###  clientHeight
+### clientHeight
 
-• **clientHeight**: *number*
+• **clientHeight**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientHeight](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clientheight)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientHeight](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clientheight)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5262
 
-___
+---
 
-###  clientLeft
+### clientLeft
 
-• **clientLeft**: *number*
+• **clientLeft**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientLeft](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clientleft)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientLeft](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clientleft)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5263
 
-___
+---
 
-###  clientTop
+### clientTop
 
-• **clientTop**: *number*
+• **clientTop**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientTop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clienttop)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientTop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clienttop)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5264
 
-___
+---
 
-###  clientWidth
+### clientWidth
 
-• **clientWidth**: *number*
+• **clientWidth**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientWidth](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clientwidth)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[clientWidth](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clientwidth)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5265
 
-___
+---
 
-###  contentEditable
+### contentEditable
 
-• **contentEditable**: *string*
+• **contentEditable**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[contentEditable](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#contenteditable)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[contentEditable](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#contenteditable)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5416
 
-___
+---
 
-###  controlState
+### controlState
 
-• **controlState**: *[TimeControlState](../modules/_ovl_src_library_forms_controls_time_.md#timecontrolstate)*
+• **controlState**: _[TimeControlState](../modules/_ovl_src_library_forms_controls_time_.md#timecontrolstate)_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L15)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L15)_
 
-___
+---
 
-###  dataset
+### dataset
 
-• **dataset**: *DOMStringMap*
+• **dataset**: _DOMStringMap_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[dataset](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dataset)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[dataset](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dataset)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:8208
 
-___
+---
 
-###  dir
+### dir
 
-• **dir**: *string*
+• **dir**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[dir](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dir)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[dir](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dir)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6741
 
-___
+---
 
-###  draggable
+### draggable
 
-• **draggable**: *boolean*
+• **draggable**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[draggable](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#draggable)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[draggable](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#draggable)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6742
 
-___
+---
 
-###  firstChild
+### firstChild
 
-• **firstChild**: *ChildNode | null*
+• **firstChild**: _ChildNode | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[firstChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#firstchild)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[firstChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#firstchild)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11006
 
 Returns the first child.
 
-___
+---
 
-###  firstElementChild
+### firstElementChild
 
-• **firstElementChild**: *Element | null*
+• **firstElementChild**: _Element | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[firstElementChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#firstelementchild)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[firstElementChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#firstelementchild)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11563
 
 Returns the first child that is an element, and null otherwise.
 
-___
+---
 
-###  hidden
+### hidden
 
-• **hidden**: *boolean*
+• **hidden**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hidden](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hidden)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hidden](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hidden)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6743
 
-___
+---
 
-###  id
+### id
 
-• **id**: *string*
+• **id**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[id](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#id)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[id](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#id)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5269
 
 Returns the value of element's id content attribute. Can be set to change it.
 
-___
+---
 
-###  innerHTML
+### innerHTML
 
-• **innerHTML**: *string*
+• **innerHTML**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[innerHTML](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#innerhtml)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[innerHTML](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#innerhtml)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:9825
 
-___
+---
 
-###  innerText
+### innerText
 
-• **innerText**: *string*
+• **innerText**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[innerText](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#innertext)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[innerText](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#innertext)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6744
 
-___
+---
 
-###  inputElement
+### inputElement
 
-• **inputElement**: *any*
+• **inputElement**: _any_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:16](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L16)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:16](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L16)_
 
-___
+---
 
-###  inputMode
+### inputMode
 
-• **inputMode**: *string*
+• **inputMode**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[inputMode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#inputmode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[inputMode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#inputmode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5417
 
-___
+---
 
-###  isConnected
+### isConnected
 
-• **isConnected**: *boolean*
+• **isConnected**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isConnected](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#isconnected)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isConnected](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#isconnected)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11010
 
 Returns true if node is connected and false otherwise.
 
-___
+---
 
-###  isContentEditable
+### isContentEditable
 
-• **isContentEditable**: *boolean*
+• **isContentEditable**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isContentEditable](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#iscontenteditable)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isContentEditable](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#iscontenteditable)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5418
 
-___
+---
 
-###  lang
+### lang
 
-• **lang**: *string*
+• **lang**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lang](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lang)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lang](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lang)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6745
 
-___
+---
 
-###  lastChild
+### lastChild
 
-• **lastChild**: *ChildNode | null*
+• **lastChild**: _ChildNode | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lastChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lastchild)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lastChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lastchild)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11014
 
 Returns the last child.
 
-___
+---
 
-###  lastElementChild
+### lastElementChild
 
-• **lastElementChild**: *Element | null*
+• **lastElementChild**: _Element | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lastElementChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lastelementchild)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lastElementChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lastelementchild)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11567
 
 Returns the last child that is an element, and null otherwise.
 
-___
+---
 
-###  localName
+### localName
 
-• **localName**: *string*
+• **localName**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[localName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#localname)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[localName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#localname)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5273
 
 Returns the local name.
 
-___
+---
 
-###  name
+### name
 
-• **name**: *string*
+• **name**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[name](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#name)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[name](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#name)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L23)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:23](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L23)_
 
-___
+---
 
-###  namespaceURI
+### namespaceURI
 
-• **namespaceURI**: *string | null*
+• **namespaceURI**: _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[namespaceURI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#namespaceuri)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[namespaceURI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#namespaceuri)_
 
-*Overrides void*
+_Overrides void_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5277
 
 Returns the namespace.
 
-___
+---
 
-###  nextElementSibling
+### nextElementSibling
 
-• **nextElementSibling**: *Element | null*
+• **nextElementSibling**: _Element | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nextElementSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nextelementsibling)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nextElementSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nextelementsibling)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11285
 
 Returns the first following sibling that is an element, and null otherwise.
 
-___
+---
 
-###  nextSibling
+### nextSibling
 
-• **nextSibling**: *ChildNode | null*
+• **nextSibling**: _ChildNode | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nextSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nextsibling)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nextSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nextsibling)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11020
 
 Returns the next sibling.
 
-___
+---
 
-###  nodeName
+### nodeName
 
-• **nodeName**: *string*
+• **nodeName**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nodeName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nodename)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nodeName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nodename)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11024
 
 Returns a string appropriate for the type of node.
 
-___
+---
 
-###  nodeType
+### nodeType
 
-• **nodeType**: *number*
+• **nodeType**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nodeType](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nodetype)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nodeType](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nodetype)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11028
 
 Returns the type of node.
 
-___
+---
 
-###  nodeValue
+### nodeValue
 
-• **nodeValue**: *string | null*
+• **nodeValue**: _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nodeValue](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nodevalue)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nodeValue](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#nodevalue)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11029
 
-___
+---
 
 ### `Optional` nonce
 
-• **nonce**? : *string*
+• **nonce**? : _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nonce](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-nonce)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[nonce](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-nonce)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:8209
 
-___
+---
 
-###  offsetHeight
+### offsetHeight
 
-• **offsetHeight**: *number*
+• **offsetHeight**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetHeight](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetheight)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetHeight](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetheight)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6746
 
-___
+---
 
-###  offsetLeft
+### offsetLeft
 
-• **offsetLeft**: *number*
+• **offsetLeft**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetLeft](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetleft)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetLeft](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetleft)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6747
 
-___
+---
 
-###  offsetParent
+### offsetParent
 
-• **offsetParent**: *Element | null*
+• **offsetParent**: _Element | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetParent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetparent)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetParent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetparent)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6748
 
-___
+---
 
-###  offsetTop
+### offsetTop
 
-• **offsetTop**: *number*
+• **offsetTop**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetTop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsettop)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetTop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsettop)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6749
 
-___
+---
 
-###  offsetWidth
+### offsetWidth
 
-• **offsetWidth**: *number*
+• **offsetWidth**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetWidth](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetwidth)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[offsetWidth](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#offsetwidth)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6750
 
-___
+---
 
-###  onabort
+### onabort
 
-• **onabort**: *function | null*
+• **onabort**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onabort](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onabort)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onabort](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onabort)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5928
 
@@ -1086,63 +1086,63 @@ Fires when the user aborts the download.
 
 **`param`** The event.
 
-___
+---
 
-###  onanimationcancel
+### onanimationcancel
 
-• **onanimationcancel**: *function | null*
+• **onanimationcancel**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationcancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationcancel)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationcancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationcancel)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5929
 
-___
+---
 
-###  onanimationend
+### onanimationend
 
-• **onanimationend**: *function | null*
+• **onanimationend**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationend)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationend)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5930
 
-___
+---
 
-###  onanimationiteration
+### onanimationiteration
 
-• **onanimationiteration**: *function | null*
+• **onanimationiteration**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationiteration](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationiteration)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationiteration](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationiteration)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5931
 
-___
+---
 
-###  onanimationstart
+### onanimationstart
 
-• **onanimationstart**: *function | null*
+• **onanimationstart**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationstart)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onanimationstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onanimationstart)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5932
 
-___
+---
 
-###  onauxclick
+### onauxclick
 
-• **onauxclick**: *function | null*
+• **onauxclick**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onauxclick](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onauxclick)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onauxclick](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onauxclick)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5933
 
-___
+---
 
-###  onblur
+### onblur
 
-• **onblur**: *function | null*
+• **onblur**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onblur](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onblur)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onblur](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onblur)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5938
 
@@ -1150,23 +1150,23 @@ Fires when the object loses the input focus.
 
 **`param`** The focus event.
 
-___
+---
 
-###  oncancel
+### oncancel
 
-• **oncancel**: *function | null*
+• **oncancel**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncancel)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncancel)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5939
 
-___
+---
 
-###  oncanplay
+### oncanplay
 
-• **oncanplay**: *function | null*
+• **oncanplay**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncanplay](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncanplay)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncanplay](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncanplay)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5944
 
@@ -1174,23 +1174,23 @@ Occurs when playback is possible, but would require further buffering.
 
 **`param`** The event.
 
-___
+---
 
-###  oncanplaythrough
+### oncanplaythrough
 
-• **oncanplaythrough**: *function | null*
+• **oncanplaythrough**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncanplaythrough](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncanplaythrough)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncanplaythrough](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncanplaythrough)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5945
 
-___
+---
 
-###  onchange
+### onchange
 
-• **onchange**: *function | null*
+• **onchange**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onchange)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onchange)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5950
 
@@ -1198,13 +1198,13 @@ Fires when the contents of the object or selection have changed.
 
 **`param`** The event.
 
-___
+---
 
-###  onclick
+### onclick
 
-• **onclick**: *function | null*
+• **onclick**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onclick](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onclick)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onclick](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onclick)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5955
 
@@ -1212,23 +1212,23 @@ Fires when the user clicks the left mouse button on the object
 
 **`param`** The mouse event.
 
-___
+---
 
-###  onclose
+### onclose
 
-• **onclose**: *function | null*
+• **onclose**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onclose](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onclose)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onclose](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onclose)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5956
 
-___
+---
 
-###  oncontextmenu
+### oncontextmenu
 
-• **oncontextmenu**: *function | null*
+• **oncontextmenu**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncontextmenu](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncontextmenu)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncontextmenu](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncontextmenu)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5961
 
@@ -1236,43 +1236,43 @@ Fires when the user clicks the right mouse button in the client area, opening th
 
 **`param`** The mouse event.
 
-___
+---
 
-###  oncopy
+### oncopy
 
-• **oncopy**: *function | null*
+• **oncopy**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncopy](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncopy)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncopy](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncopy)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5053
 
-___
+---
 
-###  oncuechange
+### oncuechange
 
-• **oncuechange**: *function | null*
+• **oncuechange**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncuechange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncuechange)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncuechange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncuechange)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5962
 
-___
+---
 
-###  oncut
+### oncut
 
-• **oncut**: *function | null*
+• **oncut**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncut](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncut)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oncut](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oncut)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5054
 
-___
+---
 
-###  ondblclick
+### ondblclick
 
-• **ondblclick**: *function | null*
+• **ondblclick**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondblclick](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondblclick)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondblclick](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondblclick)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5967
 
@@ -1280,13 +1280,13 @@ Fires when the user double-clicks the object.
 
 **`param`** The mouse event.
 
-___
+---
 
-###  ondrag
+### ondrag
 
-• **ondrag**: *function | null*
+• **ondrag**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondrag](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondrag)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondrag](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondrag)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5972
 
@@ -1294,13 +1294,13 @@ Fires on the source object continuously during a drag operation.
 
 **`param`** The event.
 
-___
+---
 
-###  ondragend
+### ondragend
 
-• **ondragend**: *function | null*
+• **ondragend**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragend)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragend)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5977
 
@@ -1308,13 +1308,13 @@ Fires on the source object when the user releases the mouse at the close of a dr
 
 **`param`** The event.
 
-___
+---
 
-###  ondragenter
+### ondragenter
 
-• **ondragenter**: *function | null*
+• **ondragenter**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragenter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragenter)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragenter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragenter)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5982
 
@@ -1322,23 +1322,23 @@ Fires on the target element when the user drags the object to a valid drop targe
 
 **`param`** The drag event.
 
-___
+---
 
-###  ondragexit
+### ondragexit
 
-• **ondragexit**: *function | null*
+• **ondragexit**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragexit](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragexit)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragexit](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragexit)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5983
 
-___
+---
 
-###  ondragleave
+### ondragleave
 
-• **ondragleave**: *function | null*
+• **ondragleave**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragleave](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragleave)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragleave](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragleave)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5988
 
@@ -1346,13 +1346,13 @@ Fires on the target object when the user moves the mouse out of a valid drop tar
 
 **`param`** The drag event.
 
-___
+---
 
-###  ondragover
+### ondragover
 
-• **ondragover**: *function | null*
+• **ondragover**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragover](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragover)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragover](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragover)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5993
 
@@ -1360,13 +1360,13 @@ Fires on the target element continuously while the user drags the object over a 
 
 **`param`** The event.
 
-___
+---
 
-###  ondragstart
+### ondragstart
 
-• **ondragstart**: *function | null*
+• **ondragstart**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragstart)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondragstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondragstart)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5998
 
@@ -1374,23 +1374,23 @@ Fires on the source object when the user starts to drag a text selection or sele
 
 **`param`** The event.
 
-___
+---
 
-###  ondrop
+### ondrop
 
-• **ondrop**: *function | null*
+• **ondrop**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondrop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondrop)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondrop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondrop)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5999
 
-___
+---
 
-###  ondurationchange
+### ondurationchange
 
-• **ondurationchange**: *function | null*
+• **ondurationchange**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondurationchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondurationchange)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ondurationchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ondurationchange)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6004
 
@@ -1398,13 +1398,13 @@ Occurs when the duration attribute is updated.
 
 **`param`** The event.
 
-___
+---
 
-###  onemptied
+### onemptied
 
-• **onemptied**: *function | null*
+• **onemptied**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onemptied](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onemptied)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onemptied](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onemptied)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6009
 
@@ -1412,13 +1412,13 @@ Occurs when the media element is reset to its initial state.
 
 **`param`** The event.
 
-___
+---
 
-###  onended
+### onended
 
-• **onended**: *function | null*
+• **onended**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onended](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onended)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onended](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onended)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6014
 
@@ -1426,13 +1426,13 @@ Occurs when the end of playback is reached.
 
 **`param`** The event
 
-___
+---
 
-###  onerror
+### onerror
 
-• **onerror**: *OnErrorEventHandler*
+• **onerror**: _OnErrorEventHandler_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onerror](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onerror)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onerror](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onerror)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6019
 
@@ -1440,13 +1440,13 @@ Fires when an error occurs during object loading.
 
 **`param`** The event.
 
-___
+---
 
-###  onfocus
+### onfocus
 
-• **onfocus**: *function | null*
+• **onfocus**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onfocus](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onfocus)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onfocus](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onfocus)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6024
 
@@ -1454,63 +1454,63 @@ Fires when the object receives focus.
 
 **`param`** The event.
 
-___
+---
 
-###  onfullscreenchange
+### onfullscreenchange
 
-• **onfullscreenchange**: *function | null*
+• **onfullscreenchange**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onfullscreenchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onfullscreenchange)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onfullscreenchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onfullscreenchange)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5278
 
-___
+---
 
-###  onfullscreenerror
+### onfullscreenerror
 
-• **onfullscreenerror**: *function | null*
+• **onfullscreenerror**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onfullscreenerror](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onfullscreenerror)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onfullscreenerror](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onfullscreenerror)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5279
 
-___
+---
 
-###  ongotpointercapture
+### ongotpointercapture
 
-• **ongotpointercapture**: *function | null*
+• **ongotpointercapture**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ongotpointercapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ongotpointercapture)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ongotpointercapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ongotpointercapture)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6025
 
-___
+---
 
-###  oninput
+### oninput
 
-• **oninput**: *function | null*
+• **oninput**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oninput](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oninput)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oninput](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oninput)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6026
 
-___
+---
 
-###  oninvalid
+### oninvalid
 
-• **oninvalid**: *function | null*
+• **oninvalid**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oninvalid](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oninvalid)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[oninvalid](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#oninvalid)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6027
 
-___
+---
 
-###  onkeydown
+### onkeydown
 
-• **onkeydown**: *function | null*
+• **onkeydown**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onkeydown](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onkeydown)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onkeydown](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onkeydown)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6032
 
@@ -1518,13 +1518,13 @@ Fires when the user presses a key.
 
 **`param`** The keyboard event
 
-___
+---
 
-###  onkeypress
+### onkeypress
 
-• **onkeypress**: *function | null*
+• **onkeypress**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onkeypress](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onkeypress)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onkeypress](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onkeypress)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6037
 
@@ -1532,13 +1532,13 @@ Fires when the user presses an alphanumeric key.
 
 **`param`** The event.
 
-___
+---
 
-###  onkeyup
+### onkeyup
 
-• **onkeyup**: *function | null*
+• **onkeyup**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onkeyup](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onkeyup)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onkeyup](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onkeyup)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6042
 
@@ -1546,13 +1546,13 @@ Fires when the user releases a key.
 
 **`param`** The keyboard event
 
-___
+---
 
-###  onload
+### onload
 
-• **onload**: *function | null*
+• **onload**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onload](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onload)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onload](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onload)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6047
 
@@ -1560,13 +1560,13 @@ Fires immediately after the browser loads the object.
 
 **`param`** The event.
 
-___
+---
 
-###  onloadeddata
+### onloadeddata
 
-• **onloadeddata**: *function | null*
+• **onloadeddata**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onloadeddata](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onloadeddata)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onloadeddata](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onloadeddata)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6052
 
@@ -1574,13 +1574,13 @@ Occurs when media data is loaded at the current playback position.
 
 **`param`** The event.
 
-___
+---
 
-###  onloadedmetadata
+### onloadedmetadata
 
-• **onloadedmetadata**: *function | null*
+• **onloadedmetadata**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onloadedmetadata](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onloadedmetadata)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onloadedmetadata](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onloadedmetadata)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6057
 
@@ -1588,13 +1588,13 @@ Occurs when the duration and dimensions of the media have been determined.
 
 **`param`** The event.
 
-___
+---
 
-###  onloadstart
+### onloadstart
 
-• **onloadstart**: *function | null*
+• **onloadstart**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onloadstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onloadstart)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onloadstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onloadstart)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6062
 
@@ -1602,23 +1602,23 @@ Occurs when Internet Explorer begins looking for media data.
 
 **`param`** The event.
 
-___
+---
 
-###  onlostpointercapture
+### onlostpointercapture
 
-• **onlostpointercapture**: *function | null*
+• **onlostpointercapture**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onlostpointercapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onlostpointercapture)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onlostpointercapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onlostpointercapture)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6063
 
-___
+---
 
-###  onmousedown
+### onmousedown
 
-• **onmousedown**: *function | null*
+• **onmousedown**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmousedown](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmousedown)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmousedown](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmousedown)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6068
 
@@ -1626,33 +1626,33 @@ Fires when the user clicks the object with either mouse button.
 
 **`param`** The mouse event.
 
-___
+---
 
-###  onmouseenter
+### onmouseenter
 
-• **onmouseenter**: *function | null*
+• **onmouseenter**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseenter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseenter)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseenter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseenter)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6069
 
-___
+---
 
-###  onmouseleave
+### onmouseleave
 
-• **onmouseleave**: *function | null*
+• **onmouseleave**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseleave](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseleave)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseleave](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseleave)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6070
 
-___
+---
 
-###  onmousemove
+### onmousemove
 
-• **onmousemove**: *function | null*
+• **onmousemove**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmousemove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmousemove)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmousemove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmousemove)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6075
 
@@ -1660,13 +1660,13 @@ Fires when the user moves the mouse over the object.
 
 **`param`** The mouse event.
 
-___
+---
 
-###  onmouseout
+### onmouseout
 
-• **onmouseout**: *function | null*
+• **onmouseout**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseout](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseout)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseout](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseout)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6080
 
@@ -1674,13 +1674,13 @@ Fires when the user moves the mouse pointer outside the boundaries of the object
 
 **`param`** The mouse event.
 
-___
+---
 
-###  onmouseover
+### onmouseover
 
-• **onmouseover**: *function | null*
+• **onmouseover**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseover](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseover)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseover](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseover)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6085
 
@@ -1688,13 +1688,13 @@ Fires when the user moves the mouse pointer into the object.
 
 **`param`** The mouse event.
 
-___
+---
 
-###  onmouseup
+### onmouseup
 
-• **onmouseup**: *function | null*
+• **onmouseup**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseup](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseup)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onmouseup](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onmouseup)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6090
 
@@ -1702,23 +1702,23 @@ Fires when the user releases a mouse button while the mouse is over the object.
 
 **`param`** The mouse event.
 
-___
+---
 
-###  onpaste
+### onpaste
 
-• **onpaste**: *function | null*
+• **onpaste**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpaste](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpaste)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpaste](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpaste)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5055
 
-___
+---
 
-###  onpause
+### onpause
 
-• **onpause**: *function | null*
+• **onpause**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpause](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpause)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpause](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpause)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6095
 
@@ -1726,13 +1726,13 @@ Occurs when playback is paused.
 
 **`param`** The event.
 
-___
+---
 
-###  onplay
+### onplay
 
-• **onplay**: *function | null*
+• **onplay**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onplay](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onplay)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onplay](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onplay)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6100
 
@@ -1740,13 +1740,13 @@ Occurs when the play method is requested.
 
 **`param`** The event.
 
-___
+---
 
-###  onplaying
+### onplaying
 
-• **onplaying**: *function | null*
+• **onplaying**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onplaying](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onplaying)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onplaying](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onplaying)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6105
 
@@ -1754,93 +1754,93 @@ Occurs when the audio or video has started playing.
 
 **`param`** The event.
 
-___
+---
 
-###  onpointercancel
+### onpointercancel
 
-• **onpointercancel**: *function | null*
+• **onpointercancel**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointercancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointercancel)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointercancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointercancel)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6106
 
-___
+---
 
-###  onpointerdown
+### onpointerdown
 
-• **onpointerdown**: *function | null*
+• **onpointerdown**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerdown](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerdown)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerdown](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerdown)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6107
 
-___
+---
 
-###  onpointerenter
+### onpointerenter
 
-• **onpointerenter**: *function | null*
+• **onpointerenter**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerenter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerenter)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerenter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerenter)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6108
 
-___
+---
 
-###  onpointerleave
+### onpointerleave
 
-• **onpointerleave**: *function | null*
+• **onpointerleave**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerleave](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerleave)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerleave](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerleave)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6109
 
-___
+---
 
-###  onpointermove
+### onpointermove
 
-• **onpointermove**: *function | null*
+• **onpointermove**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointermove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointermove)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointermove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointermove)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6110
 
-___
+---
 
-###  onpointerout
+### onpointerout
 
-• **onpointerout**: *function | null*
+• **onpointerout**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerout](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerout)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerout](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerout)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6111
 
-___
+---
 
-###  onpointerover
+### onpointerover
 
-• **onpointerover**: *function | null*
+• **onpointerover**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerover](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerover)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerover](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerover)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6112
 
-___
+---
 
-###  onpointerup
+### onpointerup
 
-• **onpointerup**: *function | null*
+• **onpointerup**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerup](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerup)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onpointerup](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onpointerup)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6113
 
-___
+---
 
-###  onprogress
+### onprogress
 
-• **onprogress**: *function | null*
+• **onprogress**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onprogress](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onprogress)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onprogress](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onprogress)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6118
 
@@ -1848,13 +1848,13 @@ Occurs to indicate progress while downloading media data.
 
 **`param`** The event.
 
-___
+---
 
-###  onratechange
+### onratechange
 
-• **onratechange**: *function | null*
+• **onratechange**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onratechange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onratechange)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onratechange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onratechange)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6123
 
@@ -1862,13 +1862,13 @@ Occurs when the playback rate is increased or decreased.
 
 **`param`** The event.
 
-___
+---
 
-###  onreset
+### onreset
 
-• **onreset**: *function | null*
+• **onreset**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onreset](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onreset)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onreset](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onreset)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6128
 
@@ -1876,23 +1876,23 @@ Fires when the user resets a form.
 
 **`param`** The event.
 
-___
+---
 
-###  onresize
+### onresize
 
-• **onresize**: *function | null*
+• **onresize**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onresize](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onresize)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onresize](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onresize)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6129
 
-___
+---
 
-###  onscroll
+### onscroll
 
-• **onscroll**: *function | null*
+• **onscroll**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onscroll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onscroll)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onscroll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onscroll)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6134
 
@@ -1900,23 +1900,23 @@ Fires when the user repositions the scroll box in the scroll bar on the object.
 
 **`param`** The event.
 
-___
+---
 
-###  onsecuritypolicyviolation
+### onsecuritypolicyviolation
 
-• **onsecuritypolicyviolation**: *function | null*
+• **onsecuritypolicyviolation**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onsecuritypolicyviolation](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onsecuritypolicyviolation)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onsecuritypolicyviolation](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onsecuritypolicyviolation)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6135
 
-___
+---
 
-###  onseeked
+### onseeked
 
-• **onseeked**: *function | null*
+• **onseeked**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onseeked](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onseeked)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onseeked](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onseeked)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6140
 
@@ -1924,13 +1924,13 @@ Occurs when the seek operation ends.
 
 **`param`** The event.
 
-___
+---
 
-###  onseeking
+### onseeking
 
-• **onseeking**: *function | null*
+• **onseeking**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onseeking](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onseeking)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onseeking](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onseeking)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6145
 
@@ -1938,13 +1938,13 @@ Occurs when the current playback position is moved.
 
 **`param`** The event.
 
-___
+---
 
-###  onselect
+### onselect
 
-• **onselect**: *function | null*
+• **onselect**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onselect](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onselect)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onselect](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onselect)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6150
 
@@ -1952,33 +1952,33 @@ Fires when the current selection changes.
 
 **`param`** The event.
 
-___
+---
 
-###  onselectionchange
+### onselectionchange
 
-• **onselectionchange**: *function | null*
+• **onselectionchange**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onselectionchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onselectionchange)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onselectionchange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onselectionchange)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6151
 
-___
+---
 
-###  onselectstart
+### onselectstart
 
-• **onselectstart**: *function | null*
+• **onselectstart**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onselectstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onselectstart)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onselectstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onselectstart)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6152
 
-___
+---
 
-###  onstalled
+### onstalled
 
-• **onstalled**: *function | null*
+• **onstalled**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onstalled](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onstalled)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onstalled](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onstalled)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6157
 
@@ -1986,23 +1986,23 @@ Occurs when the download has stopped.
 
 **`param`** The event.
 
-___
+---
 
-###  onsubmit
+### onsubmit
 
-• **onsubmit**: *function | null*
+• **onsubmit**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onsubmit](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onsubmit)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onsubmit](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onsubmit)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6158
 
-___
+---
 
-###  onsuspend
+### onsuspend
 
-• **onsuspend**: *function | null*
+• **onsuspend**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onsuspend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onsuspend)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onsuspend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onsuspend)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6163
 
@@ -2010,13 +2010,13 @@ Occurs if the load operation has been intentionally halted.
 
 **`param`** The event.
 
-___
+---
 
-###  ontimeupdate
+### ontimeupdate
 
-• **ontimeupdate**: *function | null*
+• **ontimeupdate**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontimeupdate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontimeupdate)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontimeupdate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontimeupdate)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6168
 
@@ -2024,103 +2024,103 @@ Occurs to indicate the current playback position.
 
 **`param`** The event.
 
-___
+---
 
-###  ontoggle
+### ontoggle
 
-• **ontoggle**: *function | null*
+• **ontoggle**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontoggle](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontoggle)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontoggle](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontoggle)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6169
 
-___
+---
 
 ### `Optional` ontouchcancel
 
-• **ontouchcancel**? : *function | null*
+• **ontouchcancel**? : _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchcancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchcancel)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchcancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchcancel)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6170
 
-___
+---
 
 ### `Optional` ontouchend
 
-• **ontouchend**? : *function | null*
+• **ontouchend**? : _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchend)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchend)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6171
 
-___
+---
 
 ### `Optional` ontouchmove
 
-• **ontouchmove**? : *function | null*
+• **ontouchmove**? : _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchmove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchmove)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchmove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchmove)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6172
 
-___
+---
 
 ### `Optional` ontouchstart
 
-• **ontouchstart**? : *function | null*
+• **ontouchstart**? : _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchstart)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontouchstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#optional-ontouchstart)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6173
 
-___
+---
 
-###  ontransitioncancel
+### ontransitioncancel
 
-• **ontransitioncancel**: *function | null*
+• **ontransitioncancel**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitioncancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitioncancel)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitioncancel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitioncancel)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6174
 
-___
+---
 
-###  ontransitionend
+### ontransitionend
 
-• **ontransitionend**: *function | null*
+• **ontransitionend**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitionend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitionend)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitionend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitionend)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6175
 
-___
+---
 
-###  ontransitionrun
+### ontransitionrun
 
-• **ontransitionrun**: *function | null*
+• **ontransitionrun**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitionrun](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitionrun)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitionrun](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitionrun)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6176
 
-___
+---
 
-###  ontransitionstart
+### ontransitionstart
 
-• **ontransitionstart**: *function | null*
+• **ontransitionstart**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitionstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitionstart)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ontransitionstart](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ontransitionstart)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6177
 
-___
+---
 
-###  onvolumechange
+### onvolumechange
 
-• **onvolumechange**: *function | null*
+• **onvolumechange**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onvolumechange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onvolumechange)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onvolumechange](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onvolumechange)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6182
 
@@ -2128,13 +2128,13 @@ Occurs when the volume is changed, or playback is muted or unmuted.
 
 **`param`** The event.
 
-___
+---
 
-###  onwaiting
+### onwaiting
 
-• **onwaiting**: *function | null*
+• **onwaiting**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onwaiting](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onwaiting)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onwaiting](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onwaiting)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6187
 
@@ -2142,342 +2142,342 @@ Occurs when playback stops because the next frame of a video resource is not ava
 
 **`param`** The event.
 
-___
+---
 
-###  onwheel
+### onwheel
 
-• **onwheel**: *function | null*
+• **onwheel**: _function | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onwheel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onwheel)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onwheel](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onwheel)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6188
 
-___
+---
 
-###  outerHTML
+### outerHTML
 
-• **outerHTML**: *string*
+• **outerHTML**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[outerHTML](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#outerhtml)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[outerHTML](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#outerhtml)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5280
 
-___
+---
 
-###  ownerDocument
+### ownerDocument
 
-• **ownerDocument**: *Document | null*
+• **ownerDocument**: _Document | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ownerDocument](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ownerdocument)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[ownerDocument](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#ownerdocument)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11033
 
 Returns the node document. Returns null for documents.
 
-___
+---
 
-###  parentElement
+### parentElement
 
-• **parentElement**: *[HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement) | null*
+• **parentElement**: _[HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement) | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[parentElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#parentelement)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[parentElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#parentelement)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11037
 
 Returns the parent element.
 
-___
+---
 
-###  parentNode
+### parentNode
 
-• **parentNode**: *Node & ParentNode | null*
+• **parentNode**: _Node & ParentNode | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[parentNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#parentnode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[parentNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#parentnode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11041
 
 Returns the parent.
 
-___
+---
 
-###  prefix
+### prefix
 
-• **prefix**: *string | null*
+• **prefix**: _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[prefix](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#prefix)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[prefix](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#prefix)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5284
 
 Returns the namespace prefix.
 
-___
+---
 
-###  previousElementSibling
+### previousElementSibling
 
-• **previousElementSibling**: *Element | null*
+• **previousElementSibling**: _Element | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[previousElementSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#previouselementsibling)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[previousElementSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#previouselementsibling)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11289
 
 Returns the first preceding sibling that is an element, and null otherwise.
 
-___
+---
 
-###  previousSibling
+### previousSibling
 
-• **previousSibling**: *ChildNode | null*
+• **previousSibling**: _ChildNode | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[previousSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#previoussibling)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[previousSibling](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#previoussibling)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11045
 
 Returns the previous sibling.
 
-___
+---
 
-###  props
+### props
 
-• **props**: *any*
+• **props**: _any_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L14)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L14)_
 
-___
+---
 
-###  screen
+### screen
 
-• **screen**: *string*
+• **screen**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screen](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screen)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screen](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screen)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L25)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:25](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L25)_
 
-___
+---
 
-###  scrollHeight
+### scrollHeight
 
-• **scrollHeight**: *number*
+• **scrollHeight**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollHeight](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollheight)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollHeight](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollheight)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5285
 
-___
+---
 
-###  scrollLeft
+### scrollLeft
 
-• **scrollLeft**: *number*
+• **scrollLeft**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollLeft](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollleft)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollLeft](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollleft)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5286
 
-___
+---
 
-###  scrollTop
+### scrollTop
 
-• **scrollTop**: *number*
+• **scrollTop**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollTop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrolltop)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollTop](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrolltop)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5287
 
-___
+---
 
-###  scrollWidth
+### scrollWidth
 
-• **scrollWidth**: *number*
+• **scrollWidth**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollWidth](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollwidth)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollWidth](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollwidth)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5288
 
-___
+---
 
-###  shadowRoot
+### shadowRoot
 
-• **shadowRoot**: *ShadowRoot | null*
+• **shadowRoot**: _ShadowRoot | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[shadowRoot](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#shadowroot)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[shadowRoot](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#shadowroot)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5292
 
 Returns element's shadow root, if any, and if shadow root's mode is "open", and null otherwise.
 
-___
+---
 
-###  slot
+### slot
 
-• **slot**: *string*
+• **slot**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[slot](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#slot)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[slot](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#slot)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5296
 
 Returns the value of element's slot content attribute. Can be set to change it.
 
-___
+---
 
-###  spellcheck
+### spellcheck
 
-• **spellcheck**: *boolean*
+• **spellcheck**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[spellcheck](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#spellcheck)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[spellcheck](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#spellcheck)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6751
 
-___
+---
 
-###  state
+### state
 
-• **state**: *typeof state*
+• **state**: _typeof state_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[state](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#state)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[state](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#state)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L21)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:21](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L21)_
 
-___
+---
 
-###  style
+### style
 
-• **style**: *CSSStyleDeclaration*
+• **style**: _CSSStyleDeclaration_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[style](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#style)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[style](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#style)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5412
 
-___
+---
 
-###  tabIndex
+### tabIndex
 
-• **tabIndex**: *number*
+• **tabIndex**: _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[tabIndex](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#tabindex)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[tabIndex](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#tabindex)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:8210
 
-___
+---
 
-###  tagName
+### tagName
 
-• **tagName**: *string*
+• **tagName**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[tagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#tagname)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[tagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#tagname)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5300
 
 Returns the HTML-uppercased qualified name.
 
-___
+---
 
-###  textContent
+### textContent
 
-• **textContent**: *string | null*
+• **textContent**: _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[textContent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#textcontent)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[textContent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#textcontent)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11046
 
-___
+---
 
-###  title
+### title
 
-• **title**: *string*
+• **title**: _string_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[title](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#title)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[title](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#title)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6752
 
-___
+---
 
-###  trackedTree
+### trackedTree
 
-• **trackedTree**: *ITrackStateTree‹object›*
+• **trackedTree**: _ITrackStateTree‹object›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[trackedTree](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#trackedtree)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[trackedTree](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#trackedtree)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L24)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L24)_
 
-___
+---
 
-###  translate
+### translate
 
-• **translate**: *boolean*
+• **translate**: _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[translate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#translate)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[translate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#translate)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6753
 
-___
+---
 
-### `Static` _counter
+### `Static` \_counter
 
-▪ **_counter**: *number* = 0
+▪ **\_counter**: _number_ = 0
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[_counter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-_counter)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[\_counter](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-_counter)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L28)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L28)_
 
 ## Methods
 
-###  addEventListener
+### addEventListener
 
-▸ **addEventListener**<**K**>(`type`: K, `listener`: function, `options?`: boolean | AddEventListenerOptions): *void*
+▸ **addEventListener**<**K**>(`type`: K, `listener`: function, `options?`: boolean | AddEventListenerOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[addEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#addeventlistener)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[addEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#addeventlistener)_
 
-*Overrides void*
+_Overrides void_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6755
 
 **Type parameters:**
 
-▪ **K**: *keyof HTMLElementEventMap*
+▪ **K**: _keyof HTMLElementEventMap_
 
 **Parameters:**
 
-▪ **type**: *K*
+▪ **type**: _K_
 
-▪ **listener**: *function*
+▪ **listener**: _function_
 
-▸ (`this`: [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement), `ev`: HTMLElementEventMap[K]): *any*
+▸ (`this`: [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement), `ev`: HTMLElementEventMap[K]): _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`this` | [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement) |
-`ev` | HTMLElementEventMap[K] |
+| Name   | Type                                                                                 |
+| ------ | ------------------------------------------------------------------------------------ |
+| `this` | [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement) |
+| `ev`   | HTMLElementEventMap[K]                                                               |
 
-▪`Optional`  **options**: *boolean | AddEventListenerOptions*
+▪`Optional` **options**: _boolean | AddEventListenerOptions_
 
-**Returns:** *void*
+**Returns:** _void_
 
-▸ **addEventListener**(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean | AddEventListenerOptions): *void*
+▸ **addEventListener**(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean | AddEventListenerOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[addEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#addeventlistener)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[addEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#addeventlistener)_
 
-*Overrides void*
+_Overrides void_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6756
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`listener` | EventListenerOrEventListenerObject |
-`options?` | boolean &#124; AddEventListenerOptions |
+| Name       | Type                                   |
+| ---------- | -------------------------------------- |
+| `type`     | string                                 |
+| `listener` | EventListenerOrEventListenerObject     |
+| `options?` | boolean &#124; AddEventListenerOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  after
+### after
 
-▸ **after**(...`nodes`: string | Node[]): *void*
+▸ **after**(...`nodes`: string | Node[]): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[after](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#after)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[after](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#after)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:3633
 
@@ -2487,50 +2487,50 @@ Throws a "HierarchyRequestError" DOMException if the constraints of the node tre
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...nodes` | string &#124; Node[] |
+| Name       | Type                 |
+| ---------- | -------------------- |
+| `...nodes` | string &#124; Node[] |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  afterRender
+### afterRender
 
-▸ **afterRender**(): *void*
+▸ **afterRender**(): _void_
 
-*Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[afterRender](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#afterrender)*
+_Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[afterRender](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#afterrender)_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:87](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L87)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:87](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L87)_
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  animate
+### animate
 
-▸ **animate**(`keyframes`: Keyframe[] | PropertyIndexedKeyframes | null, `options?`: number | KeyframeAnimationOptions): *Animation*
+▸ **animate**(`keyframes`: Keyframe[] | PropertyIndexedKeyframes | null, `options?`: number | KeyframeAnimationOptions): _Animation_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[animate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#animate)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[animate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#animate)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:2029
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`keyframes` | Keyframe[] &#124; PropertyIndexedKeyframes &#124; null |
-`options?` | number &#124; KeyframeAnimationOptions |
+| Name        | Type                                                   |
+| ----------- | ------------------------------------------------------ |
+| `keyframes` | Keyframe[] &#124; PropertyIndexedKeyframes &#124; null |
+| `options?`  | number &#124; KeyframeAnimationOptions                 |
 
-**Returns:** *Animation*
+**Returns:** _Animation_
 
-___
+---
 
-###  append
+### append
 
-▸ **append**(...`nodes`: string | Node[]): *void*
+▸ **append**(...`nodes`: string | Node[]): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[append](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#append)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[append](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#append)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11573
 
@@ -2540,41 +2540,41 @@ Throws a "HierarchyRequestError" DOMException if the constraints of the node tre
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...nodes` | string &#124; Node[] |
+| Name       | Type                 |
+| ---------- | -------------------- |
+| `...nodes` | string &#124; Node[] |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  appendChild
+### appendChild
 
-▸ **appendChild**<**T**>(`newChild`: T): *T*
+▸ **appendChild**<**T**>(`newChild`: T): _T_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[appendChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#appendchild)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[appendChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#appendchild)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11047
 
 **Type parameters:**
 
-▪ **T**: *Node*
+▪ **T**: _Node_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`newChild` | T |
+| Name       | Type |
+| ---------- | ---- |
+| `newChild` | T    |
 
-**Returns:** *T*
+**Returns:** _T_
 
-___
+---
 
-###  attachShadow
+### attachShadow
 
-▸ **attachShadow**(`init`: ShadowRootInit): *ShadowRoot*
+▸ **attachShadow**(`init`: ShadowRootInit): _ShadowRoot_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[attachShadow](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#attachshadow)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[attachShadow](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#attachshadow)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5304
 
@@ -2582,19 +2582,19 @@ Creates a shadow root for element and returns it.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`init` | ShadowRootInit |
+| Name   | Type           |
+| ------ | -------------- |
+| `init` | ShadowRootInit |
 
-**Returns:** *ShadowRoot*
+**Returns:** _ShadowRoot_
 
-___
+---
 
-###  before
+### before
 
-▸ **before**(...`nodes`: string | Node[]): *void*
+▸ **before**(...`nodes`: string | Node[]): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[before](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#before)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[before](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#before)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:3639
 
@@ -2604,43 +2604,43 @@ Throws a "HierarchyRequestError" DOMException if the constraints of the node tre
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...nodes` | string &#124; Node[] |
+| Name       | Type                 |
+| ---------- | -------------------- |
+| `...nodes` | string &#124; Node[] |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  blur
+### blur
 
-▸ **blur**(): *void*
+▸ **blur**(): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[blur](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#blur)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[blur](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#blur)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:8211
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  click
+### click
 
-▸ **click**(): *void*
+▸ **click**(): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[click](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#click)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[click](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#click)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6754
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  cloneNode
+### cloneNode
 
-▸ **cloneNode**(`deep?`: boolean): *Node*
+▸ **cloneNode**(`deep?`: boolean): _Node_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[cloneNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clonenode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[cloneNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#clonenode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11051
 
@@ -2648,19 +2648,19 @@ Returns a copy of node. If deep is true, the copy also includes the node's desce
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`deep?` | boolean |
+| Name    | Type    |
+| ------- | ------- |
+| `deep?` | boolean |
 
-**Returns:** *Node*
+**Returns:** _Node_
 
-___
+---
 
-###  closest
+### closest
 
-▸ **closest**<**K**>(`selector`: K): *HTMLElementTagNameMap[K] | null*
+▸ **closest**<**K**>(`selector`: K): _HTMLElementTagNameMap[K] | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[closest](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#closest)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[closest](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#closest)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5308
 
@@ -2668,59 +2668,59 @@ Returns the first (starting at element) inclusive ancestor that matches selector
 
 **Type parameters:**
 
-▪ **K**: *keyof HTMLElementTagNameMap*
+▪ **K**: _keyof HTMLElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selector` | K |
+| Name       | Type |
+| ---------- | ---- |
+| `selector` | K    |
 
-**Returns:** *HTMLElementTagNameMap[K] | null*
+**Returns:** _HTMLElementTagNameMap[K] | null_
 
-▸ **closest**<**K**>(`selector`: K): *SVGElementTagNameMap[K] | null*
+▸ **closest**<**K**>(`selector`: K): _SVGElementTagNameMap[K] | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[closest](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#closest)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[closest](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#closest)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5309
 
 **Type parameters:**
 
-▪ **K**: *keyof SVGElementTagNameMap*
+▪ **K**: _keyof SVGElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selector` | K |
+| Name       | Type |
+| ---------- | ---- |
+| `selector` | K    |
 
-**Returns:** *SVGElementTagNameMap[K] | null*
+**Returns:** _SVGElementTagNameMap[K] | null_
 
-▸ **closest**<**E**>(`selector`: string): *E | null*
+▸ **closest**<**E**>(`selector`: string): _E | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[closest](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#closest)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[closest](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#closest)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5310
 
 **Type parameters:**
 
-▪ **E**: *Element*
+▪ **E**: _Element_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selector` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `selector` | string |
 
-**Returns:** *E | null*
+**Returns:** _E | null_
 
-___
+---
 
-###  compareDocumentPosition
+### compareDocumentPosition
 
-▸ **compareDocumentPosition**(`other`: Node): *number*
+▸ **compareDocumentPosition**(`other`: Node): _number_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[compareDocumentPosition](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#comparedocumentposition)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[compareDocumentPosition](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#comparedocumentposition)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11055
 
@@ -2728,31 +2728,31 @@ Returns a bitmask indicating the position of other relative to node.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`other` | Node |
+| Name    | Type |
+| ------- | ---- |
+| `other` | Node |
 
-**Returns:** *number*
+**Returns:** _number_
 
-___
+---
 
-###  connectedCallback
+### connectedCallback
 
-▸ **connectedCallback**(): *void*
+▸ **connectedCallback**(): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[connectedCallback](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#connectedcallback)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[connectedCallback](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#connectedcallback)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:205](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L205)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:205](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L205)_
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  contains
+### contains
 
-▸ **contains**(`other`: Node | null): *boolean*
+▸ **contains**(`other`: Node | null): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[contains](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#contains)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[contains](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#contains)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11059
 
@@ -2760,31 +2760,31 @@ Returns true if other is an inclusive descendant of node, and false otherwise.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`other` | Node &#124; null |
+| Name    | Type             |
+| ------- | ---------------- |
+| `other` | Node &#124; null |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  disconnectedCallback
+### disconnectedCallback
 
-▸ **disconnectedCallback**(): *void*
+▸ **disconnectedCallback**(): _void_
 
-*Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[disconnectedCallback](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#disconnectedcallback)*
+_Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[disconnectedCallback](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#disconnectedcallback)_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:91](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L91)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:91](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L91)_
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  dispatchEvent
+### dispatchEvent
 
-▸ **dispatchEvent**(`event`: Event): *boolean*
+▸ **dispatchEvent**(`event`: Event): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[dispatchEvent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dispatchevent)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[dispatchEvent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dispatchevent)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5579
 
@@ -2792,61 +2792,61 @@ Dispatches a synthetic event event to target and returns true if either event's 
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`event` | Event |
+| Name    | Type  |
+| ------- | ----- |
+| `event` | Event |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  doRender
+### doRender
 
-▸ **doRender**(): *Promise‹void›*
+▸ **doRender**(): _Promise‹void›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[doRender](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dorender)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[doRender](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#dorender)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:104](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L104)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:104](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L104)_
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
-###  focus
+### focus
 
-▸ **focus**(`options?`: FocusOptions): *void*
+▸ **focus**(`options?`: FocusOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[focus](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#focus)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[focus](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#focus)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:8212
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | FocusOptions |
+| Name       | Type         |
+| ---------- | ------------ |
+| `options?` | FocusOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  getAnimations
+### getAnimations
 
-▸ **getAnimations**(): *Animation[]*
+▸ **getAnimations**(): _Animation[]_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAnimations](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getanimations)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAnimations](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getanimations)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:2030
 
-**Returns:** *Animation[]*
+**Returns:** _Animation[]_
 
-___
+---
 
-###  getAttribute
+### getAttribute
 
-▸ **getAttribute**(`qualifiedName`: string): *string | null*
+▸ **getAttribute**(`qualifiedName`: string): _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattribute)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattribute)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5314
 
@@ -2854,19 +2854,19 @@ Returns element's first attribute whose qualified name is qualifiedName, and nul
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | string |
+| Name            | Type   |
+| --------------- | ------ |
+| `qualifiedName` | string |
 
-**Returns:** *string | null*
+**Returns:** _string | null_
 
-___
+---
 
-###  getAttributeNS
+### getAttributeNS
 
-▸ **getAttributeNS**(`namespace`: string | null, `localName`: string): *string | null*
+▸ **getAttributeNS**(`namespace`: string | null, `localName`: string): _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5318
 
@@ -2874,95 +2874,95 @@ Returns element's attribute whose namespace is namespace and local name is local
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespace` | string &#124; null |
-`localName` | string |
+| Name        | Type               |
+| ----------- | ------------------ |
+| `namespace` | string &#124; null |
+| `localName` | string             |
 
-**Returns:** *string | null*
+**Returns:** _string | null_
 
-___
+---
 
-###  getAttributeNames
+### getAttributeNames
 
-▸ **getAttributeNames**(): *string[]*
+▸ **getAttributeNames**(): _string[]_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNames](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributenames)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNames](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributenames)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5322
 
 Returns the qualified names of all element's attributes. Can contain duplicates.
 
-**Returns:** *string[]*
+**Returns:** _string[]_
 
-___
+---
 
-###  getAttributeNode
+### getAttributeNode
 
-▸ **getAttributeNode**(`name`: string): *Attr | null*
+▸ **getAttributeNode**(`name`: string): _Attr | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributenode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributenode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5323
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name` | string |
+| Name   | Type   |
+| ------ | ------ |
+| `name` | string |
 
-**Returns:** *Attr | null*
+**Returns:** _Attr | null_
 
-___
+---
 
-###  getAttributeNodeNS
+### getAttributeNodeNS
 
-▸ **getAttributeNodeNS**(`namespaceURI`: string, `localName`: string): *Attr | null*
+▸ **getAttributeNodeNS**(`namespaceURI`: string, `localName`: string): _Attr | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNodeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributenodens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getAttributeNodeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getattributenodens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5324
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespaceURI` | string |
-`localName` | string |
+| Name           | Type   |
+| -------------- | ------ |
+| `namespaceURI` | string |
+| `localName`    | string |
 
-**Returns:** *Attr | null*
+**Returns:** _Attr | null_
 
-___
+---
 
-###  getBoundingClientRect
+### getBoundingClientRect
 
-▸ **getBoundingClientRect**(): *DOMRect*
+▸ **getBoundingClientRect**(): _DOMRect_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getBoundingClientRect](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getboundingclientrect)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getBoundingClientRect](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getboundingclientrect)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5325
 
-**Returns:** *DOMRect*
+**Returns:** _DOMRect_
 
-___
+---
 
-###  getClientRects
+### getClientRects
 
-▸ **getClientRects**(): *DOMRectList*
+▸ **getClientRects**(): _DOMRectList_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getClientRects](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getclientrects)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getClientRects](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getclientrects)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5326
 
-**Returns:** *DOMRectList*
+**Returns:** _DOMRectList_
 
-___
+---
 
-###  getElementsByClassName
+### getElementsByClassName
 
-▸ **getElementsByClassName**(`classNames`: string): *HTMLCollectionOf‹Element›*
+▸ **getElementsByClassName**(`classNames`: string): _HTMLCollectionOf‹Element›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByClassName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbyclassname)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByClassName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbyclassname)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5330
 
@@ -2970,122 +2970,122 @@ Returns a HTMLCollection of the elements in the object on which the method was i
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`classNames` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `classNames` | string |
 
-**Returns:** *HTMLCollectionOf‹Element›*
+**Returns:** _HTMLCollectionOf‹Element›_
 
-___
+---
 
-###  getElementsByTagName
+### getElementsByTagName
 
-▸ **getElementsByTagName**<**K**>(`qualifiedName`: K): *HTMLCollectionOf‹HTMLElementTagNameMap[K]›*
+▸ **getElementsByTagName**<**K**>(`qualifiedName`: K): _HTMLCollectionOf‹HTMLElementTagNameMap[K]›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagname)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagname)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5331
 
 **Type parameters:**
 
-▪ **K**: *keyof HTMLElementTagNameMap*
+▪ **K**: _keyof HTMLElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | K |
+| Name            | Type |
+| --------------- | ---- |
+| `qualifiedName` | K    |
 
-**Returns:** *HTMLCollectionOf‹HTMLElementTagNameMap[K]›*
+**Returns:** _HTMLCollectionOf‹HTMLElementTagNameMap[K]›_
 
-▸ **getElementsByTagName**<**K**>(`qualifiedName`: K): *HTMLCollectionOf‹SVGElementTagNameMap[K]›*
+▸ **getElementsByTagName**<**K**>(`qualifiedName`: K): _HTMLCollectionOf‹SVGElementTagNameMap[K]›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagname)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagname)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5332
 
 **Type parameters:**
 
-▪ **K**: *keyof SVGElementTagNameMap*
+▪ **K**: _keyof SVGElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | K |
+| Name            | Type |
+| --------------- | ---- |
+| `qualifiedName` | K    |
 
-**Returns:** *HTMLCollectionOf‹SVGElementTagNameMap[K]›*
+**Returns:** _HTMLCollectionOf‹SVGElementTagNameMap[K]›_
 
-▸ **getElementsByTagName**(`qualifiedName`: string): *HTMLCollectionOf‹Element›*
+▸ **getElementsByTagName**(`qualifiedName`: string): _HTMLCollectionOf‹Element›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagname)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagName](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagname)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5333
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | string |
+| Name            | Type   |
+| --------------- | ------ |
+| `qualifiedName` | string |
 
-**Returns:** *HTMLCollectionOf‹Element›*
+**Returns:** _HTMLCollectionOf‹Element›_
 
-___
+---
 
-###  getElementsByTagNameNS
+### getElementsByTagNameNS
 
-▸ **getElementsByTagNameNS**(`namespaceURI`: "http://www.w3.org/1999/xhtml", `localName`: string): *HTMLCollectionOf‹[HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement)›*
+▸ **getElementsByTagNameNS**(`namespaceURI`: "http://www.w3.org/1999/xhtml", `localName`: string): _HTMLCollectionOf‹[HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement)›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagNameNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagnamens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagNameNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagnamens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5334
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespaceURI` | "http://www.w3.org/1999/xhtml" |
-`localName` | string |
+| Name           | Type                           |
+| -------------- | ------------------------------ |
+| `namespaceURI` | "http://www.w3.org/1999/xhtml" |
+| `localName`    | string                         |
 
-**Returns:** *HTMLCollectionOf‹[HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement)›*
+**Returns:** _HTMLCollectionOf‹[HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement)›_
 
-▸ **getElementsByTagNameNS**(`namespaceURI`: "http://www.w3.org/2000/svg", `localName`: string): *HTMLCollectionOf‹SVGElement›*
+▸ **getElementsByTagNameNS**(`namespaceURI`: "http://www.w3.org/2000/svg", `localName`: string): _HTMLCollectionOf‹SVGElement›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagNameNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagnamens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagNameNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagnamens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5335
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespaceURI` | "http://www.w3.org/2000/svg" |
-`localName` | string |
+| Name           | Type                         |
+| -------------- | ---------------------------- |
+| `namespaceURI` | "http://www.w3.org/2000/svg" |
+| `localName`    | string                       |
 
-**Returns:** *HTMLCollectionOf‹SVGElement›*
+**Returns:** _HTMLCollectionOf‹SVGElement›_
 
-▸ **getElementsByTagNameNS**(`namespaceURI`: string, `localName`: string): *HTMLCollectionOf‹Element›*
+▸ **getElementsByTagNameNS**(`namespaceURI`: string, `localName`: string): _HTMLCollectionOf‹Element›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagNameNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagnamens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getElementsByTagNameNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getelementsbytagnamens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5336
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespaceURI` | string |
-`localName` | string |
+| Name           | Type   |
+| -------------- | ------ |
+| `namespaceURI` | string |
+| `localName`    | string |
 
-**Returns:** *HTMLCollectionOf‹Element›*
+**Returns:** _HTMLCollectionOf‹Element›_
 
-___
+---
 
-###  getRootNode
+### getRootNode
 
-▸ **getRootNode**(`options?`: GetRootNodeOptions): *Node*
+▸ **getRootNode**(`options?`: GetRootNodeOptions): _Node_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getRootNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getrootnode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getRootNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getrootnode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11063
 
@@ -3093,93 +3093,93 @@ Returns node's root.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | GetRootNodeOptions |
+| Name       | Type               |
+| ---------- | ------------------ |
+| `options?` | GetRootNodeOptions |
 
-**Returns:** *Node*
+**Returns:** _Node_
 
-___
+---
 
-###  getUI
+### getUI
 
-▸ **getUI**(): *TemplateResult‹›*
+▸ **getUI**(): _TemplateResult‹›_
 
-*Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getUI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getui)*
+_Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getUI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getui)_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:45](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L45)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:45](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L45)_
 
-**Returns:** *TemplateResult‹›*
+**Returns:** _TemplateResult‹›_
 
-___
+---
 
-###  getUIAsync
+### getUI
 
-▸ **getUIAsync**(): *Promise‹TemplateResult›*
+▸ **getUI**(): _Promise‹TemplateResult›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getUIAsync](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getuiasync)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[getUI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#getUI)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:32](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L32)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:32](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L32)_
 
-**Returns:** *Promise‹TemplateResult›*
+**Returns:** _Promise‹TemplateResult›_
 
-___
+---
 
-###  handleAnimationEnd
+### handleAnimationEnd
 
-▸ **handleAnimationEnd**(`e`: any): *void*
+▸ **handleAnimationEnd**(`e`: any): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[handleAnimationEnd](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#handleanimationend)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[handleAnimationEnd](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#handleanimationend)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L86)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`e` | any |
-
-**Returns:** *void*
-
-___
-
-###  handleChange
-
-▸ **handleChange**(`e`: Event): *void*
-
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:36](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L36)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L86)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`e` | Event |
+| Name | Type |
+| ---- | ---- |
+| `e`  | any  |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  handleFocusOut
+### handleChange
 
-▸ **handleFocusOut**(`e`: Event): *void*
+▸ **handleChange**(`e`: Event): _void_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L26)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:36](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L36)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`e` | Event |
+| Name | Type  |
+| ---- | ----- |
+| `e`  | Event |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  hasAttribute
+### handleFocusOut
 
-▸ **hasAttribute**(`qualifiedName`: string): *boolean*
+▸ **handleFocusOut**(`e`: Event): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hasattribute)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L26)_
+
+**Parameters:**
+
+| Name | Type  |
+| ---- | ----- |
+| `e`  | Event |
+
+**Returns:** _void_
+
+---
+
+### hasAttribute
+
+▸ **hasAttribute**(`qualifiedName`: string): _boolean_
+
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hasattribute)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5340
 
@@ -3187,19 +3187,19 @@ Returns true if element has an attribute whose qualified name is qualifiedName, 
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | string |
+| Name            | Type   |
+| --------------- | ------ |
+| `qualifiedName` | string |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  hasAttributeNS
+### hasAttributeNS
 
-▸ **hasAttributeNS**(`namespace`: string | null, `localName`: string): *boolean*
+▸ **hasAttributeNS**(`namespace`: string | null, `localName`: string): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hasattributens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hasattributens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5344
 
@@ -3207,176 +3207,176 @@ Returns true if element has an attribute whose namespace is namespace and local 
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespace` | string &#124; null |
-`localName` | string |
+| Name        | Type               |
+| ----------- | ------------------ |
+| `namespace` | string &#124; null |
+| `localName` | string             |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  hasAttributes
+### hasAttributes
 
-▸ **hasAttributes**(): *boolean*
+▸ **hasAttributes**(): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasAttributes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hasattributes)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasAttributes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#hasattributes)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5348
 
 Returns true if element has attributes, and false otherwise.
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  hasChildNodes
+### hasChildNodes
 
-▸ **hasChildNodes**(): *boolean*
+▸ **hasChildNodes**(): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasChildNodes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#haschildnodes)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasChildNodes](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#haschildnodes)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11067
 
 Returns whether node has children.
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  hasPointerCapture
+### hasPointerCapture
 
-▸ **hasPointerCapture**(`pointerId`: number): *boolean*
+▸ **hasPointerCapture**(`pointerId`: number): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasPointerCapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#haspointercapture)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[hasPointerCapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#haspointercapture)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5349
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`pointerId` | number |
+| Name        | Type   |
+| ----------- | ------ |
+| `pointerId` | number |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  init
+### init
 
-▸ **init**(): *void*
+▸ **init**(): _void_
 
-*Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[init](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#init)*
+_Overrides [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[init](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#init)_
 
-*Defined in [ovl/src/library/Forms/Controls/Time.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L17)*
+_Defined in [ovl/src/library/Forms/Controls/Time.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Forms/Controls/Time.ts#L17)_
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  insertAdjacentElement
+### insertAdjacentElement
 
-▸ **insertAdjacentElement**(`position`: InsertPosition, `insertedElement`: Element): *Element | null*
+▸ **insertAdjacentElement**(`position`: InsertPosition, `insertedElement`: Element): _Element | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertAdjacentElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertadjacentelement)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertAdjacentElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertadjacentelement)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5350
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`position` | InsertPosition |
-`insertedElement` | Element |
+| Name              | Type           |
+| ----------------- | -------------- |
+| `position`        | InsertPosition |
+| `insertedElement` | Element        |
 
-**Returns:** *Element | null*
+**Returns:** _Element | null_
 
-___
+---
 
-###  insertAdjacentHTML
+### insertAdjacentHTML
 
-▸ **insertAdjacentHTML**(`where`: InsertPosition, `html`: string): *void*
+▸ **insertAdjacentHTML**(`where`: InsertPosition, `html`: string): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertAdjacentHTML](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertadjacenthtml)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertAdjacentHTML](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertadjacenthtml)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5351
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`where` | InsertPosition |
-`html` | string |
+| Name    | Type           |
+| ------- | -------------- |
+| `where` | InsertPosition |
+| `html`  | string         |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  insertAdjacentText
+### insertAdjacentText
 
-▸ **insertAdjacentText**(`where`: InsertPosition, `text`: string): *void*
+▸ **insertAdjacentText**(`where`: InsertPosition, `text`: string): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertAdjacentText](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertadjacenttext)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertAdjacentText](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertadjacenttext)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5352
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`where` | InsertPosition |
-`text` | string |
+| Name    | Type           |
+| ------- | -------------- |
+| `where` | InsertPosition |
+| `text`  | string         |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  insertBefore
+### insertBefore
 
-▸ **insertBefore**<**T**>(`newChild`: T, `refChild`: Node | null): *T*
+▸ **insertBefore**<**T**>(`newChild`: T, `refChild`: Node | null): _T_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertBefore](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertbefore)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[insertBefore](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#insertbefore)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11068
 
 **Type parameters:**
 
-▪ **T**: *Node*
+▪ **T**: _Node_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`newChild` | T |
-`refChild` | Node &#124; null |
+| Name       | Type             |
+| ---------- | ---------------- |
+| `newChild` | T                |
+| `refChild` | Node &#124; null |
 
-**Returns:** *T*
+**Returns:** _T_
 
-___
+---
 
-###  isDefaultNamespace
+### isDefaultNamespace
 
-▸ **isDefaultNamespace**(`namespace`: string | null): *boolean*
+▸ **isDefaultNamespace**(`namespace`: string | null): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isDefaultNamespace](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#isdefaultnamespace)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isDefaultNamespace](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#isdefaultnamespace)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11069
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespace` | string &#124; null |
+| Name        | Type               |
+| ----------- | ------------------ |
+| `namespace` | string &#124; null |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  isEqualNode
+### isEqualNode
 
-▸ **isEqualNode**(`otherNode`: Node | null): *boolean*
+▸ **isEqualNode**(`otherNode`: Node | null): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isEqualNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#isequalnode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isEqualNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#isequalnode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11073
 
@@ -3384,73 +3384,73 @@ Returns whether node and otherNode have the same properties.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`otherNode` | Node &#124; null |
+| Name        | Type             |
+| ----------- | ---------------- |
+| `otherNode` | Node &#124; null |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  isSameNode
+### isSameNode
 
-▸ **isSameNode**(`otherNode`: Node | null): *boolean*
+▸ **isSameNode**(`otherNode`: Node | null): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isSameNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#issamenode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[isSameNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#issamenode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11074
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`otherNode` | Node &#124; null |
+| Name        | Type             |
+| ----------- | ---------------- |
+| `otherNode` | Node &#124; null |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  lookupNamespaceURI
+### lookupNamespaceURI
 
-▸ **lookupNamespaceURI**(`prefix`: string | null): *string | null*
+▸ **lookupNamespaceURI**(`prefix`: string | null): _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lookupNamespaceURI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lookupnamespaceuri)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lookupNamespaceURI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lookupnamespaceuri)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11075
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`prefix` | string &#124; null |
+| Name     | Type               |
+| -------- | ------------------ |
+| `prefix` | string &#124; null |
 
-**Returns:** *string | null*
+**Returns:** _string | null_
 
-___
+---
 
-###  lookupPrefix
+### lookupPrefix
 
-▸ **lookupPrefix**(`namespace`: string | null): *string | null*
+▸ **lookupPrefix**(`namespace`: string | null): _string | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lookupPrefix](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lookupprefix)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[lookupPrefix](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#lookupprefix)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11076
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespace` | string &#124; null |
+| Name        | Type               |
+| ----------- | ------------------ |
+| `namespace` | string &#124; null |
 
-**Returns:** *string | null*
+**Returns:** _string | null_
 
-___
+---
 
-###  matches
+### matches
 
-▸ **matches**(`selectors`: string): *boolean*
+▸ **matches**(`selectors`: string): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[matches](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#matches)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[matches](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#matches)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5356
 
@@ -3458,65 +3458,65 @@ Returns true if matching selectors against element's root yields element, and fa
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | string |
+| Name        | Type   |
+| ----------- | ------ |
+| `selectors` | string |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  msGetRegionContent
+### msGetRegionContent
 
-▸ **msGetRegionContent**(): *any*
+▸ **msGetRegionContent**(): _any_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[msGetRegionContent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#msgetregioncontent)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[msGetRegionContent](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#msgetregioncontent)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5357
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-###  normalize
+### normalize
 
-▸ **normalize**(): *void*
+▸ **normalize**(): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[normalize](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#normalize)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[normalize](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#normalize)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11080
 
 Removes empty exclusive Text nodes and concatenates the data of remaining contiguous exclusive Text nodes into the first of their nodes.
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  onUpdate
+### onUpdate
 
-▸ **onUpdate**(`mutations`: any, `paths`: any, `flushId`: any): *void*
+▸ **onUpdate**(`mutations`: any, `paths`: any, `flushId`: any): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onUpdate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onupdate)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[onUpdate](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#onupdate)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:190](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L190)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:190](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L190)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mutations` | any |
-`paths` | any |
-`flushId` | any |
+| Name        | Type |
+| ----------- | ---- |
+| `mutations` | any  |
+| `paths`     | any  |
+| `flushId`   | any  |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  prepend
+### prepend
 
-▸ **prepend**(...`nodes`: string | Node[]): *void*
+▸ **prepend**(...`nodes`: string | Node[]): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[prepend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#prepend)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[prepend](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#prepend)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11579
 
@@ -3526,19 +3526,19 @@ Throws a "HierarchyRequestError" DOMException if the constraints of the node tre
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...nodes` | string &#124; Node[] |
+| Name       | Type                 |
+| ---------- | -------------------- |
+| `...nodes` | string &#124; Node[] |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  querySelector
+### querySelector
 
-▸ **querySelector**<**K**>(`selectors`: K): *HTMLElementTagNameMap[K] | null*
+▸ **querySelector**<**K**>(`selectors`: K): _HTMLElementTagNameMap[K] | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselector)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselector)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11583
 
@@ -3546,59 +3546,59 @@ Returns the first element that is a descendant of node that matches selectors.
 
 **Type parameters:**
 
-▪ **K**: *keyof HTMLElementTagNameMap*
+▪ **K**: _keyof HTMLElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | K |
+| Name        | Type |
+| ----------- | ---- |
+| `selectors` | K    |
 
-**Returns:** *HTMLElementTagNameMap[K] | null*
+**Returns:** _HTMLElementTagNameMap[K] | null_
 
-▸ **querySelector**<**K**>(`selectors`: K): *SVGElementTagNameMap[K] | null*
+▸ **querySelector**<**K**>(`selectors`: K): _SVGElementTagNameMap[K] | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselector)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselector)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11584
 
 **Type parameters:**
 
-▪ **K**: *keyof SVGElementTagNameMap*
+▪ **K**: _keyof SVGElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | K |
+| Name        | Type |
+| ----------- | ---- |
+| `selectors` | K    |
 
-**Returns:** *SVGElementTagNameMap[K] | null*
+**Returns:** _SVGElementTagNameMap[K] | null_
 
-▸ **querySelector**<**E**>(`selectors`: string): *E | null*
+▸ **querySelector**<**E**>(`selectors`: string): _E | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselector)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselector)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11585
 
 **Type parameters:**
 
-▪ **E**: *Element*
+▪ **E**: _Element_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | string |
+| Name        | Type   |
+| ----------- | ------ |
+| `selectors` | string |
 
-**Returns:** *E | null*
+**Returns:** _E | null_
 
-___
+---
 
-###  querySelectorAll
+### querySelectorAll
 
-▸ **querySelectorAll**<**K**>(`selectors`: K): *NodeListOf‹HTMLElementTagNameMap[K]›*
+▸ **querySelectorAll**<**K**>(`selectors`: K): _NodeListOf‹HTMLElementTagNameMap[K]›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelectorAll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselectorall)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelectorAll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselectorall)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11589
 
@@ -3606,91 +3606,91 @@ Returns all element descendants of node that match selectors.
 
 **Type parameters:**
 
-▪ **K**: *keyof HTMLElementTagNameMap*
+▪ **K**: _keyof HTMLElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | K |
+| Name        | Type |
+| ----------- | ---- |
+| `selectors` | K    |
 
-**Returns:** *NodeListOf‹HTMLElementTagNameMap[K]›*
+**Returns:** _NodeListOf‹HTMLElementTagNameMap[K]›_
 
-▸ **querySelectorAll**<**K**>(`selectors`: K): *NodeListOf‹SVGElementTagNameMap[K]›*
+▸ **querySelectorAll**<**K**>(`selectors`: K): _NodeListOf‹SVGElementTagNameMap[K]›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelectorAll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselectorall)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelectorAll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselectorall)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11590
 
 **Type parameters:**
 
-▪ **K**: *keyof SVGElementTagNameMap*
+▪ **K**: _keyof SVGElementTagNameMap_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | K |
+| Name        | Type |
+| ----------- | ---- |
+| `selectors` | K    |
 
-**Returns:** *NodeListOf‹SVGElementTagNameMap[K]›*
+**Returns:** _NodeListOf‹SVGElementTagNameMap[K]›_
 
-▸ **querySelectorAll**<**E**>(`selectors`: string): *NodeListOf‹E›*
+▸ **querySelectorAll**<**E**>(`selectors`: string): _NodeListOf‹E›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelectorAll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselectorall)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[querySelectorAll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#queryselectorall)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11591
 
 **Type parameters:**
 
-▪ **E**: *Element*
+▪ **E**: _Element_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | string |
+| Name        | Type   |
+| ----------- | ------ |
+| `selectors` | string |
 
-**Returns:** *NodeListOf‹E›*
+**Returns:** _NodeListOf‹E›_
 
-___
+---
 
-###  releasePointerCapture
+### releasePointerCapture
 
-▸ **releasePointerCapture**(`pointerId`: number): *void*
+▸ **releasePointerCapture**(`pointerId`: number): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[releasePointerCapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#releasepointercapture)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[releasePointerCapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#releasepointercapture)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5358
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`pointerId` | number |
+| Name        | Type   |
+| ----------- | ------ |
+| `pointerId` | number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  remove
+### remove
 
-▸ **remove**(): *void*
+▸ **remove**(): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[remove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#remove)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[remove](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#remove)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:3643
 
 Removes node.
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  removeAttribute
+### removeAttribute
 
-▸ **removeAttribute**(`qualifiedName`: string): *void*
+▸ **removeAttribute**(`qualifiedName`: string): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeattribute)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeattribute)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5362
 
@@ -3698,19 +3698,19 @@ Removes element's first attribute whose qualified name is qualifiedName.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | string |
+| Name            | Type   |
+| --------------- | ------ |
+| `qualifiedName` | string |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  removeAttributeNS
+### removeAttributeNS
 
-▸ **removeAttributeNS**(`namespace`: string | null, `localName`: string): *void*
+▸ **removeAttributeNS**(`namespace`: string | null, `localName`: string): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeattributens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeattributens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5366
 
@@ -3718,154 +3718,154 @@ Removes element's attribute whose namespace is namespace and local name is local
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespace` | string &#124; null |
-`localName` | string |
+| Name        | Type               |
+| ----------- | ------------------ |
+| `namespace` | string &#124; null |
+| `localName` | string             |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  removeAttributeNode
+### removeAttributeNode
 
-▸ **removeAttributeNode**(`attr`: Attr): *Attr*
+▸ **removeAttributeNode**(`attr`: Attr): _Attr_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeAttributeNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeattributenode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeAttributeNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeattributenode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5367
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`attr` | Attr |
+| Name   | Type |
+| ------ | ---- |
+| `attr` | Attr |
 
-**Returns:** *Attr*
+**Returns:** _Attr_
 
-___
+---
 
-###  removeChild
+### removeChild
 
-▸ **removeChild**<**T**>(`oldChild`: T): *T*
+▸ **removeChild**<**T**>(`oldChild`: T): _T_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removechild)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removechild)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11081
 
 **Type parameters:**
 
-▪ **T**: *Node*
+▪ **T**: _Node_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`oldChild` | T |
+| Name       | Type |
+| ---------- | ---- |
+| `oldChild` | T    |
 
-**Returns:** *T*
+**Returns:** _T_
 
-___
+---
 
-###  removeEventListener
+### removeEventListener
 
-▸ **removeEventListener**<**K**>(`type`: K, `listener`: function, `options?`: boolean | EventListenerOptions): *void*
+▸ **removeEventListener**<**K**>(`type`: K, `listener`: function, `options?`: boolean | EventListenerOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeeventlistener)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeeventlistener)_
 
-*Overrides void*
+_Overrides void_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6757
 
 **Type parameters:**
 
-▪ **K**: *keyof HTMLElementEventMap*
+▪ **K**: _keyof HTMLElementEventMap_
 
 **Parameters:**
 
-▪ **type**: *K*
+▪ **type**: _K_
 
-▪ **listener**: *function*
+▪ **listener**: _function_
 
-▸ (`this`: [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement), `ev`: HTMLElementEventMap[K]): *any*
+▸ (`this`: [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement), `ev`: HTMLElementEventMap[K]): _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`this` | [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement) |
-`ev` | HTMLElementEventMap[K] |
+| Name   | Type                                                                                 |
+| ------ | ------------------------------------------------------------------------------------ |
+| `this` | [HTMLElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#static-htmlelement) |
+| `ev`   | HTMLElementEventMap[K]                                                               |
 
-▪`Optional`  **options**: *boolean | EventListenerOptions*
+▪`Optional` **options**: _boolean | EventListenerOptions_
 
-**Returns:** *void*
+**Returns:** _void_
 
-▸ **removeEventListener**(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean | EventListenerOptions): *void*
+▸ **removeEventListener**(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean | EventListenerOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeeventlistener)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removeEventListener](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removeeventlistener)_
 
-*Overrides void*
+_Overrides void_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:6758
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`listener` | EventListenerOrEventListenerObject |
-`options?` | boolean &#124; EventListenerOptions |
+| Name       | Type                                |
+| ---------- | ----------------------------------- |
+| `type`     | string                              |
+| `listener` | EventListenerOrEventListenerObject  |
+| `options?` | boolean &#124; EventListenerOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  removePathsFromTracking
+### removePathsFromTracking
 
-▸ **removePathsFromTracking**(`path`: string): *void*
+▸ **removePathsFromTracking**(`path`: string): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removePathsFromTracking](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removepathsfromtracking)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[removePathsFromTracking](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#removepathsfromtracking)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:180](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L180)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:180](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L180)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`path` | string |
+| Name   | Type   |
+| ------ | ------ |
+| `path` | string |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  replaceChild
+### replaceChild
 
-▸ **replaceChild**<**T**>(`newChild`: Node, `oldChild`: T): *T*
+▸ **replaceChild**<**T**>(`newChild`: Node, `oldChild`: T): _T_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[replaceChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#replacechild)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[replaceChild](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#replacechild)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:11082
 
 **Type parameters:**
 
-▪ **T**: *Node*
+▪ **T**: _Node_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`newChild` | Node |
-`oldChild` | T |
+| Name       | Type |
+| ---------- | ---- |
+| `newChild` | Node |
+| `oldChild` | T    |
 
-**Returns:** *T*
+**Returns:** _T_
 
-___
+---
 
-###  replaceWith
+### replaceWith
 
-▸ **replaceWith**(...`nodes`: string | Node[]): *void*
+▸ **replaceWith**(...`nodes`: string | Node[]): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[replaceWith](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#replacewith)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[replaceWith](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#replacewith)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:3649
 
@@ -3875,19 +3875,19 @@ Throws a "HierarchyRequestError" DOMException if the constraints of the node tre
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...nodes` | string &#124; Node[] |
+| Name       | Type                 |
+| ---------- | -------------------- |
+| `...nodes` | string &#124; Node[] |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  requestFullscreen
+### requestFullscreen
 
-▸ **requestFullscreen**(`options?`: FullscreenOptions): *Promise‹void›*
+▸ **requestFullscreen**(`options?`: FullscreenOptions): _Promise‹void›_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[requestFullscreen](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#requestfullscreen)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[requestFullscreen](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#requestfullscreen)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5373
 
@@ -3897,172 +3897,172 @@ When supplied, options's navigationUI member indicates whether showing navigatio
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | FullscreenOptions |
+| Name       | Type              |
+| ---------- | ----------------- |
+| `options?` | FullscreenOptions |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
-###  requestPointerLock
+### requestPointerLock
 
-▸ **requestPointerLock**(): *void*
+▸ **requestPointerLock**(): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[requestPointerLock](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#requestpointerlock)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[requestPointerLock](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#requestpointerlock)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5374
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  screenClosing
+### screenClosing
 
-▸ **screenClosing**(): *boolean*
+▸ **screenClosing**(): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screenClosing](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screenclosing)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screenClosing](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screenclosing)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L48)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L48)_
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  screenVisible
+### screenVisible
 
-▸ **screenVisible**(): *boolean*
+▸ **screenVisible**(): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screenVisible](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screenvisible)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[screenVisible](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#screenvisible)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:60](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L60)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:60](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L60)_
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  scroll
+### scroll
 
-▸ **scroll**(`options?`: ScrollToOptions): *void*
+▸ **scroll**(`options?`: ScrollToOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scroll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scroll)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scroll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scroll)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5375
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | ScrollToOptions |
+| Name       | Type            |
+| ---------- | --------------- |
+| `options?` | ScrollToOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-▸ **scroll**(`x`: number, `y`: number): *void*
+▸ **scroll**(`x`: number, `y`: number): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scroll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scroll)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scroll](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scroll)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5376
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
+| Name | Type   |
+| ---- | ------ |
+| `x`  | number |
+| `y`  | number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  scrollBy
+### scrollBy
 
-▸ **scrollBy**(`options?`: ScrollToOptions): *void*
+▸ **scrollBy**(`options?`: ScrollToOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollBy](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollby)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollBy](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollby)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5377
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | ScrollToOptions |
+| Name       | Type            |
+| ---------- | --------------- |
+| `options?` | ScrollToOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-▸ **scrollBy**(`x`: number, `y`: number): *void*
+▸ **scrollBy**(`x`: number, `y`: number): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollBy](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollby)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollBy](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollby)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5378
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
+| Name | Type   |
+| ---- | ------ |
+| `x`  | number |
+| `y`  | number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  scrollIntoView
+### scrollIntoView
 
-▸ **scrollIntoView**(`arg?`: boolean | ScrollIntoViewOptions): *void*
+▸ **scrollIntoView**(`arg?`: boolean | ScrollIntoViewOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollIntoView](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollintoview)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollIntoView](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollintoview)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5379
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`arg?` | boolean &#124; ScrollIntoViewOptions |
+| Name   | Type                                 |
+| ------ | ------------------------------------ |
+| `arg?` | boolean &#124; ScrollIntoViewOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  scrollTo
+### scrollTo
 
-▸ **scrollTo**(`options?`: ScrollToOptions): *void*
+▸ **scrollTo**(`options?`: ScrollToOptions): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollTo](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollto)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollTo](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollto)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5380
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | ScrollToOptions |
+| Name       | Type            |
+| ---------- | --------------- |
+| `options?` | ScrollToOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-▸ **scrollTo**(`x`: number, `y`: number): *void*
+▸ **scrollTo**(`x`: number, `y`: number): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollTo](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollto)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[scrollTo](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#scrollto)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5381
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
+| Name | Type   |
+| ---- | ------ |
+| `x`  | number |
+| `y`  | number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  setAttribute
+### setAttribute
 
-▸ **setAttribute**(`qualifiedName`: string, `value`: string): *void*
+▸ **setAttribute**(`qualifiedName`: string, `value`: string): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattribute)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattribute)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5385
 
@@ -4070,20 +4070,20 @@ Sets the value of element's first attribute whose qualified name is qualifiedNam
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | string |
-`value` | string |
+| Name            | Type   |
+| --------------- | ------ |
+| `qualifiedName` | string |
+| `value`         | string |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  setAttributeNS
+### setAttributeNS
 
-▸ **setAttributeNS**(`namespace`: string | null, `qualifiedName`: string, `value`: string): *void*
+▸ **setAttributeNS**(`namespace`: string | null, `qualifiedName`: string, `value`: string): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattributens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttributeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattributens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5389
 
@@ -4091,87 +4091,87 @@ Sets the value of element's attribute whose namespace is namespace and local nam
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespace` | string &#124; null |
-`qualifiedName` | string |
-`value` | string |
+| Name            | Type               |
+| --------------- | ------------------ |
+| `namespace`     | string &#124; null |
+| `qualifiedName` | string             |
+| `value`         | string             |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  setAttributeNode
+### setAttributeNode
 
-▸ **setAttributeNode**(`attr`: Attr): *Attr | null*
+▸ **setAttributeNode**(`attr`: Attr): _Attr | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttributeNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattributenode)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttributeNode](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattributenode)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5390
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`attr` | Attr |
+| Name   | Type |
+| ------ | ---- |
+| `attr` | Attr |
 
-**Returns:** *Attr | null*
+**Returns:** _Attr | null_
 
-___
+---
 
-###  setAttributeNodeNS
+### setAttributeNodeNS
 
-▸ **setAttributeNodeNS**(`attr`: Attr): *Attr | null*
+▸ **setAttributeNodeNS**(`attr`: Attr): _Attr | null_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttributeNodeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattributenodens)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setAttributeNodeNS](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setattributenodens)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5391
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`attr` | Attr |
+| Name   | Type |
+| ------ | ---- |
+| `attr` | Attr |
 
-**Returns:** *Attr | null*
+**Returns:** _Attr | null_
 
-___
+---
 
-###  setPointerCapture
+### setPointerCapture
 
-▸ **setPointerCapture**(`pointerId`: number): *void*
+▸ **setPointerCapture**(`pointerId`: number): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setPointerCapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setpointercapture)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setPointerCapture](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setpointercapture)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5392
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`pointerId` | number |
+| Name        | Type   |
+| ----------- | ------ |
+| `pointerId` | number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  setUI
+### setUI
 
-▸ **setUI**(): *void*
+▸ **setUI**(): _void_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setUI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setui)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[setUI](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#setui)_
 
-*Defined in [ovl/src/library/OvlBaseElement.ts:41](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L41)*
+_Defined in [ovl/src/library/OvlBaseElement.ts:41](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/OvlBaseElement.ts#L41)_
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-###  toggleAttribute
+### toggleAttribute
 
-▸ **toggleAttribute**(`qualifiedName`: string, `force?`: boolean): *boolean*
+▸ **toggleAttribute**(`qualifiedName`: string, `force?`: boolean): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[toggleAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#toggleattribute)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[toggleAttribute](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#toggleattribute)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5398
 
@@ -4181,27 +4181,27 @@ Returns true if qualifiedName is now present, and false otherwise.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`qualifiedName` | string |
-`force?` | boolean |
+| Name            | Type    |
+| --------------- | ------- |
+| `qualifiedName` | string  |
+| `force?`        | boolean |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-###  webkitMatchesSelector
+### webkitMatchesSelector
 
-▸ **webkitMatchesSelector**(`selectors`: string): *boolean*
+▸ **webkitMatchesSelector**(`selectors`: string): _boolean_
 
-*Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[webkitMatchesSelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#webkitmatchesselector)*
+_Inherited from [OvlBaseElement](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md).[webkitMatchesSelector](_ovl_src_library_ovlbaseelement_.ovlbaseelement.md#webkitmatchesselector)_
 
 Defined in ovl/node_modules/typescript/lib/lib.dom.d.ts:5399
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`selectors` | string |
+| Name        | Type   |
+| ----------- | ------ |
+| `selectors` | string |
 
-**Returns:** *boolean*
+**Returns:** _boolean_

@@ -1,4 +1,3 @@
-import { AsyncAction, Action } from "overmind"
 import { uuidv4 } from "../../../../ovl/src/global/globals"
 import {
   SnackAdd,
@@ -6,22 +5,26 @@ import {
   SnackTrackedRemove,
 } from "../../../../ovl/src/library/helpers"
 import { TableMobileTimeRecording } from "./MobileTimeRecordingDetail/state"
+import { OvlAction } from "../../../../ovl/src"
 
-export const MarkAsSynced: Action<string[]> = ({ state, actions }, value) => {
-  let data = state.testtables.timeentries
+export const MarkAsSynced: OvlAction<string[]> = (
+  value,
+  { state, actions }
+) => {
+  let data = state.demoApp.testtables.timeentries
   let nd = new Date()
   value.forEach((f) => {
     data.data[f].U_Synced = nd.toUTCString()
   })
 }
 
-export const SetMobileTimeEntrySelectedDate: AsyncAction<{
+export const SetMobileTimeEntrySelectedDate: OvlAction<{
   selected: string
-}> = async ({ state, actions }, value) => {
+}> = async (value, { state, actions }) => {
   // value.def.options.filter.static.U_Date = value.selected
   // state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
-  let data = state.testtables.timeentries
-  let def = state.testtables.timeentries.tableDef.mobiletimerecording1
+  let data = state.demoApp.testtables.timeentries
+  let def = state.demoApp.testtables.timeentries.tableDef.mobiletimerecording1
   def.options.filter.static.U_Date = value.selected
 
   await actions.ovl.table.TableRefresh({
@@ -31,7 +34,7 @@ export const SetMobileTimeEntrySelectedDate: AsyncAction<{
   })
 }
 
-export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
+export const CreateTestEntries: OvlAction = async (_, { state, actions }) => {
   let snackKey = uuidv4()
   SnackTrackedAdd("Datensätze werden hinzugefügt...", "Information", snackKey)
   let dt = new Date()
@@ -47,7 +50,7 @@ export const CreateTestEntries: AsyncAction = async ({ state, actions }, _) => {
       }
       testEntry.Code = undefined
       await actions.ovl.table.TableDirectSaveRow({
-        data: state.testtables.timeentries,
+        data: state.demoApp.testtables.timeentries,
         defId: "mobiletimerecording1",
         rowToSave: testEntry,
         noSnack: true,

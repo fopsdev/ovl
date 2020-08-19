@@ -1,11 +1,11 @@
-import { Action, AsyncAction } from "overmind"
 import {
   SnackAddState,
   RemoveSnack as StartRemoveSnack,
   SnackId,
 } from "./Snack"
+import { OvlAction } from "../.."
 
-export const RemoveSnack: Action<string> = ({ state }, value) => {
+export const RemoveSnack: OvlAction<string> = (value, { state }) => {
   // if not already got added just remove from state (there are max. 3 snacks display so it could be that its not even displayed)
   let key = "ovlsnack" + value
   if (state.ovl.libState.snacks[key].status === "queued") {
@@ -16,7 +16,7 @@ export const RemoveSnack: Action<string> = ({ state }, value) => {
   StartRemoveSnack(el)
 }
 
-export const ClearSnack: Action<string> = ({ state, actions }, value) => {
+export const ClearSnack: OvlAction<string> = (value, { state, actions }) => {
   delete state.ovl.libState.snacks[value]
 
   let el = document.getElementById(value)
@@ -45,60 +45,64 @@ export const ClearSnack: Action<string> = ({ state, actions }, value) => {
   }
 }
 
-export const PlaceSnack: Action = ({ state }) => {
+export const PlaceSnack: OvlAction = (_, { state }) => {
   let snacks = state.ovl.libState.snacks
   if (snacks) {
-    let filteredAndSortedSnacks = Object.keys(snacks)
+    Object.keys(snacks)
       .filter((f) => snacks[f].status === "queued")
       .sort((a, b) => snacks[a].id - snacks[b].id)
-    if (filteredAndSortedSnacks.length > 0) {
-      let snackToAdd = snacks[filteredAndSortedSnacks[0]]
-      let ovlSnackEl = document.getElementById("ovlsnack")
-      let lastOccupiedSlot = 0
-      let lastFreeSlot = 0
-      let lastFreeSlotEl
-      let firstFreeSlotEl
-      let parentEl = ovlSnackEl.lastElementChild
-      let z = 0
-      do {
-        let slotEl = parentEl.firstElementChild
-        if (slotEl) {
-          lastOccupiedSlot = z
-        } else {
-          lastFreeSlot = z
-          lastFreeSlotEl = parentEl
-          if (!firstFreeSlotEl) {
-            firstFreeSlotEl = parentEl
+      .forEach((k) => {
+        //if (filteredAndSortedSnacks.length > 0) {
+        let snackToAdd = snacks[k]
+        let ovlSnackEl = document.getElementById("ovlsnack")
+        let lastOccupiedSlot = 0
+        let lastFreeSlot = 0
+        let lastFreeSlotEl
+        let firstFreeSlotEl
+        let parentEl = ovlSnackEl.lastElementChild
+        let z = 0
+        do {
+          let slotEl = parentEl.firstElementChild
+          if (slotEl) {
+            lastOccupiedSlot = z
+          } else {
+            lastFreeSlot = z
+            lastFreeSlotEl = parentEl
+            if (!firstFreeSlotEl) {
+              firstFreeSlotEl = parentEl
+            }
+          }
+          parentEl = parentEl.previousElementSibling
+          z++
+        } while (parentEl)
+        if (lastOccupiedSlot === 0 || lastOccupiedSlot < lastFreeSlot) {
+          if (lastOccupiedSlot === 0) {
+            lastFreeSlotEl = firstFreeSlotEl
+          }
+          snackToAdd.status = "running"
+          let div = document.createElement("div")
+          div.id = k
+          div.setAttribute("role", "alert")
+          div.innerText = snackToAdd.text
+          div.classList.add("fd-alert")
+          let type = "fd-alert--" + snackToAdd.type.toLowerCase()
+          div.classList.add(type)
+          div.classList.add("fadeInSnack")
+          lastFreeSlotEl.appendChild(div)
+          if (snackToAdd.durationMs != 999999) {
+            setTimeout((e) => {
+              StartRemoveSnack(div)
+            }, snackToAdd.durationMs)
           }
         }
-        parentEl = parentEl.previousElementSibling
-        z++
-      } while (parentEl)
-      if (lastOccupiedSlot === 0 || lastOccupiedSlot < lastFreeSlot) {
-        if (lastOccupiedSlot === 0) {
-          lastFreeSlotEl = firstFreeSlotEl
-        }
-        snackToAdd.status = "running"
-        let div = document.createElement("div")
-        div.id = filteredAndSortedSnacks[0]
-        div.setAttribute("role", "alert")
-        div.innerText = snackToAdd.text
-        div.classList.add("fd-alert")
-        let type = "fd-alert--" + snackToAdd.type.toLowerCase()
-        div.classList.add(type)
-        div.classList.add("fadeInSnack")
-        lastFreeSlotEl.appendChild(div)
-        if (snackToAdd.durationMs != 999999) {
-          setTimeout((e) => {
-            StartRemoveSnack(div)
-          }, snackToAdd.durationMs)
-        }
-      }
-    }
+      })
   }
 }
 
-export const AddSnack: Action<SnackAddState> = ({ state, actions }, value) => {
+export const AddSnack: OvlAction<SnackAddState> = (
+  value,
+  { state, actions }
+) => {
   let id = SnackId.id++
   let key = value.key
   if (!key) {

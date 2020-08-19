@@ -1,17 +1,17 @@
 import { ListState } from "./ListControl"
-import { AsyncAction } from "overmind"
+
 import { KeyValueListFromServerFn } from "./helpers"
 import { ListFnReturnValue } from "../../Table/Table"
-import { FormState } from "../actions"
+import { OvlAction } from "../../.."
 
-export const FillListControl: AsyncAction<{
+export const FillListControl: OvlAction<{
   list: ListState
   listData: ListFnReturnValue
   filterValue: string
   row: {}
   namespace: string
   fieldId: string
-}> = async ({ state, effects }, value) => {
+}> = async (value, { state, effects }) => {
   await KeyValueListFromServerFn(
     state,
     value.list,

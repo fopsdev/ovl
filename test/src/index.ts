@@ -1,34 +1,24 @@
 import { html, render } from "../../ovl/node_modules/lit-html"
-import { createOvermind } from "../../ovl/node_modules/overmind"
-import { merge } from "../../ovl/node_modules/overmind/config"
-import { baseOvermindConfig, OvlConfig } from "../../ovl/src/init"
-import { defineElements } from "./registerComponents"
-import * as actions from "./actions"
-import * as state from "./state"
-import { TableDefIds, CustomFormType } from "./state"
+
+import { CustomFormType, TableDefIds, Language } from "./state"
+import { OvlConfig } from "../../ovl/src/init"
 import {
-  SnackTrackedAdd,
-  SnackTrackedRemove,
-} from "../../ovl/src/library/helpers"
-export { TableDefIds, CustomFormType }
+  OvlState,
+  ovl,
+  logState,
+  logActions,
+  logEffects,
+} from "../../ovl/src/index"
+export { TableDefIds, CustomFormType, Language }
 
-defineElements()
+OvlConfig._system.debugTracking = true
 
-let appOvermindConfig = { actions, state }
-
-export const config = merge(baseOvermindConfig, appOvermindConfig)
-
-export const overmind = createOvermind(config, {
-  devtools: true,
-  logProxies: true,
-  delimiter: " ",
-})
 OvlConfig.requiredActions = {
-  customPrepareActionPath: undefined,
-  customInitActionPath: overmind.actions.portal.system.user.CustomInit,
+  customRehydrateActionPath: undefined,
+  customInitActionPath: ovl.actions.demoApp.system.user.CustomInit,
   handleAdditionalTranslationResultActionPath:
-    overmind.actions.portal.system.user.HandleAdditionalLanguageResult,
-  handleGlobalRefreshActionPath: overmind.actions.portal.global.HandleRefresh,
+    ovl.actions.demoApp.system.user.HandleAdditionalLanguageResult,
+  handleGlobalRefreshActionPath: ovl.actions.demoApp.global.HandleRefresh,
 }
 
 OvlConfig.apiUrl = {
@@ -41,16 +31,18 @@ OvlConfig.apiUrl = {
   devServer: "http://192.168.1.117:1233/api/",
 }
 
-OvlConfig.stickyHeaderEnabled = (state: typeof overmind.state) => {
+OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
   return (
     !state.ovl.uiState.isIOS &&
-    !state.ovl.screens.screens.Shellbar.mainMenuExpanded &&
-    !state.ovl.screens.screens.Shellbar.userMenuExpanded
+    !state.demoApp.screens.shellbar.mainMenuExpanded &&
+    !state.demoApp.screens.shellbar.userMenuExpanded
   )
 }
 
-overmind.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
+import { defineElements } from "./registerComponents"
+defineElements()
 
+ovl.actions.ovl.internal.InitApp(OvlConfig.apiUrl)
 window.scrollTo(0, 1)
 render(
   html`

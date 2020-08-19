@@ -10,46 +10,52 @@ export type DPInvoiceOverviewState = {
 export class CompDPInvoiceOverview extends OvlBaseElement {
   handleFile(e: Event, fileName: string, fileType: FileType, docNum: string) {
     e.preventDefault()
-    this.actions.ovl.internal.GetFile({ fileName, fileType, docNum })
+    this.actions.ovl.internal.GetFile({
+      id1: fileName,
+      cat: fileType,
+      id2: docNum,
+    })
   }
 
-  getUI() {
-    const handlePDFPopup = e => {
+  async getUI() {
+    const handlePDFPopup = (e) => {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR219", "")
         if (this.state.ovl.screens.screens.Invoice.activeFilePopup === id) {
           id = ""
         }
-        this.actions.portal.global.TogglePDFPopup({
+        this.actions.demoApp.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Invoice
+          obj: this.state.ovl.screens.screens.Invoice,
         })
       }
     }
 
-    const handleRemoveAllPDFPopup = e => {
-      this.actions.portal.global.TogglePDFPopup({
+    const handleRemoveAllPDFPopup = (e) => {
+      this.actions.demoApp.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Invoice
+        obj: this.state.ovl.screens.screens.Invoice,
       })
     }
 
-    let detailCount = Object.keys(this.state.portal.dpInvoiceDetail.dpInvoices)
-      .length
-    if (detailCount === 0) {
-      return null
-    }
+    return this.track(() => {
+      let detailCount = Object.keys(
+        this.state.demoApp.dpInvoiceDetail.dpInvoices
+      ).length
+      if (detailCount === 0) {
+        return null
+      }
 
-    return html`
+      return html`
       <div @click=${handleRemoveAllPDFPopup}">
         <div class="fd-container fd-container--fluid">
           <div class="fd-col--12">
-            <div class="fd-panel">
-              <div class="fd-panel__header">
-                <div class="fd-panel__head">
+            <div class="fd-layout-panel">
+              <div class="fd-layout-panel__header">
+                <div class="fd-layout-panel__head">
                   <h3
-                    class="sap-icon--receipt sap-icon--xl fd-panel__title fd-has-type-3"
+                    class="sap-icon--receipt sap-icon--xl fd-layout-panel__title fd-has-type-3"
                   >
                     ${T("PortalDPInvoices")}
                   </h3>
@@ -60,10 +66,10 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
         </div>
         <div class="fd-container fd-container--fluid">
           <div class="fd-col--12">
-            <div class="fd-panel">
-              <div class="fd-panel__header fd-has-padding-tiny">
-                <div class="fd-panel__head">
-                  <h3 class="fd-panel__title">
+            <div class="fd-layout-panel">
+              <div class="fd-layout-panel__header fd-has-padding-tiny">
+                <div class="fd-layout-panel__head">
+                  <h3 class="fd-layout-panel__title">
                     ${T("PortalDPInvoiceListTitle", [detailCount.toString()])}
                     <!-- &nbsp;(<span class="fd-has-background-color-background-5">${T(
                       "PortalInvoiceOverdue"
@@ -71,7 +77,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                   </h3>
                 </div>
               </div>
-              <div class="fd-panel__body fd-has-padding-tiny">
+              <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <table class="fd-table fd-table--striped">
                   <thead class="fd-table__header">
                     <tr class="fd-table__row">
@@ -95,10 +101,10 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                     </tr>
                   </thead>
                   <tbody class="fd-table__body">
-                    ${Object.keys(this.state.portal.dpInvoiceDetail.dpInvoices)
+                    ${Object.keys(this.state.demoApp.dpInvoiceDetail.dpInvoices)
                       .sort((a, b) => parseInt(b) - parseInt(a))
-                      .map(k => {
-                        let o = this.state.portal.dpInvoiceDetail.dpInvoices[k]
+                      .map((k) => {
+                        let o = this.state.demoApp.dpInvoiceDetail.dpInvoices[k]
                         let files = o.attachments.files
                         let bgColor = "fd-has-background-color-background-5"
                         let dueDate = new Date(o.docDueDate)
@@ -119,8 +125,8 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                                     aria-controls="pQqQR219${k}"
                                     aria-haspopup="true"
                                     aria-expanded="${k ===
-                                      this.state.ovl.screens.screens.Invoice
-                                        .activeFilePopup}"
+                                    this.state.ovl.screens.screens.Invoice
+                                      .activeFilePopup}"
                                     aria-label="More"
                                   ></button>
                                 </div>
@@ -130,21 +136,21 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                                   aria-hidden="${k !==
                                     this.state.ovl.screens.screens.Invoice
                                       .activeFilePopup ||
-                                    this.state.portal.dpInvoiceDetail
-                                      .dpInvoices[k].attachments.files
-                                      .length === 0}"
+                                  this.state.demoApp.dpInvoiceDetail.dpInvoices[
+                                    k
+                                  ].attachments.files.length === 0}"
                                   id="pQqQR219${k}"
                                 >
                                   <nav class="fd-menu">
                                     <ul class="fd-menu__list">
-                                      ${this.state.portal.dpInvoiceDetail.dpInvoices[
+                                      ${this.state.demoApp.dpInvoiceDetail.dpInvoices[
                                         k
-                                      ].attachments.files.map(f => {
+                                      ].attachments.files.map((f) => {
                                         return html`
                                           <li>
                                             <a
                                               href=""
-                                              @click=${e =>
+                                              @click=${(e) =>
                                                 this.handleFile(
                                                   e,
                                                   f.fileName,
@@ -186,5 +192,6 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
         </div>
       </div>
     `
+    })
   }
 }

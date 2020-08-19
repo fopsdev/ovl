@@ -1,4 +1,4 @@
-import { TableDef } from "../../../../ovl/src/library/Table/Table"
+import { TableDef, Tabs } from "../../../../ovl/src/library/Table/Table"
 
 export type TableTesting = {
   Code: string
@@ -117,6 +117,26 @@ export let tblTableTesting: TableDef = {
     },
   },
 }
+
+let tableTesting2Tabs: Tabs = {
+  edit: {
+    tabs: {
+      TabA: { translationKey: "PortalEditTabA" },
+      TabB: { translationKey: "PortalEditTabB" },
+    },
+  },
+  view: {
+    tabs: {
+      TabA: { translationKey: "PortalViewTabA" },
+      TabB: { translationKey: "PortalViewTabB" },
+      TabX: { translationKey: "PortalViewTabX", hasCustomContent: true },
+    },
+  },
+}
+
+export type tab2EditTabs = keyof typeof tableTesting2Tabs.edit.tabs
+export type tab2ViewTabs = keyof typeof tableTesting2Tabs.view.tabs
+
 export let tblTableTesting2: TableDef = {
   id: "tab2",
   titleTranslationKey: "PortalTitleTable2",
@@ -125,6 +145,7 @@ export let tblTableTesting2: TableDef = {
     endpoint: "tabletesting",
   },
   options: {
+    tabs: tableTesting2Tabs,
     maxRows: { maxRows: 100, showHint: true, showInTitle: true },
     customRowActions: {
       Select: {
@@ -135,14 +156,14 @@ export let tblTableTesting2: TableDef = {
     },
     edit: {
       editType: "big",
-      caption: {
+      customCaption: {
         editTranslationKey: "PortalEdit",
         copyTranslationKey: "PortalCopy",
         addTranslationKey: "PortalAdd",
       },
     },
     view: {
-      caption: { translationKey: "PortalDetailView" },
+      customCaption: { translationKey: "PortalDetailView" },
     },
     sortCustom: {
       sorts: {
@@ -214,8 +235,24 @@ export let tblTableTesting2: TableDef = {
     U_Memo: {
       sortable: true,
       control: "textarea",
-      ui: { visibility: "TableNotMobile_Edit_View" },
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        language: "DE",
+        translationVisibility: "Edit_View",
+        viewTab: <tab2ViewTabs>"TabA",
+      },
     },
+    U_Memo_FR: {
+      sortable: true,
+      control: "textarea",
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        language: "FR",
+        translationVisibility: "Edit_View",
+        viewTab: <tab2ViewTabs>"TabA",
+      },
+    },
+
     U_Date: {
       control: "date",
       sortable: true,
@@ -257,6 +294,7 @@ export let tblTableTesting2: TableDef = {
         acceptOnlyListValues: false,
         valueField: "Code",
         displayField: "U_Alpha",
+        displayValueField: false,
       },
       ui: {
         visibility: "TableNotMobile_Edit_View",
@@ -281,11 +319,14 @@ export let tblTableTesting2: TableDef = {
     U_Int: {
       sortable: true,
       filter: { top: 3 },
-      ui: { visibility: "TableNotMobile_Edit_View" },
+      ui: {
+        visibility: "TableNotMobile_Edit_View",
+        viewTab: <tab2ViewTabs>"TabB",
+      },
     },
     U_Decimal: {
       sortable: true,
-      ui: { format: "4digits" },
+      ui: { format: "4digits", viewTab: <tab2ViewTabs>"TabB" },
     },
   },
 }
@@ -307,7 +348,7 @@ export let tblTableTesting3: TableDef = {
   },
   features: {
     detailView: "Enabled",
-    filter: false,
+    filter: true,
     page: false,
     add: true,
     noButtonsAtTheBottom: true,
@@ -324,6 +365,21 @@ export let tblTableTesting3: TableDef = {
       filter: { top: 3 },
       ui: { visibility: "TableNotMobile_Edit_View" },
     },
+
+    U_ItmsGrpCod: {
+      sortable: true,
+      control: "list",
+      type: "int",
+      list: {
+        valueField: "ItmsGrpCod",
+        displayField: "ItmsGrpNam",
+        serverEndpoint: "itemGroup",
+        acceptEmpty: false,
+        acceptOnlyListValues: true,
+      },
+      ui: { visibility: "Edit_View" },
+    },
+
     U_ItemCode: {
       sortable: true,
       control: "list",
@@ -352,6 +408,20 @@ export let tblTableTesting3: TableDef = {
       control: "checkbox",
 
       ui: { checkedValue: "Y", align: "center" },
+    },
+    U_Image: {
+      control: "link",
+      ui: { align: "center", showLabelIfNoValueInView: false },
+      asset: {
+        type: "Image",
+        validCategories: {
+          ItemPicture: {
+            idColumn: "U_ItemCode",
+            validFileExtensions: undefined,
+          },
+          Ext: undefined,
+        },
+      },
     },
   },
 }

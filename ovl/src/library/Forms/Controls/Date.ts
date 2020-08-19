@@ -1,13 +1,16 @@
 import { html } from "lit-html"
-import { ifDefined } from "lit-html/directives/if-defined"
+import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ControlState, GetLabel } from "./helpers"
+import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
+import { FormState } from "../actions"
+import { ColumnDisplayDef } from "../../Table/Table"
 
 export class OvlDate extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
+  formState: FormState
   init() {
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
@@ -49,66 +52,101 @@ export class OvlDate extends OvlBaseElement {
     }
   }
 
-  getUI() {
-    this.field = this.props(this.state)
-    let field = this.field.field
-    let res = getUIValidationObject(field)
+  async getUI() {
+    return this.track(() => {
+      this.field = this.props(this.state)
+      let field = this.field.field
+      this.formState = this.state.ovl.forms[field.formType][field.formId]
+      let res = getUIValidationObject(field)
 
-    let customRowCell = this.field.customRowCellClass
-    let customRowClassName = ""
-    let customRowTooltip
-    if (customRowCell) {
-      customRowClassName = customRowCell.className
-      customRowTooltip = customRowCell.tooltip
-    }
+      // let columnsDef: ColumnDisplayDef
 
-    let align = ""
-    if (field.ui && field.ui.align) {
-      align = field.ui.align
-    }
+      // columnsDef = { list: field.list, type: field.type, ui: field.ui }
 
-    let label = GetLabel(
-      field,
-      this.field.customHeaderCellClass,
-      res,
-      "date",
-      align
-    )
-    let type: "date" | "text" = "text"
-    if (this.state.ovl.uiState.isMobile) {
-      type = "date"
-    }
-    return html`
-      <div
-        class="ovl-formcontrol-container ovl-formcontrol-date-container ovl-formcontrol-container__${field.fieldKey}"
-      >
-        ${label}
-        <input
-          title="${ifDefined(customRowTooltip ? customRowTooltip : undefined)}"
-          @focusout=${(e) => this.handleFocusOut(e)}
-          @keydown=${(e) => this.handleKeyDown(e)}
-          style="${align}"
-          autocomplete="off"
-          class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-formcontrol-date-input ovl-formcontrol-input__${field.fieldKey} ${customRowClassName}"
-          type="${type}"
-          id="${field.id}"
-        />
+      let customRowCell = this.field.customRowCellClass
+      let customRowClassName = ""
+      let customRowTooltip
+      let customRowClassContainerName = ""
+      if (customRowCell) {
+        customRowClassName = customRowCell.className
+        customRowClassContainerName = customRowClassName + "Container"
+        customRowTooltip = customRowCell.tooltip
+      }
 
-        <span
-          class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-date-validation ovl-formcontrol-validation__${field.fieldKey}"
+      let align = ""
+      if (field.ui && field.ui.align) {
+        align = field.ui.align
+      }
+
+      let label = GetLabel(
+        field,
+        this.field.customHeaderCellClass,
+        res,
+        "date",
+        align,
+        this.formState,
+        this
+      )
+      let type: "date" | "text" = "text"
+      if (this.state.ovl.uiState.isMobile) {
+        type = "date"
+      }
+      let customValue = GetValueFromCustomFunction(
+        this.field.row,
+        field,
+        this.formState,
+        align,
+        this.field.isInline,
+        this.state
+      )
+      return html`
+        <div
+          class="ovl-formcontrol-container ovl-container-date ovl-container__${field.fieldKey} ${customRowClassContainerName}"
         >
-          ${field.validationResult.validationMsg}
-        </span>
-      </div>
-    `
+          ${label}
+          <input
+            title="${ifDefined(
+              customRowTooltip ? customRowTooltip : undefined,
+              this
+            )}"
+            @focusout=${(e) => this.handleFocusOut(e)}
+            @keydown=${(e) => this.handleKeyDown(e)}
+            style="${align}"
+            autocomplete="off"
+            class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-date ovl-table-value__${field.fieldKey} ${customRowClassName}"
+            type="${type}"
+            id="${field.id}"
+          />
+
+          <span
+            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-date-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
+              ? ""
+              : "hide"}"
+          >
+            ${customValue}
+          </span>
+
+          <span
+            class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-date-validation ovl-formcontrol-validation__${field.fieldKey}"
+          >
+            ${field.validationResult.validationMsg}
+          </span>
+        </div>
+      `
+    })
   }
   afterRender() {
     // place picker under date with picker on the right just visible
     this.inputElement = document.getElementById(this.field.field.id)
-    if (this.state.ovl.uiState.isMobile) {
-      this.inputElement.value = this.field.field.convertedValue.substring(0, 10)
-    } else {
-      this.inputElement.value = this.field.field.value
+    if (this.inputElement && this.field.field.convertedValue) {
+      if (this.state.ovl.uiState.isMobile) {
+        this.inputElement.value = this.field.field.convertedValue.substring(
+          0,
+          10
+        )
+      } else {
+        this.inputElement.value = this.field.field.value
+      }
     }
   }
   disconnectedCallback() {

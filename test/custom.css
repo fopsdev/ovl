@@ -1,19 +1,13 @@
-.cols2 {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  grid-gap: 10px;
-  grid-template-rows: auto;
-}
-
 .ovl-bigeditform .ovl-formcontrol-container {
   display: grid;
   grid-template-columns: 110px 1fr;
   grid-template-areas:
     "label  value"
+    ".... custom"
     ".... validation";
 }
 
-.ovl-bigeditform .ovl-formcontrol-textarea-input {
+.ovl-bigeditform .ovl-table-value-textarea {
   height: 120px;
 }
 
@@ -22,9 +16,12 @@
   font-size: small;
 }
 
-.ovl-bigeditform .ovl-formcontrol-textarea-label {
-  margin-top: 30px;
-  font-size: small;
+.ovl-bigeditform .ovl-formcontrol-custom {
+  font-size: xx-small;
+}
+
+.ovl-bigeditform .ovl-table-label-textarea {
+  margin-top: 45px;
 }
 
 .ovl-detailview-container {
@@ -32,15 +29,79 @@
   grid-template-columns: 110px 1fr;
 }
 
+.ovl-formcontrol-custom,
+.ovl-formcontrol-validation {
+  width: 100;
+  max-width: 100%;
+  box-shadow: none;
+  padding-top: 2px;
+  padding-bottom: 4px;
+  margin: 0px;
+}
+.ovl-formcontrol-container,
+.ovl-formcontrol-input {
+  margin: 0;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  padding-right: 2px;
+}
+
+.ovl-dialog-HitListDialog .ovl-dialog-body {
+  padding: 0;
+  margin: 0;
+}
+
+.ovl-dialog-body {
+  padding-left: 6px;
+  padding-right: 2px;
+  padding-top: 6px;
+  padding-bottom: 8px;
+}
+
+.ovl-hitlistdialog-footer {
+  padding: 2px;
+}
+
+.ovl-dialog-footer .fd-bar__right {
+  justify-content: center;
+}
+
+.ovl-dialog-DetailView,
+.ovl-dialog-EditFormBig,
+.ovl-dialog-TableHeaderMenu {
+  width: 70vw;
+  max-width: 70vw;
+}
+
+.ovl-dialog-DetailView {
+  height: 100%;
+}
+
+.ovl-dialog-TableHeaderMenu {
+  width: 50vw;
+}
+
 @media screen and (max-width: 992px) {
+  .ovl-tab {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
   .ovl-detailview-label {
     margin-left: -20px;
   }
+
+  .ovl-tab .ovl-detailview-label {
+    margin-left: 0px;
+  }
 }
 
-.ovl-tableview-rowcell__U_Decimal {
+.ovl-table-value__U_Decimal {
   color: green;
 }
+
+/* .ovl-tableview-rowcell {
+  font-size: xx-small;
+} */
 
 .testrowcell {
   cursor: pointer !important;
@@ -57,9 +118,68 @@
   user-select: none;
 }
 
+#ovl-detailview-intersectionobserver:focus {
+  outline: none;
+}
+
 .ovl-detailview .chartwidth {
   width: 98%;
 }
 .chartwidth {
   width: 97vw;
+}
+
+@media (max-width: 600px) {
+  .timelinenextarrow {
+  }
+  .timelinenextarrowdown {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAVFBMVEVHcEzn5/zm5vzj4//n5/zm5vzp6f/o6Pvm5v3n5/zk5P/o6Pz////n5/zn5/zn5/z////o6P/n5/zk5P/n5/zn5/ro6P/p6fvn5/zn5/zn5/vn5/w6apjbAAAAG3RSTlMA/VMJysUij3DpE00D9/zdAhbsJrM1Czqs9Nnog9ijAAAA3UlEQVRo3u3VRxLCQAxE0SHOkHP0/e/J3jioNWLF7wPoF9ivnBJjzLimYwQIECBAgAABAgQIECBAgAABAgT+JZAb17I5cHx67l+39p8wW+j353flT1q/1fuHk/YYlivt/vmiPujbS7m/e+iv0mZvvz+Zel7WYg+UH3PITm9WDgoADwcNgM5BBaBy0AFoHDwAFA4+AAKHEvGxyfEArBz8AGwcagBYONQBGOdQC2CMQz2AYQ4RAAY5lBS+HA+gn0MUgD4OcQC6OUQC6OIQC+CbQzSANod4AC0OJTHG1H0Aez/DkbfNSeMAAAAASUVORK5CYII=");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-bottom: -4%;
+  }
+  .ovl-dialog {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
+
+@media (min-width: 600px) {
+  .timelinenextarrow {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAe1BMVEVHcEzl5/3l6Pzl6Pzp6f/l5/vl6Pzl6Pzl6Pzl6fzl6Pzj4//l6Pzm5vrl6vrV1f/k6Pzl5/zm6fzk6Pzo6P/f3//m6Pzl6Pzl6Pzn5//m6fz////k5/zn5//m6P3m5v/l6PzM///l6Pzl6Pzl6Pzq6v/l6Pzm5vrl6PzvVNhEAAAAKHRSTlMAd/5OF4Dy/PPjmwnEMjEG3cNRTBYI3MeoKlABSxVvKfQFnOTFGKYz5KqByAAAAMxJREFUaN7tmFkOggAMBVGQxV1w3xBcePc/oZ5AQ3QSNW/+ySQU2r4GgTHGGGOMeZsrLTg3sECnHBao29uxAmk9gAVaRbBA2QgWKN3CgkepYYF0W8ACXSJYoGwMC5SGsEBJBxZI9QQWaDhv+UBrphtYoLiABc9LrY/Qr2CBZgdYoGUJCxTvYYGS448L6FdEF5n+TOEfjW4VdLN70a7xgfPlI5Me+vTaQi9e9OoIL7/0+k4HEDpC0SEQjrF0EKdPCfgxBD/nGGOMMcb8EXe0290rHhvFpQAAAABJRU5ErkJggg==");
+    background-repeat: no-repeat;
+    background-position-x: 110%;
+    background-size: 50% 100%;
+  }
+  .timelinenextarrowdown {
+    display: none;
+  }
+}
+
+.ovl-blink {
+  animation: blinkingText 1.2s infinite;
+}
+@keyframes blinkingText {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.7;
+  }
+
+  60% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
 }

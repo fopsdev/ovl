@@ -1,63 +1,177 @@
-import { T } from "./global/globals"
-import { overmind } from "./index"
-import { SnackType } from "./library/Snack/Snack"
+import { T, saveState, stringifyReplacer } from "./global/globals"
+
 import { OvlConfig } from "./init"
 import { SnackAdd } from "./library/helpers"
+import { SnackType } from "./library/Snack/Snack"
+import { ovl } from "."
+import { AddSnack } from "./library/Snack/actions"
 
 export let lastOfflineMsg
 
-export const postRequest = async (url, data, isBlob?: boolean) => {
-  if (isBlob !== undefined) {
-    return ovlFetch(url, data, isBlob)
-  } else {
-    return ovlFetch(url, data)
-  }
-}
-export const getRequest = async url => {
-  return ovlFetch(url, undefined, true)
+export const postRequest = async (
+  url,
+  data,
+  isBlob?: boolean,
+  noSnack?: boolean
+) => {
+  return await ovlFetch(url, data, "POST", isBlob, noSnack)
 }
 
-export const ovlFetch = async (url, data, isBlob?: boolean) => {
+export type GETRequestParams = {
+  cat: string
+  id1: string
+  id2?: string
+  ext?: string
+  mode?: string
+}
+
+export const getRequest = async (
+  url,
+  data: GETRequestParams,
+  isBlob?: boolean,
+  noSnack?: boolean
+) => {
+  return ovlFetch(url, data, "GET", isBlob, noSnack)
+}
+
+export const ovlFetch = async (
+  url,
+  data,
+  method: string,
+  isBlob?: boolean,
+  noSnack?: boolean
+) => {
   let res
   let snackMessage = ""
   let snackMessageType: SnackType = "Information"
+  let reqOptions
+  let timer
   try {
-    overmind.actions.ovl.indicator.SetIndicatorOpen()
+    ovl.actions.ovl.indicator.SetIndicatorOpen()
     // Create request to api service
-    let isPost = !!data
+
     let headers = {}
-    let method = "GET"
-    if (isPost) {
-      method = "POST"
+    if (method === "POST") {
       let contentType = "application/json"
       headers["Content-Type"] = contentType
     }
-    let user = overmind.state.ovl.user
+    let user = ovl.state.ovl.user
     if (user && user.token) {
-      headers["Authorization"] = "Bearer " + overmind.state.ovl.user.token
+      headers["Authorization"] = "Bearer " + ovl.state.ovl.user.token
     }
-    const req = await fetch(url, {
+    reqOptions = {
       method,
       headers,
-      // format the data
-      body: JSON.stringify(data)
-    })
+      signal: undefined,
+    }
+    if (data) {
+      data.clientId = ovl.state.ovl.user.clientId
+    }
+    if (method === "POST") {
+      reqOptions["body"] = JSON.stringify(data, stringifyReplacer)
+    } else if (data) {
+      // encode data as url param
+      const UrlCreator = window.URL || window.webkitURL
+      var urlWithParams = new UrlCreator(url)
+      if (data.cat) {
+        urlWithParams.searchParams.append("cat", data.cat)
+      } else {
+        throw Error("ovl error: fetch asset needs 'cat' param!")
+      }
+      if (data.id1) {
+        urlWithParams.searchParams.append("id1", data.id1)
+      } else {
+        throw Error("ovl error: fetch asset needs 'id1' param!")
+      }
+      if (data.id2) {
+        urlWithParams.searchParams.append("id2", data.id2)
+      }
+      if (data.ext) {
+        urlWithParams.searchParams.append("ext", data.ext)
+      }
+      if (data.mode) {
+        urlWithParams.searchParams.append("mode", data.mode)
+      }
+      // get requests will always use a diskCache version which is persisted in state and recreated if page reload
+      urlWithParams.searchParams.append(
+        "v",
+        ovl.state.ovl.app.discCacheVersion.toString()
+      )
+      urlWithParams.searchParams.append("clientId", ovl.state.ovl.user.clientId)
+
+      // encode params as url param
+      url = urlWithParams.toString()
+    }
+
+    const controller = new AbortController()
+    const { signal } = controller
+
+    timer = setTimeout(() => {
+      controller.abort()
+    }, OvlConfig._system.fetchTimeout)
+
+    reqOptions.signal = signal
+
+    const req = await fetch(url, reqOptions)
+
+    if (method === "POST") {
+      ovl.state.ovl.app.offline = false
+    }
     // with fetch we will have the repsonse status here on req object
     if (req.status === 401) {
       // unauthorised
 
       snackMessage = T("AppPleaseRelogin")
-      overmind.actions.ovl.navigation.NavigateTo("Login")
-
+      //@ts-ignore
+      // ovl.actions.ovl.dialog.DialogOpen({
+      //   dialogType: "Login",
+      //   elementIdToFocusAfterClose: "loginformuser",
+      // })
+      ovl.state.ovl.user.token = ""
       return
     } else if (req.status === 404) {
-      snackMessage = "Not found"
       return {
         headers: req.headers,
         data: undefined,
         status: 404,
-        message: "",
-        type: ""
+        message: "Not Found",
+        type: "",
+      }
+    } else if (req.status === 400) {
+      let msg = await req.json()
+      let type = ""
+      if (msg) {
+        if (msg.message && !msg.type) {
+          snackMessage = msg.message
+        } else if (!msg.type) {
+          snackMessage = req.statusText
+        }
+        if (msg.type) {
+          type = msg.type
+        }
+      }
+      snackMessageType = "Error"
+      return {
+        headers: req.headers,
+        data: undefined,
+        status: 400,
+        message: req.statusText,
+        type: type,
+      }
+    } else if (req.status === 422) {
+      let msg = await req.json()
+      if (msg && msg.message) {
+        snackMessage = msg.message
+      } else {
+        snackMessage = req.statusText
+      }
+      snackMessageType = "Error"
+      return {
+        headers: req.headers,
+        data: undefined,
+        status: 422,
+        message: msg.errormessage,
+        type: "",
       }
     } else {
       // ok looks ok, but still could be server error with our custom messages
@@ -70,72 +184,69 @@ export const ovlFetch = async (url, data, isBlob?: boolean) => {
         }
       }
 
-      if (req.status === 400) {
-        let type = res.type
-        if (!type) {
-          type = ""
-          snackMessage = req.statusText
-        }
-
-        return {
-          headers: req.headers,
-          data: undefined,
-          status: 400,
-          message: res.message,
-          type
-        }
-      } else if (req.ok) {
+      if (req.ok) {
         // ok all good
         return {
           headers: req.headers,
           data: res,
           status: 200,
           message: "",
-          type: ""
+          type: "",
         }
       } else {
-        // some case we didn't handle yet.... just also go to offline mode
-        let dt: number = Date.now()
-        if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
-          lastOfflineMsg = dt
-          if (OvlConfig._system.OfflineMode) {
-            snackMessage = "Offline Mode"
-          } else {
-            snackMessage = "Server Error. Server offline?"
+        let type
+        let message
+        if (res) {
+          type = res.type
+          message = res.message
+        }
+        if (!type) {
+          type = ""
+          snackMessageType = "Error"
+          if (!message) {
+            message = req.status
           }
+          snackMessage = "Server Error: " + message
         }
         return {
+          fetchParams: { url, reqOptions },
           headers: req.headers,
           data: undefined,
-          status: 449,
-          message: req.statusText,
-          type: ""
+          status: req.status,
+          message,
+          type,
         }
       }
     }
   } catch (err) {
-    // generic error
-    // go to offline mode
-    let dt: number = Date.now()
-    if (lastOfflineMsg === undefined || dt - lastOfflineMsg > 5000) {
-      lastOfflineMsg = dt
-      if (OvlConfig._system.OfflineMode) {
-        snackMessage = "Offline Mode"
-      } else {
-        snackMessage = "Server Error. Server offline?"
-      }
-    }
+    console.log(err)
+
+    // connection error
+    // well...  go to offline mode
+    ovl.state.ovl.app.offline = true
     return {
+      fetchParams: { url, reqOptions },
       headers: undefined,
       data: undefined,
       status: 449,
       message: err,
-      type: ""
+      type: "",
     }
   } finally {
-    overmind.actions.ovl.indicator.SetIndicatorClose()
+    if (timer) {
+      clearTimeout(timer)
+    }
+    ovl.actions.ovl.indicator.SetIndicatorClose()
+    // if (method === "POST") {
+    //   saveState(true, "fetchpost")
+    // }
     if (snackMessage) {
-      SnackAdd(snackMessage, snackMessageType)
+      if (!noSnack || snackMessageType === "Error") {
+        if (snackMessageType === "Error") {
+          console.log("Fetch Error: " + snackMessage)
+        }
+        SnackAdd(snackMessage, snackMessageType)
+      }
     }
   }
 }

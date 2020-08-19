@@ -1,12 +1,12 @@
 import { html, TemplateResult } from "lit-html"
-import { customFunctions, overmind } from "../.."
-import { resolvePath, T } from "../../global/globals"
-import { FormCustomColumnFn } from "../../global/hooks"
-import { overlayToRender } from "../../library/Overlay/Overlay"
-import { OvlBaseElement } from "../OvlBaseElement"
+import { ovl } from "../.."
+import { resolvePath, T, stringifyReplacer } from "../../global/globals"
+import { FormCustomColumnFn, FormCustomColumnFn_Type } from "../../global/hooks"
 import { getDisplayValue, getTextSort, TableFilterFn } from "./helpers"
 import { NavDef } from "./NavControl"
 import { ColumnFilter, ColumnFilterTypes, TableDataAndDef } from "./Table"
+import { OvlBaseElement } from "../OvlBaseElement"
+import { DialogHolderParams } from "../Dialog/OvlDialogHolder"
 
 export type HeaderMenuDef = {
   def: TableDataAndDef
@@ -15,11 +15,14 @@ export type HeaderMenuDef = {
 export class TableHeaderMenu extends OvlBaseElement {
   props: any
   headerMenu: HeaderMenuDef
-  lastTemplateResult: TemplateResult
+  //lastTemplateResult: TemplateResult
   filterDef: ColumnFilter
   filterDropDownHidden: boolean
   focusSet: boolean
   handleSortClick = (e: Event, key: string, ascending: boolean) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     this.actions.ovl.table.TableSort({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -29,37 +32,55 @@ export class TableHeaderMenu extends OvlBaseElement {
   }
 
   handleFilterSetClick = (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     //@ts-ignore
     let val = e.target.previousElementSibling.value
-
     this.actions.ovl.table.TableFilter({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
       value: val,
     })
   }
+  handleFilterUnSetClick = (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
+    //@ts-ignore
+    this.actions.ovl.table.TableFilter({
+      def: this.headerMenu.def.def,
+      data: this.headerMenu.def.data,
+      value: "",
+    })
+  }
 
   handleFilterSelectedClick = (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     this.actions.ovl.internal.TableFilterSelected(this.headerMenu.def)
   }
 
   handleCustomColumnFunctionClick = (e: Event, key: string, name: string) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     let def = this.headerMenu.def.def
     let fnName = FormCustomColumnFn.replace("%", key)
-    let fn = resolvePath(customFunctions, def.namespace)
+    let fn = resolvePath(this.actions.custom, def.namespace)
     if (fn && fn[fnName]) {
-      fn[fnName](
-        name,
-        this.headerMenu.def.def.uiState.headerSelected,
+      fn[fnName](<FormCustomColumnFn_Type>{
+        fnName: name,
+        columnKey: this.headerMenu.def.def.uiState.headerSelected,
         def,
-        this.state,
-        this.actions,
-        overmind.effects
-      )
+      })
     }
   }
 
   handleCustomSelectedClick = (e: Event, key: string, name: string) => {
+    e.stopPropagation()
+    e.preventDefault()
+
     this.actions.ovl.internal.TableMultipleCustomFunction({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
@@ -78,11 +99,6 @@ export class TableHeaderMenu extends OvlBaseElement {
         data: this.headerMenu.def.data,
         value: val,
       })
-      this.actions.ovl.internal.TableSelectHeader({
-        def: this.headerMenu.def.def,
-        data: this.headerMenu.def.data,
-        key: "",
-      })
     }
   }
 
@@ -95,9 +111,9 @@ export class TableHeaderMenu extends OvlBaseElement {
       data: this.headerMenu.def.data,
       key: "",
     })
-    overlayToRender.overlayClosedCallback = () => {
-      this.actions.ovl.table.TableAddRow(this.headerMenu.def)
-    }
+    //    overlayToRender.overlayClosedCallback = () => {
+    this.actions.ovl.table.TableAddRow(this.headerMenu.def)
+    //    }
   }
 
   handleSelectAllClick = (e: Event, select: boolean) => {
@@ -108,14 +124,6 @@ export class TableHeaderMenu extends OvlBaseElement {
       data: this.headerMenu.def.data,
       select,
     })
-    if (!select) {
-      this.actions.ovl.internal.TableSelectHeader({
-        def: this.headerMenu.def.def,
-        data: this.headerMenu.def.data,
-
-        key: "",
-      })
-    }
   }
 
   handleCloseHeaderMenu = (e: Event) => {
@@ -124,7 +132,6 @@ export class TableHeaderMenu extends OvlBaseElement {
     this.actions.ovl.internal.TableSelectHeader({
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
-
       key: "",
     })
   }
@@ -182,14 +189,15 @@ export class TableHeaderMenu extends OvlBaseElement {
       id,
       def,
     })
+    // this.actions.ovl.internal.TableSelectHeader({
+    //   def: this.headerMenu.def.def,
+    //   data: this.headerMenu.def.data,
+    //   key: "",
+    // })
+
     this.actions.ovl.table.TableRefresh({
       defId: this.headerMenu.def.def.id,
       data: this.headerMenu.def.data,
-    })
-    this.actions.ovl.internal.TableSelectHeader({
-      def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data,
-      key: "",
     })
   }
 
@@ -198,7 +206,8 @@ export class TableHeaderMenu extends OvlBaseElement {
     e.preventDefault()
     this.filterDropDownHidden = !this.filterDropDownHidden
     // this is an internal state change, thats why we need to rerender manually...
-    this.doRender()
+    //@ts-ignore
+    this.getElementsByTagName("ovl-dialogholder")[0].doRender()
   }
 
   handleFilterDropDownValue = (e: Event, key: ColumnFilterTypes) => {
@@ -211,17 +220,20 @@ export class TableHeaderMenu extends OvlBaseElement {
     let currentFilter = def.columns[def.uiState.headerSelected].filter
 
     if (key === "@@ovl_all" && !currentFilter.enabled) {
-      this.doRender()
+      //@ts-ignore
+      this.getElementsByTagName("ovl-dialogholder")[0].doRender()
       return
     } else if (
       key === "@@ovl_others" &&
       currentFilter.enabled &&
       currentFilter.isOthersSelected
     ) {
-      this.doRender()
+      //@ts-ignore
+      this.getElementsByTagName("ovl-dialogholder")[0].doRender()
       return
     } else if (key === currentFilter.selected) {
-      this.doRender()
+      //@ts-ignore
+      this.getElementsByTagName("ovl-dialogholder")[0].doRender()
       return
     }
 
@@ -261,30 +273,20 @@ export class TableHeaderMenu extends OvlBaseElement {
       defId: this.headerMenu.def.def.id,
       data: this.headerMenu.def.data,
     })
-    this.actions.ovl.internal.TableSelectHeader({
-      def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data,
-      key: "",
-    })
   }
 
   init() {
     this.headerMenu = this.props()
     this.filterDropDownHidden = true
-    this.focusSet = false
-    overlayToRender.overlayDismissedCallback = () => {
-      this.actions.ovl.internal.TableSelectHeader({
-        def: this.headerMenu.def.def,
-        data: this.headerMenu.def.data,
-        key: "",
-      })
-    }
   }
-  getUI() {
+  getBody = () => {
+    const handleMainMouseDown = (e: Event) => {
+      e.stopPropagation()
+    }
+
     let def = this.headerMenu.def.def
-    if (!def.uiState.headerSelected) {
-      // whilst fade out leave the ui as it is
-      return this.lastTemplateResult
+    if (def.uiState.headerSelected === "") {
+      return undefined
     }
     let columns = def.columns
     let selectedColumn = def.uiState.headerSelected
@@ -341,7 +343,10 @@ export class TableHeaderMenu extends OvlBaseElement {
           let emptyText = "(leer)"
           let alreadyProcessed: Set<string> = new Set()
           let columnDef = columns[selectedColumn]
-          this.filterDef = JSON.parse(JSON.stringify(columnDef.filter))
+          this.filterDef = JSON.parse(
+            JSON.stringify(columnDef.filter),
+            stringifyReplacer
+          )
           let filterDef = this.filterDef
           let result1: {
             [key: string]: { val: any; displayVal: string; count: number }
@@ -419,6 +424,7 @@ export class TableHeaderMenu extends OvlBaseElement {
           filterDef.othersCount = totalCount - count
 
           let filterKeys = result //Object.keys(this.filterDef.filterValues)
+
           if (filterKeys.length > 0) {
             let columnFilterSelectValue = ""
             let defFilter = def.columns[def.uiState.headerSelected].filter
@@ -464,31 +470,37 @@ export class TableHeaderMenu extends OvlBaseElement {
               `
             }
             columnFilter = html`
-              <div style="margin-bottom:6px;margin-left:24px;">
-                <span class="sap-icon--filter"></span>
-                <div class="fd-popover" style="width:90%;">
+              <li role="listitem" class="fd-list__item">
+                <span class="fd-list__icon sap-icon--filter"></span>
+                <div class="fd-popover" style="width:100%;">
                   <div
                     @click=${this.handleFilterDropDown}
                     class="fd-popover__control"
                   >
                     <div class="fd-select">
-                      <button
+                      <div
                         class="fd-select__control"
+                        role="button"
+                        tabindex="0"
                         aria-controls="ovlh0C6A325"
                         aria-expanded="false"
                         aria-haspopup="true"
                       >
                         ${columnFilterSelectValue}
-                      </button>
+                        <span
+                          class="fd-button fd-button--transparent sap-icon--slim-arrow-down fd-select__button"
+                        ></span>
+                      </div>
                     </div>
                   </div>
+
                   <div
-                    class="fd-popover__body fd-popover__body--no-arrow"
+                    class="fd-popover__body fd-popover__body--no-arrow fd-popover__body--dropdown"
                     aria-hidden="${this.filterDropDownHidden}"
                     id="ovlh0C6A325"
-                    style="overflow: auto; "
+                    style="overflow: auto;"
                   >
-                    <ul class="fd-list fd-list--no-border" role="listbox">
+                    <ul class="fd-list fd-list--dropdown" role="listbox">
                       ${all}
                       ${filterKeys.map((k) => {
                         let displayTemplate
@@ -524,7 +536,7 @@ export class TableHeaderMenu extends OvlBaseElement {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </li>
             `
           }
         }
@@ -541,48 +553,51 @@ export class TableHeaderMenu extends OvlBaseElement {
 
       let editSelectedRows
       if (def.features.edit && def.options.edit.editType === "inline") {
-        editSelectedRows = html`
-          <li>
-            <a
-              @click=${(e) => {
-                this.handleEdit(e)
-              }}
-              href="#"
-              class="fd-menu__item sap-icon--edit"
-            >
-              Ändern selektierte Datensätze</a
-            >
-          </li>
-        `
+        editSelectedRows = html`<li
+          role="listitem"
+          class="fd-list__item fd-list__item--link"
+        >
+          <a
+            href="#"
+            class="fd-list__link"
+            @click="${(e) => this.handleEdit(e)}"
+          >
+            <span class="fd-list__icon sap-icon--edit"></span>
+            <span class="fd-list__title">Ändern selektierte Datensätze</span></a
+          >
+        </li>`
       }
       let copySelectedRows
       if (def.features.add && def.options.edit.editType === "inline") {
-        copySelectedRows = html`
-          <li>
-            <a
-              @click=${(e) => {
-                this.handleCopy(e)
-              }}
-              href="#"
-              class="fd-menu__item sap-icon--copy"
-            >
-              Duplizieren selektierte Datensätze</a
-            >
-          </li>
-        `
+        copySelectedRows = html`<li
+          role="listitem"
+          class="fd-list__item fd-list__item--link"
+        >
+          <a
+            href="#"
+            class="fd-list__link"
+            @click="${(e) => this.handleCopy(e)}"
+          >
+            <span class="fd-list__icon sap-icon--copy"></span>
+            <span class="fd-list__title"
+              >Duplizieren selektierte Datensätze</span
+            ></a
+          >
+        </li> `
       }
       let deleteSelectedRows
       if (def.features.delete) {
         deleteSelectedRows = html`
-          <li>
+          <li role="listitem" class="fd-list__item fd-list__item--link">
             <a
-              @click=${(e) => {
-                this.handleDelete(e)
-              }}
               href="#"
-              class="fd-menu__item sap-icon--delete"
+              class="fd-list__link"
+              @click="${(e) => this.handleDelete(e)}"
             >
-              Löschen selektierte Datensätze</a
+              <span class="fd-list__icon sap-icon--delete"></span>
+              <span class="fd-list__title"
+                >Löschen selektierte Datensätze</span
+              ></a
             >
           </li>
         `
@@ -591,25 +606,31 @@ export class TableHeaderMenu extends OvlBaseElement {
       if (def.features.filter) {
         if (!def.options.filter.showSelected) {
           filterSelectedRows = html`
-            <li>
+            <li role="listitem" class="fd-list__item fd-list__item--link">
               <a
                 href="#"
-                class="fd-menu__item sap-icon--filter"
+                class="fd-list__link"
                 @click="${(e) => this.handleFilterSelectedClick(e)}"
               >
-                Filter selektierte Datensätze</a
+                <span class="fd-list__icon sap-icon--filter"></span>
+                <span class="fd-list__title"
+                  >Filter selektierte Datensätze</span
+                ></a
               >
             </li>
           `
         } else {
           filterSelectedRows = html`
-            <li>
+            <li role="listitem" class="fd-list__item fd-list__item--link">
               <a
                 href="#"
-                class="fd-menu__item sap-icon--clear-filter"
+                class="fd-list__link"
                 @click="${(e) => this.handleFilterSelectedClick(e)}"
               >
-                Filter selektierte Datensätze entfernen</a
+                <span class="fd-list__icon sap-icon--clear-filter"></span>
+                <span class="fd-list__title"
+                  >Filter selektierte Datensätze entfernen</span
+                ></a
               >
             </li>
           `
@@ -627,26 +648,29 @@ export class TableHeaderMenu extends OvlBaseElement {
           if (!fnMultipleName) {
             fnMultipleName = k
           }
+          let icon = "fd-list__icon sap-icon--wrench"
+          if (customFn.icon) {
+            icon = "fd-list__icon " + customFn.icon
+          }
           return html`
-            <li>
+            <li role="listitem" class="fd-list__item fd-list__item--link">
               <a
                 href="#"
-                class="fd-menu__item ${customFn.icon}"
+                class="fd-list__link"
                 @click="${(e) =>
                   this.handleCustomSelectedClick(e, k, fnMultipleName)}"
               >
-                ${fnMultipleName}</a
+                <span class="${icon}"></span>
+                <span class="fd-list__title">${fnMultipleName}</span></a
               >
             </li>
           `
         })
 
       selectedFunctions = html`
-        <div class="fd-menu__group">
-          <h2 class="fd-menu__title">
-            Funktionen Selektierte Zeilen(${count} Datensätze)
-          </h2>
-          <ul class="fd-menu__list">
+        <div class="ovl-bigdialog-listtitle">
+          Funktionen Selektierte Zeilen(${count} Datensätze)
+          <ul class="fd-list fd-list--navigation" role="list">
             ${filterSelectedRows} ${editSelectedRows} ${copySelectedRows}
             ${deleteSelectedRows} ${customSelectedFunctions}
           </ul>
@@ -660,24 +684,32 @@ export class TableHeaderMenu extends OvlBaseElement {
       let sortingFunctions
       if (columns[def.uiState.headerSelected].sortable) {
         sortingFunctions = html`
-          <li>
+          <li
+            class="fd-list__item fd-list__item--link  ${ascendingDisabled}"
+            role="listitem"
+          >
             <a
               href="#"
-              class="fd-menu__item sap-icon--up ${ascendingDisabled}"
+              class="fd-list__link"
               @click="${(e) =>
                 this.handleSortClick(e, def.uiState.headerSelected, true)}"
             >
-              Ascending</a
+              <span class="fd-list__icon sap-icon--up"></span>
+              <span class="fd-list__title">Ascending</span></a
             >
           </li>
-          <li>
+          <li
+            class="fd-list__item fd-list__item--link  ${descendingDisabled}"
+            role="listitem"
+          >
             <a
               href="#"
-              class="fd-menu__item sap-icon--down ${descendingDisabled}"
+              class="fd-list__link"
               @click="${(e) =>
                 this.handleSortClick(e, def.uiState.headerSelected, false)}"
             >
-              Descending</a
+              <span class="fd-list__icon sap-icon--down"></span>
+              <span class="fd-list__title">Descending</span></a
             >
           </li>
         `
@@ -691,15 +723,20 @@ export class TableHeaderMenu extends OvlBaseElement {
         if (!fnName) {
           fnName = k
         }
+        let icon = "fd-list__icon sap-icon--table-column "
+        if (customFn.icon) {
+          icon = "fd-list__icon " + customFn.icon
+        }
         return html`
-          <li>
+          <li class="fd-list__item fd-list__item--link" role="listitem">
             <a
               href="#"
-              class="fd-menu__item ${customFn.icon}"
+              class="fd-list__link"
               @click="${(e) =>
                 this.handleCustomColumnFunctionClick(e, k, fnName)}"
             >
-              ${fnName}</a
+              <span class="${icon}"></span>
+              <span class="fd-list__title">${fnName}</span></a
             >
           </li>
         `
@@ -715,13 +752,11 @@ export class TableHeaderMenu extends OvlBaseElement {
           columncaption = def.uiState.headerSelected
         }
         columnFunctions = html`
-          <div class="fd-menu__group">
-            <h4 class="fd-menu__title">
-              Funktionen Spalte <b>${columncaption}</b>
-            </h4>
-            ${columnFilter}
-            <ul class="fd-menu__list">
-              ${sortingFunctions} ${customColumnFunctions}
+          <div class="ovl-bigdialog-listtitle">
+            Funktionen Spalte <b>${columncaption}</b>
+
+            <ul class="fd-list fd-list--navigation" role="list">
+              ${columnFilter} ${sortingFunctions} ${customColumnFunctions}
             </ul>
           </div>
         `
@@ -739,40 +774,35 @@ export class TableHeaderMenu extends OvlBaseElement {
 
         if (sortCustom.selected === k) {
           return html`
-            <li>
-              <div class="container" href="#">
-                <a href="#" id="sortCustomOption_${k}" class="fd-menu__item">
-                  <span class="fd-menu__addon-before sap-icon--accept"></span
-                  >${optionText}
-                </a>
-              </div>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="sortCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__icon sap-icon--accept"></span>
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         } else {
           return html`
-            <li>
-              <a href="#" id="sortCustomOption_${k}" class="fd-menu__item">
-                <span class="fd-menu__addon-before"></span>
-                ${optionText}
-              </a>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="sortCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         }
       })
 
       customSort = html`
-        <div class="fd-menu__group">
-          <h4 class="fd-menu__title">
-            Generelle Sortierung
-          </h4>
-          <nav
+        <div class="ovl-bigdialog-listtitle">
+          Generelle Sortierung
+
+          <ul
+            class="fd-list fd-list--navigation"
+            role="list"
             @click=${this.handleCustomSortClick}
-            class="fd-menu fd-menu--addon-before"
           >
-            <ul class="fd-menu__list fd-menu__list--seperated">
-              ${options}
-            </ul>
-          </nav>
+            ${options}
+          </ul>
         </div>
       `
     }
@@ -788,40 +818,35 @@ export class TableHeaderMenu extends OvlBaseElement {
 
         if (filterCustom[k].active) {
           return html`
-            <li>
-              <div class="container" href="#">
-                <a href="#" id="filterCustomOption_${k}" class="fd-menu__item">
-                  <span class="fd-menu__addon-before sap-icon--accept"></span
-                  >${optionText}
-                </a>
-              </div>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="filterCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__icon sap-icon--accept"></span>
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         } else {
           return html`
-            <li>
-              <a href="#" id="filterCustomOption_${k}" class="fd-menu__item">
-                <span class="fd-menu__addon-before"></span>
-                ${optionText}
-              </a>
+            <li class="fd-list__item fd-list__item--link" role="listitem">
+              <a id="filterCustomOption_${k}" href="#" class="fd-list__link">
+                <span class="fd-list__title">${optionText}</span></a
+              >
             </li>
           `
         }
       })
 
       customFilter = html`
-        <div class="fd-menu__group">
-          <h4 class="fd-menu__title">
-            Generelle Filter
-          </h4>
-          <nav
+        <div class="ovl-bigdialog-listtitle">
+          Generelle Filter
+
+          <ul
+            class="fd-list fd-list--navigation"
+            role="list"
             @click=${this.handleCustomFilterClick}
-            class="fd-menu fd-menu--addon-before"
           >
-            <ul class="fd-menu__list fd-menu__list--seperated">
-              ${options}
-            </ul>
-          </nav>
+            ${options}
+          </ul>
         </div>
       `
     }
@@ -834,34 +859,134 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     if (def.features.multiselect) {
       selectionFunctions = html`
-        <li>
+        <li role="listitem" class="fd-list__item fd-list__item--link">
           <a
             @click="${(e) => this.handleSelectAllClick(e, true)}"
             href="#"
-            class="fd-menu__item sap-icon--multiselect-all"
+            class="fd-list__link"
           >
-            Alle Datensätze selektieren</a
+            <span class="fd-list__icon sap-icon--multiselect"></span>
+            <span class="fd-list__title">Alle Datensätze selektieren</span></a
           >
         </li>
 
-        <li>
+        <li role="listitem" class="fd-list__item fd-list__item--link">
           <a
             @click="${(e) => this.handleSelectAllClick(e, false)}"
             href="#"
-            class="fd-menu__item sap-icon--multiselect-none ${unselectDisabled}"
+            class="fd-list__link"
           >
-            Selektion aufheben</a
+            <span class="fd-list__icon sap-icon--multiselect-none"></span>
+            <span class="fd-list__title">Selektion aufheben</span></a
           >
         </li>
       `
     }
 
-    let paging = this.headerMenu.def.def.options.paging
+    let addRow
+
+    if (def.features.add) {
+      addRow = html`
+        <li role="listitem" class="fd-list__item fd-list__item--link">
+          <a
+            @click="${(e) => this.handleAddRowClick(e)}"
+            href="#"
+            class="fd-list__link"
+          >
+            <span class="fd-list__icon sap-icon--add"></span>
+            <span class="fd-list__title">Datensatz hinzufügen</span></a
+          >
+        </li>
+      `
+    }
+
+    let refresh = null
+    if (this.headerMenu.def.def.uiState.needsRefresh === true) {
+      refresh = html`
+        <li role="listitem" class="fd-list__item fd-list__item--link">
+          <a
+            @click="${(e) => this.handleRefreshTableClick(e)}"
+            href="#"
+            class="fd-list__link"
+          >
+            <span class="fd-list__icon sap-icon--refresh"></span>
+            <span class="fd-list__title">Ansicht aktualisieren</span></a
+          >
+        </li>
+      `
+    }
+
+    let filterRows
+
+    if (def.features.filter) {
+      filterRows = html`
+        <li role="listitem" class="fd-list__item">
+          <span class="fd-list__icon sap-icon--filter"></span>
+
+          <input
+            @keydown="${this.handleFilterTextEnter}"
+            @click="${handleFilterTextClick}"
+            tabindex="0"
+            style="width: 88%;"
+            class="fd-input"
+            type="text"
+            value="${def.options.filter.value}"
+          />
+          <button
+            @click="${this.handleFilterSetClick}"
+            class="fd-button sap-icon--filter"
+          ></button>
+          <button
+            ?disabled=${!def.options.filter.value}
+            @click="${this.handleFilterUnSetClick}"
+            class="fd-button sap-icon--clear-filter"
+          ></button>
+        </li>
+      `
+    }
+
+    let tableFunctions
+    if (filterRows || selectionFunctions || addRow) {
+      tableFunctions = html`
+        <div class="ovl-bigdialog-listtitle">
+          Funktionen Tabelle (${rowsCount} Datensätze)
+
+          <ul class="fd-list fd-list--navigation" role="list">
+            ${filterRows} ${selectionFunctions} ${addRow} ${refresh}
+          </ul>
+        </div>
+      `
+    }
+
+    return html`
+      <div class="ovl-bigdialog-content ovl-tableheadermenu-content">
+        <div>
+          ${columnFunctions} ${customSort} ${customFilter} ${selectedFunctions}
+          ${tableFunctions}
+        </div>
+      </div>
+    `
+  }
+
+  visibleHandling = (dependsOn: any) => {
+    let dlgState = this.state.ovl.dialogs.TableHeaderMenu
+    if (!dlgState.visible && dependsOn) {
+      dlgState.visible = true
+    }
+    if (dlgState.visible && !dependsOn) {
+      dlgState.closing = true
+    }
+  }
+  async getFooter() {
     let navcontrol
-    if (def.features.page && dataFilteredAndSorted.length > paging.pageSize) {
+    let def = this.headerMenu.def.def
+    let paging = this.headerMenu.def.def.options.paging
+    if (
+      def.features.page &&
+      def.uiState.dataFilteredAndSorted.length > paging.pageSize
+    ) {
       navcontrol = html`
         <ovl-tnavcontrol
-          style="margin-left:24px;"
           .props=${() => {
             return {
               tableData: this.headerMenu.def,
@@ -872,134 +997,53 @@ export class TableHeaderMenu extends OvlBaseElement {
       `
     }
 
-    let addRow
-
-    if (def.features.add) {
-      addRow = html`
-        <li>
-          <a
-            @click="${(e) => this.handleAddRowClick(e)}"
-            href="#"
-            class="fd-menu__item sap-icon--add"
-          >
-            Datensatz hinzufügen</a
-          >
-        </li>
-      `
-    }
-
-    let refresh = null
-    if (this.headerMenu.def.def.uiState.needsRefresh === true) {
-      refresh = html`
-        <li>
-          <a
-            @click="${(e) => this.handleRefreshTableClick(e)}"
-            href="#"
-            class="fd-menu__item sap-icon--refresh"
-          >
-            Ansicht aktualisieren</a
-          >
-        </li>
-      `
-    }
-
-    let filterRows
-
-    if (def.features.filter) {
-      filterRows = html`
-        <li class="fd-menu__item fd-form__item sap-icon--filter">
-          Filter
-          <input
-            @keydown="${this.handleFilterTextEnter}"
-            @click="${handleFilterTextClick}"
-            tabindex="0"
-            style="width: 66%;"
-            class="fd-input"
-            type="text"
-            value="${def.options.filter.value}"
-          />
-          <button
-            @click="${this.handleFilterSetClick}"
-            class="fd-button sap-icon--filter"
-          ></button>
-        </li>
-      `
-    }
-
-    let tableFunctions
-    if (filterRows || selectionFunctions || addRow) {
-      tableFunctions = html`
-        <div class="fd-menu__group">
-          <h4 class="fd-menu__title">
-            Funktionen Tabelle (${rowsCount} Datensätze)
-          </h4>
-          <ul class="fd-menu__list">
-            ${filterRows} ${selectionFunctions} ${addRow} ${refresh}
-          </ul>
-        </div>
-      `
-    }
-    let headerMenuwidth = "width:50vw;"
-    if (this.state.ovl.uiState.isMobile) {
-      headerMenuwidth = "width:90vw;"
-    }
-
-    const handleMainMouseDown = (e: Event) => {
-      e.stopPropagation()
-    }
-
-    this.lastTemplateResult = html`
-      <div>
-        <div
-          tabindex="0"
-          id="ovl_headerMenu"
-          style="${headerMenuwidth}"
-          class="fd-panel"
-          @mousedown=${handleMainMouseDown}
-          @click="${(e) => this.handleCloseHeaderMenu(e)}"
-          aria-hidden="false"
-        >
-          <nav class="fd-menu" id="ovl_headerMenuScroll">
-            ${columnFunctions} ${customSort} ${customFilter}
-            ${selectedFunctions} ${tableFunctions}
-          </nav>
-
-          <div class="fd-panel__footer" style="margin:2px; padding:2px;">
-            <div style="margin-left: -20px;">
-              ${navcontrol}
-            </div>
-            <div style="margin-left:12px;"></div>
-            <button
-              title="Abbrechen"
-              class="fd-button--negative sap-icon--decline"
-            ></button>
-          </div>
-        </div>
-      </div>
-    `
-    return this.lastTemplateResult
+    return html` ${navcontrol}
+      <button
+        @click="${(e) => this.handleCloseHeaderMenu(e)}"
+        style="margin-left:4px;"
+        title="Abbrechen"
+        class="fd-button fd-button--negative sap-icon--decline"
+      ></button>`
   }
-  updated() {
-    //only set scrollable if bigger than windowheight
-    let target = document.getElementById("ovl_headerMenu")
-    if (target && !this.focusSet) {
-      target.focus()
-      this.focusSet = true
-    }
-    target = document.getElementById("ovl_headerMenuScroll")
-    var rect = target.getBoundingClientRect()
-    if (rect.height > window.innerHeight) {
-      target.classList.add("scrollableOverlay")
-    }
-
-    let popover = document.getElementById("ovlh0C6A325")
-    if (popover) {
-      let popoverRect = popover.getBoundingClientRect()
-      if (popoverRect.top + popoverRect.height > rect.top + rect.height) {
-        popover.style.height =
-          rect.height - popoverRect.top + rect.top - 32 + "px"
+  async getUI() {
+    return this.track(() => {
+      let dependsOn = this.headerMenu.def.def.uiState.headerSelected
+      this.visibleHandling(dependsOn)
+      if (!this.state.ovl.dialogs.TableHeaderMenu.visible) {
+        return null
       }
-    }
-    super.updated()
+      let dialogHolderParams: DialogHolderParams
+      // tracking needs to be recorded on the holder object
+      // thats why we use functions here to get the templates
+      // to make it look nicer i even used methods for the different parts
+      dialogHolderParams = {
+        dialogParts: {
+          footer: () => this.getFooter(),
+          body: () => this.getBody(),
+          emptySpaceClickHandlerFn: () => {
+            this.filterDropDownHidden = !this.filterDropDownHidden
+            //@ts-ignore
+            this.getElementsByTagName("ovl-dialogholder")[0].doRender()
+          },
+          dismissedCallbackFn: () => {
+            this.actions.ovl.internal.TableSelectHeader({
+              def: this.headerMenu.def.def,
+              data: this.headerMenu.def.data,
+              key: "",
+            })
+          },
+          customClass: () => {
+            let def = this.headerMenu.def.def
+            return `ovl-table-${def.id} ovl-tableheadermenu ovl-tableheadermenu-${def.id}`
+          },
+        },
+        zIndex: 6,
+        dialogType: "TableHeaderMenu",
+      }
+
+      return html`<ovl-dialogholder
+        .dialogHolderParams=${dialogHolderParams}
+      ></ovl-dialogholder>`
+    })
   }
 }

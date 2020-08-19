@@ -1,11 +1,11 @@
 import { FormsState } from "./library/forms/actions"
-import { DialogState } from "./library/Dialog/Dialog"
+import { ModalDialogState } from "./library/Dialog/Dialog"
 import { Translation } from "./global/globals"
 import { ScreensState } from "./library/OvlBaseElement"
 import { OverlayState } from "./library/Overlay/Overlay"
 import { SnackState } from "./library/Snack/Snack"
-
-import { screens } from "./index"
+import { OvlDialog } from "./index"
+import { DialogsState } from "./library/Dialog/OvlDialogBase"
 
 let forms: FormsState = undefined
 
@@ -16,18 +16,21 @@ let indicator = {
 
 let snacks: { [key: string]: SnackState } = {}
 
-let dialog: DialogState = undefined
+let dialog: ModalDialogState = undefined
 
-let availableLanguages: string[] = []
 let translations: Translation = {}
 let apiUrl = ""
 
-let nav: ScreensState = {
-  nextScreen: undefined,
-  currentScreen: undefined,
-  screensHistory: [],
-  formTypeToReset: undefined,
-  formIdToReset: undefined,
+let screens: ScreensState = {
+  // screens prop will be prepared from script
+  screens: undefined,
+  nav: {
+    nextScreen: undefined,
+    currentScreen: undefined,
+    screensHistory: [],
+    formTypeToReset: undefined,
+    formIdToReset: undefined,
+  },
 }
 
 let overlay: OverlayState = { open: false, closing: false }
@@ -35,42 +38,56 @@ let overlay2: OverlayState = { open: false, closing: false }
 
 type User = {
   token: string
+  role: string
+  clientId: string
+  loginCounter: number
 }
 
-let user: User = { token: "" }
+let user: User = { token: "", clientId: "", role: "", loginCounter: 0 }
 
-export const state = {
-  ovl: {
-    user,
-    language: {
-      language: "",
-      availableLanguages,
-      translations,
+let language = {
+  language: "",
+  translations,
+  showTranslationKeys: false,
+  isReady: false,
+}
 
-      showTranslationKeys: false,
-    },
-    uiState: {
-      hasOSReducedMotion: false,
-      isDemo: false,
-      isMobile: false,
-      isTouch: false,
-      isIOS: false,
-      isReady: false,
-      stateSavedReason: "",
-    },
-    apiUrl,
-    libState: {
-      dialog,
-      snacks,
-      indicator,
-      overlay,
-      overlay2,
-    },
-    screens: {
-      screens: screens,
-      nav,
-      screenState: undefined,
-    },
-    forms,
-  },
+let uiState = {
+  hasOSReducedMotion: false,
+  isDemo: false,
+  isMobile: false,
+  isTouch: false,
+  isIOS: false,
+  isReady: false,
+
+  stateSavedReason: "",
+  tableNeedsRebuild: false,
+}
+
+let libState = {
+  dialog,
+  snacks,
+  indicator,
+  overlay,
+  overlay2,
+}
+
+let app = {
+  offline: false,
+
+  discCacheVersion: Date.now(),
+}
+
+let dialogs: { [key in OvlDialog]?: DialogsState } = {}
+
+export {
+  app,
+  user,
+  language,
+  uiState,
+  apiUrl,
+  libState,
+  screens,
+  forms,
+  dialogs,
 }

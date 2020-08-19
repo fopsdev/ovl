@@ -1,14 +1,28 @@
-import { overmind } from "../index"
 import { OvlConfig } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
+import { ovl, OvlState } from ".."
+import { TemplateResult } from "lit-html"
 
-export let api = { url: "" }
+// export let api = { url: "" }
 export let translations: Translations = { t: {} }
+
+export let modalDialog: GlobalModalDialogState = { text: undefined }
 export let translationData = {}
 export const ovltemp = "_ovltmp"
+export const ovloffline = "_ovloff"
+
+type GlobalModalDialogState = {
+  text: string | TemplateResult
+}
+
+export const getLocalTimestampString = (): string => {
+  var tzoffset = new Date().getTimezoneOffset() * 60000 //offset in milliseconds
+  return new Date(Date.now() - tzoffset).toISOString().slice(0, -1)
+}
+
 //@ts-ignore
 export let OvlTimestamp = 0
 export const uuidv4 = () => {
@@ -111,7 +125,7 @@ export const GetWeekNr = (dt: Date) => {
 export const addGlobalPersistEventListeners = () => {
   // its all about saving state to restore it when needed
   // ...
-  window.addEventListener("beforeunload", (e) => beforeUnload(e))
+  //window.addEventListener("beforeunload", (e) => beforeUnload(e))
   // window.addEventListener("pagehide", e => pageHide(e))
   // window.addEventListener("unload", e => pageHide(e))
   document.addEventListener("visibilitychange", visibilityChange)
@@ -133,24 +147,25 @@ export const focusOut = async (event) => {
   }
 }
 
-export const beforeUnload = async (event) => {
-  if (
-    !OvlConfig._system.IsDev &&
-    OvlConfig._system.OfflineMode &&
-    !logoutAndClearFlag &&
-    !gotoFileFlag
-  ) {
-    event.preventDefault()
-    let dt = Date.now()
-    let st: number = OvlTimestamp
-    if (dt - st > 5000) {
-      event.returnValue = translations.t.AppQuitMessage
-    }
-    await saveState(false, "unload")
-    SnackAdd("Sie können das Fenster jetzt schliessen...", "Information", 3000)
-  }
-}
-
+// export const beforeUnload = async (event) => {
+//   if (
+//     !OvlConfig._system.IsDev &&
+//     OvlConfig._system.OfflineMode &&
+//     !logoutAndClearFlag &&
+//     !gotoFileFlag
+//   ) {
+//     event.preventDefault()
+//     let dt = Date.now()
+//     let st: number = OvlTimestamp
+//     if (dt - st > 5000) {
+//       event.returnValue = translations.t.AppQuitMessage
+//     }
+//     await saveState(false, "unload")
+//     SnackAdd("Sie können das Fenster jetzt schliessen...", "Information", 3000)
+//   }
+// }
+export const stringifyReplacer = (key, value) =>
+  typeof value === "undefined" ? null : value
 export const visibilityChange = async (event) => {
   if (OvlConfig._system.OfflineMode) {
     // console.log(document.visibilityState)
@@ -161,147 +176,171 @@ export const visibilityChange = async (event) => {
       //@ts-ignore
       document.visibilityState === "unloaded"
     ) {
-      if (overmind.state.ovl.uiState.isIOS) {
+      if (ovl.state.ovl.uiState.isIOS) {
         saveState(false, "Visibility")
       } else {
         await saveState(false, "Visibility")
       }
     }
-    if (
-      overmind.state.ovl.uiState.isIOS &&
-      document.visibilityState === "visible"
-    ) {
+    if (ovl.state.ovl.uiState.isIOS && document.visibilityState === "visible") {
       // rehydrate state here on ios. eg. switching from standalone app to a downloaded doc and back needs to rehydrate on ios (not on android,chrome)
-      await overmind.actions.ovl.internal.RehydrateAndUpdateApp()
+      await ovl.actions.ovl.internal.RehydrateApp()
     }
   }
 }
 
 //export let ovlstatetimestamp: number = 0
-let saveReason = ""
+
 export const saveState = async (force: boolean, reason: string) => {
-  if (OvlConfig._system.OfflineMode && !logoutAndClearFlag) {
-    saveReason = reason
-    if (overmind.state.ovl.screens.nav.currentScreen !== "Login") {
+  if (
+    OvlConfig._system.OfflineMode &&
+    !logoutAndClearFlag &&
+    ovl.state.ovl.uiState.isReady
+  ) {
+    console.log("save state")
+    //@ts-ignore
+
+    let diff = 0
+    let dt = Date.now()
+    if (!force) {
       let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
-      let ts
+      let ts = 0
       if (td !== undefined) {
         ts = td.getTime()
       }
-      let dt = Date.now()
-      if (force || ts === undefined || dt - ts > 5000) {
-        await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
-        OvlTimestamp = dt
-        // let refstate = overmind.state
-        let newObj = {}
-        // let dtStart = Date.now()
-        stateCleaner(overmind.state, newObj, "state")
-        // let dtEnd = Date.now()
-        // console.log("stateCleaner " + ((dtEnd - dtStart) / 1000).toString())
-        // dtStart = Date.now()
-        // let t = JSON.stringify(refstate)
-        // dtEnd = Date.now()
-        // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
-        stateStore.set(OvlConfig._system.PersistStateId, newObj)
+      diff = dt - ts
+    }
+    if (force || diff > 5000) {
+      await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
+      OvlTimestamp = dt
+      // let refstate = ovl.state
+      let newObj: OvlState = JSON.parse(
+        JSON.stringify(ovl.state),
+        stringifyReplacer
+      )
+      newObj.ovl.uiState.stateSavedReason = reason
+      // // let dtStart = Date.now()
+      // stateCleaner(ovl.state, newObj, "state")
+      // let dtEnd = Date.now()
+      // console.log("stateCleaner " + ((dtEnd - dtStart) / 1000).toString())
+      // dtStart = Date.now()
+      // let t = JSON.stringify(refstate)
+      // dtEnd = Date.now()
+      // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
+      if (OvlConfig.saveStateCallback) {
+        OvlConfig.saveStateCallback(newObj)
       }
+      return stateStore.set(OvlConfig._system.PersistStateId, newObj)
     }
   }
 }
-let logoutAndClearFlag = false
-let gotoFileFlag = false
+export let logoutAndClearFlag = false
+export let gotoFileFlag = false
 
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
-  overmind.actions.ovl.indicator.SetIndicatorOpen()
+  ovl.actions.ovl.indicator.SetIndicatorOpen()
   if (OvlConfig._system.OfflineMode) {
-    window.removeEventListener("beforeunload", (e) => beforeUnload(e))
+    //window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))
-    document.removeEventListener("visibilitychange", visibilityChange)
-    document.removeEventListener("focusout", (e) => focusOut(e))
+    // document.removeEventListener("visibilitychange", visibilityChange)
+    // document.removeEventListener("focusout", (e) => focusOut(e))
 
+    logoutAndClearFlag = true
     try {
       // 1. unregister sw
       let regs = await navigator.serviceWorker.getRegistrations()
       if (regs) {
-        await Promise.all(regs.map(async (reg) => reg.unregister()))
+        await Promise.all(regs.map(async (reg) => await reg.unregister()))
       }
       // 2. get rid of any indexeddb state
       await stateStore.clear()
-      // 3. get rid of any cached static assets
-      let cacheKeys = await caches.keys()
-      await Promise.all(cacheKeys.map((cacheName) => caches.delete(cacheName)))
-    } catch (e) {}
-  }
 
-  logoutAndClearFlag = true
+      // 3. get rid of any cached static assets
+      // this is no more necessary since serviceworker iutsel deletes the cache
+      let cacheKeys = await caches.keys()
+      await Promise.all(
+        cacheKeys.map(async (cacheName) => await caches.delete(cacheName))
+      )
+    } catch (e) {}
+    ovl.state.ovl.user.token = ""
+  }
   //@ts-ignore
+  //setTimeout(() => {
   window.location.reload()
+  //}, 5000)
+
+  //window.location.reload(true)
 }
 
-export const stateCleaner = (
-  state: typeof overmind.state,
-  newObj,
-  parentKey: string
-) => {
-  let cb
-  let hasCb = false
-  if (OvlConfig.saveStateCallback) {
-    cb = OvlConfig.saveStateCallback
-    hasCb = true
+// export const stateCleaner = (state: OvlState, newObj, parentKey: string) => {
+//   let cb
+//   let hasCb = false
+//   if (OvlConfig.saveStateCallback) {
+//     cb = OvlConfig.saveStateCallback
+//     hasCb = true
+//   }
+
+//   Object.keys(state).forEach((key) => {
+//     // Get this value and its type
+//     let value = state[key]
+//     let valuetype = typeof value
+//     if (value !== undefined) {
+//       //<IGNORES>
+//       // we don't want huge audit data in local storage (but we want the def)
+//       if (key === "audit" && value.data) {
+//         newObj[key] = {
+//           data: {},
+//           schema: {},
+//           // do stringify here because it also strips out symbols..
+//           tableDef: JSON.parse(JSON.stringify(value.tableDef)),
+//         }
+//         return
+//       } else if (parentKey === "uiState" && key === "isReady") {
+//         newObj[key] = false
+//         return
+//       } else if (parentKey === "uiState" && key === "headerSelected") {
+//         newObj[key] = ""
+//         return
+//       } else if (parentKey === "uiState" && key === "stateSavedReason") {
+//         newObj[key] = saveReason
+//         return
+//       } else if (hasCb === true) {
+//         cb(parentKey, key, newObj)
+//         return
+//       }
+//     }
+//     // we don't want symbols (causes troubles anyway with indexeddb serializer in some cases)
+//     if (valuetype === "symbol") {
+//       return
+//     }
+//     //</IGNORES>
+
+//     if (valuetype === "object") {
+//       if (value !== null) {
+//         let no
+//         if (Array.isArray(value)) {
+//           no = newObj[key] = []
+//         } else {
+//           no = newObj[key] = {}
+//         }
+//         stateCleaner(value, no, key)
+//       } else {
+//         newObj[key] = null
+//       }
+//     } else {
+//       newObj[key] = value
+//     }
+//   })
+// }
+
+export const SetFocus = (el: any) => {
+  el.focus()
+  if (el.value && el.setSelectionRange) {
+    let val = el.value
+    el.setSelectionRange(val.length, val.length)
   }
-
-  Object.keys(state).forEach((key) => {
-    // Get this value and its type
-    let value = state[key]
-    let valuetype = typeof value
-    if (value !== undefined) {
-      //<IGNORES>
-      // we don't want huge audit data in local storage (but we want the def)
-      if (key === "audit" && value.data) {
-        newObj[key] = {
-          data: {},
-          schema: {},
-          // do stringify here because it also strips out symbols..
-          tableDef: JSON.parse(JSON.stringify(value.tableDef)),
-        }
-        return
-      } else if (parentKey === "uiState" && key === "isReady") {
-        newObj[key] = false
-        return
-      } else if (parentKey === "uiState" && key === "headerSelected") {
-        newObj[key] = ""
-        return
-      } else if (parentKey === "uiState" && key === "stateSavedReason") {
-        newObj[key] = saveReason
-        return
-      } else if (hasCb === true) {
-        cb(parentKey, key, newObj)
-        return
-      }
-    }
-    // we don't want symbols (causes troubles anyway with indexeddb serializer in some cases)
-    if (valuetype === "symbol") {
-      return
-    }
-    //</IGNORES>
-
-    if (valuetype === "object") {
-      if (value !== null) {
-        let no
-        if (Array.isArray(value)) {
-          no = newObj[key] = []
-        } else {
-          no = newObj[key] = {}
-        }
-        stateCleaner(value, no, key)
-      } else {
-        newObj[key] = null
-      }
-    } else {
-      newObj[key] = value
-    }
-  })
 }
 
 export const ShowFile = (blob, type, fileName) => {
@@ -316,7 +355,7 @@ export const ShowFile = (blob, type, fileName) => {
 
   anchor.textContent = "dummy"
   anchor.style.display = "none"
-  if (!overmind.state.ovl.uiState.isIOS) {
+  if (!ovl.state.ovl.uiState.isIOS) {
     anchor.download = fileName
     anchor.target = "_blank"
   }
@@ -325,7 +364,7 @@ export const ShowFile = (blob, type, fileName) => {
   anchor.click()
   gotoFileFlag = false
 
-  if (!overmind.state.ovl.uiState.isIOS) {
+  if (!ovl.state.ovl.uiState.isIOS) {
     SnackAdd("File has been downloaded", "Success")
   }
 }
@@ -337,10 +376,10 @@ export const ResetT = () => {
 export const T = (key: string, reps?: string[]): string => {
   // check for mobile key and use translation for mobile users to get shorter translations if applicable (key_M)
   //@ts-ignore
-  let uiState = overmind.state.ovl.uiState
+  let uiState = ovl.state.ovl.uiState
   if (uiState.isMobile) {
     let mobileKey = key + "_M"
-    if (overmind.state.ovl.language.translations[mobileKey]) {
+    if (ovl.state.ovl.language.translations[mobileKey]) {
       key = mobileKey
     }
   }
@@ -352,7 +391,7 @@ export const T = (key: string, reps?: string[]): string => {
   if (cacheRes !== undefined) {
     return cacheRes
   }
-  let str = overmind.state.ovl.language.translations[key]
+  let str = ovl.state.ovl.language.translations[key]
   if (str === undefined || str === null) {
     // if (uiState.isReady) {
     //   console.warn("Ovl Translations: key " + key + " not found")

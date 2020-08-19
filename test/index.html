@@ -8,7 +8,7 @@
     <script>
       //detect ie11 and redirect to browser update
       // ######## manage global config stuff here ###################################################################################################
-      window.OvlVersion = "1.00.032204"
+
       // gives a nice dev experience with offlinemode. but take care to check "update on reload" and "bypass network" in the devtools and leave them open
       window.OvlIsDev = false
       // configure offline-mode
@@ -23,27 +23,25 @@
       if (window.OvlOfflineMode && "serviceWorker" in navigator) {
         // Use the window load event to keep the page load performant
         window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("./service-worker.js")
-            .then((registration) => {
-              // A wild service worker has appeared in reg.installing and maybe in waiting!
-              const newWorker = registration.installing
-              const waitingWorker = registration.waiting
+          navigator.serviceWorker.register("./sw.js").then((registration) => {
+            // A wild service worker has appeared in reg.installing and maybe in waiting!
+            const newWorker = registration.installing
+            const waitingWorker = registration.waiting
 
-              if (newWorker) {
+            if (newWorker) {
+              if (newWorker.state === "activated" && !waitingWorker) {
+                // reload to avoid skipWaiting and clients.claim()
+                window.location.reload()
+              }
+              newWorker.addEventListener("statechange", (e) => {
+                // newWorker.state has changed
                 if (newWorker.state === "activated" && !waitingWorker) {
                   // reload to avoid skipWaiting and clients.claim()
                   window.location.reload()
                 }
-                newWorker.addEventListener("statechange", (e) => {
-                  // newWorker.state has changed
-                  if (newWorker.state === "activated" && !waitingWorker) {
-                    // reload to avoid skipWaiting and clients.claim()
-                    window.location.reload()
-                  }
-                })
-              }
-            })
+              })
+            }
+          })
         })
       }
     </script>

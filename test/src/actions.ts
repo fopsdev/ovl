@@ -46,16 +46,12 @@ let order = {
   SelectOrder,
 }
 
-import * as feedback from "./screens/Feedback/actions"
+import { SaveFeedback } from "./screens/Feedback/actions"
 
 import * as mobiletimerecording from "./screens/MobileTimeRecording/actions"
 
-export const portal = {
-  system: { shellbar, user },
-  global,
-  settings,
-  order,
-  feedback,
-}
+let system = { shellbar, user }
+let testtables = { mobiletimerecording }
+let feedback = { SaveFeedback }
 
-export const testtables = { mobiletimerecording }
+export { system, global, settings, order, feedback, testtables }

@@ -2,6 +2,7 @@
 
 Ovl is a strongly opinionated way of developing pwa web apps.
 It's main goals are:
+
 - small footprint
 - use modern browser features and therefore keep the dependencies low.
 - offline mode (state only contains serializable objects)
@@ -32,6 +33,11 @@ All the screen state is placed into ovl namespace to make transitions easier.
 
 ### Tables
 
+## Use ovl from your project
+
+Make sure that inside `index.ts` you replace the ../test/ - folder with your real projects folder
+**Don't change import/export statement order inside index.ts**
+
 ## Structuring your app
 
 create a git repositiory for the new project like:
@@ -44,4 +50,3 @@ then put a .gitignore to
 myproject/.gitignore which ignores the ovl folder (its handled separately)
 then do a npm install inside the myproject/ovl/ovl - folder
 then adjust the myproject/ovl/ovl/src/index.ts to point back to the screens and so on from myproject
-

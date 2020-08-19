@@ -10,9 +10,64 @@ import {
   tblTableTesting3,
 } from "./shared/TableTesting/state"
 
+import { SettingsFormState } from "./screens/Settings/SettingsForm"
+import { OrderOverviewState } from "./screens/Order/OrderOverview"
+import { QuotationOverviewState } from "./screens/Quotation/QuotationOverview"
+import { InvoiceOverviewState } from "./screens/Invoice/InvoiceOverview"
+
+import { OrderDetailFormState } from "./screens/Order/OrderDetailLayout"
+import { FeedbackFormState } from "./screens/Feedback/FeedbackForm"
+import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/MobileTimeRecordingForm"
+import { DashboardState } from "./screens/Dashboard/Dashboard"
+import { ShellbarState } from "./screens/Shellbar/Shellbar"
+
+let shellbar: ShellbarState = {
+  mainMenuExpanded: false,
+  userMenuExpanded: false,
+}
+
+let audit = {}
+
+let settings: SettingsFormState = {}
+
+let feedback: FeedbackFormState = {
+  cardCode: undefined,
+  dirty: undefined,
+  message: undefined,
+  orderDate: undefined,
+  orderDeliveryDate: undefined,
+  orderNum: undefined,
+  refNum: undefined,
+  title: undefined,
+  type: undefined,
+}
+
+let dashboard: DashboardState = {}
+
+let orderOverview: OrderOverviewState = {
+  activeFilePopup: "",
+}
+
+let quotationOverview: QuotationOverviewState = {
+  activeFilePopup: "",
+}
+
+let invoiceOverview: InvoiceOverviewState = {
+  activeFilePopup: "",
+}
+
+let orderDetailFormState: OrderDetailFormState = {
+  selectedOrder: "",
+}
+
+let mobileTimeEntryFormState: MobileTimeEntryFormState = { rowKey: undefined }
+let mobileTimeEntry = { selectedDate: "" }
+
 export type FileList = {
   files: File[]
 }
+
+export type Language = "DE" | "FR"
 
 export type DoubleBarChartState = {
   labels_ext: number[]
@@ -120,13 +175,8 @@ export type PartnerState = {
   }
 }
 
-let pics: PicsState = {
-  salesContact: "",
-  technicalContact: "",
-}
-
 type Role = "User" | "Admin"
-type Language = "DE" | "FR"
+
 export type Feature = {
   nrOfQuotations: number
   nrOfOrders: number
@@ -141,18 +191,6 @@ type User = {
   role: Role
   features: Feature
   userCode: number
-}
-
-type Portal = {
-  user: User
-  orderDetail: OrderDetailState
-  quotationDetail: QuotationDetailState
-  invoiceDetail: InvoiceDetailState
-  dpInvoiceDetail: DPInvoiceDetailState
-  chartData: DoubleBarChartState
-  partner: PartnerState
-  pics: PicsState
-  tables: { translation: TableData; audit: TableData }
 }
 
 export type CustomFormType =
@@ -171,72 +209,109 @@ export type TableDefIds =
   | "tab3"
   | "mobiletimerecording1"
 
-export let portal: Portal = {
-  user: undefined,
-  orderDetail: undefined,
-  chartData: undefined,
-  dpInvoiceDetail: undefined,
-  invoiceDetail: undefined,
-  partner: undefined,
-  pics: undefined,
-  quotationDetail: undefined,
-  tables: {
-    translation: {
-      data: {},
-      schema: {},
-      tableDef: {
-        translation: tblTranslation,
-      },
+let tableTesting: TableData = {
+  data: {},
+  schema: {},
+  tableDef: {
+    tab1: tblTableTesting,
+    tab2: tblTableTesting2,
+    tab3: tblTableTesting3,
+  },
+  lookupDef: <{ [key: string]: LookupDef }>{
+    Code: { type: "text" },
+    U_Alpha: { type: "text" },
+  },
+  lookupDef2: <{ [key: string]: LookupDef }>{
+    U_Alpha: { type: "text" },
+    U_Date: { type: "date" },
+  },
+}
+
+let timeentries: TableData = {
+  data: {},
+  schema: {},
+  tableDef: {
+    mobiletimerecording1: tblMobileTimeRecording,
+  },
+}
+
+let lookups = {
+  U_ItemCode: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+
+  U_ItmsGrpCod: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+  ProjectTypeId: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+  AbsenceTypeId: <ListFnReturnValue>{
+    data: undefined,
+    lookupDef: undefined,
+  },
+}
+
+let testtables = { tableTesting, timeentries, lookups }
+
+let user: User
+let chartData
+let dpInvoiceDetail: DPInvoiceDetailState
+let invoiceDetail: InvoiceDetailState
+let orderDetail: OrderDetailState
+let partner: PartnerState
+let pics: PicsState = {
+  salesContact: "",
+  technicalContact: "",
+}
+let quotationDetail: QuotationDetailState
+let tables = {
+  translation: {
+    data: {},
+    schema: {},
+    tableDef: {
+      translation: tblTranslation,
     },
-    audit: {
-      data: {},
-      schema: {},
-      tableDef: {
-        audit: tblAudit,
-      },
+  },
+  audit: {
+    data: {},
+    schema: {},
+    tableDef: {
+      audit: tblAudit,
     },
   },
 }
 
-export let testtables = {
-  tableTesting: <TableData>{
-    data: {},
-    schema: {},
-    tableDef: {
-      tab1: tblTableTesting,
-      tab2: tblTableTesting2,
-      tab3: tblTableTesting3,
-    },
-    lookupDef: <{ [key: string]: LookupDef }>{ U_Alpha: { type: "text" } },
-    lookupDef2: <{ [key: string]: LookupDef }>{
-      U_Alpha: { type: "text" },
-      U_Date: { type: "date" },
-    },
-  },
-  timeentries: <TableData>{
-    data: {},
-    schema: {},
-    tableDef: {
-      mobiletimerecording1: tblMobileTimeRecording,
-    },
-  },
-  lookups: {
-    U_ItemCode: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
+let screens = {
+  /* base screens */
+  shellbar: shellbar,
+  audit: {},
+  translation: {},
+  settings: settings,
+  dashboard: dashboard,
+  quotation: quotationOverview,
+  order: orderOverview,
+  orderdetail: orderDetailFormState,
+  invoice: invoiceOverview,
+  feedback: feedback,
+  tableTesting: {},
+  mobileTimeEntry: mobileTimeEntry,
+  mobileTimeEntryForm: mobileTimeEntryFormState,
+}
 
-    U_ItmsGrpCod: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
-    ProjectTypeId: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
-    AbsenceTypeId: <ListFnReturnValue>{
-      data: undefined,
-      lookupDef: undefined,
-    },
-  },
+export {
+  screens,
+  user,
+  orderDetail,
+  chartData,
+  dpInvoiceDetail,
+  invoiceDetail,
+  partner,
+  pics,
+  quotationDetail,
+  tables,
+  testtables,
 }

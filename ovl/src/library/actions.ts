@@ -1,6 +1,6 @@
-import { Action, AsyncAction } from "overmind"
-import { ResultType, DialogState } from "./Dialog/Dialog"
+import { ResultType, ModalDialogState } from "./Dialog/Dialog"
 import {
+  TableSetViewTab,
   TableRefresh,
   TableRebuild,
   TableSelectRow,
@@ -31,9 +31,14 @@ import {
   TableRefreshDataFromServer,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableOfflineRetryDeleteRow,
+  TableOfflineRetrySaveRow,
+  TableOfflineHandler,
 } from "./Table/actions"
-import { dialogAfterClose } from "./Dialog/actions"
+//import { dialogAfterClose } from "./Dialog/actions"
+import { OvlAction } from ".."
 export {
+  TableSetViewTab,
   TableRefresh,
   TableRebuild,
   TableSelectRow,
@@ -64,49 +69,32 @@ export {
   TableSelectCustomSort,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableOfflineRetrySaveRow,
+  TableOfflineRetryDeleteRow,
+  TableOfflineHandler,
 }
 
 export type DialogChangedParam = {
-  dialogState: DialogState
+  dialogState: ModalDialogState
   result: ResultType
 }
 
-export const DialogChanged: Action<DialogChangedParam> = (
-  { state, actions },
-  value
+export const DialogChanged: OvlAction<DialogChangedParam> = (
+  value,
+  { state, actions }
 ) => {
+  state.ovl.dialogs.Modal.closing = true
   value.dialogState.result = value.result
-  if (!state.ovl.uiState.hasOSReducedMotion) {
-    state.ovl.libState.dialog.closing = true
-  } else {
-    actions.ovl.internal.DialogClosed()
-  }
   if (dialogResolver) {
     dialogResolver(value.result)
   }
 }
 
-export const DialogDefaultChanged: Action<{ default: ResultType }> = (
-  { state },
-  value
+export const DialogDefaultChanged: OvlAction<{ default: ResultType }> = (
+  value,
+  { state }
 ) => {
   state.ovl.libState.dialog.default = value.default
-}
-
-export const DialogClosed: AsyncAction = async ({ state }) => {
-  state.ovl.libState.dialog.closing = false
-  state.ovl.libState.dialog.visible = false
-  state.ovl.libState.dialog.cancelText = "rerender force workaround"
-
-  if (
-    dialogAfterClose.elementToFocus &&
-    state.ovl.screens.screenState[dialogAfterClose.currentScreen].visible &&
-    !state.ovl.screens.screenState[dialogAfterClose.currentScreen].closing
-  ) {
-    //@ts-ignore
-    dialogAfterClose.elementToFocus.focus()
-  }
-  dialogAfterClose.elementToFocus = undefined
 }
 
 let dialogResolver: (value?: any) => void
@@ -116,12 +104,12 @@ export const DialogResult = () => {
   })
 }
 
-export const SetIndicatorOpen: Action = ({ state }) => {
+export const SetIndicatorOpen: OvlAction = (_, { state }) => {
   state.ovl.libState.indicator.refCounter++
   state.ovl.libState.indicator.open = true
 }
 
-export const SetIndicatorClose: Action = ({ state }) => {
+export const SetIndicatorClose: OvlAction = (_, { state }) => {
   state.ovl.libState.indicator.refCounter--
   if (state.ovl.libState.indicator.refCounter < 1) {
     state.ovl.libState.indicator.open = false

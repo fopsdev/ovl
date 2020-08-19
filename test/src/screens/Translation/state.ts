@@ -15,14 +15,16 @@ export type TblTranslation = {
 
 export let tblTranslation: TableDef = {
   id: "translation",
-  namespace: "portal.system.translations",
+  namespace: "system.translations",
   database: {
     dataIdField: "Code",
-    dbInsertMode: "UDTAutoGUID",
+    dbInsertMode: "UDTAutoGUIDBoth",
   },
   server: {
     endpoint: "translation",
   },
+  features: { focusToFirstEditableField: true },
+
   columns: {
     U_Group: {
       ui: { labelTranslationKey: "AppColTranslationGroup" },

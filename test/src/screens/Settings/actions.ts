@@ -1,4 +1,3 @@
-import { Action, AsyncAction } from "../../../../ovl/node_modules/overmind"
 import {
   ValidateFieldType,
   FormState,
@@ -11,16 +10,17 @@ import {
 import { T, api } from "../../../../ovl/src/global/globals"
 import { postRequest } from "../../../../ovl/src/effects"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
+import { OvlAction } from "../../../../ovl/src"
 
-export const SaveSettings: AsyncAction<FormState> = async (
-  { state, actions, effects },
-  value
+export const SaveSettings: OvlAction<FormState> = async (
+  value,
+  { state, actions }
 ) => {
   actions.ovl.form.ValidateForm(value)
   if (value.valid) {
     let pw = value.fields["pw"].value
     let pw1 = value.fields["pw1"].value
-    let res = await postRequest(api.url + "users/changepw", {
+    let res = await postRequest(state.ovl.apiUrl + "users/changepw", {
       password: pw,
       passwordNew: pw1,
       language: state.ovl.language.language,

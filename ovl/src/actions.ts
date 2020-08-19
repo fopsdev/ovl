@@ -1,16 +1,4 @@
 import {
-  CloseOverlay,
-  OpenOverlay,
-  StartCloseOverlay,
-} from "./library/Overlay/actions"
-
-import {
-  CloseOverlay2,
-  OpenOverlay2,
-  StartCloseOverlay2,
-} from "./library/Overlay2/actions"
-
-import {
   InitForm,
   ChangeField,
   SetField,
@@ -31,11 +19,13 @@ import {
   NavigateTo,
   Logout,
   InitApp,
-  RehydrateAndUpdateApp,
+  RehydrateApp,
   GetFile,
-  PrepareApp,
+  AfterRehydrateApp,
   SetLanguage,
   SetVisibleFalse,
+  SetTableNeedsRebuild,
+  SetLastScrollPosition,
 } from "./global/actions"
 
 import {
@@ -45,9 +35,17 @@ import {
   ClearSnack,
 } from "./library/Snack/actions"
 
-import { DialogOpen, OkDialog, OkCancelDialog } from "./library/Dialog/actions"
+import {
+  ModalDialogOpen,
+  OkDialog,
+  OkCancelDialog,
+  DialogOpen,
+  DialogClose,
+} from "./library/Dialog/actions"
 let dialog = {
   DialogOpen,
+  DialogClose,
+  ModalDialogOpen,
   OkDialog,
   OkCancelDialog,
 }
@@ -61,7 +59,7 @@ let form = {
 
 import {
   DialogChanged,
-  DialogClosed,
+  //DialogClosed,
   DialogDefaultChanged,
   SetIndicatorClose,
   SetIndicatorOpen,
@@ -95,16 +93,13 @@ import {
   TableSelectCustomSort,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableSetViewTab,
+  TableOfflineRetryDeleteRow,
+  TableOfflineRetrySaveRow,
+  TableOfflineHandler,
 } from "./library/actions"
 
 let navigation = { NavigateBack, NavigateTo }
-
-let overlay = {
-  OpenOverlay,
-  OpenOverlay2,
-  CloseOverlay: StartCloseOverlay,
-  CloseOverlay2: StartCloseOverlay2,
-}
 
 let indicator = { SetIndicatorOpen, SetIndicatorClose }
 
@@ -122,19 +117,18 @@ let table = {
   TableClearFilter,
   TableAddRow,
   TableDirectSaveRow,
+  TableSetViewTab,
 }
 
 let internal = {
-  CloseOverlay,
-
-  CloseOverlay2,
-
+  SetTableNeedsRebuild,
+  SetLastScrollPosition,
   PlaceSnack,
   ClearSnack,
   AddSnack,
   RemoveSnack,
   DialogChanged,
-  DialogClosed,
+  //DialogClosed,
   DialogDefaultChanged,
   TableSelectHeader,
   TableFilterSelected,
@@ -157,10 +151,13 @@ let internal = {
   TableSelectCustomSort,
   TableSelectCustomFilter,
   TableSelectColumnFilter,
+  TableOfflineRetryDeleteRow,
+  TableOfflineRetrySaveRow,
+  TableOfflineHandler,
   InitApp,
-  RehydrateAndUpdateApp,
+  RehydrateApp,
   GetFile,
-  PrepareApp,
+  AfterRehydrateApp,
   SetLanguage,
   SetVisibleFalse,
   ChangeField,
@@ -176,13 +173,4 @@ let internal = {
 
 let user = { Logout }
 
-export let ovl = {
-  indicator,
-  navigation,
-  overlay,
-  internal,
-  dialog,
-  form,
-  table,
-  user,
-}
+export { indicator, navigation, internal, dialog, form, table, user }

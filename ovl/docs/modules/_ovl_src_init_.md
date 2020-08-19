@@ -6,320 +6,320 @@
 
 ### Type aliases
 
-* [Init](_ovl_src_init_.md#init)
-* [OvlConfig](_ovl_src_init_.md#ovlconfig)
+- [Init](_ovl_src_init_.md#init)
+- [OvlConfig](_ovl_src_init_.md#ovlconfig)
 
 ### Variables
 
-* [dataVersion](_ovl_src_init_.md#let-dataversion)
+- [dataVersion](_ovl_src_init_.md#let-dataversion)
 
 ### Object literals
 
-* [OvlConfig](_ovl_src_init_.md#let-ovlconfig)
-* [baseOvermindConfig](_ovl_src_init_.md#const-baseovermindconfig)
+- [OvlConfig](_ovl_src_init_.md#let-ovlconfig)
+- [baseOvermindConfig](_ovl_src_init_.md#const-baseovermindconfig)
 
 ## Type aliases
 
-###  Init
+### Init
 
-Ƭ **Init**: *object*
+Ƭ **Init**: _object_
 
-*Defined in [ovl/src/init.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L4)*
-
-#### Type declaration:
-
-* **customerRealUrl**: *string*
-
-* **customerRealUrlMatch**: *string*
-
-* **customerTestUrl**: *string*
-
-* **customerTestUrlMatch**: *string*
-
-* **devServer**: *string*
-
-* **itfliesServerUrl**: *string*
-
-* **itfliesServerUrlMatch**: *string*
-
-___
-
-###  OvlConfig
-
-Ƭ **OvlConfig**: *object*
-
-*Defined in [ovl/src/init.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L14)*
+_Defined in [ovl/src/init.ts:4](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L4)_
 
 #### Type declaration:
 
-* **_system**(): *object*
+- **customerRealUrl**: _string_
 
-  * **DataVersion**: *string*
+- **customerRealUrlMatch**: _string_
 
-  * **IsDev**: *boolean*
+- **customerTestUrl**: _string_
 
-  * **OfflineMode**: *boolean*
+- **customerTestUrlMatch**: _string_
 
-  * **PersistStateId**: *string*
+- **devServer**: _string_
 
-  * **PersistTimestampId**: *string*
+- **itfliesServerUrl**: _string_
 
-  * **ShowSaveOrigin**: *boolean*
+- **itfliesServerUrlMatch**: _string_
 
-  * **Version**: *string*
+---
 
-* **apiUrl**: *[Init](_ovl_src_init_.md#init)*
+### OvlConfig
 
-* **requiredActions**(): *object*
+Ƭ **OvlConfig**: _object_
 
-  * **customInitActionPath**: *AsyncAction*
+_Defined in [ovl/src/init.ts:14](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L14)_
 
-  * **customPrepareActionPath**: *AsyncAction*
+#### Type declaration:
 
-  * **handleAdditionalTranslationResultActionPath**: *AsyncAction*
+- **\_system**(): _object_
 
-  * **handleGlobalRefreshActionPath**: *AsyncAction*
+  - **DataVersion**: _string_
 
-* **saveStateCallback**(): *function*
+  - **IsDev**: _boolean_
 
-  * (`parentKey`: string, `key`: string, `obj`: any): *object*
+  - **OfflineMode**: _boolean_
+
+  - **PersistStateId**: _string_
+
+  - **PersistTimestampId**: _string_
+
+  - **ShowSaveOrigin**: _boolean_
+
+  - **Version**: _string_
+
+- **apiUrl**: _[Init](_ovl_src_init_.md#init)_
+
+- **requiredActions**(): _object_
+
+  - **customInitActionPath**: _OvlAction_
+
+  - **customPrepareActionPath**: _OvlAction_
+
+  - **handleAdditionalTranslationResultActionPath**: _OvlAction_
+
+  - **handleGlobalRefreshActionPath**: _OvlAction_
+
+- **saveStateCallback**(): _function_
+
+  - (`parentKey`: string, `key`: string, `obj`: any): _object_
 
 ## Variables
 
 ### `Let` dataVersion
 
-• **dataVersion**: *string* = "1"
+• **dataVersion**: _string_ = "1"
 
-*Defined in [ovl/src/init.ts:53](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L53)*
+_Defined in [ovl/src/init.ts:53](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L53)_
 
 ## Object literals
 
 ### `Let` OvlConfig
 
-### ▪ **OvlConfig**: *object*
+### ▪ **OvlConfig**: _object_
 
-*Defined in [ovl/src/init.ts:54](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L54)*
+_Defined in [ovl/src/init.ts:54](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L54)_
 
-###  apiUrl
+### apiUrl
 
-• **apiUrl**: *undefined* = undefined
+• **apiUrl**: _undefined_ = undefined
 
-*Defined in [ovl/src/init.ts:64](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L64)*
+_Defined in [ovl/src/init.ts:64](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L64)_
 
-###  requiredActions
+### requiredActions
 
-• **requiredActions**: *undefined* = undefined
+• **requiredActions**: _undefined_ = undefined
 
-*Defined in [ovl/src/init.ts:65](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L65)*
+_Defined in [ovl/src/init.ts:65](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L65)_
 
-###  saveStateCallback
+### saveStateCallback
 
-• **saveStateCallback**: *undefined* = undefined
+• **saveStateCallback**: _undefined_ = undefined
 
-*Defined in [ovl/src/init.ts:66](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L66)*
+_Defined in [ovl/src/init.ts:66](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L66)_
 
-▪ **_system**: *object*
+▪ **\_system**: _object_
 
-*Defined in [ovl/src/init.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L55)*
+_Defined in [ovl/src/init.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L55)_
 
-* **DataVersion**: *string* = dataVersion
+- **DataVersion**: _string_ = dataVersion
 
-* **IsDev**: *false* = false
+- **IsDev**: _false_ = false
 
-* **OfflineMode**: *false* = false
+- **OfflineMode**: _false_ = false
 
-* **PersistStateId**: *string* = "ovlstate" + dataVersion
+- **PersistStateId**: _string_ = "ovlstate" + dataVersion
 
-* **PersistTimestampId**: *string* = "ovltimestamp" + dataVersion
+- **PersistTimestampId**: _string_ = "ovltimestamp" + dataVersion
 
-* **ShowSaveOrigin**: *true* = true
+- **ShowSaveOrigin**: _true_ = true
 
-* **Version**: *string* = "0.5"
+- **Version**: _string_ = "0.5"
 
-___
+---
 
 ### `Const` baseOvermindConfig
 
-### ▪ **baseOvermindConfig**: *object*
+### ▪ **baseOvermindConfig**: _object_
 
-*Defined in [ovl/src/init.ts:46](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L46)*
+_Defined in [ovl/src/init.ts:46](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L46)_
 
-###  actions
+### actions
 
-• **actions**: *["ovl/src/actions"](_ovl_src_actions_.md)*
+• **actions**: _["ovl/src/actions"](_ovl_src_actions_.md)_
 
-*Defined in [ovl/src/init.ts:49](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L49)*
+_Defined in [ovl/src/init.ts:49](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L49)_
 
-###  effects
+### effects
 
-• **effects**: *["ovl/src/effects"](_ovl_src_effects_.md)*
+• **effects**: _["ovl/src/effects"](_ovl_src_effects_.md)_
 
-*Defined in [ovl/src/init.ts:50](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L50)*
+_Defined in [ovl/src/init.ts:50](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L50)_
 
-###  onInitialize
+### onInitialize
 
-• **onInitialize**: *OnInitialize‹›*
+• **onInitialize**: _OnInitialize‹›_
 
-*Defined in [ovl/src/init.ts:47](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L47)*
+_Defined in [ovl/src/init.ts:47](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L47)_
 
-###  state
+### state
 
-• **state**: *object*
+• **state**: _object_
 
-*Defined in [ovl/src/init.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L48)*
+_Defined in [ovl/src/init.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/init.ts#L48)_
 
 #### Type declaration:
 
-* ### **ovl**: *object*
+- ### **ovl**: _object_
 
-  * **apiUrl**: *string*
+  - **apiUrl**: _string_
 
-  * **forms**(): *object*
+  - **forms**(): _object_
 
-  * **user**(): *object*
+  - **user**(): _object_
 
-    * **token**: *string*
+    - **token**: _string_
 
-  * **language**: *object*
+  - **language**: _object_
 
-    * **availableLanguages**: *string[]*
+    - **availableLanguages**: _string[]_
 
-    * **language**: *string* = ""
+    - **language**: _string_ = ""
 
-    * **showTranslationKeys**: *boolean* = false
+    - **showTranslationKeys**: _boolean_ = false
 
-    * **translations**(): *object*
+    - **translations**(): _object_
 
-  * **libState**: *object*
+  - **libState**: _object_
 
-    * **dialog**(): *object*
+    - **dialog**(): _object_
 
-      * **cancelText**: *string*
+      - **cancelText**: _string_
 
-      * **closing**: *boolean*
+      - **closing**: _boolean_
 
-      * **default**: *[ResultType](_ovl_src_library_dialog_dialog_.md#resulttype)*
+      - **default**: _[ResultType](_ovl_src_library_dialog_dialog_.md#resulttype)_
 
-      * **okText**: *string*
+      - **okText**: _string_
 
-      * **result**: *[ResultType](_ovl_src_library_dialog_dialog_.md#resulttype)*
+      - **result**: _[ResultType](_ovl_src_library_dialog_dialog_.md#resulttype)_
 
-      * **text**: *string*
+      - **text**: _string_
 
-      * **visible**: *boolean*
+      - **visible**: _boolean_
 
-    * **indicator**(): *object*
+    - **indicator**(): _object_
 
-      * **open**: *boolean* = true
+      - **open**: _boolean_ = true
 
-      * **refCounter**: *number* = 1
+      - **refCounter**: _number_ = 1
 
-    * **overlay**(): *object*
+    - **overlay**(): _object_
 
-      * **closing**: *boolean*
+      - **closing**: _boolean_
 
-      * **open**: *boolean*
+      - **open**: _boolean_
 
-    * **overlay2**(): *object*
+    - **overlay2**(): _object_
 
-      * **closing**: *boolean*
+      - **closing**: _boolean_
 
-      * **open**: *boolean*
+      - **open**: _boolean_
 
-    * **snacks**(): *object*
+    - **snacks**(): _object_
 
-  * **screens**: *object*
+  - **screens**: _object_
 
-    * **nav**(): *object*
+    - **nav**(): _object_
 
-      * **currentScreen**: *[Screen](_test_src_statescreens_.md#screen)*
+      - **currentScreen**: _[Screen](_test_src_statescreens_.md#screen)_
 
-      * **formIdToReset**: *string*
+      - **formIdToReset**: _string_
 
-      * **formTypeToReset**: *[FormType](_ovl_src_library_forms_actions_.md#formtype)*
+      - **formTypeToReset**: _[FormType](_ovl_src_library_forms_actions_.md#formtype)_
 
-      * **nextScreen**: *[Screen](_test_src_statescreens_.md#screen)*
+      - **nextScreen**: _[Screen](_test_src_statescreens_.md#screen)_
 
-      * **screensHistory**: *[ScreensHistory](_ovl_src_library_ovlbaseelement_.md#screenshistory)*
+      - **screensHistory**: _[ScreensHistory](_ovl_src_library_ovlbaseelement_.md#screenshistory)_
 
-    * **screenState**: *undefined* = undefined
+    - **screenState**: _undefined_ = undefined
 
-    * **screens**(): *object*
+    - **screens**(): _object_
 
-      * **Audit**(): *object*
+      - **Audit**(): _object_
 
-      * **Dashboard**(): *object*
+      - **Dashboard**(): _object_
 
-      * **Feedback**(): *object*
+      - **Feedback**(): _object_
 
-        * **cardCode**: *string*
+        - **cardCode**: _string_
 
-        * **dirty**: *boolean*
+        - **dirty**: _boolean_
 
-        * **message**: *string*
+        - **message**: _string_
 
-        * **orderDate**: *string*
+        - **orderDate**: _string_
 
-        * **orderDeliveryDate**: *string*
+        - **orderDeliveryDate**: _string_
 
-        * **orderNum**: *string*
+        - **orderNum**: _string_
 
-        * **refNum**: *string*
+        - **refNum**: _string_
 
-        * **title**: *string*
+        - **title**: _string_
 
-        * **type**: *[FeedbackType](_test_src_screens_feedback_feedbackform_.md#feedbacktype)*
+        - **type**: _[FeedbackType](_test_src_screens_feedback_feedbackform_.md#feedbacktype)_
 
-      * **Invoice**(): *object*
+      - **Invoice**(): _object_
 
-        * **activeFilePopup**: *string*
+        - **activeFilePopup**: _string_
 
-      * **Login**(): *object*
+      - **Login**(): _object_
 
-      * **MobileTimeEntry**(): *object*
+      - **MobileTimeEntry**(): _object_
 
-        * **selectedDate**: *string* = ""
+        - **selectedDate**: _string_ = ""
 
-      * **MobileTimeEntryForm**(): *object*
+      - **MobileTimeEntryForm**(): _object_
 
-        * **rowKey**: *string*
+        - **rowKey**: _string_
 
-      * **Order**(): *object*
+      - **Order**(): _object_
 
-        * **activeFilePopup**: *string*
+        - **activeFilePopup**: _string_
 
-      * **Orderdetail**(): *object*
+      - **Orderdetail**(): _object_
 
-        * **selectedOrder**: *string*
+        - **selectedOrder**: _string_
 
-      * **Quotation**(): *object*
+      - **Quotation**(): _object_
 
-        * **activeFilePopup**: *string*
+        - **activeFilePopup**: _string_
 
-      * **Settings**(): *object*
+      - **Settings**(): _object_
 
-      * **Shellbar**(): *object*
+      - **Shellbar**(): _object_
 
-        * **mainMenuExpanded**: *boolean*
+        - **mainMenuExpanded**: _boolean_
 
-        * **userMenuExpanded**: *boolean*
+        - **userMenuExpanded**: _boolean_
 
-      * **TableTesting**(): *object*
+      - **TableTesting**(): _object_
 
-      * **Translation**(): *object*
+      - **Translation**(): _object_
 
-  * **uiState**: *object*
+  - **uiState**: _object_
 
-    * **hasOSReducedMotion**: *boolean* = false
+    - **hasOSReducedMotion**: _boolean_ = false
 
-    * **isDemo**: *boolean* = false
+    - **isDemo**: _boolean_ = false
 
-    * **isIOS**: *boolean* = false
+    - **isIOS**: _boolean_ = false
 
-    * **isMobile**: *boolean* = false
+    - **isMobile**: _boolean_ = false
 
-    * **isReady**: *boolean* = false
+    - **isReady**: _boolean_ = false
 
-    * **isTouch**: *boolean* = false
+    - **isTouch**: _boolean_ = false
 
-    * **stateSavedReason**: *string* = ""
+    - **stateSavedReason**: _string_ = ""

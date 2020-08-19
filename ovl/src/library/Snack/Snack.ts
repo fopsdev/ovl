@@ -45,23 +45,25 @@ export class OvlSnack extends OvlBaseElement {
     }
   }
 
-  getUI() {
-    // this render just defines the slots...
-    // all other handling is in the ...Snack - Actions
-    let res = []
-    for (let z = 0; z < nrOfSnacks; z++) {
-      res.push(html` <div></div> `)
-    }
+  async getUI() {
+    return this.track(() => {
+      // this render just defines the slots...
+      // all other handling is in the ...Snack - Actions
+      let res = []
+      for (let z = 0; z < nrOfSnacks; z++) {
+        res.push(html` <div></div> `)
+      }
 
-    let width = ""
-    if (this.state.ovl.uiState.isMobile) {
-      width = "width: 100vw;"
-    }
+      let width = ""
+      if (this.state.ovl.uiState.isMobile) {
+        width = "width: 100vw;"
+      }
 
-    return html`
-      <div style="${width}" id="ovlsnack" class="ovlsnackbar">
-        ${res.map((m) => m)}
-      </div>
-    `
+      return html`
+        <div style="${width}" id="ovlsnack" class="ovlsnackbar">
+          ${res.map((m) => m)}
+        </div>
+      `
+    })
   }
 }

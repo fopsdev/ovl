@@ -1,22 +1,35 @@
 import { SnackType } from "./Snack/Snack"
-import { overmind } from "../../src/index"
 import { ResultType } from "./Dialog/Dialog"
 import { DialogResult } from "./actions"
+import { ovl } from ".."
+import { TemplateResult } from "lit-html"
+import { DialogType } from "./Dialog/OvlDialogBase"
 
 export const DialogOkCancel = async (
-  text: string,
-  defaultButton: ResultType = 1
+  text: TemplateResult | string,
+  defaultButton: ResultType = 1,
+  type: DialogType = "confirmation",
+  customClass?: string
 ) => {
-  overmind.actions.ovl.dialog.OkCancelDialog({
+  ovl.actions.ovl.dialog.OkCancelDialog({
     text,
     default: defaultButton,
+    type,
+    customClass,
   })
   return await DialogResult()
 }
 
-export const DialogOk = async (text: string) => {
-  overmind.actions.ovl.dialog.OkDialog({
+export const DialogOk = async (
+  text: TemplateResult | string,
+
+  type: DialogType = "information",
+  customClass?: string
+) => {
+  ovl.actions.ovl.dialog.OkDialog({
     text,
+    type,
+    customClass,
   })
   return await DialogResult()
 }
@@ -26,14 +39,14 @@ export const SnackAdd = (
   type: SnackType = "Success",
   durationMs: number = 4000
 ) => {
-  overmind.actions.ovl.internal.AddSnack({ text, type, durationMs })
+  ovl.actions.ovl.internal.AddSnack({ text, type, durationMs })
 }
 export const SnackTrackedAdd = (
   text: string,
   type: SnackType = "Success",
   key: string
 ) => {
-  overmind.actions.ovl.internal.AddSnack({
+  ovl.actions.ovl.internal.AddSnack({
     text,
     type,
     durationMs: 999999,
@@ -42,6 +55,6 @@ export const SnackTrackedAdd = (
 }
 export const SnackTrackedRemove = (key: string) => {
   setTimeout(() => {
-    overmind.actions.ovl.internal.RemoveSnack(key)
+    ovl.actions.ovl.internal.RemoveSnack(key)
   }, 2000)
 }

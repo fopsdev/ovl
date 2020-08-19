@@ -5,7 +5,7 @@ import { T, ovltemp } from "../../global/globals"
 import { DialogResult } from "../actions"
 import { FormState } from "../forms/actions"
 
-import { dialogAfterClose } from "../Dialog/actions"
+//import { dialogAfterClose } from "../Dialog/actions"
 
 export class TableRowSaveCancel extends OvlBaseElement {
   props: any
@@ -17,15 +17,16 @@ export class TableRowSaveCancel extends OvlBaseElement {
       "trow" + this.rowData.tableDef.id + this.rowData.key
     ]
   }
-  getUI() {
-    let handleSave = () => {
+  async getUI() {
+    let handleSave = async () => {
       if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
-        this.actions.ovl.internal.TableEditSaveRow({
+        await this.actions.ovl.internal.TableEditSaveRow({
           key: this.rowData.key,
           def: this.rowData.tableDef,
           data: this.rowData.data,
           formState: this.formState,
         })
+        this.rowData.tableDef.uiState.editRow[this.rowData.key].selected = false
       }
     }
 
@@ -44,7 +45,11 @@ export class TableRowSaveCancel extends OvlBaseElement {
           //   dialogAfterClose.elementToFocus = undefined
           // }
         }
-        let isAdd = this.rowData.key.indexOf(ovltemp) > -1
+        let isAdd =
+          this.rowData.data.data[this.rowData.key][
+            this.rowData.tableDef.database.dataIdField
+          ].indexOf(ovltemp) > -1
+
         if (cancel || isAdd) {
           if (isAdd) {
             this.actions.ovl.internal.TableDeleteRowFromData({
@@ -62,39 +67,41 @@ export class TableRowSaveCancel extends OvlBaseElement {
         }
       }
     }
-    let acceptEnabled = "fd-button--positive sap-icon--accept"
+    return this.track(() => {
+      let acceptEnabled = "fd-button fd-button--positive sap-icon--accept"
 
-    if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
-      acceptEnabled = "fd-button nopointerevents"
-    }
-    return html`
-      <td
-        colspan="${this.rowData.columnsCount}"
-        class="fd-table__cell fd-has-text-align-center"
-        style="margin:0;padding:0;"
-      >
-        <div
-          class="fd-button-group animated fadeIn faster"
-          role="group"
-          aria-label="RowSaveCancel"
-          style="margin-top:-2px;"
+      if (!this.formState.valid || this.state.ovl.libState.indicator.open) {
+        acceptEnabled = "fd-button ovl-disabled"
+      }
+      return html`
+        <td
+          colspan="${this.rowData.columnsCount}"
+          class="fd-table__cell fd-has-text-align-center"
+          style="margin:0;padding:0;"
         >
-          <button
-            @click=${handleSave}
-            title="Datensatz speichern"
-            style="border-top-left-radius: 0px; border-left: 2px solid #0cd7ed;border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-right:none;"
-            class="${acceptEnabled}"
-          ></button>
+          <div
+            class="fd-segmented-button animated fadeIn faster"
+            role="group"
+            aria-label="RowSaveCancel"
+            style="margin-top:-2px;"
+          >
+            <button
+              @click=${handleSave}
+              title="Datensatz speichern"
+              style="border-top-left-radius: 0px; border-left: 2px solid #0cd7ed;border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-right:none;"
+              class="${acceptEnabled}"
+            ></button>
 
-          <button
-            @mousedown=${handleCancel}
-            @click=${handleCancel}
-            title="Abbrechen"
-            style="border-top-right-radius: 0px; border-right: 2px solid #0cd7ed; border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-left:none;"
-            class="fd-button--negative sap-icon--decline"
-          ></button>
-        </div>
-      </td>
-    `
+            <button
+              @mousedown=${handleCancel}
+              @click=${handleCancel}
+              title="Abbrechen"
+              style="border-top-right-radius: 0px; border-right: 2px solid #0cd7ed; border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-left:none;"
+              class="fd-button fd-button--negative sap-icon--decline"
+            ></button>
+          </div>
+        </td>
+      `
+    })
   }
 }
