@@ -239,11 +239,6 @@ export class TableHeaderMenu extends OvlBaseElement {
 
     let colUid = def.uiState.headerSelected
 
-    this.actions.ovl.internal.TableSelectHeader({
-      def: this.headerMenu.def.def,
-      data: this.headerMenu.def.data,
-      key: "",
-    })
     this.actions.ovl.internal.TableSelectColumnFilter({
       key,
       def,
@@ -444,7 +439,8 @@ export class TableHeaderMenu extends OvlBaseElement {
             }
             let all = html`
               <li
-                @click=${(e) => this.handleFilterDropDownValue(e, "@@ovl_all")}
+                @mousedown=${(e) =>
+                  this.handleFilterDropDownValue(e, "@@ovl_all")}
                 class="fd-list__item"
                 role="option"
               >
@@ -458,7 +454,7 @@ export class TableHeaderMenu extends OvlBaseElement {
             if (this.filterDef.othersCount > 0) {
               others = html`
                 <li
-                  @click=${(e) =>
+                  @mousedown=${(e) =>
                     this.handleFilterDropDownValue(e, "@@ovl_others")}
                   class="fd-list__item"
                   role="option"
@@ -474,7 +470,7 @@ export class TableHeaderMenu extends OvlBaseElement {
                 <span class="fd-list__icon sap-icon--filter"></span>
                 <div class="fd-popover" style="width:100%;">
                   <div
-                    @click=${this.handleFilterDropDown}
+                    @mousedown=${this.handleFilterDropDown}
                     class="fd-popover__control"
                   >
                     <div class="fd-select">
@@ -515,7 +511,7 @@ export class TableHeaderMenu extends OvlBaseElement {
 
                         return html`
                           <li
-                            @click=${(e) =>
+                            @mousedown=${(e) =>
                               this.handleFilterDropDownValue(
                                 e,
                                 <ColumnFilterTypes>(<any>k)
@@ -1020,8 +1016,10 @@ export class TableHeaderMenu extends OvlBaseElement {
         dialogParts: {
           footer: () => this.getFooter(),
           body: () => this.getBody(),
-          emptySpaceClickHandlerFn: () => {
-            this.filterDropDownHidden = !this.filterDropDownHidden
+          emptySpaceClickHandlerFn: (e: Event) => {
+            e.stopPropagation()
+            e.preventDefault()
+            this.filterDropDownHidden = true
             //@ts-ignore
             this.getElementsByTagName("ovl-dialogholder")[0].doRender()
           },

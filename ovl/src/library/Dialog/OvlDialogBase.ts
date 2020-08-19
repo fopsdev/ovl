@@ -75,7 +75,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       e.stopPropagation()
       //e.preventDefault()
       if (dialogParts.emptySpaceClickHandlerFn) {
-        dialogParts.emptySpaceClickHandlerFn()
+        dialogParts.emptySpaceClickHandlerFn(e)
       }
     }
 

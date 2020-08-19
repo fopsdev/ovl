@@ -375,7 +375,7 @@ export const TableRefreshDataFromServer: OvlAction<{
             lookupColumnDef.list,
             listdata,
             "",
-            serverData[k],
+            serverData[i],
             def.namespace,
             lookupDefKey,
             effects,
@@ -390,7 +390,7 @@ export const TableRefreshDataFromServer: OvlAction<{
                 " für Spalte: " +
                 (lookupColumnDef.ui.labelTranslationKey
                   ? T(lookupColumnDef.ui.labelTranslationKey)
-                  : k) +
+                  : c) +
                 " nicht gefunden...",
               "Warning"
             )
@@ -1160,6 +1160,7 @@ export const TableSelectColumnFilter: OvlAction<{
   let def = value.def
   let columnId = value.columnId
   let filter = def.columns[columnId].filter
+  def.uiState.headerSelected = ""
   value.def.options.filter.showSelected = false
   if (key === "@@ovl_all") {
     filter.enabled = false

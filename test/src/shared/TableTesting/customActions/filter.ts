@@ -22,12 +22,12 @@ export const FormCustom_memoContainsTest_Filter: OvlAction<
   FormCustomFilter_Type,
   FormCustomFilter_ReturnType
 > = ({ row }) => {
-  return row.U_Memo.toLowerCase().indexOf("test") > -1
+  return row.U_Memo && row.U_Memo.toString().toLowerCase().indexOf("test") > -1
 }
 
 export const FormCustom_memoContainsText_Filter: OvlAction<
   FormCustomFilter_Type,
   FormCustomFilter_ReturnType
 > = ({ row }) => {
-  return row.U_Memo.toLowerCase().indexOf("text") > -1
+  return row.U_Memo && row.U_Memo.toString().toLowerCase().indexOf("text") > -1
 }
