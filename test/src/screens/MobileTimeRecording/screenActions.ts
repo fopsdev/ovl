@@ -40,7 +40,7 @@ export const ScreenNavigateIn: OvlAction = async (_, { actions }) => {
       fields,
     }
     actions.ovl.form.InitForm(initForm)
-    await actions.portal.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+    await actions.demoApp.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
       {
         selected: convDate,
       }
