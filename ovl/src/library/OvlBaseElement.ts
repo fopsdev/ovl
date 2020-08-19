@@ -80,6 +80,7 @@ export const scrollToLastPosition = (state: OvlState) => {
 
 import { render, TemplateResult, html } from "lit-html"
 import { actionTracking } from "../tracker/proxyHandler"
+import { OvlConfig } from "../init"
 
 export class OvlBaseElement extends HTMLElement {
   state: OvlState
@@ -208,7 +209,9 @@ export class OvlBaseElement extends HTMLElement {
 
   connectedCallback() {
     this.init()
-
+    if (OvlConfig._system.debugTracking) {
+      console.log("render " + this.name)
+    }
     this.doRender()
     if (this.screen) {
       this.addEventListener("animationend", this.handleAnimationEnd, true)

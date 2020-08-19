@@ -1032,7 +1032,7 @@ export const rowControlActionsHandler = async (
     }
   } else {
     let actionName = "Table" + key + "Row"
-    if (isDetailView) {
+    if (isDetailView && key !== "Edit") {
       await ovl.actions.ovl.internal.TableCloseViewRow({
         key: rowKey,
         def,

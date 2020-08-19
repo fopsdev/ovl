@@ -185,6 +185,13 @@ export class OvlListControl extends OvlBaseElement {
     let val = this.inputElement.value
     //if (this.localList !== null) {
 
+    // this.actions.ovl.internal.ChangeField({
+    //   fieldId: this.field.field.fieldKey,
+    //   formState: this.formState,
+    //   isInit: true,
+    //   value: val,
+    // })
+
     if (val) {
       let field = this.field.field
       let formState = this.state.ovl.forms[field.formType][field.formId]
@@ -424,8 +431,26 @@ export class OvlListControl extends OvlBaseElement {
         if (this.deleteElement) {
           this.deleteElement.classList.remove("hide")
         }
-
         SnackAdd("Keine passenden Einträge gefunden", "Warning", 3000)
+      } else if (filteredKeys.length === 1 && !field.list.serverEndpoint) {
+        // just handles the case when it is a local list with no more server candidates
+        // then 1 hit = the one and select it
+        let dataList: FieldGetList_ReturnType = resolvePath(
+          this.actions.custom,
+          this.formState.namespace
+        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+          row: GetRowFromFormState(this.formState),
+        })
+        let singleValue = filteredKeys[0]
+        if (dataList.index) {
+          singleValue = dataList.data[singleValue][field.list.valueField]
+        }
+        this.displayValue = GetListDisplayValue(
+          field.list,
+          singleValue,
+          dataList
+        )
+        this.writeBackValue = singleValue
       } else {
         let wasAlreadyOpen = false
         if (this.localList !== null) {
@@ -572,9 +597,18 @@ export class OvlListControl extends OvlBaseElement {
         ></ovl-dialogholder>`
       }
 
-      if (!field.validationResult.valid && this.localList === null) {
-        this.lastDisplayValue = field.value
+      if (!this.displayValue && this.deleteElement) {
+        this.deleteElement.classList.add("hide")
       }
+
+      // if (!field.validationResult.valid && this.localList === null) {
+      //   this.lastDisplayValue = field.value
+      //   if (!this.lastDisplayValue) {
+      //     if (this.deleteElement) {
+      //       this.deleteElement.classList.add("hide")
+      //     }
+      //   }
+      // }
 
       return html`
         ${hitListDialog}
