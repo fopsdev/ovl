@@ -227,13 +227,13 @@ ovl-table {
 
 .scrollableMobileOverlay {
   overflow-y: auto;
-  max-height: calc(92vh - 60px);
+  max-height: calc(100vh - 60px);
   -webkit-overflow-scrolling: touch;
 }
 
 .scrollableOverlay {
   overflow-y: auto;
-  max-height: calc(92vh - 60px);
+  max-height: calc(100vh - 60px);
   -webkit-overflow-scrolling: touch;
 }
 

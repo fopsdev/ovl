@@ -82,16 +82,11 @@
 }
 
 @media screen and (max-width: 992px) {
-  .ovl-tab {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-  .ovl-detailview-label {
-    margin-left: -20px;
-  }
-
-  .ovl-tab .ovl-detailview-label {
-    margin-left: 0px;
+  .ovl-dialog-DetailView,
+  .ovl-dialog-EditFormBig,
+  .ovl-dialog-TableHeaderMenu {
+    width: 90vw;
+    max-width: 90vw;
   }
 }
 
