@@ -226,6 +226,9 @@ export const GetListDisplayValue = (
   if (!value) {
     return ""
   }
+  if (listdata.index && listdata.index[value]) {
+    value = listdata.index[value]
+  }
   let displayField = list.displayField
   let displayValue
   if (listdata.data && listdata.data[value]) {

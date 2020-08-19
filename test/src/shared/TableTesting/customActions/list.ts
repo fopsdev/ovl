@@ -36,6 +36,7 @@ export const Field_U_ParentCode_GetList: OvlAction<
   return {
     data: state.demoApp.testtables.tableTesting.data,
     lookupDef: state.demoApp.testtables.tableTesting.lookupDef,
+    index: state.demoApp.testtables.tableTesting.index,
   }
 }
 
@@ -46,6 +47,8 @@ export const Field_U_ParentCode2_GetList: OvlAction<
   return {
     data: state.demoApp.testtables.tableTesting.data,
     lookupDef: state.demoApp.testtables.tableTesting.lookupDef2,
+    // we need index here as well because its a table for "working with" not a table for lookup purposes...
+    index: state.demoApp.testtables.tableTesting.index,
   }
 }
 

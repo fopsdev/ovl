@@ -33,6 +33,7 @@ type ListFunction = (
 export type ListState = {
   serverEndpoint?: string
   displayField: string
+  // please bear in mind that valueField will always be unique key of object. but we have it here so we can assign a type to it if its displayed at all in the selectlist
   valueField: string
   displayValueField?: boolean
   acceptEmpty?: boolean
@@ -153,19 +154,21 @@ export class OvlListControl extends OvlBaseElement {
     if (selectedKey === "@@ovlescape") {
       await this.resetLocalList()
     } else if (selectedKey !== "@@ovlcanceled") {
-      this.writeBackValue = selectedKey
       let dataList: FieldGetList_ReturnType = resolvePath(
         this.actions.custom,
         this.formState.namespace
       )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
         row: GetRowFromFormState(this.formState),
       })
-
+      this.writeBackValue = selectedKey
+      if (dataList.index) {
+        this.writeBackValue = dataList.data[selectedKey][field.list.valueField]
+      }
       this.displayValue =
         dataList.data[selectedKey][this.field.field.list.displayField]
       let event = new CustomEvent("ovlchange", {
         bubbles: true,
-        detail: { val: selectedKey, id: this.field.field.id },
+        detail: { val: this.writeBackValue, id: this.field.field.id },
       })
       this.inputElement.dispatchEvent(event)
       //this.writeBackValue = undefined
@@ -194,17 +197,19 @@ export class OvlListControl extends OvlBaseElement {
         10
       )
       if (filteredKeys.length === 1) {
+        debugger
         let dataList: FieldGetList_ReturnType = resolvePath(
           this.actions.custom,
           formState.namespace
         )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
           row: GetRowFromFormState(formState),
         })
-        let singleValue =
-          dataList.data[filteredKeys[0]][this.field.field.list.valueField]
-        val = dataList.data[filteredKeys[0]][this.field.field.list.displayField]
-
-        this.displayValue = val
+        let singleValue = filteredKeys[0]
+        this.displayValue = GetListDisplayValue(
+          field.list,
+          singleValue,
+          dataList
+        )
         val = singleValue
       }
     }
@@ -297,8 +302,8 @@ export class OvlListControl extends OvlBaseElement {
           )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
             row: GetRowFromFormState(formState),
           })
-          singleValue = listData.data[filteredKeys[0]][field.list.valueField]
-          val = listData.data[filteredKeys[0]][field.list.displayField]
+          singleValue = filteredKeys[0]
+          val = GetListDisplayValue(field.list, singleValue, listData)
         }
         // if it allow non list values also send a change
         else if (!field.list.acceptOnlyListValues) {

@@ -16,7 +16,6 @@ import {
 } from "../../global/hooks"
 import { TableDefIds, Language, ovl } from "../../index"
 import { OvlConfig } from "../../init"
-import { overlayToRender } from "../../library/Overlay/Overlay"
 import { ListState } from "../Forms/Controls/ListControl"
 import {
   DataType,
@@ -396,6 +395,8 @@ export type ListFnReturnValue = {
   /* use alternative lookups, maybe some selects doesn't need all the columns displayed in the select list, so here they are customizable */
   lookupDef2?: { [key: string]: LookupDef }
   lookupDef3?: { [key: string]: LookupDef }
+  // index object is needed if lookup is referencing a regular table (which object indexes(keys) are not the primary key for handling, offline reasons)
+  index: {}
 }
 
 export type ColumnFilter = {
