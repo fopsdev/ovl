@@ -121,9 +121,11 @@ export const deleteTableRow = (
   })
   let data = tableDataAndDef.data
   let index = data.index
-  let rowId = data.data[key][tableDataAndDef.def.database.dataIdField]
-  delete index[rowId]
-  delete data.data[key]
+  if (data.data[key]) {
+    let rowId = data.data[key][tableDataAndDef.def.database.dataIdField]
+    delete index[rowId]
+    delete data.data[key]
+  }
 }
 
 export const selectLatestRow = (def: TableDef, data: TableData) => {

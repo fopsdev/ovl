@@ -10,7 +10,7 @@ import langpic_fr from "../../../img/fr.png"
 import logo from "../../../img/logosmall.png"
 import { logTrackingList } from "../../../../ovl/src/tracker/tracker"
 import { logState, logActions, logEffects } from "../../../../ovl/src"
-import { tabletesting } from "../../shared/TableTesting/customActions"
+import { ShellButtonOrMenu } from "../../components/Refresh/Refresh"
 
 export type ShellbarState = {
   mainMenuExpanded: boolean
@@ -322,6 +322,8 @@ export class CompShellbar extends OvlBaseElement {
                           ${effortTableMenu} ${languageTableMenu} ${auditMenu}
                           ${mobileTimeEntryMenu} ${createMobileTimentriesMenu}
                           ${tableTestingMenu}
+                          <ovl-refresh .refresh=${<ShellButtonOrMenu>"menu"}>
+                          </ovl-refresh>
                           <li class="fd-menu__item" role="presentation">
                             <a
                               @click=${handleLogout}

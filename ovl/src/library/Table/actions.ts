@@ -297,7 +297,7 @@ export const TableRefreshDataFromServer: OvlAction<{
   Array.from(localKeys.keys()).forEach((k) => {
     if (!keysFromServer.has(k)) {
       rowsDeleted = true
-      deleteTableRow({ def: value.def, data: value.data }, k)
+      deleteTableRow({ def: value.def, data: value.data }, localKeys.get(k))
     }
   })
 

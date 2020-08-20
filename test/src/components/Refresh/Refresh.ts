@@ -34,14 +34,17 @@ export class OvlRefresh extends OvlBaseElement {
         `
       } else {
         refresh = html`
-          <li>
+          <li class="fd-menu__item" role="presentation">
             <a
               @click=${handleRefresh}
-              role="button"
-              class="fd-menu__item sap-icon--refresh sap-icon--l"
+              role="menuitem"
+              class="fd-menu__link fd-has-type-2"
             >
-              ${T("AppRefreshData")}</a
-            >
+              <span class="fd-menu__addon-before sap-icon--refresh"></span>
+              <span class="fd-menu__title fd-has-type-1"
+                >${T("AppRefreshData")}</span
+              >
+            </a>
           </li>
         `
       }
