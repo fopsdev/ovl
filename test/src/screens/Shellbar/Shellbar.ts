@@ -39,6 +39,10 @@ export class CompShellbar extends OvlBaseElement {
       }
     }
 
+    const openDashboard = (e: Event) => {
+      this.actions.ovl.navigation.NavigateTo("Dashboard")
+    }
+
     const openOrderOverview = (e: Event) => {
       // this.actions.global.GetFile({
       //   fileName: "tst1.pdf",
@@ -120,6 +124,20 @@ export class CompShellbar extends OvlBaseElement {
       let hideAllMenus = "hide"
       let login
 
+      let feedbackForm = null
+      let screenState = this.state.ovl.screens.screens
+      if (
+        screenState &&
+        screenState["Feedback"] &&
+        screenState["Feedback"].visible === true
+      ) {
+        feedbackForm = html`
+          <comp-feedbackform
+            id="${this.state.demoApp.screens.feedback.type}"
+          ></comp-feedbackform>
+        `
+      }
+
       if (this.state.ovl.language.isReady) {
         login = html`<ovl-login id="loginform"></ovl-login>`
       }
@@ -141,8 +159,8 @@ export class CompShellbar extends OvlBaseElement {
             <comp-quotationoverview></comp-quotationoverview>
             <comp-orderoverview></comp-orderoverview>
             <comp-invoiceoverview></comp-invoiceoverview>
-            <comp-orderdetail></comp-orderdetail>
             <comp-orderdetaillayout></comp-orderdetaillayout>
+            ${feedbackForm}
           </div>
         `
       }
@@ -269,10 +287,20 @@ export class CompShellbar extends OvlBaseElement {
       let quotationMainMenu
       let salesOrderMainMenu
       let invoiceMainMenu
+      let overviewMainMenu
 
       let quotationPopupMenu
       let salesOrderPopupMenu
       let invoicePopupMenu
+
+      overviewMainMenu = html`<button
+        class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2 ovl-shellbar-directmenu"
+        @click="${(e) => openDashboard(e)}"
+        aria-label=""
+      >
+        <span class="sap-icon--home"> </span>
+        ${T("PortalDashboardTitle")}
+      </button> `
 
       if (
         this.state.demoApp.quotationDetail &&
@@ -402,7 +430,8 @@ export class CompShellbar extends OvlBaseElement {
                 class="fd-shellbar__group fd-shellbar__group--actions ${hideAllMenus}"
               >
                 <div class="fd-shellbar__action">
-                  ${quotationMainMenu} ${salesOrderMainMenu} ${invoiceMainMenu}
+                  ${overviewMainMenu} ${quotationMainMenu} ${salesOrderMainMenu}
+                  ${invoiceMainMenu}
                   <ovl-refresh .refresh=${<ShellButtonOrMenu>"button"}>
                   </ovl-refresh>
                 </div>

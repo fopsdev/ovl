@@ -26,12 +26,12 @@ export class CompQuotationOverview extends OvlBaseElement {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR214", "")
-        if (this.state.ovl.screens.screens.Quotation.activeFilePopup === id) {
+        if (this.state.demoApp.screens.quotation.activeFilePopup === id) {
           id = ""
         }
         this.actions.demoApp.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Quotation,
+          obj: this.state.demoApp.screens.quotation,
         })
       }
     }
@@ -39,7 +39,7 @@ export class CompQuotationOverview extends OvlBaseElement {
     const handleRemoveAllPDFPopup = (e) => {
       this.actions.demoApp.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Quotation,
+        obj: this.state.demoApp.screens.quotation,
       })
     }
     return this.track(() => {
@@ -141,7 +141,7 @@ export class CompQuotationOverview extends OvlBaseElement {
                                       aria-controls="pQqQR214${k}"
                                       aria-haspopup="true"
                                       aria-expanded="${k ===
-                                      this.state.ovl.screens.screens.Quotation
+                                      this.state.demoApp.screens.quotation
                                         .activeFilePopup}"
                                       aria-label="More"
                                     ></button>
@@ -150,7 +150,7 @@ export class CompQuotationOverview extends OvlBaseElement {
                                     style="width:280px;"
                                     class="fd-popover__body"
                                     aria-hidden="${k !==
-                                      this.state.ovl.screens.screens.Quotation
+                                      this.state.demoApp.screens.quotation
                                         .activeFilePopup ||
                                     this.state.demoApp.quotationDetail
                                       .quotations[k].attachments.files

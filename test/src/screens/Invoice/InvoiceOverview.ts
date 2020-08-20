@@ -26,12 +26,12 @@ export class CompInvoiceOverview extends OvlBaseElement {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR213", "")
-        if (this.state.ovl.screens.screens.Invoice.activeFilePopup === id) {
+        if (this.state.demoApp.screens.invoice.activeFilePopup === id) {
           id = ""
         }
         this.actions.demoApp.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Invoice,
+          obj: this.state.demoApp.screens.invoice,
         })
       }
     }
@@ -39,7 +39,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
     const handleRemoveAllPDFPopup = (e) => {
       this.actions.demoApp.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Invoice,
+        obj: this.state.demoApp.screens.invoice,
       })
     }
     return this.track(() => {
@@ -125,7 +125,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                         aria-controls="pQqQR213${k}"
                                         aria-haspopup="true"
                                         aria-expanded="${k ===
-                                        this.state.ovl.screens.screens.Invoice
+                                        this.state.demoApp.screens.invoice
                                           .activeFilePopup}"
                                         aria-label="More"
                                       ></button>
@@ -134,7 +134,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                       style="width:280px;"
                                       class="fd-popover__body"
                                       aria-hidden="${k !==
-                                        this.state.ovl.screens.screens.Invoice
+                                        this.state.demoApp.screens.invoice
                                           .activeFilePopup ||
                                       this.state.demoApp.invoiceDetail.invoices[
                                         k

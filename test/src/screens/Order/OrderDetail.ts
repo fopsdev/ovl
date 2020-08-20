@@ -5,7 +5,7 @@ import { T, D } from "../../../../ovl/src/global/globals"
 export class CompOrderDetail extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
-      let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
+      let key = this.state.demoApp.screens.orderdetail.selectedOrder
       let order = this.state.demoApp.orderDetail.orders[key]
 
       return html`

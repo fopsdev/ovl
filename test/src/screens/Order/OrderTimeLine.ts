@@ -5,7 +5,7 @@ import { T, D } from "../../../../ovl/src/global/globals"
 export class CompOrderTimeLine extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
-      let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
+      let key = this.state.demoApp.screens.orderdetail.selectedOrder
       let order = this.state.demoApp.orderDetail.orders[key]
 
       return html`
@@ -30,7 +30,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
               <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
-                    s.portal.orderDetail.orders[key].steps.step1.attachments
+                    s.demoApp.orderDetail.orders[key].steps.step1.attachments
                       .files}
                 ></comp-filelist>
                 <div class="timelinenextarrowdown" style="height:80px;"></div>
@@ -57,7 +57,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
               <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
-                    s.portal.orderDetail.orders[key].steps.step2.attachments
+                    s.demoApp.orderDetail.orders[key].steps.step2.attachments
                       .files}
                 ></comp-filelist>
                 <div class="timelinenextarrowdown" style="height:80px;"></div>
@@ -81,7 +81,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
               <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
-                    s.portal.orderDetail.orders[key].steps.step3.attachments
+                    s.demoApp.orderDetail.orders[key].steps.step3.attachments
                       .files}
                 ></comp-filelist>
                 <div class="timelinenextarrowdown" style="height:80px;"></div>
@@ -106,7 +106,7 @@ export class CompOrderTimeLine extends OvlBaseElement {
               <div class="fd-layout-panel__body fd-has-padding-tiny">
                 <comp-filelist
                   .props=${(s) =>
-                    s.portal.orderDetail.orders[key].steps.step4.attachments
+                    s.demoApp.orderDetail.orders[key].steps.step4.attachments
                       .files}
                 ></comp-filelist>
               </div>

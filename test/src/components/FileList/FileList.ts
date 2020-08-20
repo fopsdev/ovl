@@ -41,7 +41,7 @@ export class CompFileList extends OvlBaseElement {
   handleFile(e: Event, fileName: string, fileType: FileType) {
     e.preventDefault()
     e.stopPropagation()
-    let docNum = this.state.ovl.screens.screens.Orderdetail.selectedOrder
+    let docNum = this.state.demoApp.screens.orderdetail.selectedOrder
     this.actions.ovl.internal.GetFile({
       id1: fileName,
       cat: fileType,

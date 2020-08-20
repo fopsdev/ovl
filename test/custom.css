@@ -1,5 +1,17 @@
+/* workaround */
 .fd-input {
   z-index: auto !important;
+}
+
+.cols2 {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-gap: 10px;
+  grid-template-rows: auto;
+}
+
+.ovl-table-value__msg {
+  height: 20vh;
 }
 
 .ovl-bigeditform .ovl-formcontrol-container {
@@ -87,6 +99,10 @@
 
 .ovl-shellbar-directandpopupmenu {
   display: none !important;
+}
+
+.ovl-shellbar-directmenu {
+  margin-left: 6px;
 }
 
 @media screen and (max-width: 992px) {

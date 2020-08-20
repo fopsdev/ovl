@@ -113,7 +113,7 @@ export const ovlFetch = async (
     reqOptions.signal = signal
 
     const req = await fetch(url, reqOptions)
-
+    clearTimeout(timer)
     if (method === "POST") {
       ovl.state.ovl.app.offline = false
     }
@@ -130,6 +130,8 @@ export const ovlFetch = async (
       ovl.state.ovl.user.token = ""
       return
     } else if (req.status === 404) {
+      snackMessage = T("AppResourceNotFound")
+      snackMessageType = "Error"
       return {
         headers: req.headers,
         data: undefined,

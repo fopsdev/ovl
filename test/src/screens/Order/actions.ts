@@ -9,7 +9,7 @@ export const PreparePositiveFeedback: OvlAction<OrderFeedbackState> = (
   { state }
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
-  let key = state.ovl.screens.screens.Orderdetail.selectedOrder
+  let key = state.demoApp.screens.orderdetail.selectedOrder
   let order = state.demoApp.orderDetail.orders[key]
   state.demoApp.screens.feedback.cardCode = order.cardCode
   state.demoApp.screens.feedback.refNum = order.refNum
@@ -27,7 +27,7 @@ export const PrepareNegativeFeedback: OvlAction<OrderFeedbackState> = (
   { state }
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
-  let key = state.ovl.screens.screens.Orderdetail.selectedOrder
+  let key = state.demoApp.screens.orderdetail.selectedOrder
   let order = state.demoApp.orderDetail.orders[key]
   state.demoApp.screens.feedback.cardCode = order.cardCode
   state.demoApp.screens.feedback.refNum = order.refNum
@@ -45,7 +45,7 @@ export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
   { state }
 ) => {
   // if feedback is left "" empty it shouldn't be displayed
-  let key = state.ovl.screens.screens.Orderdetail.selectedOrder
+  let key = state.demoApp.screens.orderdetail.selectedOrder
   let order = state.demoApp.orderDetail.orders[key]
   state.demoApp.screens.feedback.cardCode = order.cardCode
   state.demoApp.screens.feedback.refNum = order.refNum
@@ -59,5 +59,5 @@ export const PrepareDeliveryDateFeedback: OvlAction<OrderFeedbackState> = (
 }
 
 export const SelectOrder: OvlAction<string> = (value, { state }) => {
-  state.ovl.screens.screens.Orderdetail.selectedOrder = value
+  state.demoApp.screens.orderdetail.selectedOrder = value
 }

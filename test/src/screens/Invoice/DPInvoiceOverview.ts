@@ -22,12 +22,12 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR219", "")
-        if (this.state.ovl.screens.screens.Invoice.activeFilePopup === id) {
+        if (this.state.demoApp.screens.invoice.activeFilePopup === id) {
           id = ""
         }
         this.actions.demoApp.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Invoice,
+          obj: this.state.demoApp.screens.invoice,
         })
       }
     }
@@ -35,7 +35,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
     const handleRemoveAllPDFPopup = (e) => {
       this.actions.demoApp.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Invoice,
+        obj: this.state.demoApp.screens.invoice,
       })
     }
 
@@ -125,7 +125,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                                     aria-controls="pQqQR219${k}"
                                     aria-haspopup="true"
                                     aria-expanded="${k ===
-                                    this.state.ovl.screens.screens.Invoice
+                                    this.state.demoApp.screens.invoice
                                       .activeFilePopup}"
                                     aria-label="More"
                                   ></button>
@@ -134,7 +134,7 @@ export class CompDPInvoiceOverview extends OvlBaseElement {
                                   style="width:280px;"
                                   class="fd-popover__body"
                                   aria-hidden="${k !==
-                                    this.state.ovl.screens.screens.Invoice
+                                    this.state.demoApp.screens.invoice
                                       .activeFilePopup ||
                                   this.state.demoApp.dpInvoiceDetail.dpInvoices[
                                     k

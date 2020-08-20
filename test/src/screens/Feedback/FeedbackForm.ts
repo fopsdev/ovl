@@ -101,7 +101,7 @@ export class CompFeedbackForm extends OvlFormElement {
           </div>
           <div class="fd-layout-panel__body">
             <div class="fd-form__set">
-              <div class="fd-form__item">
+              <div>
                 <ovl-textarea
                   .props=${() => {
                     return { field: msgField }
@@ -110,6 +110,7 @@ export class CompFeedbackForm extends OvlFormElement {
                 </ovl-textarea>
               </div>
             </div>
+            <br />
             <button
               ?disabled=${this.state.ovl.libState.indicator.open ||
               this.screenClosing()}

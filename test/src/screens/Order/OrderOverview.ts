@@ -22,7 +22,7 @@ export class CompOrderOverview extends OvlBaseElement {
   handleDetail(e: Event, key: string) {
     //@ts-ignore
     if (
-      (!this.state.ovl.screens.screens.Order.activeFilePopup &&
+      (!this.state.demoApp.screens.order.activeFilePopup &&
         //@ts-ignore
         e.target.localName === "td") ||
       //@ts-ignore
@@ -41,12 +41,12 @@ export class CompOrderOverview extends OvlBaseElement {
       if (!e.target.disabled) {
         //@ts-ignore
         let id = e.target.getAttribute("aria-controls").replace("pQqQR215", "")
-        if (this.state.ovl.screens.screens.Order.activeFilePopup === id) {
+        if (this.state.demoApp.screens.order.activeFilePopup === id) {
           id = ""
         }
         this.actions.demoApp.global.TogglePDFPopup({
           key: id,
-          obj: this.state.ovl.screens.screens.Order,
+          obj: this.state.demoApp.screens.order,
         })
       }
     }
@@ -54,7 +54,7 @@ export class CompOrderOverview extends OvlBaseElement {
     const handleRemoveAllPDFPopup = (e) => {
       this.actions.demoApp.global.TogglePDFPopup({
         key: "",
-        obj: this.state.ovl.screens.screens.Order,
+        obj: this.state.demoApp.screens.order,
       })
     }
     return this.track(() => {
@@ -133,7 +133,7 @@ export class CompOrderOverview extends OvlBaseElement {
                                       aria-controls="pQqQR215${k}"
                                       aria-haspopup="true"
                                       aria-expanded="${k ===
-                                      this.state.ovl.screens.screens.Order
+                                      this.state.demoApp.screens.order
                                         .activeFilePopup}"
                                       aria-label="More"
                                     ></button>
@@ -142,7 +142,7 @@ export class CompOrderOverview extends OvlBaseElement {
                                     style="width:280px;"
                                     class="fd-popover__body"
                                     aria-hidden="${k !==
-                                      this.state.ovl.screens.screens.Order
+                                      this.state.demoApp.screens.order
                                         .activeFilePopup ||
                                     this.state.demoApp.orderDetail.orders[
                                       k

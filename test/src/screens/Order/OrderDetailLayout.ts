@@ -13,7 +13,7 @@ export class CompOrderDetailLayout extends OvlBaseElement {
 
   async getUI() {
     return this.track(() => {
-      let key = this.state.ovl.screens.screens.Orderdetail.selectedOrder
+      let key = this.state.demoApp.screens.orderdetail.selectedOrder
 
       return html`
       <div class="">
@@ -57,7 +57,7 @@ export class CompOrderDetailLayout extends OvlBaseElement {
             <div class="fd-layout-panel">
               <div class="fd-layout-panel__body">
                 <comp-filelist .props=${(s) =>
-                  s.portal.orderDetail.orders[key].attachments.files.filter(
+                  s.demoApp.orderDetail.orders[key].attachments.files.filter(
                     (f) => f.type === "OrderAttachment"
                   )}></comp-filelist>
               </div>
