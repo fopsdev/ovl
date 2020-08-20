@@ -50,3 +50,11 @@ then put a .gitignore to
 myproject/.gitignore which ignores the ovl folder (its handled separately)
 then do a npm install inside the myproject/ovl/ovl - folder
 then adjust the myproject/ovl/ovl/src/index.ts to point back to the screens and so on from myproject
+
+# Manual Testing Procedures
+## Table Testing
+- Add/Edit/Copy/Delete Row on FE
+- Add/Edit/Delete Row on BE and use Refresh on FE
+## Timeentry
+- Select Option Project, select Option Absence, then again Project
+
