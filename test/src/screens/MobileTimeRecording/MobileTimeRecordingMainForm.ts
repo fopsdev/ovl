@@ -186,7 +186,6 @@ export class CompMobileTimeEntry extends OvlFormElement {
                     @click=${(e) => this.handleDelete(e, k)}
                     class="fd-list__icon sap-icon--decline"
                     style="pointer-events: all; "
-                    tabindex="0"
                   ></span>
                 `
               }

@@ -340,7 +340,7 @@ export const TableRefreshDataFromServer: OvlAction<{
     let sd = serverData[i]
     localData[dataKey]["_ovl" + idfield] = sd[idfield]
     value.data.index[sd[idfield] as string] = dataKey
-    Object.keys(sd).forEach((c) => {
+    Object.keys(sd).forEach(async (c) => {
       localData[dataKey][c] = serverData[i][c]
       // check for lookups which needs to be refreshed/reloaded
       if (dataFieldsToLookups[c]) {
@@ -369,7 +369,7 @@ export const TableRefreshDataFromServer: OvlAction<{
         if (!listValueFound) {
           console.error("lookups need refresh for")
           console.error(value)
-          KeyValueListFromServerFn(
+          await KeyValueListFromServerFn(
             state,
             lookupColumnDef.list,
             listdata,
@@ -1471,10 +1471,10 @@ export const TableDeleteRow: OvlAction<
             customId: ovl.state.ovl.user.clientId,
           }
         )
-        if (res.data) {
+        if (res.data || res.type === "RecordNotFound") {
           state.ovl.app.offline = false
         }
-        if (!res.data) {
+        if (!res.data && res.type !== "RecordNotFound") {
           // 449 means offline in our context
           if (res.status === 449) {
             if (OvlConfig._system.OfflineMode) {

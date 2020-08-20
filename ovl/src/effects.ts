@@ -149,6 +149,7 @@ export const ovlFetch = async (
           snackMessage = req.statusText
         }
         if (msg.type) {
+          // returning a type means that the calling action can do some useful stuff and no error msg will be displayed
           type = msg.type
         }
       }
