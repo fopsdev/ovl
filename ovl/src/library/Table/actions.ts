@@ -1452,7 +1452,7 @@ export const TableDeleteRow: OvlAction<
       delete offlineState.updatedKeys[key]
       offlineHandled = true
     }
-    let res = { data: undefined, status: undefined }
+    let res = { data: undefined, status: undefined, type: undefined }
     if (!offlineHandled) {
       if (
         OvlConfig._system.OfflineMode &&
