@@ -1,3 +1,7 @@
+.fd-input {
+  z-index: auto !important;
+}
+
 .ovl-bigeditform .ovl-formcontrol-container {
   display: grid;
   grid-template-columns: 110px 1fr;
@@ -81,14 +85,8 @@
   width: 50vw;
 }
 
-.ovl-shellbar-directmenu {
-  display: inherit;
-  visibility: visible;
-}
-
 .ovl-shellbar-directandpopupmenu {
-  display: none;
-  visibility: hidden;
+  display: none !important;
 }
 
 @media screen and (max-width: 992px) {
@@ -99,12 +97,11 @@
     max-width: 90vw;
   }
   .ovl-shellbar-directmenu {
-    display: none;
-    visibility: hidden;
+    display: none !important;
   }
+
   .ovl-shellbar-directandpopupmenu {
-    display: inherit;
-    visibility: visible;
+    display: inherit !important;
   }
 }
 .ovl-table-value__U_Decimal {

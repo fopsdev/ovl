@@ -142,7 +142,7 @@ export class CompShellbar extends OvlBaseElement {
             <comp-orderoverview></comp-orderoverview>
             <comp-invoiceoverview></comp-invoiceoverview>
             <comp-orderdetail></comp-orderdetail>
-            <comp-orderdetaillayout></comp-orderdetaillayout>>
+            <comp-orderdetaillayout></comp-orderdetaillayout>
           </div>
         `
       }
@@ -290,7 +290,7 @@ export class CompShellbar extends OvlBaseElement {
         quotationPopupMenu = html`
           <li
             class="fd-menu__item ovl-shellbar-directandpopupmenu"
-            role="presentation"
+            role="button"
           >
             <a
               @click=${(e) => openQuotationOverview(e)}
