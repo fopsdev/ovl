@@ -39,6 +39,23 @@ export class CompShellbar extends OvlBaseElement {
       }
     }
 
+    const openOrderOverview = (e: Event) => {
+      // this.actions.global.GetFile({
+      //   fileName: "tst1.pdf",
+      //   fileType: "Test",
+      //   docNum: ""
+      // })
+      this.actions.ovl.navigation.NavigateTo("Order")
+    }
+
+    const openQuotationOverview = (e: Event) => {
+      this.actions.ovl.navigation.NavigateTo("Quotation")
+    }
+
+    const openInvoiceOverview = (e: Event) => {
+      this.actions.ovl.navigation.NavigateTo("Invoice")
+    }
+
     const handleLogout = (e: Event) => {
       this.actions.ovl.user.Logout()
     }
@@ -110,6 +127,7 @@ export class CompShellbar extends OvlBaseElement {
         hideAllMenus = ""
         let devHint = OvlConfig._system.IsDev ? "DEV" : ""
         let demoHint = this.state.ovl.uiState.isDemo ? "TEST" : ""
+        appTitle = T("AppTitle") + " " + devHint + " " + demoHint
         app = html`
           <div class="${scrollable}">
             <ovl-audit> </ovl-audit>
@@ -120,6 +138,11 @@ export class CompShellbar extends OvlBaseElement {
             </comp-mobiletimeentry>
             <comp-mobiletimeentryform id="mobiletimerecording1">
             </comp-mobiletimeentryform>
+            <comp-quotationoverview></comp-quotationoverview>
+            <comp-orderoverview></comp-orderoverview>
+            <comp-invoiceoverview></comp-invoiceoverview>
+            <comp-orderdetail></comp-orderdetail>
+            <comp-orderdetaillayout></comp-orderdetaillayout>>
           </div>
         `
       }
@@ -242,7 +265,113 @@ export class CompShellbar extends OvlBaseElement {
         (OvlConfig._system.ShowSaveOrigin
           ? " " + this.state.ovl.uiState.stateSavedReason
           : "")
-      // we have a tabindex on this first div so it can get the focus and not too many saveStates (has a focusOut handler) get called
+
+      let quotationMainMenu
+      let salesOrderMainMenu
+      let invoiceMainMenu
+
+      let quotationPopupMenu
+      let salesOrderPopupMenu
+      let invoicePopupMenu
+
+      if (
+        this.state.demoApp.quotationDetail &&
+        Object.keys(this.state.demoApp.quotationDetail.quotations).length > 0
+      ) {
+        quotationMainMenu = html`<button
+          class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2 ovl-shellbar-directmenu"
+          @click="${(e) => openQuotationOverview(e)}"
+          aria-label=""
+        >
+          <span class="sap-icon--tags"> </span>
+          ${T("PortalQuotationTitle")}
+        </button> `
+
+        quotationPopupMenu = html`
+          <li
+            class="fd-menu__item ovl-shellbar-directandpopupmenu"
+            role="presentation"
+          >
+            <a
+              @click=${(e) => openQuotationOverview(e)}
+              role="menuitem"
+              class="fd-menu__link fd-has-type-2"
+            >
+              <span class="fd-menu__addon-before sap-icon--tags"></span>
+              <span class="fd-menu__title fd-has-type-1"
+                >${T("PortalQuotationTitle")}</span
+              >
+            </a>
+          </li>
+        `
+      }
+
+      if (
+        this.state.demoApp.orderDetail &&
+        Object.keys(this.state.demoApp.orderDetail.orders).length > 0
+      ) {
+        salesOrderMainMenu = html` <button
+          @click="${(e) => openOrderOverview(e)}"
+          class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2 ovl-shellbar-directmenu"
+          aria-label=""
+        >
+          <span class="sap-icon--sales-order"> </span>
+          ${T("PortalOrderTitle")}
+        </button>`
+
+        salesOrderPopupMenu = html`
+          <li
+            class="fd-menu__item ovl-shellbar-popupmenu ovl-shellbar-directandpopupmenu"
+            role="presentation"
+          >
+            <a
+              @click=${(e) => openOrderOverview(e)}
+              role="menuitem"
+              class="fd-menu__link fd-has-type-2"
+            >
+              <span class="fd-menu__addon-before sap-icon--sales-order"></span>
+              <span class="fd-menu__title fd-has-type-1"
+                >${T("PortalOrderTitle")}</span
+              >
+            </a>
+          </li>
+        `
+      }
+      if (
+        (this.state.demoApp.invoiceDetail ||
+          this.state.demoApp.dpInvoiceDetail) &&
+        (Object.keys(this.state.demoApp.invoiceDetail.invoices).length > 0 ||
+          Object.keys(this.state.demoApp.dpInvoiceDetail.dpInvoices).length > 0)
+      ) {
+        invoiceMainMenu = html`
+          <button
+            @click="${(e) => openInvoiceOverview(e)}"
+            class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2 ovl-shellbar-directmenu"
+            aria-label=""
+          >
+            <span class="sap-icon--receipt"> </span>
+            ${T("PortalInvoiceTitle")}
+          </button>
+        `
+        invoicePopupMenu = html`
+          <li
+            class="fd-menu__item ovl-shellbar-popupmenu ovl-shellbar-directandpopupmenu"
+            role="presentation"
+          >
+            <a
+              @click=${(e) => openInvoiceOverview(e)}
+              role="menuitem"
+              class="fd-menu__link fd-has-type-2"
+            >
+              <span class="fd-menu__addon-before sap-icon--receipt"></span>
+              <span class="fd-menu__title fd-has-type-1"
+                >${T("PortalInvoiceTitle")}</span
+              >
+            </a>
+          </li>
+        `
+      }
+
       let resHtml = html`
         <div
           class="fd-shell fd-shell--fundamentals fd-has-background-color-neutral-2"
@@ -272,7 +401,12 @@ export class CompShellbar extends OvlBaseElement {
                 style="margin-left:-40%;"
                 class="fd-shellbar__group fd-shellbar__group--actions ${hideAllMenus}"
               >
-                <ovl-indicator> </ovl-indicator>
+                <div class="fd-shellbar__action">
+                  ${quotationMainMenu} ${salesOrderMainMenu} ${invoiceMainMenu}
+                  <ovl-refresh .refresh=${<ShellButtonOrMenu>"button"}>
+                  </ovl-refresh>
+                </div>
+
                 <div class="fd-shellbar__action">
                   <div class="fd-popover fd-popover--right">
                     <div class="fd-popover__control">
@@ -319,7 +453,9 @@ export class CompShellbar extends OvlBaseElement {
                               </span>
                             </a>
                           </li>
-                          ${effortTableMenu} ${languageTableMenu} ${auditMenu}
+                          ${quotationPopupMenu} ${salesOrderPopupMenu}
+                          ${invoicePopupMenu} ${effortTableMenu}
+                          ${languageTableMenu} ${auditMenu}
                           ${mobileTimeEntryMenu} ${createMobileTimentriesMenu}
                           ${tableTestingMenu}
                           <ovl-refresh .refresh=${<ShellButtonOrMenu>"menu"}>

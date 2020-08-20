@@ -2,7 +2,7 @@ import { OvlAudit } from "./screens/Audit/Audit"
 import { CompLoginForm } from "./screens/Login/LoginForm"
 import { CompShellbar } from "./screens/Shellbar/Shellbar"
 import { CompTranslation } from "./screens/Translation/Translation"
-import { OvlIndicator } from "./components/Indicator/Indicator"
+
 import { OvlBackButton } from "./components/BackButton/BackButton"
 import { OvlRefresh } from "./components/Refresh/Refresh"
 
@@ -29,7 +29,7 @@ export const defineElements = () => {
   customElements.define("ovl-translation", CompTranslation)
   customElements.define("ovl-shellbar", CompShellbar)
   customElements.define("ovl-login", CompLoginForm)
-  customElements.define("ovl-indicator", OvlIndicator)
+
   customElements.define("ovl-backbutton", OvlBackButton)
   customElements.define("ovl-refresh", OvlRefresh)
   customElements.define("comp-tabletesting", CompTableTesting)

@@ -81,6 +81,16 @@
   width: 50vw;
 }
 
+.ovl-shellbar-directmenu {
+  display: inherit;
+  visibility: visible;
+}
+
+.ovl-shellbar-directandpopupmenu {
+  display: none;
+  visibility: hidden;
+}
+
 @media screen and (max-width: 992px) {
   .ovl-dialog-DetailView,
   .ovl-dialog-EditFormBig,
@@ -88,8 +98,15 @@
     width: 90vw;
     max-width: 90vw;
   }
+  .ovl-shellbar-directmenu {
+    display: none;
+    visibility: hidden;
+  }
+  .ovl-shellbar-directandpopupmenu {
+    display: inherit;
+    visibility: visible;
+  }
 }
-
 .ovl-table-value__U_Decimal {
   color: green;
 }

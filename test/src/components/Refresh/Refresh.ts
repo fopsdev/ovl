@@ -19,8 +19,18 @@ export class OvlRefresh extends OvlBaseElement {
         : ""
 
       let refresh
+
       if (this.refresh === "button") {
-        refresh = html`
+        if (this.state.ovl.libState.indicator.open) {
+          return html`
+            <span
+              class="fd-has-color-action-2 sap-icon--synchronize sap-icon--l sap-icon--animate-spin"
+              style="padding-left:8px; padding-right:8px;"
+            ></span>
+          `
+        }
+
+        return html`
           <button
             @click=${handleRefresh}
             class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2 ${buttonInactive}"
@@ -33,7 +43,7 @@ export class OvlRefresh extends OvlBaseElement {
           </button>
         `
       } else {
-        refresh = html`
+        return html`
           <li class="fd-menu__item" role="presentation">
             <a
               @click=${handleRefresh}
@@ -48,8 +58,6 @@ export class OvlRefresh extends OvlBaseElement {
           </li>
         `
       }
-
-      return refresh
     })
   }
 }
