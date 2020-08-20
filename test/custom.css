@@ -10,7 +10,7 @@
   grid-template-rows: auto;
 }
 
-.ovl-table-value__msg {
+.ovl-value__msg {
   height: 20vh;
 }
 
@@ -23,7 +23,7 @@
     ".... validation";
 }
 
-.ovl-bigeditform .ovl-table-value-textarea {
+.ovl-bigeditform .ovl-value-textarea {
   height: 120px;
 }
 
@@ -36,7 +36,7 @@
   font-size: xx-small;
 }
 
-.ovl-bigeditform .ovl-table-label-textarea {
+.ovl-bigeditform .ovl-label-textarea {
   margin-top: 45px;
 }
 
@@ -120,7 +120,7 @@
     display: inherit !important;
   }
 }
-.ovl-table-value__U_Decimal {
+.ovl-value__U_Decimal {
   color: green;
 }
 

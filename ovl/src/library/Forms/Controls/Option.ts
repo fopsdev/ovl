@@ -115,7 +115,7 @@ export class OvlOption extends OvlBaseElement {
             ${Object.keys(listData).map((rowKey) => {
               return html`
                 <input
-                  class="fd-radio ovl-focusable ovl-formcontrol-input ovl-table-value-option ovl-table-value__${field.fieldKey}"
+                  class="fd-radio ovl-focusable ovl-formcontrol-input ovl-value-option ovl-value__${field.fieldKey}"
                   @click=${(e) => e.stopPropagation()}
                   @change=${(e) =>
                     this.handleChange(

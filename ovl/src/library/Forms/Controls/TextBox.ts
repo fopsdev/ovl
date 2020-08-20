@@ -112,7 +112,7 @@ export class OvlTextbox extends OvlBaseElement {
             style="${style} ${align}"
             autocomplete="off"
             inputmode="${inputMode}"
-            class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-textbox ovl-table-value__${field.fieldKey} ${customRowClassName}"
+            class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customRowClassName}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"

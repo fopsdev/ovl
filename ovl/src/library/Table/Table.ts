@@ -717,10 +717,10 @@ export class TableHeader extends OvlBaseElement {
               data-col="${k}"
               title="${ifDefined(tooltip ? tooltip : undefined, this)}"
               style="${cellBgColor}"
-              class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-table-label-${column.control +
+              class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-label-${column.control +
               (column.asset
                 ? column.asset.type
-                : "")} ovl-table-label__${k} ${customHeaderCellClass}"
+                : "")} ovl-label__${k} ${customHeaderCellClass}"
               scope="col"
             >
               ${headerPart}

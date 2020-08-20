@@ -633,7 +633,7 @@ export class OvlListControl extends OvlBaseElement {
                 style="${align}"
                 +
                 type="text"
-                class="fd-input ovl-focusable fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-table-value-listcontrol ovl-table-value__${field.fieldKey}"
+                class="fd-input ovl-focusable fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-value-listcontrol ovl-value__${field.fieldKey}"
                 id="${field.id}"
                 @change=${(e) => this.handleChange(e)}
                 value="${displayValue}"

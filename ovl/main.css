@@ -109,16 +109,12 @@
   }
 }
 
-.ovl-table-value-textarea {
+.ovl-value-textarea {
   white-space: pre-wrap;
 }
 
 .ovl-detailview-container {
   margin-bottom: 1em;
-}
-
-.ovl-table-textarea-input {
-  height: 70px;
 }
 
 .ovl-formcontrol-label {

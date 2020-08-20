@@ -373,7 +373,7 @@ export const GetLabel = (
         customHeaderTooltip ? customHeaderTooltip : undefined,
         comp
       )}"
-      class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-table-label-${controltype} ovl-table-label__${field.fieldKey} ${customHeaderClassName}"
+      class="fd-form-label fd-has-type-1 ovl-formcontrol-label ovl-label-${controltype} ovl-label__${field.fieldKey} ${customHeaderClassName}"
       aria-required="${res.needsAttention}"
       for="${field.id}"
       >${caption}</label

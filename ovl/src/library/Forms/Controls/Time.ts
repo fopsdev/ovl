@@ -94,7 +94,7 @@ export class OvlTime extends OvlBaseElement {
             @focusout=${(e) => this.handleFocusOut(e)}
             style="${style} ${align}"
             autocomplete="off"
-            class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-time ovl-table-value__${field.fieldKey} ${customRowClassName}"
+            class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${customRowClassName}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"

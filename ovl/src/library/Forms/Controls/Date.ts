@@ -113,7 +113,7 @@ export class OvlDate extends OvlBaseElement {
             @keydown=${(e) => this.handleKeyDown(e)}
             style="${align}"
             autocomplete="off"
-            class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-table-value-date ovl-table-value__${field.fieldKey} ${customRowClassName}"
+            class="fd-input ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-value-date ovl-value__${field.fieldKey} ${customRowClassName}"
             type="${type}"
             id="${field.id}"
           />
