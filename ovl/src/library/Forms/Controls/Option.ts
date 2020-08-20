@@ -118,7 +118,11 @@ export class OvlOption extends OvlBaseElement {
                   class="fd-radio ovl-focusable ovl-formcontrol-input ovl-table-value-option ovl-table-value__${field.fieldKey}"
                   @click=${(e) => e.stopPropagation()}
                   @change=${(e) =>
-                    this.handleChange(e, rowKey, field.id + rowKey)}
+                    this.handleChange(
+                      e,
+                      listData[rowKey][list.valueField],
+                      field.id + rowKey
+                    )}
                   @focusout=${(e) =>
                     this.handleFocusOut(
                       e,
@@ -129,7 +133,10 @@ export class OvlOption extends OvlBaseElement {
                   class="fd-radio"
                   id="${field.id + rowKey}"
                   name="${rowKey}"
-                  ?checked=${field.convertedValue === rowKey}
+                  ?checked=${field.convertedValue ===
+                  listData[rowKey][list.valueField]}
+                  .checked=${field.convertedValue ===
+                  listData[rowKey][list.valueField]}
                 />
                 <label
                   class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.fieldKey}"
