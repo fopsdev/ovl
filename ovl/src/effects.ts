@@ -224,6 +224,11 @@ export const ovlFetch = async (
     // connection error
     // well...  go to offline mode
     ovl.state.ovl.app.offline = true
+
+    if (!OvlConfig._system.OfflineMode) {
+      SnackAdd("No Server Connection", "Warning")
+    }
+
     return {
       fetchParams: { url, reqOptions },
       headers: undefined,

@@ -2,7 +2,7 @@ import { html } from "../../../../ovl/node_modules/lit-html/lit-html"
 import { TableDataAndDef } from "../../../../ovl/src/library/Table/Table"
 import { getFormFieldsFromColumns } from "../../../../ovl/src/library/Table/helpers"
 import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
-import { ovltemp, N, api, uuidv4 } from "../../../../ovl/src/global/globals"
+import { ovltemp, N, uuidv4 } from "../../../../ovl/src/global/globals"
 import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
 import { Field_U_TypeId_GetList } from "./MobileTimeRecordingDetail/formActions"
 
@@ -49,7 +49,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
     let snackUid = uuidv4()
     SnackTrackedAdd("Zeit(en) werden übermittelt...", "Information", snackUid)
     await ovl.effects.ovl.postRequest(
-      state.ovl.apiUrl + "job/addworktime",
+      this.state.ovl.apiUrl + "job/addworktime",
       guids
     )
     // tag data as synched
@@ -92,6 +92,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
   }
 
   async handleDelete(e: Event, key: string) {
+    console.log("handel del")
     let def = this.state.demoApp.testtables.timeentries.tableDef
       .mobiletimerecording1
     let data = this.state.demoApp.testtables.timeentries
@@ -129,55 +130,47 @@ export class CompMobileTimeEntry extends OvlFormElement {
       )
       return html`
         <div class="fd-layout-panel ">
-          <div class="fd-tile">
-            <div class="fd-tile__content fd-has-type-2">
-              Zeiterfassung für
-              ${this.state.demoApp.user.firstName +
-              " " +
-              this.state.demoApp.user.lastName}
-            </div>
+          <div class="fd-has-type-2">
+            Zeiterfassung für
+            ${this.state.demoApp.user.firstName +
+            " " +
+            this.state.demoApp.user.lastName}
           </div>
 
           <div class="fd-container fd-container--fluid">
             <div class="fd-col--4">
-              <div class="fd-tile">
-                <div class="fd-tile__content">
-                  <ovl-datebox
-                    class="fd-form-item "
-                    .props="${() => {
-                      return { field: dateField }
-                    }}"
-                  >
-                  </ovl-datebox>
+              <div>
+                <ovl-datebox
+                  class="fd-form-item "
+                  .props="${() => {
+                    return { field: dateField }
+                  }}"
+                >
+                </ovl-datebox>
+              </div>
+            </div>
+            <div class="fd-col--4">
+              <div>
+                <div class="fd-form-item fd-has-type-1 ">
+                  <input
+                    class="fd-input"
+                    tabindex="9999"
+                    type="text"
+                    value="${fullDate}"
+                    readonly
+                  />
                 </div>
               </div>
             </div>
             <div class="fd-col--4">
-              <div class="fd-tile">
-                <div class="fd-tile__content">
-                  <div class="fd-form-item fd-has-type-1 ">
-                    <input
-                      class="fd-input"
-                      tabindex="9999"
-                      type="text"
-                      value="${fullDate}"
-                      readonly
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="fd-col--4">
-              <div class="fd-tile">
-                <div class="fd-tile__content">
-                  <div class="fd-form-item ">
-                    <button
-                      @click=${(e) => this.handleAddRowClick(e)}
-                      class="fd-button--emphasized sap-icon--add"
-                      style="margin-top:4px;"
-                      title="Datensatz hinzufügen"
-                    ></button>
-                  </div>
+              <div>
+                <div class="fd-form-item ">
+                  <button
+                    @click=${(e) => this.handleAddRowClick(e)}
+                    class="fd-button fd-button--emphasized sap-icon--add"
+                    style="margin-top:4px;"
+                    title="Datensatz hinzufügen"
+                  ></button>
                 </div>
               </div>
             </div>
@@ -192,6 +185,8 @@ export class CompMobileTimeEntry extends OvlFormElement {
                   <span
                     @click=${(e) => this.handleDelete(e, k)}
                     class="fd-list__icon sap-icon--decline"
+                    style="pointer-events: all; "
+                    tabindex="0"
                   ></span>
                 `
               }
@@ -211,8 +206,9 @@ export class CompMobileTimeEntry extends OvlFormElement {
                 " Std."
               return html`
                 <li
-                  class="fd-list__item animated fadeIn"
+                  class="fd-list__item  animated fadeIn"
                   style="padding-top:12px;padding-bottom:12px;height:auto;"
+                  role="listitem"
                 >
                   <span
                     style="white-space: normal;width: 100%;"
@@ -226,17 +222,15 @@ export class CompMobileTimeEntry extends OvlFormElement {
             })}
           </ul>
 
-          <div class="fd-tile">
-            <div class="fd-tile__content fd-has-type-2">
-              <button
-                ?disabled=${this.getKeysToSync().length === 0}
-                @click=${(e) => this.handleAddToSAPClick(e)}
-                class="fd-button--emphasized sap-icon--add"
-                title="Zeiten ins SAP übertragen..."
-              >
-                Sync to SAP
-              </button>
-            </div>
+          <div class="fd-has-type-2">
+            <button
+              ?disabled=${this.getKeysToSync().length === 0}
+              @click=${(e) => this.handleAddToSAPClick(e)}
+              class="fd-button fd-button--emphasized sap-icon--add"
+              title="Zeiten ins SAP übertragen..."
+            >
+              Sync to SAP
+            </button>
           </div>
         </div>
       `

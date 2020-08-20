@@ -400,7 +400,7 @@ export const InitApp: OvlAction<Init> = async (
   if (!res || !res.data) {
     if (!OvlConfig.offlineFirstOnReload) {
       if (!(await Rehydrate())) {
-        SnackAdd("No Api-Connection and no Offline data found!", "Error")
+        //SnackAdd("No Api-Connection and no Offline data found!", "Error")
         return
       }
       console.log("Network start failed. Got offline data...")

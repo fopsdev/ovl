@@ -12,7 +12,7 @@ export const FormShow: OvlAction = async (formState: FormState) => {
 export const FormChanged = async (value, { actions }) => {
   switch (value.fieldId) {
     case "date":
-      await actions.portal.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+      await actions.demoApp.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
         {
           selected: value.newConvertedVal,
         }

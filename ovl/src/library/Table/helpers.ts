@@ -404,7 +404,7 @@ export const initTableState = (
     }
 
     if (uiState.currentlyAddingKey === undefined) {
-      uiState.currentlyAddingKey = ""
+      //uiState.currentlyAddingKey = ""
     }
 
     if (uiState.dataFilteredAndSorted === undefined) {

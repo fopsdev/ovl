@@ -1018,7 +1018,7 @@ export class TableHeaderMenu extends OvlBaseElement {
           body: () => this.getBody(),
           emptySpaceClickHandlerFn: (e: Event) => {
             e.stopPropagation()
-            e.preventDefault()
+
             this.filterDropDownHidden = true
             //@ts-ignore
             this.getElementsByTagName("ovl-dialogholder")[0].doRender()

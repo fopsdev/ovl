@@ -251,12 +251,11 @@ export const TableRefreshDataFromServer: OvlAction<{
   // offline flag is handled separately
   // so as long as we are offline there will be no refresh
   // thats a good idea because there could be offline data which first needs to be persisted back before refreshing data
-  if (state.ovl.app.offline) {
+  if (state.ovl.app.offline && OvlConfig._system.OfflineMode) {
     return
   }
 
   let schema = value.data.schema
-
   let getSchema = false
   if (def.dataFetching.useSchema && Object.keys(schema).length === 0) {
     getSchema = true
@@ -911,9 +910,6 @@ const TableEditSaveRowHelper = async (
                   // if its offlineRetry don't do anything in case of offline error (elsewise the same data will be tried to be added again for offline handling)
                   return
                 }
-              } else {
-                SnackAdd("No Server Connection!", "Warning")
-                return
               }
             }
 
@@ -1372,6 +1368,7 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
   addRowDefInit(value.data.tableDef, newId, "add")
   actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
   addRowPage(def)
+  def.uiState.currentlyAddingKey = newId
 }
 
 export const TableOfflineRetryDeleteRow: OvlAction<
@@ -1486,9 +1483,6 @@ export const TableDeleteRow: OvlAction<
               } else {
                 return
               }
-            } else {
-              SnackAdd("No Server connection!", "Warning")
-              return false
             }
           } else {
             // handleError @@hook

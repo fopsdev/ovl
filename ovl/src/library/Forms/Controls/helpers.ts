@@ -132,8 +132,6 @@ export const KeyValueListFromServerFn = async (
     }
 
     //listData.lookupDef = res.data.lookupDef
-  } else if (!OvlConfig._system.OfflineMode) {
-    SnackAdd("No Server Connection", "Warning")
   }
 }
 
