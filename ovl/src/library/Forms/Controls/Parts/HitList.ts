@@ -67,7 +67,9 @@ export class OvlHitList extends OvlBaseElement {
   }
 
   handleMainKeyDown(e: KeyboardEvent) {
+    e.stopPropagation()
     if (e.key === "Escape") {
+      console.log("eescape")
       if (this.controlState.type === "overlay") {
         this.controlState.selectedCallback("@@ovlcanceled")
         this.click()

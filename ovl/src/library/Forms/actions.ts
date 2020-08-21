@@ -3,6 +3,7 @@ import {
   getDecimalValue,
   resolvePath,
   stringifyReplacer,
+  T,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -319,7 +320,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     return
   }
   if (!list.acceptEmpty && !value.newVal) {
-    ValidationAddError(validatorId, "Field cannot be empty", res)
+    ValidationAddError(validatorId, T("AppSelectValidValue"), res)
     return
   }
   if (list.acceptOnlyListValues && value.newVal) {
@@ -335,13 +336,18 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     let listdata: FieldGetList_ReturnType
     let fn = resolvePath(actions.custom, namespace)
     if (fn && fn[functionName]) {
+      console.log(value.newVal)
       listdata = fn[functionName](<FieldGetList_Type>{ row })
       if (
-        Object.keys(listdata.data).filter(
-          (rowKey) => rowKey.toString() === value.newVal.toString()
-        ).length < 1
+        Object.keys(listdata.data).filter((rowKey) => {
+          return (
+            listdata.data[rowKey][field.list.valueField].toString() ===
+            value.newVal.toString()
+          )
+        }).length < 1
       ) {
-        ValidationAddError(validatorId, "Needs to be a list entry", res)
+        console.log(T("AppNeedsToBeListEntry"))
+        ValidationAddError(validatorId, T("AppNeedsToBeListEntry"), res)
         return
       }
     }

@@ -396,7 +396,7 @@ export type ListFnReturnValue = {
   lookupDef2?: { [key: string]: LookupDef }
   lookupDef3?: { [key: string]: LookupDef }
   // index object is needed if lookup is referencing a regular table (which object indexes(keys) are not the primary key for handling, offline reasons)
-  index: {}
+  index?: {}
 }
 
 export type ColumnFilter = {

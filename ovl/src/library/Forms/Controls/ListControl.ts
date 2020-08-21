@@ -38,6 +38,7 @@ export type ListState = {
   displayValueField?: boolean
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
+  isSelect?: boolean
 }
 
 export class OvlListControl extends OvlBaseElement {
@@ -74,8 +75,12 @@ export class OvlListControl extends OvlBaseElement {
       row: GetRowFromFormState(formState),
     })
 
-    //@ts-ignore
-    let filterValue = document.getElementById(field.id).value
+    let filterValue = ""
+    // select should not filter just select items...
+    if (!field.list.isSelect) {
+      //@ts-ignore
+      filterValue = document.getElementById(field.id).value
+    }
     // only reach out to server if endpoint is maintained
     if (field.list.serverEndpoint) {
       await this.actions.ovl.internal.FillListControl({
@@ -152,7 +157,7 @@ export class OvlListControl extends OvlBaseElement {
     }
 
     if (selectedKey === "@@ovlescape") {
-      await this.resetLocalList()
+      await this.forceCloseLocalHitList()
     } else if (selectedKey !== "@@ovlcanceled") {
       let dataList: FieldGetList_ReturnType = resolvePath(
         this.actions.custom,
@@ -160,10 +165,10 @@ export class OvlListControl extends OvlBaseElement {
       )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
         row: GetRowFromFormState(this.formState),
       })
-      this.writeBackValue = selectedKey
-      if (dataList.index) {
-        this.writeBackValue = dataList.data[selectedKey][field.list.valueField]
-      }
+      //this.writeBackValue = selectedKey
+      //if (dataList.index) {
+      this.writeBackValue = dataList.data[selectedKey][field.list.valueField]
+      //}
       this.displayValue =
         dataList.data[selectedKey][this.field.field.list.displayField]
       let event = new CustomEvent("ovlchange", {
@@ -211,9 +216,10 @@ export class OvlListControl extends OvlBaseElement {
           row: GetRowFromFormState(formState),
         })
         let singleValue = filteredKeys[0]
-        if (dataList.index) {
-          singleValue = dataList.data[singleValue][field.list.valueField]
-        }
+        console.log(singleValue)
+        //if (dataList.index) {
+        singleValue = dataList.data[singleValue][field.list.valueField]
+        //}
         this.displayValue = GetListDisplayValue(
           field.list,
           singleValue,
@@ -312,13 +318,13 @@ export class OvlListControl extends OvlBaseElement {
             row: GetRowFromFormState(formState),
           })
           singleValue = filteredKeys[0]
-          if (listData.index) {
-            singleValue = listData.data[singleValue][field.list.valueField]
-          }
+          //if (listData.index) {
+          singleValue = listData.data[singleValue][field.list.valueField]
+          //}
           val = GetListDisplayValue(field.list, singleValue, listData)
         }
         // if it allow non list values also send a change
-        else if (!field.list.acceptOnlyListValues) {
+        else {
           singleValue = val
         }
         if (singleValue) {
@@ -442,9 +448,9 @@ export class OvlListControl extends OvlBaseElement {
           row: GetRowFromFormState(this.formState),
         })
         let singleValue = filteredKeys[0]
-        if (dataList.index) {
-          singleValue = dataList.data[singleValue][field.list.valueField]
-        }
+        //if (dataList.index) {
+        singleValue = dataList.data[singleValue][field.list.valueField]
+        //}
         this.displayValue = GetListDisplayValue(
           field.list,
           singleValue,
@@ -552,16 +558,16 @@ export class OvlListControl extends OvlBaseElement {
       }
       this.lastDisplayValue = displayValue
       let deleteButton
-      //if (this.state.ovl.uiState.isMobile) {
-      deleteButton = html`
-        <span
-          tabindex="-9999"
-          id="delete${field.id}"
-          @click=${(e) => this.handleDelete(e)}
-          class="fd-input-group__addon sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
-        ></span>
-      `
-      //}
+      if (!field.list.isSelect) {
+        deleteButton = html`
+          <span
+            tabindex="-9999"
+            id="delete${field.id}"
+            @click=${(e) => this.handleDelete(e)}
+            class="fd-input-group__addon sap-icon--decline ovl-formcontrol-input ovl-formcontrol-deletebutton ovl-formcontrol-listcontrol-deletebutton ovl-formcontrol-deletebutton__${field.fieldKey}"
+          ></span>
+        `
+      }
       let customValue = GetValueFromCustomFunction(
         this.field.row,
         field,
@@ -613,6 +619,10 @@ export class OvlListControl extends OvlBaseElement {
       //   }
       // }
 
+      let icon = "search"
+      if (field.list.isSelect) {
+        icon = "arrow-bottom"
+      }
       return html`
         ${hitListDialog}
         <div @focusout=${(e) => this.handleFocusOut(e)}>
@@ -648,7 +658,7 @@ export class OvlListControl extends OvlBaseElement {
                 @touchend=${(e) => this.handleListPopup(e)}
                 @keydown=${(e) => this.handleSearchKeyDown(e)}
                 @focus=${(e) => this.handleGotFocusSearch(e)}
-                class="fd-input-group__addon sap-icon--search ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
+                class="fd-input-group__addon sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
               ></span>
             </div>
 
