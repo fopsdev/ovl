@@ -291,7 +291,7 @@ export let tblTableTesting2: TableDef = {
       control: "list",
       list: {
         acceptEmpty: true,
-        acceptOnlyListValues: false,
+        acceptOnlyListValues: true,
         valueField: "Code",
         displayField: "U_Alpha",
         displayValueField: false,
