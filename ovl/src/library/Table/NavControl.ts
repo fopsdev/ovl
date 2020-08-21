@@ -67,10 +67,7 @@ export class TableNavControl extends OvlBaseElement {
   }
   async getUI() {
     return this.track(() => {
-      let compact = ""
-      if (this.nav.type === "row") {
-        compact = "fd-button--compact"
-      }
+      let navbuttonsclass = "ovl-table-navbuttons"
       let tableDef = this.nav.tableData.def
       let feature = tableDef.features
 
@@ -90,7 +87,7 @@ export class TableNavControl extends OvlBaseElement {
           <button
             title="${filterClearTooltip}"
             @click="${(e) => this.handleFilterClearClick(e)}"
-            class="fd-button ${compact} sap-icon--clear-filter animated fadeIn faster"
+            class="fd-button ${navbuttonsclass} sap-icon--clear-filter animated fadeIn faster"
           ></button>
         `
       }
@@ -105,7 +102,7 @@ export class TableNavControl extends OvlBaseElement {
         refresh = html`
           <button
             @click=${(e) => this.handleRefreshClick(e)}
-            class="fd-button ${compact} sap-icon--refresh"
+            class="fd-button ${navbuttonsclass} sap-icon--refresh"
             title="Ansicht aktualisieren"
           ></button>
         `
@@ -120,7 +117,7 @@ export class TableNavControl extends OvlBaseElement {
         add = html`
           <button
             @click=${(e) => this.handleAddRowClick(e)}
-            class="fd-button ${compact} sap-icon--add"
+            class="fd-button ${navbuttonsclass} sap-icon--add"
             title="Datensatz hinzufügen"
           ></button>
         `
@@ -137,7 +134,7 @@ export class TableNavControl extends OvlBaseElement {
           <button
             title="Tabellenfunktionen"
             @click="${(e) => this.handleMoreTableOptionsClick(e)}"
-            class="fd-button ${compact} sap-icon--overflow"
+            class="fd-button ${navbuttonsclass} sap-icon--overflow"
           ></button>
         `
       }
@@ -161,17 +158,17 @@ export class TableNavControl extends OvlBaseElement {
                 title="Erster Datensatz"
                 ?disabled=${paging.page === 0 || pages === 1}
                 @click="${(e) => this.handleSetPageClick(e, 0)}"
-                class="fd-button ${compact} sap-icon--media-rewind"
+                class="fd-button ${navbuttonsclass} sap-icon--media-rewind"
               ></button>
               <button
                 ?disabled=${paging.page === 0}
                 title="Vorheriger Datensatz"
                 @click="${(e) => this.handleSetPageClick(e, paging.page - 1)}"
-                class="fd-button ${compact} sap-icon--media-reverse"
+                class="fd-button ${navbuttonsclass} sap-icon--media-reverse"
               ></button>
               <button
                 style="padding-left:2px;padding-right:2px;"
-                class="fd-button ${compact}"
+                class="fd-button ${navbuttonsclass}"
               >
                 ${paging.page + 1}/${pages}
               </button>
@@ -179,13 +176,13 @@ export class TableNavControl extends OvlBaseElement {
                 title="Nächster Datensatz"
                 @click="${(e) => this.handleSetPageClick(e, paging.page + 1)}"
                 ?disabled=${paging.page + 1 === pages}
-                class="fd-button ${compact} sap-icon--media-play"
+                class="fd-button ${navbuttonsclass} sap-icon--media-play"
               ></button>
               <button
                 title="Letzter Datensatz"
                 @click="${(e) => this.handleSetPageClick(e, pages - 1)}"
                 ?disabled=${paging.page + 1 === pages || pages === 1}
-                class="fd-button ${compact} sap-icon--media-forward"
+                class="fd-button ${navbuttonsclass} sap-icon--media-forward"
               ></button>
             </div>
           `

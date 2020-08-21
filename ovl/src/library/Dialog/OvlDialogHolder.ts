@@ -48,14 +48,18 @@ export class OvlDialogHolder extends OvlBaseDialog {
     if (chk != "go on") {
       return chk
     }
-    return this.track(async () => {
+    return await this.track(async () => {
       this.state.ovl.dialogs[this.dialogType].closing
       let d = this.dialogHolderParams.dialogParts
-      return this.getDialogTemplate({
+      return await this.getDialogTemplate({
         title: d.title ? await d.title() : undefined,
-        body: d.body ? await d.body() : undefined,
-        header: d.header ? await d.header() : undefined,
-        footer: d.footer ? await d.footer() : undefined,
+        body: d.body ? await this.track(async () => await d.body()) : undefined,
+        header: d.header
+          ? await this.track(async () => await d.header())
+          : undefined,
+        footer: d.footer
+          ? await this.track(async () => await d.footer())
+          : undefined,
         customClass: d.customClass ? d.customClass() : undefined,
         type: d.type ? d.type : undefined,
         keyHandlerFn: d.keyHandlerFn,

@@ -44,11 +44,10 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const openOrderOverview = (e: Event) => {
-      // this.actions.global.GetFile({
-      //   fileName: "tst1.pdf",
-      //   fileType: "Test",
-      //   docNum: ""
-      // })
+      this.actions.ovl.internal.GetFile({
+        id1: "tst1.pdf",
+        cat: "Test",
+      })
       this.actions.ovl.navigation.NavigateTo("Order")
     }
 

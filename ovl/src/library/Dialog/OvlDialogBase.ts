@@ -128,9 +128,7 @@ export class OvlBaseDialog extends OvlBaseElement {
 
     let body
     if (dialogParts.body) {
-      body = html`<div
-        class="fd-message-box__body ovl-dialog-body ${scrollable}"
-      >
+      body = html`<div class="fd-message-box__body ovl-dialog-body">
         ${dialogParts.body}
       </div>`
     }
@@ -173,7 +171,8 @@ export class OvlBaseDialog extends OvlBaseElement {
         @keydown=${keyHandler}
         id="ovl-dialog"
       >
-        ${fullheader} ${body} ${footer}
+        <div class="${scrollable}">${fullheader} ${body}</div>
+        ${footer}
       </div>
     </div>`
   }

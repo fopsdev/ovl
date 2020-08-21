@@ -1,4 +1,4 @@
-import { OvlConfig } from "../init"
+import { OvlConfig, FileOpenType } from "../init"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"
@@ -355,10 +355,16 @@ export const ShowFile = (blob, type, fileName) => {
 
   anchor.textContent = "dummy"
   anchor.style.display = "none"
-  if (!ovl.state.ovl.uiState.isIOS) {
-    anchor.download = fileName
-    anchor.target = "_blank"
+
+  let openType: FileOpenType = "open"
+  if (OvlConfig.fileOpenMode) {
+    openType = OvlConfig.fileOpenMode()
   }
+
+  if (openType === "download") {
+    anchor.download = fileName
+  }
+  anchor.target = "_blank"
   document.body.appendChild(anchor)
   gotoFileFlag = true
   anchor.click()

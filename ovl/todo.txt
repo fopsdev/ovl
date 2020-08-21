@@ -2,6 +2,8 @@
 
 Todos:
 
+- implement SASS precompiler (for eg. using compact buttons for navigation or not)
+
 - on android mobile try to enter a new translation in bigeditform....save button won't get activated...maybe related to bigeditform in general
   -> yeah its definitiv fishy...also on bigeditform on browser
 X - Lookup: DisplayValueField not working
@@ -21,17 +23,17 @@ X - set trap for parent in set handler.
 
 X - unify dialog and screens state . rethink tying of screen state (not the visible/isClosing stuff) to ovl.screens
 
-- go after the JSON.stringifies in Code... They are not more necessary because its handled by the proxifier now
+X - go after the JSON.stringifies in Code... They are not more necessary because its handled by the proxifier now
 
 X - dialog HeaderMenuTable... closing doesn not work. Maybe return a nothing so lit-html for sure makes nothing
 
 X - dialog base class which takes care of setting a configurable state to visible false (maybe isClosing state is not needed)
 X - this base class should be used from system dialogs (OkCancel) from Standalone Fomrs (Login) from Overlays
 
-- reimplement offline hooks
+X - reimplement offline hooks
 - Tab Feature for Edit
-- detailview as its own screen (configurable)
-- maybe consider push/pop active elementracker again...
+N - detailview as its own screen (configurable)
+N - maybe consider push/pop active elementracker again...
 
 X - simplify acctions export for custom
 X - check sort if column is memo_fr, needs language param or some other fast logic
@@ -60,8 +62,8 @@ X- Tabs for Detailview
     viewTab: "tab1"
     editTab: "tab1"
   }
-- TabContent-Hook
-- Custom Tabs
+X - TabContent-Hook
+X - Custom Tabs
 
 
 X - Rethink Translation Display. Maybe isntead of setting to "none" for translatable fields which are not in the ui use a different value.
@@ -74,7 +76,7 @@ X - Concept for Translations of Columns. Maybe add a "translatable: true" to the
   This would leave the translations as they are for the UI only. And doesn't need additional backend logic.
   For the Assets description we should always use a separate Text Column (Which could be translatable like indicated above as well) 
 
-  - Currently implemented but missing refresh. Looks like visbleColumns Object doesn't get tgransfered correctly to childs. Need check. 
+X - Currently implemented but missing refresh. Looks like visbleColumns Object doesn't get tgransfered correctly to childs. Need check. 
     -> Sequence of rendering is undefined, so no way to pass parent props. Its possibly due of async rendering (not sure)
     -> Solve by using a TableNeedsRfresh flag in state which repaints the whole table if needed
 
@@ -113,12 +115,12 @@ X  - type Checkbox
 - type Upload File
 - type Image
 
-Offline Save/Delete:
+X - Offline Save/Delete:
 - if  a post (all xhr calls are in the same post action) fails (try catch?) then the payload of that post action will be saved somehow
   its important to save those post payloads into a list sorted by execution time (also hand over that execution time then on execution. it can be used as the eg. Docdate when creating documents)
   added rows should get a key like ovl_offline+uuid and related childs added can be tracked because of next feature
 
-Change Tracking:
+X (needs to be handled with the custom longpoll)- Change Tracking:
 - long poll which can be configured with tablenames to track
   the result of the long poll will be pushed back to a state object
   now components interested in server changes just need to track this state

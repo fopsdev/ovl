@@ -13,56 +13,54 @@ export class CompSummaryChart extends OvlBaseElement {
     return this.track(() => {
       return html`
         <div class="chartwidth">
-          <canvas
-            id="canvas"
-            style="${this.chartProps}"
-            class="chartjs-render-monitor"
-          ></canvas>
+          <canvas id="canvas" style="${this.chartProps}"></canvas>
         </div>
       `
     })
   }
   getData() {
-    //@ts-ignore
-    let color = Chart.helpers.color
-    return {
-      labels: this.state.demoApp.chartData.labels.map(
-        (m, i) =>
-          T("AppMonth" + m.toString()) +
-          " " +
-          this.state.demoApp.chartData.labels_ext[i].toString()
-      ),
-      datasets: [
-        {
-          label: T("PortalCurrentYear"),
-          data: JSON.parse(
-            JSON.stringify(
-              this.state.demoApp.chartData.values_1,
-              stringifyReplacer
-            )
-          ),
-          //@ts-ignore
-          backgroundColor: color("rgb(255, 0, 0)").alpha(0.5).rgbString(),
-          //@ts-ignore
-          borderColor: "rgb(255, 0, 0)",
-          borderWidth: 1,
-        },
-        {
-          label: T("PortalLastYear"),
-          data: JSON.parse(
-            JSON.stringify(
-              this.state.demoApp.chartData.values_2,
-              stringifyReplacer
-            )
-          ),
-          //@ts-ignore
-          backgroundColor: color("rgb(54, 162, 235)").alpha(0.5).rgbString(),
-          //@ts-ignore
-          borderColor: "rgb(54, 162, 235)",
-          borderWidth: 1,
-        },
-      ],
-    }
+    return this.track(() => {
+      //@ts-ignore
+      let color = Chart.helpers.color
+      return {
+        labels: this.state.demoApp.chartData.labels.map(
+          (m, i) =>
+            T("AppMonth" + m.toString()) +
+            " " +
+            this.state.demoApp.chartData.labels_ext[i].toString()
+        ),
+        datasets: [
+          {
+            label: T("PortalCurrentYear"),
+            data: JSON.parse(
+              JSON.stringify(
+                this.state.demoApp.chartData.values_1,
+                stringifyReplacer
+              )
+            ),
+            //@ts-ignore
+            backgroundColor: color("rgb(255, 0, 0)").alpha(0.5).rgbString(),
+            //@ts-ignore
+            borderColor: "rgb(255, 0, 0)",
+            borderWidth: 1,
+          },
+          {
+            label: T("PortalLastYear"),
+            data: JSON.parse(
+              JSON.stringify(
+                this.state.demoApp.chartData.values_2,
+                stringifyReplacer
+              )
+            ),
+            //@ts-ignore
+            backgroundColor: color("rgb(54, 162, 235)").alpha(0.5).rgbString(),
+            //@ts-ignore
+            borderColor: "rgb(54, 162, 235)",
+            borderWidth: 1,
+          },
+        ],
+      }
+    })
   }
   disconnectedCallback() {
     super.disconnectedCallback()

@@ -12,6 +12,11 @@ export type Init = {
   devServer: string
 }
 
+export type FileOpenType = "open" | "download"
+
+export type FileOpenFnType = {
+  (): FileOpenType
+}
 type OvlConfig = {
   _system: {
     debugTracking: boolean
@@ -38,6 +43,7 @@ type OvlConfig = {
      thats why we have a check function to check if they should be enabled
   */
   stickyHeaderEnabled: (state: OvlState) => {}
+  fileOpenMode: FileOpenFnType
   defaultDialogTitle?: string
   offlineFirstOnReload?: boolean
 }
@@ -63,6 +69,9 @@ let OvlConfig: OvlConfig = {
   requiredActions: undefined,
   saveStateCallback: undefined,
   stickyHeaderEnabled: () => false,
+  fileOpenMode: () => {
+    return "open"
+  },
 }
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore

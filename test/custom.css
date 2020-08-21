@@ -147,11 +147,29 @@
   outline: none;
 }
 
-.ovl-detailview .chartwidth {
-  width: 98%;
-}
 .chartwidth {
   width: 97vw;
+  margin-left: -20px;
+}
+
+.ovl-detailview .chartwidth {
+  width: 100%;
+  margin-left: 0;
+}
+
+.ovl-table-navbuttons {
+  /* copied from fundamental...maybe better approach to use SASS in future...
+  /*.fd-button--compact { */
+  height: 1.625rem;
+  max-height: 1.625rem;
+  min-width: 2rem;
+  padding-left: 0.4375rem;
+  padding-left: calc(0.5rem - var(--sapButton_BorderWidth, 0.0625rem));
+  padding-right: 0.4375rem;
+  padding-right: calc(0.5rem - var(--sapButton_BorderWidth, 0.0625rem));
+  line-height: 1.5rem;
+  line-height: calc(1.625rem - 2 * var(--sapButton_BorderWidth, 0.0625rem));
+  /*}*/
 }
 
 @media (max-width: 600px) {

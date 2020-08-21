@@ -130,7 +130,11 @@ export const ovlFetch = async (
       ovl.state.ovl.user.token = ""
       return
     } else if (req.status === 404) {
-      snackMessage = T("AppResourceNotFound")
+      let nfurl = url
+      if (data.id1) {
+        nfurl = data.id1
+      }
+      snackMessage = T("AppResourceNotFound", [nfurl])
       snackMessageType = "Error"
       return {
         headers: req.headers,
