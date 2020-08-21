@@ -2,9 +2,13 @@
 
 Todos:
 
-- implement SASS precompiler (for eg. using compact buttons for navigation or not)
+- Edit tabs
+- Upload Control
+- Link Control
 
-- on android mobile try to enter a new translation in bigeditform....save button won't get activated...maybe related to bigeditform in general
+? implement SASS precompiler (for eg. using compact buttons for navigation or not)
+
+X - on android mobile try to enter a new translation in bigeditform....save button won't get activated...maybe related to bigeditform in general
   -> yeah its definitiv fishy...also on bigeditform on browser
 X - Lookup: DisplayValueField not working
 X- Lookup: If users enters code directly and it is a index data then returns "Keine Einträge gefunde..." which is wrong
@@ -111,9 +115,6 @@ X - Rearrange customFunctions content into multiple files (its super big coverin
 
 Controls:
 X  - type Checkbox
-- type Link
-- type Upload File
-- type Image
 
 X - Offline Save/Delete:
 - if  a post (all xhr calls are in the same post action) fails (try catch?) then the payload of that post action will be saved somehow

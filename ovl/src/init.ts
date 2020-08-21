@@ -12,11 +12,8 @@ export type Init = {
   devServer: string
 }
 
-export type FileOpenType = "open" | "download"
+type FileOpenFnType = (anchor: HTMLAnchorElement, fileName: string) => void
 
-export type FileOpenFnType = {
-  (): FileOpenType
-}
 type OvlConfig = {
   _system: {
     debugTracking: boolean
@@ -69,8 +66,9 @@ let OvlConfig: OvlConfig = {
   requiredActions: undefined,
   saveStateCallback: undefined,
   stickyHeaderEnabled: () => false,
-  fileOpenMode: () => {
-    return "open"
+  fileOpenMode: (anchor, fileName) => {
+    // sample if file should be downloaded
+    // anchor.download=fileName
   },
 }
 // ######## manage global config stuff here ###################################################################################################

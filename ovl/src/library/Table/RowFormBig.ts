@@ -77,13 +77,14 @@ export class TableRowFormBig extends OvlFormElement {
       let mobileTooltip
 
       let searchDataCol = e.target
-
-      while (searchDataCol) {
+      let i = 0
+      while (searchDataCol && i < 3) {
         if (searchDataCol.title) {
           mobileTooltip = searchDataCol.title
           break
         }
         searchDataCol = searchDataCol.parentNode
+        i++
       }
 
       if (mobileTooltip) {

@@ -1,9 +1,10 @@
-import { TableDefIds, OvlAction } from "../../../../ovl/src/index"
+import { TableDefIds, OvlAction, FormType } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
 import { getDateValue } from "../../../../ovl/src/global/globals"
 import { ScreenNavigateOut_ReturnType } from "../../../../ovl/src/global/hooks"
+import { stateStore } from "../../../../ovl/src/offlineStorage"
 
 /* this is for the mobiletimeentryform screen */
 export const ScreenShow: OvlAction = async (_) => {
@@ -22,7 +23,9 @@ export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
 }
 
 let initialised = false
-export const ScreenNavigateIn: OvlAction = async (_, { actions }) => {
+export const ScreenNavigateIn: OvlAction = async (_, { actions, state }) => {
+  let mainFormInstanceId = "mobiletimerecordingmain1"
+  let formType: FormType = "MobileTimeEntryMain"
   if (!initialised) {
     let dt = new Date()
     let convDate = dt.toISOString().substring(0, 10) + "T00:00:00"
@@ -32,21 +35,24 @@ export const ScreenNavigateIn: OvlAction = async (_, { actions }) => {
         type: "date",
       },
     }
-    let mainFormInstanceId = "mobiletimerecordingmain1"
+
     let initForm: InitForm = {
       namespace: "testtables.mobiletimerecordingmain",
       instanceId: mainFormInstanceId,
-      formType: "MobileTimeEntryMain",
+      formType,
       fields,
     }
     actions.ovl.form.InitForm(initForm)
-    await actions.demoApp.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
-      {
-        selected: convDate,
-      }
-    )
     initialised = true
   }
+
+  await actions.demoApp.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+    {
+      selected:
+        state.ovl.forms[formType][mainFormInstanceId].fields.date
+          .convertedValue,
+    }
+  )
 }
 
 export const ScreenNavigateOut: OvlAction<

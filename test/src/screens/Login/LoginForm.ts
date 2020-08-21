@@ -26,6 +26,22 @@ export class CompLoginForm extends OvlFormElement {
         </ovl-textbox>
       </div>
     `
+
+    let hideForgotPassword = " hide "
+    if (
+      !this.state.ovl.libState.indicator.open &&
+      this.formState.fields.user.validationResult.valid &&
+      this.formState.fields.user.value
+    ) {
+      hideForgotPassword = ""
+    }
+
+    let handleForgotPw = (e: Event) => {
+      e.preventDefault()
+      e.stopPropagation()
+      this.actions.demoApp.system.user.ForgotPw(this.formState)
+    }
+
     return html`
       <div class="fd-form__group">
         <div class="fd-form-item">
@@ -37,6 +53,12 @@ export class CompLoginForm extends OvlFormElement {
           </ovl-textbox>
         </div>
         ${pwBox}
+        <a
+          @click=${handleForgotPw}
+          href="#"
+          class="fd-link ${hideForgotPassword}"
+          >${T("AppLoginForgotPassword")}</a
+        >
       </div>
     `
   }

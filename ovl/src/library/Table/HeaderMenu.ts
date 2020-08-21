@@ -998,7 +998,7 @@ export class TableHeaderMenu extends OvlBaseElement {
         @click="${(e) => this.handleCloseHeaderMenu(e)}"
         style="margin-left:4px;"
         title="Abbrechen"
-        class="fd-button fd-button--negative sap-icon--decline"
+        class="fd-button fd-button--negative sap-icon--decline ovl-table-navbuttons"
       ></button>`
   }
   async getUI() {

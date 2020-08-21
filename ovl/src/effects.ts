@@ -12,9 +12,10 @@ export const postRequest = async (
   url,
   data,
   isBlob?: boolean,
-  noSnack?: boolean
+  noSnack?: boolean,
+  customTimeoutMs?: number
 ) => {
-  return await ovlFetch(url, data, "POST", isBlob, noSnack)
+  return await ovlFetch(url, data, "POST", isBlob, noSnack, customTimeoutMs)
 }
 
 export type GETRequestParams = {
@@ -39,7 +40,8 @@ export const ovlFetch = async (
   data,
   method: string,
   isBlob?: boolean,
-  noSnack?: boolean
+  noSnack?: boolean,
+  customTimeoutMs?: number
 ) => {
   let res
   let snackMessage = ""
@@ -105,10 +107,13 @@ export const ovlFetch = async (
 
     const controller = new AbortController()
     const { signal } = controller
-
+    let timeOutMs = OvlConfig._system.fetchTimeout
+    if (customTimeoutMs) {
+      timeOutMs = customTimeoutMs
+    }
     timer = setTimeout(() => {
       controller.abort()
-    }, OvlConfig._system.fetchTimeout)
+    }, timeOutMs)
 
     reqOptions.signal = signal
 

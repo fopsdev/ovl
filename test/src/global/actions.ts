@@ -195,11 +195,11 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
   }
   let fields: { [key: string]: FormFields } = {
     user: {
-      value: "info@itflies.ch",
+      value: "",
       ui: { labelTranslationKey: "AppLoginUser" },
     },
     pw: {
-      value: "Test1234",
+      value: "",
       ui: { labelTranslationKey: "AppLoginPassword", isPassword: true },
     },
   }
@@ -211,6 +211,6 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
     initialFocusElementId: "user",
   }
   await actions.ovl.form.InitForm(loginForm)
-  await actions.demoApp.system.user.Login(state.ovl.forms.Login.loginform)
-  actions.ovl.navigation.NavigateTo("MobileTimeEntry")
+  // await actions.demoApp.system.user.Login(state.ovl.forms.Login.loginform)
+  // actions.ovl.navigation.NavigateTo("MobileTimeEntry")
 }
