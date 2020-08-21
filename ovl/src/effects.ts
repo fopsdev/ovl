@@ -6,7 +6,7 @@ import { SnackType } from "./library/Snack/Snack"
 import { ovl } from "."
 import { AddSnack } from "./library/Snack/actions"
 
-export let lastOfflineMsg
+export let lastNoServerConnectionMsg: number
 
 export const postRequest = async (
   url,
@@ -236,9 +236,15 @@ export const ovlFetch = async (
     // connection error
     // well...  go to offline mode
     ovl.state.ovl.app.offline = true
-
+    let now = Date.now()
     if (!OvlConfig._system.OfflineMode) {
-      SnackAdd("No Server Connection", "Warning")
+      if (
+        !lastNoServerConnectionMsg ||
+        now - lastNoServerConnectionMsg > 4000
+      ) {
+        lastNoServerConnectionMsg = now
+        SnackAdd(T("AppNoServerConnection"), "Warning")
+      }
     }
 
     return {
