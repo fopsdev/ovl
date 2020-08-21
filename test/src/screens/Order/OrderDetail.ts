@@ -19,44 +19,44 @@ export class CompOrderDetail extends OvlBaseElement {
           </div>
           <div class="fd-layout-panel__body">
             <div class="cols2">
-              <div>
+              <div class="portal-orderdetail-cardcode-label">
                 ${T("PortalCardCode")}
               </div>
-              <div>
+              <div class="portal-orderdetail-cardcode-value">
                 ${order.cardCode}
               </div>
-              <div>
+              <div class="portal-orderdetail-cardname-label">
                 ${T("PortalCardName")}
               </div>
-              <div>
+              <div class="portal-orderdetail-cardname-value">
                 ${order.cardName}
               </div>
 
-              <div>
+              <div class="portal-orderdetail-docnum-label">
                 ${T("PortalOrderDocNum")}
               </div>
-              <div>
+              <div class="portal-orderdetail-docnum-value">
                 ${key}
               </div>
 
-              <div>
+              <div class="portal-orderdetail-docdate-label">
                 ${T("PortalOrderDocDate")}
               </div>
-              <div>
+              <div class="portal-orderdetail-docdate-value">
                 ${D(order.docDate)}
               </div>
 
-              <div>
+              <div class="portal-orderdetail-deliverydate-label">
                 ${T("PortalDeliveryDate")}
               </div>
-              <div>
+              <div class="portal-orderdetail-deliverydate-value">
                 ${D(order.deliveryDate)}
               </div>
 
-              <div>
+              <div class="portal-orderdetail-commission-label">
                 ${T("PortalCommission")}
               </div>
-              <div>
+              <div class="portal-orderdetail-commission-value">
                 ${order.refNum}
               </div>
             </div>

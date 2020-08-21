@@ -203,6 +203,11 @@
   }
 }
 
+.portal-orderdetail-commission-value,
+.portal-orderdetail-commission-label {
+  font-weight: bold;
+}
+
 .ovl-blink {
   animation: blinkingText 1.2s infinite;
 }
