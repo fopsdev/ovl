@@ -57,12 +57,15 @@ Col1: {type: "text", translationKey:"AppMyText"},
 Col2: {type: "date", translationKey:"AppMyDate"},
 ...
 }
+```
+and
+```js
 displayDef: {
  keyColumn: "Col1",
  displayColumn: "Col2"
 }
-
 ```
+
 
 In the columndef we just say:
 ```js
