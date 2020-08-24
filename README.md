@@ -52,10 +52,16 @@ This simplifies complex list handling in the end.
 As well a Lookup List needs to have a type and ui translation:
 ```js
 {
+columnDef:{
 Col1: {type: "text", translationKey:"AppMyText"},
 Col2: {type: "date", translationKey:"AppMyDate"},
 ...
 }
+displayDef: {
+ keyColumn: "Col1",
+ displayColumn: "Col2"
+}
+
 ```
 
 In the columndef we just say:
