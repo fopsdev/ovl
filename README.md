@@ -77,12 +77,21 @@ export type ListState = {
   isSelect?: boolean
 }
 ```
-If ovl finds the ```list``` property in the def it will use a Function named ```Field_U_Select4_GetList``` to retrieve the following data:
+
+If ovl finds the ```list``` property in the def it will use a Function named
+```Field_U_Select4_GetListDeps``` to get the list dependencies which are needed for caching internally
+it shoudl return an object like:
+```js
+{
+dep1:string | number
+dep2:string | number
+}
+```
+and then it will use this result to call
+ ```Field_U_Select4_GetList``` to retrieve the following data:
 - ```data``` object as explained above
 - ```lookupDef``` object as explained above
-- ```keyColumn``` the column where the key is saved
-- ```displayColumn``` the column to display
-
+- ```displayDef``` object as explained above
 
 This two structures are the base for all ovl-lookuplists.
 They cover the usecases:
