@@ -23,13 +23,6 @@ import { FormState } from "../actions"
 import { OvlState, OvlActions, OvlEffects, ovl } from "../../.."
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 
-type ListFunction = (
-  row: { [key: string]: {} },
-  state: OvlState,
-  actions: OvlActions,
-  effects: OvlEffects
-) => any //ListFnReturnValue -> gives a ton of ts errors. not sure why. so i've put any for now
-
 export type ListState = {
   serverEndpoint?: string
   displayField: string
@@ -45,14 +38,9 @@ export class OvlListControl extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
-  searchElement: any
-  deleteElement: any
   localList: TemplateResult
   hitListDialogBody: TemplateResult
   hitListDialogFooter: TemplateResult
-  displayValue: any
-  writeBackValue: any
-  lastDisplayValue: any
   timer: any
 
   formState: FormState
@@ -133,7 +121,6 @@ export class OvlListControl extends OvlBaseElement {
         }}
       ></ovl-hitlist>
     `
-    await this.resetLocalList()
 
     this.actions.ovl.dialog.DialogOpen({
       dialogType: "HitListDialog",
@@ -156,81 +143,29 @@ export class OvlListControl extends OvlBaseElement {
       }, 0)
     }
 
-    if (selectedKey === "@@ovlescape") {
-      await this.forceCloseLocalHitList()
-    } else if (selectedKey !== "@@ovlcanceled") {
+    if (selectedKey === "@@ovlcanceled" || selectedKey === "@@ovlescape") {
+      this.forceCloseLocalHitList()
+    } else {
+      this.localList = null
       let dataList: FieldGetList_ReturnType = resolvePath(
         this.actions.custom,
         this.formState.namespace
       )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
         row: GetRowFromFormState(this.formState),
       })
-      //this.writeBackValue = selectedKey
-      //if (dataList.index) {
-      this.writeBackValue = dataList.data[selectedKey][field.list.valueField]
-      //}
-      this.displayValue =
-        dataList.data[selectedKey][this.field.field.list.displayField]
+      let writeBackValue = selectedKey
+      if (dataList.index) {
+        writeBackValue = dataList.data[selectedKey][field.list.valueField]
+      }
+      this.inputElement.value =
+        dataList.data[selectedKey][field.list.displayField]
+
       let event = new CustomEvent("ovlchange", {
         bubbles: true,
-        detail: { val: this.writeBackValue, id: this.field.field.id },
+        detail: { val: writeBackValue, id: field.id },
       })
-      this.inputElement.dispatchEvent(event)
-      //this.writeBackValue = undefined
-
-      this.localList = null
-      await this.resetLocalList()
-      if (this.deleteElement) {
-        this.deleteElement.classList.remove("hide")
-      }
+      await this.inputElement.dispatchEvent(event)
     }
-  }
-
-  handleChange(e: Event) {
-    let val = this.inputElement.value
-    //if (this.localList !== null) {
-
-    // this.actions.ovl.internal.ChangeField({
-    //   fieldId: this.field.field.fieldKey,
-    //   formState: this.formState,
-    //   isInit: true,
-    //   value: val,
-    // })
-
-    if (val) {
-      let field = this.field.field
-      let formState = this.state.ovl.forms[field.formType][field.formId]
-      let filteredKeys = FilterHitList(
-        field.list,
-        val,
-        formState,
-        this.state,
-        field.fieldKey,
-        10
-      )
-      if (filteredKeys.length === 1) {
-        let dataList: FieldGetList_ReturnType = resolvePath(
-          this.actions.custom,
-          formState.namespace
-        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-          row: GetRowFromFormState(formState),
-        })
-        let singleValue = filteredKeys[0]
-        console.log(singleValue)
-        //if (dataList.index) {
-        singleValue = dataList.data[singleValue][field.list.valueField]
-        //}
-        this.displayValue = GetListDisplayValue(
-          field.list,
-          singleValue,
-          dataList
-        )
-        val = singleValue
-      }
-    }
-    this.writeBackValue = val
-    e.stopPropagation()
-    e.preventDefault()
   }
 
   handleGotFocusSearch(e: Event) {
@@ -239,20 +174,16 @@ export class OvlListControl extends OvlBaseElement {
   // // same here
   async handleFocusOut(e: Event) {
     let field = this.field.field
-    let formState = this.state.ovl.forms[field.formType][field.formId]
-
     let fieldId = field.id
     //@ts-ignore
     let relatedTarget = e.relatedTarget
     // if related target is null or not one of the contain elements inside the div then the focus was moved out...
     // ... and we need to trigger our change event if needed
     let movedOut: boolean = false
-    // the selection overlay doesn't count
     let idToCheck
     if (relatedTarget) {
       idToCheck = relatedTarget.id
     }
-    //if (!this.state.ovl.libState.overlay2.ope) {
     if (relatedTarget === null) {
       movedOut = true
     } else {
@@ -262,116 +193,22 @@ export class OvlListControl extends OvlBaseElement {
       }
     }
     if (movedOut) {
-      if (this.writeBackValue !== undefined) {
-        // we have som changes inside our div
-        // so lets fire the ovlchange event
-        this.displayValue = undefined
-        let event = new CustomEvent("ovlchange", {
-          bubbles: true,
-          detail: { val: this.writeBackValue, id: fieldId },
-        })
-        await this.inputElement.dispatchEvent(event)
-        this.writeBackValue = undefined
+      let event = new CustomEvent("ovlfocusout", {
+        bubbles: true,
+        detail: { id: fieldId },
+      })
+      await this.inputElement.dispatchEvent(event)
 
-        this.localList = null
-        await this.doRender()
-
-        return
-      } else {
-        //it was just a focus out without changes
-        // still we need to trigger our ovlfocusout event so the main form class can handle them
-        this.displayValue = undefined
-
-        let event = new CustomEvent("ovlfocusout", {
-          bubbles: true,
-          detail: { id: fieldId },
-        })
-        await this.inputElement.dispatchEvent(event)
-        this.writeBackValue = undefined
-        this.localList = null
-        await this.doRender()
-        return
-      }
-    }
-
-    if (idToCheck === "search" + fieldId || idToCheck === "delete" + fieldId) {
-      let val = this.writeBackValue
-      if (val === undefined) {
-        val = this.inputElement.value
-      }
-      if (val) {
-        //if (this.localList !== null) {
-        let filteredKeys = FilterHitList(
-          field.list,
-          val,
-          formState,
-          this.state,
-          field.fieldKey,
-          10
-        )
-        let singleValue
-        if (filteredKeys.length === 1) {
-          let listData: FieldGetList_ReturnType = resolvePath(
-            this.actions.custom,
-            formState.namespace
-          )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-            row: GetRowFromFormState(formState),
-          })
-          singleValue = filteredKeys[0]
-          //if (listData.index) {
-          singleValue = listData.data[singleValue][field.list.valueField]
-          //}
-          val = GetListDisplayValue(field.list, singleValue, listData)
-        }
-        // if it allow non list values also send a change
-        else {
-          singleValue = val
-        }
-        if (singleValue) {
-          let fields = formState.fields
-          let foundId
-          Object.keys(fields).some((f) => {
-            if (fields[f].id === fieldId) {
-              foundId = f
-              return true
-            }
-            return false
-          })
-
-          let listData: FieldGetList_ReturnType = resolvePath(
-            this.actions.custom,
-            formState.namespace
-          )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-            row: GetRowFromFormState(formState),
-          })
-
-          val = GetListDisplayValue(field.list, singleValue, listData)
-
-          if (singleValue !== formState.fields[foundId].convertedValue) {
-            this.writeBackValue = singleValue
-            let event = new CustomEvent("ovlchange", {
-              bubbles: true,
-              detail: { val: singleValue, id: fieldId },
-            })
-            await this.inputElement.dispatchEvent(event)
-          }
-        }
-      } else {
-        this.writeBackValue = ""
-      }
-
-      //}
-      this.displayValue = val
-      this.resetLocalList()
+      this.forceCloseLocalHitList()
     }
   }
   handleDelete(e: Event) {
-    this.displayValue = ""
-    this.inputElement.value = this.displayValue
-    this.writeBackValue = ""
-    if (this.deleteElement) {
-      this.deleteElement.classList.add("hide")
-    }
+    this.actions.ovl.internal.SetField({
+      fieldId: this.field.field.fieldKey,
+      value: "",
+      formState: this.formState,
+      isInit: true,
+    })
     this.inputElement.focus()
   }
   handleSearchKeyDown(e: KeyboardEvent) {
@@ -379,14 +216,15 @@ export class OvlListControl extends OvlBaseElement {
       this.handleListPopup(e)
     }
   }
-  handleKeyDown(e: KeyboardEvent) {
+  async handleKey(e: KeyboardEvent) {
     if (
       e.key === "Shift" ||
       e.key === "Home" ||
       e.key === "Tab" ||
       e.key === "End" ||
       e.key === "ArrowLeft" ||
-      e.key === "ArrowRight"
+      e.key === "ArrowRight" ||
+      e.key === "ArrowUp"
     ) {
       return
     }
@@ -397,32 +235,21 @@ export class OvlListControl extends OvlBaseElement {
       openLocalList = true
       waitTime = 0
     }
-    // if (e.key.length > 2) {
-    //   alert(e.key)
-    // }
 
     let field = this.field.field
 
     let filterValue = this.inputElement.value
+    console.log(e)
     if (!openLocalList) {
-      if (!filterValue || e.key === "Escape") {
-        this.setValues("", "")
-        this.resetLocalList()
+      if (e.key === "Escape") {
         this.forceCloseLocalHitList()
-
-        if (filterValue) {
-          e.stopPropagation()
-        }
         return
       }
     }
 
     this.timer = setTimeout(async () => {
       //@ts-ignore
-      let filterValue = this.inputElement.value
-
-      this.setValues(undefined, filterValue)
-
+      filterValue = document.getElementById(field.id).value
       let filteredKeys = FilterHitList(
         field.list,
         filterValue,
@@ -432,40 +259,40 @@ export class OvlListControl extends OvlBaseElement {
         10
       )
 
-      if (filteredKeys.length < 1) {
-        // maybe the user added directly a code and we have a index
-        if (this.deleteElement) {
-          this.deleteElement.classList.remove("hide")
+      if (!openLocalList) {
+        let writeBackValue = filterValue
+        let hit
+        if (filteredKeys.length === 1 && writeBackValue) {
+          let listData: FieldGetList_ReturnType = resolvePath(
+            this.actions.custom,
+            this.formState.namespace
+          )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+            row: GetRowFromFormState(this.formState),
+          })
+
+          hit = filteredKeys[0]
+          writeBackValue = hit
+          if (listData.index) {
+            writeBackValue = listData.data[hit][field.list.valueField]
+          }
+          this.inputElement.value = listData.data[hit][field.list.displayField]
         }
-        SnackAdd("Keine passenden Einträge gefunden", "Warning", 3000)
-      } else if (filteredKeys.length === 1 && !field.list.serverEndpoint) {
-        // just handles the case when it is a local list with no more server candidates
-        // then 1 hit = the one and select it
-        let dataList: FieldGetList_ReturnType = resolvePath(
-          this.actions.custom,
-          this.formState.namespace
-        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-          row: GetRowFromFormState(this.formState),
+
+        let event = new CustomEvent("ovlchange", {
+          bubbles: true,
+          detail: { val: writeBackValue, id: field.id },
         })
-        let singleValue = filteredKeys[0]
-        //if (dataList.index) {
-        singleValue = dataList.data[singleValue][field.list.valueField]
-        //}
-        this.displayValue = GetListDisplayValue(
-          field.list,
-          singleValue,
-          dataList
-        )
-        this.writeBackValue = singleValue
-        if (this.localList) {
+        await this.inputElement.dispatchEvent(event)
+        if (hit) {
           this.forceCloseLocalHitList()
+          return
         }
-      } else {
+      }
+      if (filteredKeys.length > 0) {
         let wasAlreadyOpen = false
         if (this.localList !== null) {
           wasAlreadyOpen = true
-          this.localList = null
-          await this.doRender()
+          this.forceCloseLocalHitList()
         }
         //we have a list so present it to the user
         if (document.activeElement === this.inputElement) {
@@ -496,9 +323,9 @@ export class OvlListControl extends OvlBaseElement {
               ></ovl-hitlist>
             </div>
           `
-
           await this.doRender()
         }
+
         if (openLocalList) {
           let focusEl = document.getElementById(
             this.field.field.id + "inlineovlhl_1"
@@ -507,6 +334,8 @@ export class OvlListControl extends OvlBaseElement {
             focusEl.focus()
           }
         }
+      } else {
+        this.forceCloseLocalHitList()
       }
     }, waitTime)
   }
@@ -542,23 +371,21 @@ export class OvlListControl extends OvlBaseElement {
         this
       )
 
-      let displayValue = this.displayValue
+      let displayValue = ""
 
-      if (displayValue === undefined) {
-        let getListFnName = FieldGetList.replace("%", field.fieldKey)
-        displayValue = GetListDisplayValue(
-          field.list,
-          field.value,
-          resolvePath(this.actions.custom, this.formState.namespace)[
-            getListFnName
-          ](<FieldGetList_Type>{
-            row: GetRowFromFormState(this.formState),
-          })
-        )
-      }
-      this.lastDisplayValue = displayValue
+      let getListFnName = FieldGetList.replace("%", field.fieldKey)
+      displayValue = GetListDisplayValue(
+        field.list,
+        field.convertedValue,
+        resolvePath(this.actions.custom, this.formState.namespace)[
+          getListFnName
+        ](<FieldGetList_Type>{
+          row: GetRowFromFormState(this.formState),
+        })
+      )
+
       let deleteButton
-      if (!field.list.isSelect) {
+      if (!field.list.isSelect && field.convertedValue) {
         deleteButton = html`
           <span
             tabindex="-9999"
@@ -605,23 +432,13 @@ export class OvlListControl extends OvlBaseElement {
           .dialogHolderParams=${dialogHolderParams}
         ></ovl-dialogholder>`
       }
-
-      if (!this.displayValue && this.deleteElement) {
-        this.deleteElement.classList.add("hide")
-      }
-
-      // if (!field.validationResult.valid && this.localList === null) {
-      //   this.lastDisplayValue = field.value
-      //   if (!this.lastDisplayValue) {
-      //     if (this.deleteElement) {
-      //       this.deleteElement.classList.add("hide")
-      //     }
-      //   }
-      // }
-
       let icon = "search"
       if (field.list.isSelect) {
         icon = "arrow-bottom"
+      }
+      let validationHide = res.validationHide
+      if (document.activeElement.id.startsWith(field.id)) {
+        validationHide = "hide"
       }
       return html`
         ${hitListDialog}
@@ -645,9 +462,9 @@ export class OvlListControl extends OvlBaseElement {
                 type="text"
                 class="fd-input ovl-focusable fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-value-listcontrol ovl-value__${field.fieldKey}"
                 id="${field.id}"
-                @change=${(e) => this.handleChange(e)}
                 value="${displayValue}"
-                @keydown=${(e) => this.handleKeyDown(e)}
+                .value="${displayValue}"
+                @keydown=${(e) => this.handleKey(e)}
               />
 
               ${deleteButton}
@@ -671,7 +488,7 @@ export class OvlListControl extends OvlBaseElement {
             </span>
 
             <span
-              class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
+              class="fd-form-message ${validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
             >
               ${field.validationResult.validationMsg}
             </span>
@@ -683,43 +500,9 @@ export class OvlListControl extends OvlBaseElement {
   }
   afterRender() {
     this.inputElement = document.getElementById(this.field.field.id)
-
-    this.searchElement = document.getElementById("search" + this.field.field.id)
-
-    this.deleteElement = document.getElementById("delete" + this.field.field.id)
-
-    if (this.deleteElement) {
-      if (!this.inputElement.value) {
-        this.deleteElement.classList.add("hide")
-      } else {
-        this.deleteElement.classList.remove("hide")
-      }
-    }
-    if (this.inputElement) {
-      this.inputElement.value = this.lastDisplayValue
-      // if (this.state.ovl.uiState.isMobile && this.localList) {
-      //   this.inputElement.scrollIntoView(true)
-      // }
-    }
-  }
-  setValues(val: string, dispVal: string) {
-    if (val !== undefined) {
-      this.writeBackValue = val
-    }
-    //console.log(dispVal)
-    this.displayValue = dispVal
-  }
-  async resetLocalList() {
-    this.localList = null
-    //await this.doRender()
   }
   forceCloseLocalHitList() {
     this.localList = null
     this.doRender()
-
-    // let hl = document.getElementById("ovl-hitlist")
-    // if (hl) {
-    //   hl.doRender()
-    // }
   }
 }

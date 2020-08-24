@@ -35,6 +35,7 @@ export const FormChanged: OvlAction<FormChanged_Type> = async (
               fieldId: "U_ItemCode",
               formState: value.formState,
               value: "",
+              isInit: true,
             }
             actions.ovl.internal.SetField(cf)
           }

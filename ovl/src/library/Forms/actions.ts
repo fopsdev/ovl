@@ -574,7 +574,6 @@ export const SetField: OvlAction<ChangeField> = (value, { actions }) => {
   // purpose of setfield is to use it in custom chagedactions to set other fields values without triggering the full validation (just the warning)
   let field = value.formState.fields[value.fieldId]
   field.dirty = false
-  value.isInit = true
   actions.ovl.internal.ChangeField(value)
 }
 
