@@ -564,6 +564,9 @@ export const initTableState = (
       if (col.filter.selected === undefined) {
         col.filter.selected = ""
       }
+      if (col.list) {
+        col.control = "list"
+      }
     })
   }
 }

@@ -31,11 +31,12 @@ type ListFunction = (
 ) => any //ListFnReturnValue -> gives a ton of ts errors. not sure why. so i've put any for now
 
 export type ListState = {
+  // list itself will be provided by Get_List fn and needs to be in the form {key:{Col1:"test1", Col2:"test2"},...
+  // or it could be a regular tablestate (where it uses the index object to get the correct val)
+  // displayField should then be like "Col1"
   serverEndpoint?: string
   displayField: string
-  // please bear in mind that valueField will always be unique key of object. but we have it here so we can assign a type to it if its displayed at all in the selectlist
-  valueField: string
-  displayValueField?: boolean
+  displayKeyField?: boolean
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
   isSelect?: boolean

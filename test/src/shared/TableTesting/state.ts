@@ -12,6 +12,9 @@ export type TableTesting = {
   U_ItmsGrpCod: string
   U_ParentCode: string
   U_ParentCode2: string
+  U_Select1: string
+  U_Select2: string
+
   U_Checked: string
 }
 
@@ -275,7 +278,7 @@ export let tblTableTesting2: TableDef = {
 
     U_ItemCode: {
       sortable: true,
-      control: "list",
+
       list: {
         valueField: "U_ItemCode",
         displayField: "ItemName",
@@ -288,7 +291,7 @@ export let tblTableTesting2: TableDef = {
 
     U_ParentCode: {
       sortable: true,
-      control: "list",
+
       list: {
         acceptEmpty: true,
         acceptOnlyListValues: true,
@@ -303,7 +306,7 @@ export let tblTableTesting2: TableDef = {
     },
     U_ParentCode2: {
       sortable: true,
-      control: "list",
+
       list: {
         acceptEmpty: true,
         acceptOnlyListValues: false,
@@ -313,6 +316,56 @@ export let tblTableTesting2: TableDef = {
       ui: {
         visibility: "TableNotMobile_Edit_View",
         showLabelIfNoValueInView: false,
+      },
+    },
+
+    U_Select1: {
+      sortable: true,
+
+      list: {
+        acceptEmpty: false,
+        acceptOnlyListValues: true,
+        valueField: "SelectValue",
+        displayField: "SelectDisplay",
+        displayValueField: false,
+      },
+    },
+
+    U_Select2: {
+      sortable: true,
+
+      list: {
+        acceptEmpty: false,
+        acceptOnlyListValues: false,
+        valueField: "SelectValue",
+        displayField: "SelectDisplay",
+        displayValueField: false,
+      },
+    },
+
+    U_Select3: {
+      sortable: true,
+
+      list: {
+        acceptEmpty: false,
+        acceptOnlyListValues: true,
+        valueField: "SelectValue",
+        displayField: "SelectDisplay",
+        displayValueField: false,
+        isSelect: true,
+      },
+    },
+
+    U_Select4: {
+      sortable: true,
+
+      list: {
+        acceptEmpty: false,
+        acceptOnlyListValues: true,
+        valueField: "SelectValue",
+        displayField: "SelectDisplay",
+        displayValueField: false,
+        isSelect: true,
       },
     },
 
@@ -368,7 +421,7 @@ export let tblTableTesting3: TableDef = {
 
     U_ItmsGrpCod: {
       sortable: true,
-      control: "list",
+
       type: "int",
       list: {
         valueField: "ItmsGrpCod",
@@ -382,7 +435,7 @@ export let tblTableTesting3: TableDef = {
 
     U_ItemCode: {
       sortable: true,
-      control: "list",
+
       list: {
         valueField: "U_ItemCode",
         displayField: "ItemName",

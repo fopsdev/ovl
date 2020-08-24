@@ -64,3 +64,37 @@ export const Field_U_ItemCode_GetFilteredList: OvlAction<
     )
   })
 }
+
+const SelectList = {
+  SelectKey1: { SelectDisplay: "Select Value 1" },
+  SelectKey2: { SelectDisplay: "Select Value 2" },
+  SelectKey3: { SelectDisplay: "Select Value 3" },
+}
+
+export const Field_U_Select1_GetList: OvlAction<
+  FieldGetList_Type,
+  FieldGetList_ReturnType
+> = ({ row }, { state }) => {
+  return { data: SelectList }
+}
+
+export const Field_U_Select2_GetList: OvlAction<
+  FieldGetList_Type,
+  FieldGetList_ReturnType
+> = ({ row }, { state }) => {
+  return { data: SelectList }
+}
+
+export const Field_U_Select3_GetList: OvlAction<
+  FieldGetList_Type,
+  FieldGetList_ReturnType
+> = ({ row }, { state }) => {
+  return { data: SelectList }
+}
+
+export const Field_U_Select4_GetList: OvlAction<
+  FieldGetList_Type,
+  FieldGetList_ReturnType
+> = ({ row }, { state }) => {
+  return { data: { SelectKey1: {}, SelectKey2: {}, SelectKey3: {} } }
+}
