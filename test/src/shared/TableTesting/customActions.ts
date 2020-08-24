@@ -27,6 +27,7 @@ import {
   Field_U_ItmsGrpCod_GetList,
   Field_U_ParentCode2_GetList,
   Field_U_ParentCode_GetList,
+  Field_U_Select1_GetList,
 } from "./customActions/list"
 import {
   FormAdd,
@@ -67,6 +68,7 @@ export let tabletesting = {
   Field_U_ItmsGrpCod_GetList,
   Field_U_ParentCode2_GetList,
   Field_U_ParentCode_GetList,
+  Field_U_Select1_GetList,
   FormAdd,
   FormAfterRender,
   FormCanDelete,

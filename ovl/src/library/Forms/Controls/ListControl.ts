@@ -297,31 +297,29 @@ export class OvlListControl extends OvlBaseElement {
         //we have a list so present it to the user
         if (document.activeElement === this.inputElement) {
           this.localList = html`
-            <div class="fd-layout-panel">
-              <ovl-hitlist
-                id="ovl-hitlist"
-                .props=${(state) => {
-                  let listData: FieldGetList_ReturnType = resolvePath(
-                    this.actions.custom,
-                    this.formState.namespace
-                  )[FieldGetList.replace("%", field.fieldKey)](<
-                    FieldGetList_Type
-                  >{
-                    row: GetRowFromFormState(this.formState),
-                  })
-                  return {
-                    fieldId: field.id,
-                    list: field.list,
-                    listData,
-                    filterValue,
-                    filteredKeys,
-                    type: "inline",
-                    animation: !wasAlreadyOpen,
-                    selectedCallback: this.selectedCallback,
-                  }
-                }}
-              ></ovl-hitlist>
-            </div>
+            <ovl-hitlist
+              id="ovl-hitlist"
+              .props=${(state) => {
+                let listData: FieldGetList_ReturnType = resolvePath(
+                  this.actions.custom,
+                  this.formState.namespace
+                )[FieldGetList.replace("%", field.fieldKey)](<
+                  FieldGetList_Type
+                >{
+                  row: GetRowFromFormState(this.formState),
+                })
+                return {
+                  fieldId: field.id,
+                  list: field.list,
+                  listData,
+                  filterValue,
+                  filteredKeys,
+                  type: "inline",
+                  animation: !wasAlreadyOpen,
+                  selectedCallback: this.selectedCallback,
+                }
+              }}
+            ></ovl-hitlist>
           `
           await this.doRender()
         }
@@ -443,7 +441,10 @@ export class OvlListControl extends OvlBaseElement {
       }
       return html`
         ${hitListDialog}
-        <div @focusout=${(e) => this.handleFocusOut(e)}>
+        <div
+          class="ovl-listcontrol-main"
+          @focusout=${(e) => this.handleFocusOut(e)}
+        >
           <div
             class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
           >

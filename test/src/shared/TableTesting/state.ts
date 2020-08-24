@@ -316,6 +316,17 @@ export let tblTableTesting2: TableDef = {
       },
     },
 
+    U_Select1: {
+      control: "list",
+      list: {
+        acceptEmpty: true,
+        acceptOnlyListValues: true,
+        valueField: "Key",
+        displayField: "Key",
+        isSelect: true,
+      },
+    },
+
     U_Int: {
       sortable: true,
       filter: { top: 3 },

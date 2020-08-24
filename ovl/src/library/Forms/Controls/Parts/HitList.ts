@@ -116,31 +116,40 @@ export class OvlHitList extends OvlBaseElement {
 
       let thead
 
-      if (lookupTypesKeys.length > 1 || this.controlState.type === "overlay") {
-        thead = html`
-          <thead class="fd-table__header">
-            <tr class="fd-table__row">
-              ${lookupTypesKeys.map((k) => {
-                let caption = ""
-                if (lookupTypes[k].translationKey) {
-                  caption = T(lookupTypes[k].translationKey)
-                } else {
-                  caption = k
-                }
+      if (this.controlState.type === "overlay") {
+        if (lookupTypesKeys.length > 0) {
+          thead = html`
+            <thead class="fd-table__header">
+              <tr class="fd-table__row">
+                ${lookupTypesKeys.map((k) => {
+                  if (!lookupTypes[k].translationKey) {
+                    return html`<th><br /></th>`
+                  }
+                  let caption = ""
+                  if (lookupTypes[k].translationKey) {
+                    caption = T(lookupTypes[k].translationKey)
+                  } else {
+                    caption = k
+                  }
 
-                return html`
-                  <th class="fd-table__cell stickyTableHeader" scope="col">
-                    ${caption}
-                  </th>
-                `
-              })}
-            </tr>
-          </thead>
-        `
+                  return html`
+                    <th class="fd-table__cell stickyTableHeader" scope="col">
+                      ${caption}
+                    </th>
+                  `
+                })}
+              </tr>
+            </thead>
+          `
+        }
       }
 
       return html`
-        <div id="ovlhitlist" @keydown=${(e) => this.handleMainKeyDown(e)}>
+        <div
+          id="ovlhitlist"
+          class="ovl-hitlist"
+          @keydown=${(e) => this.handleMainKeyDown(e)}
+        >
           <table class="fd-table ${animation}">
             ${thead}
             <tbody class="fd-table__body">

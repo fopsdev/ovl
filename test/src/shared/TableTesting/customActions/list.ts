@@ -52,6 +52,18 @@ export const Field_U_ParentCode2_GetList: OvlAction<
   }
 }
 
+export const Field_U_Select1_GetList: OvlAction<
+  FieldGetList_Type,
+  FieldGetList_ReturnType
+> = ({ row }, { state }) => {
+  return {
+    data: {
+      SelectKey1: { Key: "SelectKey1" },
+      SelectKey2: { Key: "SelectKey2" },
+    },
+  }
+}
+
 export const Field_U_ItemCode_GetFilteredList: OvlAction<
   FieldGetFilteredList_Type,
   FieldGetFilteredList_ReturnType
