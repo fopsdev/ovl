@@ -71,7 +71,7 @@ In the columndef use a list-property with the following type:
 ```ts
 export type ListState = {
   serverEndpoint?: string
-  displayValueField?: boolean
+  showKeyField?: boolean
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
   isSelect?: boolean
