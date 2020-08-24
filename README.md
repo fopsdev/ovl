@@ -92,6 +92,9 @@ They cover the usecases:
 - when typing the full table gets filtered and checked and presented below the input
 - full select with db-lookup when clicking the search button. it uses the existing text as a filter value)
 
+To enable fast caching the function signature of Field__GetList is:
+```export type FieldGetList_Type = { dependendVal: any}```
+That means if a selection list is dependent on a value on the current row it should submit that value to the function
 
 ## Use ovl from your project
 
