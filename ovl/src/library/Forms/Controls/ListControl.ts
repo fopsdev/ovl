@@ -437,7 +437,8 @@ export class OvlListControl extends OvlBaseElement {
         icon = "arrow-bottom"
       }
       let validationHide = res.validationHide
-      if (document.activeElement.id.startsWith(field.id)) {
+      console.log(document.activeElement.id)
+      if (document.activeElement.id.indexOf(field.id) > -1) {
         validationHide = "hide"
       }
       return html`
