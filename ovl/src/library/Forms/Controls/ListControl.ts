@@ -19,7 +19,7 @@ import {
   GetValueFromCustomFunction,
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { FormState } from "../actions"
+import { FormState, Field } from "../actions"
 import { OvlState, OvlActions, OvlEffects, ovl } from "../../.."
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 
@@ -36,7 +36,8 @@ export type ListState = {
   // displayField should then be like "Col1"
   serverEndpoint?: string
   displayField: string
-  displayKeyField?: boolean
+  valueField: string
+  displayValueField?: boolean
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
   isSelect?: boolean
@@ -65,10 +66,8 @@ export class OvlListControl extends OvlBaseElement {
   async handleListPopup(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-
     let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
-
     let listData: FieldGetList_ReturnType = resolvePath(
       this.actions.custom,
       formState.namespace
@@ -93,6 +92,7 @@ export class OvlListControl extends OvlBaseElement {
         fieldId: field.fieldKey,
       })
     }
+
     let filteredKeys = FilterHitList(
       field.list,
       filterValue,
@@ -166,10 +166,7 @@ export class OvlListControl extends OvlBaseElement {
       )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
         row: GetRowFromFormState(this.formState),
       })
-      //this.writeBackValue = selectedKey
-      //if (dataList.index) {
-      this.writeBackValue = dataList.data[selectedKey][field.list.valueField]
-      //}
+      this.writeBackValue = selectedKey
       this.displayValue =
         dataList.data[selectedKey][this.field.field.list.displayField]
       let event = new CustomEvent("ovlchange", {
@@ -217,7 +214,7 @@ export class OvlListControl extends OvlBaseElement {
           row: GetRowFromFormState(formState),
         })
         let singleValue = filteredKeys[0]
-        console.log(singleValue)
+
         //if (dataList.index) {
         singleValue = dataList.data[singleValue][field.list.valueField]
         //}
@@ -311,21 +308,26 @@ export class OvlListControl extends OvlBaseElement {
           10
         )
         let singleValue
-        if (filteredKeys.length === 1) {
+        if (
+          filteredKeys.length === 1 ||
+          (filteredKeys.length > 1 && !field.list.acceptOnlyListValues)
+        ) {
           let listData: FieldGetList_ReturnType = resolvePath(
             this.actions.custom,
             formState.namespace
           )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
             row: GetRowFromFormState(formState),
           })
-          singleValue = filteredKeys[0]
-          //if (listData.index) {
-          singleValue = listData.data[singleValue][field.list.valueField]
-          //}
+          singleValue = listData[filteredKeys[0]][field.list.valueField]
+
           val = GetListDisplayValue(field.list, singleValue, listData)
-        }
-        // if it allow non list values also send a change
-        else {
+        } else if (filteredKeys.length > 1 && field.list.acceptOnlyListValues) {
+          // there is more than 1 hit and we need only one hit
+          // so just diplay selectlist again
+          setTimeout(() => {
+            document.getElementById(field.id).focus()
+            this.doOpenLocalList(filteredKeys[0], filteredKeys, false, field)
+          }, 50)
           singleValue = val
         }
         if (singleValue) {
@@ -470,47 +472,97 @@ export class OvlListControl extends OvlBaseElement {
         }
         //we have a list so present it to the user
         if (document.activeElement === this.inputElement) {
-          this.localList = html`
-            <div class="fd-layout-panel">
-              <ovl-hitlist
-                id="ovl-hitlist"
-                .props=${(state) => {
-                  let listData: FieldGetList_ReturnType = resolvePath(
-                    this.actions.custom,
-                    this.formState.namespace
-                  )[FieldGetList.replace("%", field.fieldKey)](<
-                    FieldGetList_Type
-                  >{
-                    row: GetRowFromFormState(this.formState),
-                  })
-                  return {
-                    fieldId: field.id,
-                    list: field.list,
-                    listData,
-                    filterValue,
-                    filteredKeys,
-                    type: "inline",
-                    animation: !wasAlreadyOpen,
-                    selectedCallback: this.selectedCallback,
-                  }
-                }}
-              ></ovl-hitlist>
-            </div>
-          `
+          //     this.localList = html`
+          //       <div class="fd-layout-panel">
+          //         <ovl-hitlist
+          //           id="ovl-hitlist"
+          //           .props=${(state) => {
+          //             let listData: FieldGetList_ReturnType = resolvePath(
+          //               this.actions.custom,
+          //               this.formState.namespace
+          //             )[FieldGetList.replace("%", field.fieldKey)](<
+          //               FieldGetList_Type
+          //             >{
+          //               row: GetRowFromFormState(this.formState),
+          //             })
+          //             return {
+          //               fieldId: field.id,
+          //               list: field.list,
+          //               listData,
+          //               filterValue,
+          //               filteredKeys,
+          //               type: "inline",
+          //               animation: !wasAlreadyOpen,
+          //               selectedCallback: this.selectedCallback,
+          //             }
+          //           }}
+          //         ></ovl-hitlist>
+          //       </div>
+          //     `
 
-          await this.doRender()
-        }
-        if (openLocalList) {
-          let focusEl = document.getElementById(
-            this.field.field.id + "inlineovlhl_1"
+          //     await this.doRender()
+          //   }
+          //   if (openLocalList) {
+          //     let focusEl = document.getElementById(
+          //       this.field.field.id + "inlineovlhl_1"
+          //     )
+          //     if (focusEl) {
+          //       focusEl.focus()
+          //     }
+          //   }
+          await this.doOpenLocalList(
+            filterValue,
+            filteredKeys,
+            wasAlreadyOpen,
+            field
           )
-          if (focusEl) {
-            focusEl.focus()
+          if (openLocalList) {
+            let focusEl = document.getElementById(
+              this.field.field.id + "inlineovlhl_1"
+            )
+            if (focusEl) {
+              focusEl.focus()
+            }
           }
         }
       }
     }, waitTime)
   }
+
+  async doOpenLocalList(
+    filterValue: string,
+    filteredKeys: string[],
+    wasAlreadyOpen: boolean,
+    field: Field
+  ) {
+    this.localList = html`
+      <div class="fd-layout-panel">
+        <ovl-hitlist
+          id="ovl-hitlist"
+          .props=${(state) => {
+            let listData: FieldGetList_ReturnType = resolvePath(
+              this.actions.custom,
+              this.formState.namespace
+            )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+              row: GetRowFromFormState(this.formState),
+            })
+            return {
+              fieldId: field.id,
+              list: field.list,
+              listData,
+              filterValue,
+              filteredKeys,
+              type: "inline",
+              animation: !wasAlreadyOpen,
+              selectedCallback: this.selectedCallback,
+            }
+          }}
+        ></ovl-hitlist>
+      </div>
+    `
+    await this.doRender()
+  }
+
   async getUI() {
     return this.track(() => {
       this.field = this.props(this.state)

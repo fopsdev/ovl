@@ -1,7 +1,7 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
 import { getDisplayValue } from "../../../Table/helpers"
-import { ListFnReturnValue } from "../../../Table/Table"
+import { ListFnReturnValue, TableDef } from "../../../Table/Table"
 import { ListState } from "../ListControl"
 import { T, stringifyReplacer } from "../../../../global/globals"
 
@@ -91,7 +91,6 @@ export class OvlHitList extends OvlBaseElement {
         animation = "animated fadeIn faster"
       }
       let lookupTypes = listData.lookupDef
-
       if (!lookupTypes) {
         // get the types from the data and assume its text
         let keys = Object.keys(listData.data)
@@ -103,24 +102,25 @@ export class OvlHitList extends OvlBaseElement {
         }
       }
       // check if we should remove the valueField from the displayed list
-      if (
-        list.displayValueField !== undefined &&
-        list.displayValueField === false
-      ) {
+      if (!list.displayValueField) {
         // we have to clone it in order to remove an entry...its proxified thats why
         lookupTypes = JSON.parse(JSON.stringify(lookupTypes), stringifyReplacer)
         delete lookupTypes[list.valueField]
       }
-
       let lookupTypesKeys = Object.keys(lookupTypes)
 
       let thead
-
       if (lookupTypesKeys.length > 1 || this.controlState.type === "overlay") {
         thead = html`
           <thead class="fd-table__header">
             <tr class="fd-table__row">
               ${lookupTypesKeys.map((k) => {
+                if (
+                  lookupTypesKeys.length === 1 &&
+                  lookupTypesKeys[0] === "value"
+                ) {
+                  return html`<th scope="col"><br /></th>`
+                }
                 let caption = ""
                 if (lookupTypes[k].translationKey) {
                   caption = T(lookupTypes[k].translationKey)

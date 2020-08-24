@@ -325,7 +325,7 @@ export let tblTableTesting2: TableDef = {
       list: {
         acceptEmpty: false,
         acceptOnlyListValues: true,
-        valueField: "SelectValue",
+        valueField: "SelectKey",
         displayField: "SelectDisplay",
         displayValueField: false,
       },
@@ -337,7 +337,7 @@ export let tblTableTesting2: TableDef = {
       list: {
         acceptEmpty: false,
         acceptOnlyListValues: false,
-        valueField: "SelectValue",
+        valueField: "SelectKey",
         displayField: "SelectDisplay",
         displayValueField: false,
       },
@@ -349,7 +349,7 @@ export let tblTableTesting2: TableDef = {
       list: {
         acceptEmpty: false,
         acceptOnlyListValues: true,
-        valueField: "SelectValue",
+        valueField: "SelectKey",
         displayField: "SelectDisplay",
         displayValueField: false,
         isSelect: true,
@@ -360,10 +360,10 @@ export let tblTableTesting2: TableDef = {
       sortable: true,
 
       list: {
+        valueField: "key",
+        displayField: "value",
         acceptEmpty: false,
         acceptOnlyListValues: true,
-        valueField: "SelectValue",
-        displayField: "SelectDisplay",
         displayValueField: false,
         isSelect: true,
       },

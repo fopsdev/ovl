@@ -1,4 +1,4 @@
-import { OvlAction } from "../../../../../ovl/src"
+import { OvlAction, logState } from "../../../../../ovl/src"
 import {
   FieldGetList_Type,
   FieldGetList_ReturnType,
@@ -6,6 +6,7 @@ import {
   FieldGetFilteredList_ReturnType,
   FieldLookupPostData_Type,
 } from "../../../../../ovl/src/global/hooks"
+import { GetSimpleSelectList } from "../../../../../ovl/src/library/Forms/Controls/helpers"
 
 // some list functions
 export const Field_U_ItemCode_GetList: OvlAction<
@@ -66,9 +67,9 @@ export const Field_U_ItemCode_GetFilteredList: OvlAction<
 }
 
 const SelectList = {
-  SelectKey1: { SelectDisplay: "Select Value 1" },
-  SelectKey2: { SelectDisplay: "Select Value 2" },
-  SelectKey3: { SelectDisplay: "Select Value 3" },
+  SelectKey1: { SelectKey: "SelectKey1", SelectDisplay: "Select Value 1" },
+  SelectKey2: { SelectKey: "SelectKey2", SelectDisplay: "Select Value 2" },
+  SelectKey3: { SelectKey: "SelectKey3", SelectDisplay: "Select Value 3" },
 }
 
 export const Field_U_Select1_GetList: OvlAction<
@@ -96,5 +97,7 @@ export const Field_U_Select4_GetList: OvlAction<
   FieldGetList_Type,
   FieldGetList_ReturnType
 > = ({ row }, { state }) => {
-  return { data: { SelectKey1: {}, SelectKey2: {}, SelectKey3: {} } }
+  let res = GetSimpleSelectList(["Simple1", "Simple2", "Simple3"])
+  console.log(res)
+  return res
 }

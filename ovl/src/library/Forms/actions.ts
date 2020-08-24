@@ -336,13 +336,19 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     let listdata: FieldGetList_ReturnType
     let fn = resolvePath(actions.custom, namespace)
     if (fn && fn[functionName]) {
-      console.log(value.newVal)
       listdata = fn[functionName](<FieldGetList_Type>{ row })
       if (
         Object.keys(listdata.data).filter((rowKey) => {
+          // if (listdata.index && listdata.index[rowKey]) {
+          //   debugger
+          //   rowKey = listdata.index[rowKey]
+          // }
+
           return (
-            listdata.data[rowKey][field.list.valueField].toString() ===
-            value.newVal.toString()
+            listdata[rowKey] &&
+            listdata[rowKey][field.list.valueField] &&
+            listdata[rowKey][field.list.valueField].toString() ===
+              value.newVal.toString()
           )
         }).length < 1
       ) {
