@@ -58,6 +58,25 @@ Col2: {type: "date", translationKey:"AppMyDate"},
 }
 ```
 
+In the columndef we just say:
+```js
+U_Select4: {
+      sortable: true,
+      ...
+      list: {
+      serverEndpoint: "myData",
+       showKeyColumn: true
+      }
+      ...
+}
+```
+If ovl finds the ```list``` property in the def it will use a Function named ```Field_U_Select4_GetList``` to retrieve the following data:
+- ```data``` object as explained above
+- ```lookupDef``` object as explained above
+- ```keyColumn``` the column where the key is saved
+- ```displayColumn``` the column to display
+
+
 This two structures are the base for all ovl-lookuplists.
 They cover the usecases:
 - simple selectvalue
