@@ -33,6 +33,40 @@ All the screen state is placed into ovl namespace to make transitions easier.
 
 ### Tables
 
+### Lookup List Definition
+
+A Lookup List is specified by a data structure:
+```js
+{
+key1: {Col1: "key1", Col2, "Key 1", ...}
+
+}
+```
+
+So it can contain just one value (Simple List where the value is as well the key)
+It can contain multiple Columns and a display Value (Hence displayColumn Field in the def)
+
+
+So as you can see the key-value is needed as object property and it should be in the values as well.
+This simplifies complex list handling in the end.
+As well a Lookup List needs to have a type and ui translation:
+```js
+{
+Col1: {type: "text", translationKey:"AppMyText"},
+Col2: {type: "date", translationKey:"AppMyDate"},
+...
+}
+```
+
+This two structures are the base for all ovl-lookuplists.
+They cover the usecases:
+- simple selectvalue
+- select a key and display a description(value) in the table view and edit-views
+- when selecting a key a table can be displayed (not only key/value)
+- when typing the full table gets filtered and checked and presented below the input
+- full select with db-lookup when clicking the search button. it uses the existing text as a filter value)
+
+
 ## Use ovl from your project
 
 Make sure that inside `index.ts` you replace the ../test/ - folder with your real projects folder
