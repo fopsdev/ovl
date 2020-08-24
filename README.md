@@ -64,8 +64,9 @@ U_Select4: {
       sortable: true,
       ...
       list: {
-      serverEndpoint: "myData",
-       showKeyColumn: true
+       serverEndpoint: "myData",
+       showKeyColumn: true,   
+       isSelect: false  // diplays an arrow down instead of the search icon and has a simpler logic when filling the "select from list popup"
       }
       ...
 }
