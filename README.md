@@ -67,17 +67,14 @@ displayDef: {
 ```
 
 
-In the columndef we just say:
-```js
-U_Select4: {
-      sortable: true,
-      ...
-      list: {
-       serverEndpoint: "myData",
-       showKeyColumn: true,   
-       isSelect: false  // diplays an arrow down instead of the search icon and has a simpler logic when filling the "select from list popup"
-      }
-      ...
+In the columndef use a list-property with the following type:
+```ts
+export type ListState = {
+  serverEndpoint?: string
+  displayValueField?: boolean
+  acceptEmpty?: boolean
+  acceptOnlyListValues?: boolean
+  isSelect?: boolean
 }
 ```
 If ovl finds the ```list``` property in the def it will use a Function named ```Field_U_Select4_GetList``` to retrieve the following data:
