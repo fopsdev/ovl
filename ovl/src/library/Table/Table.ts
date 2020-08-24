@@ -388,15 +388,11 @@ export type ColumnDisplayDef = {
 }
 
 export type ListFnReturnValue = {
-  data?: {
+  data: {
     [key: string]: {}
   }
-  lookupDef?: { [key: string]: LookupDef }
-  /* use alternative lookups, maybe some selects doesn't need all the columns displayed in the select list, so here they are customizable */
-  lookupDef2?: { [key: string]: LookupDef }
-  lookupDef3?: { [key: string]: LookupDef }
-  // index object is needed if lookup is referencing a regular table (which object indexes(keys) are not the primary key for handling, offline reasons)
-  index?: {}
+  lookupDef: { [key: string]: LookupDef }
+  displayDef: { keyColumn: string; displayColumn: string }
 }
 
 export type ColumnFilter = {

@@ -31,13 +31,8 @@ type ListFunction = (
 ) => any //ListFnReturnValue -> gives a ton of ts errors. not sure why. so i've put any for now
 
 export type ListState = {
-  // list itself will be provided by Get_List fn and needs to be in the form {key:{Col1:"test1", Col2:"test2"},...
-  // or it could be a regular tablestate (where it uses the index object to get the correct val)
-  // displayField should then be like "Col1"
   serverEndpoint?: string
-  displayField: string
-  valueField: string
-  displayValueField?: boolean
+  showKeyField?: boolean
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
   isSelect?: boolean

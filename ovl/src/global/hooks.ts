@@ -158,7 +158,7 @@ export const FormCustomColumnFn = "FormCustomColumnFn_%"
 
 //Form Field Functions ####################################
 // defines the list of ListControl and Option so far
-export type FieldGetList_Type = { row: { [key: string]: {} } }
+export type FieldGetList_Type = { dependendVal: any }
 export type FieldGetList_ReturnType = ListFnReturnValue
 export const FieldGetList = "Field_%_GetList"
 
