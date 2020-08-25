@@ -336,7 +336,6 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     let listdata: FieldGetList_ReturnType
     let fn = resolvePath(actions.custom, namespace)
     if (fn && fn[functionName]) {
-      console.log(value.newVal)
       listdata = fn[functionName](<FieldGetList_Type>{ row })
       if (
         Object.keys(listdata.data).filter((rowKey) => {
@@ -346,7 +345,6 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
           )
         }).length < 1
       ) {
-        console.log(T("AppNeedsToBeListEntry"))
         ValidationAddError(validatorId, T("AppNeedsToBeListEntry"), res)
         return
       }

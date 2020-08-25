@@ -171,8 +171,11 @@ export const FilterHitList = (
     if (!filterValue) {
       filterValue = ""
     }
-    debugger
-    if (!list.displayValueField) {
+
+    if (
+      list.displayValueField !== undefined &&
+      list.displayValueField === false
+    ) {
       delete lookupTypes[list.valueField]
     }
     res = res.filter((f) => {

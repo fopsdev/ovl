@@ -239,7 +239,6 @@ export class OvlListControl extends OvlBaseElement {
     let field = this.field.field
 
     let filterValue = this.inputElement.value
-    console.log(e)
     if (!openLocalList) {
       if (e.key === "Escape") {
         this.forceCloseLocalHitList()
@@ -435,7 +434,6 @@ export class OvlListControl extends OvlBaseElement {
         icon = "arrow-bottom"
       }
       let validationHide = res.validationHide
-      console.log(document.activeElement.id)
       if (document.activeElement.id.indexOf(field.id) > -1) {
         validationHide = "hide"
       }
