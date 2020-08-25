@@ -527,15 +527,6 @@ export const initTableState = (
       }
       if (col.control === undefined) {
         if (col.list) {
-          if (
-            col.list.valueField === undefined &&
-            col.list.displayField === undefined
-          ) {
-            // its most probably a simple list
-            col.list.displayValueField = false
-            col.list.displayField = "value"
-            col.list.valueField = "key"
-          }
           col.control = "list"
         } else {
           col.control = "text"
@@ -563,6 +554,9 @@ export const initTableState = (
         }
         if (col.list.acceptOnlyListValues === undefined) {
           col.list.acceptOnlyListValues = false
+        }
+        if (col.list.valueField === col.list.displayField) {
+          col.list.displayValueField = true
         }
       }
       if (col.filter.filterValues === undefined) {

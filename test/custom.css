@@ -74,6 +74,10 @@
   padding-bottom: 8px;
 }
 
+.ovl-listcontrol-main .ovl-hitlist {
+  margin-left: 110px;
+}
+
 .ovl-hitlistdialog-footer {
   padding: 2px;
 }

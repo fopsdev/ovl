@@ -1,7 +1,7 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
 import { getDisplayValue } from "../../../Table/helpers"
-import { ListFnReturnValue, TableDef } from "../../../Table/Table"
+import { ListFnReturnValue } from "../../../Table/Table"
 import { ListState } from "../ListControl"
 import { T, stringifyReplacer } from "../../../../global/globals"
 
@@ -69,7 +69,6 @@ export class OvlHitList extends OvlBaseElement {
   handleMainKeyDown(e: KeyboardEvent) {
     e.stopPropagation()
     if (e.key === "Escape") {
-      console.log("eescape")
       if (this.controlState.type === "overlay") {
         this.controlState.selectedCallback("@@ovlcanceled")
         this.click()
@@ -91,6 +90,7 @@ export class OvlHitList extends OvlBaseElement {
         animation = "animated fadeIn faster"
       }
       let lookupTypes = listData.lookupDef
+
       if (!lookupTypes) {
         // get the types from the data and assume its text
         let keys = Object.keys(listData.data)
@@ -102,45 +102,53 @@ export class OvlHitList extends OvlBaseElement {
         }
       }
       // check if we should remove the valueField from the displayed list
-      if (!list.displayValueField) {
+      if (
+        list.displayValueField !== undefined &&
+        list.displayValueField === false
+      ) {
         // we have to clone it in order to remove an entry...its proxified thats why
         lookupTypes = JSON.parse(JSON.stringify(lookupTypes), stringifyReplacer)
         delete lookupTypes[list.valueField]
       }
+
       let lookupTypesKeys = Object.keys(lookupTypes)
 
       let thead
-      if (lookupTypesKeys.length > 1 || this.controlState.type === "overlay") {
-        thead = html`
-          <thead class="fd-table__header">
-            <tr class="fd-table__row">
-              ${lookupTypesKeys.map((k) => {
-                if (
-                  lookupTypesKeys.length === 1 &&
-                  lookupTypesKeys[0] === "value"
-                ) {
-                  return html`<th scope="col"><br /></th>`
-                }
-                let caption = ""
-                if (lookupTypes[k].translationKey) {
-                  caption = T(lookupTypes[k].translationKey)
-                } else {
-                  caption = k
-                }
 
-                return html`
-                  <th class="fd-table__cell stickyTableHeader" scope="col">
-                    ${caption}
-                  </th>
-                `
-              })}
-            </tr>
-          </thead>
-        `
+      if (this.controlState.type === "overlay") {
+        if (lookupTypesKeys.length > 0) {
+          thead = html`
+            <thead class="fd-table__header">
+              <tr class="fd-table__row">
+                ${lookupTypesKeys.map((k) => {
+                  if (!lookupTypes[k].translationKey) {
+                    return html`<th><br /></th>`
+                  }
+                  let caption = ""
+                  if (lookupTypes[k].translationKey) {
+                    caption = T(lookupTypes[k].translationKey)
+                  } else {
+                    caption = k
+                  }
+
+                  return html`
+                    <th class="fd-table__cell stickyTableHeader" scope="col">
+                      ${caption}
+                    </th>
+                  `
+                })}
+              </tr>
+            </thead>
+          `
+        }
       }
 
       return html`
-        <div id="ovlhitlist" @keydown=${(e) => this.handleMainKeyDown(e)}>
+        <div
+          id="ovlhitlist"
+          class="ovl-hitlist"
+          @keydown=${(e) => this.handleMainKeyDown(e)}
+        >
           <table class="fd-table ${animation}">
             ${thead}
             <tbody class="fd-table__body">
