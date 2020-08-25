@@ -171,6 +171,10 @@ export const FilterHitList = (
     if (!filterValue) {
       filterValue = ""
     }
+    debugger
+    if (!list.displayValueField) {
+      delete lookupTypes[list.valueField]
+    }
     res = res.filter((f) => {
       if (filterValue === "") {
         return true
@@ -223,11 +227,15 @@ export const GetListDisplayValue = (
   value: string,
   listdata: ListFnReturnValue
 ) => {
-  if (!value) {
+  if (value === undefined || value === null) {
     return ""
   }
-  if (listdata.index && listdata.index[value]) {
-    value = listdata.index[value]
+  // if we are operating on a regular table the use the index to get the correct row index
+  if (listdata.index) {
+    let idx = listdata.index[value]
+    if (idx) {
+      value = idx
+    }
   }
   let displayField = list.displayField
   let displayValue

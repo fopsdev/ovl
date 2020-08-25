@@ -103,10 +103,7 @@ export class OvlHitList extends OvlBaseElement {
         }
       }
       // check if we should remove the valueField from the displayed list
-      if (
-        list.displayValueField !== undefined &&
-        list.displayValueField === false
-      ) {
+      if (!list.displayValueField) {
         // we have to clone it in order to remove an entry...its proxified thats why
         lookupTypes = JSON.parse(JSON.stringify(lookupTypes), stringifyReplacer)
         delete lookupTypes[list.valueField]

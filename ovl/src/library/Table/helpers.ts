@@ -526,7 +526,11 @@ export const initTableState = (
         col.ui.showLabelIfNoValueInView = true
       }
       if (col.control === undefined) {
-        col.control = "text"
+        if (col.list) {
+          col.control = "list"
+        } else {
+          col.control = "text"
+        }
       }
       if (col.filter === undefined) {
         col.filter = {
@@ -550,6 +554,9 @@ export const initTableState = (
         }
         if (col.list.acceptOnlyListValues === undefined) {
           col.list.acceptOnlyListValues = false
+        }
+        if (col.list.valueField === col.list.displayField) {
+          col.list.displayValueField = true
         }
       }
       if (col.filter.filterValues === undefined) {

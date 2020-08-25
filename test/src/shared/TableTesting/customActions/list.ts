@@ -35,7 +35,12 @@ export const Field_U_ParentCode_GetList: OvlAction<
 > = ({ row }, { state }) => {
   return {
     data: state.demoApp.testtables.tableTesting.data,
-    lookupDef: state.demoApp.testtables.tableTesting.lookupDef,
+    lookupDef: {
+      Code: { type: "text", translationKey: "PortalColumnCode" },
+      U_Alpha: { type: "text", translationKey: "PortalColumnU_Alpha" },
+      U_Date: { type: "date", translationKey: "PortalColumnU_Date" },
+      U_Int: { type: "int", translationKey: "PortalColumnU_Int" },
+    },
     index: state.demoApp.testtables.tableTesting.index,
   }
 }
@@ -46,7 +51,10 @@ export const Field_U_ParentCode2_GetList: OvlAction<
 > = ({ row }, { state }) => {
   return {
     data: state.demoApp.testtables.tableTesting.data,
-    lookupDef: state.demoApp.testtables.tableTesting.lookupDef2,
+    lookupDef: {
+      Code: { type: "text", translationKey: "PortalColumnCode" },
+      U_Alpha: { type: "text", translationKey: "PortalColumnU_Alpha" },
+    },
     // we need index here as well because its a table for "working with" not a table for lookup purposes...
     index: state.demoApp.testtables.tableTesting.index,
   }
@@ -60,6 +68,9 @@ export const Field_U_Select1_GetList: OvlAction<
     data: {
       SelectKey1: { Key: "SelectKey1" },
       SelectKey2: { Key: "SelectKey2" },
+    },
+    lookupDef: {
+      Key: { type: "text", translationKey: "PortalKeySelect" },
     },
   }
 }
