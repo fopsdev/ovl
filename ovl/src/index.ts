@@ -1,17 +1,17 @@
-export { OvlVersion } from "../../test/sw"
+export { OvlVersion } from "../../../kaltag/sw"
 
 import {
-  demoAppScreens,
-  demoAppDialogs,
+  timePortalScreens,
+  timePortalDialogs,
   CustomFormType,
   TableDefIds,
   Language,
-} from "../../test/src/appDef"
-import * as demoAppState from "../../test/src/state"
-import * as demoAppActions from "../../test/src/actions"
-import * as customActions from "../../test/src/customActions"
+} from "../../../kaltag/src/appDef"
+import * as timePortalState from "../../../kaltag/src/state"
+import * as timePortalActions from "../../../kaltag/src/actions"
+import * as customActions from "../../../kaltag/src/customActions"
 
-import { createDeepProxy, actionTracking } from "./tracker/proxyHandler"
+import { createDeepProxy } from "./tracker/proxyHandler"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
@@ -33,13 +33,13 @@ export type OvlAction<T = {}, R = void> = (
 
 let _state = {
   ovl: ovlState,
-  demoApp: demoAppState,
+  timeportal: timePortalState,
 }
 
 // prepare screens state
 //@ts-ignore
 _state.ovl.screens.screens = {}
-Object.keys(demoAppScreens)
+Object.keys(timePortalScreens)
   .concat(Object.keys(baseScreens))
   .forEach((k) => {
     _state.ovl.screens.screens[k] = {
@@ -52,7 +52,7 @@ Object.keys(demoAppScreens)
 // prepare dialogs state
 //@ts-ignore
 _state.ovl.dialogs = {}
-Object.keys(demoAppDialogs)
+Object.keys(timePortalDialogs)
   .concat(Object.keys(baseDialogs))
   .forEach((k) => {
     _state.ovl.dialogs[k] = {
@@ -65,7 +65,7 @@ let state: OvlState = createDeepProxy(_state)
 
 let actions = {
   ovl: ovlActions,
-  demoApp: demoAppActions,
+  timeportal: timePortalActions,
   custom: customActions,
 }
 
@@ -79,30 +79,24 @@ export let ovl = {
   effects,
 }
 
-const interceptorAsyncFn = (originalFn, key) => {
+const interceptorAsyncFn = (originalFn) => {
   return async (value) => {
-    actionTracking.lastActionName = key
-    actionTracking.actionRunning = true
     let res = await originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
-    actionTracking.actionRunning = false
     return res
   }
 }
 
-const interceptorFn = (originalFn, key) => {
+const interceptorFn = (originalFn) => {
   return (value) => {
-    actionTracking.lastActionName = key
-    actionTracking.actionRunning = true
     let res = originalFn(value, {
       state: ovl.state,
       actions: ovl.actions,
       effects: ovl.effects,
     })
-    actionTracking.actionRunning = false
     return res
   }
 }
@@ -112,9 +106,9 @@ const getMethods = (obj) =>
     if (typeof obj[item] === "function") {
       let isAsync = obj[item].toString().startsWith("async")
       if (isAsync) {
-        obj[item] = interceptorAsyncFn(obj[item], item)
+        obj[item] = interceptorAsyncFn(obj[item])
       } else {
-        obj[item] = interceptorFn(obj[item], item)
+        obj[item] = interceptorFn(obj[item])
       }
     } else if (typeof obj[item] === "object") {
       getMethods(obj[item])
@@ -125,7 +119,7 @@ getMethods(actions)
 
 export const logState = () => {
   console.log("ovl state:")
-  console.log(JSON.parse(JSON.stringify(ovl.state), stringifyReplacer))
+  console.log(JSON.parse(JSON.stringify(ovl.state, stringifyReplacer)))
 }
 export const logActions = () => {
   console.log("ovl actions:")
@@ -140,10 +134,14 @@ export type OvlState = typeof _state
 export type OvlActions = typeof actions
 export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
-export type OvlDialog = keyof typeof baseDialogs | keyof typeof demoAppDialogs
+export type OvlDialog =
+  | keyof typeof baseDialogs
+  | keyof typeof timePortalDialogs
 
 export { TableDefIds, Language }
-export type OvlScreen = keyof typeof baseScreens | keyof typeof demoAppScreens
+export type OvlScreen =
+  | keyof typeof baseScreens
+  | keyof typeof timePortalScreens
 
 import { defineElements } from "./registerComponents"
 import { stringifyReplacer } from "./global/globals"
