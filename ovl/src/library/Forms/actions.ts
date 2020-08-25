@@ -339,16 +339,9 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
       listdata = fn[functionName](<FieldGetList_Type>{ row })
       if (
         Object.keys(listdata.data).filter((rowKey) => {
-          // if (listdata.index && listdata.index[rowKey]) {
-          //   debugger
-          //   rowKey = listdata.index[rowKey]
-          // }
-
           return (
-            listdata[rowKey] &&
-            listdata[rowKey][field.list.valueField] &&
-            listdata[rowKey][field.list.valueField].toString() ===
-              value.newVal.toString()
+            listdata.data[rowKey][field.list.valueField].toString() ===
+            value.newVal.toString()
           )
         }).length < 1
       ) {

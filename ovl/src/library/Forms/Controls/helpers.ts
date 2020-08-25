@@ -134,14 +134,7 @@ export const KeyValueListFromServerFn = async (
     //listData.lookupDef = res.data.lookupDef
   }
 }
-export const GetSimpleSelectList = (values: string[]) => {
-  return {
-    data: values.reduce((val: any, k: string) => {
-      val[k] = { key: k, value: k }
-      return val
-    }, {}),
-  }
-}
+
 export const FilterHitList = (
   list: ListState,
   filterValue: string,
