@@ -60,10 +60,8 @@ Col2: {type: "date", translationKey:"AppMyDate"},
 ```
 and
 ```js
-displayDef: {
- keyColumn: "Col1",
- displayColumn: "Col2"
-}
+index?: points to index object which is kept automatically when usiing ovl-table
+ 
 ```
 
 
@@ -71,7 +69,7 @@ In the columndef use a list-property with the following type:
 ```ts
 export type ListState = {
   serverEndpoint?: string
-  showKeyField?: boolean
+  displayValueField?: boolean
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
   isSelect?: boolean
@@ -79,31 +77,18 @@ export type ListState = {
 ```
 
 If ovl finds the ```list``` property in the def it will use a Function named
-```Field_U_Select4_GetListDeps``` to get the list dependencies which are needed for caching internally
-it shoudl return an object like:
-```js
-{
-dep1:string | number
-dep2:string | number
-}
-```
-and then it will use this result to call
  ```Field_U_Select4_GetList``` to retrieve the following data:
 - ```data``` object as explained above
 - ```lookupDef``` object as explained above
-- ```displayDef``` object as explained above
+- ```index``` object as explained above
 
-This two structures are the base for all ovl-lookuplists.
+This three structures are the base for all ovl-lookuplists.
 They cover the usecases:
 - simple selectvalue
 - select a key and display a description(value) in the table view and edit-views
 - when selecting a key a table can be displayed (not only key/value)
 - when typing the full table gets filtered and checked and presented below the input
 - full select with db-lookup when clicking the search button. it uses the existing text as a filter value)
-
-To enable fast caching the function signature of Field__GetList is:
-```export type FieldGetList_Type = { dependendVal: any}```
-That means if a selection list is dependent on a value on the current row it should submit that value to the function
 
 ## Use ovl from your project
 
