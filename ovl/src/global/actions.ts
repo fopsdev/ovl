@@ -15,6 +15,7 @@ import {
   ResetT,
   saveState,
   ShowFile,
+  translations,
 } from "./globals"
 import {
   ScreenNavigateIn,
@@ -363,7 +364,7 @@ export const InitApp: OvlAction<Init> = async (
     ovl.actions.ovl.navigation.NavigateBack()
     history.pushState(null, null, document.URL)
   })
-
+  ResetT()
   let currentLocation =
     window.location.hostname.toLowerCase() +
     ":" +
