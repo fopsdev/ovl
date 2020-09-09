@@ -459,8 +459,8 @@ export const InitForm: OvlAction<InitForm> = (
       lastTouchedField: undefined,
     }
     let formState = formInstanceList[value.instanceId]
-    formState.lastTouchedField = value.initialFocusElementId
 
+    formState.lastTouchedField = value.initialFocusElementId
     // initial validation of all fields
     let fn = resolvePath(actions.custom, formState.namespace)
     Object.keys(formState.fields).forEach((k) => {

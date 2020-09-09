@@ -171,19 +171,25 @@ export const ovlFetch = async (
         type: type,
       }
     } else if (req.status === 422) {
+      let type = ""
       let msg = await req.json()
-      if (msg && msg.message) {
-        snackMessage = msg.message
+      if (!msg.type || msg.type.indexOf("https://") > -1) {
+        // if (msg && msg.message) {
+        //   snackMessage = msg.message
+        // } else {
+        //   snackMessage = req.statusText
+        // }
+        snackMessage = T("ServerIntegrityError")
+        snackMessageType = "Error"
       } else {
-        snackMessage = req.statusText
+        type = msg.type
       }
-      snackMessageType = "Error"
       return {
         headers: req.headers,
         data: undefined,
         status: 422,
         message: msg.errormessage,
-        type: "",
+        type,
       }
     } else {
       // ok looks ok, but still could be server error with our custom messages
