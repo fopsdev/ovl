@@ -64,7 +64,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       if (elementToFocus) {
         setTimeout(() => {
           SetFocus(document.getElementById(elementToFocus))
-        }, 100)
+        }, 10)
       }
     }
     this.opened = true
@@ -98,26 +98,18 @@ export class OvlBaseDialog extends OvlBaseElement {
       if (dialogParts.title) {
         title = html`
           <div class="fd-bar__element">
-            <h3 class="fd-message-box__title">
-              ${dialogParts.title}
-            </h3>
+            <h3 class="fd-message-box__title">${dialogParts.title}</h3>
           </div>
         `
       }
       let header
       if (dialogParts.header) {
-        title = html`
-          <div class="fd-bar__element">
-            ${dialogParts.header}
-          </div>
-        `
+        title = html` <div class="fd-bar__element">${dialogParts.header}</div> `
       }
 
       fullheader = html`
         <header class="fd-message-box__header fd-bar ovl-dialog-header">
-          <div class="fd-bar__left">
-            ${header} ${title}
-          </div>
+          <div class="fd-bar__left">${header} ${title}</div>
         </header>
       `
     }
@@ -138,9 +130,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       footer = html`<footer
         class="fd-message-box__footer fd-bar fd-bar--footer ovl-dialog-footer"
       >
-        <div class="fd-bar__right">
-          ${dialogParts.footer}
-        </div>
+        <div class="fd-bar__right">${dialogParts.footer}</div>
       </footer>`
     }
     let disableIfClosing = ""
