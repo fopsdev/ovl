@@ -105,6 +105,7 @@ export const ovlFetch = async (
       url = urlWithParams.toString()
     }
 
+    //there is no need to have an timeout in offline mode...
     if (OvlConfig._system.OfflineMode) {
       const controller = new AbortController()
       const { signal } = controller
