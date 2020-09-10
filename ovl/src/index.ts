@@ -4,8 +4,8 @@ import {
   appForms,
   appScreens,
   appDialogs,
-  TableDefIds as OvlTableDefIds,
-  Language as OvlLanguage,
+  OvlTableDefIds,
+  OvlLanguage,
 } from "../../../app/src/appDef"
 import * as appState from "../../../app/src/state"
 import * as appActions from "../../../app/src/actions"
