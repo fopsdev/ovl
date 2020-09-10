@@ -1,4 +1,4 @@
-export let demoAppScreens = {
+export let appScreens = {
   /* base screens */
   Shellbar: {},
   Audit: {},
@@ -15,11 +15,11 @@ export let demoAppScreens = {
   MobileTimeEntryForm: {},
 }
 
-export let demoAppDialogs = {
+export let appDialogs = {
   Login: {},
 }
 
-export type CustomFormType =
+export type appForms =
   | "Feedback"
   | "Settings"
   | "Login"

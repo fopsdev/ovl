@@ -13,9 +13,7 @@ export class OvlAudit extends OvlBaseElement {
         <div class="fd-layout-panel ">
           <div class="fd-layout-panel__header">
             <div class="fd-layout-panel__head">
-              <h3 class="fd-layout-panel__title">
-                ${T("AppAudit")}
-              </h3>
+              <h3 class="fd-layout-panel__title">${T("AppAudit")}</h3>
             </div>
           </div>
 
@@ -26,8 +24,8 @@ export class OvlAudit extends OvlBaseElement {
               class="fd-table"
               .props=${(state: OvlState) => {
                 return {
-                  def: state.demoApp.tables.audit.tableDef.audit,
-                  data: state.demoApp.tables.audit,
+                  def: state.app.tables.audit.tableDef.audit,
+                  data: state.app.tables.audit,
                 }
               }}
             >

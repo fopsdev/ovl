@@ -34,7 +34,7 @@ export class CompFeedbackForm extends OvlFormElement {
 
       let handleOk = () => {
         if (!this.state.ovl.libState.indicator.open) {
-          this.actions.demoApp.feedback.SaveFeedback(this.formState)
+          this.actions.app.feedback.SaveFeedback(this.formState)
         }
       }
       let handleCancel = async () => {
@@ -53,50 +53,28 @@ export class CompFeedbackForm extends OvlFormElement {
         }
       }
 
-      let feedback = this.state.demoApp.screens.feedback
+      let feedback = this.state.app.screens.feedback
 
       return html`
         <div class="fd-layout-panel ">
           <div class="fd-layout-panel__header">
             <div class="fd-layout-panel__head">
-              <h3 class="fd-layout-panel__title">
-                ${feedback.title}
-              </h3>
+              <h3 class="fd-layout-panel__title">${feedback.title}</h3>
             </div>
           </div>
           <div class="fd-layout-panel__body">
             <div class="cols2">
-              <div>
-                ${T("PortalCardCode")}
-              </div>
-              <div>
-                ${feedback.cardCode}
-              </div>
-              <div>
-                ${T("PortalOrderDocNum")}
-              </div>
-              <div>
-                ${feedback.orderNum}
-              </div>
-              <div>
-                ${T("PortalCommission")}
-              </div>
-              <div>
-                ${feedback.refNum}
-              </div>
+              <div>${T("PortalCardCode")}</div>
+              <div>${feedback.cardCode}</div>
+              <div>${T("PortalOrderDocNum")}</div>
+              <div>${feedback.orderNum}</div>
+              <div>${T("PortalCommission")}</div>
+              <div>${feedback.refNum}</div>
 
-              <div>
-                ${T("PortalOrderDocDate")}
-              </div>
-              <div>
-                ${D(feedback.orderDate)}
-              </div>
-              <div>
-                ${T("PortalDeliveryDate")}
-              </div>
-              <div>
-                ${D(feedback.orderDeliveryDate)}
-              </div>
+              <div>${T("PortalOrderDocDate")}</div>
+              <div>${D(feedback.orderDate)}</div>
+              <div>${T("PortalDeliveryDate")}</div>
+              <div>${D(feedback.orderDeliveryDate)}</div>
             </div>
           </div>
           <div class="fd-layout-panel__body">

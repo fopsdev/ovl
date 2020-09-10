@@ -1,9 +1,9 @@
-import { OvlAction } from "../../../../../ovl/src"
 import {
   FormCustomFilter_Type,
   FormCustomFilter_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
 import { TableTesting } from "../state"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const FormCustom_alphaStartsWithA_Filter: OvlAction<
   FormCustomFilter_Type,

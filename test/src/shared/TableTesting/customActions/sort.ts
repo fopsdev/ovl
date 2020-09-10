@@ -1,10 +1,11 @@
 import { getTextSort } from "../../../../../ovl/src/library/Table/helpers"
 import { TableTesting } from "../state"
-import { OvlAction } from "../../../../../ovl/src"
+
 import {
   FormCustomSort_Type,
   FormCustomSort_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const FormCustom_alphaThenMemo_Sort: OvlAction<
   FormCustomSort_Type,

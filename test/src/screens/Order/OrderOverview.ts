@@ -22,13 +22,13 @@ export class CompOrderOverview extends OvlBaseElement {
   handleDetail(e: Event, key: string) {
     //@ts-ignore
     if (
-      (!this.state.demoApp.screens.order.activeFilePopup &&
+      (!this.state.app.screens.order.activeFilePopup &&
         //@ts-ignore
         e.target.localName === "td") ||
       //@ts-ignore
       e.target.localName === "button"
     ) {
-      this.actions.demoApp.order.SelectOrder(key)
+      this.actions.app.order.SelectOrder(key)
       this.actions.ovl.navigation.NavigateTo("Orderdetail")
       e.stopPropagation()
     }
@@ -41,25 +41,24 @@ export class CompOrderOverview extends OvlBaseElement {
       if (!e.target.disabled) {
         //@ts-ignore
         let id = e.target.getAttribute("aria-controls").replace("pQqQR215", "")
-        if (this.state.demoApp.screens.order.activeFilePopup === id) {
+        if (this.state.app.screens.order.activeFilePopup === id) {
           id = ""
         }
-        this.actions.demoApp.global.TogglePDFPopup({
+        this.actions.app.global.TogglePDFPopup({
           key: id,
-          obj: this.state.demoApp.screens.order,
+          obj: this.state.app.screens.order,
         })
       }
     }
 
     const handleRemoveAllPDFPopup = (e) => {
-      this.actions.demoApp.global.TogglePDFPopup({
+      this.actions.app.global.TogglePDFPopup({
         key: "",
-        obj: this.state.demoApp.screens.order,
+        obj: this.state.app.screens.order,
       })
     }
     return this.track(() => {
-      let detailCount = Object.keys(this.state.demoApp.orderDetail.orders)
-        .length
+      let detailCount = Object.keys(this.state.app.orderDetail.orders).length
       if (detailCount === 0) {
         return null
       }
@@ -112,10 +111,10 @@ export class CompOrderOverview extends OvlBaseElement {
                       </tr>
                     </thead>
                     <tbody class="fd-table__body">
-                      ${Object.keys(this.state.demoApp.orderDetail.orders)
+                      ${Object.keys(this.state.app.orderDetail.orders)
                         .sort((a, b) => parseInt(b) - parseInt(a))
                         .map((k) => {
-                          let order = this.state.demoApp.orderDetail.orders[k]
+                          let order = this.state.app.orderDetail.orders[k]
                           //console.log(order)
                           let files = order.steps["step2"].attachments.files
                           return html`
@@ -133,7 +132,7 @@ export class CompOrderOverview extends OvlBaseElement {
                                       aria-controls="pQqQR215${k}"
                                       aria-haspopup="true"
                                       aria-expanded="${k ===
-                                      this.state.demoApp.screens.order
+                                      this.state.app.screens.order
                                         .activeFilePopup}"
                                       aria-label="More"
                                     ></button>
@@ -142,18 +141,18 @@ export class CompOrderOverview extends OvlBaseElement {
                                     style="width:280px;"
                                     class="fd-popover__body"
                                     aria-hidden="${k !==
-                                      this.state.demoApp.screens.order
+                                      this.state.app.screens.order
                                         .activeFilePopup ||
-                                    this.state.demoApp.orderDetail.orders[
-                                      k
-                                    ].steps["step2"].attachments.files.filter(
+                                    this.state.app.orderDetail.orders[k].steps[
+                                      "step2"
+                                    ].attachments.files.filter(
                                       (m) => m.type === "Order"
                                     ).length === 0}"
                                     id="pQqQR215${k}"
                                   >
                                     <nav class="fd-menu">
                                       <ul class="fd-menu__list">
-                                        ${this.state.demoApp.orderDetail.orders[
+                                        ${this.state.app.orderDetail.orders[
                                           k
                                         ].attachments.files
                                           .filter((m) => m.type === "Order")
@@ -189,9 +188,7 @@ export class CompOrderOverview extends OvlBaseElement {
                                   ${k}
                                 </button>
                               </td>
-                              <td class="fd-table__cell">
-                                ${order.refNum}
-                              </td>
+                              <td class="fd-table__cell">${order.refNum}</td>
                               <td class="fd-table__cell">
                                 ${D(order.docDate)}
                               </td>

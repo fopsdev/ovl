@@ -5,16 +5,14 @@ import { T, D } from "../../../../ovl/src/global/globals"
 export class CompOrderDetail extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
-      let key = this.state.demoApp.screens.orderdetail.selectedOrder
-      let order = this.state.demoApp.orderDetail.orders[key]
+      let key = this.state.app.screens.orderdetail.selectedOrder
+      let order = this.state.app.orderDetail.orders[key]
 
       return html`
         <div class="fd-layout-panel">
           <div class="fd-layout-panel__header">
             <div class="fd-layout-panel__head">
-              <h3 class="fd-layout-panel__title">
-                ${T("PortalDetails")}
-              </h3>
+              <h3 class="fd-layout-panel__title">${T("PortalDetails")}</h3>
             </div>
           </div>
           <div class="fd-layout-panel__body">
@@ -35,9 +33,7 @@ export class CompOrderDetail extends OvlBaseElement {
               <div class="portal-orderdetail-docnum-label">
                 ${T("PortalOrderDocNum")}
               </div>
-              <div class="portal-orderdetail-docnum-value">
-                ${key}
-              </div>
+              <div class="portal-orderdetail-docnum-value">${key}</div>
 
               <div class="portal-orderdetail-docdate-label">
                 ${T("PortalOrderDocDate")}

@@ -1,31 +1,39 @@
-export { OvlVersion } from "../../../app/sw"
-import { init } from "./prepare"
+// app setup
+// export { OvlVersion } from "../../../app/sw"
+// import {
+//   appScreens,
+//   appDialogs,
+//   CustomFormType,
+//   TableDefIds as OvlTableDefIds,
+//   Language as OvlLanguage,
+// } from "../../../app/src/appDef"
+// import * as appState from "../../../app/src/state"
+// import * as appActions from "../../../app/src/actions"
+// import * as customActions from "../../../app/src/customActions"
+
+// test setup
+export { OvlVersion } from "../../test/sw"
 import {
   appScreens,
   appDialogs,
-  CustomFormType,
-  TableDefIds as OvlTableDefIds,
-  Language as OvlLanguage,
-} from "../../../app/src/appDef"
-import * as appState from "../../../app/src/state"
-import * as appActions from "../../../app/src/actions"
-import * as customActions from "../../../app/src/customActions"
+  appForms,
+  OvlTableDefIds,
+  OvlLanguage,
+} from "../../test/src/appDef"
+import * as appState from "../../test/src/state"
+import * as appActions from "../../test/src/actions"
+import * as customActions from "../../test/src/customActions"
+
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
-
+import { init } from "./prepare"
 import { baseScreens, baseDialogs } from "./screensAndDialogs"
 
-let _state = {
-  portal: appState,
-}
-let _actions = {
-  portal: appActions,
-}
-export type OvlState = { ovl: typeof ovlState; portal: typeof appState }
+export type OvlState = { ovl: typeof ovlState; app: typeof appState }
 export type OvlActions = {
   ovl: typeof ovlActions
-  portal: typeof appActions
+  app: typeof appActions
   custom: typeof customActions
 }
 export type OvlEffects = { ovl: typeof ovlEffects }
@@ -34,19 +42,19 @@ export let ovl: {
   actions: OvlActions
   effects: OvlEffects
 } = init(
-  _state,
-  _actions,
-  ovlState,
+  appState,
+  appActions,
   appScreens,
-  baseScreens,
   appDialogs,
-  baseDialogs,
-  ovlActions,
   customActions,
-  ovlEffects
+  ovlState,
+  ovlActions,
+  ovlEffects,
+  baseScreens,
+  baseDialogs
 )
 
-export type OvlForm = CustomFormType | "TableRowEdit"
+export type OvlForm = appForms | "TableRowEdit"
 export type OvlDialog = keyof typeof baseDialogs | keyof typeof appDialogs
 
 export { OvlTableDefIds, OvlLanguage }

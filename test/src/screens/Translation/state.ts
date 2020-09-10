@@ -1,4 +1,4 @@
-import { TableDef } from "../../../../ovl/src/library/Table/Table"
+import { OvlTableDef } from "../../../../ovl/src/library/Table/Table"
 
 export type Translation = {
   U_Code: string
@@ -13,7 +13,7 @@ export type TblTranslation = {
   [key: string]: Translation
 }
 
-export let tblTranslation: TableDef = {
+export let tblTranslation: OvlTableDef = {
   id: "translation",
   namespace: "system.translations",
   database: {

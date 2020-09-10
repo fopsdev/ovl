@@ -1,18 +1,14 @@
 import {
   ValidateFieldType,
-  FormState,
+  OvlFormState,
   GetFormValidationErrors,
 } from "../../../../ovl/src/library/forms/actions"
-import {
-  Mandatory,
-  MinLength,
-} from "../../../../ovl/src/library/forms/validators"
-import { T, api } from "../../../../ovl/src/global/globals"
+import { T } from "../../../../ovl/src/global/globals"
 import { postRequest } from "../../../../ovl/src/effects"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
-import { OvlAction } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
-export const SaveSettings: OvlAction<FormState> = async (
+export const SaveSettings: OvlAction<OvlFormState> = async (
   value,
   { state, actions }
 ) => {

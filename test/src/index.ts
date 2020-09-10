@@ -1,24 +1,18 @@
 import { html, render } from "../../ovl/node_modules/lit-html"
 
-import { CustomFormType, OvlTableDefIds, OvlLanguage } from "./state"
-import { OvlConfig } from "../../ovl/src/init"
-import {
-  OvlState,
-  ovl,
-  logState,
-  logActions,
-  logEffects,
-} from "../../ovl/src/index"
-export { OvlTableDefIds, CustomFormType, OvlLanguage }
+import { appForms, OvlTableDefIds, OvlLanguage } from "./appDef"
+import { OvlConfig } from "../../ovl/src/config"
+import { OvlState, ovl } from "../../ovl/src/index"
+export { OvlTableDefIds, appForms, OvlLanguage }
 
 OvlConfig._system.debugTracking = false
 
 OvlConfig.requiredActions = {
   customRehydrateActionPath: undefined,
-  customInitActionPath: ovl.actions.demoApp.system.user.CustomInit,
+  customInitActionPath: ovl.actions.app.system.user.CustomInit,
   handleAdditionalTranslationResultActionPath:
-    ovl.actions.demoApp.system.user.HandleAdditionalLanguageResult,
-  handleGlobalRefreshActionPath: ovl.actions.demoApp.global.HandleRefresh,
+    ovl.actions.app.system.user.HandleAdditionalLanguageResult,
+  handleGlobalRefreshActionPath: ovl.actions.app.global.HandleRefresh,
 }
 
 OvlConfig.apiUrl = {
@@ -34,8 +28,8 @@ OvlConfig.apiUrl = {
 OvlConfig.stickyHeaderEnabled = (state: OvlState) => {
   return (
     !state.ovl.uiState.isIOS &&
-    !state.demoApp.screens.shellbar.mainMenuExpanded &&
-    !state.demoApp.screens.shellbar.userMenuExpanded
+    !state.app.screens.shellbar.mainMenuExpanded &&
+    !state.app.screens.shellbar.userMenuExpanded
   )
 }
 

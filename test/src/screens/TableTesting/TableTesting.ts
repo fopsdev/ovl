@@ -12,8 +12,8 @@ export class CompTableTesting extends OvlBaseElement {
             class="fd-table"
             .props=${(state) => {
               return {
-                def: state.demoApp.testtables.tableTesting.tableDef.tab1,
-                data: state.demoApp.testtables.tableTesting,
+                def: state.app.testtables.tableTesting.tableDef.tab1,
+                data: state.app.testtables.tableTesting,
               }
             }}
           >
@@ -27,8 +27,8 @@ export class CompTableTesting extends OvlBaseElement {
             class="fd-table"
             .props=${(state) => {
               return {
-                def: state.demoApp.testtables.tableTesting.tableDef.tab2,
-                data: state.demoApp.testtables.tableTesting,
+                def: state.app.testtables.tableTesting.tableDef.tab2,
+                data: state.app.testtables.tableTesting,
               }
             }}
           >
@@ -43,8 +43,8 @@ export class CompTableTesting extends OvlBaseElement {
             class="fd-table"
             .props=${(state) => {
               return {
-                def: state.demoApp.testtables.tableTesting.tableDef.tab3,
-                data: state.demoApp.testtables.tableTesting,
+                def: state.app.testtables.tableTesting.tableDef.tab3,
+                data: state.app.testtables.tableTesting,
               }
             }}
           >

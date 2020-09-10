@@ -26,26 +26,25 @@ export class CompQuotationOverview extends OvlBaseElement {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR214", "")
-        if (this.state.demoApp.screens.quotation.activeFilePopup === id) {
+        if (this.state.app.screens.quotation.activeFilePopup === id) {
           id = ""
         }
-        this.actions.demoApp.global.TogglePDFPopup({
+        this.actions.app.global.TogglePDFPopup({
           key: id,
-          obj: this.state.demoApp.screens.quotation,
+          obj: this.state.app.screens.quotation,
         })
       }
     }
 
     const handleRemoveAllPDFPopup = (e) => {
-      this.actions.demoApp.global.TogglePDFPopup({
+      this.actions.app.global.TogglePDFPopup({
         key: "",
-        obj: this.state.demoApp.screens.quotation,
+        obj: this.state.app.screens.quotation,
       })
     }
     return this.track(() => {
-      let detailCount = Object.keys(
-        this.state.demoApp.quotationDetail.quotations
-      ).length
+      let detailCount = Object.keys(this.state.app.quotationDetail.quotations)
+        .length
       if (detailCount === 0) {
         return null
       }
@@ -118,16 +117,13 @@ export class CompQuotationOverview extends OvlBaseElement {
                       </tr>
                     </thead>
                     <tbody class="fd-table__body">
-                      ${Object.keys(
-                        this.state.demoApp.quotationDetail.quotations
-                      )
+                      ${Object.keys(this.state.app.quotationDetail.quotations)
                         .sort((a, b) => parseInt(b) - parseInt(a))
                         .map((k) => {
-                          let o = this.state.demoApp.quotationDetail.quotations[
+                          let o = this.state.app.quotationDetail.quotations[k]
+                          let files = this.state.app.quotationDetail.quotations[
                             k
-                          ]
-                          let files = this.state.demoApp.quotationDetail
-                            .quotations[k].attachments.files
+                          ].attachments.files
 
                           return html`
                             <tr class="fd-table__row ${statusColors[o.status]}">
@@ -141,7 +137,7 @@ export class CompQuotationOverview extends OvlBaseElement {
                                       aria-controls="pQqQR214${k}"
                                       aria-haspopup="true"
                                       aria-expanded="${k ===
-                                      this.state.demoApp.screens.quotation
+                                      this.state.app.screens.quotation
                                         .activeFilePopup}"
                                       aria-label="More"
                                     ></button>
@@ -150,16 +146,15 @@ export class CompQuotationOverview extends OvlBaseElement {
                                     style="width:280px;"
                                     class="fd-popover__body"
                                     aria-hidden="${k !==
-                                      this.state.demoApp.screens.quotation
+                                      this.state.app.screens.quotation
                                         .activeFilePopup ||
-                                    this.state.demoApp.quotationDetail
-                                      .quotations[k].attachments.files
-                                      .length === 0}"
+                                    this.state.app.quotationDetail.quotations[k]
+                                      .attachments.files.length === 0}"
                                     id="pQqQR214${k}"
                                   >
                                     <nav class="fd-menu">
                                       <ul class="fd-menu__list">
-                                        ${this.state.demoApp.quotationDetail.quotations[
+                                        ${this.state.app.quotationDetail.quotations[
                                           k
                                         ].attachments.files.map((f) => {
                                           return html`
@@ -185,15 +180,9 @@ export class CompQuotationOverview extends OvlBaseElement {
                                 </div>
                               </td>
 
-                              <td class="fd-table__cell">
-                                ${k}
-                              </td>
-                              <td class="fd-table__cell">
-                                ${o.refNum}
-                              </td>
-                              <td style="width:28%;">
-                                ${D(o.docDate)}
-                              </td>
+                              <td class="fd-table__cell">${k}</td>
+                              <td class="fd-table__cell">${o.refNum}</td>
+                              <td style="width:28%;">${D(o.docDate)}</td>
                             </tr>
                           `
                         })}

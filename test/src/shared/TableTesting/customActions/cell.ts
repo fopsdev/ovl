@@ -2,7 +2,6 @@ import { html } from "../../../../../ovl/node_modules/lit-html/lit-html"
 import { DialogOk, SnackAdd } from "../../../../../ovl/src/library/helpers"
 import { getDisplayValue } from "../../../../../ovl/src/library/Table/helpers"
 
-import { OvlAction } from "../../../../../ovl/src"
 import {
   EditGetLabelAndValueRenderer_Type,
   EditGetLabelAndValueRenderer_ReturnType,
@@ -23,6 +22,7 @@ import {
   FieldHeaderCellSelectedHandler_Type,
   FieldHeaderCellSelectedHandler_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const Edit_U_Memo_GetLabelAndValueRender: OvlAction<
   EditGetLabelAndValueRenderer_Type,

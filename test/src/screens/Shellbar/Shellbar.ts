@@ -1,6 +1,11 @@
 import { html, TemplateResult } from "../../../../ovl/node_modules/lit-html"
-import { T } from "../../../../ovl/src/global/globals"
-import { OvlConfig } from "../../../../ovl/src/init"
+import {
+  T,
+  logState,
+  logActions,
+  logEffects,
+} from "../../../../ovl/src/global/globals"
+import { OvlConfig } from "../../../../ovl/src/config"
 import { OvlBaseElement } from "../../../../ovl/src/library/OvlBaseElement"
 // @ts-ignore
 import langpic_de from "../../../img/de.png"
@@ -9,7 +14,7 @@ import langpic_fr from "../../../img/fr.png"
 // @ts-ignore
 import logo from "../../../img/logosmall.png"
 import { logTrackingList } from "../../../../ovl/src/tracker/tracker"
-import { logState, logActions, logEffects } from "../../../../ovl/src"
+
 import { ShellButtonOrMenu } from "../../components/Refresh/Refresh"
 
 export type ShellbarState = {
@@ -21,21 +26,21 @@ export class CompShellbar extends OvlBaseElement {
   async getUI() {
     const userMenuClick = (e: Event) => {
       e.stopPropagation()
-      this.actions.demoApp.system.shellbar.CloseMainMenu()
-      if (this.state.demoApp.screens.shellbar.userMenuExpanded) {
-        this.actions.demoApp.system.shellbar.CloseUserMenu()
+      this.actions.app.system.shellbar.CloseMainMenu()
+      if (this.state.app.screens.shellbar.userMenuExpanded) {
+        this.actions.app.system.shellbar.CloseUserMenu()
       } else {
-        this.actions.demoApp.system.shellbar.OpenUserMenu()
+        this.actions.app.system.shellbar.OpenUserMenu()
       }
     }
 
     const handleTopLevelClick = (e: Event) => {
       e.stopPropagation()
-      if (this.state.demoApp.screens.shellbar.mainMenuExpanded) {
-        this.actions.demoApp.system.shellbar.CloseMainMenu()
+      if (this.state.app.screens.shellbar.mainMenuExpanded) {
+        this.actions.app.system.shellbar.CloseMainMenu()
       }
-      if (this.state.demoApp.screens.shellbar.userMenuExpanded) {
-        this.actions.demoApp.system.shellbar.CloseUserMenu()
+      if (this.state.app.screens.shellbar.userMenuExpanded) {
+        this.actions.app.system.shellbar.CloseUserMenu()
       }
     }
 
@@ -65,7 +70,7 @@ export class CompShellbar extends OvlBaseElement {
 
     const handleUserMenuLevelClick = (e: Event) => {
       e.stopPropagation()
-      this.actions.demoApp.system.shellbar.CloseUserMenu()
+      this.actions.app.system.shellbar.CloseUserMenu()
     }
 
     const handleLanguage = async (e: Event) => {
@@ -82,9 +87,9 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleEffortTable = async (e: Event) => {
-      // this.state.demoApp.tables.effort.tableDef.effort.options.filter.static.U_User = this.state.demoApp.logic.selectedRessource
+      // this.state.app.tables.effort.tableDef.effort.options.filter.static.U_User = this.state.app.logic.selectedRessource
       // await this.actions.ovl.table.TableRefresh({
-      //   data: this.state.demoApp.tables.effort,
+      //   data: this.state.app.tables.effort,
       //   defId: "effort",
       // })
       // this.actions.ovl.navigation.NavigateTo("EffortTable")
@@ -106,7 +111,7 @@ export class CompShellbar extends OvlBaseElement {
     }
 
     const handleCreateTestEntries = async (e: Event) => {
-      this.actions.demoApp.testtables.mobiletimerecording.CreateTestEntries()
+      this.actions.app.testtables.mobiletimerecording.CreateTestEntries()
     }
 
     const handleTestTable = async (e: Event) => {
@@ -132,7 +137,7 @@ export class CompShellbar extends OvlBaseElement {
       ) {
         feedbackForm = html`
           <comp-feedbackform
-            id="${this.state.demoApp.screens.feedback.type}"
+            id="${this.state.app.screens.feedback.type}"
           ></comp-feedbackform>
         `
       }
@@ -302,8 +307,8 @@ export class CompShellbar extends OvlBaseElement {
       </button> `
 
       if (
-        this.state.demoApp.quotationDetail &&
-        Object.keys(this.state.demoApp.quotationDetail.quotations).length > 0
+        this.state.app.quotationDetail &&
+        Object.keys(this.state.app.quotationDetail.quotations).length > 0
       ) {
         quotationMainMenu = html`<button
           class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2 ovl-shellbar-directmenu"
@@ -334,8 +339,8 @@ export class CompShellbar extends OvlBaseElement {
       }
 
       if (
-        this.state.demoApp.orderDetail &&
-        Object.keys(this.state.demoApp.orderDetail.orders).length > 0
+        this.state.app.orderDetail &&
+        Object.keys(this.state.app.orderDetail.orders).length > 0
       ) {
         salesOrderMainMenu = html` <button
           @click="${(e) => openOrderOverview(e)}"
@@ -365,10 +370,9 @@ export class CompShellbar extends OvlBaseElement {
         `
       }
       if (
-        (this.state.demoApp.invoiceDetail ||
-          this.state.demoApp.dpInvoiceDetail) &&
-        (Object.keys(this.state.demoApp.invoiceDetail.invoices).length > 0 ||
-          Object.keys(this.state.demoApp.dpInvoiceDetail.dpInvoices).length > 0)
+        (this.state.app.invoiceDetail || this.state.app.dpInvoiceDetail) &&
+        (Object.keys(this.state.app.invoiceDetail.invoices).length > 0 ||
+          Object.keys(this.state.app.dpInvoiceDetail.dpInvoices).length > 0)
       ) {
         invoiceMainMenu = html`
           <button
@@ -443,7 +447,7 @@ export class CompShellbar extends OvlBaseElement {
                         aria-label=""
                         @click=${userMenuClick}
                         aria-controls="DD35G276"
-                        aria-expanded="${this.state.demoApp.screens.shellbar
+                        aria-expanded="${this.state.app.screens.shellbar
                           .userMenuExpanded}"
                         aria-haspopup="true"
                       >
@@ -456,7 +460,7 @@ export class CompShellbar extends OvlBaseElement {
                       @click=${handleUserMenuLevelClick}
                       style="width:280px;"
                       class="fd-popover__body fd-popover__body--right"
-                      aria-hidden="${!this.state.demoApp.screens.shellbar
+                      aria-hidden="${!this.state.app.screens.shellbar
                         .userMenuExpanded}"
                       id="DD35G276"
                     >
@@ -527,9 +531,7 @@ export class CompShellbar extends OvlBaseElement {
           </div>
           <div class="fd-shell__app">
             <div class="fd-app ">
-              <main class="fd-app__main">
-                ${app}
-              </main>
+              <main class="fd-app__main">${app}</main>
             </div>
           </div>
         </div>
@@ -565,21 +567,21 @@ export class CompShellbar extends OvlBaseElement {
 //   async getUI() {
 //     const mainMenuClick = (e: Event) => {
 //       e.stopPropagation()
-//       this.actions.demoApp.system.shellbar.CloseUserMenu()
-//       if (this.state.demoApp.screens.shellbar.mainMenuExpanded) {
-//         this.actions.demoApp.system.shellbar.CloseMainMenu()
+//       this.actions.app.system.shellbar.CloseUserMenu()
+//       if (this.state.app.screens.shellbar.mainMenuExpanded) {
+//         this.actions.app.system.shellbar.CloseMainMenu()
 //       } else {
-//         this.actions.demoApp.system.shellbar.OpenMainMenu()
+//         this.actions.app.system.shellbar.OpenMainMenu()
 //       }
 //     }
 
 //     const userMenuClick = (e: Event) => {
 //       e.stopPropagation()
-//       this.actions.demoApp.system.shellbar.CloseMainMenu()
-//       if (this.state.demoApp.screens.shellbar.userMenuExpanded) {
-//         this.actions.demoApp.system.shellbar.CloseUserMenu()
+//       this.actions.app.system.shellbar.CloseMainMenu()
+//       if (this.state.app.screens.shellbar.userMenuExpanded) {
+//         this.actions.app.system.shellbar.CloseUserMenu()
 //       } else {
-//         this.actions.demoApp.system.shellbar.OpenUserMenu()
+//         this.actions.app.system.shellbar.OpenUserMenu()
 //       }
 //     }
 
@@ -606,16 +608,16 @@ export class CompShellbar extends OvlBaseElement {
 
 //     const handleTopLevelClick = (e: Event) => {
 //       e.stopPropagation()
-//       if (this.state.demoApp.screens.shellbar.mainMenuExpanded) {
-//         this.actions.demoApp.system.shellbar.CloseMainMenu()
+//       if (this.state.app.screens.shellbar.mainMenuExpanded) {
+//         this.actions.app.system.shellbar.CloseMainMenu()
 //       }
-//       if (this.state.demoApp.screens.shellbar.userMenuExpanded) {
-//         this.actions.demoApp.system.shellbar.CloseUserMenu()
+//       if (this.state.app.screens.shellbar.userMenuExpanded) {
+//         this.actions.app.system.shellbar.CloseUserMenu()
 //       }
 //     }
 //     const handleMainMenuLevelClick = (e: Event) => {
 //       e.stopPropagation()
-//       this.actions.demoApp.system.shellbar.CloseMainMenu()
+//       this.actions.app.system.shellbar.CloseMainMenu()
 //     }
 
 //     const handleLogout = (e: Event) => {
@@ -628,7 +630,7 @@ export class CompShellbar extends OvlBaseElement {
 
 //     const handleUserMenuLevelClick = (e: Event) => {
 //       e.stopPropagation()
-//       this.actions.demoApp.system.shellbar.CloseUserMenu()
+//       this.actions.app.system.shellbar.CloseUserMenu()
 //     }
 
 //     const handleLanguage = async (e: Event) => {
@@ -658,7 +660,7 @@ export class CompShellbar extends OvlBaseElement {
 //     }
 
 //     const handleCreateTestEntries = async (e: Event) => {
-//       this.actions.demoApp.testtables.mobiletimerecording.CreateTestEntries()
+//       this.actions.app.testtables.mobiletimerecording.CreateTestEntries()
 //     }
 
 //     const handleTestTable = async (e: Event) => {
@@ -675,7 +677,7 @@ export class CompShellbar extends OvlBaseElement {
 //       ) {
 //         feedbackForm = html`
 //           <comp-feedbackform
-//             id="${this.state.demoApp.screens.feedback.type}"
+//             id="${this.state.app.screens.feedback.type}"
 //           ></comp-feedbackform>
 //         `
 //       }
@@ -713,8 +715,8 @@ export class CompShellbar extends OvlBaseElement {
 //       // hide a few things as long as not logged in
 //       let hideAllMenus = ""
 //       let user = this.state.ovl.user
-//       let portal = this.state.demoApp
-//       let partner = this.state.demoApp.partner
+//       let portal = this.state.app
+//       let partner = this.state.app.partner
 //       // if user not logged in or a form is dirty hide menus
 //       let quotationMainMenu
 //       let quotationListMenu
@@ -735,9 +737,9 @@ export class CompShellbar extends OvlBaseElement {
 //         hideAllMenus = "hide"
 //       } else {
 //         userName =
-//           this.state.demoApp.user.firstName +
+//           this.state.app.user.firstName +
 //           " " +
-//           this.state.demoApp.user.lastName +
+//           this.state.app.user.lastName +
 //           ", " +
 //           partner.cardName
 //         if (
@@ -833,7 +835,7 @@ export class CompShellbar extends OvlBaseElement {
 //           langtitle = T("AppLangFR")
 //         }
 
-//         if (this.state.demoApp.user.role === "Admin") {
+//         if (this.state.app.user.role === "Admin") {
 //           languageTableMenu = html`
 //             <li>
 //               <a
@@ -848,8 +850,8 @@ export class CompShellbar extends OvlBaseElement {
 //         }
 
 //         if (
-//           this.state.demoApp.user.role === "Admin" &&
-//           this.state.demoApp.user.userName === "info@itflies.ch"
+//           this.state.app.user.role === "Admin" &&
+//           this.state.app.user.userName === "info@itflies.ch"
 //         ) {
 //           testTableMenu = html`
 //             <li>
@@ -886,7 +888,7 @@ export class CompShellbar extends OvlBaseElement {
 //           `
 //         }
 
-//         if (this.state.demoApp.user.role === "Admin") {
+//         if (this.state.app.user.role === "Admin") {
 //           auditMenu = html`
 //             <li>
 //               <a
@@ -965,7 +967,7 @@ export class CompShellbar extends OvlBaseElement {
 //                         <div
 //                           class="fd-shellbar-collapse--control"
 //                           aria-controls="CWaGX278"
-//                           aria-expanded="${this.state.demoApp.screens.shellbar
+//                           aria-expanded="${this.state.app.screens.shellbar
 //                             .mainMenuExpanded}"
 //                           aria-haspopup="true"
 //                           role="button"
@@ -975,7 +977,7 @@ export class CompShellbar extends OvlBaseElement {
 //                             class="fd-button fd-shellbar__button sap-icon--overflow"
 //                             aria-controls="undefined"
 //                             aria-haspopup="true"
-//                             aria-expanded="${this.state.demoApp.screens.shellbar
+//                             aria-expanded="${this.state.app.screens.shellbar
 //                               .mainMenuExpanded}"
 //                           ></button>
 //                         </div>
@@ -984,7 +986,7 @@ export class CompShellbar extends OvlBaseElement {
 //                         @click=${handleMainMenuLevelClick}
 //                         style="width:280px;"
 //                         class="fd-popover__body fd-popover__body--right"
-//                         aria-hidden="${!this.state.demoApp.screens.shellbar
+//                         aria-hidden="${!this.state.app.screens.shellbar
 //                           .mainMenuExpanded}"
 //                         id="CWaGX278"
 //                       >
@@ -1018,7 +1020,7 @@ export class CompShellbar extends OvlBaseElement {
 //                         aria-label=""
 //                         @click=${userMenuClick}
 //                         aria-controls="DD35G276"
-//                         aria-expanded="${this.state.demoApp.screens.shellbar
+//                         aria-expanded="${this.state.app.screens.shellbar
 //                           .userMenuExpanded}"
 //                         aria-haspopup="true"
 //                       >
@@ -1031,7 +1033,7 @@ export class CompShellbar extends OvlBaseElement {
 //                       @click=${handleUserMenuLevelClick}
 //                       style="width:280px;"
 //                       class="fd-popover__body fd-popover__body--right"
-//                       aria-hidden="${!this.state.demoApp.screens.shellbar
+//                       aria-hidden="${!this.state.app.screens.shellbar
 //                         .userMenuExpanded}"
 //                       id="DD35G276"
 //                     >

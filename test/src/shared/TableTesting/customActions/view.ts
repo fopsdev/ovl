@@ -4,8 +4,7 @@ import {
   TemplateResult,
 } from "../../../../../ovl/node_modules/lit-html/lit-html"
 import { ViewRendererResult } from "../../../../../ovl/src/library/Table/RowDetailView"
-import { ViewRowDef } from "../../../../../ovl/src/library/Table/Table"
-import { OvlAction } from "../../../../../ovl/src"
+
 import {
   ViewCustomRender_Type,
   ViewCustomRender_ReturnType,
@@ -14,6 +13,7 @@ import {
   ViewCustomTabRender_Type,
   ViewCustomTabRender_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const ViewCustom_tab1_Render: OvlAction<
   ViewCustomRender_Type,

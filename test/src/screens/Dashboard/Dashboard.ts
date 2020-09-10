@@ -12,7 +12,7 @@ export class CompDashboard extends OvlBaseElement {
 
   async getUI() {
     return this.track(() => {
-      let partner = this.state.demoApp.partner
+      let partner = this.state.app.partner
       return html`
     <div class="">
       <div>
@@ -23,8 +23,8 @@ export class CompDashboard extends OvlBaseElement {
               <div class="fd-layout-panel__head">
                 <p class="fd-layout-panel__title fd-has-type-2">
                 ${T("PortalWelcome", [
-                  this.state.demoApp.user.firstName,
-                  this.state.demoApp.user.lastName,
+                  this.state.app.user.firstName,
+                  this.state.app.user.lastName,
                   partner.cardName,
                 ])} 
                 </p>
@@ -46,7 +46,7 @@ export class CompDashboard extends OvlBaseElement {
             </div>
         <div class="fd-layout-panel__body fd-has-padding-tiny fd-has-margin-tiny">
         <comp-filelist  .props=${(s: OvlState) =>
-          s.demoApp.partner.attachments.files}></comp-filelist>
+          s.app.partner.attachments.files}></comp-filelist>
         </div>
         </div>
       </div>
@@ -62,7 +62,7 @@ export class CompDashboard extends OvlBaseElement {
             </div>
             <div class="fd-layout-panel__body fd-has-padding-tiny fd-has-margin-tiny">
               <img style="border-radius:10px;" width="100vw" src="data:image/jpg;base64,${
-                this.state.demoApp.pics.salesContact
+                this.state.app.pics.salesContact
               }"></img>
 
               <p class="fd-layout-panel__description">
@@ -89,7 +89,7 @@ export class CompDashboard extends OvlBaseElement {
             </div>
             <div class="fd-layout-panel__body fd-has-padding-tiny fd-has-margin-tiny">
               <img style="border-radius:10px;" width="100vw" src="data:image/jpg;base64,${
-                this.state.demoApp.pics.technicalContact
+                this.state.app.pics.technicalContact
               }"></img>
 
               <p class="fd-layout-panel__description">

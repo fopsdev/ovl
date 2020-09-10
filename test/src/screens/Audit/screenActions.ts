@@ -1,14 +1,15 @@
-import { OvlTableDefIds, OvlAction } from "../../../../ovl/src"
+import { OvlTableDefIds } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
 export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
   let defId: OvlTableDefIds = "audit"
-  let data = state.demoApp.tables.audit
+  let data = state.app.tables.audit
   actions.ovl.table.TableRefresh({ defId, data, forceServerDataRefresh: true })
 }
 
 export const ScreenNavigateIn = async (_, { state, actions }) => {
   let defId: OvlTableDefIds = "audit"
-  let data = state.demoApp.tables.audit
+  let data = state.app.tables.audit
   await actions.ovl.table.TableRefresh({
     defId,
     data,

@@ -39,7 +39,7 @@ export class CompLoginForm extends OvlFormElement {
     let handleForgotPw = (e: Event) => {
       e.preventDefault()
       e.stopPropagation()
-      this.actions.demoApp.system.user.ForgotPw(this.formState)
+      this.actions.app.system.user.ForgotPw(this.formState)
     }
 
     return html`
@@ -65,7 +65,7 @@ export class CompLoginForm extends OvlFormElement {
   getFooter = () => {
     let handleLogin = () => {
       if (!this.state.ovl.user.token) {
-        this.actions.demoApp.system.user.Login(this.formState)
+        this.actions.app.system.user.Login(this.formState)
       }
     }
 
@@ -105,7 +105,7 @@ export class CompLoginForm extends OvlFormElement {
           e.stopPropagation()
           document.getElementById("ovlloginbutton").focus()
           if (!this.state.ovl.user.token) {
-            this.actions.demoApp.system.user.Login(this.formState)
+            this.actions.app.system.user.Login(this.formState)
           }
         }
       }

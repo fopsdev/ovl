@@ -15,7 +15,6 @@ import {
   ResetT,
   saveState,
   ShowFile,
-  translations,
 } from "./globals"
 import {
   ScreenNavigateIn,

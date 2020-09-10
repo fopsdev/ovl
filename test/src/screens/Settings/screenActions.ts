@@ -1,7 +1,6 @@
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
-import { T } from "../../../../ovl/src/global/globals"
-import { OvlAction } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
 export const ScreenNavigateIn: OvlAction = async (_, { actions }) => {
   let fields: { [key: string]: FormFields } = {

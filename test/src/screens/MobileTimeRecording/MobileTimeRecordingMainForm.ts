@@ -1,10 +1,12 @@
 import { html } from "../../../../ovl/node_modules/lit-html/lit-html"
 import { TableDataAndDef } from "../../../../ovl/src/library/Table/Table"
 import { getFormFieldsFromColumns } from "../../../../ovl/src/library/Table/helpers"
-import { InitForm, FormState } from "../../../../ovl/src/library/forms/actions"
+import {
+  InitForm,
+  OvlFormState,
+} from "../../../../ovl/src/library/forms/actions"
 import { ovltemp, N, uuidv4 } from "../../../../ovl/src/global/globals"
 import { GetListDisplayValue } from "../../../../ovl/src/library/forms/Controls/helpers"
-import { Field_U_TypeId_GetList } from "./MobileTimeRecordingDetail/formActions"
 
 import { OvlFormElement } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { displayFormats } from "../../../../ovl/src/global/displayFormats"
@@ -27,7 +29,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
   }
 
   getKeysToSync = () => {
-    let data = this.state.demoApp.testtables.timeentries
+    let data = this.state.app.testtables.timeentries
     let def = data.tableDef.mobiletimerecording1
     //let rowKeys = Object.keys(data.data)
     return def.uiState.dataFilteredAndSorted.filter((k) => {
@@ -41,7 +43,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
   handleAddToSAPClick = async (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    let data = this.state.demoApp.testtables.timeentries
+    let data = this.state.app.testtables.timeentries
     let rowKeys = this.getKeysToSync()
     let guids = rowKeys.map((m) => {
       return { timeentry_id: data.data[m].Code }
@@ -56,7 +58,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
       10000
     )
     // tag data as synched
-    this.actions.demoApp.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
+    this.actions.app.testtables.mobiletimerecording.MarkAsSynced(rowKeys)
 
     SnackTrackedRemove(snackUid)
     SnackAdd("Zeit(en) erfolgreich übermittelt.")
@@ -64,9 +66,9 @@ export class CompMobileTimeEntry extends OvlFormElement {
   handleAddRowClick = async (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    let def = this.state.demoApp.testtables.timeentries.tableDef
+    let def = this.state.app.testtables.timeentries.tableDef
       .mobiletimerecording1
-    let data = this.state.demoApp.testtables.timeentries
+    let data = this.state.app.testtables.timeentries
     let tableDataAndDef: TableDataAndDef = {
       data,
       def,
@@ -96,11 +98,11 @@ export class CompMobileTimeEntry extends OvlFormElement {
 
   async handleDelete(e: Event, key: string) {
     console.log("handel del")
-    let def = this.state.demoApp.testtables.timeentries.tableDef
+    let def = this.state.app.testtables.timeentries.tableDef
       .mobiletimerecording1
-    let data = this.state.demoApp.testtables.timeentries
+    let data = this.state.app.testtables.timeentries
     await this.actions.ovl.internal.TableDeleteRow({ key, def, data })
-    let formState: FormState
+    let formState: OvlFormState
     if (this.state.ovl.forms.MobileTimeEntry) {
       formState = this.state.ovl.forms.MobileTimeEntry["mobiletimerecording1"]
       if (formState) {
@@ -112,12 +114,12 @@ export class CompMobileTimeEntry extends OvlFormElement {
   }
   async getUI() {
     return this.track(() => {
-      let def = this.state.demoApp.testtables.timeentries.tableDef
+      let def = this.state.app.testtables.timeentries.tableDef
         .mobiletimerecording1
       let dataKeys = def.uiState.dataFilteredAndSorted.filter(
         (k) => k.indexOf(ovltemp) === -1
       )
-      let data = this.state.demoApp.testtables.timeentries.data
+      let data = this.state.app.testtables.timeentries.data
       let fields = this.formState.fields
       let dateField = fields["date"]
       let fd = new Date(dateField.convertedValue)
@@ -135,9 +137,9 @@ export class CompMobileTimeEntry extends OvlFormElement {
         <div class="fd-layout-panel ">
           <div class="fd-has-type-2">
             Zeiterfassung für
-            ${this.state.demoApp.user.firstName +
+            ${this.state.app.user.firstName +
             " " +
-            this.state.demoApp.user.lastName}
+            this.state.app.user.lastName}
           </div>
 
           <div class="fd-container fd-container--fluid">

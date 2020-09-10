@@ -6,12 +6,13 @@ import {
 import { Mandatory } from "../../../../../ovl/src/library/forms/validators"
 import { TableTestingColumn } from "../state"
 import { Field_U_ItemCode_GetList } from "./list"
-import { OvlAction } from "../../../../../ovl/src"
+
 import {
   FormChanged_Type,
   FieldGetList_Type,
   FormValidate_Type,
 } from "../../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const FormChanged: OvlAction<FormChanged_Type> = async (
   value,

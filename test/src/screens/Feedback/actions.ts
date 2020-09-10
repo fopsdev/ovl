@@ -1,12 +1,12 @@
 import { T } from "../../../../ovl/src/global/globals"
 import {
-  FormState,
+  OvlFormState,
   GetFormValidationErrors,
 } from "../../../../ovl/src/library/forms/actions"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
-import { OvlAction } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
-export const SaveFeedback: OvlAction<FormState> = async (
+export const SaveFeedback: OvlAction<OvlFormState> = async (
   value,
   { state, actions, effects }
 ) => {
@@ -17,11 +17,11 @@ export const SaveFeedback: OvlAction<FormState> = async (
       {
         language: state.ovl.language.language,
         message: value.fields["msg"].value,
-        orderDate: state.demoApp.screens.feedback.orderDate,
-        orderNum: state.demoApp.screens.feedback.orderNum,
-        refNum: state.demoApp.screens.feedback.refNum,
-        assignedTo: state.demoApp.partner.salesContact.id,
-        feedbackType: state.demoApp.screens.feedback.type,
+        orderDate: state.app.screens.feedback.orderDate,
+        orderNum: state.app.screens.feedback.orderNum,
+        refNum: state.app.screens.feedback.refNum,
+        assignedTo: state.app.partner.salesContact.id,
+        feedbackType: state.app.screens.feedback.type,
       }
     )
 

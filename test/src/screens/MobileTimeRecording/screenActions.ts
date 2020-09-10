@@ -1,10 +1,10 @@
-import { OvlTableDefIds, OvlAction, FormType } from "../../../../ovl/src/index"
-import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
+import { OvlTableDefIds, OvlForm } from "../../../../ovl/src/index"
+
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
 import { getDateValue } from "../../../../ovl/src/global/globals"
 import { ScreenNavigateOut_ReturnType } from "../../../../ovl/src/global/hooks"
-import { stateStore } from "../../../../ovl/src/offlineStorage"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
 /* this is for the mobiletimeentryform screen */
 export const ScreenShow: OvlAction = async (_) => {
@@ -14,7 +14,7 @@ export const ScreenShow: OvlAction = async (_) => {
 /* main form functions */
 export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
   let defId: OvlTableDefIds = "mobiletimerecording1"
-  let data = state.demoApp.testtables.timeentries
+  let data = state.app.testtables.timeentries
   await actions.ovl.table.TableRefresh({
     defId,
     data,
@@ -25,7 +25,7 @@ export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
 let initialised = false
 export const ScreenNavigateIn: OvlAction = async (_, { actions, state }) => {
   let mainFormInstanceId = "mobiletimerecordingmain1"
-  let formType: FormType = "MobileTimeEntryMain"
+  let formType: OvlForm = "MobileTimeEntryMain"
   if (!initialised) {
     let dt = new Date()
     let convDate = dt.toISOString().substring(0, 10) + "T00:00:00"
@@ -46,7 +46,7 @@ export const ScreenNavigateIn: OvlAction = async (_, { actions, state }) => {
     initialised = true
   }
 
-  await actions.demoApp.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+  await actions.app.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
     {
       selected:
         state.ovl.forms[formType][mainFormInstanceId].fields.date

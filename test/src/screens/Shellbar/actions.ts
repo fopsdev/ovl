@@ -1,15 +1,15 @@
-import { OvlAction } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
 export const CloseMainMenu: OvlAction = (_, { state }) => {
-  state.demoApp.screens.shellbar.mainMenuExpanded = false
+  state.app.screens.shellbar.mainMenuExpanded = false
 }
 export const OpenMainMenu: OvlAction = (_, { state }) => {
-  state.demoApp.screens.shellbar.mainMenuExpanded = true
+  state.app.screens.shellbar.mainMenuExpanded = true
 }
 
 export const CloseUserMenu: OvlAction = (_, { state }) => {
-  state.demoApp.screens.shellbar.userMenuExpanded = false
+  state.app.screens.shellbar.userMenuExpanded = false
 }
 export const OpenUserMenu: OvlAction = (_, { state }) => {
-  state.demoApp.screens.shellbar.userMenuExpanded = true
+  state.app.screens.shellbar.userMenuExpanded = true
 }

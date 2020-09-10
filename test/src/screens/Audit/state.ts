@@ -1,6 +1,6 @@
-import { TableDef } from "../../../../ovl/src/library/Table/Table"
+import { OvlTableDef } from "../../../../ovl/src/library/Table/Table"
 
-export let tblAudit: TableDef = {
+export let tblAudit: OvlTableDef = {
   id: "audit",
   namespace: "portal.system.audit",
   database: {

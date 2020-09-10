@@ -1,7 +1,7 @@
 import { SnackAdd } from "../../../../../ovl/src/library/helpers"
 import { RowStatus } from "../../../../../ovl/src/library/Table/Table"
 import { TableTesting } from "../state"
-import { OvlAction } from "../../../../../ovl/src"
+
 import {
   FormCan_Type,
   FormCan_ReturnType,
@@ -11,6 +11,7 @@ import {
   FormAdd_Type,
   FormCustomFn_Type,
 } from "../../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const FormCanEdit: OvlAction<FormCan_Type, FormCan_ReturnType> = async ({
   rowKey,

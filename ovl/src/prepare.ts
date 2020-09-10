@@ -46,18 +46,20 @@ const injectActions = (obj) =>
 // prepare screens state
 //@ts-ignore
 export const init = (
-  _state,
-  _actions,
-  ovlState,
+  appState,
+  appActions,
   appScreens,
-  baseScreens,
   appDialogs,
-  baseDialogs,
-  ovlActions,
   customActions,
-  ovlEffects
+  ovlState,
+  ovlActions,
+  ovlEffects,
+  baseScreens,
+  baseDialogs
 ) => {
+  let _state: any = {}
   _state.ovl = ovlState
+  _state.app = appState
   _state.ovl.screens.screens = {}
   Object.keys(appScreens)
     .concat(Object.keys(baseScreens))
@@ -80,8 +82,9 @@ export const init = (
         closing: false,
       }
     })
-
+  let _actions: any = {}
   _actions.ovl = ovlActions
+  _actions.app = appActions
   _actions.custom = customActions
 
   let effects = {

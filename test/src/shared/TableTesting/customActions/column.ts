@@ -1,5 +1,5 @@
-import { OvlAction } from "../../../../../ovl/src"
 import { FormCustomColumnFn_Type } from "../../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const FormCustomColumnFn_ValidValues: OvlAction<FormCustomColumnFn_Type> = async (
   { fnName, columnKey, def },

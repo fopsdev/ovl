@@ -14,9 +14,7 @@ export class CompTranslation extends OvlBaseElement {
         <div class="fd-layout-panel ">
           <div class="fd-layout-panel__header">
             <div class="fd-layout-panel__head">
-              <h3 class="fd-layout-panel__title">
-                ${T("AppTranslations")}
-              </h3>
+              <h3 class="fd-layout-panel__title">${T("AppTranslations")}</h3>
             </div>
           </div>
 
@@ -27,8 +25,8 @@ export class CompTranslation extends OvlBaseElement {
               class="fd-table"
               .props=${(state: OvlState) => {
                 return {
-                  def: state.demoApp.tables.translation.tableDef.translation,
-                  data: state.demoApp.tables.translation,
+                  def: state.app.tables.translation.tableDef.translation,
+                  data: state.app.tables.translation,
                 }
               }}
             >

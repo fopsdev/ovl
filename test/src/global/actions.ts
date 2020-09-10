@@ -1,8 +1,8 @@
-import { OvlScreen, OvlAction, logState } from "../../../ovl/src/index"
+import { OvlScreen } from "../../../ovl/src/index"
 
 import { T, uuidv4 } from "../../../ovl/src/global/globals"
 import {
-  FormState,
+  OvlFormState,
   GetFormValidationErrors,
   ValidateFieldType,
   InitForm,
@@ -18,8 +18,9 @@ import {
   SnackTrackedAdd,
 } from "../../../ovl/src/library/helpers"
 import { AddSnack } from "../../../ovl/src/library/Snack/actions"
+import { OvlAction } from "../../../ovl/src/ovlTypes"
 
-export const Login: OvlAction<FormState> = async (
+export const Login: OvlAction<OvlFormState> = async (
   value,
   { state, actions, effects }
 ) => {
@@ -45,33 +46,33 @@ export const Login: OvlAction<FormState> = async (
       }
       state.ovl.user.token = res.data.partner.user.token
       state.ovl.user.role = res.data.partner.user.role
-      state.demoApp.user = res.data.partner.user
-      state.demoApp.chartData = res.data.data.chartData
-      state.demoApp.partner = res.data.partner
-      state.demoApp.orderDetail = {
+      state.app.user = res.data.partner.user
+      state.app.chartData = res.data.data.chartData
+      state.app.partner = res.data.partner
+      state.app.orderDetail = {
         orders: res.data.data.orderDetail,
       }
-      state.demoApp.quotationDetail = {
+      state.app.quotationDetail = {
         quotations: res.data.data.quotationDetail,
       }
-      state.demoApp.invoiceDetail = {
+      state.app.invoiceDetail = {
         invoices: res.data.data.invoiceDetail,
       }
-      state.demoApp.dpInvoiceDetail = {
+      state.app.dpInvoiceDetail = {
         dpInvoices: res.data.data.dpInvoiceDetail,
       }
-      state.demoApp.partner.attachments = res.data.data.attachments
+      state.app.partner.attachments = res.data.data.attachments
 
       //init lookup values
       res = await effects.ovl.postRequest(state.ovl.apiUrl + "lookup", {
         lang: state.ovl.language.language,
         lookupType: "initial",
       })
-      state.demoApp.testtables.lookups.U_ItemCode = res.data.item
-      state.demoApp.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
+      state.app.testtables.lookups.U_ItemCode = res.data.item
+      state.app.testtables.lookups.U_ItmsGrpCod = res.data.itemGroup
 
-      state.demoApp.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
-      state.demoApp.testtables.lookups.ProjectTypeId = res.data.timeProjects
+      state.app.testtables.lookups.AbsenceTypeId = res.data.timeAbsences
+      state.app.testtables.lookups.ProjectTypeId = res.data.timeProjects
 
       state.ovl.uiState.isReady = true
 
@@ -88,7 +89,7 @@ export const Login: OvlAction<FormState> = async (
           command = screen
         }
         if (orderNum) {
-          state.demoApp.screens.orderdetail.selectedOrder = orderNum
+          state.app.screens.orderdetail.selectedOrder = orderNum
         }
         actions.ovl.navigation.NavigateTo(command)
       }
@@ -101,7 +102,7 @@ export const Login: OvlAction<FormState> = async (
   }
 }
 
-export const ForgotPw: OvlAction<FormState> = async (
+export const ForgotPw: OvlAction<OvlFormState> = async (
   value,
   { state, actions, effects }
 ) => {
@@ -125,16 +126,16 @@ export const HandleAdditionalLanguageResult: OvlAction<any> = async (
   value,
   { state }
 ) => {
-  state.demoApp.pics = {
+  state.app.pics = {
     salesContact: value.salesPic,
     technicalContact: value.technicianPic,
   }
-  if (!state.demoApp.partner) {
+  if (!state.app.partner) {
     //@ts-ignore
-    state.demoApp.partner = {}
+    state.app.partner = {}
   }
-  state.demoApp.partner.technicalContact = value.technician
-  state.demoApp.partner.salesContact = value.sales
+  state.app.partner.technicalContact = value.technician
+  state.app.partner.salesContact = value.sales
 }
 
 export const TogglePDFPopup: OvlAction<TogglePDFPopupState> = (value) => {
@@ -155,21 +156,21 @@ export const HandleRefresh: OvlAction = async (
   try {
     // 1st get global data to be refreshed
     let res = await effects.ovl.postRequest(state.ovl.apiUrl + "data/getdata", {
-      features: state.demoApp.user.features,
+      features: state.app.user.features,
       language: state.ovl.language.language,
     })
     if (!res.data) {
       return
     }
-    state.demoApp.partner.attachments = res.data.attachments
+    state.app.partner.attachments = res.data.attachments
 
-    state.demoApp.chartData = res.data.chartData
-    state.demoApp.quotationDetail = {
+    state.app.chartData = res.data.chartData
+    state.app.quotationDetail = {
       quotations: res.data.quotationDetail,
     }
-    state.demoApp.orderDetail = { orders: res.data.orderDetail }
-    state.demoApp.invoiceDetail = { invoices: res.data.invoiceDetail }
-    state.demoApp.dpInvoiceDetail = {
+    state.app.orderDetail = { orders: res.data.orderDetail }
+    state.app.invoiceDetail = { invoices: res.data.invoiceDetail }
+    state.app.dpInvoiceDetail = {
       dpInvoices: res.data.dpInvoiceDetail,
     }
 
@@ -211,6 +212,6 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
     initialFocusElementId: "user",
   }
   await actions.ovl.form.InitForm(loginForm)
-  await actions.demoApp.system.user.Login(state.ovl.forms.Login.loginform)
+  await actions.app.system.user.Login(state.ovl.forms.Login.loginform)
   actions.ovl.navigation.NavigateTo("TableTesting")
 }

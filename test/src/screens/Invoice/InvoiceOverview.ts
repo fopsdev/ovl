@@ -26,24 +26,24 @@ export class CompInvoiceOverview extends OvlBaseElement {
       if (!e.target.disabled) {
         e.stopPropagation()
         let id = e.target.getAttribute("aria-controls").replace("pQqQR213", "")
-        if (this.state.demoApp.screens.invoice.activeFilePopup === id) {
+        if (this.state.app.screens.invoice.activeFilePopup === id) {
           id = ""
         }
-        this.actions.demoApp.global.TogglePDFPopup({
+        this.actions.app.global.TogglePDFPopup({
           key: id,
-          obj: this.state.demoApp.screens.invoice,
+          obj: this.state.app.screens.invoice,
         })
       }
     }
 
     const handleRemoveAllPDFPopup = (e) => {
-      this.actions.demoApp.global.TogglePDFPopup({
+      this.actions.app.global.TogglePDFPopup({
         key: "",
-        obj: this.state.demoApp.screens.invoice,
+        obj: this.state.app.screens.invoice,
       })
     }
     return this.track(() => {
-      let detailCount = Object.keys(this.state.demoApp.invoiceDetail.invoices)
+      let detailCount = Object.keys(this.state.app.invoiceDetail.invoices)
         .length
       if (detailCount === 0) {
         return null
@@ -99,10 +99,10 @@ export class CompInvoiceOverview extends OvlBaseElement {
                         </tr>
                       </thead>
                       <tbody class="fd-table__body">
-                        ${Object.keys(this.state.demoApp.invoiceDetail.invoices)
+                        ${Object.keys(this.state.app.invoiceDetail.invoices)
                           .sort((a, b) => parseInt(b) - parseInt(a))
                           .map((k) => {
-                            let o = this.state.demoApp.invoiceDetail.invoices[k]
+                            let o = this.state.app.invoiceDetail.invoices[k]
                             let files = o.attachments.files
                             let bgColor = "fd-has-background-color-background-5"
                             let dueDate = new Date(o.docDueDate)
@@ -125,7 +125,7 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                         aria-controls="pQqQR213${k}"
                                         aria-haspopup="true"
                                         aria-expanded="${k ===
-                                        this.state.demoApp.screens.invoice
+                                        this.state.app.screens.invoice
                                           .activeFilePopup}"
                                         aria-label="More"
                                       ></button>
@@ -134,16 +134,15 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                       style="width:280px;"
                                       class="fd-popover__body"
                                       aria-hidden="${k !==
-                                        this.state.demoApp.screens.invoice
+                                        this.state.app.screens.invoice
                                           .activeFilePopup ||
-                                      this.state.demoApp.invoiceDetail.invoices[
-                                        k
-                                      ].attachments.files.length === 0}"
+                                      this.state.app.invoiceDetail.invoices[k]
+                                        .attachments.files.length === 0}"
                                       id="pQqQR213${k}"
                                     >
                                       <nav class="fd-menu">
                                         <ul class="fd-menu__list">
-                                          ${this.state.demoApp.invoiceDetail.invoices[
+                                          ${this.state.app.invoiceDetail.invoices[
                                             k
                                           ].attachments.files.map((f) => {
                                             return html`
@@ -168,15 +167,9 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                     </div>
                                   </div>
                                 </td>
-                                <td class="fd-table__cell">
-                                  ${k}
-                                </td>
-                                <td class="fd-table__cell">
-                                  ${o.refNum}
-                                </td>
-                                <td class="fd-table__cell">
-                                  ${D(o.docDate)}
-                                </td>
+                                <td class="fd-table__cell">${k}</td>
+                                <td class="fd-table__cell">${o.refNum}</td>
+                                <td class="fd-table__cell">${D(o.docDate)}</td>
                                 <!-- <td style="text-align: right;">
                               ${Math.round(o.paidRate)}
                             </td> -->

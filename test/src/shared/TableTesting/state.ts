@@ -1,4 +1,4 @@
-import { TableDef, Tabs } from "../../../../ovl/src/library/Table/Table"
+import { OvlTableDef, Tabs } from "../../../../ovl/src/library/Table/Table"
 
 export type TableTesting = {
   Code: string
@@ -21,7 +21,7 @@ export type TblTableTesting = {
   [key: string]: TableTesting
 }
 
-export let tblTableTesting: TableDef = {
+export let tblTableTesting: OvlTableDef = {
   id: "tab1",
   titleTranslationKey: "PortalTitleTable1",
   namespace: "testtables.tabletesting",
@@ -137,7 +137,7 @@ let tableTesting2Tabs: Tabs = {
 export type tab2EditTabs = keyof typeof tableTesting2Tabs.edit.tabs
 export type tab2ViewTabs = keyof typeof tableTesting2Tabs.view.tabs
 
-export let tblTableTesting2: TableDef = {
+export let tblTableTesting2: OvlTableDef = {
   id: "tab2",
   titleTranslationKey: "PortalTitleTable2",
   namespace: "testtables.tabletesting",
@@ -343,7 +343,7 @@ export let tblTableTesting2: TableDef = {
   },
 }
 
-export let tblTableTesting3: TableDef = {
+export let tblTableTesting3: OvlTableDef = {
   id: "tab3",
   titleTranslationKey: "PortalTitleTable3",
   namespace: "testtables.tabletesting",

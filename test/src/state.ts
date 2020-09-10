@@ -1,5 +1,8 @@
 import { LookupDef } from "../../ovl/src/library/forms/OvlFormElement"
-import { ListFnReturnValue, TableData } from "../../ovl/src/library/Table/Table"
+import {
+  ListFnReturnValue,
+  OvlTableData,
+} from "../../ovl/src/library/Table/Table"
 import { File } from "./components/FileList/FileList"
 import { tblAudit } from "./screens/Audit/state"
 import { tblMobileTimeRecording } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/state"
@@ -193,23 +196,7 @@ type User = {
   userCode: number
 }
 
-export type CustomFormType =
-  | "Feedback"
-  | "Settings"
-  | "Login"
-  | "OvlLanguage"
-  | "MobileTimeEntry"
-  | "MobileTimeEntryMain"
-
-export type OvlTableDefIds =
-  | "translation"
-  | "audit"
-  | "tab1"
-  | "tab2"
-  | "tab3"
-  | "mobiletimerecording1"
-
-let tableTesting: TableData = {
+let tableTesting: OvlTableData = {
   data: {},
   schema: {},
   tableDef: {
@@ -219,7 +206,7 @@ let tableTesting: TableData = {
   },
 }
 
-let timeentries: TableData = {
+let timeentries: OvlTableData = {
   data: {},
   schema: {},
   tableDef: {

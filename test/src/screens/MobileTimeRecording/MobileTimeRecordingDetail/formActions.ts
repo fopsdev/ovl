@@ -3,7 +3,7 @@ import {
   ChangeField,
   Field,
   FieldChanged,
-  FormState,
+  OvlFormState,
   ValidateFieldType,
 } from "../../../../../ovl/src/library/forms/actions"
 import { LookupListPostData } from "../../../../../ovl/src/library/forms/Controls/helpers"
@@ -18,13 +18,14 @@ import {
   TableDataAndDef,
 } from "../../../../../ovl/src/library/Table/Table"
 import { TableMobileTimeRecording } from "./state"
-import { OvlAction, OvlState } from "../../../../../ovl/src"
+import { OvlState } from "../../../../../ovl/src"
 import {
   FieldGetList_Type,
   FieldGetList_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
-export const FormShow: OvlAction = async (formState: FormState) => {
+export const FormShow: OvlAction = async (formState: OvlFormState) => {
   console.log("hello from timeentry formshow hook")
   console.log(formState)
 }
@@ -46,9 +47,9 @@ export const Field_U_TypeId_GetList: OvlAction<
   FieldGetList_ReturnType
 > = ({ row }: { row: TableMobileTimeRecording }, { state }) => {
   if (row.U_Type === "PROJECT") {
-    return state.demoApp.testtables.lookups.ProjectTypeId
+    return state.app.testtables.lookups.ProjectTypeId
   } else {
-    return state.demoApp.testtables.lookups.AbsenceTypeId
+    return state.app.testtables.lookups.AbsenceTypeId
   }
 }
 
@@ -97,11 +98,11 @@ export const FormValidate: OvlAction<ValidateFieldType> = async (
 }
 
 const CheckExistingTimeRange = (state: OvlState, value: ValidateFieldType) => {
-  let def = state.demoApp.testtables.timeentries.tableDef.mobiletimerecording1
+  let def = state.app.testtables.timeentries.tableDef.mobiletimerecording1
   let keysToCheck = def.uiState.dataFilteredAndSorted.filter(
     (k) => k.indexOf(ovltemp) < 0
   )
-  let data = state.demoApp.testtables.timeentries.data
+  let data = state.app.testtables.timeentries.data
   keysToCheck.some((k) => {
     if (value.newVal > data[k].U_FromTime && value.newVal < data[k].U_ToTime) {
       ValidationAddError(
@@ -115,7 +116,7 @@ const CheckExistingTimeRange = (state: OvlState, value: ValidateFieldType) => {
   })
 }
 
-const CheckFromTimeSmaller = (formState: FormState, fieldId: string) => {
+const CheckFromTimeSmaller = (formState: OvlFormState, fieldId: string) => {
   // totime needs to be smaller than fromtime
   let validatorId = "CheckTime"
   let validateField: Field
@@ -193,7 +194,7 @@ export const FormBeforeSave: OvlAction<BeforeSaveParam> = async (
   let newRow = <TableMobileTimeRecording>value.row
   let dt = new Date(newRow.U_Date)
   newRow.U_WeekNr = GetWeekNr(dt)
-  newRow.U_User = state.demoApp.user.userName
+  newRow.U_User = state.app.user.userName
 }
 
 export const FormAdd: OvlAction<{

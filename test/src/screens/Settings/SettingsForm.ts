@@ -15,7 +15,7 @@ export class CompSettingsForm extends OvlFormElement {
   async getUI() {
     let handleSave = () => {
       if (!this.state.ovl.libState.indicator.open) {
-        this.actions.demoApp.settings.SaveSettings(this.formState)
+        this.actions.app.settings.SaveSettings(this.formState)
       }
     }
 
@@ -40,7 +40,7 @@ export class CompSettingsForm extends OvlFormElement {
       let pwField = fields["pw"]
       let pw1Field = fields["pw1"]
       let pw2Field = fields["pw2"]
-      let partner = this.state.demoApp.partner
+      let partner = this.state.app.partner
 
       return html`
       <div class="fd-layout-panel  ">
@@ -49,9 +49,9 @@ export class CompSettingsForm extends OvlFormElement {
             <h3 class="fd-layout-panel__title">
             ${T("AppSettings")}
                 ${
-                  this.state.demoApp.user.firstName +
+                  this.state.app.user.firstName +
                   " " +
-                  this.state.demoApp.user.lastName
+                  this.state.app.user.lastName
                 }
             </h3>
           </div>

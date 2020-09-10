@@ -1,10 +1,10 @@
 import {
   FieldChanged,
-  FormState,
+  OvlFormState,
 } from "../../../../ovl/src/library/forms/actions"
-import { OvlAction } from "../../../../ovl/src"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
-export const FormShow: OvlAction = async (formState: FormState) => {
+export const FormShow: OvlAction = async (formState: OvlFormState) => {
   console.log("hello from timeentry main formshow hook")
   console.log(formState)
 }
@@ -12,7 +12,7 @@ export const FormShow: OvlAction = async (formState: FormState) => {
 export const FormChanged = async (value, { actions }) => {
   switch (value.fieldId) {
     case "date":
-      await actions.demoApp.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
+      await actions.app.testtables.mobiletimerecording.SetMobileTimeEntrySelectedDate(
         {
           selected: value.newConvertedVal,
         }

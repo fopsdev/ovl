@@ -15,13 +15,13 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
     super.init()
   }
   async handleSave(e) {
-    let def = this.state.demoApp.testtables.timeentries.tableDef
+    let def = this.state.app.testtables.timeentries.tableDef
       .mobiletimerecording1
     if (this.formState.valid && !this.state.ovl.libState.indicator.open) {
       await this.actions.ovl.internal.TableEditSaveRow({
         key: def.uiState.currentlyAddingKey,
         def,
-        data: this.state.demoApp.testtables.timeentries,
+        data: this.state.app.testtables.timeentries,
         formState: this.formState,
       })
     }
@@ -46,7 +46,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
   }
   async getUI() {
     return this.track(() => {
-      let def = this.state.demoApp.testtables.timeentries.tableDef
+      let def = this.state.app.testtables.timeentries.tableDef
         .mobiletimerecording1
       let typeField = this.formState.fields["U_Type"]
       let typeIdField = this.formState.fields["U_TypeId"]
@@ -62,9 +62,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
         <div class="fd-layout-panel ">
           <div class="fd-layout-panel__header">
             <div class="fd-layout-panel__head">
-              <h3 class="fd-layout-panel__title">
-                Zeit erfassen
-              </h3>
+              <h3 class="fd-layout-panel__title">Zeit erfassen</h3>
             </div>
           </div>
           <div class="fd-layout-panel__body">
@@ -105,9 +103,7 @@ export class CompMobileTimeEntryForm extends OvlFormElement {
             </ovl-timebox>
           </div>
 
-          <div class="fd-layout-panel__body">
-            Dauer: ${duration}
-          </div>
+          <div class="fd-layout-panel__body">Dauer: ${duration}</div>
 
           <div class="fd-layout-panel__footer">
             <button

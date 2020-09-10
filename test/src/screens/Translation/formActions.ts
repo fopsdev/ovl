@@ -1,13 +1,9 @@
-import {
-  ValidateFieldType,
-  FormState,
-} from "../../../../ovl/src/library/forms/actions"
-import { TableDef, TableData } from "../../../../ovl/src/library/Table/Table"
+import { OvlTableDef } from "../../../../ovl/src/library/Table/Table"
 import { Mandatory } from "../../../../ovl/src/library/forms/validators"
 
 import { TblTranslationColumn } from "./state"
 import { T } from "../../../../ovl/src/global/globals"
-import { OvlAction } from "../../../../ovl/src"
+
 import {
   FormAfterSave_Type,
   FormAfterDelete_Type,
@@ -15,6 +11,7 @@ import {
   FormAfterRender_Type,
   FormValidate_Type,
 } from "../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
 export const FormShow: OvlAction<FormShow_Type> = async (value) => {
   console.log("hello from translation formshow hook")
@@ -30,7 +27,7 @@ export const FormValidate: OvlAction<FormValidate_Type> = async (
   value,
   { state }
 ) => {
-  let def: TableDef = state.demoApp.tables.translation.tableDef.translation
+  let def: OvlTableDef = state.app.tables.translation.tableDef.translation
   switch (value.fieldId as TblTranslationColumn) {
     case "U_Group":
       Mandatory(

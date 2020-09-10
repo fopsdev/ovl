@@ -1,10 +1,11 @@
-import { OvlTableDefIds, OvlAction } from "../../../../ovl/src/index"
+import { OvlTableDefIds } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 import { ScreenNavigateOut_ReturnType } from "../../../../ovl/src/global/hooks"
+import { OvlAction } from "../../../../ovl/src/ovlTypes"
 
 export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
   let defId: OvlTableDefIds = "tab1"
-  let data = state.demoApp.testtables.tableTesting
+  let data = state.app.testtables.tableTesting
   await actions.ovl.table.TableRefresh({
     defId,
     data,
@@ -20,7 +21,7 @@ export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
 
 export const ScreenNavigateIn: OvlAction = async (_, { state, actions }) => {
   let defId: OvlTableDefIds = "tab1"
-  let data = state.demoApp.testtables.tableTesting
+  let data = state.app.testtables.tableTesting
   await actions.ovl.table.TableRefresh({
     defId,
     data,

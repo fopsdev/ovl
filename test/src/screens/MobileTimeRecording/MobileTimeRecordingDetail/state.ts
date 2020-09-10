@@ -1,4 +1,4 @@
-import { TableDef } from "../../../../../ovl/src/library/Table/Table"
+import { OvlTableDef } from "../../../../../ovl/src/library/Table/Table"
 
 export type TableMobileTimeRecording = {
   Code?: string
@@ -27,7 +27,7 @@ export type tblMobileTimeRecording = {
   [key: string]: TableMobileTimeRecording
 }
 
-export let tblMobileTimeRecording: TableDef = {
+export let tblMobileTimeRecording: OvlTableDef = {
   id: "mobiletimerecording1",
   namespace: "testtables.mobiletimerecording",
   server: {
