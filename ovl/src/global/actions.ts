@@ -1,4 +1,4 @@
-import { OvlScreen, ovl, OvlState, OvlAction, OvlActions } from "../index"
+import { OvlScreen, ovl, OvlState, OvlActions } from "../index"
 import { Init, OvlConfig } from "../init"
 import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
@@ -24,6 +24,7 @@ import {
 } from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 import { createDeepProxy } from "../tracker/proxyHandler"
+import { OvlAction } from "../ovlTypes"
 
 export const SetLastScrollPosition: OvlAction = (_, { state }) => {
   setLastScrollPosition(state)

@@ -1,6 +1,6 @@
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { html } from "lit-html"
-import { Field, FormState } from "../actions"
+import { Field, OvlFormState } from "../actions"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ColumnAlign } from "../../Table/Table"
 import { GetLabel, ControlState, GetValueFromCustomFunction } from "./helpers"
@@ -10,7 +10,7 @@ export class OvlTextArea extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
-  formState: FormState
+  formState: OvlFormState
 
   // handleKeyUp(e: KeyboardEvent) {
   //   //if (e.key === "Enter") {

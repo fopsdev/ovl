@@ -15,12 +15,12 @@ import {
   GetValueFromCustomFunction,
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { FormState } from "../actions"
+import { OvlFormState } from "../actions"
 
 export class OvlOption extends OvlBaseElement {
   props: any
   field: ControlState
-  formState: FormState
+  formState: OvlFormState
   handleFocusOut(e: Event, id: string) {
     e.stopPropagation()
     e.preventDefault()

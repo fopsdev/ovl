@@ -2,7 +2,7 @@ import { ListState } from "./ListControl"
 
 import { KeyValueListFromServerFn } from "./helpers"
 import { ListFnReturnValue } from "../../Table/Table"
-import { OvlAction } from "../../.."
+import { OvlAction } from "../../../ovlTypes"
 
 export const FillListControl: OvlAction<{
   list: ListState

@@ -35,7 +35,7 @@ import {
 } from "./helpers"
 import { CellClass } from "./Row"
 import { RowControlAllAction } from "./RowControl"
-import { DisplayMode, ViewRowDef, TableDef } from "./Table"
+import { DisplayMode, ViewRowDef, OvlTableDef } from "./Table"
 import { DialogHolderParams } from "../Dialog/OvlDialogHolder"
 
 export type ViewRendererResult = {
@@ -494,7 +494,7 @@ export class TableRowDetailView extends OvlBaseElement {
   }
   getControls(
     controls,
-    def: TableDef,
+    def: OvlTableDef,
     row,
     customHeaderCellClasses,
     customRowCellClasses,

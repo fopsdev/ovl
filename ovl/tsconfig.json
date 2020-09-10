@@ -12,6 +12,7 @@
   "exclude": [
     "**/_patched_node_modules",
     "**/updateCheck",
+    "**/projectIndexFiles",
     "**/node_modules",
     "**/dist",
     "**/*.js"

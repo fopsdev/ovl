@@ -4,8 +4,8 @@ import {
   timePortalScreens,
   timePortalDialogs,
   CustomFormType,
-  TableDefIds,
-  Language,
+  OvlTableDefIds,
+  OvlLanguage,
 } from "../../../kaltag/src/appDef"
 import * as timePortalState from "../../../kaltag/src/state"
 import * as timePortalActions from "../../../kaltag/src/actions"
@@ -138,7 +138,7 @@ export type OvlDialog =
   | keyof typeof baseDialogs
   | keyof typeof timePortalDialogs
 
-export { TableDefIds, Language }
+export { OvlTableDefIds, OvlLanguage }
 export type OvlScreen =
   | keyof typeof baseScreens
   | keyof typeof timePortalScreens

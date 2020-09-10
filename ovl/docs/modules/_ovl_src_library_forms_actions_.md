@@ -6,662 +6,662 @@
 
 ### Type aliases
 
-* [ChangeField](_ovl_src_library_forms_actions_.md#changefield)
-* [Field](_ovl_src_library_forms_actions_.md#field)
-* [FieldChanged](_ovl_src_library_forms_actions_.md#fieldchanged)
-* [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap)
-* [FormState](_ovl_src_library_forms_actions_.md#formstate)
-* [FormStatePerInstance](_ovl_src_library_forms_actions_.md#formstateperinstance)
-* [FormType](_ovl_src_library_forms_actions_.md#formtype)
-* [FormsState](_ovl_src_library_forms_actions_.md#formsstate)
-* [InitForm](_ovl_src_library_forms_actions_.md#initform)
-* [TouchField](_ovl_src_library_forms_actions_.md#touchfield)
-* [ValidateField](_ovl_src_library_forms_actions_.md#validatefield)
-* [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult)
-* [ValidateFieldResultMap](_ovl_src_library_forms_actions_.md#validatefieldresultmap)
+- [ChangeField](_ovl_src_library_forms_actions_.md#changefield)
+- [Field](_ovl_src_library_forms_actions_.md#field)
+- [FieldChanged](_ovl_src_library_forms_actions_.md#fieldchanged)
+- [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap)
+- [FormState](_ovl_src_library_forms_actions_.md#formstate)
+- [FormStatePerInstance](_ovl_src_library_forms_actions_.md#formstateperinstance)
+- [FormType](_ovl_src_library_forms_actions_.md#formtype)
+- [FormsState](_ovl_src_library_forms_actions_.md#formsstate)
+- [InitForm](_ovl_src_library_forms_actions_.md#initform)
+- [TouchField](_ovl_src_library_forms_actions_.md#touchfield)
+- [ValidateField](_ovl_src_library_forms_actions_.md#validatefield)
+- [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult)
+- [ValidateFieldResultMap](_ovl_src_library_forms_actions_.md#validatefieldresultmap)
 
 ### Functions
 
-* [ChangeField](_ovl_src_library_forms_actions_.md#const-changefield)
-* [GetFormValidationErrors](_ovl_src_library_forms_actions_.md#const-getformvalidationerrors)
-* [InitForm](_ovl_src_library_forms_actions_.md#const-initform)
-* [ResetForm](_ovl_src_library_forms_actions_.md#const-resetform)
-* [ResetFormAfterNavigation](_ovl_src_library_forms_actions_.md#const-resetformafternavigation)
-* [SetField](_ovl_src_library_forms_actions_.md#const-setfield)
-* [SetFormUndirty](_ovl_src_library_forms_actions_.md#const-setformundirty)
-* [SetFormValid](_ovl_src_library_forms_actions_.md#const-setformvalid)
-* [TouchField](_ovl_src_library_forms_actions_.md#const-touchfield)
-* [ValidateDataType](_ovl_src_library_forms_actions_.md#const-validatedatatype)
-* [ValidateForm](_ovl_src_library_forms_actions_.md#const-validateform)
-* [ValidateList](_ovl_src_library_forms_actions_.md#const-validatelist)
-* [ValidateSchema](_ovl_src_library_forms_actions_.md#const-validateschema)
+- [ChangeField](_ovl_src_library_forms_actions_.md#const-changefield)
+- [GetFormValidationErrors](_ovl_src_library_forms_actions_.md#const-getformvalidationerrors)
+- [InitForm](_ovl_src_library_forms_actions_.md#const-initform)
+- [ResetForm](_ovl_src_library_forms_actions_.md#const-resetform)
+- [ResetFormAfterNavigation](_ovl_src_library_forms_actions_.md#const-resetformafternavigation)
+- [SetField](_ovl_src_library_forms_actions_.md#const-setfield)
+- [SetFormUndirty](_ovl_src_library_forms_actions_.md#const-setformundirty)
+- [SetFormValid](_ovl_src_library_forms_actions_.md#const-setformvalid)
+- [TouchField](_ovl_src_library_forms_actions_.md#const-touchfield)
+- [ValidateDataType](_ovl_src_library_forms_actions_.md#const-validatedatatype)
+- [ValidateForm](_ovl_src_library_forms_actions_.md#const-validateform)
+- [ValidateList](_ovl_src_library_forms_actions_.md#const-validatelist)
+- [ValidateSchema](_ovl_src_library_forms_actions_.md#const-validateschema)
 
 ## Type aliases
 
-###  ChangeField
+### ChangeField
 
-Ƭ **ChangeField**: *object*
+Ƭ **ChangeField**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:540
 
 #### Type declaration:
 
-* **fieldId**: *string*
+- **fieldId**: _string_
 
-* **formState**: *[FormState](_ovl_src_library_forms_actions_.md#formstate)*
+- **formState**: _[FormState](_ovl_src_library_forms_actions_.md#formstate)_
 
-* **isInit**? : *boolean*
+- **isInit**? : _boolean_
 
-* **value**: *any*
+- **value**: _any_
 
-___
+---
 
-###  Field
+### Field
 
-Ƭ **Field**: *object*
+Ƭ **Field**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:22
 
 #### Type declaration:
 
-* **autoCorrectedValue**: *string*
+- **autoCorrectedValue**: _string_
 
-* **convertedValue**: *any*
+- **convertedValue**: _any_
 
-* **datafield**: *string*
+- **datafield**: _string_
 
-* **dirty**: *boolean*
+- **dirty**: _boolean_
 
-* **format**: *[FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)*
+- **format**: _[FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)_
 
-* **id**: *string*
+- **id**: _string_
 
-* **list**? : *[ListState](_ovl_src_library_forms_controls_listcontrol_.md#liststate)*
+- **list**? : _[ListState](_ovl_src_library_forms_controls_listcontrol_.md#liststate)_
 
-* **type**: *[DataType](_ovl_src_library_forms_ovlformelement_.md#datatype)*
+- **type**: _[DataType](_ovl_src_library_forms_ovlformelement_.md#datatype)_
 
-* **validationResult**: *[ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult)*
+- **validationResult**: _[ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult)_
 
-* **value**: *string*
+- **value**: _string_
 
-* **watched**: *boolean*
+- **watched**: _boolean_
 
-___
+---
 
-###  FieldChanged
+### FieldChanged
 
-Ƭ **FieldChanged**: *object*
+Ƭ **FieldChanged**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:547
 
 #### Type declaration:
 
-* **fieldId**: *string*
+- **fieldId**: _string_
 
-* **formState**: *[FormState](_ovl_src_library_forms_actions_.md#formstate)*
+- **formState**: _[FormState](_ovl_src_library_forms_actions_.md#formstate)_
 
-* **newConvertedVal**: *string*
+- **newConvertedVal**: _string_
 
-* **oldConvertedVal**: *string*
+- **oldConvertedVal**: _string_
 
-* **row**(): *object*
+- **row**(): _object_
 
-___
+---
 
-###  FieldValueMap
+### FieldValueMap
 
-Ƭ **FieldValueMap**: *object*
+Ƭ **FieldValueMap**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:36
 
 #### Type declaration:
 
-* \[ **key**: *string*\]: [Field](_ovl_src_library_forms_actions_.md#field)
+- \[ **key**: _string_\]: [Field](_ovl_src_library_forms_actions_.md#field)
 
-___
+---
 
-###  FormState
+### FormState
 
-Ƭ **FormState**: *object*
+Ƭ **FormState**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:55
 
 #### Type declaration:
 
-* **changedFnName**: *string*
+- **changedFnName**: _string_
 
-* **dirty**: *boolean*
+- **dirty**: _boolean_
 
-* **fields**: *[FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap)*
+- **fields**: _[FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap)_
 
-* **formId**: *string*
+- **formId**: _string_
 
-* **formType**: *[FormType](_ovl_src_library_forms_actions_.md#formtype)*
+- **formType**: _[FormType](_ovl_src_library_forms_actions_.md#formtype)_
 
-* **initFields**: *[FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap)*
+- **initFields**: _[FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap)_
 
-* **namespace**: *string*
+- **namespace**: _string_
 
-* **schema**(): *object*
+- **schema**(): _object_
 
-* **valid**: *boolean*
+- **valid**: _boolean_
 
-* **validationFnName**: *string*
+- **validationFnName**: _string_
 
-___
+---
 
-###  FormStatePerInstance
+### FormStatePerInstance
 
-Ƭ **FormStatePerInstance**: *object*
+Ƭ **FormStatePerInstance**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:67
 
 #### Type declaration:
 
-* \[ **key**: *string*\]: [FormState](_ovl_src_library_forms_actions_.md#formstate)
+- \[ **key**: _string_\]: [FormState](_ovl_src_library_forms_actions_.md#formstate)
 
-___
+---
 
-###  FormType
+### FormType
 
-Ƭ **FormType**: *"TableRowEdit" | "Feedback" | "Settings" | "Login" | "Language" | "MobileTimeEntry"*
+Ƭ **FormType**: _"TableRowEdit" | "Feedback" | "Settings" | "Login" | "OvlLanguage" | "MobileTimeEntry"_
 
 Defined in ovl/src/library/forms/actions.ts:14
 
-___
+---
 
-###  FormsState
+### FormsState
 
-Ƭ **FormsState**: *object*
+Ƭ **FormsState**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:83
 
 #### Type declaration:
 
-___
+---
 
-###  InitForm
+### InitForm
 
-Ƭ **InitForm**: *object*
+Ƭ **InitForm**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:72
 
 #### Type declaration:
 
-* **changedFnName**? : *string*
+- **changedFnName**? : _string_
 
-* **fields**(): *object*
+- **fields**(): _object_
 
-* **forceOverwrite**? : *boolean*
+- **forceOverwrite**? : _boolean_
 
-* **formType**: *[FormType](_ovl_src_library_forms_actions_.md#formtype)*
+- **formType**: _[FormType](_ovl_src_library_forms_actions_.md#formtype)_
 
-* **instanceId**: *string*
+- **instanceId**: _string_
 
-* **namespace**? : *string*
+- **namespace**? : _string_
 
-* **schema**(): *object*
+- **schema**(): _object_
 
-* **validationFnName**? : *string*
+- **validationFnName**? : _string_
 
-___
+---
 
-###  TouchField
+### TouchField
 
-Ƭ **TouchField**: *object*
+Ƭ **TouchField**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:555
 
 #### Type declaration:
 
-* **fieldId**: *string*
+- **fieldId**: _string_
 
-* **formState**: *[FormState](_ovl_src_library_forms_actions_.md#formstate)*
+- **formState**: _[FormState](_ovl_src_library_forms_actions_.md#formstate)_
 
-___
+---
 
-###  ValidateField
+### ValidateField
 
-Ƭ **ValidateField**: *object*
+Ƭ **ValidateField**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:532
 
 #### Type declaration:
 
-* **fieldId**: *string*
+- **fieldId**: _string_
 
-* **formState**: *[FormState](_ovl_src_library_forms_actions_.md#formstate)*
+- **formState**: _[FormState](_ovl_src_library_forms_actions_.md#formstate)_
 
-* **newVal**: *string*
+- **newVal**: _string_
 
-* **oldVal**: *string*
+- **oldVal**: _string_
 
-* **validationResult**: *[ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult)*
+- **validationResult**: _[ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult)_
 
-___
+---
 
-###  ValidateFieldResult
+### ValidateFieldResult
 
-Ƭ **ValidateFieldResult**: *object*
+Ƭ **ValidateFieldResult**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:43
 
 #### Type declaration:
 
-* **valid**: *boolean*
+- **valid**: _boolean_
 
-* **validationMsg**: *string*
+- **validationMsg**: _string_
 
-* **validations**(): *object*
+- **validations**(): _object_
 
-___
+---
 
-###  ValidateFieldResultMap
+### ValidateFieldResultMap
 
-Ƭ **ValidateFieldResultMap**: *object*
+Ƭ **ValidateFieldResultMap**: _object_
 
 Defined in ovl/src/library/forms/actions.ts:38
 
 #### Type declaration:
 
-* **valid**: *boolean*
+- **valid**: _boolean_
 
-* **validationMsg**: *string*
+- **validationMsg**: _string_
 
 ## Functions
 
 ### `Const` ChangeField
 
-▸ **ChangeField**(`__namedParameters`: object, `value`: object): *void*
+▸ **ChangeField**(`__namedParameters`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:572
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`fieldId` | string |
-`formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
-`isInit?` | boolean |
-`value` | any |
+| Name        | Type                                                      |
+| ----------- | --------------------------------------------------------- |
+| `fieldId`   | string                                                    |
+| `formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
+| `isInit?`   | boolean                                                   |
+| `value`     | any                                                       |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` GetFormValidationErrors
 
-▸ **GetFormValidationErrors**(`formState`: [FormState](_ovl_src_library_forms_actions_.md#formstate)): *string[]*
+▸ **GetFormValidationErrors**(`formState`: [FormState](_ovl_src_library_forms_actions_.md#formstate)): _string[]_
 
 Defined in ovl/src/library/forms/actions.ts:673
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
+| Name        | Type                                                      |
+| ----------- | --------------------------------------------------------- |
+| `formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
 
-**Returns:** *string[]*
+**Returns:** _string[]_
 
-___
+---
 
 ### `Const` InitForm
 
-▸ **InitForm**(`__namedParameters`: object, `value`: object): *void*
+▸ **InitForm**(`__namedParameters`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:421
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`changedFnName?` | string |
-`fields` | object |
-`forceOverwrite?` | boolean |
-`formType` | [FormType](_ovl_src_library_forms_actions_.md#formtype) |
-`instanceId` | string |
-`namespace?` | string |
-`schema?` | object |
-`validationFnName?` | string |
+| Name                | Type                                                    |
+| ------------------- | ------------------------------------------------------- |
+| `changedFnName?`    | string                                                  |
+| `fields`            | object                                                  |
+| `forceOverwrite?`   | boolean                                                 |
+| `formType`          | [FormType](_ovl_src_library_forms_actions_.md#formtype) |
+| `instanceId`        | string                                                  |
+| `namespace?`        | string                                                  |
+| `schema?`           | object                                                  |
+| `validationFnName?` | string                                                  |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` ResetForm
 
-▸ **ResetForm**(`_`: object, `value`: object): *void*
+▸ **ResetForm**(`_`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:85
 
 **Parameters:**
 
-▪ **_**: *object*
+▪ **\_**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | ResolveActions‹ThisConfig["actions"]› |
-`effects` | ThisConfig["effects"] |
-`revertable` | function |
-`state` | ResolveState‹ThisConfig["state"]› |
+| Name         | Type                                  |
+| ------------ | ------------------------------------- |
+| `actions`    | ResolveActions‹ThisConfig["actions"]› |
+| `effects`    | ThisConfig["effects"]                 |
+| `revertable` | function                              |
+| `state`      | ResolveState‹ThisConfig["state"]›     |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`changedFnName` | string |
-`dirty` | boolean |
-`fields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`formId` | string |
-`formType` | [FormType](_ovl_src_library_forms_actions_.md#formtype) |
-`initFields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`namespace` | string |
-`schema` | object |
-`valid` | boolean |
-`validationFnName` | string |
+| Name               | Type                                                              |
+| ------------------ | ----------------------------------------------------------------- |
+| `changedFnName`    | string                                                            |
+| `dirty`            | boolean                                                           |
+| `fields`           | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `formId`           | string                                                            |
+| `formType`         | [FormType](_ovl_src_library_forms_actions_.md#formtype)           |
+| `initFields`       | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `namespace`        | string                                                            |
+| `schema`           | object                                                            |
+| `valid`            | boolean                                                           |
+| `validationFnName` | string                                                            |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` ResetFormAfterNavigation
 
-▸ **ResetFormAfterNavigation**(`__namedParameters`: object, `value`: object): *void*
+▸ **ResetFormAfterNavigation**(`__namedParameters`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:99
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`state` | object |
+| Name    | Type   |
+| ------- | ------ |
+| `state` | object |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`changedFnName` | string |
-`dirty` | boolean |
-`fields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`formId` | string |
-`formType` | [FormType](_ovl_src_library_forms_actions_.md#formtype) |
-`initFields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`namespace` | string |
-`schema` | object |
-`valid` | boolean |
-`validationFnName` | string |
+| Name               | Type                                                              |
+| ------------------ | ----------------------------------------------------------------- |
+| `changedFnName`    | string                                                            |
+| `dirty`            | boolean                                                           |
+| `fields`           | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `formId`           | string                                                            |
+| `formType`         | [FormType](_ovl_src_library_forms_actions_.md#formtype)           |
+| `initFields`       | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `namespace`        | string                                                            |
+| `schema`           | object                                                            |
+| `valid`            | boolean                                                           |
+| `validationFnName` | string                                                            |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` SetField
 
-▸ **SetField**(`__namedParameters`: object, `value`: object): *void*
+▸ **SetField**(`__namedParameters`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:564
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
+| Name      | Type   |
+| --------- | ------ |
+| `actions` | object |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`fieldId` | string |
-`formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
-`isInit?` | boolean |
-`value` | any |
+| Name        | Type                                                      |
+| ----------- | --------------------------------------------------------- |
+| `fieldId`   | string                                                    |
+| `formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
+| `isInit?`   | boolean                                                   |
+| `value`     | any                                                       |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` SetFormUndirty
 
-▸ **SetFormUndirty**(`_`: object, `value`: object): *void*
+▸ **SetFormUndirty**(`_`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:91
 
 **Parameters:**
 
-▪ **_**: *object*
+▪ **\_**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | ResolveActions‹ThisConfig["actions"]› |
-`effects` | ThisConfig["effects"] |
-`revertable` | function |
-`state` | ResolveState‹ThisConfig["state"]› |
+| Name         | Type                                  |
+| ------------ | ------------------------------------- |
+| `actions`    | ResolveActions‹ThisConfig["actions"]› |
+| `effects`    | ThisConfig["effects"]                 |
+| `revertable` | function                              |
+| `state`      | ResolveState‹ThisConfig["state"]›     |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`changedFnName` | string |
-`dirty` | boolean |
-`fields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`formId` | string |
-`formType` | [FormType](_ovl_src_library_forms_actions_.md#formtype) |
-`initFields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`namespace` | string |
-`schema` | object |
-`valid` | boolean |
-`validationFnName` | string |
+| Name               | Type                                                              |
+| ------------------ | ----------------------------------------------------------------- |
+| `changedFnName`    | string                                                            |
+| `dirty`            | boolean                                                           |
+| `fields`           | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `formId`           | string                                                            |
+| `formType`         | [FormType](_ovl_src_library_forms_actions_.md#formtype)           |
+| `initFields`       | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `namespace`        | string                                                            |
+| `schema`           | object                                                            |
+| `valid`            | boolean                                                           |
+| `validationFnName` | string                                                            |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` SetFormValid
 
-▸ **SetFormValid**(`__namedParameters`: object, `value`: object): *void*
+▸ **SetFormValid**(`__namedParameters`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:667
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
+| Name      | Type   |
+| --------- | ------ |
+| `actions` | object |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`changedFnName` | string |
-`dirty` | boolean |
-`fields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`formId` | string |
-`formType` | [FormType](_ovl_src_library_forms_actions_.md#formtype) |
-`initFields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`namespace` | string |
-`schema` | object |
-`valid` | boolean |
-`validationFnName` | string |
+| Name               | Type                                                              |
+| ------------------ | ----------------------------------------------------------------- |
+| `changedFnName`    | string                                                            |
+| `dirty`            | boolean                                                           |
+| `fields`           | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `formId`           | string                                                            |
+| `formType`         | [FormType](_ovl_src_library_forms_actions_.md#formtype)           |
+| `initFields`       | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `namespace`        | string                                                            |
+| `schema`           | object                                                            |
+| `valid`            | boolean                                                           |
+| `validationFnName` | string                                                            |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` TouchField
 
-▸ **TouchField**(`_`: object, `value`: object): *void*
+▸ **TouchField**(`_`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:560
 
 **Parameters:**
 
-▪ **_**: *object*
+▪ **\_**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | ResolveActions‹ThisConfig["actions"]› |
-`effects` | ThisConfig["effects"] |
-`revertable` | function |
-`state` | ResolveState‹ThisConfig["state"]› |
+| Name         | Type                                  |
+| ------------ | ------------------------------------- |
+| `actions`    | ResolveActions‹ThisConfig["actions"]› |
+| `effects`    | ThisConfig["effects"]                 |
+| `revertable` | function                              |
+| `state`      | ResolveState‹ThisConfig["state"]›     |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`fieldId` | string |
-`formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
+| Name        | Type                                                      |
+| ----------- | --------------------------------------------------------- |
+| `fieldId`   | string                                                    |
+| `formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` ValidateDataType
 
-▸ **ValidateDataType**(`_`: object, `value`: object): *void*
+▸ **ValidateDataType**(`_`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:107
 
 **Parameters:**
 
-▪ **_**: *object*
+▪ **\_**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | ResolveActions‹ThisConfig["actions"]› |
-`effects` | ThisConfig["effects"] |
-`revertable` | function |
-`state` | ResolveState‹ThisConfig["state"]› |
+| Name         | Type                                  |
+| ------------ | ------------------------------------- |
+| `actions`    | ResolveActions‹ThisConfig["actions"]› |
+| `effects`    | ThisConfig["effects"]                 |
+| `revertable` | function                              |
+| `state`      | ResolveState‹ThisConfig["state"]›     |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`fieldId` | string |
-`formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
-`newVal` | string |
-`oldVal` | string |
-`validationResult` | [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult) |
+| Name               | Type                                                                          |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `fieldId`          | string                                                                        |
+| `formState`        | [FormState](_ovl_src_library_forms_actions_.md#formstate)                     |
+| `newVal`           | string                                                                        |
+| `oldVal`           | string                                                                        |
+| `validationResult` | [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult) |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` ValidateForm
 
-▸ **ValidateForm**(`__namedParameters`: object, `value`: object): *void*
+▸ **ValidateForm**(`__namedParameters`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:334
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`changedFnName` | string |
-`dirty` | boolean |
-`fields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`formId` | string |
-`formType` | [FormType](_ovl_src_library_forms_actions_.md#formtype) |
-`initFields` | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
-`namespace` | string |
-`schema` | object |
-`valid` | boolean |
-`validationFnName` | string |
+| Name               | Type                                                              |
+| ------------------ | ----------------------------------------------------------------- |
+| `changedFnName`    | string                                                            |
+| `dirty`            | boolean                                                           |
+| `fields`           | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `formId`           | string                                                            |
+| `formType`         | [FormType](_ovl_src_library_forms_actions_.md#formtype)           |
+| `initFields`       | [FieldValueMap](_ovl_src_library_forms_actions_.md#fieldvaluemap) |
+| `namespace`        | string                                                            |
+| `schema`           | object                                                            |
+| `valid`            | boolean                                                           |
+| `validationFnName` | string                                                            |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` ValidateList
 
-▸ **ValidateList**(`__namedParameters`: object, `value`: object): *void*
+▸ **ValidateList**(`__namedParameters`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:291
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | object |
-`effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
-`state` | object |
+| Name      | Type                                      |
+| --------- | ----------------------------------------- |
+| `actions` | object                                    |
+| `effects` | ["ovl/src/effects"](_ovl_src_effects_.md) |
+| `state`   | object                                    |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`fieldId` | string |
-`formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
-`newVal` | string |
-`oldVal` | string |
-`validationResult` | [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult) |
+| Name               | Type                                                                          |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `fieldId`          | string                                                                        |
+| `formState`        | [FormState](_ovl_src_library_forms_actions_.md#formstate)                     |
+| `newVal`           | string                                                                        |
+| `oldVal`           | string                                                                        |
+| `validationResult` | [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult) |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
 ### `Const` ValidateSchema
 
-▸ **ValidateSchema**(`_`: object, `value`: object): *void*
+▸ **ValidateSchema**(`_`: object, `value`: object): _void_
 
 Defined in ovl/src/library/forms/actions.ts:258
 
 **Parameters:**
 
-▪ **_**: *object*
+▪ **\_**: _object_
 
-Name | Type |
------- | ------ |
-`actions` | ResolveActions‹ThisConfig["actions"]› |
-`effects` | ThisConfig["effects"] |
-`revertable` | function |
-`state` | ResolveState‹ThisConfig["state"]› |
+| Name         | Type                                  |
+| ------------ | ------------------------------------- |
+| `actions`    | ResolveActions‹ThisConfig["actions"]› |
+| `effects`    | ThisConfig["effects"]                 |
+| `revertable` | function                              |
+| `state`      | ResolveState‹ThisConfig["state"]›     |
 
-▪ **value**: *object*
+▪ **value**: _object_
 
-Name | Type |
------- | ------ |
-`fieldId` | string |
-`formState` | [FormState](_ovl_src_library_forms_actions_.md#formstate) |
-`newVal` | string |
-`oldVal` | string |
-`validationResult` | [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult) |
+| Name               | Type                                                                          |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `fieldId`          | string                                                                        |
+| `formState`        | [FormState](_ovl_src_library_forms_actions_.md#formstate)                     |
+| `newVal`           | string                                                                        |
+| `oldVal`           | string                                                                        |
+| `validationResult` | [ValidateFieldResult](_ovl_src_library_forms_actions_.md#validatefieldresult) |
 
-**Returns:** *void*
+**Returns:** _void_

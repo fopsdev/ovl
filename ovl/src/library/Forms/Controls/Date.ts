@@ -3,14 +3,14 @@ import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { FormState } from "../actions"
+import { OvlFormState } from "../actions"
 import { ColumnDisplayDef } from "../../Table/Table"
 
 export class OvlDate extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
-  formState: FormState
+  formState: OvlFormState
   init() {
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)

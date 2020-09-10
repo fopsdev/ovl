@@ -3,7 +3,7 @@ import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { FormState } from "../actions"
+import { OvlFormState } from "../actions"
 
 type TextBoxType = "text" | "password" | "text-security"
 
@@ -11,7 +11,7 @@ export class OvlTextbox extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
-  formState: FormState
+  formState: OvlFormState
   handleFocusOut(e: Event) {
     e.stopPropagation()
     e.preventDefault()

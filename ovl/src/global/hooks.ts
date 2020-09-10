@@ -3,8 +3,8 @@
 import { LookupListPostData } from "../library/Forms/Controls/helpers"
 import {
   ListFnReturnValue,
-  TableDef,
-  TableData,
+  OvlTableDef,
+  OvlTableData,
   ViewRowDef,
   EditRowDef,
   EditMode,
@@ -16,7 +16,7 @@ import {
   FieldVisibility,
 } from "../library/Table/Table"
 import {
-  FormState,
+  OvlFormState,
   Field,
   FieldChanged,
   ValidateFieldType,
@@ -26,7 +26,7 @@ import { CellClass } from "../library/Table/Row"
 
 import { OvlBaseElement } from "../library/OvlBaseElement"
 import { ViewRendererResult } from "../library/Table/RowDetailView"
-import { Language } from "../index"
+import { OvlLanguage } from "../index"
 
 // gets called when user navigates into a screen
 export const ScreenNavigateIn = "ScreenNavigateIn"
@@ -50,13 +50,13 @@ export const ViewAfterRender = "ViewAfterRender"
 //Form Functions ####################################
 // gets called when a form first time is shown
 export type FormShow_Type = {
-  formState: FormState
+  formState: OvlFormState
   comp: OvlBaseElement
 }
 export const FormShow = "FormShow"
 // gets called when a form gets rerendered
 export type FormAfterRender_Type = {
-  formState: FormState
+  formState: OvlFormState
   comp: OvlBaseElement
 }
 export const FormAfterRender = "FormAfterRender"
@@ -73,32 +73,32 @@ export const FormChanged = "FormChanged"
 export type FormCopy_Type = {
   key: string
   newRow: { [key: string]: {} }
-  tableDef: TableDef
-  tableData: TableData
+  tableDef: OvlTableDef
+  tableData: OvlTableData
 }
 export const FormCopy = "FormCopy"
 
 // gets called when formdata is added
 export type FormAdd_Type = {
   newRow: { [key: string]: {} }
-  tableDef: TableDef
-  tableData: TableData
+  tableDef: OvlTableDef
+  tableData: OvlTableData
 }
 export const FormAdd = "FormAdd"
 
 // gets called for displaying row hints/status (warning,...)
 export type FormStatus_Type = {
   rowKey: string
-  tableDef: TableDef
-  tableData: TableData
+  tableDef: OvlTableDef
+  tableData: OvlTableData
 }
 export type FormStatus_ReturnType = Promise<RowStatus>
 export const FormStatus = "FormStatus"
 
 export type FormCustomFn_Type = {
   rowKey: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   isLastOrOnlyOne: boolean
   startedFromSelectedResult: SelectedCustomFunctionResult
 }
@@ -108,8 +108,8 @@ export const FormCustomFn = "FormCustomFn"
 // return a string explaining why it can not be done
 export type FormCan_Type = {
   rowKey: string
-  tableDef: TableDef
-  tableData: TableData
+  tableDef: OvlTableDef
+  tableData: OvlTableData
 }
 export type FormCan_ReturnType = Promise<string>
 export const FormCanEdit = "FormCanEdit"
@@ -130,17 +130,17 @@ export const FormCanCustom = "FormCan%"
 
 // custom filter function
 export type FormCustomFilter_Type = {
-  def: TableDef
-  lang: Language
-  data: TableData
+  def: OvlTableDef
+  lang: OvlLanguage
+  data: OvlTableData
   row: any
 }
 export type FormCustomFilter_ReturnType = boolean
 export const FormCustomFilter = "FormCustom_%_Filter"
 // custom sort function
 export type FormCustomSort_Type = {
-  def: TableDef
-  lang: Language
+  def: OvlTableDef
+  lang: OvlLanguage
   a: string
   b: string
   data: { [key: string]: { [key: string]: {} } }
@@ -152,7 +152,7 @@ export const FormCustomSort = "FormCustom_%_Sort"
 export type FormCustomColumnFn_Type = {
   fnName: string
   columnKey: string
-  def: TableDef
+  def: OvlTableDef
 }
 export const FormCustomColumnFn = "FormCustomColumnFn_%"
 
@@ -165,7 +165,7 @@ export const FieldGetList = "Field_%_GetList"
 // refines the list e.g. upon a row criteria
 export type FieldGetFilteredList_Type = {
   list: ListFnReturnValue
-  formState: FormState
+  formState: OvlFormState
 }
 export type FieldGetFilteredList_ReturnType = string[]
 export const FieldGetFilteredList = "Field_%_GetFilteredList"
@@ -180,16 +180,16 @@ export const FieldLookupPostData = "Field_%_LookupPostData"
 // if a field should be displayed as readonly
 export type FieldIsReadOnly_Type = {
   rowKey: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }
 export type FieldIsReadOnly_ReturnType = boolean
 export const FieldIsReadOnly = "Field_%_IsReadOnly"
 
 // if a field should not be displayed. Make sure to return a FieldVisibilty - Type
 export type FieldIsVisible_Type = {
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }
 export type FieldIsVisible_ReturnType = FieldVisibility
 export const FieldIsVisible = "Field_%_IsVisible"
@@ -246,11 +246,11 @@ export const EditGetLabelAndValueRender = "Edit_%_GetLabelAndValueRender"
 // to style the header and row cells in tableview
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set
 export type ViewRowCellClass_Type = {
-  def: TableDef
+  def: OvlTableDef
   row: { [key: string]: {} }
   isMobile: boolean
   displayMode: DisplayMode
-  formState?: FormState
+  formState?: OvlFormState
 }
 export type ViewRowCellClass_ReturnType = {
   [key: string]: CellClass
@@ -258,7 +258,7 @@ export type ViewRowCellClass_ReturnType = {
 export const ViewRowCellClass = "ViewRowCellClass"
 
 export type ViewHeaderCellClass_Type = {
-  def: TableDef
+  def: OvlTableDef
   isMobile: boolean
   displayMode: DisplayMode
 }
@@ -321,18 +321,18 @@ export const EditTabFooterRender = "EditTab_%_FooterRender"
 // the eventhandler if the user selected/clicked the cell
 export type FieldRowCellSelectedHandler_Type = {
   classList: DOMTokenList
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   rowKey: string
   displayMode: DisplayMode
-  formState: FormState
+  formState: OvlFormState
 }
 export type FieldRowCellSelectedHandler_ReturnType = Promise<boolean>
 export const FieldRowCellSelectedHandler = "Field_%_RowCellSelectedHandler"
 
 export type FieldHeaderCellSelectedHandler_Type = {
   classList: DOMTokenList
-  def: TableDef
+  def: OvlTableDef
   displayMode: DisplayMode
 }
 export type FieldHeaderCellSelectedHandler_ReturnType = Promise<boolean>
@@ -344,7 +344,7 @@ export const FieldHeaderCellSelectedHandler =
 
 export type FormCustomSave_Type = {
   key: string
-  tableDef: TableDef
+  tableDef: OvlTableDef
   newData: { [key: string]: {} }
   isOfflineRetry: boolean
 }
@@ -367,8 +367,8 @@ export const FormBeforeSave = "FormBeforeSave"
 export type FormSaveOffline_ReturnType = boolean
 export type FormSaveOffline_Type = {
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   res: any
   saveData: any
 
@@ -380,10 +380,10 @@ export const FormSaveOffline = "FormSaveOffline"
 export type FormSaveError_ReturnType = Promise<boolean>
 export type FormSaveError_Type = {
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   res: any
-  formState: FormState
+  formState: OvlFormState
   isAdd: boolean
   isOfflineRetry: boolean
 }
@@ -392,8 +392,8 @@ export const FormSaveError = "FormSaveError"
 // gets called after save
 export type FormAfterSave_Type = {
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   res: any
   isOfflineRetry: boolean
 }
@@ -402,8 +402,8 @@ export const FormAfterSave = "FormAfterSave"
 // if you would like to process delete offline mode yourself
 export type FormDeleteOffline_Type = {
   key: string
-  tableDef: TableDef
-  res: TableData
+  tableDef: OvlTableDef
+  res: OvlTableData
   isOfflineRetry: boolean
 }
 export type FormDeleteOffline_ReturnType = boolean
@@ -412,8 +412,8 @@ export const FormDeleteOffline = "FormDeleteOffline"
 // if you would like to process delete errors yourself
 export type FormDeleteError_Type = {
   key: string
-  tableDef: TableDef
-  res: TableData
+  tableDef: OvlTableDef
+  res: OvlTableData
   isOfflineRetry: boolean
 }
 export type FormDeleteError_ReturnType = string
@@ -422,8 +422,8 @@ export const FormDeleteError = "FormDeleteError"
 // if you would like to do smth after delete
 export type FormAfterDelete_Type = {
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   res: any
   isOfflineRetry: boolean
 }

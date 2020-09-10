@@ -3,14 +3,14 @@ import { EditRowSaveCancelDef } from "./Table"
 import { html } from "lit-html"
 import { T, ovltemp } from "../../global/globals"
 import { DialogResult } from "../actions"
-import { FormState } from "../forms/actions"
+import { OvlFormState } from "../forms/actions"
 
 //import { dialogAfterClose } from "../Dialog/actions"
 
 export class TableRowSaveCancel extends OvlBaseElement {
   props: any
   rowData: EditRowSaveCancelDef
-  formState: FormState
+  formState: OvlFormState
   init() {
     this.rowData = this.props()
     this.formState = this.state.ovl.forms["TableRowEdit"][

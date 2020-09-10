@@ -14,13 +14,14 @@ import {
   FormValidate_Type,
   FormChanged_Type,
 } from "../../global/hooks"
-import { FormType, OvlAction } from "../../index"
+import { OvlForm } from "../../index"
 import { ColumnAlign, ListFnReturnValue } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
 import { getFormFields, ValidationAddError } from "./helper"
 import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
 import { GetRowFromFormState } from "./Controls/helpers"
+import { OvlAction } from "../../ovlTypes"
 export { FillListControl }
 
 export type Field = {
@@ -66,11 +67,11 @@ export type ValidateFieldResult = {
 //   [key: string]: ValidateFieldResult
 // }
 
-export type FormState = {
+export type OvlFormState = {
   dirty: boolean
   valid: boolean
   fields: FieldValueMap
-  formType: FormType
+  formType: OvlForm
   formId: string
   initFields: FieldValueMap
   namespace: string
@@ -79,11 +80,11 @@ export type FormState = {
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
-  [key: string]: FormState
+  [key: string]: OvlFormState
 }
 
 export type InitForm = {
-  formType: FormType
+  formType: OvlForm
   instanceId: string
   fields: { [key: string]: FormFields }
   namespace?: string
@@ -92,16 +93,16 @@ export type InitForm = {
   initialFocusElementId?: string
 }
 
-export type FormsState = { [key in FormType]: FormStatePerInstance }
+export type FormsState = { [key in OvlForm]: FormStatePerInstance }
 
-export const ResetForm: OvlAction<FormState> = (value) => {
+export const ResetForm: OvlAction<OvlFormState> = (value) => {
   value.dirty = false
   value.fields = JSON.parse(JSON.stringify(value.initFields, stringifyReplacer))
   value.valid = true
   value.lastTouchedField = undefined
 }
 
-export const SetFormUndirty: OvlAction<FormState> = (value) => {
+export const SetFormUndirty: OvlAction<OvlFormState> = (value) => {
   value.dirty = false
   Object.keys(value.fields).forEach((e) => {
     let field = value.fields[e]
@@ -109,7 +110,7 @@ export const SetFormUndirty: OvlAction<FormState> = (value) => {
   })
 }
 
-export const ResetFormAfterNavigation: OvlAction<FormState> = (
+export const ResetFormAfterNavigation: OvlAction<OvlFormState> = (
   value,
   { state }
 ) => {
@@ -352,7 +353,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   }
 }
 
-export const ValidateForm: OvlAction<FormState> = (
+export const ValidateForm: OvlAction<OvlFormState> = (
   value,
   { actions, state, effects }
 ) => {
@@ -537,12 +538,12 @@ export type ValidateFieldType = {
   validationResult: ValidateFieldResult
   oldVal: string
   newVal: string
-  formState: FormState
+  formState: OvlFormState
   isInnerEvent: boolean
 }
 
 export type ChangeField = {
-  formState: FormState
+  formState: OvlFormState
   fieldId: string
   value: any
   isInit?: boolean
@@ -550,7 +551,7 @@ export type ChangeField = {
 }
 
 export type FieldChanged = {
-  formState: FormState
+  formState: OvlFormState
   fieldId: string
   newConvertedVal: string
   oldConvertedVal: string
@@ -559,7 +560,7 @@ export type FieldChanged = {
 }
 
 export type TouchField = {
-  formState: FormState
+  formState: OvlFormState
   fieldId: string
 }
 
@@ -659,13 +660,13 @@ export const ChangeField: OvlAction<ChangeField> = (
   actions.ovl.internal.SetFormValid(value.formState)
 }
 
-export const SetFormValid: OvlAction<FormState> = (value) => {
+export const SetFormValid: OvlAction<OvlFormState> = (value) => {
   value.valid = !Object.keys(value.fields).some(
     (k) => value.fields[k].validationResult.valid === false
   )
 }
 
-export const GetFormValidationErrors = (formState: FormState): string[] => {
+export const GetFormValidationErrors = (formState: OvlFormState): string[] => {
   let res: string[] = []
   Object.keys(formState.fields).map((k) => {
     let field = formState.fields[k]

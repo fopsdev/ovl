@@ -19,7 +19,7 @@ import {
   GetValueFromCustomFunction,
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { FormState } from "../actions"
+import { OvlFormState } from "../actions"
 import { OvlState, OvlActions, OvlEffects, ovl } from "../../.."
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 
@@ -43,7 +43,7 @@ export class OvlListControl extends OvlBaseElement {
   hitListDialogFooter: TemplateResult
   timer: any
 
-  formState: FormState
+  formState: OvlFormState
   // handleClearFilter(e: Event) {}
   handleCancel = (e: Event) => {
     this.actions.ovl.dialog.DialogClose("HitListDialog")

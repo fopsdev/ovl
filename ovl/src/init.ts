@@ -1,6 +1,6 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
-import { OvlScreen, OvlVersion } from "./index"
+import { OvlScreen, OvlVersion, ovl, OvlAction, OvlState } from "./index"
 
 export type Init = {
   customerTestUrlMatch: string
@@ -45,7 +45,9 @@ type OvlConfig = {
   offlineFirstOnReload?: boolean
 }
 
-import { OvlState, OvlAction } from "./index"
+import { actionTracking } from "./tracker/proxyHandler"
+import { portalScreens } from "../../../kaltag/src/appDef"
+import { baseScreens, baseDialogs } from "./screensAndDialogs"
 
 // #####################################################################################################################################
 

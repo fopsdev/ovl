@@ -19,17 +19,17 @@ import {
   SelectedRow,
   SelectedViewRow,
   SelectRowDef,
-  TableData,
-  TableDef,
+  OvlTableData,
+  OvlTableDef,
   ViewRowDef,
 } from "./Table"
 
 export type TableRowDef = {
-  data: TableData
+  data: OvlTableData
   selected: SelectedRow
   editSelected: SelectedEditRow
   viewRow: SelectedViewRow
-  tableDef: TableDef
+  tableDef: OvlTableDef
   columnsAlign: {}
   columnsVisible: {}
   columnsCount: number
@@ -39,7 +39,7 @@ export type TableRowDef = {
 
 export type TableRowDataDef = {
   row: {}
-  tableDef: TableDef
+  tableDef: OvlTableDef
   key: string
   columnsAlign: {}
   columnsVisible: {}

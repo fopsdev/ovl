@@ -14,7 +14,7 @@ import {
   FieldGetValueRender_Type,
   FieldGetLabelRender_Type,
 } from "../../global/hooks"
-import { TableDefIds, Language, ovl } from "../../index"
+import { OvlTableDefIds, OvlLanguage, ovl } from "../../index"
 import { OvlConfig } from "../../init"
 import { ListState } from "../Forms/Controls/ListControl"
 import {
@@ -64,10 +64,10 @@ type SortDirection = "asc" | "desc"
 
 type IDField = "{ObjectKey}" | string
 
-export type TableData = {
+export type OvlTableData = {
   data: {}
   schema: { [key: string]: Schema }
-  tableDef: { [key in TableDefIds]?: TableDef }
+  tableDef: { [key in OvlTableDefIds]?: OvlTableDef }
   timestamp?: number
   offline?: {
     addedKeys: { [key: string]: number }
@@ -80,8 +80,8 @@ export type TableData = {
 }
 
 export type TableDataAndDef = {
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }
 
 export type RowStatus = {
@@ -125,9 +125,9 @@ export type SelectedViewRow = {
 
 export type DetailViewMode = "None" | "Enabled" | "EnabledOnlyMobile"
 
-export type TableDef = {
+export type OvlTableDef = {
   initialised?: boolean
-  id?: TableDefIds
+  id?: OvlTableDefIds
   titleTranslationKey?: string
   namespace: string
   //translationGroup?: string
@@ -142,7 +142,7 @@ export type TableDef = {
     useSchema?: boolean
     useCustomDataFetching?: boolean
   }
-  columns: ColumnsDef
+  columns: OvlColumnsDef
   uiState?: {
     headerSelected?: string
     needsRefresh?: boolean
@@ -216,36 +216,36 @@ export type TableDef = {
 }
 
 export type EditRowDef = {
-  tableDef: TableDef
+  tableDef: OvlTableDef
   key: string
   row: {}
-  data: TableData
+  data: OvlTableData
   columnsAlign: {}
   columnsVisible: {}
   mode: EditMode
 }
 
 export type ViewRowDef = {
-  tableDef: TableDef
+  tableDef: OvlTableDef
   key: string
   row: {}
-  data: TableData
+  data: OvlTableData
   columnsAlign: {}
   columnsVisible: {}
 }
 
 export type EditRowSaveCancelDef = {
-  tableDef: TableDef
+  tableDef: OvlTableDef
   key: string
   row: {}
-  data: TableData
+  data: OvlTableData
   columnsCount: number
 }
 
 export type SelectRowDef = {
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }
 
 export type Tabs = {
@@ -275,7 +275,7 @@ export type ControlType =
   | "link"
 export type ColumnAlign = "left" | "center" | "right"
 
-export type ColumnsDef = {
+export type OvlColumnsDef = {
   [key: string]: ColumnDef
 }
 
@@ -311,21 +311,21 @@ export type Paging = {
 
 export type HeaderClick = {
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }
 
 export type SortClick = {
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   ascending: boolean
 }
 
 export type FilterClick = {
   value: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }
 
 export type DBInsertMode =
@@ -366,7 +366,7 @@ export type ColumnDef = {
     translationVisibility?: FieldVisibility
     showLabelIfNoValueInView?: boolean
     checkedValue?: string | boolean
-    language?: Language
+    language?: OvlLanguage
     editTab?: string | number
     viewTab?: string | number
   }

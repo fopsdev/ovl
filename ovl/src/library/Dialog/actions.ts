@@ -1,16 +1,16 @@
 import { OpenModalDialogState, ResultType } from "./Dialog"
-import { OvlAction, OvlDialog, FormType } from "../../index"
-import { FormValidate_Type } from "../../global/hooks"
+import { OvlDialog, OvlForm } from "../../index"
 import { modalDialog, T } from "../../global/globals"
 import { TemplateResult } from "lit-html"
 import { DialogType } from "./OvlDialogBase"
 import { OvlConfig } from "../../init"
+import { OvlAction } from "../../ovlTypes"
 
 export type OpenDialogOptions = {
   dialogType: OvlDialog
   elementIdToFocusAfterOpen?: string
   elementIdToFocusAfterClose?: string
-  formType?: FormType
+  formType?: OvlForm
   formId?: string
 }
 

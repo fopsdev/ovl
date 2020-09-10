@@ -274,66 +274,18 @@ export const logout = async () => {
   //window.location.reload(true)
 }
 
-// export const stateCleaner = (state: OvlState, newObj, parentKey: string) => {
-//   let cb
-//   let hasCb = false
-//   if (OvlConfig.saveStateCallback) {
-//     cb = OvlConfig.saveStateCallback
-//     hasCb = true
-//   }
-
-//   Object.keys(state).forEach((key) => {
-//     // Get this value and its type
-//     let value = state[key]
-//     let valuetype = typeof value
-//     if (value !== undefined) {
-//       //<IGNORES>
-//       // we don't want huge audit data in local storage (but we want the def)
-//       if (key === "audit" && value.data) {
-//         newObj[key] = {
-//           data: {},
-//           schema: {},
-//           // do stringify here because it also strips out symbols..
-//           tableDef: JSON.parse(JSON.stringify(value.tableDef)),
-//         }
-//         return
-//       } else if (parentKey === "uiState" && key === "isReady") {
-//         newObj[key] = false
-//         return
-//       } else if (parentKey === "uiState" && key === "headerSelected") {
-//         newObj[key] = ""
-//         return
-//       } else if (parentKey === "uiState" && key === "stateSavedReason") {
-//         newObj[key] = saveReason
-//         return
-//       } else if (hasCb === true) {
-//         cb(parentKey, key, newObj)
-//         return
-//       }
-//     }
-//     // we don't want symbols (causes troubles anyway with indexeddb serializer in some cases)
-//     if (valuetype === "symbol") {
-//       return
-//     }
-//     //</IGNORES>
-
-//     if (valuetype === "object") {
-//       if (value !== null) {
-//         let no
-//         if (Array.isArray(value)) {
-//           no = newObj[key] = []
-//         } else {
-//           no = newObj[key] = {}
-//         }
-//         stateCleaner(value, no, key)
-//       } else {
-//         newObj[key] = null
-//       }
-//     } else {
-//       newObj[key] = value
-//     }
-//   })
-// }
+export const logState = () => {
+  console.log("ovl state:")
+  console.log(JSON.parse(JSON.stringify(ovl.state), stringifyReplacer))
+}
+export const logActions = () => {
+  console.log("ovl actions:")
+  console.log(ovl.actions)
+}
+export const logEffects = () => {
+  console.log("ovl effects:")
+  console.log(ovl.effects)
+}
 
 export const SetFocus = (el: any) => {
   el.focus()

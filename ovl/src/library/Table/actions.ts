@@ -37,27 +37,12 @@ import {
   FormCan_Type,
   FormCustomFn_Type,
   FormCan_ReturnType,
-  FormSaveOffline,
-  FormSaveOffline_Type,
-  FormSaveOffline_ReturnType,
-  FormDeleteOffline,
-  FormDeleteOffline_ReturnType,
-  FormDeleteOffline_Type,
   FormAfterSave_Type,
-  FormOfflineRetry,
-  FormOfflineRetry_Type,
-  FormOfflineRetry_ReturnType,
 } from "../../global/hooks"
-import {
-  TableDefIds,
-  OvlAction,
-  OvlState,
-  OvlActions,
-  ovl,
-  logState,
-} from "../../index"
+import { OvlTableDefIds, OvlState, OvlActions, ovl } from "../../index"
+import { OvlAction } from "../../ovlTypes"
 import { DialogResult } from "../actions"
-import { FormState, InitForm } from "../forms/actions"
+import { OvlFormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
 import { ValidationAddError } from "../Forms/helper"
 import {
@@ -92,9 +77,9 @@ import {
   SelectedCustomFunctionResult,
   SelectRowDef,
   SortClick,
-  TableData,
+  OvlTableData,
   TableDataAndDef,
-  TableDef,
+  OvlTableDef,
   Tabs,
   SelectedEditRow,
 } from "./Table"
@@ -176,8 +161,8 @@ export const TableFilter: OvlAction<FilterClick> = (value, { actions }) => {
 }
 
 export const TableSelectAll: OvlAction<{
-  tableDef: TableDef
-  data: TableData
+  tableDef: OvlTableDef
+  data: OvlTableData
   select: boolean
 }> = (def, { actions }) => {
   if (!def.select) {
@@ -226,8 +211,8 @@ export const TableViewRefresh: OvlAction<TableDataAndDef> = (
 }
 
 export const TableRefreshDataFromServer: OvlAction<{
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = async (value, { state, actions, effects }) => {
   let def = value.def
   let data = value.data.data
@@ -409,8 +394,8 @@ export const TableRefresh: OvlAction<{
   ignoreRefreshedMessageSnack?: boolean
   refreshServerDataIfOlderThan?: number
   forceServerDataRefresh?: boolean
-  defId: TableDefIds
-  data: TableData
+  defId: OvlTableDefIds
+  data: OvlTableData
 }> = async (value, { actions, state, effects }) => {
   let dataAndState = value.data
   let def = dataAndState.tableDef[value.defId]
@@ -469,10 +454,10 @@ export const TableRefresh: OvlAction<{
 export const TableRebuild: OvlAction<{
   snackId: string
   defId: string
-  data: TableData
+  data: OvlTableData
 }> = async (value, { actions, state, effects }) => {
   let snackId = value.snackId
-  let def = <TableDef>value.data.tableDef[value.defId]
+  let def = <OvlTableDef>value.data.tableDef[value.defId]
   let data = value.data.data
   let lang = state.ovl.language.language
   try {
@@ -568,8 +553,8 @@ export const TableRebuild: OvlAction<{
 
 export const TableOfflineRetrySaveRow: OvlAction<
   {
-    data: TableData
-    defId: TableDefIds
+    data: OvlTableData
+    defId: OvlTableDefIds
     rowToSave: {}
     key: string
   },
@@ -594,8 +579,8 @@ export const TableOfflineRetrySaveRow: OvlAction<
 }
 
 export const TableDirectSaveRow: OvlAction<{
-  data: TableData
-  defId: TableDefIds
+  data: OvlTableData
+  defId: OvlTableDefIds
   rowToSave: {}
   noSnack?: boolean
 }> = async (value, { state, actions }) => {
@@ -642,9 +627,9 @@ export const TableDirectSaveRow: OvlAction<{
 export const TableEditSaveRow: OvlAction<
   {
     key: string
-    def: TableDef
-    data: TableData
-    formState: FormState
+    def: OvlTableDef
+    data: OvlTableData
+    formState: OvlFormState
   },
   Promise<string>
 > = async (value, { actions, state }) => {
@@ -659,8 +644,8 @@ export const TableEditSaveRow: OvlAction<
 }
 
 const EditSaveRowOfflineHelper = (
-  def: TableDef,
-  data: TableData,
+  def: OvlTableDef,
+  data: OvlTableData,
   rowCopy: any,
   res: any,
   newData: any,
@@ -703,10 +688,10 @@ const EditSaveRowOfflineHelper = (
   //saveState(true, "OffMode")
 }
 
-const TablesNeedsRefresh = (data: TableData) => {
+const TablesNeedsRefresh = (data: OvlTableData) => {
   let tableDef = data.tableDef
   Object.keys(tableDef).forEach((k) => {
-    let d: TableDef = tableDef[k]
+    let d: OvlTableDef = tableDef[k]
     if (
       d.options.sort.field ||
       d.options.sortCustom.selected ||
@@ -719,9 +704,9 @@ const TablesNeedsRefresh = (data: TableData) => {
 
 const TableEditSaveRowHelper = async (
   key: string,
-  def: TableDef,
-  data: TableData,
-  formState: FormState | null,
+  def: OvlTableDef,
+  data: OvlTableData,
+  formState: OvlFormState | null,
   state: OvlState,
   actions: OvlActions,
   rowToSave?: {},
@@ -1011,7 +996,7 @@ const TableEditSaveRowHelper = async (
 }
 
 export const TableOfflineHandler: OvlAction<
-  { data: TableData; defId: TableDefIds; key: string },
+  { data: OvlTableData; defId: OvlTableDefIds; key: string },
   Promise<{ newKey: string }>
 > = async (value, { state, actions }) => {
   if (
@@ -1135,7 +1120,7 @@ const OfflineHandlerErrorHelper = (e: any, errors: any) => {
 
 export const TableSelectCustomSort: OvlAction<{
   id: string
-  def: TableDef
+  def: OvlTableDef
 }> = (value) => {
   value.def.uiState.headerSelected = ""
   if (value.def.options.sortCustom.selected !== value.id) {
@@ -1147,7 +1132,7 @@ export const TableSelectCustomSort: OvlAction<{
 
 export const TableSelectColumnFilter: OvlAction<{
   key: ColumnFilterTypes
-  def: TableDef
+  def: OvlTableDef
   columnId: string
   othersCount: number
   filter: { [key: string]: ColumnFilterValue }
@@ -1180,7 +1165,7 @@ export const TableSelectColumnFilter: OvlAction<{
 
 export const TableSelectCustomFilter: OvlAction<{
   id: string
-  def: TableDef
+  def: OvlTableDef
 }> = (value) => {
   let def = value.def
   let id = value.id
@@ -1205,8 +1190,8 @@ export const TableSelectCustomFilter: OvlAction<{
 
 export const TableEditClose: OvlAction<{
   key: string
-  tableDef: TableDef
-  data: TableData
+  tableDef: OvlTableDef
+  data: OvlTableData
 }> = (value, { actions }) => {
   let editRow = value.tableDef.uiState.editRow
   if (editRow[value.key]) {
@@ -1217,8 +1202,8 @@ export const TableEditClose: OvlAction<{
 
 export const TableEditRow: OvlAction<{
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = (value, { actions }) => {
   // init editform explicitly with table values
   let def = value.def
@@ -1250,8 +1235,8 @@ export const TableEditRow: OvlAction<{
 
 export const TableMoreRow: OvlAction<{
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = (value, { actions }) => {
   actions.ovl.internal.TableSelectHeader({
     def: value.def,
@@ -1262,15 +1247,15 @@ export const TableMoreRow: OvlAction<{
 
 export const TableViewRow: OvlAction<{
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = (value) => {
   let def = value.def
   def.uiState.viewRow[value.key].selected = true
 }
 export const TableCloseViewRow: OvlAction<{
   key: string
-  def: TableDef
+  def: OvlTableDef
 }> = (value) => {
   let def = value.def
 
@@ -1279,8 +1264,8 @@ export const TableCloseViewRow: OvlAction<{
 
 export const TableCopyRow: OvlAction<{
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = async (value, { state, actions, effects }) => {
   let def = value.def
   let key = value.key
@@ -1373,8 +1358,8 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
 
 export const TableOfflineRetryDeleteRow: OvlAction<
   {
-    data: TableData
-    defId: TableDefIds
+    data: OvlTableData
+    defId: OvlTableDefIds
     key: string
   },
   Promise<boolean>
@@ -1395,7 +1380,7 @@ export const TableOfflineRetryDeleteRow: OvlAction<
 }
 
 const DeleteRowOfflineHelper = (
-  data: TableData,
+  data: OvlTableData,
   idValue: string,
   key: string
 ) => {
@@ -1416,8 +1401,8 @@ const DeleteRowOfflineHelper = (
 export const TableDeleteRow: OvlAction<
   {
     key: string
-    def: TableDef
-    data: TableData
+    def: OvlTableDef
+    data: OvlTableData
     isMass?: boolean
     isOfflineRetry?: boolean
     offlineKey?: string
@@ -1530,8 +1515,8 @@ export const TableDeleteRow: OvlAction<
 }
 
 export const TableMultipleDeleteRow: OvlAction<{
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = async (value, { actions, state, effects }) => {
   let def = value.def
   let rows = value.data.data
@@ -1634,8 +1619,8 @@ export const TableMultipleDeleteRow: OvlAction<{
 }
 
 export const TableMultipleCopyRow: OvlAction<{
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = async (value, { actions, state, effects }) => {
   let def = value.def
   let data = value.data
@@ -1729,8 +1714,8 @@ export const TableMultipleCopyRow: OvlAction<{
 }
 
 export const TableMultipleEditRow: OvlAction<{
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = async (value, { actions, state, effects }) => {
   let def = value.def
   let data = value.data
@@ -1822,8 +1807,8 @@ export const TableMultipleEditRow: OvlAction<{
 }
 
 export const TableMultipleCustomFunction: OvlAction<{
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
   customFnId: string
   customFnName: string
 }> = async (value, { actions, state, effects }) => {
@@ -1963,8 +1948,8 @@ export const TableMultipleCustomFunction: OvlAction<{
 
 export const TableDeleteRowFromData: OvlAction<{
   key: string
-  def: TableDef
-  data: TableData
+  def: OvlTableDef
+  data: OvlTableData
 }> = (value) => {
   let key = value.key
   let data = value.data.data

@@ -1,6 +1,6 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { TemplateResult, html } from "lit-html"
-import { OvlDialog, FormType } from "../.."
+import { OvlDialog, OvlForm } from "../.."
 import { SetFocus } from "../../global/globals"
 
 export type DialogsState = {
@@ -8,7 +8,7 @@ export type DialogsState = {
   elementIdToFocusAfterClose?: string
   visible: boolean
   closing: boolean
-  formType?: FormType
+  formType?: OvlForm
   formId?: string
 }
 

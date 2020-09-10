@@ -4,8 +4,8 @@ import {
   demoAppScreens,
   demoAppDialogs,
   CustomFormType,
-  TableDefIds,
-  Language,
+  OvlTableDefIds,
+  OvlLanguage,
 } from "../../test/src/appDef"
 import * as demoAppState from "../../test/src/state"
 import * as demoAppActions from "../../test/src/actions"
@@ -142,7 +142,7 @@ export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
 export type OvlDialog = keyof typeof baseDialogs | keyof typeof demoAppDialogs
 
-export { TableDefIds, Language }
+export { OvlTableDefIds, OvlLanguage }
 export type OvlScreen = keyof typeof baseScreens | keyof typeof demoAppScreens
 
 import { defineElements } from "./registerComponents"

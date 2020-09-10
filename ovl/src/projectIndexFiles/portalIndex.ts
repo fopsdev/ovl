@@ -4,8 +4,8 @@ import {
   portalScreens,
   portalDialogs,
   CustomFormType,
-  TableDefIds,
-  Language,
+  OvlTableDefIds,
+  OvlLanguage,
 } from "../../../kaltag/src/appDef"
 import * as portalState from "../../../kaltag/src/state"
 import * as portalActions from "../../../kaltag/src/actions"
@@ -142,7 +142,7 @@ export type OvlEffects = typeof effects
 export type FormType = CustomFormType | "TableRowEdit"
 export type OvlDialog = keyof typeof baseDialogs | keyof typeof portalDialogs
 
-export { TableDefIds, Language }
+export { OvlTableDefIds, OvlLanguage }
 export type OvlScreen = keyof typeof baseScreens | keyof typeof portalScreens
 
 import { defineElements } from "./registerComponents"

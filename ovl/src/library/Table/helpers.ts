@@ -26,15 +26,15 @@ import {
   FormCustomFn,
   FormCustomFn_Type,
 } from "../../global/hooks"
-import { TableDefIds, ovl, OvlActions } from "../../index"
+import { OvlTableDefIds, ovl, OvlActions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
 import { DataType, FormFields } from "../forms/OvlFormElement"
 import { RowControlAllAction } from "./RowControl"
 import {
   ColumnDisplayDef,
-  TableData,
+  OvlTableData,
   TableDataAndDef,
-  TableDef,
+  OvlTableDef,
   EditMode,
 } from "./Table"
 import { TableRowDetailView } from "./RowDetailView"
@@ -108,7 +108,7 @@ export const deleteTableRow = (
   key: string
 ) => {
   Object.keys(tableDataAndDef.data.tableDef).forEach((k) => {
-    let def = tableDataAndDef.data.tableDef[k] as TableDef
+    let def = tableDataAndDef.data.tableDef[k] as OvlTableDef
     let editRows = def.uiState.editRow
     let selectRows = def.uiState.selectedRow
     delete editRows[key]
@@ -128,7 +128,7 @@ export const deleteTableRow = (
   }
 }
 
-export const selectLatestRow = (def: TableDef, data: TableData) => {
+export const selectLatestRow = (def: OvlTableDef, data: OvlTableData) => {
   let selRows = def.uiState.selectedRow //data.selectedRow[def.id]
   let selectedAndSortedKeys = Object.keys(selRows)
     .filter((k) => selRows[k].selected)
@@ -146,7 +146,7 @@ export const selectLatestRow = (def: TableDef, data: TableData) => {
 
 export const addRowDefInit = (tableDef, newId, mode: EditMode) => {
   Object.keys(tableDef).forEach((k) => {
-    let d: TableDef = tableDef[k]
+    let d: OvlTableDef = tableDef[k]
     d.uiState.editRow[newId] = { selected: false, mode }
     d.uiState.selectedRow[newId] = {
       selected: false,
@@ -158,7 +158,7 @@ export const addRowDefInit = (tableDef, newId, mode: EditMode) => {
   })
 }
 
-export const addRowPage = (def: TableDef) => {
+export const addRowPage = (def: OvlTableDef) => {
   if (def.features.page) {
     let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
     let count = dataFilteredAndSorted.length
@@ -176,7 +176,7 @@ export const addRowPage = (def: TableDef) => {
   }
 }
 
-export const setPage = (data: TableData) => {
+export const setPage = (data: OvlTableData) => {
   Object.keys(data.tableDef).forEach((k) => {
     let def = data.tableDef[k]
     if (def.features.page) {
@@ -262,9 +262,9 @@ export const setRefresh = (
 }
 
 export const initTableState = (
-  def: TableDef,
-  data: TableData,
-  defId: TableDefIds,
+  def: OvlTableDef,
+  data: OvlTableData,
+  defId: OvlTableDefIds,
   isMobile: boolean
 ) => {
   if (!def.initialised) {
@@ -576,8 +576,8 @@ export const initTableState = (
 }
 
 export const TableRefreshServerData = async (
-  def: TableDef,
-  data: TableData,
+  def: OvlTableDef,
+  data: OvlTableData,
   actions: OvlActions,
   forceServerDataRefresh?: boolean
 ) => {
@@ -740,7 +740,7 @@ export const TableFilterFn = (
 }
 
 export const getFormFieldsFromColumns = (
-  def: TableDef,
+  def: OvlTableDef,
   row,
   noLabel?: boolean
 ) => {
@@ -775,8 +775,8 @@ export const getFormFieldsFromColumns = (
 }
 
 export const createDynamicRowFunctions = async (
-  def: TableDef,
-  data: TableData,
+  def: OvlTableDef,
+  data: OvlTableData,
   key: string,
   isDetailView: boolean
 ) => {
@@ -1000,8 +1000,8 @@ export const rowControlActionsHandler = async (
   isCustom: boolean,
 
   key: string,
-  def: TableDef,
-  data: TableData,
+  def: OvlTableDef,
+  data: OvlTableData,
   rowKey: string,
   isDetailView: boolean
 ) => {

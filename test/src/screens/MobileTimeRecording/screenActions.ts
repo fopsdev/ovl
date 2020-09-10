@@ -1,4 +1,4 @@
-import { TableDefIds, OvlAction, FormType } from "../../../../ovl/src/index"
+import { OvlTableDefIds, OvlAction, FormType } from "../../../../ovl/src/index"
 import { DialogOkCancel } from "../../../../ovl/src/library/helpers"
 import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
@@ -13,7 +13,7 @@ export const ScreenShow: OvlAction = async (_) => {
 
 /* main form functions */
 export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
-  let defId: TableDefIds = "mobiletimerecording1"
+  let defId: OvlTableDefIds = "mobiletimerecording1"
   let data = state.demoApp.testtables.timeentries
   await actions.ovl.table.TableRefresh({
     defId,

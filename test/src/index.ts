@@ -1,6 +1,6 @@
 import { html, render } from "../../ovl/node_modules/lit-html"
 
-import { CustomFormType, TableDefIds, Language } from "./state"
+import { CustomFormType, OvlTableDefIds, OvlLanguage } from "./state"
 import { OvlConfig } from "../../ovl/src/init"
 import {
   OvlState,
@@ -9,7 +9,7 @@ import {
   logActions,
   logEffects,
 } from "../../ovl/src/index"
-export { TableDefIds, CustomFormType, Language }
+export { OvlTableDefIds, CustomFormType, OvlLanguage }
 
 OvlConfig._system.debugTracking = false
 

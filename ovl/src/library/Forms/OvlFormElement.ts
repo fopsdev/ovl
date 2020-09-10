@@ -1,4 +1,4 @@
-import { FormType, ovl } from "../.."
+import { OvlForm, ovl } from "../.."
 import { resolvePath, SetFocus } from "../../global/globals"
 import {
   FormAfterRender,
@@ -8,7 +8,7 @@ import {
 } from "../../global/hooks"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { ColumnAlign } from "../Table/Table"
-import { FormState } from "./actions"
+import { OvlFormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
 
 export type FieldFormat =
@@ -54,13 +54,13 @@ export type LookupDef = {
 }
 
 export class OvlFormElement extends OvlBaseElement {
-  formType: FormType
+  formType: OvlForm
   formFields: { [key: string]: FormFields }
   formId: string
 
   schema: { [key: string]: Schema }
   namespace: string
-  formState: FormState
+  formState: OvlFormState
   formAfterRenderFn: any
   formShowFn: any
   formShowed: boolean

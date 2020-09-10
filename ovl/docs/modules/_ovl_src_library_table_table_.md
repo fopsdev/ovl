@@ -6,639 +6,639 @@
 
 ### Classes
 
-* [TableHeader](../classes/_ovl_src_library_table_table_.tableheader.md)
+- [TableHeader](../classes/_ovl_src_library_table_table_.tableheader.md)
 
 ### Type aliases
 
-* [BeforeSaveParam](_ovl_src_library_table_table_.md#beforesaveparam)
-* [ColumnAlign](_ovl_src_library_table_table_.md#columnalign)
-* [ColumnDef](_ovl_src_library_table_table_.md#columndef)
-* [ColumnDisplayDef](_ovl_src_library_table_table_.md#columndisplaydef)
-* [ColumnFilter](_ovl_src_library_table_table_.md#columnfilter)
-* [ColumnFilterTypes](_ovl_src_library_table_table_.md#columnfiltertypes)
-* [ColumnFilterValue](_ovl_src_library_table_table_.md#columnfiltervalue)
-* [ColumnsDef](_ovl_src_library_table_table_.md#columnsdef)
-* [ControlType](_ovl_src_library_table_table_.md#controltype)
-* [CustomFilter](_ovl_src_library_table_table_.md#customfilter)
-* [CustomFilterType](_ovl_src_library_table_table_.md#customfiltertype)
-* [CustomSort](_ovl_src_library_table_table_.md#customsort)
-* [DBInsertMode](_ovl_src_library_table_table_.md#dbinsertmode)
-* [EditRowDef](_ovl_src_library_table_table_.md#editrowdef)
-* [EditRowSaveCancelDef](_ovl_src_library_table_table_.md#editrowsavecanceldef)
-* [Filter](_ovl_src_library_table_table_.md#filter)
-* [FilterClick](_ovl_src_library_table_table_.md#filterclick)
-* [HeaderClick](_ovl_src_library_table_table_.md#headerclick)
-* [IDField](_ovl_src_library_table_table_.md#idfield)
-* [ListFnReturnValue](_ovl_src_library_table_table_.md#listfnreturnvalue)
-* [Paging](_ovl_src_library_table_table_.md#paging)
-* [RowControlAction](_ovl_src_library_table_table_.md#rowcontrolaction)
-* [RowStatus](_ovl_src_library_table_table_.md#rowstatus)
-* [SaveMode](_ovl_src_library_table_table_.md#savemode)
-* [SelectRowDef](_ovl_src_library_table_table_.md#selectrowdef)
-* [SelectedEditRow](_ovl_src_library_table_table_.md#selectededitrow)
-* [SelectedRow](_ovl_src_library_table_table_.md#selectedrow)
-* [Sort](_ovl_src_library_table_table_.md#sort)
-* [SortClick](_ovl_src_library_table_table_.md#sortclick)
-* [SortDirection](_ovl_src_library_table_table_.md#sortdirection)
-* [StaticFilter](_ovl_src_library_table_table_.md#staticfilter)
-* [TableData](_ovl_src_library_table_table_.md#tabledata)
-* [TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef)
-* [TableDef](_ovl_src_library_table_table_.md#tabledef)
+- [BeforeSaveParam](_ovl_src_library_table_table_.md#beforesaveparam)
+- [ColumnAlign](_ovl_src_library_table_table_.md#columnalign)
+- [ColumnDef](_ovl_src_library_table_table_.md#columndef)
+- [ColumnDisplayDef](_ovl_src_library_table_table_.md#columndisplaydef)
+- [ColumnFilter](_ovl_src_library_table_table_.md#columnfilter)
+- [ColumnFilterTypes](_ovl_src_library_table_table_.md#columnfiltertypes)
+- [ColumnFilterValue](_ovl_src_library_table_table_.md#columnfiltervalue)
+- [ColumnsDef](_ovl_src_library_table_table_.md#columnsdef)
+- [ControlType](_ovl_src_library_table_table_.md#controltype)
+- [CustomFilter](_ovl_src_library_table_table_.md#customfilter)
+- [CustomFilterType](_ovl_src_library_table_table_.md#customfiltertype)
+- [CustomSort](_ovl_src_library_table_table_.md#customsort)
+- [DBInsertMode](_ovl_src_library_table_table_.md#dbinsertmode)
+- [EditRowDef](_ovl_src_library_table_table_.md#editrowdef)
+- [EditRowSaveCancelDef](_ovl_src_library_table_table_.md#editrowsavecanceldef)
+- [Filter](_ovl_src_library_table_table_.md#filter)
+- [FilterClick](_ovl_src_library_table_table_.md#filterclick)
+- [HeaderClick](_ovl_src_library_table_table_.md#headerclick)
+- [IDField](_ovl_src_library_table_table_.md#idfield)
+- [ListFnReturnValue](_ovl_src_library_table_table_.md#listfnreturnvalue)
+- [Paging](_ovl_src_library_table_table_.md#paging)
+- [RowControlAction](_ovl_src_library_table_table_.md#rowcontrolaction)
+- [RowStatus](_ovl_src_library_table_table_.md#rowstatus)
+- [SaveMode](_ovl_src_library_table_table_.md#savemode)
+- [SelectRowDef](_ovl_src_library_table_table_.md#selectrowdef)
+- [SelectedEditRow](_ovl_src_library_table_table_.md#selectededitrow)
+- [SelectedRow](_ovl_src_library_table_table_.md#selectedrow)
+- [Sort](_ovl_src_library_table_table_.md#sort)
+- [SortClick](_ovl_src_library_table_table_.md#sortclick)
+- [SortDirection](_ovl_src_library_table_table_.md#sortdirection)
+- [StaticFilter](_ovl_src_library_table_table_.md#staticfilter)
+- [TableData](_ovl_src_library_table_table_.md#tabledata)
+- [TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef)
+- [TableDef](_ovl_src_library_table_table_.md#tabledef)
 
 ## Type aliases
 
-###  BeforeSaveParam
+### BeforeSaveParam
 
-Ƭ **BeforeSaveParam**: *object*
+Ƭ **BeforeSaveParam**: _object_
 
-*Defined in [ovl/src/library/Table/Table.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L17)*
-
-#### Type declaration:
-
-* **key**: *string*
-
-* **mode**: *[SaveMode](_ovl_src_library_table_table_.md#savemode)*
-
-* **row**(): *object*
-
-* **tableDef**: *[TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef)*
-
-___
-
-###  ColumnAlign
-
-Ƭ **ColumnAlign**: *"left" | "center" | "right"*
-
-*Defined in [ovl/src/library/Table/Table.ts:160](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L160)*
-
-___
-
-###  ColumnDef
-
-Ƭ **ColumnDef**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:224](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L224)*
+_Defined in [ovl/src/library/Table/Table.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L17)_
 
 #### Type declaration:
 
-* **align**? : *[ColumnAlign](_ovl_src_library_table_table_.md#columnalign)*
+- **key**: _string_
 
-* **caption**? : *string*
+- **mode**: _[SaveMode](_ovl_src_library_table_table_.md#savemode)_
 
-* **control**? : *[ControlType](_ovl_src_library_table_table_.md#controltype)*
+- **row**(): _object_
 
-* **editable**? : *boolean*
+- **tableDef**: _[TableDataAndDef](_ovl_src_library_table_table_.md#tabledataanddef)_
 
-* **filter**? : *[ColumnFilter](_ovl_src_library_table_table_.md#columnfilter)*
+---
 
-* **format**? : *[FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)*
+### ColumnAlign
 
-* **list**? : *[ListState](_ovl_src_library_forms_controls_listcontrol_.md#liststate)*
+Ƭ **ColumnAlign**: _"left" | "center" | "right"_
 
-* **sortable**? : *boolean*
+_Defined in [ovl/src/library/Table/Table.ts:160](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L160)_
 
-* **type**? : *[DataType](_ovl_src_library_forms_ovlformelement_.md#datatype)*
+---
 
-* **visible**? : *boolean*
+### ColumnDef
 
-* **width**? : *number*
+Ƭ **ColumnDef**: _object_
 
-___
-
-###  ColumnDisplayDef
-
-Ƭ **ColumnDisplayDef**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:238](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L238)*
+_Defined in [ovl/src/library/Table/Table.ts:224](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L224)_
 
 #### Type declaration:
 
-* **format**? : *[FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)*
+- **align**? : _[ColumnAlign](_ovl_src_library_table_table_.md#columnalign)_
 
-* **list**? : *[ListState](_ovl_src_library_forms_controls_listcontrol_.md#liststate)*
+- **caption**? : _string_
 
-* **type**? : *[DataType](_ovl_src_library_forms_ovlformelement_.md#datatype)*
+- **control**? : _[ControlType](_ovl_src_library_table_table_.md#controltype)_
 
-___
+- **editable**? : _boolean_
 
-###  ColumnFilter
+- **filter**? : _[ColumnFilter](_ovl_src_library_table_table_.md#columnfilter)_
 
-Ƭ **ColumnFilter**: *object*
+- **format**? : _[FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)_
 
-*Defined in [ovl/src/library/Table/Table.ts:254](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L254)*
+- **list**? : _[ListState](_ovl_src_library_forms_controls_listcontrol_.md#liststate)_
 
-#### Type declaration:
+- **sortable**? : _boolean_
 
-* **enabled**? : *boolean*
+- **type**? : _[DataType](_ovl_src_library_forms_ovlformelement_.md#datatype)_
 
-* **filterValues**(): *object*
+- **visible**? : _boolean_
 
-* **isOthersSelected**? : *boolean*
+- **width**? : _number_
 
-* **othersCount**? : *number*
+---
 
-* **selected**? : *string*
+### ColumnDisplayDef
 
-* **showFilter**? : *boolean*
+Ƭ **ColumnDisplayDef**: _object_
 
-* **top**: *number*
-
-___
-
-###  ColumnFilterTypes
-
-Ƭ **ColumnFilterTypes**: *"@@ovl_all" | "@@ovl_others"*
-
-*Defined in [ovl/src/library/Table/Table.ts:270](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L270)*
-
-___
-
-###  ColumnFilterValue
-
-Ƭ **ColumnFilterValue**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:264](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L264)*
+_Defined in [ovl/src/library/Table/Table.ts:238](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L238)_
 
 #### Type declaration:
 
-* **count**: *number*
+- **format**? : _[FieldFormat](_ovl_src_library_forms_ovlformelement_.md#fieldformat)_
 
-* **displayValue**: *string*
+- **list**? : _[ListState](_ovl_src_library_forms_controls_listcontrol_.md#liststate)_
 
-* **value**: *any*
+- **type**? : _[DataType](_ovl_src_library_forms_ovlformelement_.md#datatype)_
 
-___
+---
 
-###  ColumnsDef
+### ColumnFilter
 
-Ƭ **ColumnsDef**: *object*
+Ƭ **ColumnFilter**: _object_
 
-*Defined in [ovl/src/library/Table/Table.ts:162](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L162)*
-
-#### Type declaration:
-
-* \[ **key**: *string*\]: [ColumnDef](_ovl_src_library_table_table_.md#columndef)
-
-___
-
-###  ControlType
-
-Ƭ **ControlType**: *"text" | "textarea" | "list" | "bool" | "option" | "select" | "date" | "time"*
-
-*Defined in [ovl/src/library/Table/Table.ts:151](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L151)*
-
-___
-
-###  CustomFilter
-
-Ƭ **CustomFilter**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:184](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L184)*
+_Defined in [ovl/src/library/Table/Table.ts:254](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L254)_
 
 #### Type declaration:
 
-* **active**: *boolean*
+- **enabled**? : _boolean_
 
-* **description**: *string*
+- **filterValues**(): _object_
 
-* **showInTitle**: *boolean*
+- **isOthersSelected**? : _boolean_
 
-* **type**: *[CustomFilterType](_ovl_src_library_table_table_.md#customfiltertype)*
+- **othersCount**? : _number_
 
-___
+- **selected**? : _string_
 
-###  CustomFilterType
+- **showFilter**? : _boolean_
 
-Ƭ **CustomFilterType**: *"single" | "multi"*
+- **top**: _number_
 
-*Defined in [ovl/src/library/Table/Table.ts:182](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L182)*
+---
 
-___
+### ColumnFilterTypes
 
-###  CustomSort
+Ƭ **ColumnFilterTypes**: _"@@ovl_all" | "@@ovl_others"_
 
-Ƭ **CustomSort**: *object*
+_Defined in [ovl/src/library/Table/Table.ts:270](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L270)_
 
-*Defined in [ovl/src/library/Table/Table.ts:171](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L171)*
+---
 
-#### Type declaration:
+### ColumnFilterValue
 
-* **description**: *string*
+Ƭ **ColumnFilterValue**: _object_
 
-* **showInTitle**: *boolean*
-
-___
-
-###  DBInsertMode
-
-Ƭ **DBInsertMode**: *"UDTAutoNumber" | "UDTAutoGUID" | "UDTAutoNumberBoth" | "UDTAutoGUIDBoth" | "AutoIdentity" | "AutoGUID" | "Manual"*
-
-*Defined in [ovl/src/library/Table/Table.ts:215](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L215)*
-
-___
-
-###  EditRowDef
-
-Ƭ **EditRowDef**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L128)*
+_Defined in [ovl/src/library/Table/Table.ts:264](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L264)_
 
 #### Type declaration:
 
-* **columnsAlign**(): *object*
+- **count**: _number_
 
-* **columnsVisible**(): *object*
+- **displayValue**: _string_
 
-* **data**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
+- **value**: _any_
 
-* **key**: *string*
+---
 
-* **row**(): *object*
+### ColumnsDef
 
-* **tableDef**: *[TableDef](_ovl_src_library_table_table_.md#tabledef)*
+Ƭ **ColumnsDef**: _object_
 
-___
-
-###  EditRowSaveCancelDef
-
-Ƭ **EditRowSaveCancelDef**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:137](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L137)*
+_Defined in [ovl/src/library/Table/Table.ts:162](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L162)_
 
 #### Type declaration:
 
-* **columnsCount**: *number*
+- \[ **key**: _string_\]: [ColumnDef](_ovl_src_library_table_table_.md#columndef)
 
-* **data**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
+---
 
-* **key**: *string*
+### ControlType
 
-* **row**(): *object*
+Ƭ **ControlType**: _"text" | "textarea" | "list" | "bool" | "option" | "select" | "date" | "time"_
 
-* **tableDef**: *[TableDef](_ovl_src_library_table_table_.md#tabledef)*
+_Defined in [ovl/src/library/Table/Table.ts:151](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L151)_
 
-___
+---
 
-###  Filter
+### CustomFilter
 
-Ƭ **Filter**: *object*
+Ƭ **CustomFilter**: _object_
 
-*Defined in [ovl/src/library/Table/Table.ts:176](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L176)*
-
-#### Type declaration:
-
-* **showSelected**: *boolean*
-
-* **static**? : *[StaticFilter](_ovl_src_library_table_table_.md#staticfilter)*
-
-* **value**: *string*
-
-___
-
-###  FilterClick
-
-Ƭ **FilterClick**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:209](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L209)*
+_Defined in [ovl/src/library/Table/Table.ts:184](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L184)_
 
 #### Type declaration:
 
-* **data**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
+- **active**: _boolean_
 
-* **def**: *[TableDef](_ovl_src_library_table_table_.md#tabledef)*
+- **description**: _string_
 
-* **value**: *string*
+- **showInTitle**: _boolean_
 
-___
+- **type**: _[CustomFilterType](_ovl_src_library_table_table_.md#customfiltertype)_
 
-###  HeaderClick
+---
 
-Ƭ **HeaderClick**: *object*
+### CustomFilterType
 
-*Defined in [ovl/src/library/Table/Table.ts:196](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L196)*
+Ƭ **CustomFilterType**: _"single" | "multi"_
 
-#### Type declaration:
+_Defined in [ovl/src/library/Table/Table.ts:182](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L182)_
 
-* **data**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
+---
 
-* **def**: *[TableDef](_ovl_src_library_table_table_.md#tabledef)*
+### CustomSort
 
-* **key**: *string*
+Ƭ **CustomSort**: _object_
 
-___
-
-###  IDField
-
-Ƭ **IDField**: *"{ObjectKey}" | string*
-
-*Defined in [ovl/src/library/Table/Table.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L26)*
-
-___
-
-###  ListFnReturnValue
-
-Ƭ **ListFnReturnValue**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:244](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L244)*
+_Defined in [ovl/src/library/Table/Table.ts:171](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L171)_
 
 #### Type declaration:
 
-* **data**(): *object*
+- **description**: _string_
 
-* **lookupTypes**(): *object*
+- **showInTitle**: _boolean_
 
-* **lookupTypes2**(): *object*
+---
 
-* **lookupTypes3**(): *object*
+### DBInsertMode
 
-___
+Ƭ **DBInsertMode**: _"UDTAutoNumber" | "UDTAutoGUID" | "UDTAutoNumberBoth" | "UDTAutoGUIDBoth" | "AutoIdentity" | "AutoGUID" | "Manual"_
 
-###  Paging
+_Defined in [ovl/src/library/Table/Table.ts:215](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L215)_
 
-Ƭ **Paging**: *object*
+---
 
-*Defined in [ovl/src/library/Table/Table.ts:191](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L191)*
+### EditRowDef
 
-#### Type declaration:
+Ƭ **EditRowDef**: _object_
 
-* **page**: *number*
-
-* **pageSize**: *number*
-
-___
-
-###  RowControlAction
-
-Ƭ **RowControlAction**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:52](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L52)*
+_Defined in [ovl/src/library/Table/Table.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L128)_
 
 #### Type declaration:
 
-* **icon**: *string*
+- **columnsAlign**(): _object_
 
-* **name**: *string*
+- **columnsVisible**(): _object_
 
-___
+- **data**: _[TableData](_ovl_src_library_table_table_.md#tabledata)_
 
-###  RowStatus
+- **key**: _string_
 
-Ƭ **RowStatus**: *object*
+- **row**(): _object_
 
-*Defined in [ovl/src/library/Table/Table.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L43)*
+- **tableDef**: _[TableDef](_ovl_src_library_table_table_.md#tabledef)_
 
-#### Type declaration:
+---
 
-* **msg**: *string*
+### EditRowSaveCancelDef
 
-* **status**: *"valid" | "warning" | "error" | "information"*
+Ƭ **EditRowSaveCancelDef**: _object_
 
-___
-
-###  SaveMode
-
-Ƭ **SaveMode**: *"add" | "update"*
-
-*Defined in [ovl/src/library/Table/Table.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L15)*
-
-___
-
-###  SelectRowDef
-
-Ƭ **SelectRowDef**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:145](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L145)*
+_Defined in [ovl/src/library/Table/Table.ts:137](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L137)_
 
 #### Type declaration:
 
-* **data**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
+- **columnsCount**: _number_
 
-* **def**: *[TableDef](_ovl_src_library_table_table_.md#tabledef)*
+- **data**: _[TableData](_ovl_src_library_table_table_.md#tabledata)_
 
-* **key**: *string*
+- **key**: _string_
 
-___
+- **row**(): _object_
 
-###  SelectedEditRow
+- **tableDef**: _[TableDef](_ovl_src_library_table_table_.md#tabledef)_
 
-Ƭ **SelectedEditRow**: *object*
+---
 
-*Defined in [ovl/src/library/Table/Table.ts:63](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L63)*
+### Filter
 
-#### Type declaration:
+Ƭ **Filter**: _object_
 
-* **selected**: *boolean*
-
-___
-
-###  SelectedRow
-
-Ƭ **SelectedRow**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:57](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L57)*
+_Defined in [ovl/src/library/Table/Table.ts:176](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L176)_
 
 #### Type declaration:
 
-* **selected**: *boolean*
+- **showSelected**: _boolean_
 
-* **showNav**: *boolean*
+- **static**? : _[StaticFilter](_ovl_src_library_table_table_.md#staticfilter)_
 
-* **timestamp**: *number*
+- **value**: _string_
 
-___
+---
 
-###  Sort
+### FilterClick
 
-Ƭ **Sort**: *object*
+Ƭ **FilterClick**: _object_
 
-*Defined in [ovl/src/library/Table/Table.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L166)*
-
-#### Type declaration:
-
-* **direction**: *[SortDirection](_ovl_src_library_table_table_.md#sortdirection)*
-
-* **field**: *string*
-
-___
-
-###  SortClick
-
-Ƭ **SortClick**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:202](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L202)*
+_Defined in [ovl/src/library/Table/Table.ts:209](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L209)_
 
 #### Type declaration:
 
-* **ascending**: *boolean*
+- **data**: _[TableData](_ovl_src_library_table_table_.md#tabledata)_
 
-* **data**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
+- **def**: _[TableDef](_ovl_src_library_table_table_.md#tabledef)_
 
-* **def**: *[TableDef](_ovl_src_library_table_table_.md#tabledef)*
+- **value**: _string_
 
-* **key**: *string*
+---
 
-___
+### HeaderClick
 
-###  SortDirection
+Ƭ **HeaderClick**: _object_
 
-Ƭ **SortDirection**: *"asc" | "desc"*
-
-*Defined in [ovl/src/library/Table/Table.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L24)*
-
-___
-
-###  StaticFilter
-
-Ƭ **StaticFilter**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L48)*
+_Defined in [ovl/src/library/Table/Table.ts:196](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L196)_
 
 #### Type declaration:
 
-* \[ **key**: *string*\]: object
+- **data**: _[TableData](_ovl_src_library_table_table_.md#tabledata)_
 
-___
+- **def**: _[TableDef](_ovl_src_library_table_table_.md#tabledef)_
 
-###  TableData
+- **key**: _string_
 
-Ƭ **TableData**: *object*
+---
 
-*Defined in [ovl/src/library/Table/Table.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L28)*
+### IDField
 
-#### Type declaration:
+Ƭ **IDField**: _"{ObjectKey}" | string_
 
-* **data**(): *object*
+_Defined in [ovl/src/library/Table/Table.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L26)_
 
-* **lookupTypes**(): *object*
+---
 
-* **lookupTypes2**(): *object*
+### ListFnReturnValue
 
-* **lookupTypes3**(): *object*
+Ƭ **ListFnReturnValue**: _object_
 
-* **schema**(): *object*
-
-* **tableDef**(): *object*
-
-* **timestamp**? : *number*
-
-___
-
-###  TableDataAndDef
-
-Ƭ **TableDataAndDef**: *object*
-
-*Defined in [ovl/src/library/Table/Table.ts:38](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L38)*
+_Defined in [ovl/src/library/Table/Table.ts:244](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L244)_
 
 #### Type declaration:
 
-* **data**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
+- **data**(): _object_
 
-* **def**: *[TableDef](_ovl_src_library_table_table_.md#tabledef)*
+- **lookupTypes**(): _object_
 
-___
+- **lookupTypes2**(): _object_
 
-###  TableDef
+- **lookupTypes3**(): _object_
 
-Ƭ **TableDef**: *object*
+---
 
-*Defined in [ovl/src/library/Table/Table.ts:67](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L67)*
+### Paging
+
+Ƭ **Paging**: _object_
+
+_Defined in [ovl/src/library/Table/Table.ts:191](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L191)_
 
 #### Type declaration:
 
-* **columns**: *[ColumnsDef](_ovl_src_library_table_table_.md#columnsdef)*
+- **page**: _number_
 
-* **dataFetching**(): *object*
+- **pageSize**: _number_
 
-  * **useCustomDataFetching**? : *boolean*
+---
 
-  * **useSchema**? : *boolean*
+### RowControlAction
 
-* **database**(): *object*
+Ƭ **RowControlAction**: _object_
 
-  * **dataIdField**: *[IDField](_ovl_src_library_table_table_.md#idfield)*
+_Defined in [ovl/src/library/Table/Table.ts:52](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L52)_
 
-  * **dbInsertMode**: *[DBInsertMode](_ovl_src_library_table_table_.md#dbinsertmode)*
+#### Type declaration:
 
-* **features**(): *object*
+- **icon**: _string_
 
-  * **add**? : *boolean*
+- **name**: _string_
 
-  * **delete**? : *boolean*
+---
 
-  * **edit**? : *boolean*
+### RowStatus
 
-  * **filter**? : *boolean*
+Ƭ **RowStatus**: _object_
 
-  * **forceFreshServerDataOnRefreshClickedIfOlderThan**? : *number*
+_Defined in [ovl/src/library/Table/Table.ts:43](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L43)_
 
-  * **multiselect**? : *boolean*
+#### Type declaration:
 
-  * **noButtonsAtTheBottom**? : *boolean*
+- **msg**: _string_
 
-  * **page**? : *boolean*
+- **status**: _"valid" | "warning" | "error" | "information"_
 
-  * **showRefreshButton**? : *boolean*
+---
 
-* **id**: *[TableDefIds](_test_src_state_.md#tabledefids)*
+### SaveMode
 
-* **initialised**? : *boolean*
+Ƭ **SaveMode**: _"add" | "update"_
 
-* **namespace**: *string*
+_Defined in [ovl/src/library/Table/Table.ts:15](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L15)_
 
-* **options**(): *object*
+---
 
-  * **addedRowsPosition**? : *"bottom"*
+### SelectRowDef
 
-  * **copyColumnsIgnore**(): *object*
+Ƭ **SelectRowDef**: _object_
 
-  * **customRowActions**(): *object*
+_Defined in [ovl/src/library/Table/Table.ts:145](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L145)_
 
-  * **edit**(): *object*
+#### Type declaration:
 
-    * **editType**: *"inline" | "big" | "custom"*
+- **data**: _[TableData](_ovl_src_library_table_table_.md#tabledata)_
 
-  * **filter**? : *[Filter](_ovl_src_library_table_table_.md#filter)*
+- **def**: _[TableDef](_ovl_src_library_table_table_.md#tabledef)_
 
-  * **filterCustom**(): *object*
+- **key**: _string_
 
-  * **maxRows**(): *object*
+---
 
-    * **maxRows**: *number*
+### SelectedEditRow
 
-    * **showHint**: *boolean*
+Ƭ **SelectedEditRow**: _object_
 
-    * **showInTitle**? : *boolean*
+_Defined in [ovl/src/library/Table/Table.ts:63](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L63)_
 
-  * **navType**? : *"top/bottom" | "top" | "bottom"*
+#### Type declaration:
 
-  * **paging**? : *[Paging](_ovl_src_library_table_table_.md#paging)*
+- **selected**: _boolean_
 
-  * **sort**? : *[Sort](_ovl_src_library_table_table_.md#sort)*
+---
 
-  * **sortCustom**(): *object*
+### SelectedRow
 
-    * **selected**: *string*
+Ƭ **SelectedRow**: _object_
 
-    * **sorts**(): *object*
+_Defined in [ovl/src/library/Table/Table.ts:57](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L57)_
 
-* **server**(): *object*
+#### Type declaration:
 
-  * **endpoint**: *string*
+- **selected**: _boolean_
 
-* **title**? : *string*
+- **showNav**: _boolean_
 
-* **uiState**(): *object*
+- **timestamp**: _number_
 
-  * **currentlyAddingKey**? : *string*
+---
 
-  * **dataFilteredAndSorted**? : *string[]*
+### Sort
 
-  * **editRow**(): *object*
+Ƭ **Sort**: _object_
 
-  * **headerSelected**? : *string*
+_Defined in [ovl/src/library/Table/Table.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L166)_
 
-  * **needsRefresh**? : *boolean*
+#### Type declaration:
 
-  * **rowsCount**? : *number*
+- **direction**: _[SortDirection](_ovl_src_library_table_table_.md#sortdirection)_
 
-  * **selectedRow**(): *object*
+- **field**: _string_
+
+---
+
+### SortClick
+
+Ƭ **SortClick**: _object_
+
+_Defined in [ovl/src/library/Table/Table.ts:202](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L202)_
+
+#### Type declaration:
+
+- **ascending**: _boolean_
+
+- **data**: _[TableData](_ovl_src_library_table_table_.md#tabledata)_
+
+- **def**: _[TableDef](_ovl_src_library_table_table_.md#tabledef)_
+
+- **key**: _string_
+
+---
+
+### SortDirection
+
+Ƭ **SortDirection**: _"asc" | "desc"_
+
+_Defined in [ovl/src/library/Table/Table.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L24)_
+
+---
+
+### StaticFilter
+
+Ƭ **StaticFilter**: _object_
+
+_Defined in [ovl/src/library/Table/Table.ts:48](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L48)_
+
+#### Type declaration:
+
+- \[ **key**: _string_\]: object
+
+---
+
+### TableData
+
+Ƭ **TableData**: _object_
+
+_Defined in [ovl/src/library/Table/Table.ts:28](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L28)_
+
+#### Type declaration:
+
+- **data**(): _object_
+
+- **lookupTypes**(): _object_
+
+- **lookupTypes2**(): _object_
+
+- **lookupTypes3**(): _object_
+
+- **schema**(): _object_
+
+- **tableDef**(): _object_
+
+- **timestamp**? : _number_
+
+---
+
+### TableDataAndDef
+
+Ƭ **TableDataAndDef**: _object_
+
+_Defined in [ovl/src/library/Table/Table.ts:38](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L38)_
+
+#### Type declaration:
+
+- **data**: _[TableData](_ovl_src_library_table_table_.md#tabledata)_
+
+- **def**: _[TableDef](_ovl_src_library_table_table_.md#tabledef)_
+
+---
+
+### TableDef
+
+Ƭ **TableDef**: _object_
+
+_Defined in [ovl/src/library/Table/Table.ts:67](https://github.com/fopsdev/ovl/blob/f9b6194/ovl/src/library/Table/Table.ts#L67)_
+
+#### Type declaration:
+
+- **columns**: _[ColumnsDef](_ovl_src_library_table_table_.md#columnsdef)_
+
+- **dataFetching**(): _object_
+
+  - **useCustomDataFetching**? : _boolean_
+
+  - **useSchema**? : _boolean_
+
+- **database**(): _object_
+
+  - **dataIdField**: _[IDField](_ovl_src_library_table_table_.md#idfield)_
+
+  - **dbInsertMode**: _[DBInsertMode](_ovl_src_library_table_table_.md#dbinsertmode)_
+
+- **features**(): _object_
+
+  - **add**? : _boolean_
+
+  - **delete**? : _boolean_
+
+  - **edit**? : _boolean_
+
+  - **filter**? : _boolean_
+
+  - **forceFreshServerDataOnRefreshClickedIfOlderThan**? : _number_
+
+  - **multiselect**? : _boolean_
+
+  - **noButtonsAtTheBottom**? : _boolean_
+
+  - **page**? : _boolean_
+
+  - **showRefreshButton**? : _boolean_
+
+- **id**: _[OvlTableDefIds](_test_src_state_.md#OvlTableDefIds)_
+
+- **initialised**? : _boolean_
+
+- **namespace**: _string_
+
+- **options**(): _object_
+
+  - **addedRowsPosition**? : _"bottom"_
+
+  - **copyColumnsIgnore**(): _object_
+
+  - **customRowActions**(): _object_
+
+  - **edit**(): _object_
+
+    - **editType**: _"inline" | "big" | "custom"_
+
+  - **filter**? : _[Filter](_ovl_src_library_table_table_.md#filter)_
+
+  - **filterCustom**(): _object_
+
+  - **maxRows**(): _object_
+
+    - **maxRows**: _number_
+
+    - **showHint**: _boolean_
+
+    - **showInTitle**? : _boolean_
+
+  - **navType**? : _"top/bottom" | "top" | "bottom"_
+
+  - **paging**? : _[Paging](_ovl_src_library_table_table_.md#paging)_
+
+  - **sort**? : _[Sort](_ovl_src_library_table_table_.md#sort)_
+
+  - **sortCustom**(): _object_
+
+    - **selected**: _string_
+
+    - **sorts**(): _object_
+
+- **server**(): _object_
+
+  - **endpoint**: _string_
+
+- **title**? : _string_
+
+- **uiState**(): _object_
+
+  - **currentlyAddingKey**? : _string_
+
+  - **dataFilteredAndSorted**? : _string[]_
+
+  - **editRow**(): _object_
+
+  - **headerSelected**? : _string_
+
+  - **needsRefresh**? : _boolean_
+
+  - **rowsCount**? : _number_
+
+  - **selectedRow**(): _object_

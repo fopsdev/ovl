@@ -3,11 +3,11 @@ import { ovltemp } from "../../global/globals"
 import { SnackAdd } from "../helpers"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { createDynamicRowFunctions, rowControlActionsHandler } from "./helpers"
-import { TableData, TableDef } from "./Table"
+import { OvlTableData, OvlTableDef } from "./Table"
 
 export type NavProps = {
-  tableDef: TableDef
-  data: TableData
+  tableDef: OvlTableDef
+  data: OvlTableData
   key: string
   columnsCount: number
 }

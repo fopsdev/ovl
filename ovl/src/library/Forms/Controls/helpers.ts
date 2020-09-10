@@ -32,7 +32,7 @@ import {
   ListFnReturnValue,
   ColumnDisplayDef,
 } from "../../Table/Table"
-import { Field, FormState } from "../actions"
+import { Field, OvlFormState } from "../actions"
 import { ListState } from "./ListControl"
 import { UIValidationObject } from "./uiValidationHelper"
 import { OvlBaseElement } from "../../OvlBaseElement"
@@ -138,7 +138,7 @@ export const KeyValueListFromServerFn = async (
 export const FilterHitList = (
   list: ListState,
   filterValue: string,
-  formState: FormState,
+  formState: OvlFormState,
   state: OvlState,
   fieldId: string,
   top?: number
@@ -250,7 +250,7 @@ export const GetListDisplayValue = (
   return displayValue
 }
 
-export const GetRowFromFormState = (formState: FormState) => {
+export const GetRowFromFormState = (formState: OvlFormState) => {
   let fields = formState.fields
   return Object.keys(fields).reduce((val, k) => {
     val[k] = fields[k].convertedValue
@@ -271,7 +271,7 @@ export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
 export const GetValueFromCustomFunction = (
   row: { [key: string]: {} },
   field: Field,
-  formState: FormState,
+  formState: OvlFormState,
   align: string,
   isInline: boolean,
   state: OvlState
@@ -303,7 +303,7 @@ export const GetValueFromCustomFunction = (
 
 const fillReactiveRows = (
   originalRow: { [key: string]: {} },
-  formState: FormState
+  formState: OvlFormState
 ): { [key: string]: {} } => {
   let row = JSON.parse(JSON.stringify(originalRow), stringifyReplacer)
   Object.keys(formState.fields).forEach((f) => {
@@ -314,7 +314,7 @@ const fillReactiveRows = (
 }
 
 const getColumnDefsFromFormState = (
-  formState: FormState
+  formState: OvlFormState
 ): { [key: string]: ColumnDisplayDef } => {
   let colDisplayDefs = Object.keys(formState.fields).reduce((val, f) => {
     let field = formState.fields[f]
@@ -335,7 +335,7 @@ export const GetLabel = (
   res: UIValidationObject,
   controltype: ControlType,
   align: string,
-  formState: FormState,
+  formState: OvlFormState,
   comp: OvlBaseElement
 ): TemplateResult => {
   let caption = ""

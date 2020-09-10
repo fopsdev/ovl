@@ -1,4 +1,4 @@
-import { OvlScreen, FormType, OvlState, OvlActions, OvlEffects } from "../index"
+import { OvlScreen, OvlForm, OvlState, OvlActions, OvlEffects } from "../index"
 import { ovl } from "../index"
 import {
   startTrack,
@@ -26,7 +26,7 @@ export type NavState = {
   nextScreen: OvlScreen
   currentScreen: OvlScreen
   screensHistory: ScreensHistory
-  formTypeToReset: FormType
+  formTypeToReset: OvlForm
   formIdToReset: string
 }
 

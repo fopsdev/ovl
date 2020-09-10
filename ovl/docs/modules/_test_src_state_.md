@@ -6,786 +6,786 @@
 
 ### Type aliases
 
-* [DPInvoiceDetail](_test_src_state_.md#dpinvoicedetail)
-* [DPInvoiceDetailState](_test_src_state_.md#dpinvoicedetailstate)
-* [DoubleBarChartState](_test_src_state_.md#doublebarchartstate)
-* [Feature](_test_src_state_.md#feature)
-* [FileList](_test_src_state_.md#filelist)
-* [InvoiceDetail](_test_src_state_.md#invoicedetail)
-* [InvoiceDetailState](_test_src_state_.md#invoicedetailstate)
-* [Language](_test_src_state_.md#language)
-* [OrderDetail](_test_src_state_.md#orderdetail)
-* [OrderDetailState](_test_src_state_.md#orderdetailstate)
-* [PartnerState](_test_src_state_.md#partnerstate)
-* [PicsState](_test_src_state_.md#picsstate)
-* [Portal](_test_src_state_.md#portal)
-* [QuotationDetail](_test_src_state_.md#quotationdetail)
-* [QuotationDetailState](_test_src_state_.md#quotationdetailstate)
-* [QuotationStatus](_test_src_state_.md#quotationstatus)
-* [Role](_test_src_state_.md#role)
-* [TableDefIds](_test_src_state_.md#tabledefids)
-* [User](_test_src_state_.md#user)
+- [DPInvoiceDetail](_test_src_state_.md#dpinvoicedetail)
+- [DPInvoiceDetailState](_test_src_state_.md#dpinvoicedetailstate)
+- [DoubleBarChartState](_test_src_state_.md#doublebarchartstate)
+- [Feature](_test_src_state_.md#feature)
+- [FileList](_test_src_state_.md#filelist)
+- [InvoiceDetail](_test_src_state_.md#invoicedetail)
+- [InvoiceDetailState](_test_src_state_.md#invoicedetailstate)
+- [OvlLanguage](_test_src_state_.md#language)
+- [OrderDetail](_test_src_state_.md#orderdetail)
+- [OrderDetailState](_test_src_state_.md#orderdetailstate)
+- [PartnerState](_test_src_state_.md#partnerstate)
+- [PicsState](_test_src_state_.md#picsstate)
+- [Portal](_test_src_state_.md#portal)
+- [QuotationDetail](_test_src_state_.md#quotationdetail)
+- [QuotationDetailState](_test_src_state_.md#quotationdetailstate)
+- [QuotationStatus](_test_src_state_.md#quotationstatus)
+- [Role](_test_src_state_.md#role)
+- [OvlTableDefIds](_test_src_state_.md#OvlTableDefIds)
+- [User](_test_src_state_.md#user)
 
 ### Object literals
 
-* [pics](_test_src_state_.md#let-pics)
-* [portal](_test_src_state_.md#let-portal)
-* [testtables](_test_src_state_.md#let-testtables)
+- [pics](_test_src_state_.md#let-pics)
+- [portal](_test_src_state_.md#let-portal)
+- [testtables](_test_src_state_.md#let-testtables)
 
 ## Type aliases
 
-###  DPInvoiceDetail
+### DPInvoiceDetail
 
-Ƭ **DPInvoiceDetail**: *object*
+Ƭ **DPInvoiceDetail**: _object_
 
-*Defined in [test/src/state.ts:45](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L45)*
-
-#### Type declaration:
-
-* **attachments**: *[FileList](_test_src_state_.md#filelist)*
-
-* **cardCode**: *string*
-
-* **cardName**: *string*
-
-* **docDate**: *string*
-
-* **docDueDate**: *string*
-
-* **paidRate**: *number*
-
-* **refNum**: *string*
-
-___
-
-###  DPInvoiceDetailState
-
-Ƭ **DPInvoiceDetailState**: *object*
-
-*Defined in [test/src/state.ts:90](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L90)*
+_Defined in [test/src/state.ts:45](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L45)_
 
 #### Type declaration:
 
-* **dpInvoices**(): *object*
+- **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
 
-___
+- **cardCode**: _string_
 
-###  DoubleBarChartState
+- **cardName**: _string_
 
-Ƭ **DoubleBarChartState**: *object*
+- **docDate**: _string_
 
-*Defined in [test/src/state.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L17)*
+- **docDueDate**: _string_
 
-#### Type declaration:
+- **paidRate**: _number_
 
-* **labels**: *number[]*
+- **refNum**: _string_
 
-* **labels_ext**: *number[]*
+---
 
-* **values_1**: *number[]*
+### DPInvoiceDetailState
 
-* **values_2**: *number[]*
+Ƭ **DPInvoiceDetailState**: _object_
 
-___
-
-###  Feature
-
-Ƭ **Feature**: *object*
-
-*Defined in [test/src/state.ts:130](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L130)*
+_Defined in [test/src/state.ts:90](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L90)_
 
 #### Type declaration:
 
-* **nrOfInvoices**: *number*
+- **dpInvoices**(): _object_
 
-* **nrOfOrders**: *number*
+---
 
-* **nrOfQuotations**: *number*
+### DoubleBarChartState
 
-___
+Ƭ **DoubleBarChartState**: _object_
 
-###  FileList
-
-Ƭ **FileList**: *object*
-
-*Defined in [test/src/state.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L13)*
+_Defined in [test/src/state.ts:17](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L17)_
 
 #### Type declaration:
 
-* **files**: *[File](_test_src_components_filelist_filelist_.md#file)[]*
+- **labels**: _number[]_
 
-___
+- **labels_ext**: _number[]_
 
-###  InvoiceDetail
+- **values_1**: _number[]_
 
-Ƭ **InvoiceDetail**: *object*
+- **values_2**: _number[]_
 
-*Defined in [test/src/state.ts:35](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L35)*
+---
 
-#### Type declaration:
+### Feature
 
-* **attachments**: *[FileList](_test_src_state_.md#filelist)*
+Ƭ **Feature**: _object_
 
-* **cardCode**: *string*
-
-* **cardName**: *string*
-
-* **docDate**: *string*
-
-* **docDueDate**: *string*
-
-* **paidRate**: *number*
-
-* **refNum**: *string*
-
-___
-
-###  InvoiceDetailState
-
-Ƭ **InvoiceDetailState**: *object*
-
-*Defined in [test/src/state.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L86)*
+_Defined in [test/src/state.ts:130](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L130)_
 
 #### Type declaration:
 
-* **invoices**(): *object*
+- **nrOfInvoices**: _number_
 
-___
+- **nrOfOrders**: _number_
 
-###  Language
+- **nrOfQuotations**: _number_
 
-Ƭ **Language**: *"DE" | "FR"*
+---
 
-*Defined in [test/src/state.ts:129](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L129)*
+### FileList
 
-___
+Ƭ **FileList**: _object_
 
-###  OrderDetail
-
-Ƭ **OrderDetail**: *object*
-
-*Defined in [test/src/state.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L55)*
+_Defined in [test/src/state.ts:13](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L13)_
 
 #### Type declaration:
 
-* **attachments**: *[FileList](_test_src_state_.md#filelist)*
+- **files**: _[File](\_test_src_components_filelist_filelist_.md#file)[]\_
 
-* **cardCode**: *string*
+---
 
-* **cardName**: *string*
+### InvoiceDetail
 
-* **deliveryDate**: *string*
+Ƭ **InvoiceDetail**: _object_
 
-* **docDate**: *string*
-
-* **refNum**: *string*
-
-* **steps**(): *object*
-
-  * **step1**(): *object*
-
-    * **attachments**: *[FileList](_test_src_state_.md#filelist)*
-
-    * **date**: *string*
-
-  * **step2**(): *object*
-
-    * **attachments**: *[FileList](_test_src_state_.md#filelist)*
-
-    * **date**: *string*
-
-  * **step3**(): *object*
-
-    * **attachments**: *[FileList](_test_src_state_.md#filelist)*
-
-    * **date**: *string*
-
-  * **step4**(): *object*
-
-    * **attachments**: *[FileList](_test_src_state_.md#filelist)*
-
-    * **date**: *string*
-
-___
-
-###  OrderDetailState
-
-Ƭ **OrderDetailState**: *object*
-
-*Defined in [test/src/state.ts:94](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L94)*
+_Defined in [test/src/state.ts:35](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L35)_
 
 #### Type declaration:
 
-* **orders**(): *object*
+- **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
 
-___
+- **cardCode**: _string_
 
-###  PartnerState
+- **cardName**: _string_
 
-Ƭ **PartnerState**: *object*
+- **docDate**: _string_
 
-*Defined in [test/src/state.ts:103](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L103)*
+- **docDueDate**: _string_
 
-#### Type declaration:
+- **paidRate**: _number_
 
-* **attachments**: *[FileList](_test_src_state_.md#filelist)*
+- **refNum**: _string_
 
-* **cardCode**: *string*
+---
 
-* **cardName**: *string*
+### InvoiceDetailState
 
-* **salesContact**(): *object*
+Ƭ **InvoiceDetailState**: _object_
 
-  * **email**: *string*
-
-  * **firstName**: *string*
-
-  * **id**: *string*
-
-  * **lastName**: *string*
-
-  * **phone**: *string*
-
-* **technicalContact**(): *object*
-
-  * **email**: *string*
-
-  * **firstName**: *string*
-
-  * **id**: *string*
-
-  * **lastName**: *string*
-
-  * **phone**: *string*
-
-___
-
-###  PicsState
-
-Ƭ **PicsState**: *object*
-
-*Defined in [test/src/state.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L98)*
+_Defined in [test/src/state.ts:86](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L86)_
 
 #### Type declaration:
 
-* **salesContact**: *string*
+- **invoices**(): _object_
 
-* **technicalContact**: *string*
+---
 
-___
+### OvlLanguage
 
-###  Portal
+Ƭ **OvlLanguage**: _"DE" | "FR"_
 
-Ƭ **Portal**: *object*
+_Defined in [test/src/state.ts:129](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L129)_
 
-*Defined in [test/src/state.ts:146](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L146)*
+---
 
-#### Type declaration:
+### OrderDetail
 
-* **chartData**: *[DoubleBarChartState](_test_src_state_.md#doublebarchartstate)*
+Ƭ **OrderDetail**: _object_
 
-* **dpInvoiceDetail**: *[DPInvoiceDetailState](_test_src_state_.md#dpinvoicedetailstate)*
-
-* **invoiceDetail**: *[InvoiceDetailState](_test_src_state_.md#invoicedetailstate)*
-
-* **orderDetail**: *[OrderDetailState](_test_src_state_.md#orderdetailstate)*
-
-* **partner**: *[PartnerState](_test_src_state_.md#partnerstate)*
-
-* **pics**: *[PicsState](_test_src_state_.md#picsstate)*
-
-* **quotationDetail**: *[QuotationDetailState](_test_src_state_.md#quotationdetailstate)*
-
-* **tables**(): *object*
-
-  * **audit**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
-
-  * **translation**: *[TableData](_ovl_src_library_table_table_.md#tabledata)*
-
-* **user**: *[User](_test_src_state_.md#user)*
-
-___
-
-###  QuotationDetail
-
-Ƭ **QuotationDetail**: *object*
-
-*Defined in [test/src/state.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L26)*
+_Defined in [test/src/state.ts:55](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L55)_
 
 #### Type declaration:
 
-* **attachments**: *[FileList](_test_src_state_.md#filelist)*
+- **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
 
-* **cardCode**: *string*
+- **cardCode**: _string_
 
-* **cardName**: *string*
+- **cardName**: _string_
 
-* **docDate**: *string*
+- **deliveryDate**: _string_
 
-* **refNum**: *string*
+- **docDate**: _string_
 
-* **status**: *[QuotationStatus](_test_src_state_.md#quotationstatus)*
+- **refNum**: _string_
 
-___
+- **steps**(): _object_
 
-###  QuotationDetailState
+  - **step1**(): _object_
 
-Ƭ **QuotationDetailState**: *object*
+    - **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
 
-*Defined in [test/src/state.ts:82](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L82)*
+    - **date**: _string_
 
-#### Type declaration:
+  - **step2**(): _object_
 
-* **quotations**(): *object*
+    - **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
 
-___
+    - **date**: _string_
 
-###  QuotationStatus
+  - **step3**(): _object_
 
-Ƭ **QuotationStatus**: *"Open" | "Closed" | "Canceled"*
+    - **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
 
-*Defined in [test/src/state.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L24)*
+    - **date**: _string_
 
-___
+  - **step4**(): _object_
 
-###  Role
+    - **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
 
-Ƭ **Role**: *"User" | "Admin"*
+    - **date**: _string_
 
-*Defined in [test/src/state.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L128)*
+---
 
-___
+### OrderDetailState
 
-###  TableDefIds
+Ƭ **OrderDetailState**: _object_
 
-Ƭ **TableDefIds**: *"translation" | "audit" | "tab1" | "tab2" | "mobiletimerecording1"*
-
-*Defined in [test/src/state.ts:158](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L158)*
-
-___
-
-###  User
-
-Ƭ **User**: *object*
-
-*Defined in [test/src/state.ts:136](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L136)*
+_Defined in [test/src/state.ts:94](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L94)_
 
 #### Type declaration:
 
-* **features**: *[Feature](_test_src_state_.md#feature)*
+- **orders**(): _object_
 
-* **firstName**: *string*
+---
 
-* **language**: *[Language](_test_src_state_.md#language)*
+### PartnerState
 
-* **lastName**: *string*
+Ƭ **PartnerState**: _object_
 
-* **role**: *[Role](_test_src_state_.md#role)*
+_Defined in [test/src/state.ts:103](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L103)_
 
-* **userCode**: *number*
+#### Type declaration:
 
-* **userName**: *string*
+- **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
+
+- **cardCode**: _string_
+
+- **cardName**: _string_
+
+- **salesContact**(): _object_
+
+  - **email**: _string_
+
+  - **firstName**: _string_
+
+  - **id**: _string_
+
+  - **lastName**: _string_
+
+  - **phone**: _string_
+
+- **technicalContact**(): _object_
+
+  - **email**: _string_
+
+  - **firstName**: _string_
+
+  - **id**: _string_
+
+  - **lastName**: _string_
+
+  - **phone**: _string_
+
+---
+
+### PicsState
+
+Ƭ **PicsState**: _object_
+
+_Defined in [test/src/state.ts:98](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L98)_
+
+#### Type declaration:
+
+- **salesContact**: _string_
+
+- **technicalContact**: _string_
+
+---
+
+### Portal
+
+Ƭ **Portal**: _object_
+
+_Defined in [test/src/state.ts:146](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L146)_
+
+#### Type declaration:
+
+- **chartData**: _[DoubleBarChartState](\_test_src_state_.md#doublebarchartstate)\_
+
+- **dpInvoiceDetail**: _[DPInvoiceDetailState](\_test_src_state_.md#dpinvoicedetailstate)\_
+
+- **invoiceDetail**: _[InvoiceDetailState](\_test_src_state_.md#invoicedetailstate)\_
+
+- **orderDetail**: _[OrderDetailState](\_test_src_state_.md#orderdetailstate)\_
+
+- **partner**: _[PartnerState](\_test_src_state_.md#partnerstate)\_
+
+- **pics**: _[PicsState](\_test_src_state_.md#picsstate)\_
+
+- **quotationDetail**: _[QuotationDetailState](\_test_src_state_.md#quotationdetailstate)\_
+
+- **tables**(): _object_
+
+  - **audit**: _[TableData](\_ovl_src_library_table_table_.md#tabledata)\_
+
+  - **translation**: _[TableData](\_ovl_src_library_table_table_.md#tabledata)\_
+
+- **user**: _[User](\_test_src_state_.md#user)\_
+
+---
+
+### QuotationDetail
+
+Ƭ **QuotationDetail**: _object_
+
+_Defined in [test/src/state.ts:26](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L26)_
+
+#### Type declaration:
+
+- **attachments**: _[FileList](\_test_src_state_.md#filelist)\_
+
+- **cardCode**: _string_
+
+- **cardName**: _string_
+
+- **docDate**: _string_
+
+- **refNum**: _string_
+
+- **status**: _[QuotationStatus](\_test_src_state_.md#quotationstatus)\_
+
+---
+
+### QuotationDetailState
+
+Ƭ **QuotationDetailState**: _object_
+
+_Defined in [test/src/state.ts:82](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L82)_
+
+#### Type declaration:
+
+- **quotations**(): _object_
+
+---
+
+### QuotationStatus
+
+Ƭ **QuotationStatus**: _"Open" | "Closed" | "Canceled"_
+
+_Defined in [test/src/state.ts:24](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L24)_
+
+---
+
+### Role
+
+Ƭ **Role**: _"User" | "Admin"_
+
+_Defined in [test/src/state.ts:128](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L128)_
+
+---
+
+### OvlTableDefIds
+
+Ƭ **OvlTableDefIds**: _"translation" | "audit" | "tab1" | "tab2" | "mobiletimerecording1"_
+
+_Defined in [test/src/state.ts:158](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L158)_
+
+---
+
+### User
+
+Ƭ **User**: _object_
+
+_Defined in [test/src/state.ts:136](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L136)_
+
+#### Type declaration:
+
+- **features**: _[Feature](\_test_src_state_.md#feature)\_
+
+- **firstName**: _string_
+
+- **language**: _[OvlLanguage](\_test_src_state_.md#language)\_
+
+- **lastName**: _string_
+
+- **role**: _[Role](\_test_src_state_.md#role)\_
+
+- **userCode**: _number_
+
+- **userName**: _string_
 
 ## Object literals
 
 ### `Let` pics
 
-### ▪ **pics**: *object*
+### ▪ **pics**: _object_
 
-*Defined in [test/src/state.ts:123](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L123)*
+_Defined in [test/src/state.ts:123](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L123)_
 
-###  salesContact
+### salesContact
 
-• **salesContact**: *string* = ""
+• **salesContact**: _string_ = ""
 
-*Defined in [test/src/state.ts:124](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L124)*
+_Defined in [test/src/state.ts:124](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L124)_
 
-###  technicalContact
+### technicalContact
 
-• **technicalContact**: *string* = ""
+• **technicalContact**: _string_ = ""
 
-*Defined in [test/src/state.ts:125](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L125)*
+_Defined in [test/src/state.ts:125](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L125)_
 
-___
+---
 
 ### `Let` portal
 
-### ▪ **portal**: *object*
+### ▪ **portal**: _object_
 
-*Defined in [test/src/state.ts:165](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L165)*
+_Defined in [test/src/state.ts:165](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L165)_
 
-###  chartData
+### chartData
 
-• **chartData**: *undefined* = undefined
+• **chartData**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:168](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L168)*
+_Defined in [test/src/state.ts:168](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L168)_
 
-###  dpInvoiceDetail
+### dpInvoiceDetail
 
-• **dpInvoiceDetail**: *undefined* = undefined
+• **dpInvoiceDetail**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L169)*
+_Defined in [test/src/state.ts:169](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L169)_
 
-###  invoiceDetail
+### invoiceDetail
 
-• **invoiceDetail**: *undefined* = undefined
+• **invoiceDetail**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:170](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L170)*
+_Defined in [test/src/state.ts:170](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L170)_
 
-###  orderDetail
+### orderDetail
 
-• **orderDetail**: *undefined* = undefined
+• **orderDetail**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:167](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L167)*
+_Defined in [test/src/state.ts:167](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L167)_
 
-###  partner
+### partner
 
-• **partner**: *undefined* = undefined
+• **partner**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:171](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L171)*
+_Defined in [test/src/state.ts:171](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L171)_
 
-###  pics
+### pics
 
-• **pics**: *undefined* = undefined
+• **pics**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:172](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L172)*
+_Defined in [test/src/state.ts:172](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L172)_
 
-###  quotationDetail
+### quotationDetail
 
-• **quotationDetail**: *undefined* = undefined
+• **quotationDetail**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:173](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L173)*
+_Defined in [test/src/state.ts:173](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L173)_
 
-###  user
+### user
 
-• **user**: *undefined* = undefined
+• **user**: _undefined_ = undefined
 
-*Defined in [test/src/state.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L166)*
+_Defined in [test/src/state.ts:166](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L166)_
 
-▪ **tables**: *object*
+▪ **tables**: _object_
 
-*Defined in [test/src/state.ts:174](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L174)*
+_Defined in [test/src/state.ts:174](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L174)_
 
-* **audit**: *object*
+- **audit**: _object_
 
-  * **data**(): *object*
+  - **data**(): _object_
 
-  * **schema**(): *object*
+  - **schema**(): _object_
 
-  * **tableDef**: *object*
+  - **tableDef**: _object_
 
-    * **audit**(): *object*
+    - **audit**(): _object_
 
-      * **columns**: *[ColumnsDef](_ovl_src_library_table_table_.md#columnsdef)*
+      - **columns**: _[ColumnsDef](\_ovl_src_library_table_table_.md#columnsdef)\_
 
-      * **dataFetching**(): *object*
+      - **dataFetching**(): _object_
 
-        * **useCustomDataFetching**? : *boolean*
+        - **useCustomDataFetching**? : _boolean_
 
-        * **useSchema**? : *boolean*
+        - **useSchema**? : _boolean_
 
-      * **database**(): *object*
+      - **database**(): _object_
 
-        * **dataIdField**: *[IDField](_ovl_src_library_table_table_.md#idfield)*
+        - **dataIdField**: _[IDField](\_ovl_src_library_table_table_.md#idfield)\_
 
-        * **dbInsertMode**: *[DBInsertMode](_ovl_src_library_table_table_.md#dbinsertmode)*
+        - **dbInsertMode**: _[DBInsertMode](\_ovl_src_library_table_table_.md#dbinsertmode)\_
 
-      * **features**(): *object*
+      - **features**(): _object_
 
-        * **add**? : *boolean*
+        - **add**? : _boolean_
 
-        * **delete**? : *boolean*
+        - **delete**? : _boolean_
 
-        * **edit**? : *boolean*
+        - **edit**? : _boolean_
 
-        * **filter**? : *boolean*
+        - **filter**? : _boolean_
 
-        * **forceFreshServerDataOnRefreshClickedIfOlderThan**? : *number*
+        - **forceFreshServerDataOnRefreshClickedIfOlderThan**? : _number_
 
-        * **multiselect**? : *boolean*
+        - **multiselect**? : _boolean_
 
-        * **noButtonsAtTheBottom**? : *boolean*
+        - **noButtonsAtTheBottom**? : _boolean_
 
-        * **page**? : *boolean*
+        - **page**? : _boolean_
 
-        * **showRefreshButton**? : *boolean*
+        - **showRefreshButton**? : _boolean_
 
-      * **id**: *[TableDefIds](_test_src_state_.md#tabledefids)*
+      - **id**: _[OvlTableDefIds](\_test_src_state_.md#OvlTableDefIds)\_
 
-      * **initialised**? : *boolean*
+      - **initialised**? : _boolean_
 
-      * **namespace**: *string*
+      - **namespace**: _string_
 
-      * **options**(): *object*
+      - **options**(): _object_
 
-        * **addedRowsPosition**? : *"bottom"*
+        - **addedRowsPosition**? : _"bottom"_
 
-        * **copyColumnsIgnore**(): *object*
+        - **copyColumnsIgnore**(): _object_
 
-        * **customRowActions**(): *object*
+        - **customRowActions**(): _object_
 
-        * **edit**(): *object*
+        - **edit**(): _object_
 
-          * **editType**: *"inline" | "big" | "custom"*
+          - **editType**: _"inline" | "big" | "custom"_
 
-        * **filter**? : *[Filter](_ovl_src_library_table_table_.md#filter)*
+        - **filter**? : _[Filter](\_ovl_src_library_table_table_.md#filter)\_
 
-        * **filterCustom**(): *object*
+        - **filterCustom**(): _object_
 
-        * **maxRows**(): *object*
+        - **maxRows**(): _object_
 
-          * **maxRows**: *number*
+          - **maxRows**: _number_
 
-          * **showHint**: *boolean*
+          - **showHint**: _boolean_
 
-          * **showInTitle**? : *boolean*
+          - **showInTitle**? : _boolean_
 
-        * **navType**? : *"top/bottom" | "top" | "bottom"*
+        - **navType**? : _"top/bottom" | "top" | "bottom"_
 
-        * **paging**? : *[Paging](_ovl_src_library_table_table_.md#paging)*
+        - **paging**? : _[Paging](\_ovl_src_library_table_table_.md#paging)\_
 
-        * **sort**? : *[Sort](_ovl_src_library_table_table_.md#sort)*
+        - **sort**? : _[Sort](\_ovl_src_library_table_table_.md#sort)\_
 
-        * **sortCustom**(): *object*
+        - **sortCustom**(): _object_
 
-          * **selected**: *string*
+          - **selected**: _string_
 
-          * **sorts**(): *object*
+          - **sorts**(): _object_
 
-      * **server**(): *object*
+      - **server**(): _object_
 
-        * **endpoint**: *string*
+        - **endpoint**: _string_
 
-      * **title**? : *string*
+      - **title**? : _string_
 
-      * **uiState**(): *object*
+      - **uiState**(): _object_
 
-        * **currentlyAddingKey**? : *string*
+        - **currentlyAddingKey**? : _string_
 
-        * **dataFilteredAndSorted**? : *string[]*
+        - **dataFilteredAndSorted**? : _string[]_
 
-        * **editRow**(): *object*
+        - **editRow**(): _object_
 
-        * **headerSelected**? : *string*
+        - **headerSelected**? : _string_
 
-        * **needsRefresh**? : *boolean*
+        - **needsRefresh**? : _boolean_
 
-        * **rowsCount**? : *number*
+        - **rowsCount**? : _number_
 
-        * **selectedRow**(): *object*
+        - **selectedRow**(): _object_
 
-* **translation**: *object*
+- **translation**: _object_
 
-  * **data**(): *object*
+  - **data**(): _object_
 
-  * **schema**(): *object*
+  - **schema**(): _object_
 
-  * **tableDef**: *object*
+  - **tableDef**: _object_
 
-    * **translation**(): *object*
+    - **translation**(): _object_
 
-      * **columns**: *[ColumnsDef](_ovl_src_library_table_table_.md#columnsdef)*
+      - **columns**: _[ColumnsDef](\_ovl_src_library_table_table_.md#columnsdef)\_
 
-      * **dataFetching**(): *object*
+      - **dataFetching**(): _object_
 
-        * **useCustomDataFetching**? : *boolean*
+        - **useCustomDataFetching**? : _boolean_
 
-        * **useSchema**? : *boolean*
+        - **useSchema**? : _boolean_
 
-      * **database**(): *object*
+      - **database**(): _object_
 
-        * **dataIdField**: *[IDField](_ovl_src_library_table_table_.md#idfield)*
+        - **dataIdField**: _[IDField](\_ovl_src_library_table_table_.md#idfield)\_
 
-        * **dbInsertMode**: *[DBInsertMode](_ovl_src_library_table_table_.md#dbinsertmode)*
+        - **dbInsertMode**: _[DBInsertMode](\_ovl_src_library_table_table_.md#dbinsertmode)\_
 
-      * **features**(): *object*
+      - **features**(): _object_
 
-        * **add**? : *boolean*
+        - **add**? : _boolean_
 
-        * **delete**? : *boolean*
+        - **delete**? : _boolean_
 
-        * **edit**? : *boolean*
+        - **edit**? : _boolean_
 
-        * **filter**? : *boolean*
+        - **filter**? : _boolean_
 
-        * **forceFreshServerDataOnRefreshClickedIfOlderThan**? : *number*
+        - **forceFreshServerDataOnRefreshClickedIfOlderThan**? : _number_
 
-        * **multiselect**? : *boolean*
+        - **multiselect**? : _boolean_
 
-        * **noButtonsAtTheBottom**? : *boolean*
+        - **noButtonsAtTheBottom**? : _boolean_
 
-        * **page**? : *boolean*
+        - **page**? : _boolean_
 
-        * **showRefreshButton**? : *boolean*
+        - **showRefreshButton**? : _boolean_
 
-      * **id**: *[TableDefIds](_test_src_state_.md#tabledefids)*
+      - **id**: _[OvlTableDefIds](\_test_src_state_.md#OvlTableDefIds)\_
 
-      * **initialised**? : *boolean*
+      - **initialised**? : _boolean_
 
-      * **namespace**: *string*
+      - **namespace**: _string_
 
-      * **options**(): *object*
+      - **options**(): _object_
 
-        * **addedRowsPosition**? : *"bottom"*
+        - **addedRowsPosition**? : _"bottom"_
 
-        * **copyColumnsIgnore**(): *object*
+        - **copyColumnsIgnore**(): _object_
 
-        * **customRowActions**(): *object*
+        - **customRowActions**(): _object_
 
-        * **edit**(): *object*
+        - **edit**(): _object_
 
-          * **editType**: *"inline" | "big" | "custom"*
+          - **editType**: _"inline" | "big" | "custom"_
 
-        * **filter**? : *[Filter](_ovl_src_library_table_table_.md#filter)*
+        - **filter**? : _[Filter](\_ovl_src_library_table_table_.md#filter)\_
 
-        * **filterCustom**(): *object*
+        - **filterCustom**(): _object_
 
-        * **maxRows**(): *object*
+        - **maxRows**(): _object_
 
-          * **maxRows**: *number*
+          - **maxRows**: _number_
 
-          * **showHint**: *boolean*
+          - **showHint**: _boolean_
 
-          * **showInTitle**? : *boolean*
+          - **showInTitle**? : _boolean_
 
-        * **navType**? : *"top/bottom" | "top" | "bottom"*
+        - **navType**? : _"top/bottom" | "top" | "bottom"_
 
-        * **paging**? : *[Paging](_ovl_src_library_table_table_.md#paging)*
+        - **paging**? : _[Paging](\_ovl_src_library_table_table_.md#paging)\_
 
-        * **sort**? : *[Sort](_ovl_src_library_table_table_.md#sort)*
+        - **sort**? : _[Sort](\_ovl_src_library_table_table_.md#sort)\_
 
-        * **sortCustom**(): *object*
+        - **sortCustom**(): _object_
 
-          * **selected**: *string*
+          - **selected**: _string_
 
-          * **sorts**(): *object*
+          - **sorts**(): _object_
 
-      * **server**(): *object*
+      - **server**(): _object_
 
-        * **endpoint**: *string*
+        - **endpoint**: _string_
 
-      * **title**? : *string*
+      - **title**? : _string_
 
-      * **uiState**(): *object*
+      - **uiState**(): _object_
 
-        * **currentlyAddingKey**? : *string*
+        - **currentlyAddingKey**? : _string_
 
-        * **dataFilteredAndSorted**? : *string[]*
+        - **dataFilteredAndSorted**? : _string[]_
 
-        * **editRow**(): *object*
+        - **editRow**(): _object_
 
-        * **headerSelected**? : *string*
+        - **headerSelected**? : _string_
 
-        * **needsRefresh**? : *boolean*
+        - **needsRefresh**? : _boolean_
 
-        * **rowsCount**? : *number*
+        - **rowsCount**? : _number_
 
-        * **selectedRow**(): *object*
+        - **selectedRow**(): _object_
 
-___
+---
 
 ### `Let` testtables
 
-### ▪ **testtables**: *object*
+### ▪ **testtables**: _object_
 
-*Defined in [test/src/state.ts:192](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L192)*
+_Defined in [test/src/state.ts:192](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L192)_
 
-###  tableTesting
+### tableTesting
 
-• **tableTesting**: *object* = <TableData>{
-    data: {},
-    schema: {},
-    tableDef: { tab1: tblTableTesting, tab2: tblTableTesting2 },
-    lookupTypes: { U_Alpha: "text" },
-    lookupTypes2: { U_Alpha: "text", U_Date: "date" }
-  }
+• **tableTesting**: _object_ = <TableData>{
+data: {},
+schema: {},
+tableDef: { tab1: tblTableTesting, tab2: tblTableTesting2 },
+lookupTypes: { U_Alpha: "text" },
+lookupTypes2: { U_Alpha: "text", U_Date: "date" }
+}
 
-*Defined in [test/src/state.ts:193](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L193)*
-
-#### Type declaration:
-
-* **data**(): *object*
-
-* **lookupTypes**(): *object*
-
-* **lookupTypes2**(): *object*
-
-* **lookupTypes3**(): *object*
-
-* **schema**(): *object*
-
-* **tableDef**(): *object*
-
-* **timestamp**? : *number*
-
-###  timeentries
-
-• **timeentries**: *object* = <TableData>{
-    data: {},
-    schema: {},
-    tableDef: {
-      mobiletimerecording1: tblMobileTimeRecording
-    }
-  }
-
-*Defined in [test/src/state.ts:200](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L200)*
+_Defined in [test/src/state.ts:193](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L193)_
 
 #### Type declaration:
 
-* **data**(): *object*
+- **data**(): _object_
 
-* **lookupTypes**(): *object*
+- **lookupTypes**(): _object_
 
-* **lookupTypes2**(): *object*
+- **lookupTypes2**(): _object_
 
-* **lookupTypes3**(): *object*
+- **lookupTypes3**(): _object_
 
-* **schema**(): *object*
+- **schema**(): _object_
 
-* **tableDef**(): *object*
+- **tableDef**(): _object_
 
-* **timestamp**? : *number*
+- **timestamp**? : _number_
 
-▪ **lookups**: *object*
+### timeentries
 
-*Defined in [test/src/state.ts:207](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L207)*
+• **timeentries**: _object_ = <TableData>{
+data: {},
+schema: {},
+tableDef: {
+mobiletimerecording1: tblMobileTimeRecording
+}
+}
 
-* **AbsenceTypeId**(): *object*
+_Defined in [test/src/state.ts:200](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L200)_
 
-  * **data**(): *object*
+#### Type declaration:
 
-  * **lookupTypes**(): *object*
+- **data**(): _object_
 
-  * **lookupTypes2**(): *object*
+- **lookupTypes**(): _object_
 
-  * **lookupTypes3**(): *object*
+- **lookupTypes2**(): _object_
 
-* **ProjectTypeId**(): *object*
+- **lookupTypes3**(): _object_
 
-  * **data**(): *object*
+- **schema**(): _object_
 
-  * **lookupTypes**(): *object*
+- **tableDef**(): _object_
 
-  * **lookupTypes2**(): *object*
+- **timestamp**? : _number_
 
-  * **lookupTypes3**(): *object*
+▪ **lookups**: _object_
 
-* **U_ItemCode**(): *object*
+_Defined in [test/src/state.ts:207](https://github.com/fopsdev/ovl/blob/f9b6194/test/src/state.ts#L207)_
 
-  * **data**(): *object*
+- **AbsenceTypeId**(): _object_
 
-  * **lookupTypes**(): *object*
+  - **data**(): _object_
 
-  * **lookupTypes2**(): *object*
+  - **lookupTypes**(): _object_
 
-  * **lookupTypes3**(): *object*
+  - **lookupTypes2**(): _object_
 
-* **U_ItmsGrpCod**(): *object*
+  - **lookupTypes3**(): _object_
 
-  * **data**(): *object*
+- **ProjectTypeId**(): _object_
 
-  * **lookupTypes**(): *object*
+  - **data**(): _object_
 
-  * **lookupTypes2**(): *object*
+  - **lookupTypes**(): _object_
 
-  * **lookupTypes3**(): *object*
+  - **lookupTypes2**(): _object_
+
+  - **lookupTypes3**(): _object_
+
+- **U_ItemCode**(): _object_
+
+  - **data**(): _object_
+
+  - **lookupTypes**(): _object_
+
+  - **lookupTypes2**(): _object_
+
+  - **lookupTypes3**(): _object_
+
+- **U_ItmsGrpCod**(): _object_
+
+  - **data**(): _object_
+
+  - **lookupTypes**(): _object_
+
+  - **lookupTypes2**(): _object_
+
+  - **lookupTypes3**(): _object_

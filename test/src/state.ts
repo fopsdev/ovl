@@ -67,7 +67,7 @@ export type FileList = {
   files: File[]
 }
 
-export type Language = "DE" | "FR"
+export type OvlLanguage = "DE" | "FR"
 
 export type DoubleBarChartState = {
   labels_ext: number[]
@@ -185,7 +185,7 @@ export type Feature = {
 
 type User = {
   userName: string
-  language: Language
+  language: OvlLanguage
   firstName: string
   lastName: string
   role: Role
@@ -197,11 +197,11 @@ export type CustomFormType =
   | "Feedback"
   | "Settings"
   | "Login"
-  | "Language"
+  | "OvlLanguage"
   | "MobileTimeEntry"
   | "MobileTimeEntryMain"
 
-export type TableDefIds =
+export type OvlTableDefIds =
   | "translation"
   | "audit"
   | "tab1"

@@ -23,11 +23,11 @@ export type CustomFormType =
   | "Feedback"
   | "Settings"
   | "Login"
-  | "Language"
+  | "OvlLanguage"
   | "MobileTimeEntry"
   | "MobileTimeEntryMain"
 
-export type TableDefIds =
+export type OvlTableDefIds =
   | "translation"
   | "audit"
   | "tab1"
@@ -35,4 +35,4 @@ export type TableDefIds =
   | "tab3"
   | "mobiletimerecording1"
 
-export type Language = "DE" | "FR"
+export type OvlLanguage = "DE" | "FR"

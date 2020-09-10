@@ -275,7 +275,9 @@ export const ovlFetch = async (
     //   saveState(true, "fetchpost")
     // }
     if (snackMessage) {
+      //@ts-ignore
       if (!noSnack || snackMessageType === "Error") {
+        //@ts-ignore
         if (snackMessageType === "Error") {
           console.log("Fetch Error: " + snackMessage)
         }
