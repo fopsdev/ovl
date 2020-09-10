@@ -131,7 +131,6 @@ export class CompInvoiceOverview extends OvlBaseElement {
                                       ></button>
                                     </div>
                                     <div
-                                      style="width:280px;"
                                       class="fd-popover__body"
                                       aria-hidden="${k !==
                                         this.state.app.screens.invoice

@@ -239,3 +239,6 @@
     opacity: 0;
   }
 }
+.fd-popover__body {
+  width: 300px !important;
+}
