@@ -95,3 +95,5 @@ export const init = (
     effects,
   }
 }
+import { defineElements } from "./registerComponents"
+defineElements()

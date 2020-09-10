@@ -1,4 +1,4 @@
-import { OvlConfig } from "../init"
+import { OvlConfig } from "../config"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"

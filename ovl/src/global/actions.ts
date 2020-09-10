@@ -1,5 +1,5 @@
 import { OvlScreen, ovl, OvlState, OvlActions } from "../index"
-import { Init, OvlConfig } from "../init"
+import { Init, OvlConfig } from "../config"
 import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
   // FileInfoStore,

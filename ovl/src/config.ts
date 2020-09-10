@@ -45,10 +45,6 @@ type OvlConfig = {
   offlineFirstOnReload?: boolean
 }
 
-import { actionTracking } from "./tracker/proxyHandler"
-import { portalScreens } from "../../../kaltag/src/appDef"
-import { baseScreens, baseDialogs } from "./screensAndDialogs"
-
 // #####################################################################################################################################
 
 let OvlConfig: OvlConfig = {

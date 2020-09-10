@@ -1,6 +1,6 @@
 import { T, saveState, stringifyReplacer } from "./global/globals"
 
-import { OvlConfig } from "./init"
+import { OvlConfig } from "./config"
 import { SnackAdd } from "./library/helpers"
 import { SnackType } from "./library/Snack/Snack"
 import { ovl } from "."

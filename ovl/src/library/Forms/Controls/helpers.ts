@@ -36,7 +36,7 @@ import { Field, OvlFormState } from "../actions"
 import { ListState } from "./ListControl"
 import { UIValidationObject } from "./uiValidationHelper"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { OvlConfig } from "../../../init"
+import { OvlConfig } from "../../../config"
 import { SnackAdd } from "../../helpers"
 
 export type LookupListPostData = {

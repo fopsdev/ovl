@@ -80,7 +80,7 @@ export const scrollToLastPosition = (state: OvlState) => {
 
 import { render, TemplateResult, html } from "lit-html"
 import { actionTracking } from "../tracker/proxyHandler"
-import { OvlConfig } from "../init"
+import { OvlConfig } from "../config"
 
 export class OvlBaseElement extends HTMLElement {
   state: OvlState

@@ -83,7 +83,7 @@ import {
   Tabs,
   SelectedEditRow,
 } from "./Table"
-import { OvlConfig } from "../../init"
+import { OvlConfig } from "../../config"
 
 const minimumFilterChars = 3
 

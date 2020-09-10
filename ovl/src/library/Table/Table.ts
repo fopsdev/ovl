@@ -11,11 +11,10 @@ import {
   ViewHeaderCellClass_ReturnType,
   ViewHeaderCellClass_Type,
   FieldIsVisible_Type,
-  FieldGetValueRender_Type,
   FieldGetLabelRender_Type,
 } from "../../global/hooks"
 import { OvlTableDefIds, OvlLanguage, ovl } from "../../index"
-import { OvlConfig } from "../../init"
+import { OvlConfig } from "../../config"
 import { ListState } from "../Forms/Controls/ListControl"
 import {
   DataType,

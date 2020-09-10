@@ -1,14 +1,14 @@
 export { OvlVersion } from "../../../kaltag/sw"
 import { init } from "./prepare"
 import {
-  portalScreens,
-  portalDialogs,
+  appScreens,
+  appDialogs,
   CustomFormType,
   TableDefIds as OvlTableDefIds,
   Language as OvlLanguage,
 } from "../../../kaltag/src/appDef"
-import * as portalState from "../../../kaltag/src/state"
-import * as portalActions from "../../../kaltag/src/actions"
+import * as appState from "../../../kaltag/src/state"
+import * as appActions from "../../../kaltag/src/actions"
 import * as customActions from "../../../kaltag/src/customActions"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
@@ -17,15 +17,15 @@ import * as ovlEffects from "./effects"
 import { baseScreens, baseDialogs } from "./screensAndDialogs"
 
 let _state = {
-  portal: portalState,
+  portal: appState,
 }
 let _actions = {
-  portal: portalActions,
+  portal: appActions,
 }
-export type OvlState = { ovl: typeof ovlState; portal: typeof portalState }
+export type OvlState = { ovl: typeof ovlState; portal: typeof appState }
 export type OvlActions = {
   ovl: typeof ovlActions
-  portal: typeof portalActions
+  portal: typeof appActions
   custom: typeof customActions
 }
 export type OvlEffects = { ovl: typeof ovlEffects }
@@ -37,9 +37,9 @@ export let ovl: {
   _state,
   _actions,
   ovlState,
-  portalScreens,
+  appScreens,
   baseScreens,
-  portalDialogs,
+  appDialogs,
   baseDialogs,
   ovlActions,
   customActions,
@@ -47,10 +47,7 @@ export let ovl: {
 )
 
 export type OvlForm = CustomFormType | "TableRowEdit"
-export type OvlDialog = keyof typeof baseDialogs | keyof typeof portalDialogs
+export type OvlDialog = keyof typeof baseDialogs | keyof typeof appDialogs
 
 export { OvlTableDefIds, OvlLanguage }
-export type OvlScreen = keyof typeof baseScreens | keyof typeof portalScreens
-
-import { defineElements } from "./registerComponents"
-defineElements()
+export type OvlScreen = keyof typeof baseScreens | keyof typeof appScreens

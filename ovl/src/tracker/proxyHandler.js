@@ -1,7 +1,7 @@
 import { paths, isTracking, addTrackedPath, disposeTrack } from "./tracker"
 import { SnackTrackedRemove } from "../library/helpers"
 import { stringifyReplacer } from "../global/globals"
-import { OvlConfig } from "../init"
+import { OvlConfig } from "../config"
 export let actionTracking = { actionRunning: false, lastActionName: undefined }
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
