@@ -1,4 +1,4 @@
-export { OvlVersion } from "../../../kaltag/sw"
+export { OvlVersion } from "../../../app/sw"
 import { init } from "./prepare"
 import {
   appScreens,
@@ -6,10 +6,10 @@ import {
   CustomFormType,
   TableDefIds as OvlTableDefIds,
   Language as OvlLanguage,
-} from "../../../kaltag/src/appDef"
-import * as appState from "../../../kaltag/src/state"
-import * as appActions from "../../../kaltag/src/actions"
-import * as customActions from "../../../kaltag/src/customActions"
+} from "../../../app/src/appDef"
+import * as appState from "../../../app/src/state"
+import * as appActions from "../../../app/src/actions"
+import * as customActions from "../../../app/src/customActions"
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
