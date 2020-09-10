@@ -475,7 +475,7 @@ export class TableRowFormBig extends OvlFormElement {
       }
       if (captionContent) {
         return html`
-          <div class="ovl-panel__header ovl-detailview-header fd-has-type-1">
+          <div class="ovl-panel__header ovl-detailview-header">
             ${captionContent}
           </div>
         `

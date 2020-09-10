@@ -614,7 +614,7 @@ export class TableRowDetailView extends OvlBaseElement {
         >`
         // needs to be ignored to get css white-space: line-wrap work correctly
         // prettier-ignore
-        value = html`<article title="${ifDefined(rowtooltip ? rowtooltip : undefined, this)}" data-col=${k} class="fd-has-type-1 ovl-detailview-value ovl-value-${col.control + (col.asset ? col.asset.type : "")} ovl-value__${k} ${customRowCellClass}">${uiItem}</article>`
+        value = html`<article title="${ifDefined(rowtooltip ? rowtooltip : undefined, this)}" data-col=${k} class="ovl-detailview-value ovl-value-${col.control + (col.asset ? col.asset.type : "")} ovl-value__${k} ${customRowCellClass}">${uiItem}</article>`
       }
       return html`<div
         class="ovl-detailview-container ovl-container-${col.control +

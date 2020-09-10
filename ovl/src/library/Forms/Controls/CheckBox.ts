@@ -101,7 +101,7 @@ export class OvlCheckbox extends OvlBaseElement {
               @focusout=${(e) => this.handleFocusOut(e)}
               style="${align}"
               autocomplete="off"
-              class="fd-checkbox ovl-focusable ${res.validationType} fd-has-type-1 ovl-formcontrol-input ovl-value-checkbox-input ovl-value__${field.fieldKey} ${customRowClassName}"
+              class="fd-checkbox ovl-focusable ${res.validationType} ovl-formcontrol-input ovl-value-checkbox-input ovl-value__${field.fieldKey} ${customRowClassName}"
               type="checkbox"
               id="${field.id}"
               ?checked=${field.value === field.ui.checkedValue}

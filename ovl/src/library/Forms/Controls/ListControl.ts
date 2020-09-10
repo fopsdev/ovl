@@ -460,7 +460,7 @@ export class OvlListControl extends OvlBaseElement {
                 style="${align}"
                 +
                 type="text"
-                class="fd-input ovl-focusable fd-input-group__input fd-has-type-1 ovl-formcontrol-input ovl-value-listcontrol ovl-value__${field.fieldKey}"
+                class="fd-input ovl-focusable fd-input-group__input ovl-formcontrol-input ovl-value-listcontrol ovl-value__${field.fieldKey}"
                 id="${field.id}"
                 value="${displayValue}"
                 .value="${displayValue}"

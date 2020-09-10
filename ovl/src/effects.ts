@@ -105,20 +105,24 @@ export const ovlFetch = async (
       url = urlWithParams.toString()
     }
 
-    const controller = new AbortController()
-    const { signal } = controller
-    let timeOutMs = OvlConfig._system.fetchTimeout
-    if (customTimeoutMs) {
-      timeOutMs = customTimeoutMs
-    }
-    timer = setTimeout(() => {
-      controller.abort()
-    }, timeOutMs)
+    if (OvlConfig._system.OfflineMode) {
+      const controller = new AbortController()
+      const { signal } = controller
+      let timeOutMs = OvlConfig._system.fetchTimeout
+      if (customTimeoutMs) {
+        timeOutMs = customTimeoutMs
+      }
+      timer = setTimeout(() => {
+        controller.abort()
+      }, timeOutMs)
 
-    reqOptions.signal = signal
+      reqOptions.signal = signal
+    }
 
     const req = await fetch(url, reqOptions)
-    clearTimeout(timer)
+    if (OvlConfig._system.OfflineMode) {
+      clearTimeout(timer)
+    }
     if (method === "POST") {
       ovl.state.ovl.app.offline = false
     }
