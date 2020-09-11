@@ -2,6 +2,9 @@
 
 Todos:
 
+- check longpress toolbar functionality
+- check update check in offline mode
+
 - Edit tabs
 - Upload Control
 - Link Control
