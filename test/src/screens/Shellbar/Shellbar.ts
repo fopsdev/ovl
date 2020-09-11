@@ -185,26 +185,26 @@ export class CompShellbar extends OvlBaseElement {
       let tableTestingMenu
 
       let effortTableMenu
-      if (this.state.ovl.screens.nav.currentScreen !== "Dashboard") {
-        effortTableMenu = html`
-          <li class="fd-menu__item">
-            <a
-              @click=${handleEffortTable}
-              role="menuitem"
-              class="fd-menu__link fd-has-type-2"
-            >
-              <span
-                class="fd-menu__addon-before sap-icon--work-history "
-              ></span>
-              <span
-                style="margin-left:4px;"
-                class="fd-menu__title fd-has-type-1"
-                >Leistungen</span
-              >
-            </a>
-          </li>
-        `
-      }
+      // if (this.state.ovl.screens.nav.currentScreen !== "Dashboard") {
+      //   effortTableMenu = html`
+      //     <li class="fd-menu__item">
+      //       <a
+      //         @click=${handleEffortTable}
+      //         role="menuitem"
+      //         class="fd-menu__link fd-has-type-2"
+      //       >
+      //         <span
+      //           class="fd-menu__addon-before sap-icon--work-history "
+      //         ></span>
+      //         <span
+      //           style="margin-left:4px;"
+      //           class="fd-menu__title fd-has-type-1"
+      //           >Leistungen</span
+      //         >
+      //       </a>
+      //     </li>
+      //   `
+      // }
 
       if (this.state.ovl.user.role === "Admin") {
         languageTableMenu = html`

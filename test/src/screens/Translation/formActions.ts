@@ -10,8 +10,32 @@ import {
   FormShow_Type,
   FormAfterRender_Type,
   FormValidate_Type,
+  FormSaveError_ReturnType,
+  FormSaveError_Type,
 } from "../../../../ovl/src/global/hooks"
 import { OvlAction } from "../../../../ovl/src/ovlTypes"
+
+export const FormSaveError: OvlAction<
+  FormSaveError_Type,
+  FormSaveError_ReturnType
+> = async (value) => {
+  if (
+    value.res.status === 422 ||
+    (value.res.type && value.res.type === "UniqueKeyViolation")
+  ) {
+    // Integrity Error
+    // In this case most probably because Group and Code are not unique
+    let field = value.formState.fields["U_Group"]
+    field.watched = true
+    field.validationResult = {
+      valid: false,
+      validationMsg: "Gruppe/Code schon vorhanden!",
+      validations: {},
+    }
+    return true
+  }
+  return false
+}
 
 export const FormShow: OvlAction<FormShow_Type> = async (value) => {
   console.log("hello from translation formshow hook")
