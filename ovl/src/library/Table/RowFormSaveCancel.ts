@@ -26,7 +26,11 @@ export class TableRowSaveCancel extends OvlBaseElement {
           data: this.rowData.data,
           formState: this.formState,
         })
-        this.rowData.tableDef.uiState.editRow[this.rowData.key].selected = false
+        if (this.formState.valid) {
+          this.rowData.tableDef.uiState.editRow[
+            this.rowData.key
+          ].selected = false
+        }
       }
     }
 

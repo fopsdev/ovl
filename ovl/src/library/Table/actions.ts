@@ -897,47 +897,39 @@ const TableEditSaveRowHelper = async (
                 }
               }
             }
-
-            //}
+            // it wasn't the offline case so lets do some proper error handling
             else {
+              // for sure make formState invalid so the user cannot continue
+              // feel free to set it to true in your customErrorHandler
+              if (hasFormState) {
+                formState.valid = false
+              }
+              if (
+                (hasFormState && res.type === "UDTNameEmpty") ||
+                res.type === "UDTNameUnique"
+              ) {
+                ValidationAddError(
+                  "UniqueKeyViolation",
+                  res.message,
+                  formState.fields["Name"].validationResult
+                )
+              }
               let saveErrorFnName = FormSaveError
               // handleError @@hook
               let fn = resolvePath(actions.custom, def.namespace)
+              let throwError = true
               if (fn && fn[saveErrorFnName]) {
-                if (
-                  await fn[saveErrorFnName](<FormSaveError_Type>{
-                    key,
-                    def,
-                    data,
-                    res,
-                    formState,
-                    isAdd,
-                    isOfflineRetry,
-                  })
-                ) {
-                  // return true means its handled
-                  // so just return
-                  return
-                }
-              } else {
-                if (hasFormState) {
-                  formState.valid = false
-                }
-                // if (!noSnack) {
-                //   SnackAdd(res.message, "Error", 10000)
-                // }
-                if (
-                  (hasFormState && res.type === "UDTNameEmpty") ||
-                  res.type === "UDTNameUnique"
-                ) {
-                  ValidationAddError(
-                    "UniqueKeyViolation",
-                    res.message,
-                    formState.fields["Name"].validationResult
-                  )
-                }
-                // if you don't like the error to be throwed use your own savehandler...
-
+                throwError = !(await fn[saveErrorFnName](<FormSaveError_Type>{
+                  key,
+                  def,
+                  data,
+                  res,
+                  formState,
+                  isAdd,
+                  isOfflineRetry,
+                }))
+              }
+              if (throwError) {
                 throw {
                   status: res.status,
                   message: res.message,
