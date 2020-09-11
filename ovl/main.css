@@ -1,3 +1,19 @@
+body {
+  overscroll-behavior: none;
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+}
+
+ovl-trow:focus {
+  outline: none;
+  border-bottom: 1px solid orange !important;
+  /* because default outline on rdp session chrome is always over controbuttons */
+  border-top: 1.5px solid orange !important;
+  border-left: 2px solid orange !important;
+  border-right: 2px solid orange !important;
+}
+
 @font-face {
   font-family: "72Condensed";
   src: url(fonts/72/72-Condensed.woff2) format("woff2");
@@ -243,13 +259,6 @@ ovl-table {
   overflow-y: auto;
   max-height: calc(100vh - 50px);
   -webkit-overflow-scrolling: touch;
-}
-
-body {
-  overscroll-behavior: none;
-  margin: 0;
-  padding: 0;
-  z-index: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
