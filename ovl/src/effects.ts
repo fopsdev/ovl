@@ -66,6 +66,11 @@ export const ovlFetch = async (
       headers,
       signal: undefined,
     }
+    if (url.indexOf("ovlnocache") > -1) {
+      reqOptions["Cache"] = "no-cache"
+      headers["pragma"] = "no-cache"
+    }
+
     if (data) {
       data.clientId = ovl.state.ovl.user.clientId
     }
@@ -141,7 +146,7 @@ export const ovlFetch = async (
       return
     } else if (req.status === 404) {
       let nfurl = url
-      if (data.id1) {
+      if (data && data.id1) {
         nfurl = data.id1
       }
       snackMessage = T("AppResourceNotFound", [nfurl])
@@ -248,15 +253,12 @@ export const ovlFetch = async (
     // well...  go to offline mode
     ovl.state.ovl.app.offline = true
     let now = Date.now()
-    if (!OvlConfig._system.OfflineMode) {
-      if (
-        !lastNoServerConnectionMsg ||
-        now - lastNoServerConnectionMsg > 4000
-      ) {
-        lastNoServerConnectionMsg = now
-        SnackAdd(T("AppNoServerConnection"), "Warning")
-      }
+    //if (!OvlConfig._system.OfflineMode) {
+    if (!lastNoServerConnectionMsg || now - lastNoServerConnectionMsg > 4000) {
+      lastNoServerConnectionMsg = now
+      SnackAdd(T("AppNoServerConnection"), "Warning")
     }
+    //}
 
     return {
       fetchParams: { url, reqOptions },

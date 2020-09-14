@@ -382,7 +382,6 @@ export const InitApp: OvlAction<Init> = async (
     state.ovl.apiUrl = value.devServer
   }
 
-  UpdateCheck()
   if (OvlConfig.offlineFirstOnReload) {
     console.log("Try Offline first...")
     if (await Rehydrate()) {
