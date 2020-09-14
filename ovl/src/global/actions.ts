@@ -439,9 +439,15 @@ export const InitApp: OvlAction<Init> = async (
     OvlConfig.requiredActions.customInitActionPath()
   }
 }
-
+let lastUpdateCheck: number = undefined
 export const UpdateCheck = async () => {
-  if (OvlConfig._system.OfflineMode) {
+  let now = Date.now()
+  if (
+    OvlConfig._system.OfflineMode &&
+    /* updatecheck every ~3 minutes */
+    (lastUpdateCheck === undefined || now - lastUpdateCheck > 60000 * 3)
+  ) {
+    lastUpdateCheck = now
     try {
       let updateCheck = await ovl.effects.ovl.getRequest(
         "./ovlnocache/" +
