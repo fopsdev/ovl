@@ -16,11 +16,7 @@ import {
   saveState,
   ShowFile,
 } from "./globals"
-import {
-  ScreenNavigateIn,
-  ScreenNavigateOut,
-  ScreenNavigateOut_ReturnType,
-} from "./hooks"
+import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 import { createDeepProxy } from "../tracker/proxyHandler"
 import { OvlAction } from "../ovlTypes"
@@ -228,7 +224,7 @@ export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
 }
 
 export const Logout: OvlAction = async (_, { state, actions }) => {
-  if (state.ovl.app.offline) {
+  if (state.ovl.app.offline && OvlConfig._system.OfflineMode) {
     SnackAdd(
       "Abmelden und Neuinitialisierung nur im Onlinemodus möglich!",
       "Error"
