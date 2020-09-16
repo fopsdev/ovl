@@ -162,7 +162,6 @@ export class OvlBaseElement extends HTMLElement {
     //console.log("render " + this.name)
     let checkScreen
     actionTracking.lastActionName = "Component " + this.name
-    this.state.ovl.language.translations
     if (this.screen) {
       if (this.screenClosing()) {
         // no complete rerender is necessary
@@ -183,6 +182,12 @@ export class OvlBaseElement extends HTMLElement {
 
     let res
     if (checkScreen) {
+      // this ensures that labguage change always refreshes components
+      // its used as well for the refresh button which should always refresh
+      startTrack(this)
+      this.state.ovl.language.language
+      stopTrack()
+
       res = await this.getUI()
       if (res !== undefined) {
         if (this.screen) {
