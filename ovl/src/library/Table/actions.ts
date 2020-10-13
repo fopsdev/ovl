@@ -252,9 +252,10 @@ export const TableRefreshDataFromServer: OvlAction<{
     getSchema,
     insertMode: def.database.dbInsertMode,
   }
+
   let res = await effects.ovl.postRequest(url, postData)
   // sync needsRefresh with eventually other tables
-  if (!res.data) {
+  if (!res.data || !res.data.data) {
     return
   }
 
