@@ -212,6 +212,6 @@ export const CustomInit: OvlAction = async (_, { actions, state }) => {
     initialFocusElementId: "user",
   }
   await actions.ovl.form.InitForm(loginForm)
-  await actions.app.system.user.Login(state.ovl.forms.Login.loginform)
-  actions.ovl.navigation.NavigateTo("TableTesting")
+  // await actions.app.system.user.Login(state.ovl.forms.Login.loginform)
+  // actions.ovl.navigation.NavigateTo("TableTesting")
 }

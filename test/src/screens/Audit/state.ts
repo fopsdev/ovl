@@ -15,7 +15,6 @@ export let tblAudit: OvlTableDef = {
     paging: { page: 0, pageSize: 200 },
   },
   features: {
-    detailView: "EnabledOnlyMobile",
     page: true,
     add: false,
     delete: false,
