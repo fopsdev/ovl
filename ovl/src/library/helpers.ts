@@ -4,6 +4,7 @@ import { DialogResult } from "./actions"
 import { ovl } from ".."
 import { TemplateResult } from "lit-html"
 import { DialogType } from "./Dialog/OvlDialogBase"
+import { uuidv4 } from "../global/globals"
 
 export const DialogOkCancel = async (
   text: TemplateResult | string,
@@ -44,14 +45,18 @@ export const SnackAdd = (
 export const SnackTrackedAdd = (
   text: string,
   type: SnackType = "Success",
-  key: string
+  key?: string
 ) => {
+  if (!key) {
+    key = uuidv4()
+  }
   ovl.actions.ovl.internal.AddSnack({
     text,
     type,
     durationMs: 999999,
     key,
   })
+  return key
 }
 export const SnackTrackedRemove = (key: string) => {
   setTimeout(() => {

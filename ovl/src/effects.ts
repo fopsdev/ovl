@@ -18,6 +18,18 @@ export const postRequest = async (
   return await ovlFetch(url, data, "POST", isBlob, noSnack, customTimeoutMs)
 }
 
+export const postFormDataRequest = async (url, data) => {
+  return await ovlFetch(
+    url,
+    data,
+    "POST",
+    false,
+    false,
+    OvlConfig._system.fetchTimeout,
+    true
+  )
+}
+
 export type GETRequestParams = {
   cat: string
   id1: string
@@ -35,13 +47,33 @@ export const getRequest = async (
   return ovlFetch(url, data, "GET", isBlob, noSnack)
 }
 
+// export const ovlFetchUpload = async (url, data) => {
+//   try {
+//     ovl.actions.ovl.indicator.SetIndicatorOpen()
+//     let headers = {}
+//     let user = ovl.state.ovl.user
+//     if (user && user.token) {
+//       headers["Authorization"] = "Bearer " + ovl.state.ovl.user.token
+//     }
+//     let reqOptions = {
+//       method: "POST",
+//       headers,
+//       signal: undefined,
+//     }
+//   } catch (e) {
+//   } finally {
+//     ovl.actions.ovl.indicator.SetIndicatorClose()
+//   }
+// }
+
 export const ovlFetch = async (
   url,
   data,
   method: string,
   isBlob?: boolean,
   noSnack?: boolean,
-  customTimeoutMs?: number
+  customTimeoutMs?: number,
+  isFormData?: boolean
 ) => {
   let res
   let snackMessage = ""
@@ -53,7 +85,7 @@ export const ovlFetch = async (
     // Create request to api service
 
     let headers = {}
-    if (method === "POST") {
+    if (method === "POST" && !isFormData) {
       let contentType = "application/json"
       headers["Content-Type"] = contentType
     }
@@ -71,43 +103,49 @@ export const ovlFetch = async (
       headers["pragma"] = "no-cache"
     }
 
-    if (data) {
-      data.clientId = ovl.state.ovl.user.clientId
-    }
-    if (method === "POST") {
-      reqOptions["body"] = JSON.stringify(data, stringifyReplacer)
-    } else if (data) {
-      // encode data as url param
-      const UrlCreator = window.URL || window.webkitURL
-      var urlWithParams = new UrlCreator(url)
-      if (data.cat) {
-        urlWithParams.searchParams.append("cat", data.cat)
-      } else {
-        throw Error("ovl error: fetch asset needs 'cat' param!")
+    if (isFormData) {
+      reqOptions["body"] = data
+    } else {
+      if (data) {
+        data.clientId = ovl.state.ovl.user.clientId
       }
-      if (data.id1) {
-        urlWithParams.searchParams.append("id1", data.id1)
-      } else {
-        throw Error("ovl error: fetch asset needs 'id1' param!")
+      if (method === "POST") {
+        reqOptions["body"] = JSON.stringify(data, stringifyReplacer)
+      } else if (data) {
+        // encode data as url param
+        const UrlCreator = window.URL || window.webkitURL
+        var urlWithParams = new UrlCreator(url)
+        if (data.cat) {
+          urlWithParams.searchParams.append("cat", data.cat)
+        } else {
+          throw Error("ovl error: fetch asset needs 'cat' param!")
+        }
+        if (data.id1) {
+          urlWithParams.searchParams.append("id1", data.id1)
+        } else {
+          throw Error("ovl error: fetch asset needs 'id1' param!")
+        }
+        if (data.id2) {
+          urlWithParams.searchParams.append("id2", data.id2)
+        }
+        if (data.ext) {
+          urlWithParams.searchParams.append("ext", data.ext)
+        }
+        if (data.mode) {
+          urlWithParams.searchParams.append("mode", data.mode)
+        }
+        // get requests will always use a diskCache version which is persisted in state and recreated if page reload
+        urlWithParams.searchParams.append(
+          "v",
+          ovl.state.ovl.app.discCacheVersion.toString()
+        )
+        urlWithParams.searchParams.append(
+          "clientId",
+          ovl.state.ovl.user.clientId
+        )
+        // encode params as url param
+        url = urlWithParams.toString()
       }
-      if (data.id2) {
-        urlWithParams.searchParams.append("id2", data.id2)
-      }
-      if (data.ext) {
-        urlWithParams.searchParams.append("ext", data.ext)
-      }
-      if (data.mode) {
-        urlWithParams.searchParams.append("mode", data.mode)
-      }
-      // get requests will always use a diskCache version which is persisted in state and recreated if page reload
-      urlWithParams.searchParams.append(
-        "v",
-        ovl.state.ovl.app.discCacheVersion.toString()
-      )
-      urlWithParams.searchParams.append("clientId", ovl.state.ovl.user.clientId)
-
-      // encode params as url param
-      url = urlWithParams.toString()
     }
 
     // forced timeout only in offline mode...timeouts are normally handled by the browser itself
@@ -178,18 +216,13 @@ export const ovlFetch = async (
         headers: req.headers,
         data: undefined,
         status: 400,
-        message: req.statusText,
+        message: snackMessage,
         type: type,
       }
     } else if (req.status === 422) {
       let type = ""
       let msg = await req.json()
       if (!msg.type || msg.type.indexOf("https://") > -1) {
-        // if (msg && msg.message) {
-        //   snackMessage = msg.message
-        // } else {
-        //   snackMessage = req.statusText
-        // }
         snackMessage = T("ServerIntegrityError")
         snackMessageType = "Error"
       } else {
