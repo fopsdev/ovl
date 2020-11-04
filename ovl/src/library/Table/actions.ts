@@ -213,6 +213,7 @@ export const TableViewRefresh: OvlAction<TableDataAndDef> = (
 export const TableRefreshDataFromServer: OvlAction<{
   def: OvlTableDef
   data: OvlTableData
+  localData?: {}
 }> = async (value, { state, actions, effects }) => {
   let def = value.def
   let data = value.data.data
@@ -236,25 +237,34 @@ export const TableRefreshDataFromServer: OvlAction<{
   // offline flag is handled separately
   // so as long as we are offline there will be no refresh
   // thats a good idea because there could be offline data which first needs to be persisted back before refreshing data
-  if (state.ovl.app.offline && OvlConfig._system.OfflineMode) {
+  if (
+    !value.localData &&
+    state.ovl.app.offline &&
+    OvlConfig._system.OfflineMode
+  ) {
     return
   }
 
   let schema = value.data.schema
   let getSchema = false
-  if (def.dataFetching.useSchema && Object.keys(schema).length === 0) {
-    getSchema = true
-  }
+  let res
+  if (!value.localData) {
+    if (def.dataFetching.useSchema && Object.keys(schema).length === 0) {
+      getSchema = true
+    }
 
-  let url = state.ovl.apiUrl + def.server.endpoint + "/get"
-  let postData = {
-    lang: state.ovl.language.language,
-    getSchema,
-    insertMode: def.database.dbInsertMode,
-  }
+    let url = state.ovl.apiUrl + def.server.endpoint + "/get"
+    let postData = {
+      lang: state.ovl.language.language,
+      getSchema,
+      insertMode: def.database.dbInsertMode,
+    }
 
-  let res = await effects.ovl.postRequest(url, postData)
-  // sync needsRefresh with eventually other tables
+    res = await effects.ovl.postRequest(url, postData)
+    // sync needsRefresh with eventually other tables
+  } else {
+    res = { data: { data: value.localData } }
+  }
   if (!res.data || !res.data.data) {
     return
   }
@@ -395,6 +405,7 @@ export const TableRefresh: OvlAction<{
   ignoreRefreshedMessageSnack?: boolean
   refreshServerDataIfOlderThan?: number
   forceServerDataRefresh?: boolean
+  localData?: {}
   defId: OvlTableDefIds
   data: OvlTableData
 }> = async (value, { actions, state, effects }) => {
@@ -402,6 +413,10 @@ export const TableRefresh: OvlAction<{
   let def = dataAndState.tableDef[value.defId]
 
   initTableState(def, dataAndState, value.defId, state.ovl.uiState.isMobile)
+  // if (!value.localData && !def.server.endpoint) {
+  //   def.initialised = true
+  //   return
+  // }
   let ignoreRefreshedMessageSnack = value.ignoreRefreshedMessageSnack
   let forceServerDataRefresh = value.forceServerDataRefresh
   let refreshedBecauseOfAge = false
@@ -433,12 +448,16 @@ export const TableRefresh: OvlAction<{
     SnackTrackedAdd("Ansicht wird aktualisiert...", "Success", snackId)
   }
 
-  if (!def.dataFetching.useCustomDataFetching) {
+  if (
+    !def.dataFetching.useCustomDataFetching &&
+    (def.server.endpoint || value.localData)
+  ) {
     await TableRefreshServerData(
       def,
       dataAndState,
       actions,
-      forceServerDataRefresh
+      forceServerDataRefresh,
+      value.localData
     )
   }
   def.initialised = true
@@ -849,19 +868,23 @@ const TableEditSaveRowHelper = async (
           let oldid = newData["_ovl" + def.database.dataIdField]
           delete newData["_ovl" + def.database.dataIdField]
           try {
-            res = await postRequest(
-              state.ovl.apiUrl + def.server.endpoint + "/" + mode,
-              {
-                lang: state.ovl.language.language,
-                idField: def.database.dataIdField,
-                idValue: rowId,
-                insertMode: def.database.dbInsertMode,
-                data: newData,
-                customId: ovl.state.ovl.user.clientId,
-              },
-              false,
-              noSnack
-            )
+            if (def.server.endpoint) {
+              res = await postRequest(
+                state.ovl.apiUrl + def.server.endpoint + "/" + mode,
+                {
+                  lang: state.ovl.language.language,
+                  idField: def.database.dataIdField,
+                  idValue: rowId,
+                  insertMode: def.database.dbInsertMode,
+                  data: newData,
+                  customId: ovl.state.ovl.user.clientId,
+                },
+                false,
+                noSnack
+              )
+            } else {
+              res.data = newData
+            }
           } catch (e) {
             newData["_ovl" + def.database.dataIdField] = oldid
             throw e

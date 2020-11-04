@@ -579,14 +579,16 @@ export const TableRefreshServerData = async (
   def: OvlTableDef,
   data: OvlTableData,
   actions: OvlActions,
-  forceServerDataRefresh?: boolean
+  forceServerDataRefresh?: boolean,
+  localData?: {}
 ) => {
-  if (!data.timestamp || !!forceServerDataRefresh) {
+  if (!data.timestamp || localData || !!forceServerDataRefresh) {
     // now if there is no data do a get request
 
     await actions.ovl.table.TableRefreshDataFromServer({
       def,
       data,
+      localData,
     })
   }
   if (!def.initialised) {

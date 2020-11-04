@@ -218,7 +218,11 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
         if (!resp) {
           field.convertedValue = ""
           field.value = field.value
-          ValidationAddError(validatorId, "invalid date format", res)
+          ValidationAddError(
+            validatorId,
+            T("AppValidationInvalidDateFormat"),
+            res
+          )
         } else {
           field.convertedValue = newDate
           field.value = getDateValue(newDate, format)
@@ -237,7 +241,11 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
 
           field.convertedValue = parsedVal
         } else {
-          ValidationAddError(validatorId, "invalid number format", res)
+          ValidationAddError(
+            validatorId,
+            T("AppValidationInvalidNumberFormat"),
+            res
+          )
         }
       } else {
         field.convertedValue = null
@@ -263,7 +271,11 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           // we need to to that so it gets transmitted for sure as decimal. elsewise it could end up as an int for the deserialzer backend
           field.convertedValue = parsedVal
         } else {
-          ValidationAddError(validatorId, "invalid number format", res)
+          ValidationAddError(
+            validatorId,
+            T("AppValidationInvalidNumberFormat"),
+            res
+          )
         }
       } else {
         field.convertedValue = null
@@ -538,6 +550,7 @@ export type ValidateFieldType = {
   validationResult: ValidateFieldResult
   oldVal: string
   newVal: string
+  correctedValue: any
   formState: OvlFormState
   isInnerEvent: boolean
 }
@@ -573,6 +586,7 @@ export const SetField: OvlAction<ChangeField> = (value, { actions }) => {
   // purpose of setfield is to use it in custom chagedactions to set other fields values without triggering the full validation (just the warning)
   let field = value.formState.fields[value.fieldId]
   field.dirty = false
+
   actions.ovl.internal.ChangeField(value)
 }
 
@@ -581,7 +595,6 @@ export const ChangeField: OvlAction<ChangeField> = (
   { actions, state, effects }
 ) => {
   let field = value.formState.fields[value.fieldId]
-
   let oldConvertedVal = field.convertedValue
   field.validationResult.valid = true
   field.validationResult.validationMsg = ""
@@ -590,6 +603,8 @@ export const ChangeField: OvlAction<ChangeField> = (
   let newVal = value.value
   let namespace = value.formState.namespace
   field.value = newVal
+  let fn = resolvePath(actions.custom, namespace)
+
   actions.ovl.internal.ValidateDataType({
     fieldId: value.fieldId,
     oldVal: oldConvertedVal,
@@ -599,7 +614,6 @@ export const ChangeField: OvlAction<ChangeField> = (
     isInnerEvent: value.isInnerEvent,
   } as ValidateFieldType)
 
-  let fn = resolvePath(actions.custom, namespace)
   if (field.validationResult.valid) {
     actions.ovl.internal.ValidateSchema({
       fieldId: value.fieldId,
@@ -622,14 +636,19 @@ export const ChangeField: OvlAction<ChangeField> = (
       if (field.validationResult.valid) {
         let validationFnName = "FormValidate"
         if (fn && fn[validationFnName]) {
-          fn[validationFnName](<FormValidate_Type>{
+          let val: FormValidate_Type = {
             fieldId: value.fieldId,
             oldVal: oldConvertedVal,
             newVal: field.value,
             formState: value.formState,
             validationResult: field.validationResult,
             isInnerEvent: value.isInnerEvent,
-          })
+            correctedValue: undefined,
+          }
+          fn[validationFnName](val)
+          if (val.validationResult.valid && val.correctedValue) {
+            field.convertedValue = val.correctedValue
+          }
         }
       }
     }

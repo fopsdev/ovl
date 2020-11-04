@@ -2,6 +2,8 @@
 
 Todos:
 
+- refactor mutiple validations in Forms
+- chek filter selected rows in table... lookslike it hangs rhere with an overlay open or sos
 - check longpress toolbar functionality
 - check update check in offline mode
 
