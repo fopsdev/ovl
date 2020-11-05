@@ -11,8 +11,8 @@ export let tblAudit: OvlTableDef = {
     endpoint: "audit",
   },
   options: {
-    sort: { field: "U_Timestamp", direction: "desc" },
-    paging: { page: 0, pageSize: 200 },
+    initial_sort: { field: "U_Timestamp", direction: "desc" },
+    initial_paging: { page: 0, pageSize: 200 },
   },
   features: {
     page: true,

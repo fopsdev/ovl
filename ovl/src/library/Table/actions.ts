@@ -100,10 +100,10 @@ export const TableClearFilter: OvlAction<TableDataAndDef> = (
   { actions }
 ) => {
   let def = value.def
-  if (def.options.filter.showSelected) {
-    def.options.filter.showSelected = false
+  if (def.uiState.filter.showSelected) {
+    def.uiState.filter.showSelected = false
   } else {
-    def.options.filter.value = ""
+    def.uiState.filter.value = ""
   }
   def.uiState.headerSelected = ""
   actions.ovl.table.TableRefresh({ defId: value.def.id, data: value.data })
@@ -114,9 +114,9 @@ export const TableFilterSelected: OvlAction<TableDataAndDef> = (
   { actions }
 ) => {
   let def = value.def
-  def.options.filter.showSelected = !def.options.filter.showSelected
+  def.uiState.filter.showSelected = !def.uiState.filter.showSelected
   actions.ovl.internal.TableSetPage({
-    paging: value.def.options.paging,
+    paging: value.def.uiState.paging,
     page: 0,
   })
   actions.ovl.table.TableRefresh({ defId: def.id, data: value.data })
@@ -135,25 +135,25 @@ export const TableSelectHeader: OvlAction<HeaderClick> = (
 export const TableSort: OvlAction<SortClick> = (value, { actions }) => {
   let def = value.def
   def.uiState.headerSelected = ""
-  def.options.sort.field = value.key
+  def.uiState.sort.field = value.key
   if (value.ascending) {
-    def.options.sort.direction = "asc"
+    def.uiState.sort.direction = "asc"
   } else {
-    def.options.sort.direction = "desc"
+    def.uiState.sort.direction = "desc"
   }
-  def.options.sortCustom.selected = ""
+  def.uiState.sortCustom.selected = ""
   actions.ovl.table.TableRefresh({ defId: value.def.id, data: value.data })
 }
 
 export const TableFilter: OvlAction<FilterClick> = (value, { actions }) => {
   let def = value.def
   def.uiState.headerSelected = ""
-  def.options.filter.value = value.value
-  def.options.filter.showSelected = false
+  def.uiState.filter.value = value.value
+  def.uiState.filter.showSelected = false
 
   if (value.def.features.page) {
     actions.ovl.internal.TableSetPage({
-      paging: value.def.options.paging,
+      paging: value.def.uiState.paging,
       page: 0,
     })
   }
@@ -405,6 +405,8 @@ export const TableInit: OvlAction<{
   defId: OvlTableDefIds
   data: OvlTableData
   clearData?: boolean
+  keepFilters?: boolean
+  keepSorting?: boolean
 }> = async (value, { actions, state }) => {
   let dataAndState = value.data
   let def = dataAndState.tableDef[value.defId]
@@ -423,14 +425,28 @@ export const TableInit: OvlAction<{
     dataAndState.offlineSeq = 0
     dataAndState.timestamp = 0
     dataAndState.data = {}
-    def.uiState.currentlyAddingKey = undefined
-    def.uiState.dataFilteredAndSorted = []
-    def.uiState.editRow = {}
-    def.uiState.headerSelected = ""
-    def.uiState.needsRefresh = false
-    def.uiState.rowsCount = 0
-    def.uiState.selectedRow = {}
-    def.uiState.viewRow = {}
+  }
+  def.uiState.currentlyAddingKey = undefined
+  def.uiState.dataFilteredAndSorted = []
+  def.uiState.editRow = {}
+  def.uiState.headerSelected = ""
+  def.uiState.needsRefresh = false
+  def.uiState.rowsCount = 0
+  def.uiState.selectedRow = {}
+  def.uiState.viewRow = {}
+  def.uiState.paging = JSON.parse(JSON.stringify(def.options.initial_paging))
+
+  if (value.keepSorting === undefined || value.keepSorting === false) {
+    def.uiState.sort = JSON.parse(JSON.stringify(def.options.initial_sort))
+    def.uiState.sortCustom = JSON.parse(
+      JSON.stringify(def.options.initial_sortCustom)
+    )
+  }
+  if (value.keepFilters === undefined || value.keepFilters === false) {
+    def.uiState.filter = JSON.parse(JSON.stringify(def.options.initial_filter))
+    def.uiState.filterCustom = JSON.parse(
+      JSON.stringify(def.options.initial_filterCustom)
+    )
   }
 }
 
@@ -515,7 +531,7 @@ export const TableRebuild: OvlAction<{
   let lang = state.ovl.language.language
   try {
     let customSortFn = undefined
-    let sortCustom = def.options.sortCustom
+    let sortCustom = def.uiState.sortCustom
     let fn = resolvePath(actions.custom, def.namespace)
     if (sortCustom.selected && sortCustom.sorts[sortCustom.selected]) {
       let functionName = FormCustomSort.replace("%", sortCustom.selected)
@@ -530,9 +546,9 @@ export const TableRebuild: OvlAction<{
       }
     }
     let restable = TableFilterFn({ def, data: value.data })
-    const sortfield = def.options.sort.field
+    const sortfield = def.uiState.sort.field
 
-    const ascending = def.options.sort.direction === "asc" ? 1 : -1
+    const ascending = def.uiState.sort.direction === "asc" ? 1 : -1
     let res: number = 0
     restable = restable.sort((a, b) => {
       if (customSortFn !== undefined) {
@@ -585,7 +601,7 @@ export const TableRebuild: OvlAction<{
     })
     def.uiState.rowsCount = restable.length
     if (def.features.page) {
-      let paging = def.options.paging
+      let paging = def.uiState.paging
       let nrOfPages = Math.ceil(restable.length / paging.pageSize)
       if (paging.page > nrOfPages - 1) {
         paging.page = nrOfPages - 1
@@ -746,10 +762,10 @@ const TablesNeedsRefresh = (data: OvlTableData) => {
   Object.keys(tableDef).forEach((k) => {
     let d: OvlTableDef = tableDef[k]
     if (
-      d.options.sort.field ||
-      d.options.sortCustom.selected ||
-      d.options.filter.value ||
-      Object.keys(d.options.filterCustom).length > 0
+      d.uiState.sort.field ||
+      d.uiState.sortCustom.selected ||
+      d.uiState.filter.value ||
+      Object.keys(d.uiState.filterCustom).length > 0
     )
       d.uiState.needsRefresh = true
   })
@@ -826,11 +842,11 @@ const TableEditSaveRowHelper = async (
     })
   } else {
     if (Object.keys(newData).length > 0) {
-      if (hasFormState && def.options.filter.static) {
-        let filterKeys = Object.keys(def.options.filter.static)
+      if (hasFormState && def.uiState.filter.static) {
+        let filterKeys = Object.keys(def.uiState.filter.static)
         if (isAdd) {
           filterKeys.map((m) => {
-            newData[m] = def.options.filter.static[m]
+            newData[m] = def.uiState.filter.static[m]
           })
         }
       }
@@ -1172,10 +1188,10 @@ export const TableSelectCustomSort: OvlAction<{
   def: OvlTableDef
 }> = (value) => {
   value.def.uiState.headerSelected = ""
-  if (value.def.options.sortCustom.selected !== value.id) {
-    value.def.options.sortCustom.selected = value.id
+  if (value.def.uiState.sortCustom.selected !== value.id) {
+    value.def.uiState.sortCustom.selected = value.id
   } else {
-    value.def.options.sortCustom.selected = ""
+    value.def.uiState.sortCustom.selected = ""
   }
 }
 
@@ -1191,7 +1207,7 @@ export const TableSelectColumnFilter: OvlAction<{
   let columnId = value.columnId
   let filter = def.columns[columnId].filter
   def.uiState.headerSelected = ""
-  value.def.options.filter.showSelected = false
+  value.def.uiState.filter.showSelected = false
   if (key === "@@ovl_all") {
     filter.enabled = false
     filter.selected = ""
@@ -1218,19 +1234,19 @@ export const TableSelectCustomFilter: OvlAction<{
 }> = (value) => {
   let def = value.def
   let id = value.id
-  let filterCustom = def.options.filterCustom
+  let filterCustom = def.uiState.filterCustom
   def.uiState.headerSelected = ""
   if (!filterCustom[id].active) {
     let isSingle = filterCustom[id].type === "single"
     // make sure only one filter in the "single" group is active
     if (isSingle) {
-      Object.keys(def.options.filterCustom)
+      Object.keys(def.uiState.filterCustom)
         .filter((k) => filterCustom[k].type === "single")
         .forEach((k) => {
           filterCustom[k].active = false
         })
     }
-    value.def.options.filter.showSelected = false
+    value.def.uiState.filter.showSelected = false
     filterCustom[id].active = true
   } else {
     filterCustom[id].active = false

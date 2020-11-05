@@ -38,8 +38,8 @@ export let tblMobileTimeRecording: OvlTableDef = {
     dbInsertMode: "UDTAutoGUIDBoth",
   },
   options: {
-    filter: { value: "", showSelected: false, static: { U_Date: "" } },
-    sort: { direction: "desc", field: "U_FromTime" },
+    initial_filter: { value: "", showSelected: false, static: { U_Date: "" } },
+    initial_sort: { direction: "desc", field: "U_FromTime" },
   },
   columns: {
     U_FromTime: {

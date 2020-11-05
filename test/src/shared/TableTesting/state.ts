@@ -43,7 +43,7 @@ export let tblTableTesting: OvlTableDef = {
         translationKey: "PortalValidValues",
       },
     },
-    paging: { page: 0, pageSize: 3 },
+    initial_paging: { page: 0, pageSize: 3 },
     view: { viewType: "custom" },
   },
   database: {
@@ -165,7 +165,7 @@ export let tblTableTesting2: OvlTableDef = {
     view: {
       customCaption: { translationKey: "PortalDetailView" },
     },
-    sortCustom: {
+    initial_sortCustom: {
       sorts: {
         alphaThenMemo: {
           translationKey: "PortalSortAlphaThenMemo",
@@ -182,7 +182,7 @@ export let tblTableTesting2: OvlTableDef = {
       },
       selected: "alphaThenMemo",
     },
-    filterCustom: {
+    initial_filterCustom: {
       alphaStartsWithA: {
         active: false,
         translationKey: "PortalFilterAlphaStartsWithA",

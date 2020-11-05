@@ -181,7 +181,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     //@ts-ignore
     let id = e.target.id.split("_")[1]
     let def = this.headerMenu.def.def
-    let sortCustom = def.options.sortCustom
+    let sortCustom = def.uiState.sortCustom
     if (sortCustom.selected !== id) {
     }
 
@@ -295,15 +295,15 @@ export class TableHeaderMenu extends OvlBaseElement {
     let ascendingDisabled = ""
     let descendingDisabled = ""
 
-    if (selectedColumn === def.options.sort.field) {
-      if (def.options.sort.direction === "asc") {
+    if (selectedColumn === def.uiState.sort.field) {
+      if (def.uiState.sort.direction === "asc") {
         ascendingDisabled = "menuDisabled"
       }
-      if (def.options.sort.direction === "desc") {
+      if (def.uiState.sort.direction === "desc") {
         descendingDisabled = "menuDisabled"
       }
       if (
-        def.options.sort.field === def.database.dataIdField &&
+        def.uiState.sort.field === def.database.dataIdField &&
         def.database.dbInsertMode.indexOf("GUID") > -1
       ) {
         ascendingDisabled = "menuDisabled"
@@ -600,7 +600,7 @@ export class TableHeaderMenu extends OvlBaseElement {
       }
       let filterSelectedRows
       if (def.features.filter) {
-        if (!def.options.filter.showSelected) {
+        if (!def.uiState.filter.showSelected) {
           filterSelectedRows = html`
             <li role="listitem" class="fd-list__item fd-list__item--link">
               <a
@@ -760,7 +760,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     }
 
     let customSort
-    let sortCustom = def.options.sortCustom
+    let sortCustom = def.uiState.sortCustom
     let sortCustomKeys = Object.keys(sortCustom.sorts)
     if (sortCustomKeys.length > 0) {
       let options = sortCustomKeys.map((k) => {
@@ -804,7 +804,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     }
 
     let customFilter
-    let filterCustom = def.options.filterCustom
+    let filterCustom = def.uiState.filterCustom
     let filterCustomKeys = Object.keys(filterCustom)
     if (filterCustomKeys.length > 0) {
       let options = filterCustomKeys.map((k) => {
@@ -926,14 +926,14 @@ export class TableHeaderMenu extends OvlBaseElement {
             style="width: 88%;"
             class="fd-input"
             type="text"
-            value="${def.options.filter.value}"
+            value="${def.uiState.filter.value}"
           />
           <button
             @click="${this.handleFilterSetClick}"
             class="fd-button sap-icon--filter"
           ></button>
           <button
-            ?disabled=${!def.options.filter.value}
+            ?disabled=${!def.uiState.filter.value}
             @click="${this.handleFilterUnSetClick}"
             class="fd-button sap-icon--clear-filter"
           ></button>
@@ -976,7 +976,7 @@ export class TableHeaderMenu extends OvlBaseElement {
   async getFooter() {
     let navcontrol
     let def = this.headerMenu.def.def
-    let paging = this.headerMenu.def.def.options.paging
+    let paging = this.headerMenu.def.def.uiState.paging
     if (
       def.features.page &&
       def.uiState.dataFilteredAndSorted.length > paging.pageSize

@@ -28,7 +28,7 @@ export class TableNavControl extends OvlBaseElement {
       data: this.nav.tableData.data,
     })
     this.actions.ovl.internal.TableSetPage({
-      paging: this.nav.tableData.def.options.paging,
+      paging: this.nav.tableData.def.uiState.paging,
       page: page,
     })
   }
@@ -75,12 +75,12 @@ export class TableNavControl extends OvlBaseElement {
 
       if (
         feature.filter &&
-        (tableDef.options.filter.value ||
-          tableDef.options.filter.showSelected) &&
+        (tableDef.uiState.filter.value ||
+          tableDef.uiState.filter.showSelected) &&
         !feature.noButtonsAtTheBottom
       ) {
         let filterClearTooltip = "Filter aufheben"
-        if (tableDef.options.filter.showSelected) {
+        if (tableDef.uiState.filter.showSelected) {
           filterClearTooltip = "Filter Selektion aufheben"
         }
         filterClearButton = html`
@@ -141,7 +141,7 @@ export class TableNavControl extends OvlBaseElement {
 
       let tablenav
       let rows = this.nav.tableData.data.data
-      let paging = this.nav.tableData.def.options.paging
+      let paging = this.nav.tableData.def.uiState.paging
       let dataFilteredAndSorted = this.nav.tableData.def.uiState
         .dataFilteredAndSorted
       if (feature.page) {

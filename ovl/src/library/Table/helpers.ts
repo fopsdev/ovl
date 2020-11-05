@@ -163,7 +163,7 @@ export const addRowPage = (def: OvlTableDef) => {
     let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
     let count = dataFilteredAndSorted.length
     def.uiState.rowsCount = count
-    let paging = def.options.paging
+    let paging = def.uiState.paging
     if (def.options.addedRowsPosition === "bottom") {
       let pages = Math.ceil(count / paging.pageSize) - 1
       paging.page = pages
@@ -180,7 +180,7 @@ export const setPage = (data: OvlTableData) => {
   Object.keys(data.tableDef).forEach((k) => {
     let def = data.tableDef[k]
     if (def.features.page) {
-      let paging = def.options.paging
+      let paging = def.uiState.paging
       let rowsCount = def.uiState.rowsCount
       let dataFilteredAndSorted = def.uiState.dataFilteredAndSorted
       let count = dataFilteredAndSorted.length
@@ -214,13 +214,13 @@ export const setRefresh = (
       if (
         !needsRefresh &&
         tableDef.features.filter &&
-        tableDef.options.filter.value !== ""
+        tableDef.uiState.filter.value !== ""
       ) {
         needsRefresh = true
       }
       if (!needsRefresh) {
         // there is potentially also a refresh needed if there is any active customSort or customFilter
-        let sortCustom = tableDef.options.sortCustom
+        let sortCustom = tableDef.uiState.sortCustom
 
         if (
           sortCustom.sorts &&
@@ -231,7 +231,7 @@ export const setRefresh = (
         }
       }
       if (!needsRefresh) {
-        let filterCustom = tableDef.options.filterCustom
+        let filterCustom = tableDef.uiState.filterCustom
         needsRefresh = Object.keys(filterCustom).some(
           (s) => filterCustom[s].active
         )
@@ -241,7 +241,7 @@ export const setRefresh = (
         Object.keys(updatedData).forEach((k) => {
           if (updatedData[k] !== def.data.data[key][k]) {
             // now check if an updated column is a sort column. this would also result in a refresh
-            if (k === tableDef.options.sort.field) {
+            if (k === tableDef.uiState.sort.field) {
               needsRefresh = true
             }
             // as well check if its a columnSort
@@ -335,19 +335,22 @@ export const initTableState = (
     if (options.maxRows === undefined) {
       options.maxRows = { maxRows: -1, showHint: true }
     }
-    if (options.filter === undefined) {
-      options.filter = { showSelected: false, value: "", static: {} }
+    if (options.initial_filter === undefined) {
+      options.initial_filter = { showSelected: false, value: "", static: {} }
     }
-    if (options.filter.static === undefined) {
-      options.filter.static = {}
-    }
-
-    if (options.sort === undefined) {
-      options.sort = { direction: "asc", field: def.database.dataIdField }
+    if (options.initial_filter.static === undefined) {
+      options.initial_filter.static = {}
     }
 
-    if (options.paging === undefined) {
-      options.paging = { page: 0, pageSize: 10000 }
+    if (options.initial_sort === undefined) {
+      options.initial_sort = {
+        direction: "asc",
+        field: def.database.dataIdField,
+      }
+    }
+
+    if (options.initial_paging === undefined) {
+      options.initial_paging = { page: 0, pageSize: 10000 }
     }
 
     if (options.edit === undefined) {
@@ -360,12 +363,12 @@ export const initTableState = (
       options.view.viewType = "default"
     }
 
-    if (options.sortCustom === undefined) {
-      options.sortCustom = { sorts: {}, selected: "" }
+    if (options.initial_sortCustom === undefined) {
+      options.initial_sortCustom = { sorts: {}, selected: "" }
     }
 
-    if (options.filterCustom === undefined) {
-      options.filterCustom = {}
+    if (options.initial_filterCustom === undefined) {
+      options.initial_filterCustom = {}
     }
 
     if (
@@ -395,6 +398,15 @@ export const initTableState = (
     if (def.uiState === undefined) {
       def.uiState = {}
     }
+    def.uiState.sort = JSON.parse(JSON.stringify(def.options.initial_sort))
+    def.uiState.sortCustom = JSON.parse(
+      JSON.stringify(def.options.initial_sortCustom)
+    )
+    def.uiState.paging = JSON.parse(JSON.stringify(def.options.initial_paging))
+    def.uiState.filter = JSON.parse(JSON.stringify(def.options.initial_filter))
+    def.uiState.filterCustom = JSON.parse(
+      JSON.stringify(def.options.initial_filterCustom)
+    )
     let uiState = def.uiState
 
     if (uiState.viewRow === undefined) {
@@ -502,8 +514,8 @@ export const initTableState = (
         sortable: true,
       }
     }
-    if (def.options.sort.field && !def.columns[def.options.sort.field]) {
-      columns[def.options.sort.field] = {
+    if (def.uiState.sort.field && !def.columns[def.uiState.sort.field]) {
+      columns[def.uiState.sort.field] = {
         ui: { visibility: "none" },
         sortable: true,
       }
@@ -614,7 +626,7 @@ export const TableFilterFn = (
   let data = tableDataAndDef.data.data
   let columns = def.columns
   let restable = Object.keys(data).filter((f) => f.indexOf(ovltemp) < 0)
-  const staticFilter = def.options.filter.static
+  const staticFilter = def.uiState.filter.static
   // make sure that
   // 1. staticFilter gets applied (for master - details scenarios)
   // 2. temp rows in add mode get filtered out (they are handled in addRwos array)
@@ -629,7 +641,7 @@ export const TableFilterFn = (
     )
   }
 
-  let filterCustom = def.options.filterCustom
+  let filterCustom = def.uiState.filterCustom
   let customFilter = Object.keys(filterCustom).filter(
     (k) => filterCustom[k].active
   )
@@ -666,7 +678,7 @@ export const TableFilterFn = (
 
   if (
     calledFromColumnFilterId === undefined &&
-    def.options.filter.showSelected
+    def.uiState.filter.showSelected
   ) {
     return Object.keys(selectedRow).filter((k) => selectedRow[k].selected)
   }
@@ -717,7 +729,7 @@ export const TableFilterFn = (
   if (!def.features.filter) {
     return restable
   }
-  let hasTableFilter = def.options.filter.value !== ""
+  let hasTableFilter = def.uiState.filter.value !== ""
   //and the tableFilter which checks all the columns
   if (hasTableFilter) {
     restable = restable.filter((rowKey) => {
@@ -732,7 +744,7 @@ export const TableFilterFn = (
         return (
           dispValue
             .toLowerCase()
-            .indexOf(def.options.filter.value.toLowerCase()) > -1
+            .indexOf(def.uiState.filter.value.toLowerCase()) > -1
         )
       })
     })

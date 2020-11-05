@@ -151,6 +151,11 @@ export type OvlTableDef = {
     editRow?: { [key: string]: SelectedEditRow }
     viewRow?: { [key: string]: SelectedViewRow }
     currentlyAddingKey?: string
+    sort?: Sort
+    sortCustom?: { sorts: { [key: string]: CustomSort }; selected: string }
+    paging?: Paging
+    filter?: Filter
+    filterCustom?: { [key: string]: CustomFilter }
   }
   options?: {
     addedRowsPosition?: "bottom" /* | "top" */
@@ -171,11 +176,14 @@ export type OvlTableDef = {
 
     navType?: "top/bottom" | "top" | "bottom"
     maxRows?: { maxRows: number; showHint: boolean; showInTitle?: boolean }
-    sort?: Sort
-    sortCustom?: { sorts: { [key: string]: CustomSort }; selected: string }
-    paging?: Paging
-    filter?: Filter
-    filterCustom?: { [key: string]: CustomFilter }
+    initial_sort?: Sort
+    initial_sortCustom?: {
+      sorts: { [key: string]: CustomSort }
+      selected: string
+    }
+    initial_paging?: Paging
+    initial_filter?: Filter
+    initial_filterCustom?: { [key: string]: CustomFilter }
     tabs?: Tabs
     edit?: {
       customCaption?: {
@@ -616,15 +624,15 @@ export class TableHeader extends OvlBaseElement {
           }
 
           let sortdirection = ""
-          let sortCustom = def.options.sortCustom
+          let sortCustom = def.uiState.sortCustom
           let hasCustomSort =
             sortCustom.sorts &&
             sortCustom.selected &&
             sortCustom.sorts[sortCustom.selected]
           if (column.sortable && !hasCustomSort) {
             sortdirection = "fd-table__sort-column"
-            if (k === def.options.sort.field) {
-              if (def.options.sort.direction === "asc") {
+            if (k === def.uiState.sort.field) {
+              if (def.uiState.sort.direction === "asc") {
                 sortdirection += " fd-table__sort-column--asc"
               } else {
                 sortdirection += " fd-table__sort-column--dsc"
@@ -741,7 +749,7 @@ export class TableHeader extends OvlBaseElement {
       // get all the committed rows (no temporary keys)
       let dataRows = dataFilteredAndSorted
       let filteredRowsCount = dataRows.length
-      let paging = def.options.paging
+      let paging = def.uiState.paging
       // do paging only on committed rows
       if (def.features.page) {
         dataRows = dataRows.slice(
@@ -900,8 +908,8 @@ export class TableHeader extends OvlBaseElement {
         title = T(def.titleTranslationKey)
       }
       // check if filters and sort need to be put in title
-      let filterCustom = def.options.filterCustom
-      let sortCustom = def.options.sortCustom
+      let filterCustom = def.uiState.filterCustom
+      let sortCustom = def.uiState.sortCustom
 
       let sortText = ""
       if (
