@@ -578,7 +578,9 @@ export type TouchField = {
 }
 
 export const TouchField: OvlAction<TouchField> = (value) => {
-  value.formState.fields[value.fieldId].watched = true
+  let field = value.formState.fields[value.fieldId]
+  field.value = field.convertedValue
+  field.watched = true
   value.formState.lastTouchedField = value.fieldId
 }
 
