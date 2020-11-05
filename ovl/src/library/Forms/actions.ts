@@ -236,7 +236,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
     case "int": {
       if (val) {
         let parsedVal = parseInt(val)
-        if (parsedVal) {
+        if (parsedVal || parsedVal === 0) {
           field.value = parsedVal.toString()
 
           field.convertedValue = parsedVal

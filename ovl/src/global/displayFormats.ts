@@ -18,6 +18,14 @@ export let displayFormats = {
       minimumFractionDigits: 4,
       maximumFractionDigits: 4,
     }),
+    _3Digits: new Intl.NumberFormat(mostPreferedLanguage, {
+      minimumFractionDigits: 3,
+      maximumFractionDigits: 3,
+    }),
+    _0Digits: new Intl.NumberFormat(mostPreferedLanguage, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }),
   },
   date: {
     default: new Intl.DateTimeFormat(mostPreferedLanguage, {

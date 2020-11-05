@@ -14,6 +14,8 @@ import { ListState } from "./Controls/ListControl"
 export type FieldFormat =
   | "2digits"
   | "4digits"
+  | "3digits"
+  | "0digits"
   | "2digitsYear"
   | "4digitsYear"
   | "timestamp"

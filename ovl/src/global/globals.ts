@@ -89,8 +89,18 @@ export const getDateValue = (value: string, format?: FieldFormat) => {
 export const getDecimalValue = (value: number, format?: FieldFormat) => {
   let fmt = displayFormats.decimal.default
 
-  if (format && format === "4digits") {
-    fmt = displayFormats.decimal._4Digits
+  if (format) {
+    switch (format) {
+      case "4digits":
+        fmt = displayFormats.decimal._4Digits
+        break
+      case "3digits":
+        fmt = displayFormats.decimal._3Digits
+        break
+      case "0digits":
+        fmt = displayFormats.decimal._0Digits
+        break
+    }
   }
   return fmt.format(value)
 }

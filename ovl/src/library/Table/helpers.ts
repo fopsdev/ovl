@@ -95,7 +95,7 @@ export const getDisplayValue = (
       }
       return getDecimalValue(value, format)
     default:
-      if (!value) {
+      if (!value && value !== 0) {
         value = ""
       }
       return value.toString()
