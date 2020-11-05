@@ -2,6 +2,7 @@ import { ResultType, ModalDialogState } from "./Dialog/Dialog"
 import {
   TableSetViewTab,
   TableRefresh,
+  TableInit,
   TableRebuild,
   TableSelectRow,
   TableClearFilter,
@@ -41,6 +42,7 @@ import { OvlAction } from "../ovlTypes"
 export {
   TableSetViewTab,
   TableRefresh,
+  TableInit,
   TableRebuild,
   TableSelectRow,
   TableClearFilter,

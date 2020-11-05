@@ -64,6 +64,7 @@ import {
   SetIndicatorClose,
   SetIndicatorOpen,
   TableRefresh,
+  TableInit,
   TableRebuild,
   TableSelectRow,
   TableClearFilter,
@@ -105,6 +106,7 @@ let indicator = { SetIndicatorOpen, SetIndicatorClose }
 
 let table = {
   TableRefresh,
+  TableInit,
   TableRebuild,
   TableSelectRow,
   TableEditRow,

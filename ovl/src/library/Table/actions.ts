@@ -400,7 +400,40 @@ export const TableRefreshDataFromServer: OvlAction<{
 
   value.data.timestamp = Date.now()
 }
-let lastRefreshMsg: number = 0
+
+export const TableInit: OvlAction<{
+  defId: OvlTableDefIds
+  data: OvlTableData
+  clearData?: boolean
+}> = async (value, { actions, state }) => {
+  let dataAndState = value.data
+  let def = dataAndState.tableDef[value.defId]
+
+  initTableState(def, dataAndState, value.defId, state.ovl.uiState.isMobile)
+  def.initialised = true
+  if (value.clearData) {
+    // set default values
+    dataAndState.index = {}
+    dataAndState.offline = {
+      addedKeys: {},
+      deletedKeys: {},
+      errors: {},
+      updatedKeys: {},
+    }
+    dataAndState.offlineSeq = 0
+    dataAndState.timestamp = 0
+    dataAndState.data = {}
+    def.uiState.currentlyAddingKey = undefined
+    def.uiState.dataFilteredAndSorted = []
+    def.uiState.editRow = {}
+    def.uiState.headerSelected = ""
+    def.uiState.needsRefresh = false
+    def.uiState.rowsCount = 0
+    def.uiState.selectedRow = {}
+    def.uiState.viewRow = {}
+  }
+}
+
 export const TableRefresh: OvlAction<{
   ignoreRefreshedMessageSnack?: boolean
   refreshServerDataIfOlderThan?: number
