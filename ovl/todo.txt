@@ -2,6 +2,7 @@
 
 Todos:
 
+- crete TableInit Method which clears data, tablestate, ... 
 - implement 0digits display for int datatype
 - simplify css styling for a whole column in table (set backgound opacity, needs another conatiner for the value becaue its opacity should be 1)
 - refactor mutiple validations in Forms
