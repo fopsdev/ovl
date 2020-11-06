@@ -37,8 +37,6 @@ export class OvlBaseDialog extends OvlBaseElement {
   dialogType: OvlDialog
   zIndex: number
   opened: boolean
-  elementIdToFocusAfterClose: string
-  elementToFocusAfterClose: Element
 
   closedCallbackFn: any
   dismissCallbackFn: any
@@ -53,10 +51,10 @@ export class OvlBaseDialog extends OvlBaseElement {
     let dialogState = this.state.ovl.dialogs[this.dialogType]
     if (!this.opened) {
       if (!dialogState.elementIdToFocusAfterClose) {
-        this.elementToFocusAfterClose = document.activeElement
-      } else {
-        this.elementIdToFocusAfterClose = dialogState.elementIdToFocusAfterClose
-      }
+        dialogState.elementIdToFocusAfterClose = document.activeElement.id
+      } // else {
+      //   dialogState.elementIdToFocusAfterClose = dialogState.elementIdToFocusAfterClose
+      // }
       let elementToFocus = dialogState.elementIdToFocusAfterOpen
       if (!elementToFocus) {
         elementToFocus = "ovl-dialog"
@@ -176,6 +174,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       if (el) {
         el.classList.remove("fadeInDialog")
         el.classList.add("fadeOutDialog")
+        console.log("added fadeOutDialog class")
       }
     }
   }
@@ -183,25 +182,29 @@ export class OvlBaseDialog extends OvlBaseElement {
   handleAnimationEnd = (e: AnimationEvent) => {
     e.stopPropagation()
     if (e.animationName === "fadeOutDialog") {
+      console.log("fadeOutDialog catched...")
       this.removeDialog()
     }
   }
   removeDialog = () => {
     this.opened = false
+    let dlg = this.state.ovl.dialogs[this.dialogType]
     if (this.closedCallbackFn) {
       this.closedCallbackFn()
     }
-    if (this.elementIdToFocusAfterClose) {
-      document.getElementById(this.elementIdToFocusAfterClose).focus()
-    } else if (this.elementToFocusAfterClose) {
-      //@ts-ignore
-      if (this.elementToFocusAfterClose.focus) {
-        //@ts-ignore
-        this.elementToFocusAfterClose.focus()
-      }
-    }
-    this.state.ovl.dialogs[this.dialogType].visible = false
-    this.state.ovl.dialogs[this.dialogType].closing = false
+
+    if (dlg.elementIdToFocusAfterClose) {
+      document.getElementById(dlg.elementIdToFocusAfterClose).focus()
+    } //else if (dlg.elementToFocusAfterClose) {
+    //   //@ts-ignore
+    //   if (dlg.elementToFocusAfterClose.focus) {
+    //     //@ts-ignore
+    //     //myObj.myAlert.call(window, 'this is an alert')
+    //     dlg.elementToFocusAfterClose.focus.call(window)
+    //   }
+    // }
+    dlg.visible = false
+    dlg.closing = false
 
     // also reset form if necessary
     if (this.state.ovl.screens.nav.formTypeToReset) {
@@ -222,7 +225,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (!this.state.ovl.dialogs[this.dialogType].visible) {
       return null
     }
-
+    console.log("check for closing...")
     if (this.state.ovl.dialogs[this.dialogType].closing) {
       this.closeDialog()
       return undefined

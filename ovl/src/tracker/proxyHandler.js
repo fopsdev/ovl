@@ -82,11 +82,11 @@ export function createDeepProxy(target) {
             pathToTrack = [...path, key].join(".")
             //console.log(pathToTrack)
           }
+          // if (pathToTrackParent) {
+          //   checkForCallbacks(pathToTrackParent)
+          // }
           if (pathToTrack) {
             checkForCallbacks(pathToTrack)
-          }
-          if (pathToTrackParent) {
-            checkForCallbacks(pathToTrackParent)
           }
         }
         return true

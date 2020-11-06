@@ -1,4 +1,9 @@
-import { OvlBaseDialog, DialogParts, DialogType } from "./OvlDialogBase"
+import {
+  OvlBaseDialog,
+  DialogParts,
+  DialogType,
+  DialogsState,
+} from "./OvlDialogBase"
 import { OvlDialog } from "../.."
 import { TemplateResult } from "lit-html"
 
@@ -44,12 +49,28 @@ export class OvlDialogHolder extends OvlBaseDialog {
   }
 
   async getUI() {
+    console.log("checkDialog in Holder")
     let chk = this.checkDialog()
     if (chk != "go on") {
       return chk
     }
+
+    //now that we are here that means there is an dialog opening
+    // so if there are other dialogs in closing state steal the focusAfterClose from them...
+    let dialogs = this.state.ovl.dialogs
+    let dialogClosingKey = Object.keys(dialogs).filter((k) => {
+      let dlg: DialogsState = dialogs[k]
+      return dlg.closing
+    })
+    if (dialogClosingKey.length > 0) {
+      let closingDialog: DialogsState = dialogs[dialogClosingKey[0]]
+      dialogs[this.dialogType].elementIdToFocusAfterClose =
+        closingDialog.elementIdToFocusAfterClose
+      closingDialog.elementIdToFocusAfterClose = undefined
+    }
+
     return await this.track(async () => {
-      this.state.ovl.dialogs[this.dialogType].closing
+      dialogs[this.dialogType].closing
       let d = this.dialogHolderParams.dialogParts
       return await this.getDialogTemplate({
         title: d.title ? await d.title() : undefined,
