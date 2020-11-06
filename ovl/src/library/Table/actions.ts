@@ -1263,6 +1263,15 @@ export const TableEditClose: OvlAction<{
   data: OvlTableData
 }> = (value, { actions }) => {
   let editRow = value.tableDef.uiState.editRow
+  if (value.tableDef.options.edit.editType === "inline") {
+    setTimeout(() => {
+      if (value.tableDef.uiState.editInlineLastFocus) {
+        document
+          .getElementById(value.tableDef.uiState.editInlineLastFocus)
+          .focus()
+      }
+    }, 300)
+  }
   if (editRow[value.key]) {
     editRow[value.key].selected = false
     editRow[value.key].mode = undefined
@@ -1297,6 +1306,7 @@ export const TableEditRow: OvlAction<{
   actions.ovl.form.InitForm(initForm)
   let editRow = value.def.uiState.editRow
   editRow[value.key].selected = true
+  def.uiState.editInlineLastFocus = document.activeElement.id
   if (editRow[value.key].mode === undefined) {
     editRow[value.key].mode = "edit"
   }

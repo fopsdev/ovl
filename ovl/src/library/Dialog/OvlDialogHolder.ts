@@ -49,7 +49,6 @@ export class OvlDialogHolder extends OvlBaseDialog {
   }
 
   async getUI() {
-    console.log("checkDialog in Holder")
     let chk = this.checkDialog()
     if (chk != "go on") {
       return chk

@@ -174,7 +174,6 @@ export class OvlBaseDialog extends OvlBaseElement {
       if (el) {
         el.classList.remove("fadeInDialog")
         el.classList.add("fadeOutDialog")
-        console.log("added fadeOutDialog class")
       }
     }
   }
@@ -182,7 +181,6 @@ export class OvlBaseDialog extends OvlBaseElement {
   handleAnimationEnd = (e: AnimationEvent) => {
     e.stopPropagation()
     if (e.animationName === "fadeOutDialog") {
-      console.log("fadeOutDialog catched...")
       this.removeDialog()
     }
   }
@@ -225,7 +223,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (!this.state.ovl.dialogs[this.dialogType].visible) {
       return null
     }
-    console.log("check for closing...")
+
     if (this.state.ovl.dialogs[this.dialogType].closing) {
       this.closeDialog()
       return undefined

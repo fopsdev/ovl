@@ -97,7 +97,6 @@ export class CompMobileTimeEntry extends OvlFormElement {
   }
 
   async handleDelete(e: Event, key: string) {
-    console.log("handel del")
     let def = this.state.app.testtables.timeentries.tableDef
       .mobiletimerecording1
     let data = this.state.app.testtables.timeentries

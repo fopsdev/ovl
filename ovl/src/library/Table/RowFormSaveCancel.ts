@@ -11,6 +11,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
   props: any
   rowData: EditRowSaveCancelDef
   formState: OvlFormState
+
   init() {
     this.rowData = this.props()
     this.formState = this.state.ovl.forms["TableRowEdit"][
@@ -27,9 +28,14 @@ export class TableRowSaveCancel extends OvlBaseElement {
           formState: this.formState,
         })
         if (this.formState.valid) {
-          this.rowData.tableDef.uiState.editRow[
-            this.rowData.key
-          ].selected = false
+          // this.rowData.tableDef.uiState.editRow[
+          //   this.rowData.key
+          // ].selected = false
+          this.actions.ovl.table.TableEditClose({
+            key: this.rowData.key,
+            tableDef: this.rowData.tableDef,
+            data: this.rowData.data,
+          })
         }
       }
     }
@@ -68,6 +74,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
             tableDef: this.rowData.tableDef,
             data: this.rowData.data,
           })
+          // reset focus to this last known pos
         }
       }
     }

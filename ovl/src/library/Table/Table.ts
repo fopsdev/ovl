@@ -149,6 +149,7 @@ export type OvlTableDef = {
     rowsCount?: number
     selectedRow?: { [key: string]: SelectedRow }
     editRow?: { [key: string]: SelectedEditRow }
+    editInlineLastFocus?: string
     viewRow?: { [key: string]: SelectedViewRow }
     currentlyAddingKey?: string
     sort?: Sort

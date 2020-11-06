@@ -118,6 +118,7 @@ export class TableNavControl extends OvlBaseElement {
           <button
             @click=${(e) => this.handleAddRowClick(e)}
             class="fd-button ${navbuttonsclass} sap-icon--add"
+            id="ovl_nav_add"
             title="Datensatz hinzufügen"
           ></button>
         `
@@ -135,6 +136,7 @@ export class TableNavControl extends OvlBaseElement {
             title="Tabellenfunktionen"
             @click="${(e) => this.handleMoreTableOptionsClick(e)}"
             class="fd-button ${navbuttonsclass} sap-icon--overflow"
+            id="ovl_nav_more"
           ></button>
         `
       }
