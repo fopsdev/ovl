@@ -50,9 +50,8 @@ export class OvlBaseDialog extends OvlBaseElement {
 
     let dialogState = this.state.ovl.dialogs[this.dialogType]
     if (!this.opened) {
-      if (!dialogState.elementIdToFocusAfterClose) {
-        dialogState.elementIdToFocusAfterClose = document.activeElement.id
-      } // else {
+      dialogState.elementIdToFocusAfterClose = document.activeElement.id
+      // else {
       //   dialogState.elementIdToFocusAfterClose = dialogState.elementIdToFocusAfterClose
       // }
       let elementToFocus = dialogState.elementIdToFocusAfterOpen
@@ -190,17 +189,13 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (this.closedCallbackFn) {
       this.closedCallbackFn()
     }
-
+    debugger
     if (dlg.elementIdToFocusAfterClose) {
-      document.getElementById(dlg.elementIdToFocusAfterClose).focus()
-    } //else if (dlg.elementToFocusAfterClose) {
-    //   //@ts-ignore
-    //   if (dlg.elementToFocusAfterClose.focus) {
-    //     //@ts-ignore
-    //     //myObj.myAlert.call(window, 'this is an alert')
-    //     dlg.elementToFocusAfterClose.focus.call(window)
-    //   }
-    // }
+      let el = document.getElementById(dlg.elementIdToFocusAfterClose)
+      if (el && el.focus) {
+        el.focus()
+      }
+    }
     dlg.visible = false
     dlg.closing = false
 

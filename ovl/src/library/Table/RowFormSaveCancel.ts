@@ -60,7 +60,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
             this.rowData.tableDef.database.dataIdField
           ].indexOf(ovltemp) > -1
 
-        if (cancel || isAdd) {
+        if (cancel) {
           if (isAdd) {
             this.actions.ovl.internal.TableDeleteRowFromData({
               key: this.rowData.key,
@@ -98,6 +98,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
           >
             <button
               @click=${handleSave}
+              id="ovl_row_save_save"
               title="Datensatz speichern"
               style="border-top-left-radius: 0px; border-left: 2px solid #0cd7ed;border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-right:none;"
               class="${acceptEnabled}"
@@ -106,6 +107,7 @@ export class TableRowSaveCancel extends OvlBaseElement {
             <button
               @mousedown=${handleCancel}
               @click=${handleCancel}
+              id="ovl_row_save_cancel"
               title="Abbrechen"
               style="border-top-right-radius: 0px; border-right: 2px solid #0cd7ed; border-bottom: 2px solid #0cd7ed;border-top: 2px solid #ffffff; border-left:none;"
               class="fd-button fd-button--negative sap-icon--decline"
