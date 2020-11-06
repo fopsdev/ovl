@@ -455,6 +455,7 @@ export const TableRefresh: OvlAction<{
   refreshServerDataIfOlderThan?: number
   forceServerDataRefresh?: boolean
   localData?: {}
+  staticFilter?: {}
   defId: OvlTableDefIds
   data: OvlTableData
 }> = async (value, { actions, state, effects }) => {
@@ -466,6 +467,9 @@ export const TableRefresh: OvlAction<{
   //   def.initialised = true
   //   return
   // }
+  if (value.staticFilter) {
+    def.uiState.filter.static = value.staticFilter
+  }
   let ignoreRefreshedMessageSnack = value.ignoreRefreshedMessageSnack
   let forceServerDataRefresh = value.forceServerDataRefresh
   let refreshedBecauseOfAge = false

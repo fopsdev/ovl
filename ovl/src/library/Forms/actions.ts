@@ -22,6 +22,7 @@ import { getFormFields, ValidationAddError } from "./helper"
 import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
 import { GetRowFromFormState } from "./Controls/helpers"
 import { OvlAction } from "../../ovlTypes"
+import { getDisplayValue } from "../Table/helpers"
 export { FillListControl }
 
 export type Field = {
@@ -579,7 +580,14 @@ export type TouchField = {
 
 export const TouchField: OvlAction<TouchField> = (value) => {
   let field = value.formState.fields[value.fieldId]
-  field.value = field.convertedValue
+
+  field.value = getDisplayValue(
+    field.fieldKey,
+    { ui: field.ui, list: field.list, type: field.type },
+    GetRowFromFormState(value.formState),
+    value.formState.namespace
+  )
+
   field.watched = true
   value.formState.lastTouchedField = value.fieldId
 }

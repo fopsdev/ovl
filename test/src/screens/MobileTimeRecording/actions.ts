@@ -21,16 +21,14 @@ export const MarkAsSynced: OvlAction<string[]> = (
 export const SetMobileTimeEntrySelectedDate: OvlAction<{
   selected: string
 }> = async (value, { state, actions }) => {
-  // value.def.uiState.filter.static.U_Date = value.selected
-  // state.ovl.screens.screens.MobileTimeEntry.selectedDate = value.selected
   let data = state.app.testtables.timeentries
-  let def = state.app.testtables.timeentries.tableDef.mobiletimerecording1
-  def.uiState.filter.static.U_Date = value.selected
+  let staticFilter = { U_Date: value.selected }
 
   await actions.ovl.table.TableRefresh({
     defId: "mobiletimerecording1",
     data,
     forceServerDataRefresh: true,
+    staticFilter,
   })
 }
 
