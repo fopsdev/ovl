@@ -400,11 +400,16 @@ export const TableRefreshDataFromServer: OvlAction<{
 
   value.data.timestamp = Date.now()
 }
-
+export type TableInitResetStrategy =
+  | "ClearData"
+  | "ClearDataAndKeepFilters"
+  | "ClearDataAndKeepSorting"
+  | "ClearDataAndKeepSortingAndFiltering"
+  | "SettingsReset"
 export const TableInit: OvlAction<{
   defId: OvlTableDefIds
   data: OvlTableData
-  clearData?: boolean
+  resetStrategy?: TableInitResetStrategy
   keepFilters?: boolean
   keepSorting?: boolean
 }> = async (value, { actions, state }) => {
@@ -413,7 +418,13 @@ export const TableInit: OvlAction<{
 
   initTableState(def, dataAndState, value.defId, state.ovl.uiState.isMobile)
   def.initialised = true
-  if (value.clearData) {
+  let rs = value.resetStrategy
+  let clearData = false
+  if (rs !== undefined) {
+    clearData = rs.indexOf("ClearData") > -1
+  }
+
+  if (clearData) {
     // set default values
     dataAndState.index = {}
     dataAndState.offline = {
@@ -422,27 +433,36 @@ export const TableInit: OvlAction<{
       errors: {},
       updatedKeys: {},
     }
+  }
+  if (clearData || rs === "SettingsReset") {
     dataAndState.offlineSeq = 0
     dataAndState.timestamp = 0
     dataAndState.data = {}
+    def.uiState.currentlyAddingKey = undefined
+    def.uiState.dataFilteredAndSorted = []
+    def.uiState.editRow = {}
+    def.uiState.headerSelected = ""
+    def.uiState.needsRefresh = false
+    def.uiState.rowsCount = 0
+    def.uiState.selectedRow = {}
+    def.uiState.viewRow = {}
+    def.uiState.paging = JSON.parse(JSON.stringify(def.options.initial_paging))
   }
-  def.uiState.currentlyAddingKey = undefined
-  def.uiState.dataFilteredAndSorted = []
-  def.uiState.editRow = {}
-  def.uiState.headerSelected = ""
-  def.uiState.needsRefresh = false
-  def.uiState.rowsCount = 0
-  def.uiState.selectedRow = {}
-  def.uiState.viewRow = {}
-  def.uiState.paging = JSON.parse(JSON.stringify(def.options.initial_paging))
-
-  if (value.keepSorting === undefined || value.keepSorting === false) {
+  if (
+    rs === undefined ||
+    rs === "ClearDataAndKeepSorting" ||
+    rs === "ClearDataAndKeepSortingAndFiltering"
+  ) {
     def.uiState.sort = JSON.parse(JSON.stringify(def.options.initial_sort))
     def.uiState.sortCustom = JSON.parse(
       JSON.stringify(def.options.initial_sortCustom)
     )
   }
-  if (value.keepFilters === undefined || value.keepFilters === false) {
+  if (
+    rs === undefined ||
+    rs === "ClearDataAndKeepFilters" ||
+    rs === "ClearDataAndKeepSortingAndFiltering"
+  ) {
     def.uiState.filter = JSON.parse(JSON.stringify(def.options.initial_filter))
     def.uiState.filterCustom = JSON.parse(
       JSON.stringify(def.options.initial_filterCustom)

@@ -6,9 +6,9 @@ X - crete TableInit Method which clears data, tablestate, ...
 X - implement 0digits display for int datatype
 - simplify css styling for a whole column in table (set backgound opacity, needs another conatiner for the value becaue its opacity should be 1)
 - refactor mutiple validations in Forms
-- chek filter selected rows in table... lookslike it hangs rhere with an overlay open or sos
-- check longpress toolbar functionality
-- check update check in offline mode
+X - chek filter selected rows in table... lookslike it hangs rhere with an overlay open or sos
+X - check longpress toolbar functionality
+X - check update check in offline mode
 
 - Edit tabs
 - Upload Control
