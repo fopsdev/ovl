@@ -719,7 +719,7 @@ export class TableHeader extends OvlBaseElement {
               data-col="${k}"
               title="${ifDefined(tooltip ? tooltip : undefined, this)}"
               style="${cellBgColor}"
-              class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader} ovl-tableview-headercell ovl-label-${column.control +
+              class="${sortdirection} fd-table__cell  ${cssAlign} ${stickyTableHeader}  ovl-tableview-headercell ovl-table-columnheader-${k} ovl-table-column-${k} ovl-label-${column.control +
               (column.asset
                 ? column.asset.type
                 : "")} ovl-label__${k} ${customHeaderCellClass}"

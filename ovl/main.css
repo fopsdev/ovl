@@ -83,11 +83,11 @@ body {
 
 ovl-trow:focus {
   outline: none;
-  border-bottom: 1px solid orange !important;
+  border-bottom: none !important;
   /* because default outline on rdp session chrome is always over controbuttons */
-  border-top: 1.5px solid orange !important;
-  border-left: 2px solid orange !important;
-  border-right: 2px solid orange !important;
+  /*border-top: 1.5px solid rgba(34, 119, 247, 0.568) !important;*/
+  border-left: 4px solid rgba(34, 119, 247, 0.568) !important;
+  border-right: 4px solid rgba(34, 119, 247, 0.568) !important;
 }
 
 @font-face {
@@ -185,6 +185,10 @@ ovl-trow:focus {
 /* custom styles 
 #############################################################
 */
+
+.ovl-row-selected {
+  background-color: rgba(34, 119, 247, 0.568) !important;
+}
 
 .ovl-disabled {
   pointer-events: none;

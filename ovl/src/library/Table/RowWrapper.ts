@@ -269,10 +269,10 @@ export class TableRowWrapper extends OvlBaseElement {
       }
       let selected = this.row.selected
       let nav
-      let selectedRowBg = ""
+      let selectedClass = ""
       if (selected) {
         if (selected.selected) {
-          selectedRowBg = "background-color: var(--fd-color-accent-7)"
+          selectedClass = "ovl-row-selected"
         }
         if (selected.showNav) {
           nav = html`
@@ -322,8 +322,7 @@ export class TableRowWrapper extends OvlBaseElement {
         <ovl-trow
           @keydown=${(e) => this.handleKeyDown(e)}
           tabindex="0"
-          style="${selectedRowBg}"
-          class="fd-table__row ${rowStatus}  animated fadeIn faster"
+          class="fd-table__row ${rowStatus} ovl-table-row ${selectedClass}  animated fadeIn faster"
           title="${rowStatusMsg}"
           data-rowkey="${key}"
           @click="${this.handleRowClick}"

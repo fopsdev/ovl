@@ -86,8 +86,8 @@ export class TableRowControl extends OvlBaseElement {
             ?disabled=${button.disabled}
             id="${k + this.nav.key}"
             title="${button.name}"
-            class="fd-button ${compact} ${button.icon}"
-            style="${selectedRowBg};${border}"
+            class="fd-button ${compact} ${button.icon} ovl-row-selected"
+            style="${border}"
           ></button>
         `
       })
