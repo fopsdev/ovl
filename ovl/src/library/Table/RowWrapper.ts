@@ -277,7 +277,7 @@ export class TableRowWrapper extends OvlBaseElement {
         if (selected.showNav) {
           nav = html`
             <ovl-trowcontrol
-              class="fd-table__row"
+              class="fd-table__row ovl-table-navrow"
               style="border-bottom: 0px;"
               .props=${() => {
                 return <NavProps>{

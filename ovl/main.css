@@ -190,6 +190,10 @@ ovl-trow:focus {
   background-color: rgba(34, 119, 247, 0.568) !important;
 }
 
+.ovl-table-navrow:hover {
+  background-color: initial;
+}
+
 .ovl-disabled {
   pointer-events: none;
 }
