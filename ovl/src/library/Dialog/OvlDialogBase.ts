@@ -189,7 +189,6 @@ export class OvlBaseDialog extends OvlBaseElement {
     if (this.closedCallbackFn) {
       this.closedCallbackFn()
     }
-    debugger
     if (dlg.elementIdToFocusAfterClose) {
       let el = document.getElementById(dlg.elementIdToFocusAfterClose)
       if (el && el.focus) {

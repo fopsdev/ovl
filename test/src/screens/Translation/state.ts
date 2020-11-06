@@ -23,7 +23,7 @@ export let tblTranslation: OvlTableDef = {
   server: {
     endpoint: "translation",
   },
-  features: { focusToFirstEditableField: true },
+  features: { focusToFirstEditableField: true, detailView: "Enabled" },
 
   columns: {
     U_Group: {
