@@ -38,6 +38,7 @@ import {
   FormCustomFn_Type,
   FormCan_ReturnType,
   FormAfterSave_Type,
+  FormCustomFn_ReturnType,
 } from "../../global/hooks"
 import { OvlTableDefIds, OvlState, OvlActions, ovl } from "../../index"
 import { OvlAction } from "../../ovlTypes"
@@ -162,7 +163,7 @@ export const TableFilter: OvlAction<FilterClick> = (value, { actions }) => {
 
 export const TableSelectAll: OvlAction<{
   tableDef: OvlTableDef
-  data: OvlTableData
+
   select: boolean
 }> = (def, { actions }) => {
   if (!def.select) {
@@ -535,13 +536,12 @@ export const TableRefresh: OvlAction<{
   }
   def.initialised = true
   let data = dataAndState
-  setTimeout(() => {
-    actions.ovl.table.TableRebuild({
-      data,
-      defId: value.defId,
-      snackId,
-    })
-  }, 5)
+
+  await actions.ovl.table.TableRebuild({
+    data,
+    defId: value.defId,
+    snackId,
+  })
 }
 
 export const TableRebuild: OvlAction<{
@@ -1909,12 +1909,14 @@ export const TableMultipleCustomFunction: OvlAction<{
   def: OvlTableDef
   data: OvlTableData
   customFnId: string
-  customFnName: string
 }> = async (value, { actions, state, effects }) => {
   let def = value.def
   let data = value.data
   let rows = value.data.data
-  let fnMultipleName = value.customFnName
+
+  let fnMultipleName = T(
+    def.options.customRowActions[value.customFnId].selected.translationKey
+  )
   let cancel: boolean = false
   let canNotEditMsg = ""
   let selectedObjects: string[] = []
@@ -1985,10 +1987,11 @@ export const TableMultipleCustomFunction: OvlAction<{
   if ((await DialogResult()) === 2 || selectedObjects.length === 0) {
     cancel = true
   }
+  let showSuccessSnack: FormCustomFn_ReturnType = true
   if (!cancel) {
     def.uiState.headerSelected = ""
     let customFns = resolvePath(actions.custom, def.namespace)
-    let customFunctionName = "FormCustom" + value.customFnId
+    let customFunctionName = "FormCustomFn" + value.customFnId
     let customFunction = customFns[customFunctionName]
     let result = ""
     let errCount = 0
@@ -2000,7 +2003,7 @@ export const TableMultipleCustomFunction: OvlAction<{
             success: true,
           }
           let isLast = i === selectedObjects.length - 1
-          await customFunction(<FormCustomFn_Type>{
+          showSuccessSnack = await customFunction(<FormCustomFn_Type>{
             rowKey: k,
             def: def,
             data: data,
@@ -2020,10 +2023,12 @@ export const TableMultipleCustomFunction: OvlAction<{
     }
     if (errCount < selectedObjects.length) {
       if (errCount === 0) {
-        SnackAdd(
-          "Funktion " + fnMultipleName + " erfolgreich ausgeführt",
-          "Information"
-        )
+        if (showSuccessSnack === undefined || showSuccessSnack === true) {
+          SnackAdd(
+            "Funktion " + fnMultipleName + " erfolgreich ausgeführt",
+            "Information"
+          )
+        }
       } else {
         SnackAdd(
           "Funktion " +
@@ -2062,4 +2067,19 @@ export const TableDeleteRowFromData: OvlAction<{
   delete def.uiState.editRow[key]
   delete def.uiState.viewRow[key]
   setPage(value.data)
+}
+
+export const TableGetSelectedRowKeys: OvlAction<
+  {
+    def: OvlTableDef
+  },
+  string[]
+> = (value, _) => {
+  let def = value.def
+  let selected = def.uiState.selectedRow
+  if (selected) {
+    return Object.keys(selected).filter((f) => selected[f].selected)
+  } else {
+    return []
+  }
 }

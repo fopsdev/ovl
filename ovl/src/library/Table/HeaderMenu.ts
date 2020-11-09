@@ -77,7 +77,7 @@ export class TableHeaderMenu extends OvlBaseElement {
     }
   }
 
-  handleCustomSelectedClick = (e: Event, key: string, name: string) => {
+  handleCustomSelectedClick = (e: Event, key: string) => {
     e.stopPropagation()
     e.preventDefault()
 
@@ -85,7 +85,6 @@ export class TableHeaderMenu extends OvlBaseElement {
       def: this.headerMenu.def.def,
       data: this.headerMenu.def.data,
       customFnId: key,
-      customFnName: name,
     })
   }
 
@@ -121,7 +120,6 @@ export class TableHeaderMenu extends OvlBaseElement {
     e.preventDefault()
     this.actions.ovl.internal.TableSelectAll({
       tableDef: this.headerMenu.def.def,
-      data: this.headerMenu.def.data,
       select,
     })
   }
@@ -653,8 +651,7 @@ export class TableHeaderMenu extends OvlBaseElement {
               <a
                 href="#"
                 class="fd-list__link"
-                @click="${(e) =>
-                  this.handleCustomSelectedClick(e, k, fnMultipleName)}"
+                @click="${(e) => this.handleCustomSelectedClick(e, k)}"
               >
                 <span class="${icon}"></span>
                 <span class="fd-list__title">${fnMultipleName}</span></a

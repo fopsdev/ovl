@@ -97,9 +97,6 @@ export type RowControlAction = {
   icon: string
   selected?: {
     translationKey?: string
-    // if the call itself should be one call with all the valid keys in a object
-    // if not callOnce then every valid selected row gets iterated and called
-    callOnce?: boolean
   }
 }
 

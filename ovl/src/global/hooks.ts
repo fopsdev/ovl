@@ -95,6 +95,8 @@ export type FormStatus_Type = {
 export type FormStatus_ReturnType = Promise<RowStatus>
 export const FormStatus = "FormStatus"
 
+// if it returns false no generic success snack will be displayed
+export type FormCustomFn_ReturnType = boolean
 export type FormCustomFn_Type = {
   rowKey: string
   def: OvlTableDef
