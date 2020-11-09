@@ -25,8 +25,8 @@ export const SaveSettings: OvlAction<OvlFormState> = async (
       // most probably the password is wrong
       // so already point the user to the right field
       value.valid = false
-      value.fields["pw"].validationResult.valid = false
-      value.fields["pw"].validationResult.validationMsg = res.message
+
+      value.fields["pw"].validationResult.errors.push(res.message)
       return
     }
     SnackAdd(T("AppPasswordChangedSuccess"), "Success")

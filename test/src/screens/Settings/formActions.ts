@@ -20,20 +20,18 @@ export const FormValidate: OvlAction<FormValidate_Type> = (value) => {
         6,
         value.validationResult
       )
-      if (value.validationResult.valid) {
+      if (value.validationResult.errors.length === 0) {
         if (value.newVal !== value.formState.fields.pw2.value) {
-          value.formState.fields.pw2.validationResult.valid = false
-          value.formState.fields.pw2.validationResult.validationMsg = T(
-            "AppSettingsValidationNewPasswordConfirmation"
+          value.formState.fields.pw2.validationResult.errors.push(
+            T("AppSettingsValidationNewPasswordConfirmation")
           )
         }
       }
       break
     case "pw2":
       if (value.newVal !== value.formState.fields.pw1.value) {
-        value.validationResult.valid = false
-        value.validationResult.validationMsg = T(
-          "AppSettingsValidationNewPasswordConfirmation"
+        value.validationResult.errors.push(
+          T("AppSettingsValidationNewPasswordConfirmation")
         )
       }
       break

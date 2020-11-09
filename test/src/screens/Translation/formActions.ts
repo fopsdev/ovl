@@ -27,11 +27,7 @@ export const FormSaveError: OvlAction<
     // In this case most probably because Group and Code are not unique
     let field = value.formState.fields["U_Group"]
     field.watched = true
-    field.validationResult = {
-      valid: false,
-      validationMsg: "Gruppe/Code schon vorhanden!",
-      validations: {},
-    }
+    field.validationResult.errors.push("Gruppe/Code schon vorhanden!")
     return true
   }
   return false

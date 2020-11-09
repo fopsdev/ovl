@@ -30,7 +30,7 @@ export class CompLoginForm extends OvlFormElement {
     let hideForgotPassword = " hide "
     if (
       !this.state.ovl.libState.indicator.open &&
-      this.formState.fields.user.validationResult.valid &&
+      this.formState.fields.user.validationResult.errors.length === 0 &&
       this.formState.fields.user.value
     ) {
       hideForgotPassword = ""

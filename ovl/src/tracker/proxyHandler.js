@@ -14,7 +14,7 @@ export function createDeepProxy(target) {
           let value = target[key]
           if (
             typeof value !== "function" &&
-            !(isArray && "push;pop;splice;unshift;shift".indexOf(key) > -1) &&
+            !(isArray && "push;pop;splice;unshift;shift;".indexOf(key) > -1) &&
             key !== "toJSON"
           ) {
             let pathToTrack
@@ -77,6 +77,7 @@ export function createDeepProxy(target) {
             pathToTrackParent = [...path].join(".")
             pathToTrack = [...path, key].join(".")
           } else if (isArray && key === "length") {
+            
             pathToTrack = [...path].join(".")
           } else if (isArray) {
             pathToTrack = [...path, key].join(".")
@@ -134,6 +135,9 @@ export function createDeepProxy(target) {
   }
 
   function checkForCallbacks(path) {
+    // if (path.indexOf("U_ParentCode.validationResult.errors") > -1) {
+    //   debugger
+    // }
     let cbs = paths.get(path)
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0

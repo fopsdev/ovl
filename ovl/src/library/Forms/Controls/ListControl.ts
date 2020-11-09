@@ -22,6 +22,7 @@ import { getUIValidationObject } from "./uiValidationHelper"
 import { OvlFormState } from "../actions"
 import { OvlState, OvlActions, OvlEffects, ovl } from "../../.."
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
+import { logTrackingList } from "../../../tracker/tracker"
 
 export type ListState = {
   serverEndpoint?: string
@@ -350,6 +351,9 @@ export class OvlListControl extends OvlBaseElement {
         customRowClassContainerName = customRowClassName + "Container"
         customRowTooltip = customRowCell.tooltip
       }
+      // if (field.fieldKey === "U_ParentCode") {
+      //   debugger
+      // }
 
       let res = getUIValidationObject(field)
 
@@ -434,9 +438,15 @@ export class OvlListControl extends OvlBaseElement {
         icon = "arrow-bottom"
       }
       let validationHide = res.validationHide
-      if (document.activeElement.id.indexOf(field.id) > -1) {
+
+      // if (document.activeElement.id.indexOf(field.id) > -1) {
+      //   validationHide = "hide"
+      // }
+      // logTrackingList()
+      if (this.localList) {
         validationHide = "hide"
       }
+
       return html`
         ${hitListDialog}
         <div

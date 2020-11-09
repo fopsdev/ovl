@@ -318,6 +318,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   let namespace = value.formState.namespace
   let res = value.validationResult
   let list = field.list
+
   if (list.acceptEmpty && !list.acceptOnlyListValues) {
     return
   }
@@ -368,6 +369,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
     let namespace = value.namespace
     // field.validationResult.valid = true
     // field.validationResult.validationMsg = ""
+
     field.validationResult.errors = []
     actions.ovl.internal.TouchField({ fieldId: k, formState: value })
 
@@ -592,6 +594,7 @@ export const ChangeField: OvlAction<ChangeField> = (
 ) => {
   let field = value.formState.fields[value.fieldId]
   let oldConvertedVal = field.convertedValue
+
   field.validationResult.errors = []
   field.watched = !value.isInit
   let newVal = value.value

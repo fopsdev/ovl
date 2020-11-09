@@ -4,11 +4,11 @@ Todos:
 
 - document that Object.keys on an empty object can be critical for tracking. Because if keys get added afterwards the parent doesn't get notified
   
-
+- create a remove error msg from linked field method helper
 X - crete TableInit Method which clears data, tablestate, ... 
 X - implement 0digits display for int datatype
 X - simplify css styling for a whole column in table (set backgound opacity, needs another conatiner for the value becaue its opacity should be 1)
-- refactor mutiple validations in Forms -> just use pushError (an Array which gets initilise to empty before validation dfunctions)
+x - refactor mutiple validations in Forms -> just use pushError (an Array which gets initilise to empty before validation dfunctions)
 X - chek filter selected rows in table... lookslike it hangs rhere with an overlay open or sos
 X - check longpress toolbar functionality
 X - check update check in offline mode

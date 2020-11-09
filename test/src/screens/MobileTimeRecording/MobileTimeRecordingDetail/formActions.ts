@@ -7,10 +7,7 @@ import {
   ValidateFieldType,
 } from "../../../../../ovl/src/library/forms/actions"
 import { LookupListPostData } from "../../../../../ovl/src/library/forms/Controls/helpers"
-import {
-  ValidationAddError,
-  ValidationRemoveError,
-} from "../../../../../ovl/src/library/Forms/helper"
+
 import { Mandatory } from "../../../../../ovl/src/library/forms/validators"
 import {
   BeforeSaveParam,
@@ -75,20 +72,20 @@ export const FormValidate: OvlAction<ValidateFieldType> = async (
 
     case "U_FromTime":
       Mandatory("U_FromTime", value.newVal, value.validationResult)
-      if (value.validationResult.valid) {
+      if (value.validationResult.errors.length === 0) {
         CheckFromTimeSmaller(value.formState, value.fieldId)
       }
-      if (value.validationResult.valid) {
+      if (value.validationResult.errors.length === 0) {
         // check if there is overlapping
         CheckExistingTimeRange(state, value)
       }
       break
     case "U_ToTime":
       Mandatory("U_ToTime", value.newVal, value.validationResult)
-      if (value.validationResult.valid) {
+      if (value.validationResult.errors.length === 0) {
         CheckFromTimeSmaller(value.formState, value.fieldId)
       }
-      if (value.validationResult.valid) {
+      if (value.validationResult.errors.length === 0) {
         // check if there is overlapping
         CheckExistingTimeRange(state, value)
       }
@@ -105,10 +102,8 @@ const CheckExistingTimeRange = (state: OvlState, value: ValidateFieldType) => {
   let data = state.app.testtables.timeentries.data
   keysToCheck.some((k) => {
     if (value.newVal > data[k].U_FromTime && value.newVal < data[k].U_ToTime) {
-      ValidationAddError(
-        "TimeRange",
-        "Schon eine Buchung erfasst für diese Zeit",
-        value.validationResult
+      value.validationResult.errors.push(
+        "Schon eine Buchung erfasst für diese Zeit"
       )
       return true
     }
@@ -134,14 +129,9 @@ const CheckFromTimeSmaller = (formState: OvlFormState, fieldId: string) => {
   let tt = ttField.convertedValue
   if (ft && tt) {
     if (parseFloat(ft.replace(":", ".")) > parseFloat(tt.replace(":", "."))) {
-      ValidationAddError(
-        validatorId,
-        "Bis Zeit muss grösser sein als von Zeit!",
-        validateField.validationResult
+      validateField.validationResult.errors.push(
+        "Bis Zeit muss grösser sein als von Zeit!"
       )
-    } else {
-      // looks ok. so we need to remove this error as well on the related field
-      ValidationRemoveError(validatorId, relatedValidateField.validationResult)
     }
   }
 }
