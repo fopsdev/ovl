@@ -1027,26 +1027,29 @@ export const rowControlActionsHandler = async (
 
       if (customFunction) {
         if (isDetailView) {
-          ovl.actions.ovl.internal.TableCloseViewRow({
-            key: rowKey,
-            def,
-          })
-          await customFunction(<FormCustomFn_Type>{
-            rowKey,
-            def,
-            data,
-            isLastOrOnlyOne: true,
-            startedFromSelectedResult: null,
-          })
-        } else {
-          await customFunction(<FormCustomFn_Type>{
-            rowKey,
-            def,
-            data,
-            isLastOrOnlyOne: true,
-            startedFromSelectedResult: null,
-          })
+          // await ovl.actions.ovl.internal.TableCloseViewRow({
+          //   key: rowKey,
+          //   def,
+          // })
+          ovl.actions.ovl.dialog.DialogClose("DetailView")
         }
+        await customFunction(<FormCustomFn_Type>{
+          rowKey,
+          def,
+          data,
+          selectedKeys: [rowKey],
+          isLastOrOnlyOne: true,
+          startedFromSelectedResult: null,
+        })
+        // } else {
+        //   await customFunction(<FormCustomFn_Type>{
+        //     rowKey,
+        //     def,
+        //     data,
+        //     isLastOrOnlyOne: true,
+        //     startedFromSelectedResult: null,
+        //   })
+        // }
       } else {
         throw Error(
           "Ovl error: Custom Action: " + customFunctionName + " not found!"
@@ -1056,23 +1059,17 @@ export const rowControlActionsHandler = async (
   } else {
     let actionName = "Table" + key + "Row"
     if (isDetailView && key !== "Edit") {
-      await ovl.actions.ovl.internal.TableCloseViewRow({
-        key: rowKey,
-        def,
-      })
-
-      await ovl.actions.ovl.internal[actionName]({
-        key: rowKey,
-        def,
-        data,
-      })
-    } else {
-      await ovl.actions.ovl.internal[actionName]({
-        key: rowKey,
-        def,
-        data,
-      })
+      // await ovl.actions.ovl.internal.TableCloseViewRow({
+      //   key: rowKey,
+      //   def,
+      // })
+      ovl.actions.ovl.dialog.DialogClose("DetailView")
     }
+    await ovl.actions.ovl.internal[actionName]({
+      key: rowKey,
+      def,
+      data,
+    })
   }
 }
 export type CachedRendererData = {

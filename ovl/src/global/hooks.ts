@@ -101,6 +101,7 @@ export type FormCustomFn_Type = {
   data: OvlTableData
   isLastOrOnlyOne: boolean
   startedFromSelectedResult: SelectedCustomFunctionResult
+  selectedKeys: string[]
 }
 export const FormCustomFn = "FormCustomFn"
 

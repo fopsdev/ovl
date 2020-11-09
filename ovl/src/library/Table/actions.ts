@@ -1917,7 +1917,7 @@ export const TableMultipleCustomFunction: OvlAction<{
   let fnMultipleName = value.customFnName
   let cancel: boolean = false
   let canNotEditMsg = ""
-  let selectedObjects = []
+  let selectedObjects: string[] = []
   let functionName = FormCanCustom.replace("%", value.customFnId)
   let fn = null
   let fnc = resolvePath(actions.custom, def.namespace)
@@ -2004,6 +2004,7 @@ export const TableMultipleCustomFunction: OvlAction<{
             rowKey: k,
             def: def,
             data: data,
+            selectedKeys: selectedObjects,
             isLastOrOnlyOne: isLast,
             startedFromSelectedResult: fnResult,
           })

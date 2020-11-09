@@ -83,6 +83,9 @@ export const FormCustomFnSelect: OvlAction<FormCustomFn_Type> = async ({
   isLastOrOnlyOne,
 }) => {
   // this sample shows how to deal with msg and succss when also used from headerform (multiple rows selected))
+  // it gets called for every selected row
+  // deals with validation and messages itself
+  // please have in mind that a FormCan---Function will be called if present to validate each line
   let msg = ""
   if (isLastOrOnlyOne) {
     msg = "Funktion noch nicht implementiert!"
