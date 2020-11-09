@@ -45,7 +45,7 @@ import { OvlAction } from "../../ovlTypes"
 import { DialogResult } from "../actions"
 import { OvlFormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"
-import { ValidationAddError } from "../Forms/helper"
+
 import {
   DialogOk,
   SnackAdd,
@@ -1005,10 +1005,8 @@ const TableEditSaveRowHelper = async (
                 (hasFormState && res.type === "UDTNameEmpty") ||
                 res.type === "UDTNameUnique"
               ) {
-                ValidationAddError(
-                  "UniqueKeyViolation",
-                  res.message,
-                  formState.fields["Name"].validationResult
+                formState.fields["Name"].validationResult.errors.push(
+                  res.message
                 )
               }
               let saveErrorFnName = FormSaveError
@@ -2067,19 +2065,4 @@ export const TableDeleteRowFromData: OvlAction<{
   delete def.uiState.editRow[key]
   delete def.uiState.viewRow[key]
   setPage(value.data)
-}
-
-export const TableGetSelectedRowKeys: OvlAction<
-  {
-    def: OvlTableDef
-  },
-  string[]
-> = (value, _) => {
-  let def = value.def
-  let selected = def.uiState.selectedRow
-  if (selected) {
-    return Object.keys(selected).filter((f) => selected[f].selected)
-  } else {
-    return []
-  }
 }

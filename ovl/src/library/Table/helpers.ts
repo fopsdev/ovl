@@ -1106,3 +1106,8 @@ export const GetRendererFn = (
   }
   return rendererFn
 }
+
+export const TableGetSelectedRowKeys = (def: OvlTableDef): string[] => {
+  let selected = def.uiState.selectedRow
+  return Object.keys(selected).filter((f) => selected[f].selected)
+}

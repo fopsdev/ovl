@@ -129,7 +129,7 @@ export class OvlDate extends OvlBaseElement {
           <span
             class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-date-validation ovl-formcontrol-validation__${field.fieldKey}"
           >
-            ${field.validationResult.validationMsg}
+            ${field.validationResult.errors.join(", ")}
           </span>
         </div>
       `

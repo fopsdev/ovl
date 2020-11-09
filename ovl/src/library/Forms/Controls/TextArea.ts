@@ -115,7 +115,7 @@ ${field.value}</textarea
         <span
           class="fd-form-message fd-form-message--warning ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textarea-validation ovl-formcontrol-validation__${field.fieldKey}"
         >
-          ${field.validationResult.validationMsg}
+          ${field.validationResult.errors.join(", ")}
         </span>
       `
     })

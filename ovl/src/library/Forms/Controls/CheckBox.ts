@@ -123,7 +123,7 @@ export class OvlCheckbox extends OvlBaseElement {
           <span
             class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-checkbox-validation ovl-formcontrol-validation__${field.fieldKey}"
           >
-            ${field.validationResult.validationMsg}
+            ${field.validationResult.errors.join(", ")}
           </span>
         </div>
       `

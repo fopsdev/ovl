@@ -967,7 +967,6 @@ export class TableHeaderMenu extends OvlBaseElement {
       dlgState.visible = true
     }
     if (dlgState.visible && !dependsOn) {
-      console.log("set to closing")
       dlgState.closing = true
     }
   }

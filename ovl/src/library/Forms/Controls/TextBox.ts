@@ -129,7 +129,7 @@ export class OvlTextbox extends OvlBaseElement {
           <span
             class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textbox-validation ovl-formcontrol-validation__${field.fieldKey}"
           >
-            ${field.validationResult.validationMsg}
+            ${field.validationResult.errors.join(", ")}
           </span>
         </div>
       `

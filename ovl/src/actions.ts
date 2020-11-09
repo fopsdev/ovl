@@ -85,7 +85,6 @@ import {
   TableCloseViewRow,
   TableAddRow,
   TableDeleteRowFromData,
-  TableGetSelectedRowKeys,
   TableMultipleDeleteRow,
   TableMultipleCopyRow,
   TableMultipleEditRow,
@@ -147,7 +146,7 @@ let internal = {
   TableViewRow,
   TableCloseViewRow,
   TableDeleteRowFromData,
-  TableGetSelectedRowKeys,
+
   TableMultipleDeleteRow,
   TableMultipleCopyRow,
   TableMultipleEditRow,

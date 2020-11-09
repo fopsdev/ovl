@@ -159,7 +159,7 @@ export class OvlOption extends OvlBaseElement {
         <span
           class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-option-validation ovl-formcontrol-validation__${field.fieldKey}"
         >
-          ${field.validationResult.validationMsg}
+          ${field.validationResult.errors.join(", ")}
         </span>
       `
     })

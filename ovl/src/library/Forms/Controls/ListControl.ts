@@ -490,7 +490,7 @@ export class OvlListControl extends OvlBaseElement {
             <span
               class="fd-form-message ${validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
             >
-              ${field.validationResult.validationMsg}
+              ${field.validationResult.errors.join(", ")}
             </span>
           </div>
           ${this.localList}

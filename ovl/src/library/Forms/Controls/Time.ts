@@ -111,7 +111,7 @@ export class OvlTime extends OvlBaseElement {
         <span
           class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-time-validation ovl-formcontrol-time__${field.fieldKey}"
         >
-          ${field.validationResult.validationMsg}
+          ${field.validationResult.errors.join(", ")}
         </span>
       `
     })

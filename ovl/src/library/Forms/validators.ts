@@ -1,6 +1,5 @@
 import { ValidateFieldResult } from "./actions"
 import { T } from "../../global/globals"
-import { ValidationAddError } from "./helper"
 
 export const Mandatory = (
   displayFieldName: string,
@@ -8,11 +7,7 @@ export const Mandatory = (
   res: ValidateFieldResult
 ) => {
   if (!val) {
-    ValidationAddError(
-      "Mandatory",
-      T("AppValidationMandatory", [displayFieldName]),
-      res
-    )
+    res.errors.push(T("AppValidationMandatory", [displayFieldName]))
   }
 }
 
@@ -23,10 +18,8 @@ export const MinLength = (
   res: ValidateFieldResult
 ) => {
   if (!val || (val && val.length < minLength)) {
-    ValidationAddError(
-      "MinLength",
-      T("AppValidationMinLength", [displayFieldName, minLength.toString()]),
-      res
+    res.errors.push(
+      T("AppValidationMinLength", [displayFieldName, minLength.toString()])
     )
   }
 }
@@ -38,13 +31,11 @@ export const MinLengthOrEmpty = (
   res: ValidateFieldResult
 ) => {
   if (val && val.length < minLength) {
-    ValidationAddError(
-      "MinLengthOrEmpty",
+    res.errors.push(
       T("AppValidationMinLengthOrEmpty", [
         displayFieldName,
         minLength.toString(),
-      ]),
-      res
+      ])
     )
   }
 }
@@ -55,11 +46,7 @@ export const Email = (
   res: ValidateFieldResult
 ) => {
   if (!val || (val && !validateEmail(val))) {
-    ValidationAddError(
-      "Email",
-      T("AppValidationEmail", [displayFieldName]),
-      res
-    )
+    res.errors.push(T("AppValidationEmail", [displayFieldName]))
   }
 }
 

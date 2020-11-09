@@ -10,7 +10,7 @@ export const getUIValidationObject = (field: Field): UIValidationObject => {
     validationHide: " hide ",
     validationType: "",
   }
-  if (!field.validationResult.valid) {
+  if (field.validationResult.errors.length !== 0) {
     if (field.dirty || field.watched) {
       res.validationType = " is-invalid "
       res.needsAttention = true

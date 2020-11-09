@@ -31,7 +31,7 @@ export const getFormFields = (
       type: type,
       dirty: false,
       watched: false,
-      validationResult: { valid: true, validationMsg: "", validations: {} },
+      validationResult: { errors: [] },
       id: instanceId + k,
       list: formFields[k].list,
       formId: instanceId,
@@ -43,38 +43,38 @@ export const getFormFields = (
   return fields
 }
 
-export const ValidationAddError = (
-  validatorId: string,
-  msg: string,
-  val: ValidateFieldResult
-) => {
-  val.valid = false
-  val.validationMsg = msg
-  val.validations[validatorId] = { valid: false, validationMsg: msg }
-  ValidationSetCurrentError(val)
-}
+// export const ValidationAddError = (
+//   validatorId: string,
+//   msg: string,
+//   val: ValidateFieldResult
+// ) => {
+//   val.valid = false
+//   val.validationMsg = msg
+//   val.validations[validatorId] = { valid: false, validationMsg: msg }
+//   ValidationSetCurrentError(val)
+// }
 
-export const ValidationRemoveError = (
-  validatorId: string,
-  val: ValidateFieldResult
-) => {
-  delete val.validations[validatorId]
-  ValidationSetCurrentError(val)
-}
+// export const ValidationRemoveError = (
+//   validatorId: string,
+//   val: ValidateFieldResult
+// ) => {
+//   delete val.validations[validatorId]
+//   ValidationSetCurrentError(val)
+// }
 
-export const ValidationSetCurrentError = (val: ValidateFieldResult) => {
-  // still display the last error if any
-  let lastError = ""
-  let validationKeys = Object.keys(val.validations)
-  if (validationKeys.length > 0) {
-    lastError =
-      val.validations[validationKeys[validationKeys.length - 1]].validationMsg
-  }
-  if (lastError) {
-    val.valid = false
-    val.validationMsg = lastError
-  } else {
-    val.valid = true
-    val.validationMsg = ""
-  }
-}
+// export const ValidationSetCurrentError = (val: ValidateFieldResult) => {
+//   // still display the last error if any
+//   let lastError = ""
+//   let validationKeys = Object.keys(val.validations)
+//   if (validationKeys.length > 0) {
+//     lastError =
+//       val.validations[validationKeys[validationKeys.length - 1]].validationMsg
+//   }
+//   if (lastError) {
+//     val.valid = false
+//     val.validationMsg = lastError
+//   } else {
+//     val.valid = true
+//     val.validationMsg = ""
+//   }
+// }
