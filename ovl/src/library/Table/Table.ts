@@ -253,7 +253,6 @@ export type EditRowSaveCancelDef = {
 export type SelectRowDef = {
   key: string
   def: OvlTableDef
-  data: OvlTableData
 }
 
 export type Tabs = {

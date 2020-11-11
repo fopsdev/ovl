@@ -47,6 +47,14 @@ export class TableRowControl extends OvlBaseElement {
     )
   }
 
+  handleEmptyClick = async (e: Event) => {
+    e.preventDefault()
+    e.stopPropagation()
+    let def = this.nav.tableDef
+    let rowKey = this.nav.key
+    def.uiState.selectedRow[rowKey].showNav = false
+  }
+
   async getUI() {
     return this.track(async () => {
       let compact = ""
@@ -100,6 +108,7 @@ export class TableRowControl extends OvlBaseElement {
           class="fd-table__cell fd-has-text-align-center"
           style="margin:0;padding:0;"
           colspan="${this.nav.columnsCount}"
+          @click="${(e) => this.handleEmptyClick(e)}"
         >
           <div
             style="margin-top:-1px;"

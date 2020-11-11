@@ -128,21 +128,21 @@ export const deleteTableRow = (
   }
 }
 
-export const selectLatestRow = (def: OvlTableDef, data: OvlTableData) => {
-  let selRows = def.uiState.selectedRow //data.selectedRow[def.id]
-  let selectedAndSortedKeys = Object.keys(selRows)
-    .filter((k) => selRows[k].selected)
-    .sort((a, b) => selRows[b].timestamp - selRows[a].timestamp)
-  if (selectedAndSortedKeys.length > 0) {
-    selRows[selectedAndSortedKeys[0]].showNav = true
-    for (let i = 1; i < selectedAndSortedKeys.length; i++) {
-      selRows[selectedAndSortedKeys[i]].showNav = false
-      if (!def.features.multiselect) {
-        selRows[selectedAndSortedKeys[i]].selected = false
-      }
-    }
-  }
-}
+// export const selectLatestRow = (def: OvlTableDef, data: OvlTableData) => {
+//   let selRows = def.uiState.selectedRow //data.selectedRow[def.id]
+//   let selectedAndSortedKeys = Object.keys(selRows)
+//     .filter((k) => selRows[k].selected)
+//     .sort((a, b) => selRows[b].timestamp - selRows[a].timestamp)
+//   if (selectedAndSortedKeys.length > 0) {
+//     selRows[selectedAndSortedKeys[0]].showNav = true
+//     for (let i = 1; i < selectedAndSortedKeys.length; i++) {
+//       selRows[selectedAndSortedKeys[i]].showNav = false
+//       if (!def.features.multiselect) {
+//         selRows[selectedAndSortedKeys[i]].selected = false
+//       }
+//     }
+//   }
+// }
 
 export const addRowDefInit = (tableDef, newId, mode: EditMode) => {
   Object.keys(tableDef).forEach((k) => {
