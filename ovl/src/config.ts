@@ -43,6 +43,7 @@ type OvlConfig = {
   fileOpenMode: FileOpenFnType
   defaultDialogTitle?: string
   offlineFirstOnReload?: boolean
+  ignoreLanguages?: boolean
 }
 
 // #####################################################################################################################################

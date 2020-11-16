@@ -32,7 +32,7 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
   if (state.ovl.screens.nav.currentScreen !== value) {
     let fn = actions.custom.screens
     if (fn) {
-      let currentScreen = state.ovl.screens.nav.currentScreen
+      let currentScreen: OvlScreen = state.ovl.screens.nav.currentScreen
       setLastScrollPosition(state)
       if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
         let navErrorMessage = <string>(
@@ -47,7 +47,7 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
       }
     }
     if (fn[value] && fn[value][ScreenNavigateIn]) {
-      let navErrorMessage = await fn[value][ScreenNavigateIn]()
+      let navErrorMessage = await fn[value as OvlScreen][ScreenNavigateIn]()
       if (navErrorMessage) {
         if (navErrorMessage.toLowerCase() !== "error") {
           SnackAdd(navErrorMessage, "Error")
@@ -385,38 +385,40 @@ export const InitApp: OvlAction<Init> = async (
       return
     }
   }
-  let lang = localStorage.getItem("PortalLanguage")
-  let res = await effects.ovl.postRequest(
-    state.ovl.apiUrl + "users/translations",
-    {
-      language: lang,
-    }
-  )
 
-  if (!res || !res.data) {
-    if (!OvlConfig.offlineFirstOnReload) {
-      if (!(await Rehydrate())) {
-        //SnackAdd("No Api-Connection and no Offline data found!", "Error")
+  if (!OvlConfig.ignoreLanguages) {
+    let lang = localStorage.getItem("PortalLanguage")
+    let res = await effects.ovl.postRequest(
+      state.ovl.apiUrl + "users/translations",
+      {
+        language: lang,
+      }
+    )
+    if (!res || !res.data) {
+      if (!OvlConfig.offlineFirstOnReload) {
+        if (!(await Rehydrate())) {
+          //SnackAdd("No Api-Connection and no Offline data found!", "Error")
+          return
+        }
+        console.log("Network start failed. Got offline data...")
+        return
+      } else {
+        SnackAdd("No Api-Connection!", "Error")
         return
       }
-      console.log("Network start failed. Got offline data...")
-      return
-    } else {
-      SnackAdd("No Api-Connection!", "Error")
-      return
     }
-  }
 
-  state.ovl.language.language = res.data.lang
+    state.ovl.language.language = res.data.lang
 
-  localStorage.setItem("PortalLanguage", res.data.lang)
-  state.ovl.language.translations = res.data.translations
-  state.ovl.language.isReady = true
+    localStorage.setItem("PortalLanguage", res.data.lang)
+    state.ovl.language.translations = res.data.translations
+    state.ovl.language.isReady = true
 
-  if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
-    OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
-      res.data
-    )
+    if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
+      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
+        res.data
+      )
+    }
   }
 
   state.ovl.libState.indicator.open = false
