@@ -57,7 +57,6 @@ import {
   getFormFieldsFromColumns,
   getTextSort,
   initTableState,
-  selectLatestRow,
   setPage,
   setRefresh,
   TableFilterFn,
@@ -191,14 +190,21 @@ export const TableSelectRow: OvlAction<SelectRowDef> = (selectRow) => {
   let selRows = selectRow.def.uiState.selectedRow
   let sel = selRows[selectRow.key]
   // toggle selected state
-  sel.selected = !sel.selected
-  if (sel.selected) {
-    sel.timestamp = new Date().getTime()
-  } else {
-    sel.showNav = false
+  if (sel.selected && !sel.showNav) {
+    Object.keys(selRows).forEach((f) => {
+      selRows[f].showNav = false
+    })
+    sel.showNav = true
+    return
+  } else if (sel.selected) {
+    Object.keys(selRows).forEach((f) => {
+      selRows[f].showNav = false
+    })
+    sel.selected = false
+    return
+  } else if (!sel.selected) {
+    sel.selected = true
   }
-  // only the "freshest click" should display nav
-  selectLatestRow(selectRow.def, selectRow.data)
 }
 
 export const TableViewRefresh: OvlAction<TableDataAndDef> = (
@@ -1591,7 +1597,6 @@ export const TableDeleteRow: OvlAction<
       SnackAdd("Datensatz gelöscht", "Success")
     }
     if (!value.isMass && !value.isOfflineRetry) {
-      selectLatestRow(def, value.data)
       setPage(value.data)
     }
 
@@ -1704,7 +1709,7 @@ export const TableMultipleDeleteRow: OvlAction<{
       deletedCounter.toString() + " Datensätze gelöscht...",
       "Information"
     )
-    selectLatestRow(def, value.data)
+
     let rows2 = value.data.data
     setPage(value.data)
     actions.ovl.internal.TableSelectHeader({
