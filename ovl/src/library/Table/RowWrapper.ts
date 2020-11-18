@@ -119,7 +119,6 @@ export class TableRowWrapper extends OvlBaseElement {
     let val: SelectRowDef = {
       def,
       key: rowKey,
-      data: this.row.data,
     }
     this.actions.ovl.table.TableSelectRow(val)
   }
@@ -163,7 +162,6 @@ export class TableRowWrapper extends OvlBaseElement {
           let val: SelectRowDef = {
             def: toSelectElement.row.tableDef,
             key,
-            data: toSelectElement.row.TableData,
           }
           this.actions.ovl.table.TableSelectRow(val)
         }
