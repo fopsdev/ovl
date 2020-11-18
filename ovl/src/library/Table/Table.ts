@@ -64,8 +64,8 @@ type SortDirection = "asc" | "desc"
 type IDField = "{ObjectKey}" | string
 
 export type OvlTableData = {
-  data: {}
-  schema: { [key: string]: Schema }
+  data?: {}
+  schema?: { [key: string]: Schema }
   tableDef: { [key in OvlTableDefIds]?: OvlTableDef }
   timestamp?: number
   offline?: {

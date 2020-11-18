@@ -16,7 +16,11 @@ import {
   saveState,
   ShowFile,
 } from "./globals"
-import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
+import {
+  ScreenNavigateIn,
+  ScreenNavigateIn_ReturnType,
+  ScreenNavigateOut,
+} from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 import { createDeepProxy } from "../tracker/proxyHandler"
 import { OvlAction } from "../ovlTypes"
@@ -39,17 +43,19 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
           await fn[currentScreen][ScreenNavigateOut]()
         )
         if (navErrorMessage) {
-          if (navErrorMessage.toLowerCase() !== "error") {
+          if (navErrorMessage.toLowerCase() === "error") {
             SnackAdd(navErrorMessage, "Error")
           }
           return
         }
       }
     }
+
     if (fn[value] && fn[value][ScreenNavigateIn]) {
-      let navErrorMessage = await fn[value as OvlScreen][ScreenNavigateIn]()
+      let fn2: () => ScreenNavigateIn_ReturnType = fn[value][ScreenNavigateIn]
+      let navErrorMessage = await fn2()
       if (navErrorMessage) {
-        if (navErrorMessage.toLowerCase() !== "error") {
+        if (navErrorMessage.toLowerCase() === "error") {
           SnackAdd(navErrorMessage, "Error")
         }
         return
@@ -112,7 +118,7 @@ export const NavigateBack: OvlAction = async (
         if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
           let navErrorMessage = await fn[currentScreen][ScreenNavigateOut]()
           if (navErrorMessage) {
-            if (navErrorMessage.toLowerCase() !== "error") {
+            if (navErrorMessage.toLowerCase() === "error") {
               SnackAdd(navErrorMessage, "Error")
             }
             return
@@ -125,13 +131,9 @@ export const NavigateBack: OvlAction = async (
         ]
       if (nextScreen) {
         if (fn[nextScreen] && fn[nextScreen][ScreenNavigateIn]) {
-          let navErrorMessage = await fn[nextScreen][ScreenNavigateIn](
-            state,
-            actions,
-            effects
-          )
+          let navErrorMessage = <string>await fn[nextScreen][ScreenNavigateIn]()
           if (navErrorMessage) {
-            if (navErrorMessage.toLowerCase() !== "error") {
+            if (navErrorMessage.toLowerCase() === "error") {
               SnackAdd(navErrorMessage, "Error")
             }
             return
