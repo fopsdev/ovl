@@ -190,10 +190,11 @@ export const TableSelectRow: OvlAction<SelectRowDef> = (selectRow) => {
   let selRows = selectRow.def.uiState.selectedRow
   let sel = selRows[selectRow.key]
   // toggle selected state
-  if (sel.selected && !sel.showNav) {
+  if (!sel.selected) {
     Object.keys(selRows).forEach((f) => {
       selRows[f].showNav = false
     })
+    sel.selected = true
     sel.showNav = true
     return
   } else if (sel.selected) {
@@ -344,7 +345,9 @@ export const TableRefreshDataFromServer: OvlAction<{
     localData[dataKey]["_ovl" + idfield] = sd[idfield]
     value.data.index[sd[idfield] as string] = dataKey
     Object.keys(sd).forEach(async (c) => {
-      localData[dataKey][c] = serverData[i][c]
+      if (localData[dataKey][c] !== serverData[i][c]) {
+        localData[dataKey][c] = serverData[i][c]
+      }
       // check for lookups which needs to be refreshed/reloaded
       if (dataFieldsToLookups[c]) {
         // its a lookup column, also check if lookup description is available

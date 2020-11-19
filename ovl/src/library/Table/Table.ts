@@ -83,9 +83,9 @@ export type TableDataAndDef = {
   data: OvlTableData
 }
 
-export type RowStatus = {
-  status: "valid" | "warning" | "error" | "information"
-  msg: string
+export type ViewRowClassContent = {
+  className: string
+  tooltip: string
 }
 
 type StaticFilter = {
@@ -203,6 +203,10 @@ export type OvlTableDef = {
         view?: { checked: string; unchecked: string }
         table?: { checked: string; unchecked: string }
       }
+    }
+    rowDensity?: {
+      low: number
+      medium: number
     }
   }
   features?: {
@@ -978,6 +982,23 @@ export class TableHeader extends OvlBaseElement {
         ${tableHeaderMenu}
       `)
     })
+  }
+  afterRender() {
+    // get the row density to enable row sizes by css
+    let def = this.tabledata.def
+    let rowDensity = def.options.rowDensity
+    let rowDensityClass = ""
+    if (def.uiState.rowsCount <= rowDensity.low) {
+      rowDensityClass = "ovl-table-rowdensity-low"
+    } else if (def.uiState.rowsCount <= rowDensity.medium) {
+      rowDensityClass = "ovl-table-rowdensity-medium"
+    } else {
+      rowDensityClass = "ovl-table-rowdensity-high"
+    }
+    this.classList.remove("ovl-table-rowdensity-high")
+    this.classList.remove("ovl-table-rowdensity-medium")
+    this.classList.remove("ovl-table-rowdensity-low")
+    this.classList.add(rowDensityClass)
   }
   tableRebuildCheck() {
     if (this.state.ovl.uiState.tableNeedsRebuild) {

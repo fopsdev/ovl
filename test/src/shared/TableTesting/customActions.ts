@@ -35,7 +35,7 @@ import {
   FormCanEdit,
   FormCopy,
   FormCustomFnSelect,
-  FormStatus,
+  ViewRowClass,
 } from "./customActions/row"
 import {
   FormCustom_alphaThenMemo_Sort,
@@ -85,7 +85,7 @@ export let tabletesting = {
   FormCustomColumnFn_ValidValues,
   FormCustomFnSelect,
   FormShow,
-  FormStatus,
+  ViewRowClass,
   FormValidate,
   ViewAfterRender,
   ViewCustomTab_TabX_Render,

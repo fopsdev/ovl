@@ -1,17 +1,18 @@
 import { SnackAdd } from "../../../../../ovl/src/library/helpers"
-import { RowStatus } from "../../../../../ovl/src/library/Table/Table"
+
 import { TableTesting } from "../state"
 
 import {
   FormCan_Type,
   FormCan_ReturnType,
-  FormStatus_Type,
-  FormStatus_ReturnType,
+  ViewRowClass_Type,
+  ViewRowClass_ReturnType,
   FormCopy_Type,
   FormAdd_Type,
   FormCustomFn_Type,
 } from "../../../../../ovl/src/global/hooks"
 import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { ViewRowClassContent } from "../../../../../ovl/src/library/Table/Table"
 
 export const FormCanEdit: OvlAction<FormCan_Type, FormCan_ReturnType> = async ({
   rowKey,
@@ -49,24 +50,25 @@ export const FormCanDelete: OvlAction<
   }
 }
 
-export const FormStatus: OvlAction<
-  FormStatus_Type,
-  FormStatus_ReturnType
-> = async ({ rowKey, tableData }) => {
+export const ViewRowClass: OvlAction<
+  ViewRowClass_Type,
+  ViewRowClass_ReturnType
+> = async ({ rowKey, tableData }, { state }) => {
   let row = <TableTesting>tableData.data[rowKey]
-  let res: RowStatus
+  let res: ViewRowClassContent
+
   if (row.U_Alpha.toLowerCase().indexOf("test") > -1) {
     res = {
-      status: "warning",
-      msg: 'Text enthält "Test"',
+      className: "fd-table__row--warning",
+      tooltip: 'Text enthält "Test"',
     }
   } else if (row.U_Alpha.toLowerCase().indexOf("fehler") > -1) {
     res = {
-      status: "error",
-      msg: 'Text enthält "Fehler"',
+      className: "fd-table__row--error",
+      tooltip: 'Text enthält "Fehler"',
     }
   }
-  return res
+  return Promise.resolve(res)
 }
 
 export const FormCopy: OvlAction<FormCopy_Type> = async ({ newRow }) => {
