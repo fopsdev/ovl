@@ -211,12 +211,11 @@ export class OvlBaseElement extends HTMLElement {
           }
         }
         await render(res, this)
-
-        await this.afterRender()
-        setTimeout(() => {
-          this.updated()
-        }, 50)
       }
+      await this.afterRender()
+      setTimeout(() => {
+        this.updated()
+      }, 50)
     } else {
       render(res, this)
     }
