@@ -407,7 +407,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
             fn[validationFnName](<FormValidate_Type>{
               fieldId: k,
               oldVal: val,
-              newVal: field.value,
+              newVal: field.convertedValue,
               formState: value,
               validationResult: field.validationResult,
             })
@@ -537,8 +537,8 @@ export const InitForm: OvlAction<InitForm> = (
 export type ValidateFieldType = {
   fieldId: string
   validationResult: ValidateFieldResult
-  oldVal: string
-  newVal: string
+  oldVal: any
+  newVal: any
   correctedValue: any
   formState: OvlFormState
   isInnerEvent: boolean
