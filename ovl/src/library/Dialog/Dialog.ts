@@ -6,8 +6,8 @@ export type DialogChangedParam = {
   dialogState: ModalDialogState
   result: ResultType
 }
-type OkType = "AppOk" | "AppYes" | "NoButton"
-type CancelType = "AppCancel" | "AppNo" | "NoButton"
+type OkType = "AppOk" | "AppYes" | "NoButton" | string
+type CancelType = "AppCancel" | "AppNo" | "NoButton" | string
 
 export type ResultType = undefined | 1 | 2
 
@@ -121,7 +121,7 @@ export class OvlDialog extends OvlBaseElement {
           aria-selected="${this.state.ovl.libState.dialog.default == 1}"
           id="ovldialogok"
         >
-          ${T("AppOk")}
+          ${this.state.ovl.libState.dialog.okText}
         </button>
       </div> `
     }
@@ -138,7 +138,7 @@ export class OvlDialog extends OvlBaseElement {
             aria-selected="${this.state.ovl.libState.dialog.default == 2}"
             id="ovldialogcancel"
           >
-            ${T("AppCancel")}
+            ${this.state.ovl.libState.dialog.cancelText}
           </button>
         </div>
       `
