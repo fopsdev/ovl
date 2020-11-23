@@ -350,9 +350,6 @@ export class OvlListControl extends OvlBaseElement {
         customRowClassContainerName = customRowClassName + "Container"
         customRowTooltip = customRowCell.tooltip
       }
-      // if (field.fieldKey === "U_ParentCode") {
-      //   debugger
-      // }
 
       let res = getUIValidationObject(field)
 

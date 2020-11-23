@@ -55,17 +55,27 @@ export class TableRowFormBig extends OvlFormElement {
     ) {
       this.focusInit = true
 
-      let el = document.getElementById("ovlRFNFocus_focus")
-      if (el) {
-        let focusEl: HTMLCollection = el.getElementsByClassName("ovl-focusable")
-        if (focusEl.length > 0) {
-          setTimeout(() => {
-            SetFocus(focusEl[0])
-          }, 100)
+      let el
+      let target
+      if (!this.formState.fieldToFocus) {
+        el = document.getElementById("ovlRFNFocus_focus")
+        if (el) {
+          let focusEl: HTMLCollection = el.getElementsByClassName(
+            "ovl-focusable"
+          )
+          if (focusEl.length > 0) {
+            target = focusEl[0]
+          }
         }
+      } else {
+        target = document.getElementById(
+          this.formState.fields[this.formState.fieldToFocus].id
+        )
       }
-      //@ts-ignore
-      //focusEl.firstElementChild.focus()
+
+      if (target) {
+        SetFocus(target)
+      }
     }
 
     super.updated()

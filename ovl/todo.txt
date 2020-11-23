@@ -2,7 +2,9 @@
 
 Todos:
 
-- document that Object.keys on an empty object can be critical for tracking. Because if keys get added afterwards the parent doesn't get notified
+- form show does not work as expected...see form show of dem timentry detailform. basically if a screen gets fadedout the formShowed property should be set to false
+  if there are multiple forms on a screen? -> needs rethinking
+X - document that Object.keys on an empty object can be critical for tracking. Because if keys get added afterwards the parent doesn't get notified
   
 - create a remove error msg from linked field method helper
 X - crete TableInit Method which clears data, tablestate, ... 

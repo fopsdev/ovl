@@ -32,7 +32,7 @@ export const DialogOpen: OvlAction<OpenDialogOptions> = async (
     if (!elFocusId && value.formType) {
       elFocusId =
         value.formId +
-        state.ovl.forms[value.formType][value.formId].lastTouchedField
+        state.ovl.forms[value.formType][value.formId].fieldToFocus
     }
     dlgState.elementIdToFocusAfterOpen = elFocusId
     dlgState.elementIdToFocusAfterClose = value.elementIdToFocusAfterClose

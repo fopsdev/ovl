@@ -1328,6 +1328,7 @@ export const TableEditRow: OvlAction<{
     namespace: def.namespace,
     schema: value.data.schema,
     forceOverwrite: true,
+    tableDefId: def.id,
   }
 
   actions.ovl.form.InitForm(initForm)
@@ -1372,6 +1373,7 @@ export const TableCopyRow: OvlAction<{
   key: string
   def: OvlTableDef
   data: OvlTableData
+  manual?: boolean
 }> = async (value, { state, actions, effects }) => {
   let def = value.def
   let key = value.key
@@ -1408,7 +1410,9 @@ export const TableCopyRow: OvlAction<{
   value.data.data[newId] = newRow
 
   addRowDefInit(value.data.tableDef, newId, "copy")
-  actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  if (!value.manual) {
+    actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  }
   addRowPage(def)
 }
 
@@ -1457,7 +1461,9 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
   value.data.data[newId] = newRow
 
   addRowDefInit(value.data.tableDef, newId, "add")
-  actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  if (!value.manual) {
+    actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  }
   addRowPage(def)
   def.uiState.currentlyAddingKey = newId
 }

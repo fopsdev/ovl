@@ -72,6 +72,8 @@ export class CompMobileTimeEntry extends OvlFormElement {
     let tableDataAndDef: TableDataAndDef = {
       data,
       def,
+      // signalizing taht we don't use auto editform
+      manual: true,
     }
     let rowKey = def.uiState.currentlyAddingKey
     // only add row if there is not already one in addmode
@@ -91,6 +93,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
       namespace: def.namespace,
       schema: data.schema,
       forceOverwrite,
+      initialFocusElementId: "U_TypeId",
     }
     this.actions.ovl.form.InitForm(initForm)
     this.actions.ovl.navigation.NavigateTo("MobileTimeEntryForm")

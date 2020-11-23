@@ -77,7 +77,6 @@ export function createDeepProxy(target) {
             pathToTrackParent = [...path].join(".")
             pathToTrack = [...path, key].join(".")
           } else if (isArray && key === "length") {
-            
             pathToTrack = [...path].join(".")
           } else if (isArray) {
             pathToTrack = [...path, key].join(".")

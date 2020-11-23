@@ -6,10 +6,14 @@ import { SetFocus } from "../../../../../ovl/src/global/globals"
 import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const FormShow: OvlAction<FormShow_Type> = async ({ formState }) => {
-  console.log("hello from formshow hook. setting focus to item group")
-  //@ts-ignore
-  if (formState.fields["U_ItmsGrpCod"]) {
-    SetFocus(document.getElementById(formState.fields["U_ItmsGrpCod"].id))
+  console.log("hello from formshow hook. setting focus test")
+
+  if (formState.tableDefId === "tab1") {
+    formState.fieldToFocus = "U_ItmsGrpCod"
+  } else if (formState.tableDefId === "tab2") {
+    formState.fieldToFocus = "U_ItemCode"
+  } else if (formState.tableDefId === "tab3") {
+    formState.fieldToFocus = "U_Decimal"
   }
 }
 

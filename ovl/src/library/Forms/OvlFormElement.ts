@@ -65,7 +65,7 @@ export class OvlFormElement extends OvlBaseElement {
   formState: OvlFormState
   formAfterRenderFn: any
   formShowFn: any
-  formShowed: boolean
+  //formShowed: boolean
   handleOvlFocusOut = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
@@ -165,48 +165,36 @@ export class OvlFormElement extends OvlBaseElement {
   }
 
   handleFormShowCustomHook() {
-    if (this.formState) {
-      if (
-        this.screen !== undefined &&
-        this.state.ovl.screens.nav.currentScreen !== this.screen
-      ) {
-        this.formShowed = false
+    if (this.formState && !this.formState.formShowed) {
+      this.formState.formShowed = true
+
+      // call form Show hook
+      if (this.formShowFn !== -1) {
+        if (this.formShowFn) {
+          this.callFormShow()
+        } else {
+          let formFunctions = resolvePath(
+            this.actions.custom,
+            this.formState.namespace
+          )
+          if (formFunctions) {
+            if (formFunctions[FormShow]) {
+              this.formShowFn = formFunctions[FormShow]
+              this.callFormShow()
+            }
+          } else {
+            this.formShowFn = -1
+          }
+        }
       }
 
-      if (
-        !this.formShowed &&
-        (this.state.ovl.screens.nav.currentScreen === this.screen ||
-          this.screen === undefined)
-      ) {
-        this.formShowed = true
-        // preserve form control focus
-        let lastTouchedField = this.formState.fields[
-          this.formState.lastTouchedField
-        ]
+      let fsLastTouchedField = this.formState.fieldToFocus
+      if (fsLastTouchedField) {
+        let lastTouchedField = this.formState.fields[fsLastTouchedField]
         if (lastTouchedField) {
           let focusEl = document.getElementById(lastTouchedField.id)
           if (focusEl) {
             SetFocus(focusEl)
-          }
-        }
-
-        // call form Show hook
-        if (this.formShowFn !== -1) {
-          if (this.formShowFn) {
-            this.callFormShow()
-          } else {
-            let formFunctions = resolvePath(
-              this.actions.custom,
-              this.formState.namespace
-            )
-            if (formFunctions) {
-              if (formFunctions[FormShow]) {
-                this.formShowFn = formFunctions[FormShow]
-                this.callFormShow()
-                return
-              }
-            }
-            this.formShowFn = -1
           }
         }
       }
@@ -220,8 +208,8 @@ export class OvlFormElement extends OvlBaseElement {
     })
   }
   callFormShow() {
-    setTimeout(() => {
-      this.formShowFn(<FormShow_Type>{ formState: this.formState, comp: this })
-    }, 200)
+    //setTimeout(() => {
+    this.formShowFn(<FormShow_Type>{ formState: this.formState, comp: this })
+    //}, 200)
   }
 }

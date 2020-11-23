@@ -24,6 +24,7 @@ export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
 
 let initialised = false
 export const ScreenNavigateIn: OvlAction = async (_, { actions, state }) => {
+  console.log("navigatein")
   let mainFormInstanceId = "mobiletimerecordingmain1"
   let formType: OvlForm = "MobileTimeEntryMain"
   if (!initialised) {

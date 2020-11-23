@@ -86,6 +86,7 @@ export class OvlBaseElement extends HTMLElement {
   state: OvlState
   actions: OvlActions
   effects: OvlEffects
+
   name: string
   _id: number = 0
   screen: OvlScreen
@@ -207,6 +208,8 @@ export class OvlBaseElement extends HTMLElement {
           }
           if (!this.screenClosing()) {
             this.classList.add("fadeInScreen")
+            this.classList.remove("fadeOutScreen")
+            this.classList.remove("ovl-disabled")
           }
         }
         await render(res, this)

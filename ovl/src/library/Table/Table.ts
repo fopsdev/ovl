@@ -81,6 +81,7 @@ export type OvlTableData = {
 export type TableDataAndDef = {
   def: OvlTableDef
   data: OvlTableData
+  manual?: boolean
 }
 
 export type ViewRowClassContent = {
