@@ -14,6 +14,25 @@
   height: 20vh;
 }
 
+ovl-refresh {
+  display: inline !important;
+}
+
+/* ovl-hitlist {
+  display: inline !important;
+} */
+
+ovl-backbutton {
+  display: flex !important;
+}
+
+.ovl-hitlist {
+  display: inline !important;
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
+}
+
 .ovl-bigeditform .ovl-formcontrol-container {
   display: grid;
   grid-template-columns: 110px 1fr;
@@ -72,10 +91,6 @@
   padding-right: 2px;
   padding-top: 6px;
   padding-bottom: 8px;
-}
-
-.ovl-listcontrol-main .ovl-hitlist {
-  margin-left: 110px;
 }
 
 .ovl-hitlistdialog-footer {

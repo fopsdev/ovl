@@ -2052,7 +2052,7 @@ export const TableMultipleCustomFunction: OvlAction<{
     }
 
     if (result) {
-      await DialogOk(result)
+      await DialogOk({ text: result })
     }
   }
 }

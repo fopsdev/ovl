@@ -176,7 +176,7 @@ export class OvlBaseElement extends HTMLElement {
       if (this.screenClosing()) {
         // no complete rerender is necessary
         // just set the animation class accordingly
-        let el = this.firstElementChild
+        let el = this
         if (el) {
           el.classList.remove("fadeInScreen")
           el.classList.add("ovl-disabled")
@@ -202,12 +202,11 @@ export class OvlBaseElement extends HTMLElement {
       if (res !== undefined) {
         if (this.screen) {
           let screenHide = !this.screenVisible() ? "hide" : ""
+          if (screenHide) {
+            this.classList.add(screenHide)
+          }
           if (!this.screenClosing()) {
-            // wrap screen always in a div
-            // because animations didn't work on custom element top level
-            res = html`<div class="fadeInScreen ${screenHide}">${res}</div>`
-          } else {
-            res = html`<div>${res}</div>`
+            this.classList.add("fadeInScreen")
           }
         }
         await render(res, this)

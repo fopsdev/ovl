@@ -233,7 +233,9 @@ export const Logout: OvlAction = async (_, { state, actions }) => {
     )
     return
   }
-  if ((await DialogOkCancel("Wollen Sie sich wirklich abmelden?", 1)) === 1) {
+  if (
+    (await DialogOkCancel({ text: "Wollen Sie sich wirklich abmelden?" })) === 1
+  ) {
     logout()
   }
 }
@@ -457,7 +459,7 @@ export const UpdateCheck = async () => {
       )
       if (updateCheck.status === 404) {
         // we need an update
-        await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
+        await DialogOk({ text: "Update erforderlich!\n Bitte neu anmelden!" })
         logout()
       }
     } catch (e) {}

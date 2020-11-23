@@ -200,7 +200,7 @@ export const Field_U_Decimal_RowCellSelectedHandler: OvlAction<
         data.data[rowKey],
         def.namespace
       )
-      await DialogOk("U_Decimal selected! Value:" + val)
+      await DialogOk({ text: "U_Decimal selected! Value:" + val })
     }
 
     // do not use default event (select row in cas called from table)
@@ -226,7 +226,7 @@ export const Field_U_ItemCode_HeaderCellSelectedHandler: OvlAction<
   FieldHeaderCellSelectedHandler_ReturnType
 > = async ({ classList, def, displayMode }, { state }) => {
   if (classList.contains("testheadercell")) {
-    await DialogOk("Header U_ItemCode selected!")
+    await DialogOk({ text: "Header U_ItemCode selected!" })
     // do not use default event (open tableheader menu)
     return false
   }

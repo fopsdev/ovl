@@ -208,7 +208,6 @@ export class OvlListControl extends OvlBaseElement {
       fieldId: this.field.field.fieldKey,
       value: "",
       formState: this.formState,
-      isInit: true,
     })
     this.inputElement.focus()
   }
@@ -439,11 +438,10 @@ export class OvlListControl extends OvlBaseElement {
       }
       let validationHide = res.validationHide
 
-      // if (document.activeElement.id.indexOf(field.id) > -1) {
-      //   validationHide = "hide"
-      // }
-      // logTrackingList()
-      if (this.localList) {
+      if (
+        this.localList ||
+        document.activeElement.id.indexOf(this.field.field.id) > -1
+      ) {
         validationHide = "hide"
       }
 
