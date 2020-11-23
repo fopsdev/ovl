@@ -113,6 +113,18 @@ export class OvlFormElement extends OvlBaseElement {
     }
   }
   async doRender() {
+    if (this.screenClosing()) {
+      //whilst screenclosing setting formShowed to false so formshows should appear again
+      let forms = this.state.ovl.forms
+      Object.keys(forms).forEach((formType: OvlForm) => {
+        if (formType !== "TableRowEdit") {
+          Object.keys(forms[formType]).forEach((formInstance) => {
+            forms[formType][formInstance].formShowed = false
+          })
+        }
+      })
+    }
+
     if (!this.screen || this.screenVisible()) {
       let forms = this.state.ovl.forms
       if (!forms[this.formType] || !forms[this.formType][this.formId]) {
@@ -165,7 +177,7 @@ export class OvlFormElement extends OvlBaseElement {
   }
 
   handleFormShowCustomHook() {
-    if (this.formState && !this.formState.formShowed) {
+    if (!this.screenClosing() && this.formState && !this.formState.formShowed) {
       this.formState.formShowed = true
 
       // call form Show hook

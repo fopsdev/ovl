@@ -24,7 +24,6 @@ import { OvlAction } from "../../../../../ovl/src/ovlTypes"
 
 export const FormShow: OvlAction = async (formState: OvlFormState) => {
   console.log("hello from timeentry formshow hook")
-  console.log(formState)
 }
 
 export const Field_U_Type_GetList: OvlAction = (row: {
