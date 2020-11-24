@@ -8,7 +8,10 @@ import {
 } from "../../../../../ovl/src/library/forms/actions"
 import { LookupListPostData } from "../../../../../ovl/src/library/forms/Controls/helpers"
 
-import { Mandatory } from "../../../../../ovl/src/library/forms/validators"
+import {
+  Mandatory,
+  RemoveValidationMsg,
+} from "../../../../../ovl/src/library/forms/validators"
 import {
   BeforeSaveParam,
   ListFnReturnValue,
@@ -127,10 +130,12 @@ const CheckFromTimeSmaller = (formState: OvlFormState, fieldId: string) => {
   let ft = ftField.convertedValue
   let tt = ttField.convertedValue
   if (ft && tt) {
-    if (parseFloat(ft.replace(":", ".")) > parseFloat(tt.replace(":", "."))) {
+    if (parseFloat(ft.replace(":", ".")) >= parseFloat(tt.replace(":", "."))) {
       validateField.validationResult.errors.push(
         "Bis Zeit muss grösser sein als von Zeit!"
       )
+    } else {
+      RemoveValidationMsg(relatedValidateField, "Von Zeit muss")
     }
   }
 }

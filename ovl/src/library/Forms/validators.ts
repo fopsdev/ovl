@@ -1,4 +1,4 @@
-import { ValidateFieldResult } from "./actions"
+import { Field, ValidateFieldResult } from "./actions"
 import { T } from "../../global/globals"
 
 export const Mandatory = (
@@ -53,4 +53,11 @@ export const Email = (
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return re.test(String(email).toLowerCase())
+}
+
+export const RemoveValidationMsg = (field: Field, msgOrPartOfMsg: string) => {
+  let errorIndex = field.validationResult.errors.findIndex(
+    (f) => f.indexOf(msgOrPartOfMsg) > -1
+  )
+  field.validationResult.errors.splice(errorIndex, 1)
 }
