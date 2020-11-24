@@ -207,12 +207,13 @@ export class TableRowWrapper extends OvlBaseElement {
       }
 
       if (editSelected && editSelected.selected) {
-        if (this.state.ovl.dialogs.DetailView.visible) {
-          def.uiState.viewRow[key].selected = false
-          this.state.ovl.dialogs.DetailView.visible = false
-          this.state.ovl.dialogs.DetailView.closing = false
-        }
         if (def.options.edit.editType === "inline") {
+          if (this.state.ovl.dialogs.DetailView.visible) {
+            def.uiState.viewRow[key].selected = false
+            this.state.ovl.dialogs.DetailView.visible = false
+            this.state.ovl.dialogs.DetailView.closing = false
+          }
+
           let editRowSC = html`
             <ovl-trowsc
               class="fd-table__row"

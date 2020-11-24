@@ -75,6 +75,7 @@ export class OvlBaseDialog extends OvlBaseElement {
     // now put together the template
 
     let handleTopLevelClick = (e: Event) => {
+      //e.stopImmediatePropagation()
       e.stopPropagation()
       //e.preventDefault()
       if (dialogParts.emptySpaceClickHandlerFn) {

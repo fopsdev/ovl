@@ -2,6 +2,7 @@ import { paths, isTracking, addTrackedPath, disposeTrack } from "./tracker"
 import { SnackTrackedRemove } from "../library/helpers"
 import { stringifyReplacer } from "../global/globals"
 import { OvlConfig } from "../config"
+import { ovl } from ".."
 export let actionTracking = { actionRunning: false, lastActionName: undefined }
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
@@ -134,7 +135,7 @@ export function createDeepProxy(target) {
   }
 
   function checkForCallbacks(path) {
-    // if (path.indexOf("U_ParentCode.validationResult.errors") > -1) {
+    // if (path.indexOf("viewRow") > -1) {
     //   debugger
     // }
     let cbs = paths.get(path)
