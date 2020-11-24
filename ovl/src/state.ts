@@ -32,6 +32,7 @@ let screens: ScreensState = {
     formTypeToReset: undefined,
     formIdToReset: undefined,
   },
+  formShowedToReset: [],
 }
 
 type User = {

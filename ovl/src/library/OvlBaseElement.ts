@@ -20,6 +20,7 @@ export type ScreensState = {
     }
   }
   nav: NavState
+  formShowedToReset: FormShowed[]
 }
 
 export type NavState = {
@@ -81,6 +82,7 @@ export const scrollToLastPosition = (state: OvlState) => {
 import { render, TemplateResult, html } from "lit-html"
 import { actionTracking } from "../tracker/proxyHandler"
 import { OvlConfig } from "../config"
+import { FormShowed } from "./forms/OvlFormElement"
 
 export class OvlBaseElement extends HTMLElement {
   state: OvlState

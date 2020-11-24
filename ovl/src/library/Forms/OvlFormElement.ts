@@ -55,6 +55,11 @@ export type LookupDef = {
   translationKey?: string
 }
 
+export type FormShowed = {
+  formType: OvlForm
+  instanceId: string
+}
+
 export class OvlFormElement extends OvlBaseElement {
   formType: OvlForm
   formFields: { [key: string]: FormFields }
@@ -114,15 +119,14 @@ export class OvlFormElement extends OvlBaseElement {
   }
   async doRender() {
     if (this.screenClosing()) {
-      //whilst screenclosing setting formShowed to false so formshows should appear again
-      let forms = this.state.ovl.forms
-      Object.keys(forms).forEach((formType: OvlForm) => {
-        if (formType !== "TableRowEdit") {
-          Object.keys(forms[formType]).forEach((formInstance) => {
-            forms[formType][formInstance].formShowed = false
-          })
-        }
+      //whilst screenclosing reset all the formShowed to false so they can show again...
+      let formsState = this.state.ovl.forms
+      let formShowedToReset: FormShowed[] = this.state.ovl.screens
+        .formShowedToReset
+      formShowedToReset.forEach((formInfo: FormShowed) => {
+        formsState[formInfo.formType][formInfo.instanceId].formShowed = false
       })
+      formShowedToReset = []
     }
 
     if (!this.screen || this.screenVisible()) {
@@ -179,7 +183,10 @@ export class OvlFormElement extends OvlBaseElement {
   handleFormShowCustomHook() {
     if (!this.screenClosing() && this.formState && !this.formState.formShowed) {
       this.formState.formShowed = true
-
+      this.state.ovl.screens.formShowedToReset.push({
+        formType: this.formType,
+        instanceId: this.formId,
+      })
       // call form Show hook
       if (this.formShowFn !== -1) {
         if (this.formShowFn) {
