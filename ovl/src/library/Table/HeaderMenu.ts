@@ -111,7 +111,11 @@ export class TableHeaderMenu extends OvlBaseElement {
       key: "",
     })
     //    overlayToRender.overlayClosedCallback = () => {
-    this.actions.ovl.table.TableAddRow(this.headerMenu.def)
+    this.actions.ovl.table.TableAddRow({
+      data: this.headerMenu.def.data,
+      def: this.headerMenu.def.def,
+      internal: true,
+    })
     //    }
   }
 

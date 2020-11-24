@@ -81,7 +81,8 @@ export type OvlTableData = {
 export type TableDataAndDef = {
   def: OvlTableDef
   data: OvlTableData
-  manual?: boolean
+    // if the add was called from ovl table integration itself this will be set to true
+  internal?: boolean
 }
 
 export type ViewRowClassContent = {

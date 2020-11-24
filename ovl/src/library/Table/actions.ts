@@ -1461,7 +1461,7 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
   value.data.data[newId] = newRow
 
   addRowDefInit(value.data.tableDef, newId, "add")
-  if (!value.manual) {
+  if (value.internal && value.internal === true) {
     actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
   }
   addRowPage(def)

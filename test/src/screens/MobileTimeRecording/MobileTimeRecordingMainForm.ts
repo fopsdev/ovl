@@ -73,7 +73,7 @@ export class CompMobileTimeEntry extends OvlFormElement {
       data,
       def,
       // signalizing taht we don't use auto editform
-      manual: true,
+      internal: true,
     }
     let rowKey = def.uiState.currentlyAddingKey
     // only add row if there is not already one in addmode

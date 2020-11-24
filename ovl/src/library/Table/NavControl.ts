@@ -44,16 +44,18 @@ export class TableNavControl extends OvlBaseElement {
   handleAddRowClick = (e: Event) => {
     e.stopPropagation()
     e.preventDefault()
-    if (this.nav.type !== "header") {
-      this.actions.ovl.table.TableAddRow(this.nav.tableData)
-    } else {
+    if (this.nav.type === "header") {
       this.actions.ovl.internal.TableSelectHeader({
         def: this.nav.tableData.def,
         data: this.nav.tableData.data,
         key: "",
       })
-      this.actions.ovl.table.TableAddRow(this.nav.tableData)
     }
+    this.actions.ovl.table.TableAddRow({
+      data: this.nav.tableData.data,
+      def: this.nav.tableData.def,
+      internal: true,
+    })
   }
 
   handleRefreshClick = (e: Event) => {
