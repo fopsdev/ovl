@@ -5,7 +5,7 @@ Todos:
 X - TableAddRow replace manual to internal so using the action from outside doesn't need to think about it
 X - form show resetting using an array (pop off and set to false)
 - demo timeentry validate. time ranges... setting back related validate msg
-- escape on dialogs should close them (check using the dismissed handler)
+X - escape on dialogs should close them (check using the dismissed handler)
 
 X - form show does not work as expected...see form show of dem timentry detailform. basically if a screen gets fadedout the formShowed property should be set to false
   if there are multiple forms on a screen? -> needs rethinking
