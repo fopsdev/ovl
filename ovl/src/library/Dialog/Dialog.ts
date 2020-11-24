@@ -74,7 +74,7 @@ export class OvlDialog extends OvlBaseElement {
   keyHandler = (e: KeyboardEvent) => {
     e.preventDefault()
     e.stopPropagation()
-
+    console.log(e.key)
     if (e.key == "Enter") {
       if (this.state.ovl.libState.dialog.default == 1) {
         this.handleResult(1)
@@ -94,6 +94,15 @@ export class OvlDialog extends OvlBaseElement {
         this.handleDefault(1)
       } else {
         this.handleDefault(2)
+      }
+    } else if (e.key === "Escape") {
+      if (this.state.ovl.libState.dialog.cancelText !== "NoButton") {
+        this.handleDefault(2)
+        setTimeout(() => {
+          this.handleResult(2)
+        }, 100)
+      } else {
+        this.handleResult(1)
       }
     }
   }

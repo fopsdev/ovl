@@ -41,11 +41,17 @@ export class OvlBaseDialog extends OvlBaseElement {
   closedCallbackFn: any
   dismissCallbackFn: any
 
-  defaultKeyHandler = (e: Event) => {}
-
   getDialogTemplate = (dialogParts: DialogParts): TemplateResult => {
     if (!this.closedCallbackFn && dialogParts.closedCallbackFn) {
       this.closedCallbackFn = dialogParts.closedCallbackFn
+    }
+
+    const defaultKeyHandler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (dialogParts.dismissHandlerFn) {
+          dialogParts.dismissHandlerFn()
+        }
+      }
     }
 
     let dialogState = this.state.ovl.dialogs[this.dialogType]
@@ -84,7 +90,7 @@ export class OvlBaseDialog extends OvlBaseElement {
         dialogParts.dismissHandlerFn()
       }
     }
-    let keyHandler = this.defaultKeyHandler
+    let keyHandler = defaultKeyHandler
     if (dialogParts.keyHandlerFn) {
       keyHandler = dialogParts.keyHandlerFn
     }

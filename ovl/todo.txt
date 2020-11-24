@@ -3,7 +3,7 @@
 Todos:
 
 X - TableAddRow replace manual to internal so using the action from outside doesn't need to think about it
-- form show resetting using an array (pop off and set to false)
+X - form show resetting using an array (pop off and set to false)
 - demo timeentry validate. time ranges... setting back related validate msg
 - escape on dialogs should close them (check using the dismissed handler)
 
