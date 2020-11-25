@@ -81,7 +81,7 @@ export type OvlTableData = {
 export type TableDataAndDef = {
   def: OvlTableDef
   data: OvlTableData
-    // if the add was called from ovl table integration itself this will be set to true
+  // if the add was called from ovl table integration itself this will be set to true
   internal?: boolean
 }
 
@@ -960,8 +960,7 @@ export class TableHeader extends OvlBaseElement {
 
       return Promise.resolve(html`
         <caption>
-          <b>${title}</b>
-          ${filterAndSortText} ${rowNavTop}
+          ${title} ${filterAndSortText} ${rowNavTop}
         </caption>
         ${colWidths}
         <thead class="fd-table__header">
