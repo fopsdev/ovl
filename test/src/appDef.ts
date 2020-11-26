@@ -5,6 +5,7 @@ export let appScreens = {
   Translation: {},
   Settings: {},
   Dashboard: {},
+  OccasionsDashboard: {},
   Quotation: {},
   Order: {},
   Orderdetail: {},
@@ -34,5 +35,6 @@ export type OvlTableDefIds =
   | "tab2"
   | "tab3"
   | "mobiletimerecording1"
+  | "Vehicles"
 
 export type OvlLanguage = "DE" | "FR"

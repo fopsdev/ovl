@@ -48,6 +48,10 @@ export class CompShellbar extends OvlBaseElement {
       this.actions.ovl.navigation.NavigateTo("Dashboard")
     }
 
+    const openOccasionsDashboard = (e: Event) => {
+      this.actions.ovl.navigation.NavigateTo("OccasionsDashboard")
+    }
+
     const openOrderOverview = (e: Event) => {
       // this.actions.ovl.internal.GetFile({
       //   id1: "tst1.pdf",
@@ -164,6 +168,7 @@ export class CompShellbar extends OvlBaseElement {
             <comp-orderoverview></comp-orderoverview>
             <comp-invoiceoverview></comp-invoiceoverview>
             <comp-orderdetaillayout></comp-orderdetaillayout>
+            <comp-occasionsdashboard> </comp-occasionsdashboard>
             ${feedbackForm}
           </div>
         `
@@ -305,6 +310,21 @@ export class CompShellbar extends OvlBaseElement {
         <span class="sap-icon--home"> </span>
         ${T("PortalDashboardTitle")}
       </button> `
+
+      let occasionsDashboardMenu = html`
+        <li class="fd-menu__item ovl-shellbar-popupmenu " role="presentation">
+          <a
+            @click=${(e) => openOccasionsDashboard(e)}
+            role="menuitem"
+            class="fd-menu__link fd-has-type-2"
+          >
+            <span class="fd-menu__addon-before sap-icon--bbyd-dashboard"></span>
+            <span class="fd-menu__title fd-has-type-1"
+              >Occasions Dashboard</span
+            >
+          </a>
+        </li>
+      `
 
       if (
         this.state.app.quotationDetail &&
@@ -488,7 +508,7 @@ export class CompShellbar extends OvlBaseElement {
                           ${invoicePopupMenu} ${effortTableMenu}
                           ${languageTableMenu} ${auditMenu}
                           ${mobileTimeEntryMenu} ${createMobileTimentriesMenu}
-                          ${tableTestingMenu}
+                          ${tableTestingMenu} ${occasionsDashboardMenu}
                           <ovl-refresh .refresh=${<ShellButtonOrMenu>"menu"}>
                           </ovl-refresh>
                           <li class="fd-menu__item" role="presentation">

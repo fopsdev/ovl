@@ -227,6 +227,123 @@ ovl-backbutton {
   font-weight: bold;
 }
 
+.ovl-table-Vehicles .ovl-label-text {
+  font-size: medium !important;
+  font-weight: bold !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+.ovl-table-Vehicles.ovl-table-rowdensity-high .ovl-label-text {
+  font-size: small !important;
+  font-weight: bold !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+.ovl-table-Vehicles.ovl-table-rowdensity-low .ovl-tableview-rowcell {
+  min-height: 8px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  font-size: x-large;
+  font-weight: normal !important;
+}
+
+.ovl-table-Vehicles.ovl-table-rowdensity-medium .ovl-tableview-rowcell {
+  min-height: 4px !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  font-size: medium;
+  font-weight: normal !important;
+}
+
+.ovl-table-rowdensity-high .ovl-tableview-rowcell {
+  min-height: 1px !important;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  font-size: xx-small;
+  font-weight: normal !important;
+}
+
+.app-rowstatus-ok {
+  background-color: rgba(124, 247, 23, 0.308);
+}
+
+.app-rowstatus-warning {
+  background-color: rgba(241, 226, 9, 0.199);
+}
+.app-rowstatus-bad {
+  background-color: rgba(252, 4, 4, 0.13);
+}
+
+.app-highlight {
+  padding: 6px;
+}
+
+.dashtable {
+  text-align: left;
+  font-size: medium;
+  font-weight: bolder;
+  margin-bottom: 4px;
+}
+
+.dashtable {
+  pointer-events: none;
+  user-select: none;
+}
+
+.dashboard-grid {
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 68vw 30vw;
+  grid-template-areas:
+    "title  title"
+    "table  gauge1"
+    "table  gauge2"
+    "table  result";
+}
+
+.dashtable {
+  margin-left: 20px;
+  margin-top: -10vh;
+  grid-area: table;
+}
+.dashtitle {
+  padding: 2px;
+  padding-top: 4px;
+  margin: 0;
+  grid-area: title;
+  margin-left: 35%;
+}
+
+.dashtitle img {
+  padding: 8px;
+  float: left;
+}
+.dashgauge1 {
+  margin-top: -18vh;
+  grid-area: gauge1;
+  text-align: center;
+}
+.dashgauge2 {
+  margin-top: -12vh;
+  grid-area: gauge2;
+
+  text-align: center;
+}
+.dashtachotitle {
+  margin: 0;
+  padding: 0;
+}
+
+.dashresult {
+  margin-top: -14vh;
+  text-align: center;
+}
+
 .ovl-blink {
   animation: blinkingText 1.2s infinite;
 }

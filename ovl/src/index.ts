@@ -1,30 +1,30 @@
-// <app setup>
-export { OvlVersion } from "../../../app/sw"
-import {
-  appForms,
-  appScreens,
-  appDialogs,
-  OvlTableDefIds,
-  OvlLanguage,
-} from "../../../app/src/appDef"
-import * as appState from "../../../app/src/state"
-import * as appActions from "../../../app/src/actions"
-import * as customActions from "../../../app/src/customActions"
-// </app setup>
-
-// // <test setup>
-// export { OvlVersion } from "../../test/sw"
+// // <app setup>
+// export { OvlVersion } from "../../../app/sw"
 // import {
+//   appForms,
 //   appScreens,
 //   appDialogs,
-//   appForms,
 //   OvlTableDefIds,
 //   OvlLanguage,
-// } from "../../test/src/appDef"
-// import * as appState from "../../test/src/state"
-// import * as appActions from "../../test/src/actions"
-// import * as customActions from "../../test/src/customActions"
-// // </test setup>
+// } from "../../../app/src/appDef"
+// import * as appState from "../../../app/src/state"
+// import * as appActions from "../../../app/src/actions"
+// import * as customActions from "../../../app/src/customActions"
+// // </app setup>
+
+// <test setup>
+export { OvlVersion } from "../../test/sw"
+import {
+  appScreens,
+  appDialogs,
+  appForms,
+  OvlTableDefIds,
+  OvlLanguage,
+} from "../../test/src/appDef"
+import * as appState from "../../test/src/state"
+import * as appActions from "../../test/src/actions"
+import * as customActions from "../../test/src/customActions"
+// </test setup>
 
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
@@ -55,7 +55,7 @@ export let ovl: {
   baseScreens,
   baseDialogs
 )
-
+debugger
 export type OvlForm = appForms | "TableRowEdit"
 export type OvlDialog = keyof typeof baseDialogs | keyof typeof appDialogs
 

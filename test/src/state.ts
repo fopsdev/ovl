@@ -1,4 +1,3 @@
-import { LookupDef } from "../../ovl/src/library/forms/OvlFormElement"
 import {
   ListFnReturnValue,
   OvlTableData,
@@ -23,6 +22,7 @@ import { FeedbackFormState } from "./screens/Feedback/FeedbackForm"
 import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/MobileTimeRecordingForm"
 import { DashboardState } from "./screens/Dashboard/Dashboard"
 import { ShellbarState } from "./screens/Shellbar/Shellbar"
+import { tblVehicles } from "./screens/OccasionsDashboard/state"
 
 let shellbar: ShellbarState = {
   mainMenuExpanded: false,
@@ -281,6 +281,49 @@ let screens = {
   mobileTimeEntryForm: mobileTimeEntryFormState,
 }
 
+let vehicles: OvlTableData = {
+  tableDef: {
+    Vehicles: tblVehicles,
+  },
+}
+let selectedLocation = ""
+let selectedInterval = 0
+
+let calculated_values = {
+  total: {
+    nrOfMediumLines: 0,
+    nrOfBadLines: 0,
+    nrOfGoodLines: 0,
+    totalLines: 0,
+    goodPerc: 0.0,
+  },
+  quarter: {
+    nrOfGoodClosed: 0,
+    nrOfMediumClosed: 0,
+    nrOfBadClosed: 0,
+    nrOfGoodLines: 0,
+    nrOfMediumLines: 0,
+    nrOfBadLines: 0,
+    totalInProcessLines: 0,
+    goodPerc: 0.0,
+  },
+  currentQuarter: 0,
+}
+let occasionProcessDashboard = {
+  selectedLocation,
+  selectedInterval,
+  calculated_values,
+  vehicles,
+  settings: {
+    days1: 13,
+    days2: 21,
+    smileyPerc1: 20,
+    smileyPerc2: 40,
+    smileyPerc1_2: 20,
+    smileyPerc2_2: 40,
+  },
+}
+
 export {
   screens,
   user,
@@ -293,4 +336,5 @@ export {
   quotationDetail,
   tables,
   testtables,
+  occasionProcessDashboard,
 }

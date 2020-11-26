@@ -6,6 +6,10 @@ import {
   HandleRefresh,
   TogglePDFPopup,
 } from "./global/actions"
+
+import { OccasionsProcessDataPoll } from "./screens/OccasionsDashboard/actions"
+let occasionsProcessDashboard = { OccasionsProcessDataPoll }
+
 let user = {
   Login,
   ForgotPw,
@@ -54,4 +58,12 @@ let system = { shellbar, user }
 let testtables = { mobiletimerecording }
 let feedback = { SaveFeedback }
 
-export { system, global, settings, order, feedback, testtables }
+export {
+  system,
+  global,
+  settings,
+  order,
+  feedback,
+  testtables,
+  occasionsProcessDashboard,
+}
