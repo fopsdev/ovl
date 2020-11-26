@@ -6,6 +6,7 @@ import * as Settings from "./screens/Settings/screenActions"
 import * as OccasionsDashboard from "./screens/OccasionsDashboard/screenActions"
 import * as TableTesting from "./screens/TableTesting/screenActions"
 import * as Translation from "./screens/Translation/screenActions"
+import * as AutoQuotation from "./screens/AutoQuotation/screenActions"
 
 export {
   Audit,
@@ -16,4 +17,5 @@ export {
   TableTesting,
   Translation,
   OccasionsDashboard,
+  AutoQuotation,
 }

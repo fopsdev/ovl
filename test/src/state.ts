@@ -23,6 +23,8 @@ import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTi
 import { DashboardState } from "./screens/Dashboard/Dashboard"
 import { ShellbarState } from "./screens/Shellbar/Shellbar"
 import { tblVehicles } from "./screens/OccasionsDashboard/state"
+import { OvlTableDefIds } from "."
+import { tblAutoQuotation } from "./screens/AutoQuotation/state"
 
 let shellbar: ShellbarState = {
   mainMenuExpanded: false,
@@ -248,6 +250,11 @@ let pics: PicsState = {
 }
 let quotationDetail: QuotationDetailState
 let tables = {
+  autoQuotation: {
+    index: {},
+    data: {},
+    tableDef: { autoQuotation: tblAutoQuotation },
+  },
   translation: {
     data: {},
     schema: {},
@@ -263,7 +270,7 @@ let tables = {
     },
   },
 }
-
+let autoQuotation = { okMessage: "", errorMessage: "", bvxFileName: "" }
 let screens = {
   /* base screens */
   shellbar: shellbar,
@@ -279,6 +286,7 @@ let screens = {
   tableTesting: {},
   mobileTimeEntry: mobileTimeEntry,
   mobileTimeEntryForm: mobileTimeEntryFormState,
+  autoQuotation: autoQuotation,
 }
 
 let vehicles: OvlTableData = {

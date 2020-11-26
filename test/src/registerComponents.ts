@@ -23,6 +23,8 @@ import { CompFeedbackForm } from "./screens/Feedback/FeedbackForm"
 
 import { CompTacho } from "./components/tacho/tacho"
 
+import { CompAutoQuotation } from "./screens/AutoQuotation/AutoQuotation"
+
 import { CompTableTesting } from "./screens/TableTesting/TableTesting"
 import { CompMobileTimeEntry } from "./screens/MobileTimeRecording/MobileTimeRecordingMainForm"
 import { CompMobileTimeEntryForm } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/MobileTimeRecordingForm"
@@ -41,6 +43,7 @@ export const defineElements = () => {
   customElements.define("comp-mobiletimeentryform", CompMobileTimeEntryForm)
   customElements.define("comp-dashboard", CompDashboard)
   customElements.define("comp-occasionsdashboard", CompOccasionsDashboard)
+  customElements.define("comp-autoquotation", CompAutoQuotation)
   customElements.define("comp-settingsform", CompSettingsForm)
   customElements.define("comp-orderoverview", CompOrderOverview)
   customElements.define("comp-quotationoverview", CompQuotationOverview)

@@ -122,6 +122,10 @@ export class CompShellbar extends OvlBaseElement {
       this.actions.ovl.navigation.NavigateTo("TableTesting")
     }
 
+    const openAutoQuotation = (e: Event) => {
+      this.actions.ovl.navigation.NavigateTo("AutoQuotation")
+    }
+
     return this.track(() => {
       let app
       let scrollable = "scrollable"
@@ -169,6 +173,7 @@ export class CompShellbar extends OvlBaseElement {
             <comp-invoiceoverview></comp-invoiceoverview>
             <comp-orderdetaillayout></comp-orderdetaillayout>
             <comp-occasionsdashboard> </comp-occasionsdashboard>
+            <comp-autoquotation id="autoquotationform"></comp-autoquotation>
             ${feedbackForm}
           </div>
         `
@@ -301,6 +306,21 @@ export class CompShellbar extends OvlBaseElement {
       let quotationPopupMenu
       let salesOrderPopupMenu
       let invoicePopupMenu
+
+      let autoQuotation = html`
+        <li class="fd-menu__item ovl-shellbar-popupmenu" role="presentation">
+          <a
+            @click=${(e) => openAutoQuotation(e)}
+            role="menuitem"
+            class="fd-menu__link fd-has-type-2"
+          >
+            <span class="fd-menu__addon-before sap-icon--puzzle"></span>
+            <span class="fd-menu__title fd-has-type-1"
+              >Optimierung Angebot</span
+            >
+          </a>
+        </li>
+      `
 
       overviewMainMenu = html`<button
         class="fd-button fd-shellbar__button fd-has-type-1 fd-has-color-action-2 ovl-shellbar-directmenu"
@@ -509,6 +529,7 @@ export class CompShellbar extends OvlBaseElement {
                           ${languageTableMenu} ${auditMenu}
                           ${mobileTimeEntryMenu} ${createMobileTimentriesMenu}
                           ${tableTestingMenu} ${occasionsDashboardMenu}
+                          ${autoQuotation}
                           <ovl-refresh .refresh=${<ShellButtonOrMenu>"menu"}>
                           </ovl-refresh>
                           <li class="fd-menu__item" role="presentation">
