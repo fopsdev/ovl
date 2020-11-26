@@ -256,7 +256,7 @@ ovl-backbutton {
   font-weight: normal !important;
 }
 
-.ovl-table-rowdensity-high .ovl-tableview-rowcell {
+.ovl-table-Vehicles.ovl-table-rowdensity-high .ovl-tableview-rowcell {
   min-height: 1px !important;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
