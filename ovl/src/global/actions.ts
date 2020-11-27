@@ -361,8 +361,10 @@ export const InitApp: OvlAction<Init> = async (
 ) => {
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function (e) {
-    ovl.actions.ovl.navigation.NavigateBack()
-    history.pushState(null, null, document.URL)
+    if (!document.getElementById("ovl-dialog")) {
+      ovl.actions.ovl.navigation.NavigateBack()
+      history.pushState(null, null, document.URL)
+    }
   })
   ResetT()
   let currentLocation =

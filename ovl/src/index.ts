@@ -55,7 +55,7 @@ export let ovl: {
   baseScreens,
   baseDialogs
 )
-debugger
+
 export type OvlForm = appForms | "TableRowEdit"
 export type OvlDialog = keyof typeof baseDialogs | keyof typeof appDialogs
 
