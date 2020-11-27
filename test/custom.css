@@ -4,7 +4,8 @@
 }
 
 .fd-list__title {
-  font-size: 0.98rem;
+  font-size: 0.96rem;
+  padding-bottom: 2px;
 }
 
 .fd-menu__link,
