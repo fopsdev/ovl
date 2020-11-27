@@ -344,6 +344,10 @@ ovl-backbutton {
   text-align: center;
 }
 
+comp-mobiletimeentry .fd-layout-panel {
+  padding: 8px;
+}
+
 .ovl-blink {
   animation: blinkingText 1.2s infinite;
 }

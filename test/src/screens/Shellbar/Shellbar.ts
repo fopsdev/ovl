@@ -12,7 +12,7 @@ import langpic_de from "../../../img/de.png"
 // @ts-ignore
 import langpic_fr from "../../../img/fr.png"
 // @ts-ignore
-import logo from "../../../img/logosmall.png"
+import logo from "../../../img/icon-128x128.png"
 import { logTrackingList } from "../../../../ovl/src/tracker/tracker"
 
 import { ShellButtonOrMenu } from "../../components/Refresh/Refresh"
