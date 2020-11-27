@@ -492,7 +492,7 @@ export class CompShellbar extends OvlBaseElement {
                         aria-haspopup="true"
                       >
                         <span
-                          class="sap-icon--role  fd-has-color-action-2"
+                          class="sap-icon--menu  fd-has-color-action-2"
                         ></span>
                       </button>
                     </div>

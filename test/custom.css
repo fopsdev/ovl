@@ -3,6 +3,17 @@
   z-index: auto !important;
 }
 
+.fd-list__title {
+  font-size: 0.98rem;
+}
+
+.fd-menu__link,
+.fd-list__footer,
+.fd-list__group-header,
+.fd-list__item {
+  height: 2.5rem;
+}
+
 .cols2 {
   display: grid;
   grid-template-columns: 150px 1fr;
