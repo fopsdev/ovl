@@ -7,6 +7,15 @@ export { OvlTableDefIds, appForms, OvlLanguage }
 
 OvlConfig._system.debugTracking = false
 
+OvlConfig.fileOpenMode = (anchor: HTMLAnchorElement, fileName: string) => {
+  // open directly in ep tab if known type...
+  if (
+    ".jpg,.png,.gif,.pdf,".indexOf(fileName.substr(fileName.length - 4, 4)) < 0
+  ) {
+    anchor.download = fileName
+  }
+}
+
 OvlConfig.requiredActions = {
   customRehydrateActionPath: undefined,
   customInitActionPath: ovl.actions.app.system.user.CustomInit,
