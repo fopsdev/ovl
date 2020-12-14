@@ -111,6 +111,7 @@ export class OvlBaseElement extends HTMLElement {
     }
     let res
     startTrack(this)
+
     res = this.state.ovl.screens.screens[this.screen].visible
     stopTrack()
     return res
@@ -207,9 +208,12 @@ export class OvlBaseElement extends HTMLElement {
           let screenHide = !this.screenVisible() ? "hide" : ""
           if (screenHide) {
             this.classList.add(screenHide)
+          } else {
+            this.classList.remove("hide")
           }
           if (!this.screenClosing()) {
             this.classList.add("fadeInScreen")
+
             this.classList.remove("fadeOutScreen")
             this.classList.remove("ovl-disabled")
           }
