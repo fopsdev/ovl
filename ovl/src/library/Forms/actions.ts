@@ -23,7 +23,7 @@ import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
 import { GetRowFromFormState } from "./Controls/helpers"
 import { OvlAction } from "../../ovlTypes"
 import { getDisplayValue } from "../Table/helpers"
-import { OvlTableDefIds } from "../../../../test/src"
+import { OvlTableDefIds } from "../../index"
 export { FillListControl }
 
 export type Field = {
