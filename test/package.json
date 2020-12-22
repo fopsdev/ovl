@@ -19,7 +19,7 @@
     "build": "npm run cleandist && parcel build index.html"
   },
   "dependencies": {
-    "canvas-gauges": "^2.1.7-radial",
+    "canvas-gauges": "2.1.7-radial",
     "idb": "5.0.1",
     "lit-html": "1.1.2"
   },
