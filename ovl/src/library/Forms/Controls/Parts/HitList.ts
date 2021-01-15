@@ -113,16 +113,14 @@ export class OvlHitList extends OvlBaseElement {
 
       // if they lookupTypes contains an order property sort by that
       // because in that case they were delivered by the server which has no order guarantee for that kind of serialization (json.text)
-
       let lookupTypesKeys = Object.keys(lookupTypes).sort(
         (s) => (
           lookupTypes[s].order !== undefined ? lookupTypes[s].order : 0,
           lookupTypes[s].order !== undefined ? lookupTypes[s].order : 0
         )
       )
-      console.log(lookupTypes)
-      let thead
 
+      let thead
       if (this.controlState.type === "overlay") {
         if (lookupTypesKeys.length > 0) {
           thead = html`

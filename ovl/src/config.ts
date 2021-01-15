@@ -1,13 +1,7 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
-import {
-  OvlScreen,
-  OvlVersion,
-  ovl,
-  OvlState,
-  OvlConfig,
-  OvlActions,
-} from "./index"
+import { OvlScreen, OvlVersion, OvlState, OvlConfig, OvlActions } from "./index"
+export { OvlConfig }
 import { OvlAction } from "./ovlTypes"
 
 export type Init = {
@@ -83,4 +77,3 @@ OvlConfig._system.Version = OvlVersion
 OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.Version
 OvlConfig._system.PersistTimestampId =
   "ovltimestamp" + OvlConfig._system.Version
-export { OvlConfigType as OvlConfig }

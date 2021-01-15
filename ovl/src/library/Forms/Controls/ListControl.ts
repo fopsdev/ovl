@@ -9,7 +9,6 @@ import {
 } from "../../../global/hooks"
 import { SnackAdd } from "../../helpers"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ListFnReturnValue } from "../../Table/Table"
 import {
   ControlState,
   FilterHitList,
@@ -20,9 +19,7 @@ import {
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
 import { OvlFormState } from "../actions"
-import { OvlState, OvlActions, OvlEffects, ovl } from "../../.."
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
-import { logTrackingList } from "../../../tracker/tracker"
 
 export type ListState = {
   serverEndpoint?: string

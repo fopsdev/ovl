@@ -23,7 +23,7 @@ import {
   FieldGetLabelRender_Type,
   FieldGetList_ReturnType,
 } from "../../../global/hooks"
-import { OvlState, OvlEffects, ovl } from "../../../index"
+import { OvlState, OvlEffects, ovl, OvlConfig } from "../../../index"
 import { CachedRendererData, GetRendererFn } from "../../Table/helpers"
 import { CellClass } from "../../Table/Row"
 import {
@@ -36,7 +36,7 @@ import { Field, OvlFormState } from "../actions"
 import { ListState } from "./ListControl"
 import { UIValidationObject } from "./uiValidationHelper"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { OvlConfig } from "../../../config"
+
 import { SnackAdd } from "../../helpers"
 
 export type LookupListPostData = {
