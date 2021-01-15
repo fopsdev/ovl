@@ -8,7 +8,7 @@ import { OvlDialog } from "./index"
 import { DialogsState } from "./library/Dialog/OvlDialogBase"
 import { OvlConfig } from "./config"
 
-let forms: FormsState = {}
+let forms: FormsState = undefined
 
 let indicator = {
   open: true,

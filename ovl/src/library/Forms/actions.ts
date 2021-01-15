@@ -88,7 +88,7 @@ export type InitForm = {
   formType: OvlForm
   instanceId: string
   fields: { [key: string]: FormFields }
-  namespace?: string
+  namespace: string
   schema?: { [key: string]: Schema }
   forceOverwrite?: boolean
   initialFocusElementId?: string
