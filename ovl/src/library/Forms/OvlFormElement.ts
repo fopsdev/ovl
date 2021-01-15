@@ -53,6 +53,7 @@ export type DataType = "text" | "date" | "decimal" | "int" | "bool" | "time"
 export type LookupDef = {
   type: DataType
   translationKey?: string
+  order?: number
 }
 
 export type FormShowed = {

@@ -111,8 +111,16 @@ export class OvlHitList extends OvlBaseElement {
         delete lookupTypes[list.valueField]
       }
 
-      let lookupTypesKeys = Object.keys(lookupTypes)
+      // if they lookupTypes contains an order property sort by that
+      // because in that case they were delivered by the server which has no order guarantee for that kind of serialization (json.text)
 
+      let lookupTypesKeys = Object.keys(lookupTypes).sort(
+        (s) => (
+          lookupTypes[s].order !== undefined ? lookupTypes[s].order : 0,
+          lookupTypes[s].order !== undefined ? lookupTypes[s].order : 0
+        )
+      )
+      console.log(lookupTypes)
       let thead
 
       if (this.controlState.type === "overlay") {
@@ -194,11 +202,7 @@ export class OvlHitList extends OvlBaseElement {
                         }
                       }
                       if (!filterHit) {
-                        return html`
-                          <td class="fd-table__cell">
-                            ${val}
-                          </td>
-                        `
+                        return html` <td class="fd-table__cell">${val}</td> `
                       }
                     })}
                   </tr>

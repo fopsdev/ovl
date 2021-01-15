@@ -1,5 +1,5 @@
-import { OvlScreen, ovl, OvlState, OvlActions } from "../index"
-import { Init, OvlConfig } from "../config"
+import { OvlScreen, ovl, OvlState, OvlActions, OvlConfig } from "../index"
+import { Init, OvlConfigType } from "../config"
 import { DialogOk, DialogOkCancel, SnackAdd } from "../library/helpers"
 import {
   // FileInfoStore,
@@ -52,7 +52,7 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
     }
 
     if (fn[value] && fn[value][ScreenNavigateIn]) {
-      let fn2: () => ScreenNavigateIn_ReturnType = fn[value][ScreenNavigateIn]
+      let fn2 = fn[value][ScreenNavigateIn]
       let navErrorMessage = await fn2()
       if (navErrorMessage) {
         if (navErrorMessage.toLowerCase() === "error") {
@@ -77,7 +77,6 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
     state.ovl.screens.nav.screensHistory.push(value)
 
     document.getElementById("app").focus()
-
     if (!state.ovl.screens.nav.currentScreen) {
       //@ts-ignore
       state.ovl.screens.nav.currentScreen = OvlConfig.initialScreen
@@ -213,10 +212,9 @@ export const SetLanguage: OvlAction<string> = async (
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
-  if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
-    OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
-      res.data
-    )
+  let fn = OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
+  if (fn) {
+    fn(actions)(res.data)
   }
   localStorage.setItem("PortalLanguage", res.data.lang)
 }
@@ -355,10 +353,11 @@ export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
   }
 }
 
-export const InitApp: OvlAction<Init> = async (
-  value,
+export const InitApp: OvlAction<OvlConfigType> = async (
+  ovlConfig,
   { actions, state, effects }
 ) => {
+  let value = ovlConfig.apiUrl
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function (e) {
     if (!document.getElementById("ovl-dialog")) {
@@ -384,15 +383,15 @@ export const InitApp: OvlAction<Init> = async (
     state.ovl.apiUrl = value.devServer
   }
 
-  if (OvlConfig.offlineFirstOnReload) {
+  if (ovlConfig.offlineFirstOnReload) {
     console.log("Try Offline first...")
-    if (await Rehydrate()) {
+    if (await Rehydrate(ovlConfig, actions)) {
       console.log("Offline first. Got offline data...")
       return
     }
   }
 
-  if (!OvlConfig.ignoreLanguages) {
+  if (!ovlConfig.ignoreLanguages) {
     let lang = localStorage.getItem("PortalLanguage")
     let res = await effects.ovl.postRequest(
       state.ovl.apiUrl + "users/translations",
@@ -401,8 +400,8 @@ export const InitApp: OvlAction<Init> = async (
       }
     )
     if (!res || !res.data) {
-      if (!OvlConfig.offlineFirstOnReload) {
-        if (!(await Rehydrate())) {
+      if (!ovlConfig.offlineFirstOnReload) {
+        if (!(await Rehydrate(ovlConfig, actions))) {
           //SnackAdd("No Api-Connection and no Offline data found!", "Error")
           return
         }
@@ -420,10 +419,10 @@ export const InitApp: OvlAction<Init> = async (
     state.ovl.language.translations = res.data.translations
     state.ovl.language.isReady = true
 
-    if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
-      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
-        res.data
-      )
+    let fn =
+      ovlConfig.requiredActions.handleAdditionalTranslationResultActionPath
+    if (fn) {
+      fn(actions)(res.data)
     }
   }
 
@@ -439,8 +438,14 @@ export const InitApp: OvlAction<Init> = async (
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
 
-  if (OvlConfig.requiredActions.customInitActionPath) {
-    OvlConfig.requiredActions.customInitActionPath()
+  if (ovlConfig.requiredActions.customInitActionPath) {
+    let fn = ovlConfig.requiredActions.customInitActionPath(actions)
+    if (fn) {
+      fn()
+    }
+  }
+  if (ovlConfig.initialScreen) {
+    actions.ovl.navigation.NavigateTo("NewService")
   }
 }
 let lastUpdateCheck: number = undefined
@@ -468,11 +473,15 @@ export const UpdateCheck = async () => {
   }
 }
 
-export const Rehydrate = async (): Promise<boolean> => {
+export const Rehydrate = async (
+  ovlConfig: OvlConfigType,
+  actions: OvlActions
+): Promise<boolean> => {
   try {
     if (await ovl.actions.ovl.internal.RehydrateApp()) {
-      if (OvlConfig.requiredActions.customRehydrateActionPath) {
-        await OvlConfig.requiredActions.customRehydrateActionPath()
+      let fn = ovlConfig.requiredActions.customRehydrateActionPath
+      if (fn) {
+        await fn(actions)()
       }
       return true
     }

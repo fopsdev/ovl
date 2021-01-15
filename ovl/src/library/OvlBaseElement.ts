@@ -1,4 +1,11 @@
-import { OvlScreen, OvlForm, OvlState, OvlActions, OvlEffects } from "../index"
+import {
+  OvlScreen,
+  OvlForm,
+  OvlState,
+  OvlActions,
+  OvlEffects,
+  OvlConfig,
+} from "../index"
 import { ovl } from "../index"
 import {
   startTrack,
@@ -81,7 +88,7 @@ export const scrollToLastPosition = (state: OvlState) => {
 
 import { render, TemplateResult, html } from "lit-html"
 import { actionTracking } from "../tracker/proxyHandler"
-import { OvlConfig } from "../config"
+
 import { FormShowed } from "./forms/OvlFormElement"
 
 export class OvlBaseElement extends HTMLElement {

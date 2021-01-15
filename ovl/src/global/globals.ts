@@ -1,9 +1,8 @@
-import { OvlConfig } from "../config"
 import { FieldFormat } from "../library/Forms/OvlFormElement"
 import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
-import { ovl, OvlState } from ".."
+import { ovl, OvlState, OvlConfig } from ".."
 import { TemplateResult } from "lit-html"
 
 // export let api = { url: "" }
@@ -27,13 +26,14 @@ export const getLocalTimestampString = (): string => {
 export let OvlTimestamp = 0
 export const uuidv4 = () => {
   let dt = new Date().getTime()
-  let uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (
-    c
-  ) {
-    var r = (dt + Math.random() * 16) % 16 | 0
-    dt = Math.floor(dt / 16)
-    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16)
-  })
+  let uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+    /[xy]/g,
+    function (c) {
+      var r = (dt + Math.random() * 16) % 16 | 0
+      dt = Math.floor(dt / 16)
+      return (c == "x" ? r : (r & 0x3) | 0x8).toString(16)
+    }
+  )
   return uuid
 }
 

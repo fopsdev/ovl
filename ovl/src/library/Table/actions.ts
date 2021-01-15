@@ -40,7 +40,13 @@ import {
   FormAfterSave_Type,
   FormCustomFn_ReturnType,
 } from "../../global/hooks"
-import { OvlTableDefIds, OvlState, OvlActions, ovl } from "../../index"
+import {
+  OvlTableDefIds,
+  OvlState,
+  OvlActions,
+  OvlConfig,
+  ovl,
+} from "../../index"
 import { OvlAction } from "../../ovlTypes"
 import { DialogResult } from "../actions"
 import { OvlFormState, InitForm } from "../forms/actions"
@@ -83,7 +89,6 @@ import {
   Tabs,
   SelectedEditRow,
 } from "./Table"
-import { OvlConfig } from "../../config"
 
 const minimumFilterChars = 3
 

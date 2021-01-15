@@ -92,6 +92,7 @@ export const init = (
   }
   // find the functions in actions and inject our own action caller
   injectActions(_actions)
+
   return {
     state: <OvlState>createDeepProxy(_state),
     actions: <OvlActions>_actions,
@@ -99,4 +100,5 @@ export const init = (
   }
 }
 import { defineElements } from "./registerComponents"
-defineElements()
+import { startRender } from "../../../app/src"
+import { OvlConfig } from "../../../app/src/appDef"

@@ -1,6 +1,14 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
-import { OvlScreen, OvlVersion, ovl, OvlAction, OvlState } from "./index"
+import {
+  OvlScreen,
+  OvlVersion,
+  ovl,
+  OvlState,
+  OvlConfig,
+  OvlActions,
+} from "./index"
+import { OvlAction } from "./ovlTypes"
 
 export type Init = {
   customerTestUrlMatch: string
@@ -14,7 +22,7 @@ export type Init = {
 
 type FileOpenFnType = (anchor: HTMLAnchorElement, fileName: string) => void
 
-type OvlConfig = {
+export type OvlConfigType = {
   _system: {
     debugTracking: boolean
     fetchTimeout: number
@@ -29,18 +37,20 @@ type OvlConfig = {
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
   requiredActions: {
-    customInitActionPath: OvlAction
-    customRehydrateActionPath: OvlAction
-    handleAdditionalTranslationResultActionPath: OvlAction
-    handleGlobalRefreshActionPath: OvlAction
+    customInitActionPath?: (actions: OvlActions) => OvlAction
+    customRehydrateActionPath?: (actions: OvlActions) => OvlAction
+    handleAdditionalTranslationResultActionPath?: (
+      actions: OvlActions
+    ) => OvlAction
+    handleGlobalRefreshActionPath?: (actions: OvlActions) => OvlAction
   }
   /*check stateCleaner in ovl global to see the possibilities of this fn*/
-  saveStateCallback: (stateToPersist: OvlState) => void
+  saveStateCallback?: (stateToPersist: OvlState) => void
   /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
      thats why we have a check function to check if they should be enabled
   */
-  stickyHeaderEnabled: (state: OvlState) => {}
-  fileOpenMode: FileOpenFnType
+  stickyHeaderEnabled?: (state: OvlState) => {}
+  fileOpenMode?: FileOpenFnType
   defaultDialogTitle?: string
   offlineFirstOnReload?: boolean
   ignoreLanguages?: boolean
@@ -48,28 +58,6 @@ type OvlConfig = {
 
 // #####################################################################################################################################
 
-let OvlConfig: OvlConfig = {
-  _system: {
-    debugTracking: false,
-    fetchTimeout: 5000,
-    Version: "0.5",
-    IsDev: false,
-    OfflineMode: false,
-    ShowSaveOrigin: true,
-    PersistStateId: "ovlstate",
-    PersistTimestampId: "ovltimestamp",
-  },
-  //@ts-ignore
-  initialScreen: "",
-  apiUrl: undefined,
-  requiredActions: undefined,
-  saveStateCallback: undefined,
-  stickyHeaderEnabled: () => false,
-  fileOpenMode: (anchor, fileName) => {
-    // sample if file should be downloaded
-    // anchor.download=fileName
-  },
-}
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
 if (window.OvlOfflineMode) {
@@ -95,4 +83,4 @@ OvlConfig._system.Version = OvlVersion
 OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.Version
 OvlConfig._system.PersistTimestampId =
   "ovltimestamp" + OvlConfig._system.Version
-export { OvlConfig }
+export { OvlConfigType as OvlConfig }

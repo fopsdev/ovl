@@ -1,4 +1,5 @@
 // <app setup>
+console.log("index ovl started")
 export { OvlVersion } from "../../../app/sw"
 import {
   appForms,
@@ -6,6 +7,7 @@ import {
   appDialogs,
   OvlTableDefIds,
   OvlLanguage,
+  OvlConfig,
 } from "../../../app/src/appDef"
 import * as appState from "../../../app/src/state"
 import * as appActions from "../../../app/src/actions"
@@ -31,6 +33,8 @@ import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
 import { init } from "./prepare"
 import { baseScreens, baseDialogs } from "./screensAndDialogs"
+import { defineElements } from "./registerComponents"
+import { startRender } from "../../../app/src"
 
 export type OvlState = { ovl: typeof ovlState; app: typeof appState }
 export type OvlActions = {
@@ -39,6 +43,7 @@ export type OvlActions = {
   custom: typeof customActions
 }
 export type OvlEffects = { ovl: typeof ovlEffects }
+
 export let ovl: {
   state: OvlState
   actions: OvlActions
@@ -55,9 +60,13 @@ export let ovl: {
   baseScreens,
   baseDialogs
 )
+defineElements()
+startRender(ovl.actions, OvlConfig)
 
 export type OvlForm = appForms | "TableRowEdit"
 export type OvlDialog = keyof typeof baseDialogs | keyof typeof appDialogs
 
 export { OvlTableDefIds, OvlLanguage }
 export type OvlScreen = keyof typeof baseScreens | keyof typeof appScreens
+
+export { OvlConfig }

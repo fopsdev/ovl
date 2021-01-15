@@ -1,9 +1,8 @@
 import { T, saveState, stringifyReplacer } from "./global/globals"
 
-import { OvlConfig } from "./config"
 import { SnackAdd } from "./library/helpers"
 import { SnackType } from "./library/Snack/Snack"
-import { ovl } from "."
+import { ovl, OvlConfig } from "."
 import { AddSnack } from "./library/Snack/actions"
 
 export let lastNoServerConnectionMsg: number

@@ -13,8 +13,8 @@ import {
   FieldIsVisible_Type,
   FieldGetLabelRender_Type,
 } from "../../global/hooks"
-import { OvlTableDefIds, OvlLanguage, ovl } from "../../index"
-import { OvlConfig } from "../../config"
+import { OvlTableDefIds, OvlLanguage, OvlConfig, ovl } from "../../index"
+
 import { ListState } from "../Forms/Controls/ListControl"
 import {
   DataType,
