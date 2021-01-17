@@ -1,6 +1,6 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
-import { OvlScreen, OvlVersion, OvlState, OvlConfig, OvlActions } from "./index"
+import { OvlScreen, OvlState, OvlConfig, OvlActions } from "./index"
 export { OvlConfig }
 import { OvlAction } from "./ovlTypes"
 
@@ -20,17 +20,24 @@ export type OvlConfigType = {
   _system: {
     debugTracking: boolean
     fetchTimeout: number
-    Version: string
-    IsDev: boolean
-    OfflineMode: boolean
-    ShowSaveOrigin: boolean
-    PersistStateId: string
-    PersistTimestampId: string
+    version: string
+    isDev: boolean
+    offlineMode: boolean
+    showSaveOrigin: boolean
+    persistStateId: string
+    persistTimestampId: string
+  }
+  app: {
+    dialogs: {}
+    forms: {}
+    tableDefIds: {}
+    languages: {}
+    screens: {}
   }
   initialScreen?: OvlScreen
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/
-  requiredActions: {
+  hookInActions: {
     customInitActionPath?: (actions: OvlActions) => OvlAction
     customRehydrateActionPath?: (actions: OvlActions) => OvlAction
     handleAdditionalTranslationResultActionPath?: (
@@ -49,31 +56,3 @@ export type OvlConfigType = {
   offlineFirstOnReload?: boolean
   ignoreLanguages?: boolean
 }
-
-// #####################################################################################################################################
-
-// ######## manage global config stuff here ###################################################################################################
-//@ts-ignore
-if (window.OvlOfflineMode) {
-  //@ts-ignore
-  OvlConfig._system.OfflineMode = window.OvlOfflineMode
-}
-//@ts-ignore
-if (window.OvlDataVersion) {
-  //@ts-ignore
-  OvlConfig._system.DataVersion = window.OvlDataVersion
-}
-//@ts-ignore
-if (window.OvlIsDev) {
-  //@ts-ignore
-  OvlConfig._system.IsDev = window.OvlIsDev
-}
-//@ts-ignore
-if (window.OvlShowSaveOrigin) {
-  //@ts-ignore
-  OvlConfig._system.ShowSaveOrigin = window.OvlShowSaveOrigin
-}
-OvlConfig._system.Version = OvlVersion
-OvlConfig._system.PersistStateId = "ovlstate" + OvlConfig._system.Version
-OvlConfig._system.PersistTimestampId =
-  "ovltimestamp" + OvlConfig._system.Version

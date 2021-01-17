@@ -212,7 +212,7 @@ export const SetLanguage: OvlAction<string> = async (
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
-  let fn = OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath
+  let fn = OvlConfig.hookInActions.handleAdditionalTranslationResultActionPath
   if (fn) {
     fn(actions)(res.data)
   }
@@ -224,7 +224,7 @@ export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
 }
 
 export const Logout: OvlAction = async (_, { state, actions }) => {
-  if (state.ovl.app.offline && OvlConfig._system.OfflineMode) {
+  if (state.ovl.app.offline && OvlConfig._system.offlineMode) {
     SnackAdd(
       "Abmelden und Neuinitialisierung nur im Onlinemodus möglich!",
       "Error"
@@ -263,8 +263,8 @@ export const AfterRehydrateApp: OvlAction = async (
   // state.ovl.screens.nav.currentScreen = screenToGo
   // state.ovl.screens.nav.nextScreen = undefined
   //actions.ovl.navigation.NavigateTo(screenToGo)
-  if (OvlConfig.requiredActions.customRehydrateActionPath) {
-    OvlConfig.requiredActions.customRehydrateActionPath(undefined)
+  if (OvlConfig.hookInActions.customRehydrateActionPath) {
+    OvlConfig.hookInActions.customRehydrateActionPath(undefined)
   }
 }
 
@@ -328,10 +328,10 @@ export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
   _,
   { state }
 ) => {
-  if (OvlConfig._system.OfflineMode) {
+  if (OvlConfig._system.offlineMode) {
     try {
       let persistedState = await stateStore.get(
-        OvlConfig._system.PersistStateId
+        OvlConfig._system.persistStateId
       )
       if (!persistedState) {
         // clear also maybe old versions lingering around...
@@ -419,8 +419,7 @@ export const InitApp: OvlAction<OvlConfigType> = async (
     state.ovl.language.translations = res.data.translations
     state.ovl.language.isReady = true
 
-    let fn =
-      ovlConfig.requiredActions.handleAdditionalTranslationResultActionPath
+    let fn = ovlConfig.hookInActions.handleAdditionalTranslationResultActionPath
     if (fn) {
       fn(actions)(res.data)
     }
@@ -438,8 +437,8 @@ export const InitApp: OvlAction<OvlConfigType> = async (
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
 
-  if (ovlConfig.requiredActions.customInitActionPath) {
-    let fn = ovlConfig.requiredActions.customInitActionPath(actions)
+  if (OvlConfig.hookInActions.customInitActionPath) {
+    let fn = ovlConfig.hookInActions.customInitActionPath(actions)
     if (fn) {
       fn()
     }
@@ -452,7 +451,7 @@ let lastUpdateCheck: number = undefined
 export const UpdateCheck = async () => {
   let now = Date.now()
   if (
-    OvlConfig._system.OfflineMode &&
+    OvlConfig._system.offlineMode &&
     /* updatecheck every ~3 minutes */
     (lastUpdateCheck === undefined || now - lastUpdateCheck > 60000 * 3)
   ) {
@@ -460,7 +459,7 @@ export const UpdateCheck = async () => {
     try {
       let updateCheck = await ovl.effects.ovl.getRequest(
         "./ovlnocache/" +
-          OvlConfig._system.Version.split(".").join("_") +
+          OvlConfig._system.version.split(".").join("_") +
           ".js",
         undefined
       )
@@ -479,7 +478,7 @@ export const Rehydrate = async (
 ): Promise<boolean> => {
   try {
     if (await ovl.actions.ovl.internal.RehydrateApp()) {
-      let fn = ovlConfig.requiredActions.customRehydrateActionPath
+      let fn = ovlConfig.hookInActions.customRehydrateActionPath
       if (fn) {
         await fn(actions)()
       }

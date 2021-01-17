@@ -149,7 +149,7 @@ export const ovlFetch = async (
 
     // forced timeout only in offline mode...timeouts are normally handled by the browser itself
     // but we need to rely on a timeout in offline mode which works the same across browsers, hence the forced timeout
-    if (OvlConfig._system.OfflineMode) {
+    if (OvlConfig._system.offlineMode) {
       const controller = new AbortController()
       const { signal } = controller
       let timeOutMs = OvlConfig._system.fetchTimeout
@@ -164,7 +164,7 @@ export const ovlFetch = async (
     }
 
     const req = await fetch(url, reqOptions)
-    if (OvlConfig._system.OfflineMode) {
+    if (OvlConfig._system.offlineMode) {
       clearTimeout(timer)
     }
     if (method === "POST") {

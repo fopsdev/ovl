@@ -150,7 +150,7 @@ export const addGlobalPersistEventListeners = () => {
 // }
 
 export const focusOut = async (event) => {
-  if (OvlConfig._system.OfflineMode) {
+  if (OvlConfig._system.offlineMode) {
     if (!event.relatedTarget) {
       await saveState(false, "FocusOut")
     }
@@ -177,7 +177,7 @@ export const focusOut = async (event) => {
 export const stringifyReplacer = (key, value) =>
   typeof value === "undefined" ? null : value
 export const visibilityChange = async (event) => {
-  if (OvlConfig._system.OfflineMode) {
+  if (OvlConfig._system.offlineMode) {
     // console.log(document.visibilityState)
     // fires when user switches tabs, apps, goes to homescreen, etc.
     //@ts-ignore
@@ -203,7 +203,7 @@ export const visibilityChange = async (event) => {
 
 export const saveState = async (force: boolean, reason: string) => {
   if (
-    OvlConfig._system.OfflineMode &&
+    OvlConfig._system.offlineMode &&
     !logoutAndClearFlag &&
     ovl.state.ovl.uiState.isReady
   ) {
@@ -213,7 +213,7 @@ export const saveState = async (force: boolean, reason: string) => {
     let diff = 0
     let dt = Date.now()
     if (!force) {
-      let td: Date = await stateStore.get(OvlConfig._system.PersistTimestampId)
+      let td: Date = await stateStore.get(OvlConfig._system.persistTimestampId)
       let ts = 0
       if (td !== undefined) {
         ts = td.getTime()
@@ -221,7 +221,7 @@ export const saveState = async (force: boolean, reason: string) => {
       diff = dt - ts
     }
     if (force || diff > 5000) {
-      await stateStore.set(OvlConfig._system.PersistTimestampId, new Date(dt))
+      await stateStore.set(OvlConfig._system.persistTimestampId, new Date(dt))
       OvlTimestamp = dt
       // let refstate = ovl.state
       let newObj: OvlState = JSON.parse(
@@ -240,7 +240,7 @@ export const saveState = async (force: boolean, reason: string) => {
       if (OvlConfig.saveStateCallback) {
         OvlConfig.saveStateCallback(newObj)
       }
-      return stateStore.set(OvlConfig._system.PersistStateId, newObj)
+      return stateStore.set(OvlConfig._system.persistStateId, newObj)
     }
   }
 }
@@ -250,7 +250,7 @@ export let gotoFileFlag = false
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
   ovl.actions.ovl.indicator.SetIndicatorOpen()
-  if (OvlConfig._system.OfflineMode) {
+  if (OvlConfig._system.offlineMode) {
     //window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))

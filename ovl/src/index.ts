@@ -2,11 +2,11 @@
 console.log("index ovl started")
 export { OvlVersion } from "../../../app/sw"
 import {
-  appForms,
-  appScreens,
-  appDialogs,
-  OvlTableDefIds,
-  OvlLanguage,
+  OvlAppDialogs,
+  OvlAppForms,
+  OvlAppLanguage,
+  OvlAppScreens,
+  OvlAppTableDefIds,
   OvlConfig,
 } from "../../../app/src/appDef"
 import * as appState from "../../../app/src/state"
@@ -51,8 +51,8 @@ export let ovl: {
 } = init(
   appState,
   appActions,
-  appScreens,
-  appDialogs,
+  OvlConfig.app.screens,
+  OvlConfig.app.dialogs,
   customActions,
   ovlState,
   ovlActions,
@@ -63,10 +63,10 @@ export let ovl: {
 defineElements()
 startRender(ovl.actions, OvlConfig)
 
-export type OvlForm = appForms | "TableRowEdit"
-export type OvlDialog = keyof typeof baseDialogs | keyof typeof appDialogs
-
-export { OvlTableDefIds, OvlLanguage }
-export type OvlScreen = keyof typeof baseScreens | keyof typeof appScreens
+export type OvlForm = OvlAppForms | "TableRowEdit"
+export type OvlDialog = OvlAppDialogs | keyof typeof baseDialogs
+export type OvlTableDefIds = OvlAppTableDefIds
+export type OvlLanguage = OvlAppLanguage
+export type OvlScreen = OvlAppScreens | keyof typeof baseScreens
 
 export { OvlConfig }

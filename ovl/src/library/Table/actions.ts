@@ -253,7 +253,7 @@ export const TableRefreshDataFromServer: OvlAction<{
   if (
     !value.localData &&
     state.ovl.app.offline &&
-    OvlConfig._system.OfflineMode
+    OvlConfig._system.offlineMode
   ) {
     return
   }
@@ -915,7 +915,7 @@ const TableEditSaveRowHelper = async (
         })
         offlineHandled = true
         if (
-          OvlConfig._system.OfflineMode &&
+          OvlConfig._system.offlineMode &&
           !isOfflineRetry &&
           data.offline &&
           !state.ovl.app.offline
@@ -938,7 +938,7 @@ const TableEditSaveRowHelper = async (
         let rowCopy = JSON.parse(JSON.stringify(newData), stringifyReplacer)
         if (
           state.ovl.app.offline &&
-          OvlConfig._system.OfflineMode &&
+          OvlConfig._system.offlineMode &&
           !isOfflineRetry
         ) {
           EditSaveRowOfflineHelper(
@@ -990,7 +990,7 @@ const TableEditSaveRowHelper = async (
             // 449 means offline in our context
             if (res.status === 449) {
               // handle offline
-              if (OvlConfig._system.OfflineMode) {
+              if (OvlConfig._system.offlineMode) {
                 if (!isOfflineRetry) {
                   EditSaveRowOfflineHelper(
                     def,
@@ -1557,7 +1557,7 @@ export const TableDeleteRow: OvlAction<
     let res = { data: undefined, status: undefined, type: undefined }
     if (!offlineHandled) {
       if (
-        OvlConfig._system.OfflineMode &&
+        OvlConfig._system.offlineMode &&
         !value.isOfflineRetry &&
         state.ovl.app.offline
       ) {
@@ -1579,7 +1579,7 @@ export const TableDeleteRow: OvlAction<
         if (!res.data && res.type !== "RecordNotFound") {
           // 449 means offline in our context
           if (res.status === 449) {
-            if (OvlConfig._system.OfflineMode) {
+            if (OvlConfig._system.offlineMode) {
               if (!value.isOfflineRetry) {
                 DeleteRowOfflineHelper(value.data, idValue, key)
               } else {
