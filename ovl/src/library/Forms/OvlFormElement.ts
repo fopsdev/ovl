@@ -104,12 +104,14 @@ export class OvlFormElement extends OvlBaseElement {
     this.addEventListener("ovlchange", this.handleOvlChange)
     this.addEventListener("ovlfocusout", this.handleOvlFocusOut)
 
-    let id = this.getAttribute("id")
+    if (!this.formId) {
+      let id = this.getAttribute("id")
 
-    if (!id) {
-      throw new Error("ovl forms: attribute 'id' is mandatory for forms!")
+      if (!id) {
+        throw new Error("ovl forms: attribute 'id' is mandatory for forms!")
+      }
+      this.formId = id
     }
-    this.formId = id
     if (!this.formType) {
       throw new Error(
         "ovl forms: " +
