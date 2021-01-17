@@ -61,7 +61,7 @@ export let ovl: {
   baseDialogs
 )
 defineElements()
-startRender(ovl.actions, OvlConfig)
+startRender(ovl.actions)
 
 export type OvlForm = OvlAppForms | "TableRowEdit"
 export type OvlDialog = OvlAppDialogs | keyof typeof baseDialogs

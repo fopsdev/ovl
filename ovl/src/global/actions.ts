@@ -353,11 +353,8 @@ export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
   }
 }
 
-export const InitApp: OvlAction<OvlConfigType> = async (
-  ovlConfig,
-  { actions, state, effects }
-) => {
-  let value = ovlConfig.apiUrl
+export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
+  let value = OvlConfig.apiUrl
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function (e) {
     if (!document.getElementById("ovl-dialog")) {
@@ -383,15 +380,15 @@ export const InitApp: OvlAction<OvlConfigType> = async (
     state.ovl.apiUrl = value.devServer
   }
 
-  if (ovlConfig.offlineFirstOnReload) {
+  if (OvlConfig.offlineFirstOnReload) {
     console.log("Try Offline first...")
-    if (await Rehydrate(ovlConfig, actions)) {
+    if (await Rehydrate(actions)) {
       console.log("Offline first. Got offline data...")
       return
     }
   }
 
-  if (!ovlConfig.ignoreLanguages) {
+  if (!OvlConfig.ignoreLanguages) {
     let lang = localStorage.getItem("PortalLanguage")
     let res = await effects.ovl.postRequest(
       state.ovl.apiUrl + "users/translations",
@@ -400,8 +397,8 @@ export const InitApp: OvlAction<OvlConfigType> = async (
       }
     )
     if (!res || !res.data) {
-      if (!ovlConfig.offlineFirstOnReload) {
-        if (!(await Rehydrate(ovlConfig, actions))) {
+      if (!OvlConfig.offlineFirstOnReload) {
+        if (!(await Rehydrate(actions))) {
           //SnackAdd("No Api-Connection and no Offline data found!", "Error")
           return
         }
@@ -419,7 +416,7 @@ export const InitApp: OvlAction<OvlConfigType> = async (
     state.ovl.language.translations = res.data.translations
     state.ovl.language.isReady = true
 
-    let fn = ovlConfig.hookInActions.handleAdditionalTranslationResultActionPath
+    let fn = OvlConfig.hookInActions.handleAdditionalTranslationResultActionPath
     if (fn) {
       fn(actions)(res.data)
     }
@@ -438,12 +435,12 @@ export const InitApp: OvlAction<OvlConfigType> = async (
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
 
   if (OvlConfig.hookInActions.customInitActionPath) {
-    let fn = ovlConfig.hookInActions.customInitActionPath(actions)
+    let fn = OvlConfig.hookInActions.customInitActionPath(actions)
     if (fn) {
       fn()
     }
   }
-  if (ovlConfig.initialScreen) {
+  if (OvlConfig.initialScreen) {
     actions.ovl.navigation.NavigateTo("NewService")
   }
 }
@@ -472,13 +469,10 @@ export const UpdateCheck = async () => {
   }
 }
 
-export const Rehydrate = async (
-  ovlConfig: OvlConfigType,
-  actions: OvlActions
-): Promise<boolean> => {
+export const Rehydrate = async (actions: OvlActions): Promise<boolean> => {
   try {
     if (await ovl.actions.ovl.internal.RehydrateApp()) {
-      let fn = ovlConfig.hookInActions.customRehydrateActionPath
+      let fn = OvlConfig.hookInActions.customRehydrateActionPath
       if (fn) {
         await fn(actions)()
       }

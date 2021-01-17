@@ -99,6 +99,3 @@ export const init = (
     effects,
   }
 }
-import { defineElements } from "./registerComponents"
-import { startRender } from "../../../app/src"
-import { OvlConfig } from "../../../app/src/appDef"
