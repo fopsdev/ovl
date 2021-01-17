@@ -86,9 +86,9 @@ type FormStatePerInstance = {
 
 export type InitForm = {
   formType: OvlForm
-  instanceId: string
+  instanceId?: string
   fields: { [key: string]: FormFields }
-  namespace: string
+  namespace?: string
   schema?: { [key: string]: Schema }
   forceOverwrite?: boolean
   initialFocusElementId?: string
@@ -441,38 +441,46 @@ export const InitForm: OvlAction<InitForm> = (
     //@ts-ignore
     state.ovl.forms = {}
   }
+  let instanceId = value.instanceId
+  if (!instanceId) {
+    instanceId = value.formType
+  }
+  let namespace = value.namespace
+  if (!namespace) {
+    namespace = value.formType
+  }
   let formInstanceList = state.ovl.forms[value.formType]
   if (!formInstanceList) {
     state.ovl.forms[value.formType] = {}
     formInstanceList = state.ovl.forms[value.formType]
   }
   // if there is already a formstate -> do nothing (except its forceOverwrite)
-  if (!formInstanceList[value.instanceId] || value.forceOverwrite === true) {
+  if (!formInstanceList[instanceId] || value.forceOverwrite === true) {
     let fields: FieldValueMap = getFormFields(
       value.schema,
       value.fields,
-      value.instanceId,
+      instanceId,
       value.formType
     )
 
-    formInstanceList[value.instanceId] = {
+    formInstanceList[instanceId] = {
       dirty: false,
       valid: true,
       fields,
       initFields: {},
-      formId: value.instanceId,
+      formId: instanceId,
       formType: value.formType,
-      namespace: value.namespace,
+      namespace: namespace,
       schema: value.schema,
       fieldToFocus: value.initialFocusElementId,
       tableDefId: value.tableDefId,
     }
 
-    let formState = formInstanceList[value.instanceId]
+    let formState = formInstanceList[instanceId]
 
     //formState.lastTouchedField = value.initialFocusElementId
     // initial validation of all fields
-    let fn = resolvePath(actions.custom, formState.namespace)
+    let fn = resolvePath(actions.custom, namespace)
     Object.keys(formState.fields).forEach((k) => {
       let fieldValue = formState.fields[k]
       fieldValue.validationResult = {
@@ -524,10 +532,9 @@ export const InitForm: OvlAction<InitForm> = (
     // because when resetting the form, this should be inital state and there will be no re-initing
     formState.initFields = JSON.parse(JSON.stringify(fields), stringifyReplacer)
   }
-  formInstanceList[value.instanceId].formShowed = false
-  if (!formInstanceList[value.instanceId].fieldToFocus) {
-    formInstanceList[value.instanceId].fieldToFocus =
-      value.initialFocusElementId
+  formInstanceList[instanceId].formShowed = false
+  if (!formInstanceList[instanceId].fieldToFocus) {
+    formInstanceList[instanceId].fieldToFocus = value.initialFocusElementId
   }
 }
 
