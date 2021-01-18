@@ -324,7 +324,6 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   let namespace = value.formState.namespace
   let res = value.validationResult
   let list = field.list
-
   if (list.acceptEmpty && !list.acceptOnlyListValues) {
     return
   }

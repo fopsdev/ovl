@@ -51,7 +51,7 @@ export class OvlListControl extends OvlBaseElement {
   async handleListPopup(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-
+    this.forceCloseLocalHitList()
     let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
@@ -196,57 +196,51 @@ export class OvlListControl extends OvlBaseElement {
       }
     }
     //@ts-ignore
-    let filterValue = e.target.value
-    let filteredRes = FilterHitList(
-      field.list,
-      filterValue,
-      this.formState,
-      this.state,
-      field.fieldKey,
-      10
-    )
+    if (e.target.id === field.id) {
+      //@ts-ignore
+      let filterValue = e.target.value
+      let writeBackValue = filterValue
 
-    let filteredKeys = filteredRes.filteredKeys
-    if ((filterValue && filteredKeys.length === 1) || filteredRes.isExactKey) {
-      let writeBackValue
-      let listData: FieldGetList_ReturnType = resolvePath(
-        this.actions.custom,
-        this.formState.namespace
-      )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-        row: GetRowFromFormState(this.formState),
-      })
-      let hit = filteredKeys[0]
-      if (!this.localList || filteredKeys.length === 1) {
-        if (filteredRes.isExactKey) {
-          writeBackValue = filterValue
-          hit = writeBackValue
-        } else if (filteredRes.filteredKeys.length === 1) {
-          writeBackValue = hit
-          if (listData.index) {
-            writeBackValue = listData.data[hit][field.list.valueField]
-          }
-        }
+      let filteredRes = FilterHitList(
+        field.list,
+        filterValue,
+        this.formState,
+        this.state,
+        field.fieldKey,
+        10
+      )
+
+      let filteredKeys = filteredRes.filteredKeys
+      if (filteredKeys.length === 1) {
+        let listData: FieldGetList_ReturnType = resolvePath(
+          this.actions.custom,
+          this.formState.namespace
+        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+          row: GetRowFromFormState(this.formState),
+        })
+        let hit = filteredKeys[0]
+        writeBackValue = hit
         this.inputElement.value = listData.data[hit][field.list.displayField]
-        //console.log("WriteBack from FocusOut: " + writeBackValue)
-
+        if (relatedTarget && relatedTarget.id.indexOf("ovlhl_") > -1) {
+          this.inputElement.focus()
+          this.forceCloseLocalHitList()
+        }
+      }
+      // always as well write back value here
+      if (!(filteredRes.isExactKey && filteredKeys.length > 1)) {
         let event = new CustomEvent("ovlchange", {
           bubbles: true,
           detail: { val: writeBackValue, id: field.id },
         })
         await this.inputElement.dispatchEvent(event)
-        if (relatedTarget && relatedTarget.id.indexOf("ovlhl_") > -1) {
-          this.forceCloseLocalHitList()
-        }
       }
     }
-
     if (movedOut) {
       let event = new CustomEvent("ovlfocusout", {
         bubbles: true,
         detail: { id: fieldId },
       })
       await this.inputElement.dispatchEvent(event)
-
       this.forceCloseLocalHitList()
       //@ts-ignore
     }
@@ -286,7 +280,6 @@ export class OvlListControl extends OvlBaseElement {
 
     let field = this.field.field
 
-    let filterValue = this.inputElement.value
     if (!openLocalList) {
       if (e.key === "Escape") {
         this.forceCloseLocalHitList()
@@ -301,7 +294,8 @@ export class OvlListControl extends OvlBaseElement {
       }
 
       //@ts-ignore
-      filterValue = document.getElementById(field.id).value
+      let filterValue = document.getElementById(field.id).value
+
       let filteredRes = FilterHitList(
         field.list,
         filterValue,
@@ -473,12 +467,14 @@ export class OvlListControl extends OvlBaseElement {
       }
       let validationHide = res.validationHide
 
-      if (
-        this.localList ||
-        document.activeElement.id.indexOf(this.field.field.id) > -1
-      ) {
-        validationHide = "hide"
-      }
+      // if (
+      //   this.localList ||
+      //   document.activeElement.id.indexOf(this.field.field.id) > -1 ||
+      //   this.state.ovl.dialogs.HitListDialog.visible
+      // ) {
+      //   console.log("hhhhh")
+      //   validationHide = "hide"
+      // }
 
       return html`
         ${hitListDialog}
