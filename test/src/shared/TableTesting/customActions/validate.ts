@@ -12,7 +12,7 @@ import {
   FieldGetList_Type,
   FormValidate_Type,
 } from "../../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 export const FormChanged: OvlAction<FormChanged_Type> = async (
   value,

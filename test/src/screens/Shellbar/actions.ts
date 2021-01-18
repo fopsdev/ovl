@@ -1,4 +1,4 @@
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const CloseMainMenu: OvlAction = (_, { state }) => {
   state.app.screens.shellbar.mainMenuExpanded = false

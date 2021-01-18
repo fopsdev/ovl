@@ -47,7 +47,7 @@ import {
   OvlConfig,
   ovl,
 } from "../../index"
-import { OvlAction } from "../../ovlTypes"
+import { OvlAction } from "../../index"
 import { DialogResult } from "../actions"
 import { OvlFormState, InitForm } from "../forms/actions"
 import { KeyValueListFromServerFn } from "../forms/Controls/helpers"

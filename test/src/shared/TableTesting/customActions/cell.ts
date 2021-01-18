@@ -22,7 +22,7 @@ import {
   FieldHeaderCellSelectedHandler_Type,
   FieldHeaderCellSelectedHandler_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 export const Edit_U_Memo_GetLabelAndValueRender: OvlAction<
   EditGetLabelAndValueRenderer_Type,

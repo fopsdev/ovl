@@ -23,7 +23,7 @@ import {
   FieldGetList_Type,
   FieldGetList_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 export const FormShow: OvlAction = async (formState: OvlFormState) => {
   console.log("hello from timeentry formshow hook")

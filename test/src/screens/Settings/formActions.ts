@@ -6,7 +6,7 @@ import {
 } from "../../../../ovl/src/library/forms/validators"
 
 import { FormValidate_Type } from "../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const FormValidate: OvlAction<FormValidate_Type> = (value) => {
   switch (value.fieldId) {

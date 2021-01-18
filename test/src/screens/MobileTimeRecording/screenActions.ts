@@ -4,7 +4,7 @@ import { FormFields } from "../../../../ovl/src/library/forms/OvlFormElement"
 import { InitForm } from "../../../../ovl/src/library/forms/actions"
 import { getDateValue } from "../../../../ovl/src/global/globals"
 import { ScreenNavigateOut_ReturnType } from "../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 /* this is for the mobiletimeentryform screen */
 export const ScreenShow: OvlAction = async (_) => {

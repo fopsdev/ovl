@@ -3,7 +3,7 @@ import {
   FormCustomFilter_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
 import { TableTesting } from "../state"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 export const FormCustom_alphaStartsWithA_Filter: OvlAction<
   FormCustomFilter_Type,

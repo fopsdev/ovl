@@ -18,7 +18,7 @@ import {
   SnackTrackedAdd,
 } from "../../../ovl/src/library/helpers"
 import { AddSnack } from "../../../ovl/src/library/Snack/actions"
-import { OvlAction } from "../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../ovl/src/index"
 
 export const Login: OvlAction<OvlFormState> = async (
   value,

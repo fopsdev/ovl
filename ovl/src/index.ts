@@ -70,3 +70,14 @@ export type OvlLanguage = OvlAppLanguage
 export type OvlScreen = OvlAppScreens | keyof typeof baseScreens
 
 export { OvlConfig }
+
+type OvlActionContext = {
+  state: OvlState
+  actions: OvlActions
+  effects: OvlEffects
+}
+
+export type OvlAction<T = {}, R = void> = (
+  value?: T,
+  context?: OvlActionContext
+) => R

@@ -21,7 +21,7 @@ import { ListState } from "./Controls/ListControl"
 import { getFormFields } from "./helper"
 import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
 import { GetRowFromFormState } from "./Controls/helpers"
-import { OvlAction } from "../../ovlTypes"
+import { OvlAction } from "../../index"
 import { getDisplayValue } from "../Table/helpers"
 import { OvlTableDefIds } from "../../index"
 export { FillListControl }

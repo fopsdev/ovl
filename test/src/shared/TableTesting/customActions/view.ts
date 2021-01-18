@@ -13,7 +13,7 @@ import {
   ViewCustomTabRender_Type,
   ViewCustomTabRender_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 export const ViewCustom_tab1_Render: OvlAction<
   ViewCustomRender_Type,

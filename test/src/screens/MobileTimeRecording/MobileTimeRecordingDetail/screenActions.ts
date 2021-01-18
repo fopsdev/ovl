@@ -1,4 +1,4 @@
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 /* this is for the mobiletimeentryform screen */
 export const ScreenShow: OvlAction = async (_) => {

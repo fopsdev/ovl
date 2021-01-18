@@ -6,7 +6,7 @@ import {
   FormCustomSort_ReturnType,
   FormCustomSort_Type,
 } from "../../../../../ovl/ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/ovl/src/index"
 import { AutoQuotation } from "./state"
 import {
   getDisplayValue,

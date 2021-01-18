@@ -2,7 +2,7 @@ import {
   FieldChanged,
   OvlFormState,
 } from "../../../../ovl/src/library/forms/actions"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const FormShow: OvlAction = async (formState: OvlFormState) => {
   console.log("hello from timeentry main formshow hook")

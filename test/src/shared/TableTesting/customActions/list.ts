@@ -5,7 +5,7 @@ import {
   FieldGetFilteredList_ReturnType,
   FieldLookupPostData_Type,
 } from "../../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 // some list functions
 export const Field_U_ItemCode_GetList: OvlAction<

@@ -2,7 +2,7 @@
 //@ts-ignore
 import { OvlScreen, OvlState, OvlConfig, OvlActions } from "./index"
 export { OvlConfig }
-import { OvlAction } from "./ovlTypes"
+import { OvlAction } from "./index"
 
 export type Init = {
   customerTestUrlMatch: string

@@ -4,7 +4,7 @@ import {
   GetFormValidationErrors,
 } from "../../../../ovl/src/library/forms/actions"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const SaveFeedback: OvlAction<OvlFormState> = async (
   value,

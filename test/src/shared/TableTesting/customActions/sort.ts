@@ -5,7 +5,7 @@ import {
   FormCustomSort_Type,
   FormCustomSort_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 export const FormCustom_alphaThenMemo_Sort: OvlAction<
   FormCustomSort_Type,

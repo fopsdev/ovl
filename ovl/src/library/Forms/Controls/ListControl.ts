@@ -226,6 +226,7 @@ export class OvlListControl extends OvlBaseElement {
           writeBackValue = listData.data[hit][field.list.valueField]
         }
         this.inputElement.value = listData.data[hit][field.list.displayField]
+        //console.log("WriteBack from FocusOut: " + writeBackValue)
         let event = new CustomEvent("ovlchange", {
           bubbles: true,
           detail: { val: writeBackValue, id: field.id },
@@ -278,6 +279,11 @@ export class OvlListControl extends OvlBaseElement {
     }
 
     this.timer = setTimeout(async () => {
+      // just do all the stuff if it still has focus
+      if (document.activeElement.id !== field.id) {
+        return
+      }
+
       //@ts-ignore
       filterValue = document.getElementById(field.id).value
       let filteredKeys = FilterHitList(
@@ -311,6 +317,7 @@ export class OvlListControl extends OvlBaseElement {
         //   this.inputElement.value = listData.data[hit][field.list.displayField]
         // }
 
+        //console.log("WriteBack from DelayedKey: " + writeBackValue)
         let event = new CustomEvent("ovlchange", {
           bubbles: true,
           detail: { val: writeBackValue, id: field.id },

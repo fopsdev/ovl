@@ -2,7 +2,7 @@ import { T } from "../../../../ovl/src/global/globals"
 import { ValidateFieldType } from "../../../../ovl/src/library/forms/actions"
 import { Email, Mandatory } from "../../../../ovl/src/library/forms/validators"
 import { FieldId } from "./LoginForm"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const FormValidate: OvlAction<ValidateFieldType> = (value) => {
   let field = value.formState.fields[value.fieldId]

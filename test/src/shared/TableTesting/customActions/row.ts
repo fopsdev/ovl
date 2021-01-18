@@ -11,7 +11,7 @@ import {
   FormAdd_Type,
   FormCustomFn_Type,
 } from "../../../../../ovl/src/global/hooks"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 import { ViewRowClassContent } from "../../../../../ovl/src/library/Table/Table"
 
 export const FormCanEdit: OvlAction<FormCan_Type, FormCan_ReturnType> = async ({

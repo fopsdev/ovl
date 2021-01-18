@@ -36,7 +36,7 @@ import {
   TableOfflineRetrySaveRow,
   TableOfflineHandler,
 } from "./Table/actions"
-import { OvlAction } from "../ovlTypes"
+import { OvlAction } from "../index"
 //import { dialogAfterClose } from "./Dialog/actions"
 
 export {

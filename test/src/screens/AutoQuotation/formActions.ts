@@ -6,7 +6,7 @@ import {
 import { Mandatory } from "../../../../../ovl/ovl/src/library/forms/validators"
 import { SnackAdd } from "../../../../../ovl/ovl/src/library/helpers"
 import { TableGetSelectedRowKeys } from "../../../../../ovl/ovl/src/library/Table/helpers"
-import { OvlAction } from "../../../../../ovl/ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/ovl/src/index"
 
 let copyToDetailsTimer
 let lastCopyToDetailsTimestamp = 0

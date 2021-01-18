@@ -3,7 +3,7 @@ import {
   ScreenNavigateOut_ReturnType,
 } from "../../../../../ovl/ovl/src/global/hooks"
 
-import { OvlAction } from "../../../../../ovl/ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/ovl/src/index"
 
 let intervalHandle = undefined
 export const ScreenNavigateIn: OvlAction<

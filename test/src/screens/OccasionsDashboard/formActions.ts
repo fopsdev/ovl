@@ -3,7 +3,7 @@ import {
   ViewRowClass_ReturnType,
 } from "../../../../../ovl/ovl/src/global/hooks"
 import { ViewRowClassContent } from "../../../../../ovl/ovl/src/library/Table/Table"
-import { OvlAction } from "../../../../../ovl/ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/ovl/src/index"
 import { OccasionsProcessDashboardData } from "./state"
 
 export const ViewRowClass: OvlAction<

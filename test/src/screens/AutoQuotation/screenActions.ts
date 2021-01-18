@@ -1,7 +1,7 @@
 import { OvlTableDefIds } from "../.."
 import { InitForm } from "../../../../../ovl/ovl/src/library/Forms/actions"
 import { FormFields } from "../../../../../ovl/ovl/src/library/Forms/OvlFormElement"
-import { OvlAction } from "../../../../../ovl/ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/ovl/src/index"
 
 export const ScreenNavigateIn: OvlAction = async (_, { actions, state }) => {
   // only initialise form if not already initialised

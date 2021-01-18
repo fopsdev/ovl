@@ -5,7 +5,7 @@ import {
   SnackTrackedRemove,
 } from "../../../../ovl/src/library/helpers"
 import { TableMobileTimeRecording } from "./MobileTimeRecordingDetail/state"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const MarkAsSynced: OvlAction<string[]> = (
   value,

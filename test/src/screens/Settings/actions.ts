@@ -6,7 +6,7 @@ import {
 import { T } from "../../../../ovl/src/global/globals"
 import { postRequest } from "../../../../ovl/src/effects"
 import { SnackAdd } from "../../../../ovl/src/library/helpers"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const SaveSettings: OvlAction<OvlFormState> = async (
   value,

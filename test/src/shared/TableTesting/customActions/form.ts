@@ -3,7 +3,7 @@ import {
   FormAfterRender_Type,
 } from "../../../../../ovl/src/global/hooks"
 import { SetFocus } from "../../../../../ovl/src/global/globals"
-import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../../ovl/src/index"
 
 export const FormShow: OvlAction<FormShow_Type> = async ({ formState }) => {
   console.log("hello from formshow hook. setting focus test")

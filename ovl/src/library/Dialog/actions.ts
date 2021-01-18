@@ -4,7 +4,7 @@ import { modalDialog, T } from "../../global/globals"
 import { TemplateResult } from "lit-html"
 import { DialogType } from "./OvlDialogBase"
 
-import { OvlAction } from "../../ovlTypes"
+import { OvlAction } from "../../index"
 
 export type OpenDialogOptions = {
   dialogType: OvlDialog

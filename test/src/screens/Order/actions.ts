@@ -1,5 +1,5 @@
 import { T } from "../../../../ovl/src/global/globals"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 type OrderFeedbackState = {
   message: string

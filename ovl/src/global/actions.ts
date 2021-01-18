@@ -23,7 +23,7 @@ import {
 } from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 import { createDeepProxy } from "../tracker/proxyHandler"
-import { OvlAction } from "../ovlTypes"
+import { OvlAction } from "../index"
 
 export const SetLastScrollPosition: OvlAction = (_, { state }) => {
   setLastScrollPosition(state)

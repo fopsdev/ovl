@@ -2,7 +2,7 @@ import {
   OccasionsProcessDashboardData,
   OccasionsProcessDashboardDataClosedQuarter,
 } from "./state"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 const getQuartersArray = (quarterDates: Date[], compareDate: Date): Date[] => {
   return quarterDates

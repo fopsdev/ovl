@@ -1,5 +1,5 @@
 import { OvlTableDefIds } from "../../../../ovl/src"
-import { OvlAction } from "../../../../ovl/src/ovlTypes"
+import { OvlAction } from "../../../../ovl/src/index"
 
 export const ScreenRefresh: OvlAction = async (_, { state, actions }) => {
   let defId: OvlTableDefIds = "audit"
