@@ -1,14 +1,14 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
 import { getDisplayValue } from "../../../Table/helpers"
-import { ListFnReturnValue } from "../../../Table/Table"
+import { ListDefinition } from "../../../Table/Table"
 import { ListState } from "../ListControl"
 import { T, stringifyReplacer } from "../../../../global/globals"
 
 export type HitListState = {
   fieldId: string
   list: ListState
-  listData: ListFnReturnValue
+  listData: ListDefinition
   filterValue: string
   filteredKeys: string[]
   type: "inline" | "overlay"

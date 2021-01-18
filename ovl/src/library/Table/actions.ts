@@ -77,7 +77,7 @@ import {
   ColumnFilterValue,
   FilterClick,
   HeaderClick,
-  ListFnReturnValue,
+  ListDefinition,
   Paging,
   SaveMode,
   SelectedCustomFunctionResult,

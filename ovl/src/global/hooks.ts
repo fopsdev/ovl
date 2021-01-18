@@ -2,7 +2,7 @@
 
 import { LookupListPostData } from "../library/Forms/Controls/helpers"
 import {
-  ListFnReturnValue,
+  ListDefinition,
   OvlTableDef,
   OvlTableData,
   ViewRowDef,
@@ -154,12 +154,12 @@ export const FormCustomColumnFn = "FormCustomColumnFn_%"
 //Form Field Functions ####################################
 // defines the list of ListControl and Option so far
 export type FieldGetList_Type = { row: { [key: string]: {} } }
-export type FieldGetList_ReturnType = ListFnReturnValue
+export type FieldGetList_ReturnType = ListDefinition
 export const FieldGetList = "Field_%_GetList"
 
 // refines the list e.g. upon a row criteria
 export type FieldGetFilteredList_Type = {
-  list: ListFnReturnValue
+  list: ListDefinition
   formState: OvlFormState
 }
 export type FieldGetFilteredList_ReturnType = string[]

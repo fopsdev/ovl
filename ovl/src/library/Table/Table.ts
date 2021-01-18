@@ -397,7 +397,7 @@ export type ColumnDisplayDef = {
   list?: ListState
 }
 
-export type ListFnReturnValue = {
+export type ListDefinition = {
   data?: {
     [key: string]: {}
   }

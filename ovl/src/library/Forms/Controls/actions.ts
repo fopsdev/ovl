@@ -1,12 +1,12 @@
 import { ListState } from "./ListControl"
 
 import { KeyValueListFromServerFn } from "./helpers"
-import { ListFnReturnValue } from "../../Table/Table"
+import { ListDefinition } from "../../Table/Table"
 import { OvlAction } from "../../../index"
 
 export const FillListControl: OvlAction<{
   list: ListState
-  listData: ListFnReturnValue
+  listData: ListDefinition
   filterValue: string
   row: {}
   namespace: string

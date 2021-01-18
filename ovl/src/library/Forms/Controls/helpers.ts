@@ -29,7 +29,7 @@ import { CellClass } from "../../Table/Row"
 import {
   ControlType,
   DisplayMode,
-  ListFnReturnValue,
+  ListDefinition,
   ColumnDisplayDef,
 } from "../../Table/Table"
 import { Field, OvlFormState } from "../actions"
@@ -58,7 +58,7 @@ export type ControlState = {
 export const KeyValueListFromServerFn = async (
   state: OvlState,
   list: ListState,
-  listData: ListFnReturnValue,
+  listData: ListDefinition,
   filterValue: string,
   row: {},
   namespace: string,
@@ -142,7 +142,7 @@ export const FilterHitList = (
   state: OvlState,
   fieldId: string,
   top?: number
-) => {
+): { filteredKeys: string[]; isExactKey: boolean } => {
   let hitLength = {}
   let functionName = FieldGetFilteredList.replace("%", fieldId)
   let dataList: FieldGetList_ReturnType = resolvePath(
@@ -151,7 +151,9 @@ export const FilterHitList = (
   )[FieldGetList.replace("%", fieldId)](<FieldGetList_Type>{
     row: GetRowFromFormState(formState),
   })
+
   if (dataList.data) {
+    let isExactKey = false
     let res = Object.keys(dataList.data)
     let fn = resolvePath(ovl.actions.custom, formState.namespace)
     if (fn && fn[functionName]) {
@@ -171,6 +173,10 @@ export const FilterHitList = (
     if (!filterValue) {
       filterValue = ""
     }
+
+    isExactKey = Object.keys(dataList.data).some(
+      (k) => dataList.data[k][list.valueField] == filterValue
+    )
 
     if (
       list.displayValueField !== undefined &&
@@ -220,15 +226,15 @@ export const FilterHitList = (
     //     return dataList.data[m][list.valueField]
     //   })
     // }
-    return res
+    return { filteredKeys: res, isExactKey }
   }
-  return []
+  return { filteredKeys: [], isExactKey: false }
 }
 
 export const GetListDisplayValue = (
   list: ListState,
   value: string,
-  listdata: ListFnReturnValue
+  listdata: ListDefinition
 ) => {
   if (value === undefined || value === null) {
     return ""

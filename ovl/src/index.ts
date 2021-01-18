@@ -1,5 +1,4 @@
 // <app setup>
-console.log("index ovl started")
 export { OvlVersion } from "../../../app/sw"
 import {
   OvlAppDialogs,
@@ -61,7 +60,8 @@ export let ovl: {
   baseDialogs
 )
 defineElements()
-startRender(ovl.actions)
+startRender()
+ovl.actions.ovl.internal.InitApp()
 
 export type OvlForm = OvlAppForms | "TableRowEdit"
 export type OvlDialog = OvlAppDialogs | keyof typeof baseDialogs

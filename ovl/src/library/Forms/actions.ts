@@ -15,7 +15,7 @@ import {
   FormChanged_Type,
 } from "../../global/hooks"
 import { OvlForm } from "../../index"
-import { ColumnAlign, ListFnReturnValue } from "../Table/Table"
+import { ColumnAlign, ListDefinition } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
 import { getFormFields } from "./helper"
