@@ -13,6 +13,8 @@ import {
   FieldGetList_Type,
   FormValidate_Type,
   FormChanged_Type,
+  FieldGetFilteredList,
+  FieldGetFilteredList_Type,
 } from "../../global/hooks"
 import { OvlForm } from "../../index"
 import { ColumnAlign, ListDefinition } from "../Table/Table"
@@ -344,8 +346,19 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     let fn = resolvePath(actions.custom, namespace)
     if (fn && fn[functionName]) {
       listdata = fn[functionName](<FieldGetList_Type>{ row })
+      let filteredKeys = Object.keys(listdata.data)
+      if (listdata) {
+        functionName = FieldGetFilteredList.replace("%", value.fieldId)
+        if (fn[functionName]) {
+          filteredKeys = fn[functionName](<FieldGetFilteredList_Type>{
+            list: listdata,
+            formState: value.formState,
+          })
+        }
+      }
+
       if (
-        Object.keys(listdata.data).filter((rowKey) => {
+        filteredKeys.filter((rowKey) => {
           return (
             listdata.data[rowKey][field.list.valueField].toString() ===
             value.newVal.toString()

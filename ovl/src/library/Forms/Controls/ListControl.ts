@@ -140,6 +140,9 @@ export class OvlListControl extends OvlBaseElement {
         let val = this.inputElement.value
         this.inputElement.setSelectionRange(val.length, val.length)
       }, 0)
+    } else {
+      this.state.ovl.dialogs.HitListDialog.elementIdToFocusAfterClose =
+        "search" + this.field.field.id
     }
 
     if (selectedKey === "@@ovlcanceled" || selectedKey === "@@ovlescape") {
@@ -204,7 +207,7 @@ export class OvlListControl extends OvlBaseElement {
     )
 
     let filteredKeys = filteredRes.filteredKeys
-    if (filteredKeys.length === 1 || filteredRes.isExactKey) {
+    if ((filterValue && filteredKeys.length === 1) || filteredRes.isExactKey) {
       let writeBackValue
       let listData: FieldGetList_ReturnType = resolvePath(
         this.actions.custom,
@@ -231,7 +234,9 @@ export class OvlListControl extends OvlBaseElement {
           detail: { val: writeBackValue, id: field.id },
         })
         await this.inputElement.dispatchEvent(event)
-        //this.forceCloseLocalHitList()
+        if (relatedTarget && relatedTarget.id.indexOf("ovlhl_") > -1) {
+          this.forceCloseLocalHitList()
+        }
       }
     }
 
