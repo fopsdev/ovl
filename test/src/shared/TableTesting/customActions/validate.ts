@@ -3,7 +3,10 @@ import {
   FieldChanged,
   ValidateFieldType,
 } from "../../../../../ovl/src/library/forms/actions"
-import { Mandatory } from "../../../../../ovl/src/library/forms/validators"
+import {
+  Mandatory,
+  RemoveValidationMsg,
+} from "../../../../../ovl/src/library/forms/validators"
 import { TableTestingColumn } from "../state"
 import { Field_U_ItemCode_GetList } from "./list"
 
@@ -39,6 +42,12 @@ export const FormChanged: OvlAction<FormChanged_Type> = async (
               isInit: true,
             }
             actions.ovl.internal.SetField(cf)
+          } else {
+            value.formState.fields["U_ItemCode"].validationResult.errors
+            RemoveValidationMsg(
+              value.formState.fields["U_ItemCode"],
+              "ListEntry"
+            )
           }
         }
       }

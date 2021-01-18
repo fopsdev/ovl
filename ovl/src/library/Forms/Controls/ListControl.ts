@@ -204,7 +204,7 @@ export class OvlListControl extends OvlBaseElement {
     )
 
     let filteredKeys = filteredRes.filteredKeys
-    if (filteredKeys.length === 1 || filteredRes.isExactKey) {
+    if ((filterValue && filteredKeys.length === 1) || filteredRes.isExactKey) {
       let writeBackValue
       let listData: FieldGetList_ReturnType = resolvePath(
         this.actions.custom,
