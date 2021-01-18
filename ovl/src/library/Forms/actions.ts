@@ -35,6 +35,7 @@ export type Field = {
   list?: ListState
   dirty: boolean
   watched: boolean
+  hasFocus?: boolean
   validationResult: ValidateFieldResult
   id: string
   formType: string
@@ -596,16 +597,19 @@ export type TouchField = {
   fieldId: string
 }
 
+export type FocusField = {
+  formState: OvlFormState
+  fieldId: string
+  hasFocus: boolean
+}
+
+export const FocusField: OvlAction<FocusField> = (value) => {
+  let field = value.formState.fields[value.fieldId]
+  field.hasFocus = value.hasFocus
+}
+
 export const TouchField: OvlAction<TouchField> = (value) => {
   let field = value.formState.fields[value.fieldId]
-
-  field.value = getDisplayValue(
-    field.fieldKey,
-    { ui: field.ui, list: field.list, type: field.type },
-    GetRowFromFormState(value.formState),
-    value.formState.namespace
-  )
-
   field.watched = true
   value.formState.fieldToFocus = value.fieldId
 }

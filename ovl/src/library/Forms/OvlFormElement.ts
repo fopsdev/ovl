@@ -79,6 +79,11 @@ export class OvlFormElement extends OvlBaseElement {
         formState: this.formState,
         fieldId: id,
       })
+      this.actions.ovl.internal.FocusField({
+        formState: this.formState,
+        fieldId: id,
+        hasFocus: false,
+      })
     }
   }
 
@@ -96,6 +101,17 @@ export class OvlFormElement extends OvlBaseElement {
     }
   }
 
+  handleOvlFocusIn = async (e) => {
+    let id = e.detail.id.replace(this.formId, "")
+    if (id && this.formState.fields[id]) {
+      this.actions.ovl.internal.FocusField({
+        formState: this.formState,
+        fieldId: id,
+        hasFocus: true,
+      })
+    }
+  }
+
   getFormFieldId(id: string) {
     return this.formId + id
   }
@@ -103,6 +119,7 @@ export class OvlFormElement extends OvlBaseElement {
   init() {
     this.addEventListener("ovlchange", this.handleOvlChange)
     this.addEventListener("ovlfocusout", this.handleOvlFocusOut)
+    this.addEventListener("ovlfocusin", this.handleOvlFocusIn)
 
     if (!this.formType) {
       throw new Error(
@@ -158,6 +175,7 @@ export class OvlFormElement extends OvlBaseElement {
     super.disconnectedCallback()
     this.removeEventListener("ovlchange", this.handleOvlChange)
     this.removeEventListener("ovlfocusout", this.handleOvlFocusOut)
+    this.removeEventListener("ovlfocusin", this.handleOvlFocusIn)
   }
 
   handleAfterRenderCustomHook() {

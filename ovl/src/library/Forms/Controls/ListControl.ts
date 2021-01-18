@@ -18,7 +18,7 @@ import {
   GetValueFromCustomFunction,
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { OvlFormState } from "../actions"
+import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 
 export type ListState = {
@@ -43,6 +43,7 @@ export class OvlListControl extends OvlBaseElement {
   timer: any
   lastExactHitValue: any
   formState: OvlFormState
+
   // handleClearFilter(e: Event) {}
   handleCancel = (e: Event) => {
     this.actions.ovl.dialog.DialogClose("HitListDialog")
@@ -174,6 +175,15 @@ export class OvlListControl extends OvlBaseElement {
     this.forceCloseLocalHitList()
   }
   // // same here
+
+  handleOnFocus(e: Event) {
+    let event = new CustomEvent("ovlfocusin", {
+      bubbles: true,
+      detail: { id: this.field.field.id },
+    })
+    e.target.dispatchEvent(event)
+  }
+
   async handleFocusOut(e: Event) {
     let field = this.field.field
     let fieldId = field.id
@@ -211,7 +221,7 @@ export class OvlListControl extends OvlBaseElement {
       )
 
       let filteredKeys = filteredRes.filteredKeys
-      if (filteredKeys.length === 1) {
+      if (filterValue !== "" && filteredKeys.length === 1) {
         let listData: FieldGetList_ReturnType = resolvePath(
           this.actions.custom,
           this.formState.namespace
@@ -236,12 +246,14 @@ export class OvlListControl extends OvlBaseElement {
       }
     }
     if (movedOut) {
+      //SnackAdd("Moved Out...")
       let event = new CustomEvent("ovlfocusout", {
         bubbles: true,
         detail: { id: fieldId },
       })
       await this.inputElement.dispatchEvent(event)
       this.forceCloseLocalHitList()
+
       //@ts-ignore
     }
   }
@@ -369,6 +381,7 @@ export class OvlListControl extends OvlBaseElement {
     }, waitTime)
   }
   async getUI() {
+    //SnackAdd("Rerender...")
     return this.track(() => {
       this.field = this.props(this.state)
       let field = this.field.field
@@ -467,6 +480,10 @@ export class OvlListControl extends OvlBaseElement {
       }
       let validationHide = res.validationHide
 
+      if (field.hasFocus) {
+        validationHide = "hide"
+      }
+
       // if (
       //   this.localList ||
       //   document.activeElement.id.indexOf(this.field.field.id) > -1 ||
@@ -504,6 +521,7 @@ export class OvlListControl extends OvlBaseElement {
                 value="${displayValue}"
                 .value="${displayValue}"
                 @keydown=${(e) => this.handleKey(e)}
+                @focus=${(e) => this.handleOnFocus(e)}
               />
 
               ${deleteButton}

@@ -298,6 +298,7 @@ export const GetValueFromCustomFunction = (
       columnsDef: getColumnDefsFromFormState(formState),
       align,
       displayMode: isInline ? <DisplayMode>"EditInline" : <DisplayMode>"Edit",
+      formState,
     })
     let d = field.value
     if (val !== undefined) {

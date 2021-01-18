@@ -12,6 +12,15 @@ export class OvlTextbox extends OvlBaseElement {
   field: ControlState
   inputElement: any
   formState: OvlFormState
+
+  handleOnFocus(e: Event) {
+    let event = new CustomEvent("ovlfocusin", {
+      bubbles: true,
+      detail: { id: this.field.field.id },
+    })
+    e.target.dispatchEvent(event)
+  }
+
   handleFocusOut(e: Event) {
     e.stopPropagation()
     e.preventDefault()
@@ -108,6 +117,7 @@ export class OvlTextbox extends OvlBaseElement {
             )}"
             @change=${(e) => this.handleChange(e)}
             @focusout=${(e) => this.handleFocusOut(e)}
+            @focus=${(e) => this.handleOnFocus(e)}
             @keyup=${(e) => this.handleKeyUp(e)}
             style="${style} ${align}"
             autocomplete="off"
