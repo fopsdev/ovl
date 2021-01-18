@@ -181,10 +181,8 @@ export class OvlListControl extends OvlBaseElement {
     let movedOut: boolean = false
     let idToCheck
 
-    let focusInHitListNow = false
     if (relatedTarget) {
       idToCheck = relatedTarget.id
-      focusInHitListNow = idToCheck.indexOf("inlineovlhl") > -1
     }
     if (relatedTarget === null) {
       movedOut = true
@@ -194,33 +192,28 @@ export class OvlListControl extends OvlBaseElement {
         movedOut = true
       }
     }
-
     //@ts-ignore
-    if (e.target.id === fieldId && !focusInHitListNow) {
-      // its the inpit field focusout
-      // if we have only one hit with the fragment typed use that directly
-      //@ts-ignore
-      let filterValue = e.target.value
-      let filteredRes = FilterHitList(
-        field.list,
-        filterValue,
-        this.formState,
-        this.state,
-        field.fieldKey,
-        10
-      )
+    let filterValue = e.target.value
+    let filteredRes = FilterHitList(
+      field.list,
+      filterValue,
+      this.formState,
+      this.state,
+      field.fieldKey,
+      10
+    )
 
-      let filteredKeys = filteredRes.filteredKeys
-      if (filteredKeys.length === 1 || filteredRes.isExactKey) {
-        let writeBackValue
-        let listData: FieldGetList_ReturnType = resolvePath(
-          this.actions.custom,
-          this.formState.namespace
-        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-          row: GetRowFromFormState(this.formState),
-        })
-        let hit = filteredKeys[0]
-
+    let filteredKeys = filteredRes.filteredKeys
+    if (filteredKeys.length === 1 || filteredRes.isExactKey) {
+      let writeBackValue
+      let listData: FieldGetList_ReturnType = resolvePath(
+        this.actions.custom,
+        this.formState.namespace
+      )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+        row: GetRowFromFormState(this.formState),
+      })
+      let hit = filteredKeys[0]
+      if (!this.localList || filteredKeys.length === 1) {
         if (filteredRes.isExactKey) {
           writeBackValue = filterValue
           hit = writeBackValue
@@ -232,13 +225,16 @@ export class OvlListControl extends OvlBaseElement {
         }
         this.inputElement.value = listData.data[hit][field.list.displayField]
         //console.log("WriteBack from FocusOut: " + writeBackValue)
+
         let event = new CustomEvent("ovlchange", {
           bubbles: true,
           detail: { val: writeBackValue, id: field.id },
         })
         await this.inputElement.dispatchEvent(event)
+        //this.forceCloseLocalHitList()
       }
     }
+
     if (movedOut) {
       let event = new CustomEvent("ovlfocusout", {
         bubbles: true,
