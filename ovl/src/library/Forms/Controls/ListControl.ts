@@ -198,6 +198,40 @@ export class OvlListControl extends OvlBaseElement {
       await this.inputElement.dispatchEvent(event)
 
       this.forceCloseLocalHitList()
+      //@ts-ignore
+    } else if (e.target.id === fieldId) {
+      // its the inpit field focusout
+      // if we have only one hit with the fragment typed use that directly
+      //@ts-ignore
+      let filterValue = e.target.value
+      let filteredKeys = FilterHitList(
+        field.list,
+        filterValue,
+        this.formState,
+        this.state,
+        field.fieldKey,
+        10
+      )
+      if (filteredKeys.length === 1) {
+        let listData: FieldGetList_ReturnType = resolvePath(
+          this.actions.custom,
+          this.formState.namespace
+        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+          row: GetRowFromFormState(this.formState),
+        })
+
+        let hit = filteredKeys[0]
+        let writeBackValue = hit
+        if (listData.index) {
+          writeBackValue = listData.data[hit][field.list.valueField]
+        }
+        this.inputElement.value = listData.data[hit][field.list.displayField]
+        let event = new CustomEvent("ovlchange", {
+          bubbles: true,
+          detail: { val: writeBackValue, id: field.id },
+        })
+        await this.inputElement.dispatchEvent(event)
+      }
     }
   }
   handleDelete(e: Event) {
@@ -257,32 +291,35 @@ export class OvlListControl extends OvlBaseElement {
 
       if (!openLocalList) {
         let writeBackValue = filterValue
-        let hit
-        if (filteredKeys.length === 1 && writeBackValue) {
-          let listData: FieldGetList_ReturnType = resolvePath(
-            this.actions.custom,
-            this.formState.namespace
-          )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-            row: GetRowFromFormState(this.formState),
-          })
+        // moved the part where it sets the full hit in the lostfocus
+        // was kind disturbing here after every key
 
-          hit = filteredKeys[0]
-          writeBackValue = hit
-          if (listData.index) {
-            writeBackValue = listData.data[hit][field.list.valueField]
-          }
-          this.inputElement.value = listData.data[hit][field.list.displayField]
-        }
+        //let hit
+        // if (filteredKeys.length === 1 && writeBackValue) {
+        //   let listData: FieldGetList_ReturnType = resolvePath(
+        //     this.actions.custom,
+        //     this.formState.namespace
+        //   )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+        //     row: GetRowFromFormState(this.formState),
+        //   })
+
+        //   hit = filteredKeys[0]
+        //   writeBackValue = hit
+        //   if (listData.index) {
+        //     writeBackValue = listData.data[hit][field.list.valueField]
+        //   }
+        //   this.inputElement.value = listData.data[hit][field.list.displayField]
+        // }
 
         let event = new CustomEvent("ovlchange", {
           bubbles: true,
           detail: { val: writeBackValue, id: field.id },
         })
         await this.inputElement.dispatchEvent(event)
-        if (hit) {
-          this.forceCloseLocalHitList()
-          return
-        }
+        // if (hit) {
+        //   this.forceCloseLocalHitList()
+        //   return
+        // }
       }
       if (filteredKeys.length > 0) {
         let wasAlreadyOpen = false
