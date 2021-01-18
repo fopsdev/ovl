@@ -23,6 +23,7 @@ import {
   FieldHeaderCellSelectedHandler_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
 import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { form } from "../../../../../ovl/src/actions"
 
 export const Edit_U_Memo_GetLabelAndValueRender: OvlAction<
   EditGetLabelAndValueRenderer_Type,
@@ -82,7 +83,15 @@ export const Field_U_ItemCode_GetValueRender: OvlAction<
   FieldGetValueRender_Type,
   FieldGetValueRender_ReturnType
 > = (
-  { columnKey, row, namespace, columnsDef, align: string, displayMode },
+  {
+    columnKey,
+    row,
+    namespace,
+    columnsDef,
+    align: string,
+    displayMode,
+    formState,
+  },
   { state }
 ) => {
   let itemCodeValue = getDisplayValue(
@@ -91,6 +100,13 @@ export const Field_U_ItemCode_GetValueRender: OvlAction<
     row,
     namespace
   )
+
+  if (
+    formState &&
+    formState.fields["U_ItemCode"].validationResult.errors.length > 0
+  ) {
+    return undefined
+  }
 
   if (displayMode.startsWith("Edit")) {
     return html`(${row.U_ItemCode})`

@@ -119,7 +119,8 @@ export class OvlTextbox extends OvlBaseElement {
           />
 
           <span
-            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
+            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue &&
+            res.validationHide !== "hide"
               ? ""
               : "hide"} "
           >

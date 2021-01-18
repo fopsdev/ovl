@@ -78,6 +78,22 @@ export class OvlFormElement extends OvlBaseElement {
         formState: this.formState,
         fieldId: id,
       })
+      this.actions.ovl.internal.FocusField({
+        formState: this.formState,
+        fieldId: id,
+        hasFocus: false,
+      })
+    }
+  }
+
+  handleOvlFocusIn = async (e) => {
+    let id = e.detail.id.replace(this.formId, "")
+    if (id && this.formState.fields[id]) {
+      this.actions.ovl.internal.FocusField({
+        formState: this.formState,
+        fieldId: id,
+        hasFocus: true,
+      })
     }
   }
 
@@ -102,6 +118,7 @@ export class OvlFormElement extends OvlBaseElement {
   init() {
     this.addEventListener("ovlchange", this.handleOvlChange)
     this.addEventListener("ovlfocusout", this.handleOvlFocusOut)
+    this.addEventListener("ovlfocusin", this.handleOvlFocusIn)
 
     let id = this.getAttribute("id")
 
