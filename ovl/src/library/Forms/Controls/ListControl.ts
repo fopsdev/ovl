@@ -436,7 +436,7 @@ export class OvlListControl extends OvlBaseElement {
           @focusout=${(e) => this.handleFocusOut(e)}
         >
           <div
-            class="ovl-formcontrol-container ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
+            class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
           >
             <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
             <div
