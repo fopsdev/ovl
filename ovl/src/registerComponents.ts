@@ -19,6 +19,7 @@ import { TableRowFormBig } from "./library/Table/RowFormBig"
 import { TableRowSaveCancel } from "./library/Table/RowFormSaveCancel"
 import { TableRowWrapper } from "./library/Table/RowWrapper"
 import { TableHeader } from "./library/Table/Table"
+import { OvlCustomValueHint } from "./library/Forms/Controls/Parts/CustomValueHint"
 
 export const defineElements = () => {
   customElements.define("ovl-trowcontrol", TableRowControl)
@@ -42,4 +43,5 @@ export const defineElements = () => {
   customElements.define("ovl-dialog", OvlDialog)
   customElements.define("ovl-dialogholder", OvlDialogHolder)
   customElements.define("ovl-snack", OvlSnack)
+  customElements.define("ovl-cvhint", OvlCustomValueHint)
 }

@@ -312,7 +312,10 @@ const fillReactiveRows = (
   originalRow: { [key: string]: {} },
   formState: OvlFormState
 ): { [key: string]: {} } => {
-  let row = JSON.parse(JSON.stringify(originalRow), stringifyReplacer)
+  let row = {}
+  if (originalRow !== undefined) {
+    row = JSON.parse(JSON.stringify(originalRow), stringifyReplacer)
+  }
   Object.keys(formState.fields).forEach((f) => {
     let field = formState.fields[f]
     row[field.fieldKey] = field.convertedValue

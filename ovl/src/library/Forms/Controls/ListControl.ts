@@ -20,6 +20,7 @@ import {
 import { getUIValidationObject } from "./uiValidationHelper"
 import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
+import { OvlState } from "../../.."
 
 export type ListState = {
   serverEndpoint?: string
@@ -380,10 +381,12 @@ export class OvlListControl extends OvlBaseElement {
       }
     }, waitTime)
   }
+  init() {
+    this.field = this.props(this.state)
+  }
   async getUI() {
     //SnackAdd("Rerender...")
     return this.track(() => {
-      this.field = this.props(this.state)
       let field = this.field.field
       this.formState = this.state.ovl.forms[field.formType][field.formId]
       let customRowCell = this.field.customRowCellClass
@@ -536,14 +539,7 @@ export class OvlListControl extends OvlBaseElement {
               ></span>
             </div>
 
-            <span
-              class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
-                ? ""
-                : "hide"}"
-            >
-              ${customValue}
-            </span>
-
+            <ovl-cvhint .props=${(state: OvlState) => this.field}> </ovl-cvhint>
             <span
               class="fd-form-message ${validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
             >
