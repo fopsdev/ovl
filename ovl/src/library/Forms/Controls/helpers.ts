@@ -34,10 +34,6 @@ import {
 } from "../../Table/Table"
 import { Field, OvlFormState } from "../actions"
 import { ListState } from "./ListControl"
-import { UIValidationObject } from "./uiValidationHelper"
-import { OvlBaseElement } from "../../OvlBaseElement"
-
-import { SnackAdd } from "../../helpers"
 
 export type LookupListPostData = {
   url: string
@@ -274,6 +270,18 @@ export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
   CachedRendererData
 >()
 
+export const GetCustomInfo = (customRowCell: CellClass) => {
+  let customRowClassName = ""
+  let customRowTooltip
+  let customRowClassContainerName = ""
+  if (customRowCell) {
+    customRowClassName = customRowCell.className
+    customRowClassContainerName = customRowClassName + "Container"
+    customRowTooltip = customRowCell.tooltip
+  }
+  return { customRowClassName, customRowTooltip, customRowClassContainerName }
+}
+
 export const GetValueFromCustomFunction = (
   row: { [key: string]: {} },
   field: Field,
@@ -298,7 +306,6 @@ export const GetValueFromCustomFunction = (
       columnsDef: getColumnDefsFromFormState(formState),
       align,
       displayMode: isInline ? <DisplayMode>"EditInline" : <DisplayMode>"Edit",
-      formState,
     })
     let d = field.value
     if (val !== undefined) {
@@ -337,68 +344,4 @@ const getColumnDefsFromFormState = (
     return val
   }, {})
   return colDisplayDefs
-}
-
-export const GetLabel = (
-  field: Field,
-  customHeaderCell: CellClass,
-  res: UIValidationObject,
-  controltype: ControlType,
-  align: string,
-  formState: OvlFormState,
-  comp: OvlBaseElement
-): TemplateResult => {
-  let caption = ""
-  let label
-
-  if (field.ui) {
-    if (field.ui.noLabel) {
-      return null
-    }
-    if (field.ui.labelTranslationKey) {
-      caption = T(field.ui.labelTranslationKey)
-    }
-    if (!caption) {
-      caption = field.fieldKey
-    }
-  }
-
-  let customHeaderClassName = ""
-  let customHeaderTooltip
-  if (customHeaderCell) {
-    customHeaderClassName = customHeaderCell.className
-    customHeaderTooltip = customHeaderCell.tooltip
-  }
-  let state = ovl.state
-  //let formState: FormState = state.ovl.forms[field.formType][field.formId]
-  let rendererFn = GetRendererFn(
-    formState.namespace,
-    cachedRendererFn,
-    FieldGetLabelRender,
-    field.fieldKey
-  )
-
-  if (rendererFn) {
-    caption = rendererFn(<FieldGetLabelRender_Type>{
-      columnKey: field.fieldKey,
-      caption,
-      align,
-      displayMode: <DisplayMode>"Edit",
-      state,
-    })
-  }
-
-  label = html`
-    <label
-      title="${ifDefined(
-        customHeaderTooltip ? customHeaderTooltip : undefined,
-        comp
-      )}"
-      class="fd-form-label  ovl-formcontrol-label ovl-label-${controltype} ovl-label__${field.fieldKey} ${customHeaderClassName}"
-      aria-required="${res.needsAttention}"
-      for="${field.id}"
-      >${caption}</label
-    >
-  `
-  return label
 }

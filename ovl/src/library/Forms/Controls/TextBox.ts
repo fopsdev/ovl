@@ -1,9 +1,10 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
-import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
-import { getUIValidationObject } from "./uiValidationHelper"
+import { ControlState, GetCustomInfo } from "./helpers"
+import { GetOutlineValidationHint } from "./uiValidationHelper"
 import { OvlFormState } from "../actions"
+import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
 
 type TextBoxType = "text" | "password" | "text-security"
 
@@ -13,32 +14,10 @@ export class OvlTextbox extends OvlBaseElement {
   inputElement: any
   formState: OvlFormState
 
-  handleOnFocus(e: Event) {
-    let event = new CustomEvent("ovlfocusin", {
-      bubbles: true,
-      detail: { id: this.field.field.id },
-    })
-    e.target.dispatchEvent(event)
-  }
-
-  handleFocusOut(e: Event) {
-    e.stopPropagation()
-    e.preventDefault()
-    let event = new CustomEvent("ovlfocusout", {
-      bubbles: true,
-      detail: { id: this.field.field.id },
-    })
-    this.inputElement.dispatchEvent(event)
-  }
-
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    let event = new CustomEvent("ovlchange", {
-      bubbles: true,
-      detail: { val: this.inputElement.value, id: this.field.field.id },
-    })
-    this.inputElement.dispatchEvent(event)
+    ChangeValue(this, this.inputElement.value, this.field.field.id)
   }
 
   handleKeyUp(e: KeyboardEvent) {
@@ -60,16 +39,7 @@ export class OvlTextbox extends OvlBaseElement {
       this.field = this.props(this.state)
       let field = this.field.field
       this.formState = this.state.ovl.forms[field.formType][field.formId]
-      let customRowCell = this.field.customRowCellClass
-      let customRowClassName = ""
-      let customRowTooltip
-      let customRowClassContainerName = ""
-      if (customRowCell) {
-        customRowClassName = customRowCell.className
-        customRowClassContainerName = customRowClassName + "Container"
-        customRowTooltip = customRowCell.tooltip
-      }
-
+      let customInfo = GetCustomInfo(this.field.customRowCellClass)
       let inputMode: any = "text"
       if (field.type === "decimal") {
         inputMode = "decimal"
@@ -77,70 +47,43 @@ export class OvlTextbox extends OvlBaseElement {
         inputMode = "numeric"
       }
 
-      let res = getUIValidationObject(field)
       let style = ""
       let type: TextBoxType = "text"
       if (field.ui && field.ui.isPassword) {
         type = "password"
       }
-      let align = ""
-      if (field.ui && field.ui.align) {
-        align = field.ui.align
-      }
 
-      let label = GetLabel(
-        field,
-        this.field.customHeaderCellClass,
-        res,
-        "text",
-        align,
-        this.formState,
-        this
-      )
-      let customValue = GetValueFromCustomFunction(
-        this.field.row,
-        field,
-        this.formState,
-        align,
-        this.field.isInline,
-        this.state
-      )
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
+          class="ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
         >
-          ${label}
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <input
             title="${ifDefined(
-              customRowTooltip ? customRowTooltip : undefined,
+              customInfo.customRowTooltip
+                ? customInfo.customRowTooltip
+                : undefined,
               this
             )}"
             @change=${(e) => this.handleChange(e)}
-            @focusout=${(e) => this.handleFocusOut(e)}
-            @focus=${(e) => this.handleOnFocus(e)}
+            @focusout=${() => RemoveFocus(this, field.id)}
+            @focus=${() => SetFocus(this.inputElement, field.id)}
             @keyup=${(e) => this.handleKeyUp(e)}
-            style="${style} ${align}"
+            style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
             inputmode="${inputMode}"
-            class="fd-input ovl-focusable ${res.validationType}  ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customRowClassName}"
+            class="fd-input ovl-focusable ${GetOutlineValidationHint(
+              field
+            )}  ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"
           />
 
-          <span
-            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
-              ? ""
-              : "hide"} "
-          >
-            ${customValue}
-          </span>
-
-          <span
-            class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-textbox-validation ovl-formcontrol-validation__${field.fieldKey}"
-          >
-            ${field.validationResult.errors.join(", ")}
-          </span>
+          <ovl-controlcustomhint .props=${() => this.field}>
+          </ovl-controlcustomhint>
+          <ovl-controlvalidationhint .props=${() => this.field}>
+          </ovl-controlvalidationhint>
         </div>
       `
     })

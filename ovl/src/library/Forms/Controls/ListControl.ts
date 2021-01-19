@@ -12,15 +12,15 @@ import { OvlBaseElement } from "../../OvlBaseElement"
 import {
   ControlState,
   FilterHitList,
-  GetLabel,
+  GetCustomInfo,
   GetListDisplayValue,
   GetRowFromFormState,
-  GetValueFromCustomFunction,
 } from "./helpers"
-import { getUIValidationObject } from "./uiValidationHelper"
+import { GetOutlineValidationHint } from "./uiValidationHelper"
 import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 import { OvlState } from "../../.."
+import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
 
 export type ListState = {
   serverEndpoint?: string
@@ -163,27 +163,23 @@ export class OvlListControl extends OvlBaseElement {
       }
       this.inputElement.value =
         dataList.data[selectedKey][field.list.displayField]
-
-      let event = new CustomEvent("ovlchange", {
-        bubbles: true,
-        detail: { val: writeBackValue, id: field.id },
-      })
-      await this.inputElement.dispatchEvent(event)
+      ChangeValue(this, writeBackValue, field.id)
     }
   }
 
   handleGotFocusSearch(e: Event) {
     this.forceCloseLocalHitList()
+    SetFocus(e.target, this.field.field.id)
   }
   // // same here
 
-  handleOnFocus(e: Event) {
-    let event = new CustomEvent("ovlfocusin", {
-      bubbles: true,
-      detail: { id: this.field.field.id },
-    })
-    e.target.dispatchEvent(event)
-  }
+  // handleOnFocus(e: Event) {
+  //   let event = new CustomEvent("ovlfocusin", {
+  //     bubbles: true,
+  //     detail: { id: this.field.field.id },
+  //   })
+  //   e.target.dispatchEvent(event)
+  // }
 
   async handleFocusOut(e: Event) {
     let field = this.field.field
@@ -239,23 +235,12 @@ export class OvlListControl extends OvlBaseElement {
       }
       // always as well write back value here
       if (!(filteredRes.isExactKey && filteredKeys.length > 1)) {
-        let event = new CustomEvent("ovlchange", {
-          bubbles: true,
-          detail: { val: writeBackValue, id: field.id },
-        })
-        await this.inputElement.dispatchEvent(event)
+        ChangeValue(this, writeBackValue, field.id)
       }
     }
     if (movedOut) {
-      //SnackAdd("Moved Out...")
-      let event = new CustomEvent("ovlfocusout", {
-        bubbles: true,
-        detail: { id: fieldId },
-      })
-      await this.inputElement.dispatchEvent(event)
+      RemoveFocus(this, field.id)
       this.forceCloseLocalHitList()
-
-      //@ts-ignore
     }
   }
   handleDelete(e: Event) {
@@ -323,11 +308,7 @@ export class OvlListControl extends OvlBaseElement {
         let writeBackValue = filterValue
         this.lastExactHitValue = undefined
         if (!filteredRes.isExactKey) {
-          let event = new CustomEvent("ovlchange", {
-            bubbles: true,
-            detail: { val: writeBackValue, id: field.id },
-          })
-          await this.inputElement.dispatchEvent(event)
+          ChangeValue(this, writeBackValue, field.id)
         } else {
           this.lastExactHitValue = writeBackValue
         }
@@ -389,33 +370,7 @@ export class OvlListControl extends OvlBaseElement {
     return this.track(() => {
       let field = this.field.field
       this.formState = this.state.ovl.forms[field.formType][field.formId]
-      let customRowCell = this.field.customRowCellClass
-      let customRowClassName = ""
-      let customRowTooltip
-      let customRowClassContainerName = ""
-      if (customRowCell) {
-        customRowClassName = customRowCell.className
-        customRowClassContainerName = customRowClassName + "Container"
-        customRowTooltip = customRowCell.tooltip
-      }
-
-      let res = getUIValidationObject(field)
-
-      let align = ""
-      if (field.ui && field.ui.align) {
-        align = field.ui.align
-      }
-
-      let label = GetLabel(
-        field,
-        this.field.customHeaderCellClass,
-        res,
-        "list",
-        align,
-        this.formState,
-        this
-      )
-
+      let customInfo = GetCustomInfo(this.field.customRowCellClass)
       let displayValue = ""
 
       let getListFnName = FieldGetList.replace("%", field.fieldKey)
@@ -440,14 +395,6 @@ export class OvlListControl extends OvlBaseElement {
           ></span>
         `
       }
-      let customValue = GetValueFromCustomFunction(
-        this.field.row,
-        field,
-        this.formState,
-        align,
-        this.field.isInline,
-        this.state
-      )
       let hitListDialog
       if (
         this.state.ovl.dialogs.HitListDialog.visible &&
@@ -481,20 +428,6 @@ export class OvlListControl extends OvlBaseElement {
       if (field.list.isSelect) {
         icon = "arrow-bottom"
       }
-      let validationHide = res.validationHide
-
-      if (field.hasFocus) {
-        validationHide = "hide"
-      }
-
-      // if (
-      //   this.localList ||
-      //   document.activeElement.id.indexOf(this.field.field.id) > -1 ||
-      //   this.state.ovl.dialogs.HitListDialog.visible
-      // ) {
-      //   console.log("hhhhh")
-      //   validationHide = "hide"
-      // }
 
       return html`
         ${hitListDialog}
@@ -503,28 +436,31 @@ export class OvlListControl extends OvlBaseElement {
           @focusout=${(e) => this.handleFocusOut(e)}
         >
           <div
-            class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
+            class="ovl-formcontrol-container ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
           >
-            ${label}
-
+            <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
             <div
-              class="fd-input-group ${res.validationType} ${customRowClassName} ovl-formcontrol-input"
+              class="fd-input-group ${GetOutlineValidationHint(
+                field
+              )} ${customInfo.customRowClassName} ovl-formcontrol-input"
             >
               <input
                 title="${ifDefined(
-                  customRowTooltip ? customRowTooltip : undefined,
+                  customInfo.customRowTooltip
+                    ? customInfo.customRowTooltip
+                    : undefined,
                   this
                 )}"
                 autocomplete="off"
-                style="${align}"
+                style="${field.ui && field.ui.align ? field.ui.align : ""}"
                 +
                 type="text"
-                class="fd-input ovl-focusable fd-input-group__input ovl-formcontrol-input ovl-value-listcontrol ovl-value__${field.fieldKey}"
+                class="fd-input ovl-focusable fd-input-group__input ovl-formcontrol-input ovl-value__${field.fieldKey}"
                 id="${field.id}"
                 value="${displayValue}"
                 .value="${displayValue}"
                 @keydown=${(e) => this.handleKey(e)}
-                @focus=${(e) => this.handleOnFocus(e)}
+                @focus=${() => SetFocus(this, field.id)}
               />
 
               ${deleteButton}
@@ -535,16 +471,14 @@ export class OvlListControl extends OvlBaseElement {
                 @touchend=${(e) => this.handleListPopup(e)}
                 @keydown=${(e) => this.handleSearchKeyDown(e)}
                 @focus=${(e) => this.handleGotFocusSearch(e)}
-                class="fd-input-group__addon sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-listcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
+                class="fd-input-group__addon sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
               ></span>
             </div>
 
-            <ovl-cvhint .props=${(state: OvlState) => this.field}> </ovl-cvhint>
-            <span
-              class="fd-form-message ${validationHide} ovl-formcontrol-validation ovl-formcontrol-listcontrol-validation ovl-formcontrol-validation__${field.fieldKey}"
-            >
-              ${field.validationResult.errors.join(", ")}
-            </span>
+            <ovl-controlcustomhint .props=${() => this.field}>
+            </ovl-controlcustomhint>
+            <ovl-controlvalidationhint .props=${() => this.field}>
+            </ovl-controlvalidationhint>
           </div>
           ${this.localList}
         </div>

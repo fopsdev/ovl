@@ -19,8 +19,13 @@ ovl-datebox,
 ovl-dialog,
 ovl-dialogholder,
 ovl-snack,
-ovl-cvhint {
+ovl-controllabel {
   display: block;
+}
+
+ovl-controlcustomhint,
+ovl-controlvalidationhint {
+  display: inline;
 }
 
 body {
@@ -167,16 +172,16 @@ ovl-trow:focus {
   margin-bottom: 1em;
 }
 
-.ovl-formcontrol-label {
+ovl-controllabel {
   grid-area: label;
 }
 .ovl-formcontrol-value {
   grid-area: value;
 }
-.ovl-formcontrol-custom {
+ovl-controlcustomhint {
   grid-area: custom;
 }
-.ovl-formcontrol-validation {
+ovl-controlvalidationhint {
   grid-area: validation;
 }
 

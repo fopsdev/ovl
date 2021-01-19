@@ -197,7 +197,6 @@ export type FieldGetValueRender_Type = {
   columnsDef: { [key: string]: ColumnDisplayDef }
   align: string
   displayMode: DisplayMode
-  formState?: OvlFormState
 }
 export type FieldGetValueRender_ReturnType = TemplateResult
 export const FieldGetValueRender = "Field_%_GetValueRender"

@@ -19,7 +19,9 @@ import { TableRowFormBig } from "./library/Table/RowFormBig"
 import { TableRowSaveCancel } from "./library/Table/RowFormSaveCancel"
 import { TableRowWrapper } from "./library/Table/RowWrapper"
 import { TableHeader } from "./library/Table/Table"
-import { OvlCustomValueHint } from "./library/Forms/Controls/Parts/CustomValueHint"
+import { OvlCustomValueHint } from "./library/Forms/Controls/Parts/ControlCustomValueHint"
+import { OvlValidationHint } from "./library/Forms/Controls/Parts/ControlValidationHint"
+import { OvlControlLabel } from "./library/Forms/Controls/Parts/ControlLabel"
 
 // don't forget to add the display block in css - file
 export const defineElements = () => {
@@ -44,5 +46,7 @@ export const defineElements = () => {
   customElements.define("ovl-dialog", OvlDialog)
   customElements.define("ovl-dialogholder", OvlDialogHolder)
   customElements.define("ovl-snack", OvlSnack)
-  customElements.define("ovl-cvhint", OvlCustomValueHint)
+  customElements.define("ovl-controlcustomhint", OvlCustomValueHint)
+  customElements.define("ovl-controlvalidationhint", OvlValidationHint)
+  customElements.define("ovl-controllabel", OvlControlLabel)
 }

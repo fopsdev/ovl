@@ -1,9 +1,10 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
-import { getUIValidationObject } from "./uiValidationHelper"
+import { ControlState, GetCustomInfo } from "./helpers"
+import { GetOutlineValidationHint } from "./uiValidationHelper"
 import { OvlFormState } from "../actions"
+import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
 
 export class OvlTime extends OvlBaseElement {
   props: any
@@ -18,101 +19,52 @@ export class OvlTime extends OvlBaseElement {
     }
   }
 
-  handleFocusOut(e: Event) {
-    e.stopPropagation()
-    e.preventDefault()
-    let event = new CustomEvent("ovlfocusout", {
-      bubbles: true,
-      detail: { id: this.field.field.id },
-    })
-    this.inputElement.dispatchEvent(event)
-  }
-
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    let event = new CustomEvent("ovlchange", {
-      bubbles: true,
-      detail: { val: this.inputElement.value, id: this.field.field.id },
-    })
-    this.inputElement.dispatchEvent(event)
+    ChangeValue(this, this.inputElement.value, this.field.field.id)
   }
   async getUI() {
     return this.track(() => {
       this.field = this.props(this.state)
       let field = this.field.field
       this.formState = this.state.ovl.forms[field.formType][field.formId]
-      let customRowCell = this.field.customRowCellClass
-      let customRowClassName = ""
-      let customRowTooltip
-      let customRowClassContainerName = ""
-      if (customRowCell) {
-        customRowClassName = customRowCell.className
-        customRowClassContainerName = customRowClassName + "Container"
-        customRowTooltip = customRowCell.tooltip
-      }
-
-      let res = getUIValidationObject(field)
+      let customInfo = GetCustomInfo(this.field.customRowCellClass)
       let style = ""
-      let align = ""
-      if (field.ui && field.ui.align) {
-        align = field.ui.align
-      }
-      let label = GetLabel(
-        field,
-        this.field.customHeaderCellClass,
-        res,
-        "time",
-        align,
-        this.formState,
-        this
-      )
-
       type TimeBoxType = "text" | "time"
       let type: TimeBoxType = "text"
       if (this.state.ovl.uiState.isMobile) {
         type = "time"
       }
-      let customValue = GetValueFromCustomFunction(
-        this.field.row,
-        field,
-        this.formState,
-        align,
-        this.field.isInline,
-        this.state
-      )
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-time ovl-container__${field.fieldKey} ${customRowClassContainerName}"
+          class="ovl-formcontrol-container ovl-container-time ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
         >
-          ${label}
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
+
           <input
             title="${ifDefined(
-              customRowTooltip ? customRowTooltip : undefined,
+              customInfo.customRowTooltip
+                ? customInfo.customRowTooltip
+                : undefined,
               this
             )}"
-            @focusout=${(e) => this.handleFocusOut(e)}
-            style="${style} ${align}"
+            @focusout=${() => RemoveFocus(this, field.id)}
+            @focus=${() => SetFocus(this, field.id)}
+            style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
-            class="fd-input ovl-focusable ${res.validationType}  ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${customRowClassName}"
+            class="fd-input ovl-focusable ${GetOutlineValidationHint(
+              field
+            )}  ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"
           />
         </div>
-        <span
-          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-time-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
-            ? ""
-            : "hide"}"
-        >
-          ${customValue}
-        </span>
-
-        <span
-          class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-time-validation ovl-formcontrol-time__${field.fieldKey}"
-        >
-          ${field.validationResult.errors.join(", ")}
-        </span>
+        <ovl-controlcustomhint .props=${() => this.field}>
+        </ovl-controlcustomhint>
+        <ovl-controlvalidationhint .props=${() => this.field}>
+        </ovl-controlvalidationhint>
       `
     })
   }

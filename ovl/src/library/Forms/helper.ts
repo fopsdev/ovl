@@ -1,12 +1,33 @@
 import { FieldValueMap, ValidateFieldResult } from "./actions"
 import { Schema, FormFields } from "./OvlFormElement"
-import { getDateValue } from "../../global/globals"
-// export const setDecimalValue = (val: any): number => {
-//   if (val == 0) {
-//     val = 0.0
-//   }
-//   return Math.round(val * 1000000) / 1000000 + 0.0000001
-// }
+
+export const SetFocus = (dispatchEl: EventTarget, fieldId: string) => {
+  let event = new CustomEvent("ovlfocusin", {
+    bubbles: true,
+    detail: { id: fieldId },
+  })
+  dispatchEl.dispatchEvent(event)
+}
+
+export const ChangeValue = async (
+  dispatchEl: EventTarget,
+  value: any,
+  fieldId: string
+) => {
+  let event = new CustomEvent("ovlchange", {
+    bubbles: true,
+    detail: { val: value, id: fieldId },
+  })
+  await dispatchEl.dispatchEvent(event)
+}
+
+export const RemoveFocus = (dispatchEl: EventTarget, fieldId: string) => {
+  let event = new CustomEvent("ovlfocusout", {
+    bubbles: true,
+    detail: { id: fieldId },
+  })
+  dispatchEl.dispatchEvent(event)
+}
 
 export const getFormFields = (
   schema: { [key: string]: Schema },

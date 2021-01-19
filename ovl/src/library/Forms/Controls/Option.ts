@@ -8,43 +8,20 @@ import {
   FieldGetList_Type,
 } from "../../../global/hooks"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import {
-  ControlState,
-  GetLabel,
-  GetRowFromFormState,
-  GetValueFromCustomFunction,
-} from "./helpers"
-import { getUIValidationObject } from "./uiValidationHelper"
+import { ControlState, GetCustomInfo, GetRowFromFormState } from "./helpers"
+import { GetOutlineValidationHint } from "./uiValidationHelper"
 import { OvlFormState } from "../actions"
+import { ChangeValue, SetFocus } from "../helper"
 
 export class OvlOption extends OvlBaseElement {
   props: any
   field: ControlState
   formState: OvlFormState
-  handleFocusOut(e: Event, id: string) {
-    e.stopPropagation()
-    e.preventDefault()
-    let event = new CustomEvent("ovlfocusout", {
-      bubbles: true,
-      detail: { id: this.field.field.id },
-    })
-    document.getElementById(id).dispatchEvent(event)
-  }
 
   handleChange(e: Event, value: any, id: string) {
     e.stopPropagation()
     e.preventDefault()
-
-    let event = new CustomEvent("ovlchange", {
-      bubbles: true,
-
-      detail: {
-        //@ts-ignore
-        val: value,
-        id: this.field.field.id,
-      },
-    })
-    document.getElementById(id).dispatchEvent(event)
+    ChangeValue(this, value, this.field.field.id)
   }
   async getUI() {
     return this.track(() => {
@@ -59,64 +36,35 @@ export class OvlOption extends OvlBaseElement {
       )[listFn](<FieldGetList_Type>{ row: GetRowFromFormState(this.formState) })
         .data
 
-      let customRowCell = this.field.customRowCellClass
-      let customRowClassName = ""
-      let customRowTooltip
-      let customRowClassContainerName = ""
-      if (customRowCell) {
-        customRowClassName = customRowCell.className
-        customRowClassContainerName = customRowClassName + "Container"
-        customRowTooltip = customRowCell.tooltip
-      }
-
-      let res = getUIValidationObject(field)
-      let align = ""
-      if (field.ui.align) {
-        align = field.ui.align
-      }
-
-      let label = GetLabel(
-        field,
-        this.field.customHeaderCellClass,
-        res,
-        "option",
-        align,
-        this.formState,
-        this
-      )
-
+      let customInfo = GetCustomInfo(this.field.customRowCellClass)
       let inline
       if (field.ui && field.ui.inline) {
         inline = "fd-form-group--inline"
       }
-      let customValue = GetValueFromCustomFunction(
-        this.field.row,
-        field,
-        this.formState,
-        align,
-        this.field.isInline,
-        this.state
-      )
+
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-option ovl-container__${field.fieldKey} ${customRowClassContainerName}"
+          class="ovl-formcontrol-container ovl-container-option ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
         >
-          ${label}
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
 
           <div
             tabindex="0"
             title="${ifDefined(
-              customRowTooltip ? customRowTooltip : undefined,
+              customInfo.customRowTooltip
+                ? customInfo.customRowTooltip
+                : undefined,
               this
             )}"
-            class="fd-form-group ${inline} ${customRowClassName}"
-            id="${this.field.field.id}"
+            class="fd-form-group ${inline} ${customInfo.customRowClassName}"
+            id="${field.id}"
           >
             ${Object.keys(listData).map((rowKey) => {
               return html`
                 <input
                   class="fd-radio ovl-focusable ovl-formcontrol-input ovl-value-option ovl-value__${field.fieldKey}"
                   @click=${(e) => e.stopPropagation()}
+                  @focus=${() => SetFocus(this, field.id)}
                   @change=${(e) =>
                     this.handleChange(
                       e,
@@ -124,13 +72,13 @@ export class OvlOption extends OvlBaseElement {
                       field.id + rowKey
                     )}
                   @focusout=${(e) =>
-                    this.handleFocusOut(
-                      e,
+                    SetFocus(
+                      this,
 
                       field.id + rowKey
                     )}
                   type="radio"
-                  class="fd-radio"
+                  class="fd-radio ${GetOutlineValidationHint(field)}"
                   id="${field.id + rowKey}"
                   name="${rowKey}"
                   ?checked=${field.convertedValue ===
@@ -148,30 +96,11 @@ export class OvlOption extends OvlBaseElement {
             })}
           </div>
         </div>
-        <span
-          class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-option-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
-            ? ""
-            : "hide"}"
-        >
-          ${customValue}
-        </span>
-
-        <span
-          class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-option-validation ovl-formcontrol-validation__${field.fieldKey}"
-        >
-          ${field.validationResult.errors.join(", ")}
-        </span>
+        <ovl-controlcustomhint .props=${() => this.field}>
+        </ovl-controlcustomhint>
+        <ovl-controlvalidationhint .props=${() => this.field}>
+        </ovl-controlvalidationhint>
       `
     })
   }
 }
-// <input
-// @change=${e => this.handleChange(e)}
-// @focusout=${e => this.handleFocusOut(e)}
-// style="${style} ${align}"
-// autocomplete="off"
-// class="fd-input ${res.validationType}"
-// type="${type}"
-// id="${field.id}"
-// value="${field.value}"
-// />

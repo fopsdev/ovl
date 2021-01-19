@@ -1,9 +1,11 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ControlState, GetLabel, GetValueFromCustomFunction } from "./helpers"
-import { getUIValidationObject } from "./uiValidationHelper"
+import { ControlState, GetCustomInfo } from "./helpers"
+import { GetOutlineValidationHint } from "./uiValidationHelper"
 import { OvlFormState } from "../actions"
+import { OvlState } from "../../.."
+import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
 
 type TextBoxType = "text" | "password" | "text-security"
 
@@ -12,16 +14,6 @@ export class OvlCheckbox extends OvlBaseElement {
   field: ControlState
   inputElement: any
   formState: OvlFormState
-  handleFocusOut(e: Event) {
-    e.stopPropagation()
-    e.preventDefault()
-    let event = new CustomEvent("ovlfocusout", {
-      bubbles: true,
-      detail: { id: this.field.field.id },
-    })
-    this.inputElement.dispatchEvent(event)
-  }
-
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
@@ -40,11 +32,7 @@ export class OvlCheckbox extends OvlBaseElement {
         val = true
       }
     }
-    let event = new CustomEvent("ovlchange", {
-      bubbles: true,
-      detail: { val, id: field.id },
-    })
-    this.inputElement.dispatchEvent(event)
+    ChangeValue(this, val, field.id)
   }
 
   async getUI() {
@@ -52,56 +40,29 @@ export class OvlCheckbox extends OvlBaseElement {
       this.field = this.props(this.state)
       let field = this.field.field
       this.formState = this.state.ovl.forms[field.formType][field.formId]
-      let customRowCell = this.field.customRowCellClass
-      let customRowClassName = ""
-      let customRowTooltip
-      let customRowClassContainerName = ""
-      if (customRowCell) {
-        customRowClassName = customRowCell.className
-        customRowClassContainerName = customRowClassName + "Container"
-        customRowTooltip = customRowCell.tooltip
-      }
+      let customInfo = GetCustomInfo(this.field.customRowCellClass)
 
-      let res = getUIValidationObject(field)
-      let align = ""
-      if (field.ui && field.ui.align) {
-        align = field.ui.align
-      }
-
-      let label = GetLabel(
-        field,
-        this.field.customHeaderCellClass,
-        res,
-        "checkbox",
-        align,
-        this.formState,
-        this
-      )
-      let customValue = GetValueFromCustomFunction(
-        this.field.row,
-        field,
-        this.formState,
-        align,
-        this.field.isInline,
-        this.state
-      )
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-checkbox ovl-container__${field.fieldKey} ${customRowClassContainerName}"
+          class="ovl-formcontrol-container ovl-container-checkbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
         >
-          ${label}
-
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <div class="fd-form-item">
             <input
               title="${ifDefined(
-                customRowTooltip ? customRowTooltip : undefined,
+                customInfo.customRowTooltip
+                  ? customInfo.customRowTooltip
+                  : undefined,
                 this
               )}"
               @change=${(e) => this.handleChange(e)}
-              @focusout=${(e) => this.handleFocusOut(e)}
-              style="${align}"
+              @focusout=${() => RemoveFocus(this, field.id)}
+              @focus=${() => SetFocus(this.inputElement, field.id)}
+              style="${field.ui && field.ui.align ? field.ui.align : ""}"
               autocomplete="off"
-              class="fd-checkbox ovl-focusable ${res.validationType} ovl-formcontrol-input ovl-value-checkbox-input ovl-value__${field.fieldKey} ${customRowClassName}"
+              class="fd-checkbox ovl-focusable ${GetOutlineValidationHint(
+                field
+              )} ovl-formcontrol-input ovl-value-checkbox-input ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
               type="checkbox"
               id="${field.id}"
               ?checked=${field.value === field.ui.checkedValue}
@@ -112,19 +73,10 @@ export class OvlCheckbox extends OvlBaseElement {
             >
             </label>
           </div>
-          <span
-            class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-textbox-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
-              ? ""
-              : "hide"}"
-          >
-            ${customValue}
-          </span>
-
-          <span
-            class="fd-form-message ${res.validationHide} ovl-formcontrol-validation ovl-formcontrol-checkbox-validation ovl-formcontrol-validation__${field.fieldKey}"
-          >
-            ${field.validationResult.errors.join(", ")}
-          </span>
+          <ovl-controlcustomhint .props=${() => this.field}>
+          </ovl-controlcustomhint>
+          <ovl-controlvalidationhint .props=${() => this.field}>
+          </ovl-controlvalidationhint>
         </div>
       `
     })

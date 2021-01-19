@@ -11,27 +11,30 @@ export class OvlCustomValueHint extends OvlBaseElement {
 
   async getUI() {
     return this.track(() => {
+      let customValue
       let field = this.field.field
-      let align = ""
-      if (field.ui && field.ui.align) {
-        align = field.ui.align
+      if (field.validationResult.errors.length === 0) {
+        let align = ""
+        if (field.ui && field.ui.align) {
+          align = field.ui.align
+        }
+        customValue = GetValueFromCustomFunction(
+          this.field.row,
+          field,
+          this.state.ovl.forms[field.formType][field.formId],
+          align,
+          this.field.isInline,
+          this.state
+        )
       }
-      let customValue = GetValueFromCustomFunction(
-        this.field.row,
-        field,
-        this.state.ovl.forms[field.formType][field.formId],
-        align,
-        this.field.isInline,
-        this.state
-      )
       return html`
-        <span
+        <div
           class="fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
             ? ""
             : "hide"}"
         >
           ${customValue}
-        </span>
+        </div>
       `
     })
   }
