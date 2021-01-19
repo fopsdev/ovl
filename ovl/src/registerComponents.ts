@@ -21,6 +21,7 @@ import { TableRowWrapper } from "./library/Table/RowWrapper"
 import { TableHeader } from "./library/Table/Table"
 import { OvlCustomValueHint } from "./library/Forms/Controls/Parts/CustomValueHint"
 
+// don't forget to add the display block in css - file
 export const defineElements = () => {
   customElements.define("ovl-trowcontrol", TableRowControl)
   customElements.define("ovl-tnavcontrol", TableNavControl)

@@ -1,3 +1,28 @@
+ovl-trowcontrol,
+ovl-tnavcontrol,
+ovl-tableheadermenu,
+ovl-table,
+ovl-trow,
+ovl-trg,
+ovl-trowform,
+ovl-trowformb,
+ovl-trowdetailview,
+ovl-trowsc,
+ovl-textarea,
+ovl-textbox,
+ovl-checkbox,
+ovl-listcontrol,
+ovl-option,
+ovl-hitlist,
+ovl-timebox,
+ovl-datebox,
+ovl-dialog,
+ovl-dialogholder,
+ovl-snack,
+ovl-cvhint {
+  display: block;
+}
+
 body {
   overscroll-behavior: none;
   margin: 0;

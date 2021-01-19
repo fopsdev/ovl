@@ -237,7 +237,6 @@ export class OvlBaseElement extends HTMLElement {
   }
 
   connectedCallback() {
-    this.style.display = "block"
     this.init()
     if (OvlConfig._system.debugTracking) {
       console.log("render " + this.name)
