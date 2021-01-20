@@ -143,10 +143,12 @@ export class OvlListControl extends OvlBaseElement {
 
     if (this.localList !== null) {
       this.inputElement.focus()
-      setTimeout(() => {
-        let val = this.inputElement.value
-        this.inputElement.setSelectionRange(val.length, val.length)
-      }, 0)
+      // setTimeout(() => {
+      //   let val = this.inputElement.value
+      //   this.inputElement.setSelectionRange(0, val.length)
+      //    this.inputElement.setSelectionRange(val.length, val.length)
+
+      // }, 0)
     } else {
       this.state.ovl.dialogs.HitListDialog.elementIdToFocusAfterClose =
         "search" + this.field.field.id
