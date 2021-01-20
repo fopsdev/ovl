@@ -84,8 +84,8 @@ export const PlaceSnack: OvlAction = (_, { state }) => {
           div.id = k
           div.setAttribute("role", "alert")
           div.innerText = snackToAdd.text
-          div.classList.add("fd-alert")
-          let type = "fd-alert--" + snackToAdd.type.toLowerCase()
+          div.classList.add("fd-message-strip")
+          let type = "fd-message-strip--" + snackToAdd.type.toLowerCase()
           div.classList.add(type)
           div.classList.add("fadeInSnack")
           lastFreeSlotEl.appendChild(div)

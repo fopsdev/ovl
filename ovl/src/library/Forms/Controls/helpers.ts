@@ -1,5 +1,4 @@
-import { html, TemplateResult } from "lit-html"
-import { ifDefined } from "../../../tracker/litdirectives/if-defined"
+import { TemplateResult } from "lit-html"
 
 import {
   getDateValue,
@@ -138,7 +137,7 @@ export const FilterHitList = (
   state: OvlState,
   fieldId: string,
   top?: number
-): { filteredKeys: string[]; isExactKey: boolean } => {
+): { filteredKeys: string[]; directValue?: any; directDescription?: any } => {
   let hitLength = {}
   let functionName = FieldGetFilteredList.replace("%", fieldId)
   let dataList: FieldGetList_ReturnType = resolvePath(
@@ -149,7 +148,9 @@ export const FilterHitList = (
   })
 
   if (dataList.data) {
-    let isExactKey = false
+    let directValue
+    let directDescription
+
     let res = Object.keys(dataList.data)
     let fn = resolvePath(ovl.actions.custom, formState.namespace)
     if (fn && fn[functionName]) {
@@ -157,6 +158,12 @@ export const FilterHitList = (
         list: dataList,
         formState,
       })
+    }
+
+    let directKeyHits = res.filter((f) => f == filterValue)
+    if (directKeyHits.length === 1) {
+      directValue = directKeyHits[0]
+      directDescription = dataList.data[directValue][list.displayField]
     }
 
     let lookupTypes = dataList.lookupDef
@@ -169,10 +176,6 @@ export const FilterHitList = (
     if (!filterValue) {
       filterValue = ""
     }
-
-    isExactKey = Object.keys(dataList.data).some(
-      (k) => dataList.data[k][list.valueField] == filterValue
-    )
 
     if (
       list.displayValueField !== undefined &&
@@ -222,9 +225,13 @@ export const FilterHitList = (
     //     return dataList.data[m][list.valueField]
     //   })
     // }
-    return { filteredKeys: res, isExactKey }
+    if (!directValue && res.length === 1) {
+      directValue = res[0]
+      directDescription = dataList.data[res[0]][list.displayField]
+    }
+    return { filteredKeys: res, directValue, directDescription }
   }
-  return { filteredKeys: [], isExactKey: false }
+  return { filteredKeys: [] }
 }
 
 export const GetListDisplayValue = (

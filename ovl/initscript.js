@@ -4,7 +4,7 @@ if (
   navigator.appVersion.indexOf("MSIE 10") !== -1
 ) {
   alert(
-    "DE: Inkompatibler Browser entdeckt. Otto Rohrunterhalt Service läuft auf: Chrome, Firefox und Edge in jeweils aktuellen Versionen. Falls Sie nicht Chrome oder Firefox einsetzen wollen installieren Sie doch bitte den neuen Edge Browser nach dem bestätigen dieser Meldung.\nFR: Navigateur incompatible découvert. Kalt AG Portal fonctionne sur: Chrome, Firefox et le nouveau navigateur MS Edge. Si vous ne souhaitez pas utiliser Chrome ou Firefox, veuillez installer le nouveau navigateur Edge après avoir confirmé ce message"
+    "DE: Inkompatibler Browser entdeckt. Diese Webseite läuft auf: Chrome, Firefox, Safari und Edge in jeweils aktuellen Versionen. Falls Sie nicht Chrome oder Firefox einsetzen wollen installieren Sie doch bitte den neuen Edge Browser nach dem bestätigen dieser Meldung.\nFR: Navigateur incompatible découvert. Ca site fonctionne sur: Chrome, Firefox, Safari et le nouveau navigateur MS Edge. Si vous ne souhaitez pas utiliser Chrome ou Firefox, veuillez installer le nouveau navigateur Edge après avoir confirmé ce message"
   )
   window.location.href =
     "https://support.microsoft.com/de-ch/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
