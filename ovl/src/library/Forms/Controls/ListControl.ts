@@ -185,7 +185,13 @@ export class OvlListControl extends OvlBaseElement {
   //   })
   //   e.target.dispatchEvent(event)
   // }
-
+  handleFocus(e: Event) {
+    e.stopPropagation()
+    if (this.localList) {
+      this.forceCloseLocalHitList()
+    }
+    SetFocus(this, this.field.field.id)
+  }
   async handleFocusOut(e: Event) {
     let field = this.field.field
     let fieldId = field.id
@@ -248,28 +254,30 @@ export class OvlListControl extends OvlBaseElement {
       e.key === "End" ||
       e.key === "ArrowLeft" ||
       e.key === "ArrowRight" ||
-      e.key === "ArrowUp" ||
-      e.key === "Enter"
+      e.key === "ArrowUp"
     ) {
       return
     }
 
+    // if (e.key === "Enter" && this.localList) {
+    //   this.forceCloseLocalHitList()
+    // }
+
     let waitTime = 500
 
     //clearTimeout(this.timer)
+
     let openLocalList = false
-    if (e.key === "ArrowDown") {
+    if (e.key === "ArrowDown" || e.key === "Enter") {
       openLocalList = true
       waitTime = 0
     }
 
     let field = this.field.field
 
-    if (!openLocalList) {
-      if (e.key === "Escape") {
-        this.forceCloseLocalHitList()
-        return
-      }
+    if (e.key === "Escape") {
+      this.forceCloseLocalHitList()
+      return
     }
     // this.inputValueToProcess = this.inputElement.value
     // console.log(this.inputValueToProcess)
@@ -290,6 +298,18 @@ export class OvlListControl extends OvlBaseElement {
     this.directHitDescription = filteredRes.directDescription
     if (filteredKeys.length !== 1 && this.directHitValue === undefined) {
       ChangeValue(this, filterValue, field.id)
+    }
+
+    if (openLocalList) {
+      if (filteredKeys.length === 1) {
+        openLocalList = false
+        if (this.localList) {
+          this.forceCloseLocalHitList()
+        }
+        document.getElementById("search" + field.id).focus()
+
+        return
+      }
     }
 
     this.timer = setTimeout(async () => {
@@ -444,7 +464,7 @@ export class OvlListControl extends OvlBaseElement {
                 value="${displayValue}"
                 .value="${displayValue}"
                 @keyup=${(e) => this.handleKey(e)}
-                @focus=${() => SetFocus(this, field.id)}
+                @focus=${(e) => this.handleFocus(e)}
               />
 
               ${deleteButton}
@@ -455,7 +475,7 @@ export class OvlListControl extends OvlBaseElement {
                   id="search${field.id}"
                   @click=${(e) => this.handleListPopup(e)}
                   @touchend=${(e) => this.handleListPopup(e)}
-                  @keydown=${(e) => this.handleSearchKeyDown(e)}
+                  @keyup=${(e) => this.handleSearchKeyDown(e)}
                   @focus=${(e) => this.handleGotFocusSearch(e)}
                   class="sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
                   role="presentation"
