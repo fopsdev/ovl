@@ -212,66 +212,12 @@ export class OvlListControl extends OvlBaseElement {
         movedOut = true
       }
     }
-    // //@ts-ignore
-    // if (e.target.id === field.id) {
-    //   //@ts-ignore
-    //   let filterValue = e.target.value
-    //   let writeBackValue = filterValue
-
-    //   let filteredRes = FilterHitList(
-    //     field.list,
-    //     filterValue,
-    //     this.formState,
-    //     this.state,
-    //     field.fieldKey,
-    //     10
-    //   )
-
-    //   let filteredKeys = filteredRes.filteredKeys
-    //   if (filterValue !== "" && filteredKeys.length === 1) {
-    //     let listData: FieldGetList_ReturnType = resolvePath(
-    //       this.actions.custom,
-    //       this.formState.namespace
-    //     )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-    //       row: GetRowFromFormState(this.formState),
-    //     })
-    //     let hit = filteredKeys[0]
-    //     writeBackValue = hit
-    //     this.inputElement.value = listData.data[hit][field.list.displayField]
-    //     if (relatedTarget && relatedTarget.id.indexOf("ovlhl_") > -1) {
-    //       this.inputElement.focus()
-    //       this.forceCloseLocalHitList()
-    //     }
-    //   }
-    //   // always as well write back value here
-    //   if (!(filteredRes.isExactKey && filteredKeys.length > 1)) {
-    //     ChangeValue(this, writeBackValue, field.id)
-    //   }
-    // }
 
     let valueToWriteBack = this.directHitValue
     let valueForDescription = this.directHitDescription
-    debugger
-    if (valueToWriteBack === undefined) {
-      if (this.inputValueToProcess !== undefined) {
-        valueToWriteBack = this.inputValueToProcess
-        let listData: FieldGetList_ReturnType = resolvePath(
-          this.actions.custom,
-          this.formState.namespace
-        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-          row: GetRowFromFormState(this.formState),
-        })
-        valueForDescription = GetListDisplayValue(
-          this.field.field.list,
-          valueToWriteBack,
-          listData
-        )
-      }
-    }
 
     if (valueToWriteBack !== undefined && !focusInList) {
       this.overrideDisplayValue = undefined
-      SnackAdd("LFWB")
       ChangeValue(this, valueToWriteBack, fieldId)
       this.inputElement.value = valueForDescription
       this.directHitValue = undefined
@@ -307,9 +253,9 @@ export class OvlListControl extends OvlBaseElement {
     ) {
       return
     }
-    console.log(e.key)
+
     let waitTime = 500
-    SnackAdd("clear")
+
     //clearTimeout(this.timer)
     let openLocalList = false
     if (e.key === "ArrowDown") {
@@ -337,36 +283,16 @@ export class OvlListControl extends OvlBaseElement {
       10
     )
     let filteredKeys = filteredRes.filteredKeys
-    // if (!openLocalList) {
-    //   let writeBackValue = filterValue
 
     this.overrideDisplayValue = filterValue
 
-    //   // just remember the directhit here
-    //   // it will be written in the lostfocus
-    // }
-    //if (filteredKeys.length === 1) {
     this.directHitValue = filteredRes.directValue
     this.directHitDescription = filteredRes.directDescription
-    //}
-
     if (filteredKeys.length !== 1 && this.directHitValue === undefined) {
-      SnackAdd("WB")
       ChangeValue(this, filterValue, field.id)
     }
 
     this.timer = setTimeout(async () => {
-      //      this.inputValueToProcess = undefined
-      // // just do all the stuff if it still has focus
-      // if (document.activeElement.id !== field.id) {
-      //   return
-      // }
-      // let filterValue = filterValueInFocus
-      // if (document.activeElement.id === field.id) {
-      //   filterValue = this.inputElement.value
-      // }
-      //@ts-ignore
-
       if (filteredKeys.length > 0) {
         let wasAlreadyOpen = false
         if (this.localList !== null) {
