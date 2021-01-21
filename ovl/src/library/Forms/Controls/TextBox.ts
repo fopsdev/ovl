@@ -58,35 +58,28 @@ export class OvlTextbox extends OvlBaseElement {
           class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
         >
           <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
-          <div
+          <input
+            title="${ifDefined(
+              customInfo.customRowTooltip
+                ? customInfo.customRowTooltip
+                : undefined,
+              this
+            )}"
             ?readonly=${readOnly}
-            class="fd-input-group ${GetOutlineValidationHint(
+            @change=${(e) => this.handleChange(e)}
+            @focusout=${() => RemoveFocus(this, field.id)}
+            @focus=${() => SetFocus(this.inputElement, field.id)}
+            @keyup=${(e) => this.handleKeyUp(e)}
+            style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
+            autocomplete="nope"
+            inputmode="${inputMode}"
+            class="fd-input ${GetOutlineValidationHint(
               field
-            )} ${customInfo.customRowClassName} ovl-formcontrol-input"
-          >
-            <input
-              title="${ifDefined(
-                customInfo.customRowTooltip
-                  ? customInfo.customRowTooltip
-                  : undefined,
-                this
-              )}"
-              ?readonly=${readOnly}
-              @change=${(e) => this.handleChange(e)}
-              @focusout=${() => RemoveFocus(this, field.id)}
-              @focus=${() => SetFocus(this.inputElement, field.id)}
-              @keyup=${(e) => this.handleKeyUp(e)}
-              style="${style} ${field.ui && field.ui.align
-                ? field.ui.align
-                : ""}"
-              autocomplete="off"
-              inputmode="${inputMode}"
-              class="fd-input fd-input-group__input ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
-              type="${type}"
-              id="${field.id}"
-              value="${field.value}"
-            />
-          </div>
+            )} ${customInfo.customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
+            type="${type}"
+            id="${field.id}"
+            value="${field.value}"
+          />
           <ovl-controlcustomhint .props=${() => this.field}>
           </ovl-controlcustomhint>
           <ovl-controlvalidationhint .props=${() => this.field}>
