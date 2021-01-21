@@ -52,13 +52,14 @@ export class OvlTextbox extends OvlBaseElement {
       if (field.ui && field.ui.isPassword) {
         type = "password"
       }
-
+      let readOnly = field.ui.readonly
       return html`
         <div
           class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
         >
           <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <div
+            ?readonly=${readOnly}
             class="fd-input-group ${GetOutlineValidationHint(
               field
             )} ${customInfo.customRowClassName} ovl-formcontrol-input"
@@ -70,6 +71,7 @@ export class OvlTextbox extends OvlBaseElement {
                   : undefined,
                 this
               )}"
+              ?readonly=${readOnly}
               @change=${(e) => this.handleChange(e)}
               @focusout=${() => RemoveFocus(this, field.id)}
               @focus=${() => SetFocus(this.inputElement, field.id)}
