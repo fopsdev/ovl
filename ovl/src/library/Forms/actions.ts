@@ -180,61 +180,66 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
       break
 
     case "date":
-      if (val) {
-        if (val.length === 10 && val.indexOf("-") > -1) {
-          // looks like the well formed date select format
-          field.convertedValue = val + "T00:00:00"
-          field.value = getDateValue(field.convertedValue, format)
-          return
-        }
-        let vals = val.split(".")
-        // there should be 3 entries (dd,mm,yyyy) for a complete date as supported for now
-        let cDate = new Date()
-        let cDay = cDate.getDate()
-        let cMonth = cDate.getMonth() + 1
-        let cYear = cDate.getFullYear()
-
-        let day
-        let month
-        let year
-        if (vals.length > 2) {
-          year = parseInt(vals[2])
-          if (year.toString().length < 4) {
-            year += 2000
-          }
-        }
-        if (vals.length > 1) {
-          month = parseInt(vals[1])
-        }
-        if (vals.length > 0) {
-          day = parseInt(vals[0])
-        }
-        let newDate =
-          (year ? year.toString().padStart(4, "0") : cYear.toString()) +
-          "-" +
-          (month
-            ? month.toString().padStart(2, "0")
-            : cMonth.toString().padStart(2, "0")) +
-          "-" +
-          (day
-            ? day.toString().padStart(2, "0")
-            : cDay.toString().padStart(2, "0")) +
-          "T00:00:00"
-        let resp = Date.parse(newDate)
-        if (!resp) {
-          field.convertedValue = ""
-          field.value = field.value
-          field.validationResult.errors.push(
-            T("AppValidationInvalidDateFormat")
-          )
-        } else {
-          field.convertedValue = newDate
-          field.value = getDateValue(newDate, format)
-        }
+      if (value.isInnerEvent) {
+        field.value = val
       } else {
-        field.convertedValue = null
-        field.value = ""
-        //field.value = ""
+        if (val) {
+          if (val.length === 10 && val.indexOf("-") > -1) {
+            // looks like the well formed date select format
+            field.convertedValue = val + "T00:00:00"
+            field.value = getDateValue(field.convertedValue, format)
+            return
+          }
+          let vals = val.split(".")
+          // there should be 3 entries (dd,mm,yyyy) for a complete date as supported for now
+          let cDate = new Date()
+          let cDay = cDate.getDate()
+          let cMonth = cDate.getMonth() + 1
+          let cYear = cDate.getFullYear()
+
+          let day
+          let month
+          let year
+          if (vals.length > 2) {
+            year = parseInt(vals[2])
+            if (year.toString().length < 4) {
+              year += 2000
+            }
+          }
+          if (vals.length > 1) {
+            month = parseInt(vals[1])
+          }
+          if (vals.length > 0) {
+            day = parseInt(vals[0])
+          }
+          let newDate =
+            (year ? year.toString().padStart(4, "0") : cYear.toString()) +
+            "-" +
+            (month
+              ? month.toString().padStart(2, "0")
+              : cMonth.toString().padStart(2, "0")) +
+            "-" +
+            (day
+              ? day.toString().padStart(2, "0")
+              : cDay.toString().padStart(2, "0")) +
+            "T00:00:00"
+          let resp = Date.parse(newDate)
+          if (!resp) {
+            field.convertedValue = ""
+            field.value = field.value
+            field.validationResult.errors.push(
+              T("AppValidationInvalidDateFormat")
+            )
+          } else {
+            field.convertedValue = newDate
+
+            field.value = getDateValue(newDate, format)
+          }
+        } else {
+          field.convertedValue = null
+          field.value = ""
+          //field.value = ""
+        }
       }
       break
     case "int": {
@@ -611,6 +616,7 @@ export type FocusField = {
 export const FocusField: OvlAction<FocusField> = (value) => {
   let field = value.formState.fields[value.fieldId]
   field.hasFocus = value.hasFocus
+
   if (value.hasFocus) {
     // remember previous convertedvalue
     field.previousConvertedValue = field.convertedValue

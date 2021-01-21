@@ -5,12 +5,15 @@ import { ControlState, GetCustomInfo } from "./helpers"
 import { GetOutlineValidationHint } from "./uiValidationHelper"
 import { OvlFormState } from "../actions"
 import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import { getDisplayValue } from "../../Table/helpers"
+import { getDateValue } from "../../../global/globals"
 
 export class OvlDate extends OvlBaseElement {
   props: any
   field: ControlState
   inputElement: any
   formState: OvlFormState
+  displayValue: string
   init() {
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
@@ -24,10 +27,13 @@ export class OvlDate extends OvlBaseElement {
     ChangeValue(this, this.inputElement.value, this.field.field.id)
   }
 
-  handleKeyDown(e: KeyboardEvent) {
-    if (e.key === "Enter") {
-      ChangeValue(this, this.inputElement.value, this.field.field.id)
-    }
+  handleKeyUp(e: KeyboardEvent) {
+    ChangeValue(this, this.inputElement.value, this.field.field.id, true)
+  }
+
+  handleFocusOut() {
+    ChangeValue(this, this.inputElement.value, this.field.field.id)
+    RemoveFocus(this, this.field.field.id)
   }
 
   async getUI() {
@@ -41,6 +47,7 @@ export class OvlDate extends OvlBaseElement {
         type = "date"
       }
 
+      this.displayValue = getDateValue(field.convertedValue, field.ui.format)
       return html`
         <div
           class="ovl-formcontrol-container ovl-container-date ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
@@ -53,9 +60,9 @@ export class OvlDate extends OvlBaseElement {
                 : undefined,
               this
             )}"
-            @focusout=${() => RemoveFocus(this, field.id)}
-            @focus=${() => SetFocus(this.inputElement, field.id)}
-            @keydown=${(e) => this.handleKeyDown(e)}
+            @focus=${() => SetFocus(this, field.id)}
+            @focusout=${() => this.handleFocusOut()}
+            @keyup=${(e) => this.handleKeyUp(e)}
             style="${field.ui && field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
             class="fd-input ovl-focusable ${GetOutlineValidationHint(
@@ -63,6 +70,7 @@ export class OvlDate extends OvlBaseElement {
             )} ovl-formcontrol-input ovl-value-date ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
             type="${type}"
             id="${field.id}"
+            value="${field.value}"
           />
 
           <ovl-controlcustomhint .props=${() => this.field}>
@@ -76,16 +84,19 @@ export class OvlDate extends OvlBaseElement {
   afterRender() {
     // place picker under date with picker on the right just visible
     this.inputElement = document.getElementById(this.field.field.id)
-    if (this.inputElement && this.field.field.convertedValue) {
-      if (this.state.ovl.uiState.isMobile) {
-        this.inputElement.value = this.field.field.convertedValue.substring(
-          0,
-          10
-        )
-      } else {
-        this.inputElement.value = this.field.field.value
-      }
+    if (this.inputElement) {
+      this.inputElement.value = this.field.field.value
     }
+    // if (this.inputElement && this.field.field.convertedValue) {
+    //   if (this.state.ovl.uiState.isMobile) {
+    //     this.inputElement.value = this.field.field.convertedValue.substring(
+    //       0,
+    //       10
+    //     )
+    //   } else {
+    //     this.inputElement.value = this.field.field.value
+    //   }
+    // }
   }
   disconnectedCallback() {
     if (this.state.ovl.uiState.isMobile) {

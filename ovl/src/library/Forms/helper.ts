@@ -53,7 +53,7 @@ export const getFormFields = (
     let row = Object.keys(formFields).reduce((val, k, i) => {
       return (val[k] = formFields[k])
     }, {})
-    debugger
+    //debugger
     fields[k] = {
       value: getDisplayValue(
         k,
