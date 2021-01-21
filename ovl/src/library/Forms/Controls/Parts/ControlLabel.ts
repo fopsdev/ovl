@@ -75,9 +75,10 @@ export class OvlControlLabel extends OvlBaseElement {
             customHeaderTooltip ? customHeaderTooltip : undefined,
             this
           )}"
-          class="fd-form-label  ovl-formcontrol-label ovl-label__${field.fieldKey} ${customHeaderClassName}"
-          aria-required="${field.validationResult.errors.length > 0 &&
-          !field.watched}"
+          class="fd-form-label ${field.validationResult.errors.length > 0 &&
+          !field.watched
+            ? "fd-form-label--required"
+            : ""}  ovl-formcontrol-label ovl-label__${field.fieldKey} ${customHeaderClassName}"
           for="${field.id}"
           >${caption}</label
         >

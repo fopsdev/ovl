@@ -135,7 +135,6 @@ export class OvlListControl extends OvlBaseElement {
   }
 
   selectedCallback = async (selectedKey: string) => {
-    //this.actions.ovl.overlay.CloseOverlay2()
     if (this.state.ovl.dialogs.HitListDialog.visible) {
       this.actions.ovl.dialog.DialogClose("HitListDialog")
     }
@@ -267,7 +266,7 @@ export class OvlListControl extends OvlBaseElement {
 
     let waitTime = 500
 
-    //clearTimeout(this.timer)
+    clearTimeout(this.timer)
 
     let openLocalList = false
     if (e.key === "ArrowDown" || e.key === "Enter") {
@@ -316,6 +315,7 @@ export class OvlListControl extends OvlBaseElement {
 
     this.timer = setTimeout(async () => {
       if (filteredKeys.length > 0) {
+        console.log("loooooo")
         let wasAlreadyOpen = false
         if (this.localList !== null) {
           wasAlreadyOpen = true
@@ -485,12 +485,12 @@ export class OvlListControl extends OvlBaseElement {
               </span>
             </div>
 
+            ${this.localList}
             <ovl-controlcustomhint .props=${() => this.field}>
             </ovl-controlcustomhint>
             <ovl-controlvalidationhint .props=${() => this.field}>
             </ovl-controlvalidationhint>
           </div>
-          ${this.localList}
         </div>
       `
     })

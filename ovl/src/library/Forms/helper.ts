@@ -1,5 +1,5 @@
 import { FieldValueMap, ValidateFieldResult } from "./actions"
-import { Schema, FormFields } from "./OvlFormElement"
+import { Schema, FormField } from "./OvlFormElement"
 
 export const SetFocus = (dispatchEl: EventTarget, fieldId: string) => {
   let event = new CustomEvent("ovlfocusin", {
@@ -31,7 +31,7 @@ export const RemoveFocus = (dispatchEl: EventTarget, fieldId: string) => {
 
 export const getFormFields = (
   schema: { [key: string]: Schema },
-  formFields: { [key: string]: FormFields },
+  formFields: { [key: string]: FormField },
   instanceId: string,
   formType: string
 ): FieldValueMap => {

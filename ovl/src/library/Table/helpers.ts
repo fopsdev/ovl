@@ -28,7 +28,7 @@ import {
 } from "../../global/hooks"
 import { OvlTableDefIds, ovl, OvlActions } from "../../index"
 import { GetListDisplayValue } from "../forms/Controls/helpers"
-import { DataType, FormFields } from "../forms/OvlFormElement"
+import { DataType, FormField } from "../forms/OvlFormElement"
 import { RowControlAllAction } from "./RowControl"
 import {
   ColumnDisplayDef,
@@ -765,7 +765,7 @@ export const getFormFieldsFromColumns = (
   row,
   noLabel?: boolean
 ) => {
-  let formFields: { [key: string]: FormFields } = {}
+  let formFields: { [key: string]: FormField } = {}
   let columns = def.columns
   Object.keys(columns).map((k) => {
     let col = columns[k]

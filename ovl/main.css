@@ -131,6 +131,9 @@ ovl-controlcustomhint {
 ovl-controlvalidationhint {
   grid-area: validation;
 }
+ovl-hitlist {
+  grid-area: hitlist;
+}
 
 .ovl-editform .ovl-formcontrol-custom {
   grid-area: custom;
@@ -160,6 +163,7 @@ ovl-controlvalidationhint {
   grid-template-areas:
     "label"
     "value"
+    "hitlist"
     "custom"
     "validation";
 }

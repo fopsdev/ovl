@@ -21,7 +21,7 @@ import { ColumnAlign, ListDefinition } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
 import { getFormFields } from "./helper"
-import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
+import { DataType, FieldFormat, FormField, Schema } from "./OvlFormElement"
 import { GetRowFromFormState } from "./Controls/helpers"
 import { OvlAction } from "../../index"
 import { getDisplayValue } from "../Table/helpers"
@@ -90,7 +90,7 @@ type FormStatePerInstance = {
 export type InitForm = {
   formType: OvlForm
   instanceId?: string
-  fields: { [key: string]: FormFields }
+  fields: { [key: string]: FormField }
   namespace?: string
   schema?: { [key: string]: Schema }
   forceOverwrite?: boolean

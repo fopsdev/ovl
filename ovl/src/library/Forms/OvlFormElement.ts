@@ -26,7 +26,7 @@ export type Schema = {
   maxLength: number
 }
 
-export type FormFields = {
+export type FormField = {
   value: string
   type?: DataType
   list?: ListState
@@ -63,7 +63,7 @@ export type FormShowed = {
 
 export class OvlFormElement extends OvlBaseElement {
   formType: OvlForm
-  formFields: { [key: string]: FormFields }
+  formFields: { [key: string]: FormField }
   formId: string
 
   schema: { [key: string]: Schema }
