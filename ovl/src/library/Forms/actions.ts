@@ -94,7 +94,7 @@ export type InitForm = {
   namespace?: string
   schema?: { [key: string]: Schema }
   forceOverwrite?: boolean
-  initialFocusElementId?: string
+  initialFocusFieldKey?: string
   tableDefId?: OvlTableDefIds
 }
 
@@ -485,7 +485,7 @@ export const InitForm: OvlAction<InitForm> = (
       formType: value.formType,
       namespace: namespace,
       schema: value.schema,
-      fieldToFocus: value.initialFocusElementId,
+      fieldToFocus: value.initialFocusFieldKey,
       tableDefId: value.tableDefId,
     }
 
@@ -547,7 +547,7 @@ export const InitForm: OvlAction<InitForm> = (
   }
   formInstanceList[instanceId].formShowed = false
   if (!formInstanceList[instanceId].fieldToFocus) {
-    formInstanceList[instanceId].fieldToFocus = value.initialFocusElementId
+    formInstanceList[instanceId].fieldToFocus = value.initialFocusFieldKey
   }
 }
 
