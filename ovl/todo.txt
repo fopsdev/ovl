@@ -1,6 +1,16 @@
 
 
 Todos:
+Because of an ovl overhaul following checks needs to be done:
+- Initform now takes convertedvalue and uses getDisplayValue(..) for value
+- we now have an previousConvertedValue on every field
+- index.ts in index.html needs always to be from ovl/ovl
+- listcontrol with demo
+- innerEvent now should work for textboxes and listcontrol
+- OvlConfig is now only source of truth (no window.xxxx in html script tag)
+- reworked appDef so now OvlConfig should be used
+- reworked OvlConfig so now actionsPaths are callbacks
+- new css
 
 X - TableAddRow replace manual to internal so using the action from outside doesn't need to think about it
 X - form show resetting using an array (pop off and set to false)

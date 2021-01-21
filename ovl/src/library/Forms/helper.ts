@@ -1,4 +1,6 @@
+import { getDisplayValue } from "../Table/helpers"
 import { FieldValueMap, ValidateFieldResult } from "./actions"
+import { GetListDisplayValue, GetRowFromFormState } from "./Controls/helpers"
 import { Schema, FormField } from "./OvlFormElement"
 
 export const SetFocus = (dispatchEl: EventTarget, fieldId: string) => {
@@ -12,11 +14,12 @@ export const SetFocus = (dispatchEl: EventTarget, fieldId: string) => {
 export const ChangeValue = async (
   dispatchEl: EventTarget,
   value: any,
-  fieldId: string
+  fieldId: string,
+  isInnerEvent?: boolean
 ) => {
   let event = new CustomEvent("ovlchange", {
     bubbles: true,
-    detail: { val: value, id: fieldId },
+    detail: { val: value, id: fieldId, isInnerEvent },
   })
   await dispatchEl.dispatchEvent(event)
 }
@@ -33,7 +36,8 @@ export const getFormFields = (
   schema: { [key: string]: Schema },
   formFields: { [key: string]: FormField },
   instanceId: string,
-  formType: string
+  formType: string,
+  namespace: string
 ): FieldValueMap => {
   let fields: FieldValueMap = {}
   Object.keys(formFields).forEach((k) => {
@@ -45,9 +49,19 @@ export const getFormFields = (
         type = "text"
       }
     }
+    let value = formFields[k].value
+    let row = Object.keys(formFields).reduce((val, k, i) => {
+      return (val[k] = formFields[k])
+    }, {})
+    debugger
     fields[k] = {
-      value: formFields[k].value,
-      convertedValue: undefined,
+      value: getDisplayValue(
+        k,
+        { list: formFields[k].list, type, ui: formFields[k].ui },
+        row,
+        namespace
+      ),
+      convertedValue: value,
 
       type: type,
       dirty: false,
@@ -59,6 +73,7 @@ export const getFormFields = (
       formType,
       fieldKey: k,
       ui: formFields[k].ui,
+      previousConvertedValue: value,
     }
   })
   return fields

@@ -769,14 +769,14 @@ export const getFormFieldsFromColumns = (
   let columns = def.columns
   Object.keys(columns).map((k) => {
     let col = columns[k]
-    let dispVal = getDisplayValue(k, col, row, "")
+    //let dispVal = getDisplayValue(k, col, row, "")
     let type: DataType = undefined
     if (col.type) {
       type = col.type
     }
     formFields[k] = {
       type,
-      value: dispVal,
+      value: row[k],
       list: col.list
         ? JSON.parse(JSON.stringify(col.list), stringifyReplacer)
         : undefined,

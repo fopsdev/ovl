@@ -51,6 +51,8 @@ export type Field = {
     readonly?: boolean
     checkedValue?: string | boolean
   }
+
+  previousConvertedValue: any
 }
 
 export type FieldValueMap = { [key: string]: Field }
@@ -439,6 +441,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
           formState: value,
           oldConvertedVal: val,
           newConvertedVal: val,
+          isInnerEvent: true,
         })
       }
     }
@@ -473,7 +476,8 @@ export const InitForm: OvlAction<InitForm> = (
       value.schema,
       value.fields,
       instanceId,
-      value.formType
+      value.formType,
+      namespace
     )
 
     formInstanceList[instanceId] = {
@@ -534,6 +538,7 @@ export const InitForm: OvlAction<InitForm> = (
                 newVal: newVal,
                 oldVal: oldVal,
                 validationResult: fieldValue.validationResult,
+                isInnerEvent: true,
               })
             }
           }
@@ -606,6 +611,10 @@ export type FocusField = {
 export const FocusField: OvlAction<FocusField> = (value) => {
   let field = value.formState.fields[value.fieldId]
   field.hasFocus = value.hasFocus
+  if (value.hasFocus) {
+    // remember previous convertedvalue
+    field.previousConvertedValue = field.convertedValue
+  }
 }
 
 export const TouchField: OvlAction<TouchField> = (value) => {

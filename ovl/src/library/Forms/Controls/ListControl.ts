@@ -169,7 +169,7 @@ export class OvlListControl extends OvlBaseElement {
       }
       this.inputElement.value =
         dataList.data[selectedKey][field.list.displayField]
-      ChangeValue(this, writeBackValue, field.id)
+      ChangeValue(this, writeBackValue, field.id, false)
     }
   }
 
@@ -225,7 +225,8 @@ export class OvlListControl extends OvlBaseElement {
 
     if (valueToWriteBack !== undefined && !focusInList) {
       this.overrideDisplayValue = undefined
-      ChangeValue(this, valueToWriteBack, fieldId)
+
+      ChangeValue(this, valueToWriteBack, fieldId, false)
       this.inputElement.value = valueForDescription
       this.directHitValue = undefined
     }
@@ -315,7 +316,6 @@ export class OvlListControl extends OvlBaseElement {
 
     this.timer = setTimeout(async () => {
       if (filteredKeys.length > 0) {
-        console.log("loooooo")
         let wasAlreadyOpen = false
         if (this.localList !== null) {
           wasAlreadyOpen = true
