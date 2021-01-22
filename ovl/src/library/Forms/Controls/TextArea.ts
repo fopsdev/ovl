@@ -26,6 +26,7 @@ export class OvlTextArea extends OvlBaseElement {
       this.formState = this.state.ovl.forms[field.formType][field.formId]
 
       let customInfo = GetCustomInfo(this.field.customRowCellClass)
+      let readOnly = field.ui.readonly
 
       return html`
         <div

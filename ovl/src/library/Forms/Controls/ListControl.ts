@@ -434,7 +434,7 @@ export class OvlListControl extends OvlBaseElement {
       if (field.list.isSelect) {
         icon = "arrow-bottom"
       }
-
+      let readOnly = field.ui.readonly
       return html`
         ${hitListDialog}
         <div
@@ -442,10 +442,13 @@ export class OvlListControl extends OvlBaseElement {
           @focusout=${(e) => this.handleFocusOut(e)}
         >
           <div
-            class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
+            class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName} ${readOnly
+              ? "ovl-disabled"
+              : ""}"
           >
             <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
             <div
+              ?readonly=${readOnly}
               class="fd-input-group ${GetOutlineValidationHint(
                 field
               )} ${customInfo.customRowClassName} ovl-formcontrol-input"
@@ -457,6 +460,7 @@ export class OvlListControl extends OvlBaseElement {
                     : undefined,
                   this
                 )}"
+                ?readonly=${readOnly}
                 spellcheck="false"
                 autocomplete="off"
                 style="${field.ui && field.ui.align ? field.ui.align : ""}"
@@ -472,7 +476,7 @@ export class OvlListControl extends OvlBaseElement {
 
               ${deleteButton}
 
-              <span class="fd-input-group__addon">
+              <span class="fd-input-group__addon" ?readonly=${readOnly}>
                 <span
                   tabindex="0"
                   id="search${field.id}"
