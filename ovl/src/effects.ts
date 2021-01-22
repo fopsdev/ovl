@@ -281,7 +281,7 @@ export const ovlFetch = async (
     }
   } catch (err) {
     console.log(err)
-
+    debugger
     // connection error
     // well...  go to offline mode
     ovl.state.ovl.app.offline = true

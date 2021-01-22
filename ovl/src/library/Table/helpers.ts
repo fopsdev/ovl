@@ -74,6 +74,11 @@ export const getDisplayValue = (
       listFn = resolvePath(ovl.actions.custom, namespace)[
         FieldGetList.replace("%", key)
       ]
+      if (!listFn) {
+        throw new Error(
+          "Listfunction: " + FieldGetList.replace("%", key) + " not found!"
+        )
+      }
       cachedListFn.set(cachedListKey, listFn)
     }
     let listdata: FieldGetList_ReturnType = listFn(<FieldGetList_Type>{ row })
