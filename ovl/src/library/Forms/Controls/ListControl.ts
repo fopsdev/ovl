@@ -54,8 +54,9 @@ export class OvlListControl extends OvlBaseElement {
   }
 
   async handleListPopup(e: Event) {
-    // e.stopPropagation()
-    // e.preventDefault()
+    e.stopPropagation()
+    e.preventDefault()
+
     this.forceCloseLocalHitList()
     let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
@@ -212,7 +213,6 @@ export class OvlListControl extends OvlBaseElement {
     }
 
     if (relatedTarget === null) {
-      console.log(document.activeElement.id)
       movedOut = true
     } else {
       // check the ids
@@ -480,8 +480,7 @@ export class OvlListControl extends OvlBaseElement {
               <span
                 tabindex="0"
                 ?readonly=${readOnly}
-                @click=${(e) => this.handleListPopup(e)}
-                @touchend=${(e) => this.handleListPopup(e)}
+                @mousedown=${(e) => this.handleListPopup(e)}
                 @keyup=${(e) => this.handleSearchKeyDown(e)}
                 @focus=${(e) => this.handleGotFocusSearch(e)}
                 id="search${field.id}"
