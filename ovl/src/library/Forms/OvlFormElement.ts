@@ -39,6 +39,8 @@ export type FormField = {
     isPassword?: boolean
     readonly?: boolean
     showLabelIfNoValueInView?: boolean
+    disableSpellcheck?: boolean
+    autocomplete?: string
     checkedValue?: string | boolean
   }
   asset?: {

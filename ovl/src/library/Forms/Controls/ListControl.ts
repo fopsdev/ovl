@@ -458,7 +458,7 @@ export class OvlListControl extends OvlBaseElement {
                   this
                 )}"
                 spellcheck="false"
-                autocomplete="nope"
+                autocomplete="off"
                 style="${field.ui && field.ui.align ? field.ui.align : ""}"
                 +
                 type="text"

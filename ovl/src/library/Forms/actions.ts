@@ -50,6 +50,8 @@ export type Field = {
     isPassword?: boolean
     readonly?: boolean
     checkedValue?: string | boolean
+    disableSpellcheck?: boolean
+    autocomplete?: string
   }
 
   previousConvertedValue: any

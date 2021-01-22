@@ -75,6 +75,9 @@ export const getFormFields = (
       ui: formFields[k].ui,
       previousConvertedValue: value,
     }
+    if (!formFields[k].ui) {
+      formFields[k].ui = {}
+    }
   })
   return fields
 }

@@ -71,7 +71,10 @@ export class OvlTextbox extends OvlBaseElement {
             @focus=${() => SetFocus(this.inputElement, field.id)}
             @keyup=${(e) => this.handleKeyUp(e)}
             style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
-            autocomplete="nope"
+            autocomplete="${field.ui.autocomplete
+              ? field.ui.autocomplete
+              : "on"}"
+            spellcheck="${!field.ui.disableSpellcheck ? "true" : "false"}"
             inputmode="${inputMode}"
             class="fd-input ${GetOutlineValidationHint(
               field
