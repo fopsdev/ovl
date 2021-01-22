@@ -54,8 +54,8 @@ export class OvlListControl extends OvlBaseElement {
   }
 
   async handleListPopup(e: Event) {
-    e.stopPropagation()
-    e.preventDefault()
+    // e.stopPropagation()
+    // e.preventDefault()
     this.forceCloseLocalHitList()
     let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
@@ -212,6 +212,7 @@ export class OvlListControl extends OvlBaseElement {
     }
 
     if (relatedTarget === null) {
+      console.log(document.activeElement.id)
       movedOut = true
     } else {
       // check the ids
@@ -476,18 +477,17 @@ export class OvlListControl extends OvlBaseElement {
 
               ${deleteButton}
 
-              <span class="fd-input-group__addon" ?readonly=${readOnly}>
-                <span
-                  tabindex="0"
-                  id="search${field.id}"
-                  @click=${(e) => this.handleListPopup(e)}
-                  @touchend=${(e) => this.handleListPopup(e)}
-                  @keyup=${(e) => this.handleSearchKeyDown(e)}
-                  @focus=${(e) => this.handleGotFocusSearch(e)}
-                  class="sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
-                  role="presentation"
-                ></span>
-              </span>
+              <span
+                tabindex="0"
+                ?readonly=${readOnly}
+                @click=${(e) => this.handleListPopup(e)}
+                @touchend=${(e) => this.handleListPopup(e)}
+                @keyup=${(e) => this.handleSearchKeyDown(e)}
+                @focus=${(e) => this.handleGotFocusSearch(e)}
+                id="search${field.id}"
+                class="fd-input-group__addon sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
+                role="presentation"
+              ></span>
             </div>
 
             ${this.localList}
