@@ -263,7 +263,7 @@ ovl-table {
 @media (orientation: landscape) {
   .ovlsnackbar {
     width: 40vw;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
   }
@@ -272,7 +272,7 @@ ovl-table {
 @media (orientation: portrait) {
   .ovlsnackbar {
     width: 100vw;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
   }
