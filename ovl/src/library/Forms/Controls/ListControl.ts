@@ -162,8 +162,11 @@ export class OvlListControl extends OvlBaseElement {
     if (selectedKey === "@@ovlcanceled" || selectedKey === "@@ovlescape") {
       this.forceCloseLocalHitList()
     } else {
+      if (this.localList) {
+        enableBodyScroll(this.state)
+      }
+
       this.localList = null
-      enableBodyScroll(this.state)
       let dataList: FieldGetList_ReturnType = resolvePath(
         this.actions.custom,
         this.formState.namespace
@@ -514,7 +517,9 @@ export class OvlListControl extends OvlBaseElement {
     this.inputElement = document.getElementById(this.field.field.id)
   }
   forceCloseLocalHitList() {
-    enableBodyScroll(this.state)
+    if (this.localList) {
+      enableBodyScroll(this.state)
+    }
     this.localList = null
     this.doRender()
   }

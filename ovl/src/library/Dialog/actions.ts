@@ -21,8 +21,6 @@ export type OpenDialogOptions = {
 
 export const DialogClose: OvlAction<OvlDialog> = async (value, { state }) => {
   state.ovl.dialogs[value].closing = true
-
-  enableBodyScroll(state)
 }
 
 export const DialogOpen: OvlAction<OpenDialogOptions> = async (

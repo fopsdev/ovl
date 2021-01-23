@@ -1,7 +1,7 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { TemplateResult, html } from "lit-html"
 import { OvlDialog, OvlForm } from "../.."
-import { SetFocus } from "../../global/globals"
+import { enableBodyScroll, SetFocus } from "../../global/globals"
 
 export type DialogsState = {
   elementIdToFocusAfterOpen?: string
@@ -202,6 +202,7 @@ export class OvlBaseDialog extends OvlBaseElement {
         el.focus()
       }
     }
+    enableBodyScroll(this.state)
     dlg.visible = false
     dlg.closing = false
 
