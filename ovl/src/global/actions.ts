@@ -212,6 +212,18 @@ export const SetLanguage: OvlAction<string> = async (
   ResetT()
   state.ovl.language.translations = res.data.translations
   state.ovl.language.language = res.data.lang
+  // also set body lang fro screenreaders, spellcheck, etc
+  let body = document.getElementsByTagName("body")[0]
+  let langCode
+  switch (res.data.lang) {
+    case "DE":
+      langCode = "de-CH"
+      break
+    case "FR":
+      langCode = "fr-CH"
+      break
+  }
+  body.setAttribute("lang", langCode)
   let fn = OvlConfig.hookInActions.handleAdditionalTranslationResultActionPath
   if (fn) {
     fn(actions)(res.data)

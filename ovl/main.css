@@ -28,11 +28,23 @@ ovl-controlvalidationhint {
   display: inline;
 }
 
-body {
-  overscroll-behavior: none;
+.ovl-body {
   margin: 0;
   padding: 0;
   z-index: 0;
+}
+
+.ovl-body-scroll {
+  overscroll-behavior: none;
+  overflow: auto;
+}
+.ovl-body-noscroll {
+  overflow: hidden;
+  padding-right: 16px;
+}
+
+.ovl-body-noscroll-mobile {
+  overflow: hidden;
 }
 
 ovl-trow:focus {
