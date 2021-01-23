@@ -169,7 +169,7 @@ export class OvlHitList extends OvlBaseElement {
                       .type}ovlhl_${rowNr}"
                     tabindex="0"
                     class="fd-table__row "
-                    @keyup=${(e) => this.handleKeyDown(e, rowKey)}
+                    @keydown=${(e) => this.handleKeyDown(e, rowKey)}
                   >
                     ${lookupTypesKeys.map((c) => {
                       let val = getDisplayValue(

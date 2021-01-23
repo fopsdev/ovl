@@ -1,6 +1,11 @@
 import { OpenModalDialogState, ResultType } from "./Dialog"
 import { OvlDialog, OvlForm, OvlConfig } from "../../index"
-import { modalDialog, T } from "../../global/globals"
+import {
+  modalDialog,
+  disableBodyScroll,
+  T,
+  enableBodyScroll,
+} from "../../global/globals"
 import { TemplateResult } from "lit-html"
 import { DialogType } from "./OvlDialogBase"
 
@@ -16,14 +21,8 @@ export type OpenDialogOptions = {
 
 export const DialogClose: OvlAction<OvlDialog> = async (value, { state }) => {
   state.ovl.dialogs[value].closing = true
-  let el = document.getElementsByTagName("body")[0]
-  if (state.ovl.uiState.isMobile) {
-    el.classList.remove("ovl-body-noscroll-mobile")
-  } else {
-    el.classList.remove("ovl-body-noscroll")
-  }
 
-  el.classList.add("ovl-body-scroll")
+  enableBodyScroll(state)
 }
 
 export const DialogOpen: OvlAction<OpenDialogOptions> = async (
@@ -45,15 +44,7 @@ export const DialogOpen: OvlAction<OpenDialogOptions> = async (
     dlgState.elementIdToFocusAfterOpen = elFocusId
     dlgState.elementIdToFocusAfterClose = value.elementIdToFocusAfterClose
     dlgState.visible = true
-    let el = document.getElementsByTagName("body")[0]
-    el.classList.remove("ovl-body-scroll")
-
-    if (state.ovl.uiState.isMobile) {
-      el.classList.add("ovl-body-noscroll-mobile")
-    } else {
-      el.classList.add("ovl-body-noscroll")
-    }
-
+    disableBodyScroll(state)
     dlgState.closing = false
   }, wait)
 }

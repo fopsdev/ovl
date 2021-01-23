@@ -1,7 +1,12 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 
-import { resolvePath, getDecimalValue } from "../../../global/globals"
+import {
+  resolvePath,
+  getDecimalValue,
+  enableBodyScroll,
+  disableBodyScroll,
+} from "../../../global/globals"
 import {
   FieldGetList,
   FieldGetList_Type,
@@ -158,6 +163,7 @@ export class OvlListControl extends OvlBaseElement {
       this.forceCloseLocalHitList()
     } else {
       this.localList = null
+      enableBodyScroll(this.state)
       let dataList: FieldGetList_ReturnType = resolvePath(
         this.actions.custom,
         this.formState.namespace
@@ -246,9 +252,13 @@ export class OvlListControl extends OvlBaseElement {
   }
   handleSearchKeyDown(e: KeyboardEvent) {
     if (e.key === "ArrowDown" || e.key === "Enter") {
+      e.stopPropagation()
+      e.preventDefault()
+
       this.handleListPopup(e)
     }
   }
+
   async handleKey(e: KeyboardEvent) {
     if (
       e.key === "Shift" ||
@@ -324,6 +334,7 @@ export class OvlListControl extends OvlBaseElement {
         }
         //we have a list so present it to the user
         if (document.activeElement === this.inputElement) {
+          disableBodyScroll(this.state)
           this.localList = html`
             <ovl-hitlist
               id="ovl-hitlist"
@@ -481,7 +492,7 @@ export class OvlListControl extends OvlBaseElement {
                 tabindex="0"
                 ?readonly=${readOnly}
                 @mousedown=${(e) => this.handleListPopup(e)}
-                @keyup=${(e) => this.handleSearchKeyDown(e)}
+                @keydown=${(e) => this.handleSearchKeyDown(e)}
                 @focus=${(e) => this.handleGotFocusSearch(e)}
                 id="search${field.id}"
                 class="fd-input-group__addon sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
@@ -503,6 +514,7 @@ export class OvlListControl extends OvlBaseElement {
     this.inputElement = document.getElementById(this.field.field.id)
   }
   forceCloseLocalHitList() {
+    enableBodyScroll(this.state)
     this.localList = null
     this.doRender()
   }

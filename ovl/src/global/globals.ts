@@ -400,6 +400,28 @@ export const T = (key: string, reps?: string[]): string => {
   }
 }
 
+export const enableBodyScroll = (state: OvlState) => {
+  let el = document.getElementsByTagName("body")[0]
+  if (state.ovl.uiState.isMobile) {
+    el.classList.remove("ovl-body-noscroll-mobile")
+  } else {
+    el.classList.remove("ovl-body-noscroll")
+  }
+
+  el.classList.add("ovl-body-scroll")
+}
+
+export const disableBodyScroll = (state: OvlState) => {
+  let el = document.getElementsByTagName("body")[0]
+  el.classList.remove("ovl-body-scroll")
+
+  if (state.ovl.uiState.isMobile) {
+    el.classList.add("ovl-body-noscroll-mobile")
+  } else {
+    el.classList.add("ovl-body-noscroll")
+  }
+}
+
 export const resolvePath = (object, path, defaultValue?) => {
   return path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object)
 }
