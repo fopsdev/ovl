@@ -458,12 +458,11 @@ export class OvlListControl extends OvlBaseElement {
         >
           <div
             class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName} ${readOnly
-              ? "ovl-disabled"
+              ? "ovl-disabled__cursor-not-allowed"
               : ""}"
           >
             <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
             <div
-              ?readonly=${readOnly}
               class="fd-input-group ${GetOutlineValidationHint(
                 field
               )} ${customInfo.customRowClassName} ovl-formcontrol-input"
@@ -475,13 +474,14 @@ export class OvlListControl extends OvlBaseElement {
                     : undefined,
                   this
                 )}"
-                ?readonly=${readOnly}
                 spellcheck="false"
                 autocomplete="off"
                 style="${field.ui && field.ui.align ? field.ui.align : ""}"
                 +
                 type="text"
-                class="fd-input ovl-focusable fd-input-group__input ovl-formcontrol-input ovl-value__${field.fieldKey}"
+                class="fd-input ovl-focusable fd-input-group__input ovl-formcontrol-input ovl-value__${field.fieldKey} ${readOnly
+                  ? "ovl-disabled"
+                  : ""}"
                 id="${field.id}"
                 value="${displayValue}"
                 .value="${displayValue}"
@@ -493,12 +493,13 @@ export class OvlListControl extends OvlBaseElement {
 
               <span
                 tabindex="0"
-                ?readonly=${readOnly}
                 @mousedown=${(e) => this.handleListPopup(e)}
                 @keydown=${(e) => this.handleSearchKeyDown(e)}
                 @focus=${(e) => this.handleGotFocusSearch(e)}
                 id="search${field.id}"
-                class="fd-input-group__addon sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey}"
+                class="fd-input-group__addon sap-icon--${icon} ovl-formcontrol-input ovl-formcontrol-searchbutton ovl-formcontrol-searchbutton__${field.fieldKey} ${readOnly
+                  ? "ovl-disabled"
+                  : ""}"
                 role="presentation"
               ></span>
             </div>

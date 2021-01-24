@@ -53,9 +53,13 @@ export class OvlTime extends OvlBaseElement {
             @focus=${() => SetFocus(this, field.id)}
             style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
+            spellcheck="false"
             class="fd-input ovl-focusable ${GetOutlineValidationHint(
               field
-            )}  ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
+            )}  ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${customInfo.customRowClassName} ${field
+              .ui.readonly
+              ? "ovl-disabled"
+              : ""}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"

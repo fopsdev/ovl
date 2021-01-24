@@ -26,7 +26,6 @@ export class OvlTextArea extends OvlBaseElement {
       this.formState = this.state.ovl.forms[field.formType][field.formId]
 
       let customInfo = GetCustomInfo(this.field.customRowCellClass)
-      let readOnly = field.ui.readonly
 
       return html`
         <div
@@ -45,8 +44,12 @@ export class OvlTextArea extends OvlBaseElement {
             @focus=${() => SetFocus(this, field.id)}
             class="fd-textarea ovl-focusable ${GetOutlineValidationHint(
               field
-            )} ovl-formcontrol-input  ovl-value-textarea ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
+            )} ovl-formcontrol-input  ovl-value-textarea ovl-value__${field.fieldKey} ${customInfo.customRowClassName} ${field
+              .ui.readonly
+              ? "ovl-disabled"
+              : ""}"
             id="${field.id}"
+            spellcheck="${field.ui.useSpellcheck ? "true" : "false"}"
           >
 ${field.value}</textarea
           >

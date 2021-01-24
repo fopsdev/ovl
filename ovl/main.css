@@ -59,8 +59,8 @@ ovl-trow:focus {
 /* some overwritten fundamental styles
 #############################################################
 */
-.fd-alert {
-  z-index: 1005;
+.fd-message-strip {
+  z-index: 999 !important;
 }
 .fd-table__header .fd-table__cell {
   padding-top: 8px;
@@ -108,8 +108,13 @@ ovl-trow:focus {
   background-color: initial;
 }
 
+.ovl-disabled__cursor-not-allowed {
+  cursor: not-allowed;
+}
+
 .ovl-disabled {
   pointer-events: none;
+  background-color: rgb(248, 245, 245) !important;
 }
 
 .ovl-dialog-Modal .ovl-dialog-body {
@@ -278,6 +283,7 @@ ovl-table {
     position: fixed;
     bottom: 0;
     right: 0;
+    z-index: 999;
   }
 }
 

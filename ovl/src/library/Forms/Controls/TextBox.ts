@@ -52,10 +52,13 @@ export class OvlTextbox extends OvlBaseElement {
       if (field.ui && field.ui.isPassword) {
         type = "password"
       }
-      let readOnly = field.ui.readonly
+
       return html`
         <div
-          class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
+          class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName} ${field
+            .ui.readonly
+            ? "ovl-disabled__cursor-not-allowed"
+            : ""} "
         >
           <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <input
@@ -65,20 +68,20 @@ export class OvlTextbox extends OvlBaseElement {
                 : undefined,
               this
             )}"
-            ?readonly=${readOnly}
             @change=${(e) => this.handleChange(e)}
             @focusout=${() => RemoveFocus(this, field.id)}
             @focus=${() => SetFocus(this.inputElement, field.id)}
             @keyup=${(e) => this.handleKeyUp(e)}
             style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
-            autocomplete="${field.ui.autocomplete
-              ? field.ui.autocomplete
-              : "on"}"
-            spellcheck="${!field.ui.disableSpellcheck ? "true" : "false"}"
+            autocomplete="${field.ui.autocomplete ? "on" : "new-password"}"
+            spellcheck="${field.ui.useSpellcheck ? "true" : "false"}"
             inputmode="${inputMode}"
             class="fd-input ${GetOutlineValidationHint(
               field
-            )} ${customInfo.customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
+            )} ${customInfo.customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customInfo.customRowClassName} ${field
+              .ui.readonly
+              ? "ovl-disabled"
+              : ""}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"

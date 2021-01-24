@@ -67,10 +67,14 @@ export class OvlDate extends OvlBaseElement {
             autocomplete="off"
             class="fd-input ovl-focusable ${GetOutlineValidationHint(
               field
-            )} ovl-formcontrol-input ovl-value-date ovl-value__${field.fieldKey} ${customInfo.customRowClassName}"
+            )} ovl-formcontrol-input ovl-value-date ovl-value__${field.fieldKey} ${customInfo.customRowClassName} ${field
+              .ui.readonly
+              ? "ovl-disabled"
+              : ""}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"
+            spellcheck="false"
           />
 
           <ovl-controlcustomhint .props=${() => this.field}>

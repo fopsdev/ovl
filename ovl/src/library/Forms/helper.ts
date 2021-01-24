@@ -78,6 +78,16 @@ export const getFormFields = (
     if (!formFields[k].ui) {
       formFields[k].ui = {}
     }
+    let ui = formFields[k].ui
+    if (ui.readonly === undefined) {
+      ui.readonly = false
+    }
+    if (ui.autocomplete === undefined) {
+      ui.autocomplete = false
+    }
+    if (ui.useSpellcheck === undefined) {
+      ui.useSpellcheck = false
+    }
   })
   return fields
 }
