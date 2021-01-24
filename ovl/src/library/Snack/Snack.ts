@@ -60,7 +60,7 @@ export class OvlSnack extends OvlBaseElement {
       }
 
       return html`
-        <div style="${width}" id="ovlsnack" class="ovlsnackbar">
+        <div style="${width}" id="ovlsnack" class="ovl-snacks">
           ${res.map((m) => m)}
         </div>
       `
