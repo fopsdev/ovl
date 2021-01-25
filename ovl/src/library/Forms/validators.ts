@@ -60,3 +60,13 @@ export const RemoveValidationMsg = (field: Field, msgOrPartOfMsg: string) => {
   )
   field.validationResult.errors.splice(errorIndex, 1)
 }
+
+export const AddValidationMsg = (field: Field, key: string, reps?: any[]) => {
+  if (!field.validationResult.errors.some((f) => f.key.indexOf(key) > -1)) {
+    field.validationResult.errors.push({ key, reps })
+  }
+}
+
+export const IsFieldValid = (field: Field) => {
+  return field.validationResult.errors.length === 0
+}
