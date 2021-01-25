@@ -7,7 +7,7 @@ export const Mandatory = (
   res: ValidateFieldResult
 ) => {
   if (!val) {
-    res.errors.push(T("AppValidationMandatory", [displayFieldName]))
+    res.errors.push({ key: "AppValidationMandatory", reps: [displayFieldName] })
   }
 }
 
@@ -18,9 +18,10 @@ export const MinLength = (
   res: ValidateFieldResult
 ) => {
   if (!val || (val && val.length < minLength)) {
-    res.errors.push(
-      T("AppValidationMinLength", [displayFieldName, minLength.toString()])
-    )
+    res.errors.push({
+      key: "AppValidationMinLength",
+      reps: [displayFieldName, minLength.toString()],
+    })
   }
 }
 
@@ -31,12 +32,10 @@ export const MinLengthOrEmpty = (
   res: ValidateFieldResult
 ) => {
   if (val && val.length < minLength) {
-    res.errors.push(
-      T("AppValidationMinLengthOrEmpty", [
-        displayFieldName,
-        minLength.toString(),
-      ])
-    )
+    res.errors.push({
+      key: "AppValidationMinLengthOrEmpty",
+      reps: [displayFieldName, minLength.toString()],
+    })
   }
 }
 
@@ -46,7 +45,7 @@ export const Email = (
   res: ValidateFieldResult
 ) => {
   if (!val || (val && !validateEmail(val))) {
-    res.errors.push(T("AppValidationEmail", [displayFieldName]))
+    res.errors.push({ key: "AppValidationEmail", reps: [displayFieldName] })
   }
 }
 
@@ -57,7 +56,7 @@ function validateEmail(email) {
 
 export const RemoveValidationMsg = (field: Field, msgOrPartOfMsg: string) => {
   let errorIndex = field.validationResult.errors.findIndex(
-    (f) => f.indexOf(msgOrPartOfMsg) > -1
+    (f) => f.key.indexOf(msgOrPartOfMsg) > -1
   )
   field.validationResult.errors.splice(errorIndex, 1)
 }

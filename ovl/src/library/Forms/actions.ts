@@ -66,7 +66,7 @@ export type ValidateFieldResultMap = {
 
 export type ValidateFieldResult = {
   // its just an array with string errors. if its empty tere are no validation errors
-  errors: string[]
+  errors: { key: string; reps?: string[] }[]
 }
 
 // export type ValidationFieldResults = {
@@ -229,9 +229,9 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           if (!resp) {
             field.convertedValue = ""
             field.value = field.value
-            field.validationResult.errors.push(
-              T("AppValidationInvalidDateFormat")
-            )
+            field.validationResult.errors.push({
+              key: "AppValidationInvalidDateFormat",
+            })
           } else {
             field.convertedValue = newDate
 
@@ -252,9 +252,9 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
 
           field.convertedValue = parsedVal
         } else {
-          field.validationResult.errors.push(
-            T("AppValidationInvalidNumberFormat")
-          )
+          field.validationResult.errors.push({
+            key: "AppValidationInvalidNumberFormat",
+          })
         }
       } else {
         field.convertedValue = null
@@ -280,9 +280,9 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           // we need to to that so it gets transmitted for sure as decimal. elsewise it could end up as an int for the deserialzer backend
           field.convertedValue = parsedVal
         } else {
-          field.validationResult.errors.push(
-            T("AppValidationInvalidNumberFormat")
-          )
+          field.validationResult.errors.push({
+            key: "AppValidationInvalidNumberFormat",
+          })
         }
       } else {
         field.convertedValue = null
@@ -307,16 +307,16 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
       if (type === "text") {
         if (value.newVal) {
           if (value.newVal.length > schema.maxLength) {
-            field.validationResult.errors.push(
-              "Maximum " + schema.maxLength.toString() + " chars!"
-            )
+            field.validationResult.errors.push({
+              key: "Maximum " + schema.maxLength.toString() + " chars!",
+            })
             return
           }
         }
       } else {
         if (!value.newVal) {
           if (!schema.nullable) {
-            field.validationResult.errors.push("Field cannot be null!")
+            field.validationResult.errors.push({ key: "Field cannot be null!" })
             return
           }
         }
@@ -338,7 +338,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     return
   }
   if (!list.acceptEmpty && !value.newVal) {
-    field.validationResult.errors.push(T("AppSelectValidValue"))
+    field.validationResult.errors.push({ key: "AppSelectValidValue" })
     return
   }
   if (list.acceptOnlyListValues && value.newVal) {
@@ -374,7 +374,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
           )
         }).length < 1
       ) {
-        field.validationResult.errors.push(T("AppNeedsToBeListEntry"))
+        field.validationResult.errors.push({ key: "AppNeedsToBeListEntry" })
         return
       }
     }
@@ -769,7 +769,7 @@ export const GetFormValidationErrors = (formState: OvlFormState): string[] => {
   let res: string[] = []
   Object.keys(formState.fields).map((k) => {
     let field = formState.fields[k]
-    res = res.concat(field.validationResult.errors)
+    res = res.concat(field.validationResult.errors.map((m) => T(m.key, m.reps)))
   })
   return res
 }
