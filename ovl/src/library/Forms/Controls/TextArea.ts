@@ -1,9 +1,12 @@
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { html } from "lit-html"
 import { OvlFormState } from "../actions"
-import { GetOutlineValidationHint } from "./uiValidationHelper"
 
-import { ControlState, GetCustomInfo } from "./helpers"
+import {
+  ControlState,
+  GetCustomInfo,
+  GetOutlineValidationHint,
+} from "./helpers"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
 

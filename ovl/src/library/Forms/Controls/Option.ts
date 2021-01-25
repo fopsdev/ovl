@@ -8,8 +8,13 @@ import {
   FieldGetList_Type,
 } from "../../../global/hooks"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ControlState, GetCustomInfo, GetRowFromFormState } from "./helpers"
-import { GetOutlineValidationHint } from "./uiValidationHelper"
+import {
+  ControlState,
+  GetCustomInfo,
+  GetRowFromFormState,
+  GetOutlineValidationHint,
+} from "./helpers"
+
 import { OvlFormState } from "../actions"
 import { ChangeValue, SetFocus } from "../helper"
 

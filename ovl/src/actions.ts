@@ -56,6 +56,7 @@ let form = {
   ResetForm,
   ResetFormAfterNavigation,
   ValidateForm,
+  SetField,
 }
 
 import {

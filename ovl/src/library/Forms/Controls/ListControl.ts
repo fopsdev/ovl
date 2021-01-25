@@ -20,8 +20,9 @@ import {
   GetCustomInfo,
   GetListDisplayValue,
   GetRowFromFormState,
+  GetOutlineValidationHint,
 } from "./helpers"
-import { GetOutlineValidationHint } from "./uiValidationHelper"
+
 import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 import { OvlState } from "../../.."
@@ -246,9 +247,9 @@ export class OvlListControl extends OvlBaseElement {
     }
   }
   handleDelete(e: Event) {
-    this.actions.ovl.internal.SetField({
-      fieldId: this.field.field.fieldKey,
-      value: "",
+    this.actions.ovl.form.SetField({
+      fieldKey: this.field.field.fieldKey,
+      convertedValue: "",
       formState: this.formState,
     })
     this.inputElement.focus()

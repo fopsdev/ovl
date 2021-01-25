@@ -97,7 +97,7 @@ export class OvlFormElement extends OvlBaseElement {
     if (id && this.formState.fields[id]) {
       // change the field in state
       this.actions.ovl.internal.ChangeField({
-        fieldId: id,
+        fieldKey: id,
         formState: this.formState,
         value: e.detail.val,
         isInit: false,

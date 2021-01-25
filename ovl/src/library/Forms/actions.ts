@@ -589,10 +589,22 @@ export type ValidateFieldType = {
 
 export type ChangeField = {
   formState: OvlFormState
-  fieldId: string
+  fieldKey: string
   value: any
+  // if initilised touched and dirty should not be set
   isInit?: boolean
+  // if innerEvent then just shortcircuit some validation and just do value update (textbox char entry -> every key gets recorded -> keeps state in value but not convertedValue)
+  // this also means if innerevent is false then for sure the diting is done and lost focus
   isInnerEvent?: boolean
+  // the submitted value is already the finished converted and user checked value
+  // so no validation will happen and eventually the form valid will be set to true
+  isConvertedValue?: boolean
+}
+
+export type SetField = {
+  formState: OvlFormState
+  fieldKey: string
+  convertedValue: any
 }
 
 export type FieldChanged = {
@@ -631,18 +643,36 @@ export const TouchField: OvlAction<TouchField> = (value) => {
   value.formState.fieldToFocus = value.fieldId
 }
 
-export const SetField: OvlAction<ChangeField> = (value, { actions }) => {
-  let field = value.formState.fields[value.fieldId]
-  field.dirty = false
-
-  actions.ovl.internal.ChangeField(value)
+export const SetField: OvlAction<SetField> = (value, { actions }) => {
+  actions.ovl.internal.ChangeField({
+    fieldKey: value.fieldKey,
+    formState: value.formState,
+    value: value.convertedValue,
+    isConvertedValue: true,
+  })
 }
 
 export const ChangeField: OvlAction<ChangeField> = (
   value,
   { actions, state, effects }
 ) => {
-  let field = value.formState.fields[value.fieldId]
+  let field = value.formState.fields[value.fieldKey]
+  if (value.isConvertedValue) {
+    field.previousConvertedValue = field.convertedValue
+    field.convertedValue = value.value
+    field.value = getDisplayValue(
+      field.fieldKey,
+      { list: field.list, type: field.type, ui: field.ui },
+      GetRowFromFormState(value.formState),
+      value.formState.namespace
+    )
+    field.validationResult.errors = []
+    field.dirty = true
+    field.watched = true
+    actions.ovl.internal.SetFormValid(value.formState)
+    return
+  }
+
   let oldConvertedVal = field.convertedValue
 
   field.validationResult.errors = []
@@ -656,7 +686,7 @@ export const ChangeField: OvlAction<ChangeField> = (
   let fn = resolvePath(actions.custom, namespace)
 
   actions.ovl.internal.ValidateDataType({
-    fieldId: value.fieldId,
+    fieldId: value.fieldKey,
     oldVal: oldConvertedVal,
     newVal: newVal,
     formState: value.formState,
@@ -666,7 +696,7 @@ export const ChangeField: OvlAction<ChangeField> = (
 
   if (field.validationResult.errors.length === 0) {
     actions.ovl.internal.ValidateSchema({
-      fieldId: value.fieldId,
+      fieldId: value.fieldKey,
       oldVal: oldConvertedVal,
       newVal: field.value,
       formState: value.formState,
@@ -676,7 +706,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     if (field.validationResult.errors.length === 0) {
       if (field.list) {
         actions.ovl.internal.ValidateList({
-          fieldId: value.fieldId,
+          fieldId: value.fieldKey,
           oldVal: oldConvertedVal,
           newVal: field.value,
           formState: value.formState,
@@ -687,7 +717,7 @@ export const ChangeField: OvlAction<ChangeField> = (
         let validationFnName = "FormValidate"
         if (fn && fn[validationFnName]) {
           let val: FormValidate_Type = {
-            fieldId: value.fieldId,
+            fieldId: value.fieldKey,
             oldVal: oldConvertedVal,
             newVal: value.isInnerEvent ? field.value : field.convertedValue,
             formState: value.formState,
@@ -717,10 +747,10 @@ export const ChangeField: OvlAction<ChangeField> = (
   ) {
     if (fn && fn[FormChanged]) {
       fn[FormChanged](<FormChanged_Type>{
-        fieldId: value.fieldId,
+        fieldId: value.fieldKey,
         formState: value.formState,
         oldConvertedVal: oldConvertedVal,
-        newConvertedVal: value.formState.fields[value.fieldId].convertedValue,
+        newConvertedVal: value.formState.fields[value.fieldKey].convertedValue,
         row: GetRowFromFormState(value.formState),
       })
     }

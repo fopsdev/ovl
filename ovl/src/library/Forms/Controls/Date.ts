@@ -1,8 +1,11 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ControlState, GetCustomInfo } from "./helpers"
-import { GetOutlineValidationHint } from "./uiValidationHelper"
+import {
+  ControlState,
+  GetCustomInfo,
+  GetOutlineValidationHint,
+} from "./helpers"
 import { OvlFormState } from "../actions"
 import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
 import { getDisplayValue } from "../../Table/helpers"
