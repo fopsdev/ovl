@@ -6,7 +6,8 @@ Because of an ovl overhaul following checks needs to be done:
 - we now have an previousConvertedValue on every field
 - index.ts in index.html needs always to be from ovl/ovl
 - listcontrol with demo
-- innerEvent now should work for textboxes and listcontrol
+- innerEvent now should also work for textboxes and listcontrol
+- the user form validate hook gets now convertedvalue if innerevent=false
 - OvlConfig is now only source of truth (no window.xxxx in html script tag)
 - reworked appDef so now OvlConfig should be used
 - reworked OvlConfig so now actionsPaths are callbacks

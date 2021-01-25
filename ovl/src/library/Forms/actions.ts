@@ -646,7 +646,10 @@ export const ChangeField: OvlAction<ChangeField> = (
   let oldConvertedVal = field.convertedValue
 
   field.validationResult.errors = []
-  field.watched = !value.isInit
+
+  if (!field.ui.readonly) {
+    field.watched = !value.isInit
+  }
   let newVal = value.value
   let namespace = value.formState.namespace
   field.value = newVal
@@ -686,7 +689,7 @@ export const ChangeField: OvlAction<ChangeField> = (
           let val: FormValidate_Type = {
             fieldId: value.fieldId,
             oldVal: oldConvertedVal,
-            newVal: field.value,
+            newVal: value.isInnerEvent ? field.value : field.convertedValue,
             formState: value.formState,
             validationResult: field.validationResult,
             isInnerEvent: value.isInnerEvent,

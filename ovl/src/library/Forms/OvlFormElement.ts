@@ -77,15 +77,18 @@ export class OvlFormElement extends OvlBaseElement {
   handleOvlFocusOut = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
-      this.actions.ovl.internal.TouchField({
-        formState: this.formState,
-        fieldId: id,
-      })
-      this.actions.ovl.internal.FocusField({
-        formState: this.formState,
-        fieldId: id,
-        hasFocus: false,
-      })
+      if (!this.formState.fields[id].ui.readonly) {
+        this.actions.ovl.internal.TouchField({
+          formState: this.formState,
+          fieldId: id,
+        })
+
+        this.actions.ovl.internal.FocusField({
+          formState: this.formState,
+          fieldId: id,
+          hasFocus: false,
+        })
+      }
     }
   }
 
@@ -105,7 +108,11 @@ export class OvlFormElement extends OvlBaseElement {
 
   handleOvlFocusIn = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
-    if (id && this.formState.fields[id]) {
+    if (
+      id &&
+      this.formState.fields[id] &&
+      !this.formState.fields[id].ui.readonly
+    ) {
       this.actions.ovl.internal.FocusField({
         formState: this.formState,
         fieldId: id,

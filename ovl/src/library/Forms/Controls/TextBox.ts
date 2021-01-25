@@ -76,6 +76,7 @@ export class OvlTextbox extends OvlBaseElement {
             autocomplete="${field.ui.autocomplete ? "on" : "new-password"}"
             spellcheck="${field.ui.useSpellcheck ? "true" : "false"}"
             inputmode="${inputMode}"
+            ?readonly="${field.ui.readonly}"
             class="fd-input ${GetOutlineValidationHint(
               field
             )} ${customInfo.customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customInfo.customRowClassName} ${field

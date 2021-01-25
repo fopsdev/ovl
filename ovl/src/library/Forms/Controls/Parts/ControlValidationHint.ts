@@ -16,7 +16,8 @@ export class OvlValidationHint extends OvlBaseElement {
         <div
           class="fd-form-message fd-form-message--error ovl-formcontrol-validation ovl-formcontrol-validation__${field.fieldKey} ${hints &&
           field.watched &&
-          !field.hasFocus
+          !field.hasFocus &&
+          !field.ui.readonly
             ? ""
             : "hide"}"
         >
