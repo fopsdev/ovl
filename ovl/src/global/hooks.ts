@@ -14,19 +14,21 @@ import {
   SelectedCustomFunctionResult,
   BeforeSaveParam,
   FieldVisibility,
+  ColumnDef,
 } from "../library/Table/Table"
 import {
   OvlFormState,
   Field,
   FieldChanged,
   ValidateFieldType,
+  FieldValueMap,
 } from "../library/Forms/actions"
 import { TemplateResult } from "lit-html"
 import { CellClass } from "../library/Table/Row"
 
 import { OvlBaseElement } from "../library/OvlBaseElement"
 import { ViewRendererResult } from "../library/Table/RowDetailView"
-import { OvlLanguage } from "../index"
+import { OvlLanguage, OvlTableDefIds } from "../index"
 
 // gets called when user navigates into a screen
 export type ScreenNavigateIn_ReturnType = Promise<string> | string
@@ -251,11 +253,12 @@ export const ViewRowClass = "ViewRowClass"
 // to style the header and row cells in tableview
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set
 export type ViewRowCellClass_Type = {
-  def: OvlTableDef
+  columns: { [key: string]: ColumnDisplayDef }
   row: { [key: string]: {} }
   isMobile: boolean
   displayMode: DisplayMode
-  formState?: OvlFormState
+  tableDefId?: OvlTableDefIds
+  namespace?: string
 }
 export type ViewRowCellClass_ReturnType = {
   [key: string]: CellClass
@@ -263,9 +266,11 @@ export type ViewRowCellClass_ReturnType = {
 export const ViewRowCellClass = "ViewRowCellClass"
 
 export type ViewHeaderCellClass_Type = {
-  def: OvlTableDef
+  columns: { [key: string]: ColumnDisplayDef }
   isMobile: boolean
   displayMode: DisplayMode
+  tableDefId?: OvlTableDefIds
+  namespace?: string
 }
 export type ViewHeaderCellClass_ReturnType = {
   [key: string]: CellClass

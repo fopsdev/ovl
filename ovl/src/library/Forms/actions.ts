@@ -23,6 +23,7 @@ import {
 import { OvlActions, OvlForm, OvlState } from "../../index"
 import {
   ColumnAlign,
+  ColumnDisplayDef,
   DisplayMode,
   ListDefinition,
   OvlTableDef,
@@ -673,13 +674,17 @@ export const SetRowCellInformation = (
   actions: OvlActions,
   state: OvlState
 ) => {
-  let def: OvlTableDef = {
-    columns: formState.fields,
-    namespace: formState.namespace,
-    database: { dataIdField: "", dbInsertMode: "Manual" },
-    server: { endpoint: "" },
-    id: formState.tableDefId,
-  }
+  let columns: { [key: string]: ColumnDisplayDef } = Object.keys(
+    formState.fields
+  ).reduce((val, k, i) => {
+    let field = formState.fields[k]
+    val[k] = {
+      ui: { format: field.ui.format },
+      type: field.type,
+      list: field.list,
+    }
+    return val[k]
+  }, {})
 
   let isMobile = state.ovl.uiState.isMobile
   let displayMode: DisplayMode = "Edit"
@@ -687,19 +692,22 @@ export const SetRowCellInformation = (
   let resolveFn = resolvePath(actions.custom, formState.namespace)
   if (resolveFn && resolveFn["ViewRowCellClass"]) {
     let viewRowCellParams: ViewRowCellClass_Type = {
-      def,
+      columns,
       displayMode,
       isMobile,
       row: GetRowFromFormState(formState),
-      formState,
+      namespace: formState.namespace,
+      tableDefId: formState.tableDefId,
     }
     formState.viewRowCell = resolveFn["ViewRowCellClass"](viewRowCellParams)
   }
   if (resolveFn && resolveFn["ViewHeaderCellClass"]) {
     let viewHeaderCellParams: ViewHeaderCellClass_Type = {
-      def,
+      columns,
       displayMode,
       isMobile,
+      namespace: formState.namespace,
+      tableDefId: formState.tableDefId,
     }
     formState.viewHeaderCell = resolveFn["ViewHeaderCellClass"](
       viewHeaderCellParams

@@ -174,10 +174,12 @@ export class TableRowDetailView extends OvlBaseElement {
     let fn = resolvePath(this.actions.custom, def.namespace)
     if (fn && fn[functionName]) {
       customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
-        def,
+        columns: def.columns,
         row: this.rowData.row,
         isMobile: this.state.ovl.uiState.isMobile,
         displayMode: <DisplayMode>"DetailView",
+        namespace: def.namespace,
+        tableDefId: def.id,
       })
     }
     if (!customRowCellClasses) {

@@ -581,9 +581,11 @@ export class TableHeader extends OvlBaseElement {
       let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
         customHeaderCellClasses = fn[functionName](<ViewHeaderCellClass_Type>{
-          def,
+          columns: def.columns,
           isMobile,
           displayMode: <DisplayMode>"Table",
+          namespace: def.namespace,
+          tableDefId: def.id,
         })
       }
       if (!customHeaderCellClasses) {

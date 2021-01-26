@@ -54,10 +54,12 @@ export class TableRow extends OvlBaseElement {
       let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
         customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
-          def,
+          columns: def.columns,
           row,
           isMobile,
           displayMode: <DisplayMode>"Table",
+          namespace: def.namespace,
+          tableDefId: def.id,
         })
       }
       if (!customRowCellClasses) {

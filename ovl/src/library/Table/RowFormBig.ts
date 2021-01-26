@@ -207,11 +207,12 @@ export class TableRowFormBig extends OvlFormElement {
     let fn = resolvePath(this.actions.custom, def.namespace)
     if (fn && fn[functionName]) {
       customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
-        def,
+        columns: def.columns,
         row: this.rowData.row,
         isMobile: this.state.ovl.uiState.isMobile,
         displayMode: <DisplayMode>"Edit",
-        formState: this.formState,
+        namespace: def.namespace,
+        tableDefId: def.id,
       })
     }
 
@@ -224,9 +225,11 @@ export class TableRowFormBig extends OvlFormElement {
     let fn2 = resolvePath(this.actions.custom, def.namespace)
     if (fn2 && fn[functionName2]) {
       customHeaderCellClasses = fn2[functionName2](<ViewHeaderCellClass_Type>{
-        def,
+        columns: def.columns,
         isMobile: this.state.ovl.uiState.isMobile,
         displayMode: <DisplayMode>"Edit",
+        namespace: def.namespace,
+        tableDefId: def.id,
       })
     }
     if (!customHeaderCellClasses) {
