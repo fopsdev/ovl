@@ -277,14 +277,14 @@ export let cachedRendererFn: Map<string, CachedRendererData> = new Map<
   CachedRendererData
 >()
 
-export const GetCustomInfo = (customRowCell: CellClass) => {
+export const GetCustomInfo = (customRowCell: CellClass, key: string) => {
   let customRowClassName = ""
   let customRowTooltip
   let customRowClassContainerName = ""
-  if (customRowCell) {
-    customRowClassName = customRowCell.className
+  if (customRowCell && customRowCell[key]) {
+    customRowClassName = customRowCell[key].className
     customRowClassContainerName = customRowClassName + "Container"
-    customRowTooltip = customRowCell.tooltip
+    customRowTooltip = customRowCell[key].tooltip
   }
   return { customRowClassName, customRowTooltip, customRowClassContainerName }
 }

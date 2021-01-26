@@ -27,7 +27,7 @@ export type Schema = {
 }
 
 export type FormField = {
-  value: string
+  value: any
   type?: DataType
   list?: ListState
   ui?: {

@@ -25,11 +25,17 @@ export class OvlControlBase extends OvlBaseElement {
 
   InitControl() {
     this.controlState = this.props(this.state)
-    this.customInfo = GetCustomInfo(this.controlState.customRowCellClass)
+
     this.field = this.controlState.field
+    console.log("render:" + this.field.fieldKey)
     this.formState = this.state.ovl.forms[this.field.formType][
       this.field.formId
     ]
+
+    this.customInfo = GetCustomInfo(
+      this.formState.viewRowCell,
+      this.field.fieldKey
+    )
 
     if (this.field.ui.readonly) {
       this.classList.add("ovl-disabled__cursor-not-allowed")
@@ -89,7 +95,6 @@ export class OvlControlBase extends OvlBaseElement {
     //       : undefined,
     //     this
     //   )}"
-
     if (this.customInfo.customRowTooltip) {
       this.setAttribute("title", this.customInfo.customRowTooltip)
     } else {

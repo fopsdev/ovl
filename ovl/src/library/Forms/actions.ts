@@ -15,9 +15,19 @@ import {
   FormChanged_Type,
   FieldGetFilteredList,
   FieldGetFilteredList_Type,
+  ViewRowCellClass_ReturnType,
+  ViewRowCellClass_Type,
+  ViewHeaderCellClass_Type,
+  ViewRowClass_ReturnType,
 } from "../../global/hooks"
-import { OvlForm } from "../../index"
-import { ColumnAlign, ListDefinition } from "../Table/Table"
+import { OvlActions, OvlForm, OvlState } from "../../index"
+import {
+  ColumnAlign,
+  DisplayMode,
+  ListDefinition,
+  OvlTableDef,
+  ViewRowClassContent,
+} from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
 import { getFormFields } from "./helper"
@@ -86,6 +96,8 @@ export type OvlFormState = {
   fieldToFocus: string
   formShowed?: boolean
   tableDefId?: OvlTableDefIds
+  viewRowCell?: ViewRowClassContent
+  viewHeaderCell?: ViewRowClassContent
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
@@ -276,9 +288,9 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
         }
         if (parsedVal || parsedVal == 0) {
           if (!value.isInnerEvent) {
+            // as long as we are entering the value digit by digit we don't like formatting
             field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
           }
-          // we need to to that so it gets transmitted for sure as decimal. elsewise it could end up as an int for the deserialzer backend
           field.convertedValue = parsedVal
         } else {
           field.validationResult.errors.push({
@@ -554,6 +566,7 @@ export const InitForm: OvlAction<InitForm> = (
         }
       }
     })
+    SetRowCellInformation(formState, actions, state)
     actions.ovl.internal.SetFormValid(formState)
     // save a copy of validationresults (as well of fields, see json(..) above)
     // because when resetting the form, this should be inital state and there will be no re-initing
@@ -654,13 +667,54 @@ export const SetField: OvlAction<SetField> = (value, { actions }) => {
   })
 }
 
+// this method is just used to get the tooltips and custom class names when in form-context
+export const SetRowCellInformation = (
+  formState: OvlFormState,
+  actions: OvlActions,
+  state: OvlState
+) => {
+  let def: OvlTableDef = {
+    columns: formState.fields,
+    namespace: formState.namespace,
+    database: { dataIdField: "", dbInsertMode: "Manual" },
+    server: { endpoint: "" },
+    id: formState.tableDefId,
+  }
+
+  let isMobile = state.ovl.uiState.isMobile
+  let displayMode: DisplayMode = "Edit"
+
+  let resolveFn = resolvePath(actions.custom, formState.namespace)
+  if (resolveFn && resolveFn["ViewRowCellClass"]) {
+    let viewRowCellParams: ViewRowCellClass_Type = {
+      def,
+      displayMode,
+      isMobile,
+      row: GetRowFromFormState(formState),
+      formState,
+    }
+    formState.viewRowCell = resolveFn["ViewRowCellClass"](viewRowCellParams)
+  }
+  if (resolveFn && resolveFn["ViewHeaderCellClass"]) {
+    let viewHeaderCellParams: ViewHeaderCellClass_Type = {
+      def,
+      displayMode,
+      isMobile,
+    }
+    formState.viewHeaderCell = resolveFn["ViewHeaderCellClass"](
+      viewHeaderCellParams
+    )
+  }
+}
+
 export const ChangeField: OvlAction<ChangeField> = (
   value,
   { actions, state, effects }
 ) => {
   let field = value.formState.fields[value.fieldKey]
+
   if (value.isConvertedValue) {
-    field.previousConvertedValue = field.convertedValue
+    //field.previousConvertedValue = field.convertedValue
     field.convertedValue = value.value
     field.value = getDisplayValue(
       field.fieldKey,
@@ -671,6 +725,8 @@ export const ChangeField: OvlAction<ChangeField> = (
     field.validationResult.errors = []
     field.dirty = true
     field.watched = true
+    console.log("tschagaa")
+    SetRowCellInformation(value.formState, actions, state)
     actions.ovl.internal.SetFormValid(value.formState)
     return
   }
@@ -746,6 +802,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     oldConvertedVal !== field.convertedValue &&
     field.validationResult.errors.length === 0
   ) {
+    SetRowCellInformation(value.formState, actions, state)
     if (fn && fn[FormChanged]) {
       fn[FormChanged](<FormChanged_Type>{
         fieldId: value.fieldKey,

@@ -14,6 +14,7 @@ import {
 import { ifDefined } from "../../../../tracker/litdirectives/if-defined"
 import { GetRendererFn } from "../../../Table/helpers"
 import { DisplayMode } from "../../../Table/Table"
+import { OvlFormState } from "../../actions"
 
 export class OvlControlLabel extends OvlBaseElement {
   props: any
@@ -25,13 +26,19 @@ export class OvlControlLabel extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
       let field = this.field.field
-      let customHeaderCell = this.field.customHeaderCellClass
+      let formState: OvlFormState = this.state.ovl.forms[field.formType][
+        field.formId
+      ]
+      let customHeaderCell
+      if (formState.viewHeaderCell) {
+        customHeaderCell = formState.viewHeaderCell[field.fieldKey]
+      }
       let caption = ""
       let align = ""
       if (field.ui && field.ui.align) {
         align = field.ui.align
       }
-      let formState = this.state.ovl.forms[field.formType][field.formId]
+
       if (field.ui) {
         if (field.ui.noLabel) {
           return null
