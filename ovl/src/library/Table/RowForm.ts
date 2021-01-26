@@ -237,10 +237,6 @@ export class TableRowForm extends OvlFormElement {
                     .props=${() => {
                       return {
                         field: fields[k],
-                        customHeaderCellClass,
-                        customRowCellClass,
-                        row: this.rowData.row,
-                        isInline: true,
                       }
                     }}
                   >
@@ -255,10 +251,6 @@ export class TableRowForm extends OvlFormElement {
                     .props=${() => {
                       return {
                         field: fields[k],
-                        customHeaderCellClass,
-                        customRowCellClass,
-                        row: this.rowData.row,
-                        isInline: true,
                       }
                     }}
                   >
@@ -274,10 +266,6 @@ export class TableRowForm extends OvlFormElement {
                     .props=${() => {
                       return {
                         field: fields[k],
-                        customHeaderCellClass,
-                        customRowCellClass,
-                        row: this.rowData.row,
-                        isInline: true,
                       }
                     }}
                   >
@@ -293,10 +281,6 @@ export class TableRowForm extends OvlFormElement {
                     .props=${() => {
                       return {
                         field: fields[k],
-                        customHeaderCellClass,
-                        customRowCellClass,
-                        row: this.rowData.row,
-                        isInline: true,
                       }
                     }}
                   >
@@ -312,10 +296,6 @@ export class TableRowForm extends OvlFormElement {
                       .props=${() => {
                         return {
                           field: fields[k],
-                          customHeaderCellClass,
-                          customRowCellClass,
-                          row: this.rowData.row,
-                          isInline: true,
                         }
                       }}
                     >
@@ -332,10 +312,6 @@ export class TableRowForm extends OvlFormElement {
                       .props=${() => {
                         return {
                           field: fields[k],
-                          customHeaderCellClass,
-                          customRowCellClass,
-                          row: this.rowData.row,
-                          isInline: true,
                         }
                       }}
                     >

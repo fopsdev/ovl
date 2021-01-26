@@ -43,11 +43,7 @@ export type LookupListPostData = {
 }
 
 export type ControlState = {
-  customHeaderCellClass: CellClass
-  customRowCellClass: CellClass
   field: Field
-  row: { [key: string]: any }
-  isInline: boolean
 }
 
 export const KeyValueListFromServerFn = async (
@@ -294,7 +290,7 @@ export const GetValueFromCustomFunction = (
   field: Field,
   formState: OvlFormState,
   align: string,
-  isInline: boolean,
+
   state: OvlState
 ): TemplateResult => {
   let rendererFn = GetRendererFn(
@@ -312,7 +308,9 @@ export const GetValueFromCustomFunction = (
       namespace: formState.namespace,
       columnsDef: getColumnDefsFromFormState(formState),
       align,
-      displayMode: isInline ? <DisplayMode>"EditInline" : <DisplayMode>"Edit",
+      displayMode: formState.isInline
+        ? <DisplayMode>"EditInline"
+        : <DisplayMode>"Edit",
     })
     let d = field.value
     if (val !== undefined) {
@@ -337,7 +335,7 @@ const fillReactiveRows = (
   return row
 }
 
-const getColumnDefsFromFormState = (
+export const getColumnDefsFromFormState = (
   formState: OvlFormState
 ): { [key: string]: ColumnDisplayDef } => {
   let colDisplayDefs = Object.keys(formState.fields).reduce((val, f) => {

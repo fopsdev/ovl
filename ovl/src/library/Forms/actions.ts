@@ -33,9 +33,12 @@ import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
 import { getFormFields } from "./helper"
 import { DataType, FieldFormat, FormField, Schema } from "./OvlFormElement"
-import { GetRowFromFormState } from "./Controls/helpers"
+import {
+  getColumnDefsFromFormState,
+  GetRowFromFormState,
+} from "./Controls/helpers"
 import { OvlAction } from "../../index"
-import { getDisplayValue } from "../Table/helpers"
+import { getDisplayValue, getFormFieldsFromColumns } from "../Table/helpers"
 import { OvlTableDefIds } from "../../index"
 export { FillListControl }
 
@@ -99,6 +102,8 @@ export type OvlFormState = {
   tableDefId?: OvlTableDefIds
   viewRowCell?: ViewRowClassContent
   viewHeaderCell?: ViewRowClassContent
+  isInline?: boolean
+  row?: any
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
@@ -114,6 +119,8 @@ export type InitForm = {
   forceOverwrite?: boolean
   initialFocusFieldKey?: string
   tableDefId?: OvlTableDefIds
+  isInline?: boolean
+  row?: any
 }
 
 export type FormsState = { [key in OvlForm]: FormStatePerInstance }
@@ -674,20 +681,22 @@ export const SetRowCellInformation = (
   actions: OvlActions,
   state: OvlState
 ) => {
-  let columns: { [key: string]: ColumnDisplayDef } = Object.keys(
-    formState.fields
-  ).reduce((val, k, i) => {
-    let field = formState.fields[k]
-    val[k] = {
-      ui: { format: field.ui.format },
-      type: field.type,
-      list: field.list,
-    }
-    return val[k]
-  }, {})
+  let columns: { [key: string]: ColumnDisplayDef } = getColumnDefsFromFormState(
+    formState
+  ) //Object.keys(
+  //   formState.fields
+  // ).reduce((val, k, i) => {
+  //   let field = formState.fields[k]
+  //   val[k] = {
+  //     ui: { format: field.ui.format },
+  //     type: field.type,
+  //     list: field.list,
+  //   }
+  //   return val[k]
+  // }, {})
 
   let isMobile = state.ovl.uiState.isMobile
-  let displayMode: DisplayMode = "Edit"
+  let displayMode: DisplayMode = formState.isInline ? "EditInline" : "Edit"
 
   let resolveFn = resolvePath(actions.custom, formState.namespace)
   if (resolveFn && resolveFn["ViewRowCellClass"]) {

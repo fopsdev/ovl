@@ -1,6 +1,10 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
-import { ControlState, GetValueFromCustomFunction } from "../helpers"
+import {
+  ControlState,
+  GetRowFromFormState,
+  GetValueFromCustomFunction,
+} from "../helpers"
 
 export class OvlCustomValueHint extends OvlBaseElement {
   props: any
@@ -18,12 +22,12 @@ export class OvlCustomValueHint extends OvlBaseElement {
         if (field.ui && field.ui.align) {
           align = field.ui.align
         }
+        let formState = this.state.ovl.forms[field.formType][field.formId]
         customValue = GetValueFromCustomFunction(
-          this.field.row,
+          formState.row,
           field,
-          this.state.ovl.forms[field.formType][field.formId],
+          formState,
           align,
-          this.field.isInline,
           this.state
         )
       }

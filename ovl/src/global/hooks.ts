@@ -232,8 +232,7 @@ export const EditGetCaptionRender = "EditGetCaptionRender"
 // easiest is to copy the existing custom element and change it (eg. textbox.ts)
 export type EditGetLabelAndValueRenderer_Type = {
   field: Field
-  customHeaderCellClass: CellClass
-  customRowCellClass: CellClass
+  formState: OvlFormState
   id: string
   readonly: boolean
 }

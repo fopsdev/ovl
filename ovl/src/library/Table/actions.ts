@@ -1334,6 +1334,8 @@ export const TableEditRow: OvlAction<{
     schema: value.data.schema,
     forceOverwrite: true,
     tableDefId: def.id,
+    isInline: def.options.edit.editType === "inline",
+    row: value.data[value.key],
   }
 
   actions.ovl.form.InitForm(initForm)
