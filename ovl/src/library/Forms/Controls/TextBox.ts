@@ -9,19 +9,15 @@ import {
 
 import { OvlFormState } from "../actions"
 import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import { OvlControlBase } from "./OvlControlBase"
 
 type TextBoxType = "text" | "password" | "text-security"
 
-export class OvlTextbox extends OvlBaseElement {
-  props: any
-  field: ControlState
-  inputElement: any
-  formState: OvlFormState
-
+export class OvlTextbox extends OvlControlBase {
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    ChangeValue(this, this.inputElement.value, this.field.field.id)
+    ChangeValue(this, this.inputElement.value, this.field.id)
   }
 
   handleKeyUp(e: KeyboardEvent) {
@@ -30,7 +26,7 @@ export class OvlTextbox extends OvlBaseElement {
       bubbles: true,
       detail: {
         val: this.inputElement.value,
-        id: this.field.field.id,
+        id: this.field.id,
         isInnerEvent: true,
       },
     })
@@ -40,70 +36,63 @@ export class OvlTextbox extends OvlBaseElement {
 
   async getUI() {
     return this.track(() => {
-      this.field = this.props(this.state)
-      let field = this.field.field
-      this.formState = this.state.ovl.forms[field.formType][field.formId]
-      let customInfo = GetCustomInfo(this.field.customRowCellClass)
+      super.InitControl()
       let inputMode: any = "text"
-      if (field.type === "decimal") {
+      if (this.field.type === "decimal") {
         inputMode = "decimal"
-      } else if (field.type === "int") {
+      } else if (this.field.type === "int") {
         inputMode = "numeric"
       }
 
       let style = ""
       let type: TextBoxType = "text"
-      if (field.ui && field.ui.isPassword) {
+      if (this.field.ui && this.field.ui.isPassword) {
         type = "password"
       }
-
       return html`
         <div
-          class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName} ${field
-            .ui.readonly
-            ? "ovl-disabled__cursor-not-allowed"
-            : ""} "
+          class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${this
+            .field.fieldKey} ${this.customInfo.customRowClassContainerName}"
         >
-          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.controlState}>
+          </ovl-controllabel>
           <input
-            title="${ifDefined(
-              customInfo.customRowTooltip
-                ? customInfo.customRowTooltip
-                : undefined,
+            tabindex="${ifDefined(
+              this.needsTabIndex() ? "-1" : undefined,
               this
             )}"
             @change=${(e) => this.handleChange(e)}
-            @focusout=${() => RemoveFocus(this, field.id)}
-            @focus=${() => SetFocus(this.inputElement, field.id)}
+            @focusout=${() => RemoveFocus(this, this.field.id)}
+            @focus=${() => SetFocus(this.inputElement, this.field.id)}
             @keyup=${(e) => this.handleKeyUp(e)}
-            style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
-            autocomplete="${field.ui.autocomplete ? "on" : "new-password"}"
-            spellcheck="${field.ui.useSpellcheck ? "true" : "false"}"
-            inputmode="${inputMode}"
-            ?readonly="${field.ui.readonly}"
-            class="fd-input ${GetOutlineValidationHint(
-              field
-            )} ${customInfo.customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${customInfo.customRowClassName} ${field
-              .ui.readonly
-              ? "ovl-disabled"
+            style="${style} ${this.field.ui && this.field.ui.align
+              ? this.field.ui.align
               : ""}"
+            autocomplete="${this.field.ui.autocomplete ? "on" : "new-password"}"
+            spellcheck="${this.field.ui.useSpellcheck ? "true" : "false"}"
+            inputmode="${inputMode}"
+            ?readonly="${this.field.ui.readonly}"
+            class="fd-input ${GetOutlineValidationHint(this.field)} ${this
+              .customInfo
+              .customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${this
+              .field.fieldKey} ${this.field.ui.readonly ? "ovl-disabled" : ""}"
             type="${type}"
-            id="${field.id}"
-            value="${field.value}"
+            id="${this.field.id}"
+            value="${this.field.value}"
           />
-          <ovl-controlcustomhint .props=${() => this.field}>
+          <ovl-controlcustomhint .props=${() => this.controlState}>
           </ovl-controlcustomhint>
-          <ovl-controlvalidationhint .props=${() => this.field}>
+          <ovl-controlvalidationhint .props=${() => this.controlState}>
           </ovl-controlvalidationhint>
         </div>
       `
     })
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.field.field.id)
+    this.inputElement = document.getElementById(this.field.id)
     if (this.inputElement) {
-      this.inputElement.value = this.field.field.value
+      this.inputElement.value = this.field.value
     }
+    super.afterRender()
   }
-  getDisplayValue() {}
 }

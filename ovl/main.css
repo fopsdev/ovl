@@ -404,6 +404,40 @@ ovl-table {
   }
 }
 
+.fadeOutControl {
+  opacity: 0;
+  animation-name: fadeOutControl;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.25s;
+}
+
+@keyframes fadeOutControl {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fadeInControl {
+  opacity: 1;
+  animation-name: fadeInDialog;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.25s;
+}
+
+@keyframes fadeInControl {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;

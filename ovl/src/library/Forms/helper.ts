@@ -88,6 +88,9 @@ export const getFormFields = (
     if (ui.useSpellcheck === undefined) {
       ui.useSpellcheck = false
     }
+    if (ui.visible === undefined) {
+      ui.visible = "true"
+    }
   })
   return fields
 }

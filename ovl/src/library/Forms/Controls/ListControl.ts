@@ -454,7 +454,11 @@ export class OvlListControl extends OvlBaseElement {
       return html`
         ${hitListDialog}
         <div
-          class="ovl-listcontrol-main"
+          class="ovl-listcontrol-main  ${field.ui.visible === "false"
+            ? "hide"
+            : ""} ${field.ui.visible !== "false" && field.ui.visible !== "true"
+            ? field.ui.visible + "Control"
+            : ""}"
           @focusout=${(e) => this.handleFocusOut(e)}
         >
           <div

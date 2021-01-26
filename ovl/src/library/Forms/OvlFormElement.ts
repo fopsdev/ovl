@@ -42,6 +42,7 @@ export type FormField = {
     useSpellcheck?: boolean
     autocomplete?: boolean
     checkedValue?: string | boolean
+    visible?: "true" | "false" | "fadeIn" | "fadeOut" | "fadeOutHide"
   }
   asset?: {
     validFileExtensions: string[]
