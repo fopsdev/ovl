@@ -3,7 +3,9 @@ import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import {
   ControlState,
+  GetContainerClass,
   GetCustomInfo,
+  GetInputClass,
   GetOutlineValidationHint,
 } from "./helpers"
 
@@ -44,15 +46,17 @@ export class OvlTextbox extends OvlControlBase {
       } else if (field.type === "int") {
         inputMode = "numeric"
       }
-
       let type: TextBoxType = "text"
       if (field.ui && field.ui.isPassword) {
         type = "password"
       }
       return html`
         <div
-          class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${this
-            .customInfo.customRowClassContainerName}"
+          class="${GetContainerClass(
+            "textbox",
+            field.fieldKey,
+            this.customInfo.customRowClassContainerName
+          )}"
         >
           <ovl-controllabel .props=${() => this.controlState}>
           </ovl-controllabel>
@@ -70,11 +74,11 @@ export class OvlTextbox extends OvlControlBase {
             spellcheck="${field.ui.useSpellcheck ? "true" : "false"}"
             inputmode="${inputMode}"
             ?readonly="${field.ui.readonly}"
-            class="fd-input ${GetOutlineValidationHint(field)} ${this.customInfo
-              .customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${field
-              .ui.readonly
-              ? "ovl-disabled"
-              : ""}"
+            class="fd-input ${GetInputClass(
+              "textbox",
+              field,
+              this.customInfo.customRowClassName
+            )}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"

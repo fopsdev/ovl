@@ -3,7 +3,9 @@ import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import {
   ControlState,
+  GetContainerClass,
   GetCustomInfo,
+  GetInputClass,
   GetOutlineValidationHint,
 } from "./helpers"
 
@@ -36,8 +38,11 @@ export class OvlTime extends OvlControlBase {
       }
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-time ovl-container__${field.fieldKey} ${this
-            .customInfo.customRowClassContainerName}"
+          class="${GetContainerClass(
+            "time",
+            field.fieldKey,
+            this.customInfo.customRowClassContainerName
+          )}"
         >
           <ovl-controllabel .props=${() => this.controlState}>
           </ovl-controllabel>
@@ -52,12 +57,11 @@ export class OvlTime extends OvlControlBase {
             style="${field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
             spellcheck="false"
-            class="fd-input ovl-focusable ${GetOutlineValidationHint(
-              field
-            )}  ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${this
-              .customInfo.customRowClassName} ${field.ui.readonly
-              ? "ovl-disabled"
-              : ""}"
+            class="fd-input ${GetInputClass(
+              "time",
+              field,
+              this.customInfo.customRowClassName
+            )}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"

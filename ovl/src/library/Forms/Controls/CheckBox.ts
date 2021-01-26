@@ -3,7 +3,9 @@ import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import {
   ControlState,
+  GetContainerClass,
   GetCustomInfo,
+  GetInputClass,
   GetOutlineValidationHint,
 } from "./helpers"
 import { OvlFormState } from "../actions"
@@ -41,8 +43,11 @@ export class OvlCheckbox extends OvlControlBase {
       let field = this.field
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-checkbox ovl-container__${field.fieldKey} ${this
-            .customInfo.customRowClassContainerName}"
+          class="${GetContainerClass(
+            "checkbox",
+            field.fieldKey,
+            this.customInfo.customRowClassContainerName
+          )}"
         >
           <ovl-controllabel .props=${() => this.controlState}>
           </ovl-controllabel>
@@ -57,10 +62,11 @@ export class OvlCheckbox extends OvlControlBase {
               @focus=${() => SetFocus(this.inputElement, field.id)}
               style="${field.ui.align ? field.ui.align : ""}"
               autocomplete="off"
-              class="fd-checkbox ovl-focusable ${GetOutlineValidationHint(
-                field
-              )} ovl-formcontrol-input ovl-value-checkbox-input ovl-value__${field.fieldKey} ${this
-                .customInfo.customRowClassName}"
+              class="fd-checkbox ${GetInputClass(
+                "checkbox",
+                field,
+                this.customInfo.customRowClassName
+              )}"
               type="checkbox"
               id="${field.id}"
               ?checked=${field.value === field.ui.checkedValue}

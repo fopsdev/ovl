@@ -13,6 +13,8 @@ import {
   GetCustomInfo,
   GetRowFromFormState,
   GetOutlineValidationHint,
+  GetInputClass,
+  GetContainerClass,
 } from "./helpers"
 
 import { OvlFormState } from "../actions"
@@ -44,8 +46,11 @@ export class OvlOption extends OvlControlBase {
 
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-option ovl-container__${field.fieldKey} ${this
-            .customInfo.customRowClassContainerName}"
+          class="${GetContainerClass(
+            "option",
+            field.fieldKey,
+            this.customInfo.customRowClassContainerName
+          )}"
         >
           <ovl-controllabel .props=${() => this.controlState}>
           </ovl-controllabel>
@@ -63,7 +68,11 @@ export class OvlOption extends OvlControlBase {
                     this.nonFocusable() ? "-1" : undefined,
                     this
                   )}"
-                  class="fd-radio ovl-focusable ovl-formcontrol-input ovl-value-option ovl-value__${field.fieldKey}"
+                  class="fd-radio ${GetInputClass(
+                    "option",
+                    field,
+                    this.customInfo.customRowClassName
+                  )}"
                   @click=${(e) => e.stopPropagation()}
                   @focus=${() => SetFocus(this, field.id)}
                   @change=${(e) =>

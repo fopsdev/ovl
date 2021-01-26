@@ -1,7 +1,11 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { GetOutlineValidationHint } from "./helpers"
+import {
+  GetContainerClass,
+  GetInputClass,
+  GetOutlineValidationHint,
+} from "./helpers"
 
 import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
 import { getDateValue } from "../../../global/globals"
@@ -43,8 +47,11 @@ export class OvlDate extends OvlControlBase {
       this.displayValue = getDateValue(field.convertedValue, field.ui.format)
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-date ovl-container__${field.fieldKey} ${this
-            .customInfo.customRowClassContainerName}"
+          class="${GetContainerClass(
+            "date",
+            field.fieldKey,
+            this.customInfo.customRowClassContainerName
+          )}"
         >
           <ovl-controllabel .props=${() => this.controlState}>
           </ovl-controllabel>
@@ -58,12 +65,11 @@ export class OvlDate extends OvlControlBase {
             @keyup=${(e) => this.handleKeyUp(e)}
             style="${field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
-            class="fd-input ovl-focusable ${GetOutlineValidationHint(
-              field
-            )} ovl-formcontrol-input ovl-value-date ovl-value__${field.fieldKey} ${this
-              .customInfo.customRowClassName} ${field.ui.readonly
-              ? "ovl-disabled"
-              : ""}"
+            class="fd-input ${GetInputClass(
+              "date",
+              field,
+              this.customInfo.customRowClassName
+            )}"
             type="${type}"
             id="${field.id}"
             value="${field.value}"

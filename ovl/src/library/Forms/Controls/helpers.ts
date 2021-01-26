@@ -285,6 +285,26 @@ export const GetCustomInfo = (customRowCell: CellClass, key: string) => {
   return { customRowClassName, customRowTooltip, customRowClassContainerName }
 }
 
+export const GetContainerClass = (
+  type: string,
+  fieldKey: string,
+  customRowClassName
+): string => {
+  return `fd-form-item ovl-formcontrol-container ovl-container-${type} ovl-container__${fieldKey} ${customRowClassName}`
+}
+
+export const GetInputClass = (
+  type: string,
+  field: Field,
+  customRowClassName
+): string => {
+  return `${GetOutlineValidationHint(
+    field
+  )} ${customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-${type} ovl-value__${
+    field.fieldKey
+  } ${field.ui.readonly ? "ovl-disabled" : ""}`
+}
+
 export const GetValueFromCustomFunction = (
   row: { [key: string]: {} },
   field: Field,
