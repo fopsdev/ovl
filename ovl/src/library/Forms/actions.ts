@@ -132,7 +132,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
   let field = value.formState.fields[value.fieldKey]
   let type = field.type
   let format
-  if (field.ui && field.ui.format) {
+  if (field.ui.format) {
     format = field.ui.format
   }
   let val = value.newVal

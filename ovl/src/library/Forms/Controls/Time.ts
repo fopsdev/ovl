@@ -9,12 +9,9 @@ import {
 
 import { OvlFormState } from "../actions"
 import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import { OvlControlBase } from "./OvlControlBase"
 
-export class OvlTime extends OvlBaseElement {
-  props: any
-  field: ControlState
-  inputElement: any
-  formState: OvlFormState
+export class OvlTime extends OvlControlBase {
   init() {
     if (this.state.ovl.uiState.isMobile) {
       this.addEventListener("input", this.handleChange)
@@ -26,15 +23,12 @@ export class OvlTime extends OvlBaseElement {
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    ChangeValue(this, this.inputElement.value, this.field.field.id)
+    ChangeValue(this, this.inputElement.value, this.field.id)
   }
   async getUI() {
+    this.InitControl()
     return this.track(() => {
-      this.field = this.props(this.state)
-      let field = this.field.field
-      this.formState = this.state.ovl.forms[field.formType][field.formId]
-      let customInfo = GetCustomInfo(this.field.customRowCellClass)
-      let style = ""
+      let field = this.field
       type TimeBoxType = "text" | "time"
       let type: TimeBoxType = "text"
       if (this.state.ovl.uiState.isMobile) {
@@ -42,26 +36,26 @@ export class OvlTime extends OvlBaseElement {
       }
       return html`
         <div
-          class="ovl-formcontrol-container ovl-container-time ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName}"
+          class="ovl-formcontrol-container ovl-container-time ovl-container__${field.fieldKey} ${this
+            .customInfo.customRowClassContainerName}"
         >
-          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.controlState}>
+          </ovl-controllabel>
 
           <input
-            title="${ifDefined(
-              customInfo.customRowTooltip
-                ? customInfo.customRowTooltip
-                : undefined,
+            tabindex="${ifDefined(
+              this.nonFocusable() ? "-1" : undefined,
               this
             )}"
             @focusout=${() => RemoveFocus(this, field.id)}
             @focus=${() => SetFocus(this, field.id)}
-            style="${style} ${field.ui && field.ui.align ? field.ui.align : ""}"
+            style="${field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
             spellcheck="false"
             class="fd-input ovl-focusable ${GetOutlineValidationHint(
               field
-            )}  ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${customInfo.customRowClassName} ${field
-              .ui.readonly
+            )}  ovl-formcontrol-input ovl-value-time ovl-value__${field.fieldKey} ${this
+              .customInfo.customRowClassName} ${field.ui.readonly
               ? "ovl-disabled"
               : ""}"
             type="${type}"
@@ -69,18 +63,19 @@ export class OvlTime extends OvlBaseElement {
             value="${field.value}"
           />
         </div>
-        <ovl-controlcustomhint .props=${() => this.field}>
+        <ovl-controlcustomhint .props=${() => this.controlState}>
         </ovl-controlcustomhint>
-        <ovl-controlvalidationhint .props=${() => this.field}>
+        <ovl-controlvalidationhint .props=${() => this.controlState}>
         </ovl-controlvalidationhint>
       `
     })
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.field.field.id)
+    this.inputElement = document.getElementById(this.field.id)
     if (this.inputElement) {
-      this.inputElement.value = this.field.field.value
+      this.inputElement.value = this.field.value
     }
+    super.afterRender()
   }
   disconnectedCallback() {
     if (this.state.ovl.uiState.isMobile) {

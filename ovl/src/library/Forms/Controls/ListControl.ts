@@ -27,6 +27,7 @@ import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 import { OvlState } from "../../.."
 import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import { OvlControlBase } from "./OvlControlBase"
 
 export type ListState = {
   serverEndpoint?: string
@@ -40,10 +41,7 @@ export type ListState = {
   isSelect?: boolean
 }
 
-export class OvlListControl extends OvlBaseElement {
-  props: any
-  field: ControlState
-  inputElement: any
+export class OvlListControl extends OvlControlBase {
   localList: TemplateResult
   hitListDialogBody: TemplateResult
   hitListDialogFooter: TemplateResult
@@ -52,7 +50,6 @@ export class OvlListControl extends OvlBaseElement {
   directHitDescription: any
   inputValueToProcess: any
   timer: any
-  formState: OvlFormState
 
   // handleClearFilter(e: Event) {}
   handleCancel = (e: Event) => {
@@ -64,7 +61,7 @@ export class OvlListControl extends OvlBaseElement {
     e.preventDefault()
 
     this.forceCloseLocalHitList()
-    let field = this.field.field
+    let field = this.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
     let listData: FieldGetList_ReturnType = resolvePath(
@@ -137,7 +134,7 @@ export class OvlListControl extends OvlBaseElement {
 
     this.actions.ovl.dialog.DialogOpen({
       dialogType: "HitListDialog",
-      elementIdToFocusAfterOpen: this.field.field.id + "overlayovlhl_1",
+      elementIdToFocusAfterOpen: this.field.id + "overlayovlhl_1",
     })
   }
 
@@ -145,7 +142,7 @@ export class OvlListControl extends OvlBaseElement {
     if (this.state.ovl.dialogs.HitListDialog.visible) {
       this.actions.ovl.dialog.DialogClose("HitListDialog")
     }
-    let field = this.field.field
+    let field = this.field
 
     if (this.localList !== null) {
       this.inputElement.focus()
@@ -157,7 +154,7 @@ export class OvlListControl extends OvlBaseElement {
       // }, 0)
     } else {
       this.state.ovl.dialogs.HitListDialog.elementIdToFocusAfterClose =
-        "search" + this.field.field.id
+        "search" + this.field.id
     }
 
     if (selectedKey === "@@ovlcanceled" || selectedKey === "@@ovlescape") {
@@ -186,7 +183,7 @@ export class OvlListControl extends OvlBaseElement {
 
   handleGotFocusSearch(e: Event) {
     this.forceCloseLocalHitList()
-    SetFocus(e.target, this.field.field.id)
+    SetFocus(e.target, this.field.id)
   }
   // // same here
 
@@ -202,10 +199,10 @@ export class OvlListControl extends OvlBaseElement {
     if (this.localList) {
       this.forceCloseLocalHitList()
     }
-    SetFocus(this, this.field.field.id)
+    SetFocus(this, this.field.id)
   }
   async handleFocusOut(e: Event) {
-    let field = this.field.field
+    let field = this.field
     let fieldId = field.id
     //@ts-ignore
     let relatedTarget = e.relatedTarget
@@ -248,7 +245,7 @@ export class OvlListControl extends OvlBaseElement {
   }
   handleDelete(e: Event) {
     this.actions.ovl.form.SetField({
-      fieldKey: this.field.field.fieldKey,
+      fieldKey: this.field.fieldKey,
       convertedValue: "",
       formState: this.formState,
     })
@@ -290,7 +287,7 @@ export class OvlListControl extends OvlBaseElement {
       waitTime = 0
     }
 
-    let field = this.field.field
+    let field = this.field
 
     if (e.key === "Escape") {
       this.forceCloseLocalHitList()
@@ -368,9 +365,7 @@ export class OvlListControl extends OvlBaseElement {
         }
 
         if (openLocalList) {
-          let focusEl = document.getElementById(
-            this.field.field.id + "inlineovlhl_1"
-          )
+          let focusEl = document.getElementById(this.field.id + "inlineovlhl_1")
           if (focusEl) {
             focusEl.focus()
           }
@@ -380,17 +375,12 @@ export class OvlListControl extends OvlBaseElement {
       }
     }, waitTime)
   }
-  init() {
-    this.field = this.props(this.state)
-  }
   async getUI() {
+    this.InitControl()
     //SnackAdd("Rerender...")
     return this.track(() => {
-      let field = this.field.field
-      this.formState = this.state.ovl.forms[field.formType][field.formId]
-      let customInfo = GetCustomInfo(this.field.customRowCellClass)
+      let field = this.field
       let displayValue = ""
-
       let getListFnName = FieldGetList.replace("%", field.fieldKey)
       displayValue = this.overrideDisplayValue
 
@@ -454,34 +444,27 @@ export class OvlListControl extends OvlBaseElement {
       return html`
         ${hitListDialog}
         <div
-          class="ovl-listcontrol-main  ${field.ui.visible === "false"
-            ? "hide"
-            : ""} ${field.ui.visible !== "false" && field.ui.visible !== "true"
-            ? field.ui.visible + "Control"
-            : ""}"
+          class="ovl-listcontrol-main"
           @focusout=${(e) => this.handleFocusOut(e)}
         >
           <div
-            class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${customInfo.customRowClassContainerName} ${readOnly
-              ? "ovl-disabled__cursor-not-allowed"
-              : ""}"
+            class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${this
+              .customInfo.customRowClassContainerName}"
           >
-            <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
+            <ovl-controllabel .props=${() => this.controlState}>
+            </ovl-controllabel>
             <div
-              class="fd-input-group ${GetOutlineValidationHint(
-                field
-              )} ${customInfo.customRowClassName} ovl-formcontrol-input"
+              class="fd-input-group ${GetOutlineValidationHint(field)} ${this
+                .customInfo.customRowClassName} ovl-formcontrol-input"
             >
               <input
-                title="${ifDefined(
-                  customInfo.customRowTooltip
-                    ? customInfo.customRowTooltip
-                    : undefined,
+                tabindex="${ifDefined(
+                  this.nonFocusable() ? "-1" : undefined,
                   this
                 )}"
                 spellcheck="false"
                 autocomplete="off"
-                style="${field.ui && field.ui.align ? field.ui.align : ""}"
+                style="${field.ui.align ? field.ui.align : ""}"
                 +
                 type="text"
                 class="fd-input ovl-focusable fd-input-group__input ovl-formcontrol-input ovl-value__${field.fieldKey} ${readOnly
@@ -497,7 +480,7 @@ export class OvlListControl extends OvlBaseElement {
               ${deleteButton}
 
               <span
-                tabindex="0"
+                tabindex="${this.nonFocusable() ? "-1" : "0"}"
                 @mousedown=${(e) => this.handleListPopup(e)}
                 @keydown=${(e) => this.handleSearchKeyDown(e)}
                 @focus=${(e) => this.handleGotFocusSearch(e)}
@@ -510,9 +493,9 @@ export class OvlListControl extends OvlBaseElement {
             </div>
 
             ${this.localList}
-            <ovl-controlcustomhint .props=${() => this.field}>
+            <ovl-controlcustomhint .props=${() => this.controlState}>
             </ovl-controlcustomhint>
-            <ovl-controlvalidationhint .props=${() => this.field}>
+            <ovl-controlvalidationhint .props=${() => this.controlState}>
             </ovl-controlvalidationhint>
           </div>
         </div>
@@ -520,7 +503,8 @@ export class OvlListControl extends OvlBaseElement {
     })
   }
   afterRender() {
-    this.inputElement = document.getElementById(this.field.field.id)
+    this.inputElement = document.getElementById(this.field.id)
+    super.afterRender()
   }
   forceCloseLocalHitList() {
     if (this.localList) {

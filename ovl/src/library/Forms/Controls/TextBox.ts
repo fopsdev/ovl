@@ -35,50 +35,49 @@ export class OvlTextbox extends OvlControlBase {
   }
 
   async getUI() {
+    super.InitControl()
     return this.track(() => {
-      super.InitControl()
+      let field = this.field
       let inputMode: any = "text"
-      if (this.field.type === "decimal") {
+      if (field.type === "decimal") {
         inputMode = "decimal"
-      } else if (this.field.type === "int") {
+      } else if (field.type === "int") {
         inputMode = "numeric"
       }
 
-      let style = ""
       let type: TextBoxType = "text"
-      if (this.field.ui && this.field.ui.isPassword) {
+      if (field.ui && field.ui.isPassword) {
         type = "password"
       }
       return html`
         <div
-          class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${this
-            .field.fieldKey} ${this.customInfo.customRowClassContainerName}"
+          class="fd-form-item ovl-formcontrol-container ovl-container-textbox ovl-container__${field.fieldKey} ${this
+            .customInfo.customRowClassContainerName}"
         >
           <ovl-controllabel .props=${() => this.controlState}>
           </ovl-controllabel>
           <input
             tabindex="${ifDefined(
-              this.needsTabIndex() ? "-1" : undefined,
+              this.nonFocusable() ? "-1" : undefined,
               this
             )}"
             @change=${(e) => this.handleChange(e)}
-            @focusout=${() => RemoveFocus(this, this.field.id)}
-            @focus=${() => SetFocus(this.inputElement, this.field.id)}
+            @focusout=${() => RemoveFocus(this, field.id)}
+            @focus=${() => SetFocus(this.inputElement, field.id)}
             @keyup=${(e) => this.handleKeyUp(e)}
-            style="${style} ${this.field.ui && this.field.ui.align
-              ? this.field.ui.align
-              : ""}"
-            autocomplete="${this.field.ui.autocomplete ? "on" : "new-password"}"
-            spellcheck="${this.field.ui.useSpellcheck ? "true" : "false"}"
+            style="${field.ui.align ? field.ui.align : ""}"
+            autocomplete="${field.ui.autocomplete ? "on" : "new-password"}"
+            spellcheck="${field.ui.useSpellcheck ? "true" : "false"}"
             inputmode="${inputMode}"
-            ?readonly="${this.field.ui.readonly}"
-            class="fd-input ${GetOutlineValidationHint(this.field)} ${this
-              .customInfo
-              .customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${this
-              .field.fieldKey} ${this.field.ui.readonly ? "ovl-disabled" : ""}"
+            ?readonly="${field.ui.readonly}"
+            class="fd-input ${GetOutlineValidationHint(field)} ${this.customInfo
+              .customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-textbox ovl-value__${field.fieldKey} ${field
+              .ui.readonly
+              ? "ovl-disabled"
+              : ""}"
             type="${type}"
-            id="${this.field.id}"
-            value="${this.field.value}"
+            id="${field.id}"
+            value="${field.value}"
           />
           <ovl-controlcustomhint .props=${() => this.controlState}>
           </ovl-controlcustomhint>

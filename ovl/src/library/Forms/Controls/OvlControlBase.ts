@@ -62,7 +62,9 @@ export class OvlControlBase extends OvlBaseElement {
       this.classList.remove("fadeInControl")
     }
   }
-  needsTabIndex() {
+
+  // this is needed because other methods still allow to tab into the control
+  nonFocusable() {
     return (
       this.field.ui.readonly ||
       this.field.ui.visible === "false" ||
