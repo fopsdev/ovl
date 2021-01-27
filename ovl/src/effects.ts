@@ -106,7 +106,19 @@ export const ovlFetch = async (
       reqOptions["body"] = data
     } else {
       if (data) {
-        data.clientId = ovl.state.ovl.user.clientId
+        // always send a def object if configured
+        if (OvlConfig.fetchDefaultParams.clientId) {
+          if (!data.ovl) {
+            data.ovl = {}
+          }
+          data.ovl.clientId = ovl.state.ovl.user.clientId
+        }
+        if (OvlConfig.fetchDefaultParams.lang) {
+          if (!data.ovl) {
+            data.ovl = {}
+          }
+          data.ovl.lang = ovl.state.ovl.language.language
+        }
       }
       if (method === "POST") {
         reqOptions["body"] = JSON.stringify(data, stringifyReplacer)
@@ -138,10 +150,20 @@ export const ovlFetch = async (
           "v",
           ovl.state.ovl.app.discCacheVersion.toString()
         )
-        urlWithParams.searchParams.append(
-          "clientId",
-          ovl.state.ovl.user.clientId
-        )
+        if (OvlConfig.fetchDefaultParams.clientId) {
+          urlWithParams.searchParams.append(
+            "clientId",
+            ovl.state.ovl.user.clientId
+          )
+        }
+
+        if (OvlConfig.fetchDefaultParams.lang) {
+          urlWithParams.searchParams.append(
+            "lang",
+            ovl.state.ovl.language.language
+          )
+        }
+
         // encode params as url param
         url = urlWithParams.toString()
       }

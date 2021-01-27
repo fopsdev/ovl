@@ -7,7 +7,11 @@ import {
   GetOutlineValidationHint,
 } from "./helpers"
 
-import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import {
+  ChangeValueEventHelper,
+  RemoveFocusEventHelper,
+  SetFocusEventHelper,
+} from "../helper"
 import { getDateValue } from "../../../global/globals"
 import { OvlControlBase } from "./OvlControlBase"
 
@@ -23,16 +27,16 @@ export class OvlDate extends OvlControlBase {
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    ChangeValue(this, this.inputElement.value, this.field.id)
+    ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
   }
 
   handleKeyUp(e: KeyboardEvent) {
-    ChangeValue(this, this.inputElement.value, this.field.id, true)
+    ChangeValueEventHelper(this, this.inputElement.value, this.field.id, true)
   }
 
   handleFocusOut() {
-    ChangeValue(this, this.inputElement.value, this.field.id)
-    RemoveFocus(this, this.field.id)
+    ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
+    RemoveFocusEventHelper(this, this.field.id)
   }
 
   async getUI() {
@@ -60,7 +64,7 @@ export class OvlDate extends OvlControlBase {
               this.nonFocusable() ? "-1" : undefined,
               this
             )}"
-            @focus=${() => SetFocus(this, field.id)}
+            @focus=${() => SetFocusEventHelper(this, field.id)}
             @focusout=${() => this.handleFocusOut()}
             @keyup=${(e) => this.handleKeyUp(e)}
             style="${field.ui.align ? field.ui.align : ""}"

@@ -3,7 +3,10 @@ import { FieldValueMap, ValidateFieldResult } from "./actions"
 import { GetListDisplayValue, GetRowFromFormState } from "./Controls/helpers"
 import { Schema, FormField } from "./OvlFormElement"
 
-export const SetFocus = (dispatchEl: EventTarget, fieldId: string) => {
+export const SetFocusEventHelper = (
+  dispatchEl: EventTarget,
+  fieldId: string
+) => {
   let event = new CustomEvent("ovlfocusin", {
     bubbles: true,
     detail: { id: fieldId },
@@ -11,7 +14,7 @@ export const SetFocus = (dispatchEl: EventTarget, fieldId: string) => {
   dispatchEl.dispatchEvent(event)
 }
 
-export const ChangeValue = async (
+export const ChangeValueEventHelper = async (
   dispatchEl: EventTarget,
   value: any,
   fieldId: string,
@@ -24,7 +27,10 @@ export const ChangeValue = async (
   await dispatchEl.dispatchEvent(event)
 }
 
-export const RemoveFocus = (dispatchEl: EventTarget, fieldId: string) => {
+export const RemoveFocusEventHelper = (
+  dispatchEl: EventTarget,
+  fieldId: string
+) => {
   let event = new CustomEvent("ovlfocusout", {
     bubbles: true,
     detail: { id: fieldId },

@@ -10,7 +10,11 @@ import {
 } from "./helpers"
 import { OvlFormState } from "../actions"
 import { OvlState } from "../../.."
-import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import {
+  ChangeValueEventHelper,
+  RemoveFocusEventHelper,
+  SetFocusEventHelper,
+} from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 
 type TextBoxType = "text" | "password" | "text-security"
@@ -34,7 +38,7 @@ export class OvlCheckbox extends OvlControlBase {
         val = true
       }
     }
-    ChangeValue(this, val, field.id)
+    ChangeValueEventHelper(this, val, field.id)
   }
 
   async getUI() {
@@ -58,8 +62,8 @@ export class OvlCheckbox extends OvlControlBase {
                 this
               )}"
               @change=${(e) => this.handleChange(e)}
-              @focusout=${() => RemoveFocus(this, field.id)}
-              @focus=${() => SetFocus(this.inputElement, field.id)}
+              @focusout=${() => RemoveFocusEventHelper(this, field.id)}
+              @focus=${() => SetFocusEventHelper(this.inputElement, field.id)}
               style="${field.ui.align ? field.ui.align : ""}"
               autocomplete="off"
               class="fd-checkbox ${GetInputClass(

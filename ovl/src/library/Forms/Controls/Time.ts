@@ -10,7 +10,11 @@ import {
 } from "./helpers"
 
 import { OvlFormState } from "../actions"
-import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import {
+  ChangeValueEventHelper,
+  RemoveFocusEventHelper,
+  SetFocusEventHelper,
+} from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 
 export class OvlTime extends OvlControlBase {
@@ -25,7 +29,7 @@ export class OvlTime extends OvlControlBase {
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    ChangeValue(this, this.inputElement.value, this.field.id)
+    ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
   }
   async getUI() {
     this.InitControl()
@@ -52,8 +56,8 @@ export class OvlTime extends OvlControlBase {
               this.nonFocusable() ? "-1" : undefined,
               this
             )}"
-            @focusout=${() => RemoveFocus(this, field.id)}
-            @focus=${() => SetFocus(this, field.id)}
+            @focusout=${() => RemoveFocusEventHelper(this, field.id)}
+            @focus=${() => SetFocusEventHelper(this, field.id)}
             style="${field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
             spellcheck="false"

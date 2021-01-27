@@ -242,10 +242,7 @@ export class OvlFormElement extends OvlBaseElement {
       if (fsLastTouchedField) {
         let lastTouchedField = this.formState.fields[fsLastTouchedField]
         if (lastTouchedField) {
-          let focusEl = document.getElementById(lastTouchedField.id)
-          if (focusEl) {
-            SetFocus(focusEl)
-          }
+          SetFocus(lastTouchedField.id)
         }
       }
     }

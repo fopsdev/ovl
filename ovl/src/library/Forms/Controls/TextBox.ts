@@ -10,7 +10,11 @@ import {
 } from "./helpers"
 
 import { OvlFormState } from "../actions"
-import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import {
+  ChangeValueEventHelper,
+  RemoveFocusEventHelper,
+  SetFocusEventHelper,
+} from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 
 type TextBoxType = "text" | "password" | "text-security"
@@ -19,7 +23,7 @@ export class OvlTextbox extends OvlControlBase {
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    ChangeValue(this, this.inputElement.value, this.field.id)
+    ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
   }
 
   handleKeyUp(e: KeyboardEvent) {
@@ -66,8 +70,8 @@ export class OvlTextbox extends OvlControlBase {
               this
             )}"
             @change=${(e) => this.handleChange(e)}
-            @focusout=${() => RemoveFocus(this, field.id)}
-            @focus=${() => SetFocus(this.inputElement, field.id)}
+            @focusout=${() => RemoveFocusEventHelper(this, field.id)}
+            @focus=${() => SetFocusEventHelper(this.inputElement, field.id)}
             @keyup=${(e) => this.handleKeyUp(e)}
             style="${field.ui.align ? field.ui.align : ""}"
             autocomplete="${field.ui.autocomplete ? "on" : "new-password"}"

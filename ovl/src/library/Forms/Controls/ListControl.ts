@@ -26,7 +26,11 @@ import {
 import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
 import { OvlState } from "../../.."
-import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import {
+  ChangeValueEventHelper,
+  RemoveFocusEventHelper,
+  SetFocusEventHelper,
+} from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 
 export type ListState = {
@@ -177,13 +181,13 @@ export class OvlListControl extends OvlControlBase {
       }
       this.inputElement.value =
         dataList.data[selectedKey][field.list.displayField]
-      ChangeValue(this, writeBackValue, field.id, false)
+      ChangeValueEventHelper(this, writeBackValue, field.id, false)
     }
   }
 
   handleGotFocusSearch(e: Event) {
     this.forceCloseLocalHitList()
-    SetFocus(e.target, this.field.id)
+    SetFocusEventHelper(e.target, this.field.id)
   }
   // // same here
 
@@ -199,7 +203,7 @@ export class OvlListControl extends OvlControlBase {
     if (this.localList) {
       this.forceCloseLocalHitList()
     }
-    SetFocus(this, this.field.id)
+    SetFocusEventHelper(this, this.field.id)
   }
   async handleFocusOut(e: Event) {
     let field = this.field
@@ -234,12 +238,12 @@ export class OvlListControl extends OvlControlBase {
     if (valueToWriteBack !== undefined && !focusInList) {
       this.overrideDisplayValue = undefined
 
-      ChangeValue(this, valueToWriteBack, fieldId, false)
+      ChangeValueEventHelper(this, valueToWriteBack, fieldId, false)
       this.inputElement.value = valueForDescription
       this.directHitValue = undefined
     }
     if (movedOut) {
-      RemoveFocus(this, field.id)
+      RemoveFocusEventHelper(this, field.id)
       this.forceCloseLocalHitList()
     }
   }
@@ -311,7 +315,7 @@ export class OvlListControl extends OvlControlBase {
     this.directHitValue = filteredRes.directValue
     this.directHitDescription = filteredRes.directDescription
     if (filteredKeys.length !== 1 && this.directHitValue === undefined) {
-      ChangeValue(this, filterValue, field.id)
+      ChangeValueEventHelper(this, filterValue, field.id)
     }
 
     if (openLocalList) {

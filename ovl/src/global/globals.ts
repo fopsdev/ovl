@@ -297,11 +297,14 @@ export const logEffects = () => {
   console.log(ovl.effects)
 }
 
-export const SetFocus = (el: any) => {
-  el.focus()
-  if (el.value && el.setSelectionRange) {
-    let val = el.value
-    el.setSelectionRange(val.length, val.length)
+export const SetFocus = (id: string) => {
+  let el: any = document.getElementById(id)
+  if (el) {
+    el.focus()
+    if (el.value && el.setSelectionRange) {
+      let val = el.value
+      el.setSelectionRange(val.length, val.length)
+    }
   }
 }
 

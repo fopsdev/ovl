@@ -18,14 +18,14 @@ import {
 } from "./helpers"
 
 import { OvlFormState } from "../actions"
-import { ChangeValue, SetFocus } from "../helper"
+import { ChangeValueEventHelper, SetFocusEventHelper } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 
 export class OvlOption extends OvlControlBase {
   handleChange(e: Event, value: any, id: string) {
     e.stopPropagation()
     e.preventDefault()
-    ChangeValue(this, value, this.field.id)
+    ChangeValueEventHelper(this, value, this.field.id)
   }
   async getUI() {
     this.InitControl()
@@ -74,14 +74,15 @@ export class OvlOption extends OvlControlBase {
                     this.customInfo.customRowClassName
                   )}"
                   @click=${(e) => e.stopPropagation()}
-                  @focus=${() => SetFocus(this, field.id)}
+                  @focus=${() => SetFocusEventHelper(this, field.id)}
                   @change=${(e) =>
                     this.handleChange(
                       e,
                       listData[rowKey][list.valueField],
                       field.id + rowKey
                     )}
-                  @focusout=${(e) => SetFocus(this, field.id + rowKey)}
+                  @focusout=${(e) =>
+                    SetFocusEventHelper(this, field.id + rowKey)}
                   type="radio"
                   class="fd-radio ${GetOutlineValidationHint(field)}"
                   id="${field.id + rowKey}"

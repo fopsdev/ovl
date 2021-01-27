@@ -66,7 +66,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       }
       if (elementToFocus) {
         setTimeout(() => {
-          SetFocus(document.getElementById(elementToFocus))
+          SetFocus(elementToFocus)
         }, 10)
       }
     }

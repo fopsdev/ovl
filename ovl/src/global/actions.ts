@@ -374,6 +374,11 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
       history.pushState(null, null, document.URL)
     }
   })
+
+  if (OvlConfig.fetchDefaultParams === undefined) {
+    OvlConfig.fetchDefaultParams = { clientId: false, lang: false }
+  }
+
   ResetT()
   let currentLocation =
     window.location.hostname.toLowerCase() +

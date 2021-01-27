@@ -34,6 +34,11 @@ export type OvlConfigType = {
     languages: {}
     screens: {}
   }
+  // makes handling of server error message and sync stuff easier
+  fetchDefaultParams?: {
+    lang: boolean
+    clientId: boolean
+  }
   initialScreen?: OvlScreen
   apiUrl: Init
   /*actions that will be used from base but needs to be defined per app*/

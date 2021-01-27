@@ -8,14 +8,18 @@ import {
   GetOutlineValidationHint,
 } from "./helpers"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
-import { ChangeValue, RemoveFocus, SetFocus } from "../helper"
+import {
+  ChangeValueEventHelper,
+  RemoveFocusEventHelper,
+  SetFocusEventHelper,
+} from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 
 export class OvlTextArea extends OvlControlBase {
   handleChange(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-    ChangeValue(this, this.inputElement.value, this.field.id)
+    ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
   }
 
   async getUI() {
@@ -38,8 +42,8 @@ export class OvlTextArea extends OvlControlBase {
               this
             )}"
             @change=${(e) => this.handleChange(e)}
-            @focusout=${() => RemoveFocus(this, field.id)}
-            @focus=${() => SetFocus(this, field.id)}
+            @focusout=${() => RemoveFocusEventHelper(this, field.id)}
+            @focus=${() => SetFocusEventHelper(this, field.id)}
             class="fd-textarea ${GetInputClass(
               "textarea",
               field,
