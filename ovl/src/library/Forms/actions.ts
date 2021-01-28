@@ -105,6 +105,30 @@ export type ValidateSummaryResult = {
 //   [key: string]: ValidateFieldResult
 // }
 
+export type BuiltInValidationDisplayType = {
+  DataTypeValidation?: {
+    fieldDisplayType: FieldValidationDisplayType
+    summary?: {
+      displayType: SummaryValidationDisplayType
+      displayInSummaryAndOutlineRelatedFields?: boolean
+    }
+  }
+  SchemaValidation?: {
+    fieldDisplayType: FieldValidationDisplayType
+    summary?: {
+      displayType: SummaryValidationDisplayType
+      displayInSummaryAndOutlineRelatedFields?: boolean
+    }
+  }
+  ListValidation?: {
+    fieldDisplayType: FieldValidationDisplayType
+    summary?: {
+      displayType: SummaryValidationDisplayType
+      displayInSummaryAndOutlineRelatedFields?: boolean
+    }
+  }
+}
+
 export type OvlFormState = {
   dirty: boolean
   valid: boolean
@@ -122,29 +146,7 @@ export type OvlFormState = {
   viewHeaderCell?: ViewRowClassContent
   isInline?: boolean
   row?: any
-  builtInValidationDisplay?: {
-    DataTypeValidation: {
-      fieldDisplayType: FieldValidationDisplayType
-      summary?: {
-        displayType: SummaryValidationDisplayType
-        displayInSummaryAndOutlineRelatedFields?: boolean
-      }
-    }
-    SchemaValidation: {
-      fieldDisplayType: FieldValidationDisplayType
-      summary?: {
-        displayType: SummaryValidationDisplayType
-        displayInSummaryAndOutlineRelatedFields?: boolean
-      }
-    }
-    ListValidation: {
-      fieldDisplayType: FieldValidationDisplayType
-      summary?: {
-        displayType: SummaryValidationDisplayType
-        displayInSummaryAndOutlineRelatedFields?: boolean
-      }
-    }
-  }
+  builtInValidationDisplay?: BuiltInValidationDisplayType
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
@@ -162,6 +164,7 @@ export type InitForm = {
   tableDefId?: OvlTableDefIds
   isInline?: boolean
   row?: any
+  builtInValidationDisplay?: BuiltInValidationDisplayType
 }
 
 export type FormsState = { [key in OvlForm]: FormStatePerInstance }
@@ -664,6 +667,22 @@ export const InitForm: OvlAction<InitForm> = (
         },
       }
     }
+    if (formState.builtInValidationDisplay.DataTypeValidation === undefined) {
+      formState.builtInValidationDisplay.DataTypeValidation = {
+        fieldDisplayType: "WhenTouched",
+      }
+    }
+    if (formState.builtInValidationDisplay.SchemaValidation === undefined) {
+      formState.builtInValidationDisplay.SchemaValidation = {
+        fieldDisplayType: "WhenTouched",
+      }
+    }
+    if (formState.builtInValidationDisplay.ListValidation === undefined) {
+      formState.builtInValidationDisplay.ListValidation = {
+        fieldDisplayType: "WhenTouched",
+      }
+    }
+
     //</defaults>
 
     //formState.lastTouchedField = value.initialFocusElementId

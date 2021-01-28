@@ -33,6 +33,11 @@ import { CachedRendererData, GetRendererFn } from "./helpers"
 import { NavDef } from "./NavControl"
 import { CellClass } from "./Row"
 import { TableRowDef } from "./RowWrapper"
+import {
+  FieldValidationDisplayType,
+  SummaryValidationDisplayType,
+} from "../Forms/validators"
+import { BuiltInValidationDisplayType } from "../Forms/actions"
 
 export type SaveMode = "add" | "update"
 
@@ -195,6 +200,7 @@ export type OvlTableDef = {
         addTranslationKey: string
       }
       editType: "inline" | "big" | "custom"
+      builtInValidationDisplay?: BuiltInValidationDisplayType
     }
     view?: {
       customCaption?: { translationKey: string }

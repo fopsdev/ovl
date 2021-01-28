@@ -97,7 +97,6 @@ export type SummaryValidationDisplayType =
   | "Always"
 
 export type AddValidationType = {
-  type?: FieldValidationType
   textCode: { key: string; reps?: any[] }
   field: {
     field: Field
@@ -110,10 +109,9 @@ export type AddValidationType = {
 }
 
 export const AddValidation = (v: AddValidationType) => {
+  let formState: OvlFormState =
+    ovl.state.ovl.forms[v.field.field.formType][v.field.field.formId]
   // <set defaults>
-  if (v.type === undefined) {
-    v.type = "error"
-  }
   if (v.field.displayCond === undefined) {
     v.field.displayCond = "WhenTouched"
   }
@@ -144,8 +142,6 @@ export const AddValidation = (v: AddValidationType) => {
       displayType: fieldDisplayCond,
     })
   }
-  let formState: OvlFormState =
-    ovl.state.ovl.forms[v.field.field.formType][v.field.field.formId]
 
   if (v.summary) {
     // handle summary

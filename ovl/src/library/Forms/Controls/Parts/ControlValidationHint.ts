@@ -23,7 +23,6 @@ export class OvlValidationHint extends OvlBaseElement {
       return html`
         <div
           class="fd-form-message fd-form-message--error ovl-formcontrol-validation ovl-formcontrol-validation__${field.fieldKey} ${errors &&
-          field.watched &&
           !field.hasFocus &&
           !field.ui.readonly
             ? ""
