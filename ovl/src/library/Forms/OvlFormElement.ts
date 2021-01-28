@@ -10,6 +10,7 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { ColumnAlign } from "../Table/Table"
 import { OvlFormState } from "./actions"
 import { ListState } from "./Controls/ListControl"
+import { SetVisibleSummaryErrorKeys } from "./validators"
 
 export type FieldFormat =
   | "2digits"
@@ -83,7 +84,7 @@ export class OvlFormElement extends OvlBaseElement {
           formState: this.formState,
           fieldId: id,
         })
-
+        SetVisibleSummaryErrorKeys(this.formState)
         this.actions.ovl.internal.FocusField({
           formState: this.formState,
           fieldId: id,

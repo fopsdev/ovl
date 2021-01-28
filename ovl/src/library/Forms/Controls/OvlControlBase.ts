@@ -27,7 +27,7 @@ export class OvlControlBase extends OvlBaseElement {
     this.controlState = this.props(this.state)
 
     this.field = this.controlState.field
-    console.log("render:" + this.field.fieldKey)
+
     this.formState = this.state.ovl.forms[this.field.formType][
       this.field.formId
     ]

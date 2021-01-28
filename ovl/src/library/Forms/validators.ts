@@ -114,6 +114,9 @@ export const AddValidation = (v: AddValidationType) => {
   if (v.type === undefined) {
     v.type = "error"
   }
+  if (v.field.displayCond === undefined) {
+    v.field.displayCond = "WhenTouched"
+  }
   let fieldDisplayCond = v.field.displayCond
   if (v.summary) {
     if (v.summary.displayInSummaryAndOutlineRelatedFields === undefined) {
@@ -126,9 +129,7 @@ export const AddValidation = (v: AddValidationType) => {
       fieldDisplayCond = "OnlyOutline"
     }
   }
-  if (v.field.displayCond === undefined) {
-    v.field.displayCond = "WhenTouched"
-  }
+
   // </set defaults>
 
   // handle field
@@ -159,6 +160,7 @@ export const AddValidation = (v: AddValidationType) => {
         displayType: v.summary.displayCond,
       })
     }
+    SetVisibleSummaryErrorKeys(formState)
   }
   formState.valid = false
 }
@@ -180,6 +182,7 @@ export const AddSummaryValidation = (
     })
   }
   formState.valid = false
+  SetVisibleSummaryErrorKeys(formState)
 }
 
 export const RemoveSummaryValidation = (
@@ -189,19 +192,16 @@ export const RemoveSummaryValidation = (
   _removeSummaryValidation(formState, key)
 }
 
-const _removeSummaryValidation = (
-  formState: OvlFormState,
-  key: string,
-  mass: boolean = false
-) => {
+const _removeSummaryValidation = (formState: OvlFormState, key: string) => {
   let errorIndex = formState.validationResult.errors.findIndex(
     (f) => f.key.indexOf(key) > -1
   )
   if (errorIndex > -1) {
     formState.validationResult.errors.splice(errorIndex, 1)
   }
-  if (!!mass) {
-    _setFormValid(formState)
+  _setFormValid(formState)
+  if (!formState.valid) {
+    SetVisibleSummaryErrorKeys(formState)
   }
 }
 
@@ -232,16 +232,50 @@ export const RemoveAllValidationOfType = (
     let field = formState.fields[f]
     _removeFieldValidation(field, key, true)
   })
-  _removeSummaryValidation(formState, key, true)
-  _setFormValid(formState)
+  _removeSummaryValidation(formState, key)
   logState()
 }
 
 export const IsFieldValid = (field: Field) => {
   return field.validationResult.errors.length === 0
 }
-export const IsSummaryValid = (formState: OvlFormState) => {
-  return formState.validationResult.errors.length === 0
+
+export const SetVisibleSummaryErrorKeys = (formState: OvlFormState) => {
+  let errors = formState.validationResult.errors
+
+  let fields = formState.fields
+
+  let allUnWatchedFieldsErrorKeys: Set<string> = new Set()
+  Object.keys(fields)
+    .filter((f) => fields[f].watched === false)
+    .forEach((f) =>
+      fields[f].validationResult.errors.forEach((f2) => {
+        allUnWatchedFieldsErrorKeys.add(f2.key)
+      })
+    )
+
+  let allWatchedFieldsErrorKeys: Set<string> = new Set()
+  Object.keys(fields)
+    .filter((f) => fields[f].watched)
+    .forEach((f) =>
+      fields[f].validationResult.errors.forEach((f2) => {
+        allWatchedFieldsErrorKeys.add(f2.key)
+      })
+    )
+
+  let res1 = errors.filter(
+    (f) =>
+      f.displayType === "WhenAllRelatedFieldsTouched" &&
+      !allUnWatchedFieldsErrorKeys.has(f.key)
+  )
+
+  let res2 = errors.filter(
+    (f) =>
+      f.displayType === "WhenFirstFieldTouched" &&
+      allWatchedFieldsErrorKeys.has(f.key)
+  )
+  let res3 = errors.filter((f) => f.displayType === "Always")
+  formState.validationResult.visibleErrors = res1.concat(res2).concat(res3)
 }
 
 const _isFormValid = (formState: OvlFormState) => {
@@ -261,6 +295,10 @@ const _setFormValid = (formState?: OvlFormState, field?: Field) => {
   formState.valid = _isFormValid(formState)
 }
 
-export const SetFormValidFromNoValidate = (formState: OvlFormState) => {
-  _setFormValid(formState)
+// export const SetFormValidFromNoValidate = (formState: OvlFormState) => {
+//   _setFormValid(formState)
+// }
+
+export const HasVisibleSummaryErrors = (formState: OvlFormState) => {
+  return formState.validationResult.visibleErrors.length > 0
 }

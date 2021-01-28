@@ -44,7 +44,6 @@ import {
   AddValidation,
   FieldValidationDisplayType,
   FieldValidationType,
-  SetFormValidFromNoValidate,
   SummaryValidationDisplayType,
 } from "./validators"
 export { FillListControl }
@@ -86,6 +85,11 @@ export type ValidateResultErrors = {
   displayType: FieldValidationDisplayType
 }
 
+export type ValidateResultSummaryErrors = {
+  key: string
+  reps?: string[]
+  displayType: SummaryValidationDisplayType
+}
 export type ValidateResult = {
   // its just an array
   errors: ValidateResultErrors[]
@@ -93,11 +97,8 @@ export type ValidateResult = {
 
 export type ValidateSummaryResult = {
   // its just an array
-  errors: {
-    key: string
-    reps?: string[]
-    displayType: SummaryValidationDisplayType
-  }[]
+  visibleErrors: ValidateResultSummaryErrors[]
+  errors: ValidateResultSummaryErrors[]
 }
 
 // export type ValidationFieldResults = {
@@ -169,7 +170,7 @@ export const ResetForm: OvlAction<OvlFormState> = (value) => {
   value.dirty = false
   value.fields = JSON.parse(JSON.stringify(value.initFields, stringifyReplacer))
   value.valid = true
-  value.validationResult = { errors: [] }
+  value.validationResult = { errors: [], visibleErrors: [] }
   value.fieldToFocus = undefined
 }
 
@@ -647,7 +648,7 @@ export const InitForm: OvlAction<InitForm> = (
     let formState = formInstanceList[instanceId]
     //<defaults>
     if (formState.validationResult === undefined) {
-      formState.validationResult = { errors: [] }
+      formState.validationResult = { errors: [], visibleErrors: [] }
     }
 
     if (formState.builtInValidationDisplay === undefined) {
@@ -884,7 +885,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     field.dirty = true
     field.watched = true
     SetRowCellInformation(value.formState, actions, state)
-    SetFormValidFromNoValidate(value.formState)
+
     return
   }
 
