@@ -12,19 +12,24 @@ export class OvlValidationHint extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
       let field = this.field.field
-      let hints = field.validationResult.errors
+      let errors = field.validationResult.errors
+        .filter(
+          (f) =>
+            f.displayType === "Always" ||
+            (f.displayType === "WhenTouched" && field.watched)
+        )
         .map((m) => T(m.key, m.reps))
         .join(", ")
       return html`
         <div
-          class="fd-form-message fd-form-message--error ovl-formcontrol-validation ovl-formcontrol-validation__${field.fieldKey} ${hints &&
+          class="fd-form-message fd-form-message--error ovl-formcontrol-validation ovl-formcontrol-validation__${field.fieldKey} ${errors &&
           field.watched &&
           !field.hasFocus &&
           !field.ui.readonly
             ? ""
             : "hide"}"
         >
-          ${hints}
+          ${errors}
         </div>
       `
     })

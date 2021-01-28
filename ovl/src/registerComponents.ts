@@ -21,6 +21,7 @@ import { TableRowWrapper } from "./library/Table/RowWrapper"
 import { TableHeader } from "./library/Table/Table"
 import { OvlCustomValueHint } from "./library/Forms/Controls/Parts/ControlCustomValueHint"
 import { OvlValidationHint } from "./library/Forms/Controls/Parts/ControlValidationHint"
+import { OvlFormValidationHint } from "./library/Forms/Controls/FormValidationHint"
 import { OvlControlLabel } from "./library/Forms/Controls/Parts/ControlLabel"
 
 // don't forget to add the display block in css - file
@@ -48,5 +49,6 @@ export const defineElements = () => {
   customElements.define("ovl-snack", OvlSnack)
   customElements.define("ovl-controlcustomhint", OvlCustomValueHint)
   customElements.define("ovl-controlvalidationhint", OvlValidationHint)
+  customElements.define("ovl-formvalidationhint", OvlFormValidationHint)
   customElements.define("ovl-controllabel", OvlControlLabel)
 }

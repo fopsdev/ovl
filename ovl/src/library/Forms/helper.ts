@@ -1,5 +1,5 @@
 import { getDisplayValue } from "../Table/helpers"
-import { FieldValueMap, ValidateFieldResult } from "./actions"
+import { FieldValueMap, ValidateResult } from "./actions"
 import { GetListDisplayValue, GetRowFromFormState } from "./Controls/helpers"
 import { Schema, FormField } from "./OvlFormElement"
 

@@ -40,6 +40,13 @@ import {
 import { OvlAction } from "../../index"
 import { getDisplayValue, getFormFieldsFromColumns } from "../Table/helpers"
 import { OvlTableDefIds } from "../../index"
+import {
+  AddValidation,
+  FieldValidationDisplayType,
+  FieldValidationType,
+  SetFormValidFromNoValidate,
+  SummaryValidationDisplayType,
+} from "./validators"
 export { FillListControl }
 
 export type Field = {
@@ -50,7 +57,7 @@ export type Field = {
   dirty: boolean
   watched: boolean
   hasFocus?: boolean
-  validationResult: ValidateFieldResult
+  validationResult: ValidateResult
   id: string
   formType: string
   formId: string
@@ -68,20 +75,29 @@ export type Field = {
     autocomplete?: boolean
     visible?: "true" | "false" | "fadeIn" | "fadeOut" | "fadeOutHide"
   }
-
   previousConvertedValue: any
 }
 
 export type FieldValueMap = { [key: string]: Field }
 
-export type ValidateFieldResultMap = {
-  valid: boolean
-  validationMsg: string
+export type ValidateResultErrors = {
+  key: string
+  reps?: string[]
+  displayType: FieldValidationDisplayType
 }
 
-export type ValidateFieldResult = {
-  // its just an array with string errors. if its empty tere are no validation errors
-  errors: { key: string; reps?: string[] }[]
+export type ValidateResult = {
+  // its just an array
+  errors: ValidateResultErrors[]
+}
+
+export type ValidateSummaryResult = {
+  // its just an array
+  errors: {
+    key: string
+    reps?: string[]
+    displayType: SummaryValidationDisplayType
+  }[]
 }
 
 // export type ValidationFieldResults = {
@@ -98,12 +114,36 @@ export type OvlFormState = {
   namespace: string
   schema: { [key: string]: Schema }
   fieldToFocus: string
+  validationResult?: ValidateSummaryResult
   formShowed?: boolean
   tableDefId?: OvlTableDefIds
   viewRowCell?: ViewRowClassContent
   viewHeaderCell?: ViewRowClassContent
   isInline?: boolean
   row?: any
+  builtInValidationDisplay?: {
+    DataTypeValidation: {
+      fieldDisplayType: FieldValidationDisplayType
+      summary?: {
+        displayType: SummaryValidationDisplayType
+        displayInSummaryAndOutlineRelatedFields?: boolean
+      }
+    }
+    SchemaValidation: {
+      fieldDisplayType: FieldValidationDisplayType
+      summary?: {
+        displayType: SummaryValidationDisplayType
+        displayInSummaryAndOutlineRelatedFields?: boolean
+      }
+    }
+    ListValidation: {
+      fieldDisplayType: FieldValidationDisplayType
+      summary?: {
+        displayType: SummaryValidationDisplayType
+        displayInSummaryAndOutlineRelatedFields?: boolean
+      }
+    }
+  }
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
@@ -129,6 +169,7 @@ export const ResetForm: OvlAction<OvlFormState> = (value) => {
   value.dirty = false
   value.fields = JSON.parse(JSON.stringify(value.initFields, stringifyReplacer))
   value.valid = true
+  value.validationResult = { errors: [] }
   value.fieldToFocus = undefined
 }
 
@@ -159,6 +200,15 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
   let res = value.validationResult
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
+  let v = value.formState.builtInValidationDisplay.DataTypeValidation
+  let summary
+  if (v.summary) {
+    summary = {
+      displayInSummaryAndOutlineRelatedFields:
+        v.summary.displayInSummaryAndOutlineRelatedFields,
+      displayCond: v.summary.displayType,
+    }
+  }
   switch (type) {
     case "text":
       field.convertedValue = val
@@ -250,8 +300,13 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           if (!resp) {
             field.convertedValue = ""
             field.value = field.value
-            field.validationResult.errors.push({
-              key: "AppValidationInvalidDateFormat",
+            AddValidation({
+              field: {
+                field,
+                displayCond: v.fieldDisplayType,
+              },
+              summary,
+              textCode: { key: "AppValidationInvalidDateFormat" },
             })
           } else {
             field.convertedValue = newDate
@@ -273,8 +328,13 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
 
           field.convertedValue = parsedVal
         } else {
-          field.validationResult.errors.push({
-            key: "AppValidationInvalidNumberFormat",
+          AddValidation({
+            field: {
+              field,
+              displayCond: v.fieldDisplayType,
+            },
+            summary,
+            textCode: { key: "AppValidationInvalidNumberFormat" },
           })
         }
       } else {
@@ -301,8 +361,13 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           }
           field.convertedValue = parsedVal
         } else {
-          field.validationResult.errors.push({
-            key: "AppValidationInvalidNumberFormat",
+          AddValidation({
+            field: {
+              field,
+              displayCond: v.fieldDisplayType,
+            },
+            summary,
+            textCode: { key: "AppValidationInvalidNumberFormat" },
           })
         }
       } else {
@@ -324,12 +389,31 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
     let val = value.newVal
     let res = value.validationResult
     // check for size
+
     if (schema) {
+      let v = value.formState.builtInValidationDisplay.SchemaValidation
+      let summary
+      if (v.summary) {
+        summary = {
+          displayInSummaryAndOutlineRelatedFields:
+            v.summary.displayInSummaryAndOutlineRelatedFields,
+          displayCond: v.summary.displayType,
+        }
+      }
+
       if (type === "text") {
         if (value.newVal) {
           if (value.newVal.length > schema.maxLength) {
-            field.validationResult.errors.push({
-              key: "Maximum " + schema.maxLength.toString() + " chars!",
+            AddValidation({
+              field: {
+                field,
+                displayCond: v.fieldDisplayType,
+              },
+              summary,
+              textCode: {
+                key: "AppValidationSchemaMaxChars",
+                reps: [schema.maxLength.toString()],
+              },
             })
             return
           }
@@ -337,7 +421,16 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
       } else {
         if (!value.newVal) {
           if (!schema.nullable) {
-            field.validationResult.errors.push({ key: "Field cannot be null!" })
+            AddValidation({
+              field: {
+                field,
+                displayCond: v.fieldDisplayType,
+              },
+              summary,
+              textCode: {
+                key: "AppValidationSchemaNotNull",
+              },
+            })
             return
           }
         }
@@ -358,8 +451,28 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   if (list.acceptEmpty && !list.acceptOnlyListValues) {
     return
   }
+  let v = value.formState.builtInValidationDisplay.ListValidation
+  let summary
+  if (v.summary) {
+    summary = {
+      displayInSummaryAndOutlineRelatedFields:
+        v.summary.displayInSummaryAndOutlineRelatedFields,
+      displayCond: v.summary.displayType,
+    }
+  }
+
   if (!list.acceptEmpty && !value.newVal) {
-    field.validationResult.errors.push({ key: "AppSelectValidValue" })
+    AddValidation({
+      field: {
+        field,
+        displayCond: v.fieldDisplayType,
+      },
+      summary,
+      textCode: {
+        key: "AppValidationListNotEmpty",
+      },
+    })
+
     return
   }
   if (list.acceptOnlyListValues && value.newVal) {
@@ -395,7 +508,16 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
           )
         }).length < 1
       ) {
-        field.validationResult.errors.push({ key: "AppNeedsToBeListEntry" })
+        AddValidation({
+          field: {
+            field,
+            displayCond: v.fieldDisplayType,
+          },
+          summary,
+          textCode: {
+            key: "AppValidationListNeedsToBeEntry",
+          },
+        })
         return
       }
     }
@@ -475,7 +597,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
       }
     }
   })
-  actions.ovl.internal.SetFormValid(value)
+  //actions.ovl.internal.SetFormValid(value)
 }
 
 export const InitForm: OvlAction<InitForm> = (
@@ -523,6 +645,25 @@ export const InitForm: OvlAction<InitForm> = (
     }
 
     let formState = formInstanceList[instanceId]
+    //<defaults>
+    if (formState.validationResult === undefined) {
+      formState.validationResult = { errors: [] }
+    }
+
+    if (formState.builtInValidationDisplay === undefined) {
+      formState.builtInValidationDisplay = {
+        DataTypeValidation: {
+          fieldDisplayType: "WhenTouched",
+        },
+        SchemaValidation: {
+          fieldDisplayType: "WhenTouched",
+        },
+        ListValidation: {
+          fieldDisplayType: "WhenTouched",
+        },
+      }
+    }
+    //</defaults>
 
     //formState.lastTouchedField = value.initialFocusElementId
     // initial validation of all fields
@@ -575,7 +716,7 @@ export const InitForm: OvlAction<InitForm> = (
       }
     })
     SetRowCellInformation(formState, actions, state)
-    actions.ovl.internal.SetFormValid(formState)
+    //actions.ovl.internal.SetFormValid(formState)
     // save a copy of validationresults (as well of fields, see json(..) above)
     // because when resetting the form, this should be inital state and there will be no re-initing
     formState.initFields = JSON.parse(JSON.stringify(fields), stringifyReplacer)
@@ -602,7 +743,7 @@ export const InitForm: OvlAction<InitForm> = (
 
 export type ValidateFieldType = {
   fieldKey: string
-  validationResult: ValidateFieldResult
+  validationResult: ValidateResult
   oldVal: any
   newVal: any
   correctedValue: any
@@ -742,9 +883,8 @@ export const ChangeField: OvlAction<ChangeField> = (
     field.validationResult.errors = []
     field.dirty = true
     field.watched = true
-    console.log("tschagaa")
     SetRowCellInformation(value.formState, actions, state)
-    actions.ovl.internal.SetFormValid(value.formState)
+    SetFormValidFromNoValidate(value.formState)
     return
   }
 
@@ -831,14 +971,15 @@ export const ChangeField: OvlAction<ChangeField> = (
     }
   }
 
-  actions.ovl.internal.SetFormValid(value.formState)
+  //actions.ovl.internal.SetFormValid(value.formState)
 }
 
-export const SetFormValid: OvlAction<OvlFormState> = (value) => {
-  value.valid = !Object.keys(value.fields).some(
-    (k) => value.fields[k].validationResult.errors.length !== 0
-  )
-}
+// export const SetFormValid: OvlAction<OvlFormState> = (value) => {
+//   value.valid =
+//     !Object.keys(value.fields).some(
+//       (k) => value.fields[k].validationResult.errors.length !== 0
+//     ) && value.validationResult.errors.length !== 0
+// }
 
 export const GetFormValidationErrors = (formState: OvlFormState): string[] => {
   let res: string[] = []
@@ -846,5 +987,8 @@ export const GetFormValidationErrors = (formState: OvlFormState): string[] => {
     let field = formState.fields[k]
     res = res.concat(field.validationResult.errors.map((m) => T(m.key, m.reps)))
   })
+  res = res.concat(
+    formState.validationResult.errors.map((m) => T(m.key, m.reps))
+  )
   return res
 }
