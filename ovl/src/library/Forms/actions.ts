@@ -127,6 +127,13 @@ export type BuiltInValidationDisplayType = {
       displayInSummaryAndOutlineRelatedFields?: boolean
     }
   }
+  CustomValidationDefaults?: {
+    fieldDisplayType: FieldValidationDisplayType
+    summary?: {
+      displayType: SummaryValidationDisplayType
+      displayInSummaryAndOutlineRelatedFields?: boolean
+    }
+  }
 }
 
 export type OvlFormState = {
@@ -665,6 +672,9 @@ export const InitForm: OvlAction<InitForm> = (
         ListValidation: {
           fieldDisplayType: "WhenTouched",
         },
+        CustomValidationDefaults: {
+          fieldDisplayType: "WhenTouched",
+        },
       }
     }
     if (formState.builtInValidationDisplay.DataTypeValidation === undefined) {
@@ -679,6 +689,13 @@ export const InitForm: OvlAction<InitForm> = (
     }
     if (formState.builtInValidationDisplay.ListValidation === undefined) {
       formState.builtInValidationDisplay.ListValidation = {
+        fieldDisplayType: "WhenTouched",
+      }
+    }
+    if (
+      formState.builtInValidationDisplay.CustomValidationDefaults === undefined
+    ) {
+      formState.builtInValidationDisplay.CustomValidationDefaults = {
         fieldDisplayType: "WhenTouched",
       }
     }
