@@ -107,31 +107,36 @@ export type ValidateSummaryResult = {
 
 export type BuiltInValidationDisplayType = {
   DataTypeValidation?: {
-    fieldDisplayType: FieldValidationDisplayType
+    field: {
+      displayType: FieldValidationDisplayType
+    }
     summary?: {
       displayType: SummaryValidationDisplayType
-      displayInSummaryAndOutlineRelatedFields?: boolean
     }
   }
   SchemaValidation?: {
-    fieldDisplayType: FieldValidationDisplayType
+    field: {
+      displayType: FieldValidationDisplayType
+    }
     summary?: {
       displayType: SummaryValidationDisplayType
-      displayInSummaryAndOutlineRelatedFields?: boolean
     }
   }
   ListValidation?: {
-    fieldDisplayType: FieldValidationDisplayType
+    field: {
+      displayType: FieldValidationDisplayType
+    }
     summary?: {
       displayType: SummaryValidationDisplayType
-      displayInSummaryAndOutlineRelatedFields?: boolean
     }
   }
   CustomValidationDefaults?: {
-    fieldDisplayType: FieldValidationDisplayType
+    field: {
+      displayType: FieldValidationDisplayType
+      displayTypeIfSummary: FieldValidationDisplayType
+    }
     summary?: {
       displayType: SummaryValidationDisplayType
-      displayInSummaryAndOutlineRelatedFields?: boolean
     }
   }
 }
@@ -215,8 +220,6 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
   let summary
   if (v.summary) {
     summary = {
-      displayInSummaryAndOutlineRelatedFields:
-        v.summary.displayInSummaryAndOutlineRelatedFields,
       displayCond: v.summary.displayType,
     }
   }
@@ -314,7 +317,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
             AddValidation({
               field: {
                 field,
-                displayCond: v.fieldDisplayType,
+                displayCond: v.field.displayType,
               },
               summary,
               textCode: { key: "AppValidationInvalidDateFormat" },
@@ -342,7 +345,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           AddValidation({
             field: {
               field,
-              displayCond: v.fieldDisplayType,
+              displayCond: v.field.displayType,
             },
             summary,
             textCode: { key: "AppValidationInvalidNumberFormat" },
@@ -375,7 +378,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           AddValidation({
             field: {
               field,
-              displayCond: v.fieldDisplayType,
+              displayCond: v.field.displayType,
             },
             summary,
             textCode: { key: "AppValidationInvalidNumberFormat" },
@@ -406,8 +409,6 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
       let summary
       if (v.summary) {
         summary = {
-          displayInSummaryAndOutlineRelatedFields:
-            v.summary.displayInSummaryAndOutlineRelatedFields,
           displayCond: v.summary.displayType,
         }
       }
@@ -418,7 +419,7 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
             AddValidation({
               field: {
                 field,
-                displayCond: v.fieldDisplayType,
+                displayCond: v.field.displayType,
               },
               summary,
               textCode: {
@@ -435,7 +436,7 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
             AddValidation({
               field: {
                 field,
-                displayCond: v.fieldDisplayType,
+                displayCond: v.field.displayType,
               },
               summary,
               textCode: {
@@ -466,8 +467,6 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   let summary
   if (v.summary) {
     summary = {
-      displayInSummaryAndOutlineRelatedFields:
-        v.summary.displayInSummaryAndOutlineRelatedFields,
       displayCond: v.summary.displayType,
     }
   }
@@ -476,7 +475,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     AddValidation({
       field: {
         field,
-        displayCond: v.fieldDisplayType,
+        displayCond: v.field.displayType,
       },
       summary,
       textCode: {
@@ -522,7 +521,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
         AddValidation({
           field: {
             field,
-            displayCond: v.fieldDisplayType,
+            displayCond: v.field.displayType,
           },
           summary,
           textCode: {
@@ -664,39 +663,45 @@ export const InitForm: OvlAction<InitForm> = (
     if (formState.builtInValidationDisplay === undefined) {
       formState.builtInValidationDisplay = {
         DataTypeValidation: {
-          fieldDisplayType: "WhenTouched",
+          field: { displayType: "WhenTouched" },
         },
         SchemaValidation: {
-          fieldDisplayType: "WhenTouched",
+          field: { displayType: "WhenTouched" },
         },
         ListValidation: {
-          fieldDisplayType: "WhenTouched",
+          field: { displayType: "WhenTouched" },
         },
         CustomValidationDefaults: {
-          fieldDisplayType: "WhenTouched",
+          field: {
+            displayType: "WhenTouched",
+            displayTypeIfSummary: "OnlyOutline",
+          },
         },
       }
     }
     if (formState.builtInValidationDisplay.DataTypeValidation === undefined) {
       formState.builtInValidationDisplay.DataTypeValidation = {
-        fieldDisplayType: "WhenTouched",
+        field: { displayType: "WhenTouched" },
       }
     }
     if (formState.builtInValidationDisplay.SchemaValidation === undefined) {
       formState.builtInValidationDisplay.SchemaValidation = {
-        fieldDisplayType: "WhenTouched",
+        field: { displayType: "WhenTouched" },
       }
     }
     if (formState.builtInValidationDisplay.ListValidation === undefined) {
       formState.builtInValidationDisplay.ListValidation = {
-        fieldDisplayType: "WhenTouched",
+        field: { displayType: "WhenTouched" },
       }
     }
     if (
       formState.builtInValidationDisplay.CustomValidationDefaults === undefined
     ) {
       formState.builtInValidationDisplay.CustomValidationDefaults = {
-        fieldDisplayType: "WhenTouched",
+        field: {
+          displayType: "WhenTouched",
+          displayTypeIfSummary: "OnlyOutline",
+        },
       }
     }
 

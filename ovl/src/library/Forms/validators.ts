@@ -103,7 +103,6 @@ export type AddValidationType = {
     displayCond?: FieldValidationDisplayType
   }
   summary?: {
-    displayInSummaryAndOutlineRelatedFields?: boolean
     displayCond?: SummaryValidationDisplayType
   }
 }
@@ -113,21 +112,21 @@ export const AddValidation = (v: AddValidationType) => {
     ovl.state.ovl.forms[v.field.field.formType][v.field.field.formId]
   // <set defaults>
   if (v.field.displayCond === undefined) {
-    v.field.displayCond = "WhenTouched"
+    if (v.summary) {
+      v.field.displayCond =
+        formState.builtInValidationDisplay.CustomValidationDefaults.field.displayTypeIfSummary
+    } else {
+      v.field.displayCond =
+        formState.builtInValidationDisplay.CustomValidationDefaults.field.displayType
+    }
   }
   let fieldDisplayCond = v.field.displayCond
   if (v.summary) {
-    if (v.summary.displayInSummaryAndOutlineRelatedFields === undefined) {
-      v.summary.displayInSummaryAndOutlineRelatedFields = true
-    }
     if (v.summary.displayCond === undefined) {
-      v.summary.displayCond = "WhenFirstFieldTouched"
-    }
-    if (v.summary.displayInSummaryAndOutlineRelatedFields) {
-      fieldDisplayCond = "OnlyOutline"
+      v.summary.displayCond =
+        formState.builtInValidationDisplay.CustomValidationDefaults.summary.displayType
     }
   }
-
   // </set defaults>
 
   // handle field
