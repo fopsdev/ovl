@@ -97,6 +97,7 @@ export type SummaryValidationDisplayType =
   | "Always"
 
 export type AddValidationType = {
+  //isGrouped?: boolean
   textCode: { key: string; reps?: any[] }
   field: {
     field: Field
@@ -144,16 +145,26 @@ export const AddValidation = (v: AddValidationType) => {
 
   if (v.summary) {
     // handle summary
-    if (
-      !formState.validationResult.errors.some(
-        (f) => f.key.indexOf(v.textCode.key) > -1
-      )
-    ) {
+    let idx = formState.validationResult.errors.findIndex(
+      (f) => f.key === v.textCode.key
+    )
+    if (idx < 0) {
       formState.validationResult.errors.push({
         key: v.textCode.key,
         reps: v.textCode.reps,
         displayType: v.summary.displayCond,
+        fieldKeys: [v.field.field.fieldKey],
       })
+    } else {
+      let err = formState.validationResult.errors[idx]
+      err.reps = v.textCode.reps
+      err.displayType = v.summary.displayCond
+      //if (v.isGrouped) {
+      if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
+        //console.log(v.field.field.fieldKey)
+        err.fieldKeys.push(v.field.field.fieldKey)
+      }
+      //}
     }
     SetVisibleSummaryErrorKeys(formState)
   }
@@ -176,6 +187,7 @@ export const AddSummaryValidation = (
       key: key,
       reps: reps,
       displayType,
+      fieldKeys: [],
     })
   }
   formState.valid = false
@@ -191,7 +203,7 @@ export const RemoveSummaryValidation = (
 
 const _removeSummaryValidation = (formState: OvlFormState, key: string) => {
   let errorIndex = formState.validationResult.errors.findIndex(
-    (f) => f.key.indexOf(key) > -1
+    (f) => f.key === key
   )
   if (errorIndex > -1) {
     formState.validationResult.errors.splice(errorIndex, 1)
@@ -210,12 +222,24 @@ const _removeFieldValidation = (
   key: string,
   mass: boolean = false
 ) => {
-  let errorIndex = field.validationResult.errors.findIndex(
-    (f) => f.key.indexOf(key) > -1
-  )
+  let errorIndex = field.validationResult.errors.findIndex((f) => f.key === key)
   if (errorIndex > -1) {
     field.validationResult.errors.splice(errorIndex, 1)
   }
+
+  // remove it as well from the summary fieldKeys list if there
+  let formState: OvlFormState =
+    ovl.state.ovl.forms[field.formType][field.formId]
+  let errors = formState.validationResult.errors
+  errors
+    .filter((f) => f.key === key)
+    .forEach((f) => {
+      let idx = f.fieldKeys.findIndex((f) => f === field.fieldKey)
+      if (idx > -1) {
+        f.fieldKeys.splice(idx, 1)
+      }
+    })
+
   if (!!mass) {
     _setFormValid(undefined, field)
   }
@@ -239,11 +263,16 @@ export const IsFieldValid = (field: Field) => {
 
 export const SetVisibleSummaryErrorKeys = (formState: OvlFormState) => {
   let errors = formState.validationResult.errors
-
+  let fieldsToCheck: string[] = []
+  errors.forEach((e) =>
+    e.fieldKeys.forEach((f) => {
+      fieldsToCheck.push(f)
+    })
+  )
+  //console.log(fieldsToCheck)
   let fields = formState.fields
-
   let allUnWatchedFieldsErrorKeys: Set<string> = new Set()
-  Object.keys(fields)
+  fieldsToCheck
     .filter((f) => fields[f].watched === false)
     .forEach((f) =>
       fields[f].validationResult.errors.forEach((f2) => {
@@ -252,7 +281,7 @@ export const SetVisibleSummaryErrorKeys = (formState: OvlFormState) => {
     )
 
   let allWatchedFieldsErrorKeys: Set<string> = new Set()
-  Object.keys(fields)
+  fieldsToCheck
     .filter((f) => fields[f].watched)
     .forEach((f) =>
       fields[f].validationResult.errors.forEach((f2) => {
@@ -265,7 +294,7 @@ export const SetVisibleSummaryErrorKeys = (formState: OvlFormState) => {
       f.displayType === "WhenAllRelatedFieldsTouched" &&
       !allUnWatchedFieldsErrorKeys.has(f.key)
   )
-
+  //console.log(res1)
   let res2 = errors.filter(
     (f) =>
       f.displayType === "WhenFirstFieldTouched" &&

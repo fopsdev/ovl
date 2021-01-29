@@ -88,6 +88,7 @@ export type ValidateResultErrors = {
 export type ValidateResultSummaryErrors = {
   key: string
   reps?: string[]
+  fieldKeys: string[]
   displayType: SummaryValidationDisplayType
 }
 export type ValidateResult = {
