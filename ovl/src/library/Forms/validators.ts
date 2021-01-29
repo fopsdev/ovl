@@ -113,73 +113,83 @@ export type AddValidationType = {
   }
 }
 
+export const AddValidationFromBuiltinValidation = (v: AddValidationType) => {
+  _addValidation(v, "BuiltIn")
+}
+
 export const AddValidation = (v: AddValidationType) => {
+  _addValidation(v, "Custom")
+}
+
+const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
   let formState: OvlFormState =
     ovl.state.ovl.forms[v.field.field.formType][v.field.field.formId]
-  // <set defaults>
-  if (v.field.displayCond === undefined) {
-    if (v.summary) {
-      v.field.displayCond =
-        formState.builtInValidationDisplay.customValidationDefaults.field.displayTypeIfSummary
-    } else {
-      v.field.displayCond =
-        formState.builtInValidationDisplay.customValidationDefaults.field.displayType
-    }
-  }
   let fieldDisplayCond = v.field.displayCond
-  if (v.summary) {
-    if (v.summary.displayCond === undefined) {
-      v.summary.displayCond =
-        formState.builtInValidationDisplay.customValidationDefaults.summary.displayType
+  if (type === "Custom") {
+    // <set defaults>
+    if (v.field.displayCond === undefined) {
+      if (v.summary) {
+        v.field.displayCond =
+          formState.builtInValidationDisplay.customValidationDefaults.field.displayTypeIfSummary
+      } else {
+        v.field.displayCond =
+          formState.builtInValidationDisplay.customValidationDefaults.field.displayType
+      }
     }
-    if (!v.summary.msg) {
-      v.summary.msg = v.msg
+
+    if (v.summary) {
+      if (v.summary.displayCond === undefined) {
+        v.summary.displayCond =
+          formState.builtInValidationDisplay.customValidationDefaults.summary.displayType
+      }
+      if (!v.summary.msg) {
+        v.summary.msg = v.msg
+      }
     }
   }
   // </set defaults>
-
+  if (type === "BuiltIn") {
+    debugger
+  }
   let key = v.msg.translationKey
   if (!v.isGrouped) {
     key += v.field.field.fieldKey
   }
 
   // handle field
-  if (
-    !v.field.field.validationResult.errors.some(
-      (f) => f.translationKey.indexOf(v.msg.translationKey) > -1
-    )
-  ) {
+  let fieldIdx = v.field.field.validationResult.errors.findIndex(
+    (f) => f.key === key
+  )
+  if (fieldIdx < 0) {
     v.field.field.validationResult.errors.push({
       key,
       translationKey: v.msg.translationKey,
       translationReps: v.msg.translationReps,
       displayType: fieldDisplayCond,
     })
+  }
+  // handle summary
+  if (v.summary) {
+    let idx = formState.validationResult.errors.findIndex((f) => f.key === key)
+    if (idx < 0) {
+      formState.validationResult.errors.push({
+        key,
+        translationKey: v.summary.msg.translationKey,
+        translationReps: v.summary.msg.translationReps,
+        displayType: v.summary.displayCond,
+        fieldKeys: [v.field.field.fieldKey],
+      })
+    } else {
+      let err = formState.validationResult.errors[idx]
+      err.translationReps = v.msg.translationReps
+      err.displayType = v.summary.displayCond
 
-    // handle summary
-    if (v.summary) {
-      let idx = formState.validationResult.errors.findIndex(
-        (f) => f.key === key
-      )
-      if (idx < 0) {
-        formState.validationResult.errors.push({
-          key,
-          translationKey: v.summary.msg.translationKey,
-          translationReps: v.summary.msg.translationReps,
-          displayType: v.summary.displayCond,
-          fieldKeys: [v.field.field.fieldKey],
-        })
-      } else {
-        let err = formState.validationResult.errors[idx]
-        err.translationReps = v.msg.translationReps
-        err.displayType = v.summary.displayCond
-
-        if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
-          err.fieldKeys.push(v.field.field.fieldKey)
-        }
+      if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
+        err.fieldKeys.push(v.field.field.fieldKey)
       }
     }
   }
+
   SetVisibleSummaryErrorKeys(formState)
   formState.valid = false
 }

@@ -1,6 +1,7 @@
 import {
   getDateValue,
   getDecimalValue,
+  logState,
   resolvePath,
   stringifyReplacer,
   T,
@@ -31,7 +32,7 @@ import {
 } from "../Table/Table"
 import { FillListControl } from "./Controls/actions"
 import { ListState } from "./Controls/ListControl"
-import { getFormFields } from "./helper"
+import { getFormFields, RemoveFocusEventHelper } from "./helper"
 import { DataType, FieldFormat, FormField, Schema } from "./OvlFormElement"
 import {
   getColumnDefsFromFormState,
@@ -42,8 +43,10 @@ import { getDisplayValue, getFormFieldsFromColumns } from "../Table/helpers"
 import { OvlTableDefIds } from "../../index"
 import {
   AddValidation,
+  AddValidationFromBuiltinValidation,
   FieldValidationDisplayType,
   FieldValidationType,
+  RemoveFieldValidation,
   SetFormValid,
   SummaryValidationDisplayType,
 } from "./validators"
@@ -110,38 +113,30 @@ export type ValidateSummaryResult = {
 // }
 
 export type BuiltInValidationDisplayType = {
-  dataTypeValidation?: {
-    field: {
-      displayType: FieldValidationDisplayType
-    }
-    summary?: {
-      displayType: SummaryValidationDisplayType
-    }
+  dataTypeValidation?: ValidationSettingsType
+  schemaValidation?: ValidationSettingsType
+  listValidation?: ValidationSettingsType
+  customValidationDefaults?: CustomValidationSettingsType
+}
+
+export type CustomValidationSettingsType = {
+  field: {
+    displayType: FieldValidationDisplayType
+    displayTypeIfSummary: FieldValidationDisplayType
   }
-  schemaValidation?: {
-    field: {
-      displayType: FieldValidationDisplayType
-    }
-    summary?: {
-      displayType: SummaryValidationDisplayType
-    }
+  summary?: {
+    displayType: SummaryValidationDisplayType
   }
-  listValidation?: {
-    field: {
-      displayType: FieldValidationDisplayType
-    }
-    summary?: {
-      displayType: SummaryValidationDisplayType
-    }
+}
+
+export type ValidationSettingsType = {
+  isGrouped?: boolean
+  field: {
+    displayType: FieldValidationDisplayType
   }
-  customValidationDefaults?: {
-    field: {
-      displayType: FieldValidationDisplayType
-      displayTypeIfSummary: FieldValidationDisplayType
-    }
-    summary?: {
-      displayType: SummaryValidationDisplayType
-    }
+  summary?: {
+    displayType: SummaryValidationDisplayType
+    msg?: { translationKey: string }
   }
 }
 
@@ -473,21 +468,25 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     summary = {
       displayCond: v.summary.displayType,
     }
+    if (v.summary.msg) {
+      summary.msg = { translationKey: v.summary.msg.translationKey }
+    }
   }
 
   if (!list.acceptEmpty && !value.newVal) {
-    AddValidation({
+    AddValidationFromBuiltinValidation({
+      isGrouped: v.isGrouped,
       field: {
         field,
         displayCond: v.field.displayType,
       },
       summary,
-      msg: {
-        translationKey: "AppValidationListNotEmpty",
-      },
+      msg: { translationKey: "AppValidationListNotEmpty" },
     })
 
     return
+  } else {
+    RemoveFieldValidation(field, "AppValidationListNotEmpty")
   }
   if (list.acceptOnlyListValues && value.newVal) {
     // get a handy row object for FieldChanged hooks
@@ -522,17 +521,19 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
           )
         }).length < 1
       ) {
-        AddValidation({
+        AddValidationFromBuiltinValidation({
+          isGrouped: v.isGrouped,
           field: {
             field,
             displayCond: v.field.displayType,
           },
           summary,
-          msg: {
-            translationKey: "AppValidationListNeedsToBeEntry",
-          },
+          msg: { translationKey: "AppValidationListNeedsToBeEntry" },
         })
+
         return
+      } else {
+        RemoveFieldValidation(field, "AppValidationListNeedsToBeEntry")
       }
     }
   }
@@ -614,7 +615,23 @@ export const ValidateForm: OvlAction<OvlFormState> = (
   SetFormValid(value)
   //actions.ovl.internal.SetFormValid(value)
 }
-
+const applyValidationSettings = (
+  source: ValidationSettingsType,
+  dest: ValidationSettingsType
+) => {
+  if (source) {
+    if (source.isGrouped !== undefined) {
+      dest.isGrouped = source.isGrouped
+    }
+    dest.field.displayType = source.field.displayType
+    if (source.summary) {
+      dest.summary = { displayType: source.summary.displayType }
+      if (source.summary.msg) {
+        dest.summary.msg = { translationKey: source.summary.msg.translationKey }
+      }
+    }
+  }
+}
 export const InitForm: OvlAction<InitForm> = (
   value,
   { state, actions, effects }
@@ -709,8 +726,30 @@ export const InitForm: OvlAction<InitForm> = (
         },
       }
     }
-
     //</defaults>
+
+    if (value.builtInValidationDisplay) {
+      let source = value.builtInValidationDisplay.listValidation
+      let dest = formState.builtInValidationDisplay.listValidation
+      applyValidationSettings(source, dest)
+      source = value.builtInValidationDisplay.dataTypeValidation
+      dest = formState.builtInValidationDisplay.dataTypeValidation
+      applyValidationSettings(source, dest)
+      source = value.builtInValidationDisplay.schemaValidation
+      dest = formState.builtInValidationDisplay.schemaValidation
+      applyValidationSettings(source, dest)
+
+      let csource = value.builtInValidationDisplay.customValidationDefaults
+      let cdest = formState.builtInValidationDisplay.customValidationDefaults
+
+      if (csource) {
+        cdest.field.displayType = csource.field.displayType
+        cdest.field.displayTypeIfSummary = csource.field.displayTypeIfSummary
+        if (csource.summary) {
+          cdest.summary = { displayType: csource.summary.displayType }
+        }
+      }
+    }
 
     //formState.lastTouchedField = value.initialFocusElementId
     // initial validation of all fields
