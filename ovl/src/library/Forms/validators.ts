@@ -114,17 +114,17 @@ export const AddValidation = (v: AddValidationType) => {
   if (v.field.displayCond === undefined) {
     if (v.summary) {
       v.field.displayCond =
-        formState.builtInValidationDisplay.CustomValidationDefaults.field.displayTypeIfSummary
+        formState.builtInValidationDisplay.customValidationDefaults.field.displayTypeIfSummary
     } else {
       v.field.displayCond =
-        formState.builtInValidationDisplay.CustomValidationDefaults.field.displayType
+        formState.builtInValidationDisplay.customValidationDefaults.field.displayType
     }
   }
   let fieldDisplayCond = v.field.displayCond
   if (v.summary) {
     if (v.summary.displayCond === undefined) {
       v.summary.displayCond =
-        formState.builtInValidationDisplay.CustomValidationDefaults.summary.displayType
+        formState.builtInValidationDisplay.customValidationDefaults.summary.displayType
     }
   }
   // </set defaults>
@@ -167,7 +167,9 @@ export const AddSummaryValidation = (
   reps?: any[]
 ) => {
   if (displayType === undefined) {
-    displayType = "WhenFirstFieldTouched"
+    displayType =
+      formState.builtInValidationDisplay.customValidationDefaults.summary
+        .displayType
   }
   if (!formState.validationResult.errors.some((f) => f.key.indexOf(key) > -1)) {
     formState.validationResult.errors.push({
