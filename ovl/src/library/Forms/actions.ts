@@ -44,6 +44,7 @@ import {
   AddValidation,
   FieldValidationDisplayType,
   FieldValidationType,
+  SetFormValid,
   SummaryValidationDisplayType,
 } from "./validators"
 export { FillListControl }
@@ -610,6 +611,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
       }
     }
   })
+  SetFormValid(value)
   //actions.ovl.internal.SetFormValid(value)
 }
 
@@ -760,6 +762,7 @@ export const InitForm: OvlAction<InitForm> = (
         }
       }
     })
+    SetFormValid(formState)
     SetRowCellInformation(formState, actions, state)
     //actions.ovl.internal.SetFormValid(formState)
     // save a copy of validationresults (as well of fields, see json(..) above)
@@ -999,7 +1002,7 @@ export const ChangeField: OvlAction<ChangeField> = (
       value.formState.dirty = !value.isInit
     }
   }
-
+  SetFormValid(value.formState)
   if (
     oldConvertedVal !== field.convertedValue &&
     field.validationResult.errors.length === 0

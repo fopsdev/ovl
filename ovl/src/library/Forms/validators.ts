@@ -179,8 +179,8 @@ export const AddValidation = (v: AddValidationType) => {
         }
       }
     }
-    SetVisibleSummaryErrorKeys(formState)
   }
+  SetVisibleSummaryErrorKeys(formState)
   formState.valid = false
 }
 
@@ -226,10 +226,10 @@ const _removeSummaryValidation = (formState: OvlFormState, key: string) => {
   if (errorIndex > -1) {
     formState.validationResult.errors.splice(errorIndex, 1)
   }
-  _setFormValid(formState)
-  if (!formState.valid) {
-    SetVisibleSummaryErrorKeys(formState)
-  }
+  SetFormValid(formState)
+  // if (!formState.valid) {
+  //   SetVisibleSummaryErrorKeys(formState)
+  // }
 }
 
 export const RemoveFieldValidation = (field: Field, key: string) => {
@@ -240,8 +240,10 @@ const _removeFieldValidation = (
   key: string,
   mass: boolean = false
 ) => {
+  let changed = false
   let errorIndex = field.validationResult.errors.findIndex((f) => f.key === key)
   if (errorIndex > -1) {
+    changed = true
     field.validationResult.errors.splice(errorIndex, 1)
   }
   // remove it as well from the summary fieldKeys list if there
@@ -249,20 +251,24 @@ const _removeFieldValidation = (
     ovl.state.ovl.forms[field.formType][field.formId]
   let errors = formState.validationResult.errors
 
-  let keyIndex = errors.findIndex((f) => f.key === key)
-  if (keyIndex > -1) {
-    let err = errors[keyIndex]
-    let idx = err.fieldKeys.findIndex((f) => f === field.fieldKey)
-    if (idx > -1) {
-      err.fieldKeys.splice(idx, 1)
+  let allKeysToTest: string[] = [key, key + field.fieldKey]
+  allKeysToTest.forEach((keyToTest) => {
+    let keyIndex = errors.findIndex((f) => f.key === keyToTest)
+    if (keyIndex > -1) {
+      let err = errors[keyIndex]
+      let idx = err.fieldKeys.findIndex((f) => f === field.fieldKey)
+      if (idx > -1) {
+        changed = true
+        err.fieldKeys.splice(idx, 1)
+      }
+      if (err.fieldKeys.length === 0) {
+        changed = true
+        errors.splice(keyIndex, 1)
+      }
     }
-    if (err.fieldKeys.length === 0) {
-      errors.splice(keyIndex, 1)
-    }
-  }
-
-  if (!!mass) {
-    _setFormValid(undefined, field)
+  })
+  if (changed) {
+    SetFormValid(undefined, field)
   }
 }
 
@@ -274,9 +280,7 @@ export const RemoveAllValidationOfType = (
     let field = formState.fields[f]
     _removeFieldValidation(field, key, true)
   })
-  _setFormValid(formState)
-  //_removeSummaryValidation(formState, key)
-  logState()
+  SetFormValid(formState)
 }
 
 export const IsFieldValid = (field: Field) => {
@@ -335,11 +339,12 @@ const _isFormValid = (formState: OvlFormState) => {
   )
 }
 
-const _setFormValid = (formState?: OvlFormState, field?: Field) => {
+export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   if (!formState) {
     formState = ovl.state.ovl.forms[field.formType][field.formId]
   }
   formState.valid = _isFormValid(formState)
+  SetVisibleSummaryErrorKeys(formState)
 }
 
 // export const SetFormValidFromNoValidate = (formState: OvlFormState) => {
