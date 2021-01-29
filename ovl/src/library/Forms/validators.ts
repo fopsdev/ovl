@@ -1,4 +1,9 @@
-import { Field, OvlFormState, ValidateResult } from "./actions"
+import {
+  Field,
+  OvlFormState,
+  ValidateResult,
+  ValidateResultSummaryErrors,
+} from "./actions"
 import { logState, T } from "../../global/globals"
 import { ovl, OvlForm } from "../.."
 import { form } from "../../actions"
@@ -148,12 +153,14 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
     }
   }
   // </set defaults>
-  if (type === "BuiltIn") {
-    debugger
-  }
   let key = v.msg.translationKey
   if (!v.isGrouped) {
     key += v.field.field.fieldKey
+  }
+
+  let reps = v.msg.translationReps
+  if (type === "BuiltIn") {
+    reps = [T(v.field.field.ui.labelTranslationKey)]
   }
 
   // handle field
@@ -164,29 +171,41 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
     v.field.field.validationResult.errors.push({
       key,
       translationKey: v.msg.translationKey,
-      translationReps: v.msg.translationReps,
+      translationReps: reps,
       displayType: fieldDisplayCond,
     })
   }
   // handle summary
   if (v.summary) {
-    let idx = formState.validationResult.errors.findIndex((f) => f.key === key)
+    let summaryErrors = formState.validationResult.errors
+    let idx = summaryErrors.findIndex((f) => f.key === key)
+
+    let newErr: ValidateResultSummaryErrors
     if (idx < 0) {
-      formState.validationResult.errors.push({
+      summaryErrors.push({
         key,
         translationKey: v.summary.msg.translationKey,
         translationReps: v.summary.msg.translationReps,
         displayType: v.summary.displayCond,
         fieldKeys: [v.field.field.fieldKey],
       })
+      newErr = summaryErrors[summaryErrors.length - 1]
     } else {
       let err = formState.validationResult.errors[idx]
+      newErr = err
       err.translationReps = v.msg.translationReps
       err.displayType = v.summary.displayCond
 
       if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
         err.fieldKeys.push(v.field.field.fieldKey)
       }
+    }
+    if (type === "BuiltIn") {
+      newErr.translationReps = [
+        newErr.fieldKeys
+          .map((k) => T(formState.fields[k].ui.labelTranslationKey))
+          .join(", "),
+      ]
     }
   }
 

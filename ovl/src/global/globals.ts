@@ -359,10 +359,11 @@ export const T = (key: string, reps?: string[]): string => {
   }
   let str = ovl.state.ovl.language.translations[key]
   if (str === undefined || str === null) {
-    // if (uiState.isReady) {
-    //   console.warn("Ovl Translations: key " + key + " not found")
-    // }
-    return key
+    str = key
+    //   // if (uiState.isReady) {
+    //   //   console.warn("Ovl Translations: key " + key + " not found")
+    //   // }
+    //   return key
   }
   if (str.split("{").length !== str.split("}").length) {
     return str + " invalid{}"
