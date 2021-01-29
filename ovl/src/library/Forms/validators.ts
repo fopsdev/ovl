@@ -187,14 +187,9 @@ export const AddValidation = (v: AddValidationType) => {
 export const AddSummaryValidation = (
   formState: OvlFormState,
   key: string,
-  displayType?: SummaryValidationDisplayType,
-  reps?: any[]
+  translationKey: string,
+  translationReps?: any[]
 ) => {
-  if (displayType === undefined) {
-    displayType =
-      formState.builtInValidationDisplay.customValidationDefaults.summary
-        .displayType
-  }
   if (
     !formState.validationResult.errors.some(
       (f) => f.translationKey.indexOf(key) > -1
@@ -202,9 +197,9 @@ export const AddSummaryValidation = (
   ) {
     formState.validationResult.errors.push({
       key,
-      translationKey: key,
-      translationReps: reps,
-      displayType,
+      translationKey,
+      translationReps,
+      displayType: "Always",
       fieldKeys: [],
     })
   }
@@ -280,7 +275,7 @@ export const RemoveAllValidationOfType = (
     let field = formState.fields[f]
     _removeFieldValidation(field, key, true)
   })
-  SetFormValid(formState)
+  //SetFormValid(formState)
 }
 
 export const IsFieldValid = (field: Field) => {
@@ -343,6 +338,7 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   if (!formState) {
     formState = ovl.state.ovl.forms[field.formType][field.formId]
   }
+  console.log("setvalid")
   formState.valid = _isFormValid(formState)
   SetVisibleSummaryErrorKeys(formState)
 }

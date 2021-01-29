@@ -997,12 +997,13 @@ export const ChangeField: OvlAction<ChangeField> = (
   }
 
   if (field.convertedValue !== oldConvertedVal) {
+    SetFormValid(value.formState)
     field.dirty = !value.isInit
     if (!value.formState.dirty) {
       value.formState.dirty = !value.isInit
     }
   }
-  SetFormValid(value.formState)
+
   if (
     oldConvertedVal !== field.convertedValue &&
     field.validationResult.errors.length === 0
