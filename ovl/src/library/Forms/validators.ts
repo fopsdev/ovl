@@ -201,7 +201,6 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
       }
     }
     if (type === "BuiltIn") {
-      errToAdjust.isBuiltIn = true
       errToAdjust.translationReps = [
         errToAdjust.fieldKeys
           .map((k) => T(formState.fields[k].ui.labelTranslationKey))
@@ -301,9 +300,9 @@ const _removeFieldValidation = (
       }
     }
   })
-  if (changed) {
-    SetFormValid(undefined, field)
-  }
+  // if (changed) {
+  //   SetFormValid(undefined, field)
+  // }
 }
 
 export const RemoveAllValidationOfType = (
