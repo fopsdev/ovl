@@ -226,6 +226,7 @@ export const AddSummaryValidation = (
     )
   ) {
     formState.validationResult.errors.push({
+      standalone: true,
       key,
       translationKey,
       translationReps,
