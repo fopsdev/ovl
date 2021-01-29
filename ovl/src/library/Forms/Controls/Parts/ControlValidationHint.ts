@@ -18,7 +18,7 @@ export class OvlValidationHint extends OvlBaseElement {
             f.displayType === "Always" ||
             (f.displayType === "WhenTouched" && field.watched)
         )
-        .map((m) => T(m.key, m.reps))
+        .map((m) => T(m.translationKey, m.translationReps))
         .join(", ")
       return html`
         <div

@@ -15,7 +15,9 @@ export class OvlFormValidationHint extends OvlBaseElement {
       if (res.length === 0) {
         return null
       }
-      let msgs = res.map((m) => T(m.key, m.reps)).join(", ")
+      let msgs = res
+        .map((m) => T(m.translationKey, m.translationReps))
+        .join(", ")
 
       return html`
         <div

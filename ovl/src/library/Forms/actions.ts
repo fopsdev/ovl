@@ -81,13 +81,15 @@ export type FieldValueMap = { [key: string]: Field }
 
 export type ValidateResultErrors = {
   key: string
-  reps?: string[]
+  translationKey: string
+  translationReps?: string[]
   displayType: FieldValidationDisplayType
 }
 
 export type ValidateResultSummaryErrors = {
   key: string
-  reps?: string[]
+  translationKey: string
+  translationReps?: string[]
   fieldKeys: string[]
   displayType: SummaryValidationDisplayType
 }
@@ -321,7 +323,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
                 displayCond: v.field.displayType,
               },
               summary,
-              textCode: { key: "AppValidationInvalidDateFormat" },
+              msg: { translationKey: "AppValidationInvalidDateFormat" },
             })
           } else {
             field.convertedValue = newDate
@@ -349,7 +351,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
               displayCond: v.field.displayType,
             },
             summary,
-            textCode: { key: "AppValidationInvalidNumberFormat" },
+            msg: { translationKey: "AppValidationInvalidNumberFormat" },
           })
         }
       } else {
@@ -382,7 +384,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
               displayCond: v.field.displayType,
             },
             summary,
-            textCode: { key: "AppValidationInvalidNumberFormat" },
+            msg: { translationKey: "AppValidationInvalidNumberFormat" },
           })
         }
       } else {
@@ -423,9 +425,9 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
                 displayCond: v.field.displayType,
               },
               summary,
-              textCode: {
-                key: "AppValidationSchemaMaxChars",
-                reps: [schema.maxLength.toString()],
+              msg: {
+                translationKey: "AppValidationSchemaMaxChars",
+                translationReps: [schema.maxLength.toString()],
               },
             })
             return
@@ -440,8 +442,8 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
                 displayCond: v.field.displayType,
               },
               summary,
-              textCode: {
-                key: "AppValidationSchemaNotNull",
+              msg: {
+                translationKey: "AppValidationSchemaNotNull",
               },
             })
             return
@@ -479,8 +481,8 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
         displayCond: v.field.displayType,
       },
       summary,
-      textCode: {
-        key: "AppValidationListNotEmpty",
+      msg: {
+        translationKey: "AppValidationListNotEmpty",
       },
     })
 
@@ -525,8 +527,8 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
             displayCond: v.field.displayType,
           },
           summary,
-          textCode: {
-            key: "AppValidationListNeedsToBeEntry",
+          msg: {
+            translationKey: "AppValidationListNeedsToBeEntry",
           },
         })
         return
@@ -1028,10 +1030,16 @@ export const GetFormValidationErrors = (formState: OvlFormState): string[] => {
   let res: string[] = []
   Object.keys(formState.fields).map((k) => {
     let field = formState.fields[k]
-    res = res.concat(field.validationResult.errors.map((m) => T(m.key, m.reps)))
+    res = res.concat(
+      field.validationResult.errors.map((m) =>
+        T(m.translationKey, m.translationReps)
+      )
+    )
   })
   res = res.concat(
-    formState.validationResult.errors.map((m) => T(m.key, m.reps))
+    formState.validationResult.errors.map((m) =>
+      T(m.translationKey, m.translationReps)
+    )
   )
   return res
 }

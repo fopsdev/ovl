@@ -15,8 +15,9 @@ export const Mandatory = (
   }
   if (!val) {
     res.errors.push({
-      key: "AppValidationMandatory",
-      reps: [displayFieldName],
+      key: "Mandatory",
+      translationKey: "AppValidationMandatory",
+      translationReps: [displayFieldName],
       displayType,
     })
   }
@@ -35,8 +36,9 @@ export const MinLength = (
 
   if (!val || (val && val.length < minLength)) {
     res.errors.push({
-      key: "AppValidationMinLength",
-      reps: [displayFieldName, minLength.toString()],
+      key: "MinLength",
+      translationKey: "AppValidationMinLength",
+      translationReps: [displayFieldName, minLength.toString()],
       displayType,
     })
   }
@@ -55,8 +57,9 @@ export const MinLengthOrEmpty = (
 
   if (val && val.length < minLength) {
     res.errors.push({
-      key: "AppValidationMinLengthOrEmpty",
-      reps: [displayFieldName, minLength.toString()],
+      key: "MinLenOrEmpty",
+      translationKey: "AppValidationMinLengthOrEmpty",
+      translationReps: [displayFieldName, minLength.toString()],
       displayType,
     })
   }
@@ -74,8 +77,9 @@ export const Email = (
 
   if (!val || (val && !validateEmail(val))) {
     res.errors.push({
-      key: "AppValidationEmail",
-      reps: [displayFieldName],
+      key: "Email",
+      translationKey: "AppValidationEmail",
+      translationReps: [displayFieldName],
       displayType,
     })
   }
@@ -97,14 +101,15 @@ export type SummaryValidationDisplayType =
   | "Always"
 
 export type AddValidationType = {
-  //isGrouped?: boolean
-  textCode: { key: string; reps?: any[] }
+  isGrouped?: boolean
+  msg: { translationKey: string; translationReps?: any[] }
   field: {
     field: Field
     displayCond?: FieldValidationDisplayType
   }
   summary?: {
     displayCond?: SummaryValidationDisplayType
+    msg?: { translationKey: string; translationReps?: any[] }
   }
 }
 
@@ -127,44 +132,52 @@ export const AddValidation = (v: AddValidationType) => {
       v.summary.displayCond =
         formState.builtInValidationDisplay.customValidationDefaults.summary.displayType
     }
+    if (!v.summary.msg) {
+      v.summary.msg = v.msg
+    }
   }
   // </set defaults>
+
+  let key = v.msg.translationKey
+  if (!v.isGrouped) {
+    key += v.field.field.fieldKey
+  }
 
   // handle field
   if (
     !v.field.field.validationResult.errors.some(
-      (f) => f.key.indexOf(v.textCode.key) > -1
+      (f) => f.translationKey.indexOf(v.msg.translationKey) > -1
     )
   ) {
     v.field.field.validationResult.errors.push({
-      key: v.textCode.key,
-      reps: v.textCode.reps,
+      key,
+      translationKey: v.msg.translationKey,
+      translationReps: v.msg.translationReps,
       displayType: fieldDisplayCond,
     })
-  }
 
-  if (v.summary) {
     // handle summary
-    let idx = formState.validationResult.errors.findIndex(
-      (f) => f.key === v.textCode.key
-    )
-    if (idx < 0) {
-      formState.validationResult.errors.push({
-        key: v.textCode.key,
-        reps: v.textCode.reps,
-        displayType: v.summary.displayCond,
-        fieldKeys: [v.field.field.fieldKey],
-      })
-    } else {
-      let err = formState.validationResult.errors[idx]
-      err.reps = v.textCode.reps
-      err.displayType = v.summary.displayCond
-      //if (v.isGrouped) {
-      if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
-        //console.log(v.field.field.fieldKey)
-        err.fieldKeys.push(v.field.field.fieldKey)
+    if (v.summary) {
+      let idx = formState.validationResult.errors.findIndex(
+        (f) => f.key === key
+      )
+      if (idx < 0) {
+        formState.validationResult.errors.push({
+          key,
+          translationKey: v.summary.msg.translationKey,
+          translationReps: v.summary.msg.translationReps,
+          displayType: v.summary.displayCond,
+          fieldKeys: [v.field.field.fieldKey],
+        })
+      } else {
+        let err = formState.validationResult.errors[idx]
+        err.translationReps = v.msg.translationReps
+        err.displayType = v.summary.displayCond
+
+        if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
+          err.fieldKeys.push(v.field.field.fieldKey)
+        }
       }
-      //}
     }
     SetVisibleSummaryErrorKeys(formState)
   }
@@ -182,10 +195,15 @@ export const AddSummaryValidation = (
       formState.builtInValidationDisplay.customValidationDefaults.summary
         .displayType
   }
-  if (!formState.validationResult.errors.some((f) => f.key.indexOf(key) > -1)) {
+  if (
+    !formState.validationResult.errors.some(
+      (f) => f.translationKey.indexOf(key) > -1
+    )
+  ) {
     formState.validationResult.errors.push({
-      key: key,
-      reps: reps,
+      key,
+      translationKey: key,
+      translationReps: reps,
       displayType,
       fieldKeys: [],
     })
@@ -226,19 +244,22 @@ const _removeFieldValidation = (
   if (errorIndex > -1) {
     field.validationResult.errors.splice(errorIndex, 1)
   }
-
   // remove it as well from the summary fieldKeys list if there
   let formState: OvlFormState =
     ovl.state.ovl.forms[field.formType][field.formId]
   let errors = formState.validationResult.errors
-  errors
-    .filter((f) => f.key === key)
-    .forEach((f) => {
-      let idx = f.fieldKeys.findIndex((f) => f === field.fieldKey)
-      if (idx > -1) {
-        f.fieldKeys.splice(idx, 1)
-      }
-    })
+
+  let keyIndex = errors.findIndex((f) => f.key === key)
+  if (keyIndex > -1) {
+    let err = errors[keyIndex]
+    let idx = err.fieldKeys.findIndex((f) => f === field.fieldKey)
+    if (idx > -1) {
+      err.fieldKeys.splice(idx, 1)
+    }
+    if (err.fieldKeys.length === 0) {
+      errors.splice(keyIndex, 1)
+    }
+  }
 
   if (!!mass) {
     _setFormValid(undefined, field)
@@ -253,7 +274,8 @@ export const RemoveAllValidationOfType = (
     let field = formState.fields[f]
     _removeFieldValidation(field, key, true)
   })
-  _removeSummaryValidation(formState, key)
+  _setFormValid(formState)
+  //_removeSummaryValidation(formState, key)
   logState()
 }
 
@@ -269,7 +291,6 @@ export const SetVisibleSummaryErrorKeys = (formState: OvlFormState) => {
       fieldsToCheck.push(f)
     })
   )
-  //console.log(fieldsToCheck)
   let fields = formState.fields
   let allUnWatchedFieldsErrorKeys: Set<string> = new Set()
   fieldsToCheck
