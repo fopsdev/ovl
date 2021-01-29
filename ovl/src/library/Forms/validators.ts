@@ -180,7 +180,7 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
     let summaryErrors = formState.validationResult.errors
     let idx = summaryErrors.findIndex((f) => f.key === key)
 
-    let newErr: ValidateResultSummaryErrors
+    let errToAdjust: ValidateResultSummaryErrors
     if (idx < 0) {
       summaryErrors.push({
         key,
@@ -189,10 +189,10 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
         displayType: v.summary.displayCond,
         fieldKeys: [v.field.field.fieldKey],
       })
-      newErr = summaryErrors[summaryErrors.length - 1]
+      errToAdjust = summaryErrors[summaryErrors.length - 1]
     } else {
       let err = formState.validationResult.errors[idx]
-      newErr = err
+      errToAdjust = err
       err.translationReps = v.msg.translationReps
       err.displayType = v.summary.displayCond
 
@@ -201,8 +201,9 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
       }
     }
     if (type === "BuiltIn") {
-      newErr.translationReps = [
-        newErr.fieldKeys
+      errToAdjust.isBuiltIn = true
+      errToAdjust.translationReps = [
+        errToAdjust.fieldKeys
           .map((k) => T(formState.fields[k].ui.labelTranslationKey))
           .join(", "),
       ]
@@ -265,18 +266,20 @@ const _removeFieldValidation = (
   mass: boolean = false
 ) => {
   let changed = false
-  let errorIndex = field.validationResult.errors.findIndex((f) => f.key === key)
-  if (errorIndex > -1) {
-    changed = true
-    field.validationResult.errors.splice(errorIndex, 1)
-  }
-  // remove it as well from the summary fieldKeys list if there
-  let formState: OvlFormState =
-    ovl.state.ovl.forms[field.formType][field.formId]
-  let errors = formState.validationResult.errors
-
   let allKeysToTest: string[] = [key, key + field.fieldKey]
   allKeysToTest.forEach((keyToTest) => {
+    let errorIndex = field.validationResult.errors.findIndex(
+      (f) => f.key === keyToTest
+    )
+    if (errorIndex > -1) {
+      changed = true
+      field.validationResult.errors.splice(errorIndex, 1)
+    }
+    // remove it as well from the summary fieldKeys list if there
+    let formState: OvlFormState =
+      ovl.state.ovl.forms[field.formType][field.formId]
+    let errors = formState.validationResult.errors
+
     let keyIndex = errors.findIndex((f) => f.key === keyToTest)
     if (keyIndex > -1) {
       let err = errors[keyIndex]
@@ -288,6 +291,12 @@ const _removeFieldValidation = (
       if (err.fieldKeys.length === 0) {
         changed = true
         errors.splice(keyIndex, 1)
+      } else {
+        err.translationReps = [
+          err.fieldKeys
+            .map((k) => T(formState.fields[k].ui.labelTranslationKey))
+            .join(", "),
+        ]
       }
     }
   })

@@ -96,6 +96,7 @@ export type ValidateResultSummaryErrors = {
   translationReps?: string[]
   fieldKeys: string[]
   displayType: SummaryValidationDisplayType
+  isBuiltIn?: boolean
 }
 export type ValidateResult = {
   // its just an array
@@ -313,7 +314,9 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           if (!resp) {
             field.convertedValue = ""
             field.value = field.value
-            AddValidation({
+
+            AddValidationFromBuiltinValidation({
+              isGrouped: v.isGrouped,
               field: {
                 field,
                 displayCond: v.field.displayType,
@@ -323,8 +326,8 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
             })
           } else {
             field.convertedValue = newDate
-
             field.value = getDateValue(newDate, format)
+            RemoveFieldValidation(field, "AppValidationInvalidDateFormat")
           }
         } else {
           field.convertedValue = null
@@ -338,10 +341,11 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
         let parsedVal = parseInt(val)
         if (parsedVal || parsedVal === 0) {
           field.value = parsedVal.toString()
-
           field.convertedValue = parsedVal
+          RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
-          AddValidation({
+          AddValidationFromBuiltinValidation({
+            isGrouped: v.isGrouped,
             field: {
               field,
               displayCond: v.field.displayType,
@@ -373,8 +377,10 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
             field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
           }
           field.convertedValue = parsedVal
+          RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
-          AddValidation({
+          AddValidationFromBuiltinValidation({
+            isGrouped: v.isGrouped,
             field: {
               field,
               displayCond: v.field.displayType,
@@ -415,7 +421,8 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
       if (type === "text") {
         if (value.newVal) {
           if (value.newVal.length > schema.maxLength) {
-            AddValidation({
+            AddValidationFromBuiltinValidation({
+              isGrouped: v.isGrouped,
               field: {
                 field,
                 displayCond: v.field.displayType,
@@ -429,10 +436,12 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
             return
           }
         }
+        RemoveFieldValidation(field, "AppValidationSchemaMaxChars")
       } else {
         if (!value.newVal) {
           if (!schema.nullable) {
-            AddValidation({
+            AddValidationFromBuiltinValidation({
+              isGrouped: v.isGrouped,
               field: {
                 field,
                 displayCond: v.field.displayType,
@@ -445,6 +454,7 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
             return
           }
         }
+        RemoveFieldValidation(field, "AppValidationSchemaNotNull")
       }
     }
   }
@@ -545,8 +555,10 @@ export const ValidateForm: OvlAction<OvlFormState> = (
 ) => {
   // re do validations with boolean watched set to true
   value.valid = true
+
   Object.keys(value.fields).map((k) => {
     let field = value.fields[k]
+    let stillTheSame = field.validationResult.errors.length
     let oldValid = field.validationResult.errors.length === 0
     let val = field.convertedValue
     let validationFnName = FormValidate
@@ -554,7 +566,6 @@ export const ValidateForm: OvlAction<OvlFormState> = (
     // field.validationResult.valid = true
     // field.validationResult.validationMsg = ""
 
-    field.validationResult.errors = []
     actions.ovl.internal.TouchField({ fieldId: k, formState: value })
 
     actions.ovl.internal.ValidateDataType({
@@ -567,7 +578,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
 
     let fn = resolvePath(actions.custom, namespace)
 
-    if (field.validationResult.errors.length === 0) {
+    if (field.validationResult.errors.length === stillTheSame) {
       actions.ovl.internal.ValidateSchema({
         fieldKey: k,
         oldVal: val,
@@ -576,7 +587,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
         validationResult: field.validationResult,
       } as ValidateFieldType)
 
-      if (field.validationResult.errors.length === 0) {
+      if (field.validationResult.errors.length === stillTheSame) {
         if (field.list) {
           actions.ovl.internal.ValidateList({
             fieldKey: k,
@@ -586,7 +597,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
             validationResult: field.validationResult,
           } as ValidateFieldType)
         }
-        if (field.validationResult.errors.length === 0) {
+        if (field.validationResult.errors.length === stillTheSame) {
           if (fn && fn[validationFnName]) {
             fn[validationFnName](<FormValidate_Type>{
               fieldKey: k,
@@ -600,7 +611,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
         }
       }
     }
-    if (!oldValid && field.validationResult.errors.length === 0) {
+    if (!oldValid && field.validationResult.errors.length === stillTheSame) {
       if (fn && fn[FormChanged]) {
         fn[FormChanged](<FormChanged_Type>{
           fieldId: k,
@@ -957,7 +968,7 @@ export const ChangeField: OvlAction<ChangeField> = (
   { actions, state, effects }
 ) => {
   let field = value.formState.fields[value.fieldKey]
-
+  let stillTheSame = field.validationResult.errors.length
   if (value.isConvertedValue) {
     //field.previousConvertedValue = field.convertedValue
     field.convertedValue = value.value
@@ -974,8 +985,6 @@ export const ChangeField: OvlAction<ChangeField> = (
 
     return
   }
-
-  field.validationResult.errors = []
 
   if (!field.ui.readonly) {
     field.watched = !value.isInit
@@ -995,7 +1004,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     isInnerEvent: value.isInnerEvent,
   } as ValidateFieldType)
 
-  if (field.validationResult.errors.length === 0) {
+  if (field.validationResult.errors.length === stillTheSame) {
     actions.ovl.internal.ValidateSchema({
       fieldKey: value.fieldKey,
       oldVal: newVal,
@@ -1004,7 +1013,7 @@ export const ChangeField: OvlAction<ChangeField> = (
       validationResult: field.validationResult,
     } as ValidateFieldType)
 
-    if (field.validationResult.errors.length === 0) {
+    if (field.validationResult.errors.length === stillTheSame) {
       if (field.list) {
         actions.ovl.internal.ValidateList({
           fieldKey: value.fieldKey,
@@ -1014,7 +1023,7 @@ export const ChangeField: OvlAction<ChangeField> = (
           validationResult: field.validationResult,
         } as ValidateFieldType)
       }
-      if (field.validationResult.errors.length === 0) {
+      if (field.validationResult.errors.length === stillTheSame) {
         let validationFnName = "FormValidate"
         if (fn && fn[validationFnName]) {
           let val: FormValidate_Type = {
@@ -1027,7 +1036,10 @@ export const ChangeField: OvlAction<ChangeField> = (
             correctedValue: undefined,
           }
           fn[validationFnName](val)
-          if (val.validationResult.errors.length === 0 && val.correctedValue) {
+          if (
+            val.validationResult.errors.length === stillTheSame &&
+            val.correctedValue
+          ) {
             field.convertedValue = val.correctedValue
           }
         }
@@ -1045,7 +1057,7 @@ export const ChangeField: OvlAction<ChangeField> = (
 
   if (
     oldConvertedVal !== field.convertedValue &&
-    field.validationResult.errors.length === 0
+    field.validationResult.errors.length === stillTheSame
   ) {
     SetRowCellInformation(value.formState, actions, state)
     if (fn && fn[FormChanged]) {
