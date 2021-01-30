@@ -3,29 +3,60 @@ import {
   OvlFormState,
   ValidateResult,
   ValidateResultSummaryErrors,
+  ValidateSummaryResult,
 } from "./actions"
 import { logState, T } from "../../global/globals"
 import { ovl, OvlForm } from "../.."
 import { form } from "../../actions"
 import { forms } from "../../state"
 
-export const Mandatory = (
-  displayFieldName: string,
-  val: String,
-  res: ValidateResult,
-  displayType?: FieldValidationDisplayType
+const _validatorHelper = (
+  translationKey: string,
+  field: Field,
+  def?: {
+    fieldDisplayType?: FieldValidationDisplayType
+    isGrouped?: boolean
+    summaryDisplayType?: SummaryValidationDisplayType
+  }
 ) => {
-  if (!displayType) {
-    displayType = "WhenTouched"
+  translationKey = "OvlValidator" + translationKey
+  let isGrouped: boolean
+  let summary: SummaryType
+  let summaryDisplayType: SummaryValidationDisplayType
+  let fieldDisplayType: FieldValidationDisplayType
+  if (def) {
+    if (!def.summaryDisplayType && def.isGrouped) {
+      let formState: OvlFormState =
+        ovl.state.ovl.forms[field.formType][field.formId]
+      summaryDisplayType =
+        formState.builtInValidationDisplay.customValidationDefaults.summary
+          .displayType
+    }
+    fieldDisplayType = def.fieldDisplayType
+    isGrouped = def.isGrouped
   }
-  if (!val) {
-    res.errors.push({
-      key: "Mandatory",
-      translationKey: "AppValidationMandatory",
-      translationReps: [displayFieldName],
-      displayType,
-    })
+  if (summaryDisplayType) {
+    summary = {
+      displayCond: summaryDisplayType,
+      msg: { translationKey: translationKey + "Summary" },
+    }
   }
+  AddValidation({
+    field: { field, displayCond: fieldDisplayType },
+    msg: { translationKey },
+    isGrouped,
+  })
+}
+
+export const Mandatory = (
+  field: Field,
+  def?: {
+    fieldDisplayType?: FieldValidationDisplayType
+    isGrouped?: boolean
+    summaryDisplayType?: SummaryValidationDisplayType
+  }
+) => {
+  if (!field.value) _validatorHelper("Mandatory", field, def)
 }
 
 export const MinLength = (
@@ -105,17 +136,19 @@ export type SummaryValidationDisplayType =
   | "WhenAllRelatedFieldsTouched"
   | "Always"
 
+export type SummaryType = {
+  displayCond?: SummaryValidationDisplayType
+  msg?: { translationKey: string; translationReps?: any[] }
+}
 export type AddValidationType = {
   isGrouped?: boolean
+  customGroup?: string
   msg: { translationKey: string; translationReps?: any[] }
   field: {
     field: Field
     displayCond?: FieldValidationDisplayType
   }
-  summary?: {
-    displayCond?: SummaryValidationDisplayType
-    msg?: { translationKey: string; translationReps?: any[] }
-  }
+  summary?: SummaryType
 }
 
 export const AddValidationFromBuiltinValidation = (v: AddValidationType) => {
@@ -153,9 +186,13 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
     }
   }
   // </set defaults>
-  let key = v.msg.translationKey
-  if (!v.isGrouped) {
-    key += v.field.field.fieldKey
+  let key
+  if (v.customGroup) {
+    key = v.customGroup
+  } else if (v.isGrouped) {
+    key = v.msg.translationKey
+  } else {
+    key = v.msg.translationKey + v.field.field.fieldKey
   }
 
   let reps = v.msg.translationReps
@@ -352,7 +389,7 @@ export const SetVisibleSummaryErrorKeys = (formState: OvlFormState) => {
       f.displayType === "WhenAllRelatedFieldsTouched" &&
       !allUnWatchedFieldsErrorKeys.has(f.key)
   )
-  //console.log(res1)
+
   let res2 = errors.filter(
     (f) =>
       f.displayType === "WhenFirstFieldTouched" &&
@@ -376,7 +413,6 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   if (!formState) {
     formState = ovl.state.ovl.forms[field.formType][field.formId]
   }
-  console.log("setvalid")
   formState.valid = _isFormValid(formState)
   SetVisibleSummaryErrorKeys(formState)
 }

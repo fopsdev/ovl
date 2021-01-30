@@ -133,6 +133,7 @@ export type CustomValidationSettingsType = {
 
 export type ValidationSettingsType = {
   isGrouped?: boolean
+  _validationGroup?: string
   field: {
     displayType: FieldValidationDisplayType
   }
@@ -207,14 +208,14 @@ export const ResetFormAfterNavigation: OvlAction<OvlFormState> = (
 }
 
 export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
-  let field = value.formState.fields[value.fieldKey]
+  let field = value.field
   let type = field.type
   let format
   if (field.ui.format) {
     format = field.ui.format
   }
-  let val = value.newVal
-  let res = value.validationResult
+  let val = field.value
+
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
   let v = value.formState.builtInValidationDisplay.dataTypeValidation
@@ -317,7 +318,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
             field.value = field.value
 
             AddValidationFromBuiltinValidation({
-              isGrouped: v.isGrouped,
+              customGroup: v._validationGroup,
               field: {
                 field,
                 displayCond: v.field.displayType,
@@ -328,7 +329,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           } else {
             field.convertedValue = newDate
             field.value = getDateValue(newDate, format)
-            RemoveFieldValidation(field, "AppValidationInvalidDateFormat")
+            //RemoveFieldValidation(field, "AppValidationInvalidDateFormat")
           }
         } else {
           field.convertedValue = null
@@ -343,10 +344,10 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
         if (parsedVal || parsedVal === 0) {
           field.value = parsedVal.toString()
           field.convertedValue = parsedVal
-          RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
+          //RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
           AddValidationFromBuiltinValidation({
-            isGrouped: v.isGrouped,
+            customGroup: v._validationGroup,
             field: {
               field,
               displayCond: v.field.displayType,
@@ -378,10 +379,10 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
             field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
           }
           field.convertedValue = parsedVal
-          RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
+          //RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
           AddValidationFromBuiltinValidation({
-            isGrouped: v.isGrouped,
+            customGroup: v._validationGroup,
             field: {
               field,
               displayCond: v.field.displayType,
@@ -402,14 +403,10 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
 
 export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
   if (value.formState.schema) {
-    let validatorId = "Schema"
-    let field = value.formState.fields[value.fieldKey]
-    let schema = value.formState.schema[value.fieldKey]
+    let field = value.field
+    let schema = value.formState.schema[field.fieldKey]
     let type = field.type
-    let val = value.newVal
-    let res = value.validationResult
     // check for size
-
     if (schema) {
       let v = value.formState.builtInValidationDisplay.schemaValidation
       let summary
@@ -420,10 +417,10 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
       }
 
       if (type === "text") {
-        if (value.newVal) {
-          if (value.newVal.length > schema.maxLength) {
+        if (field.value) {
+          if (field.value.length > schema.maxLength) {
             AddValidationFromBuiltinValidation({
-              isGrouped: v.isGrouped,
+              customGroup: v._validationGroup,
               field: {
                 field,
                 displayCond: v.field.displayType,
@@ -437,12 +434,12 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
             return
           }
         }
-        RemoveFieldValidation(field, "AppValidationSchemaMaxChars")
+        //RemoveFieldValidation(field, "AppValidationSchemaMaxChars")
       } else {
-        if (!value.newVal) {
+        if (!field.value) {
           if (!schema.nullable) {
             AddValidationFromBuiltinValidation({
-              isGrouped: v.isGrouped,
+              customGroup: v._validationGroup,
               field: {
                 field,
                 displayCond: v.field.displayType,
@@ -455,7 +452,7 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
             return
           }
         }
-        RemoveFieldValidation(field, "AppValidationSchemaNotNull")
+        //RemoveFieldValidation(field, "AppValidationSchemaNotNull")
       }
     }
   }
@@ -465,10 +462,9 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   value,
   { state, actions, effects }
 ) => {
-  let validatorId = "List"
-  let field = value.formState.fields[value.fieldKey]
+  let field = value.field
   let namespace = value.formState.namespace
-  let res = value.validationResult
+
   let list = field.list
   if (list.acceptEmpty && !list.acceptOnlyListValues) {
     return
@@ -484,9 +480,9 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     }
   }
 
-  if (!list.acceptEmpty && !value.newVal) {
+  if (!list.acceptEmpty && !field.value) {
     AddValidationFromBuiltinValidation({
-      isGrouped: v.isGrouped,
+      customGroup: v._validationGroup,
       field: {
         field,
         displayCond: v.field.displayType,
@@ -499,7 +495,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   } else {
     RemoveFieldValidation(field, "AppValidationListNotEmpty")
   }
-  if (list.acceptOnlyListValues && value.newVal) {
+  if (list.acceptOnlyListValues && field.value) {
     // get a handy row object for FieldChanged hooks
     let fields = value.formState.fields
     let row = Object.keys(fields).reduce((val, k) => {
@@ -507,7 +503,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
       return val
     }, {})
 
-    let functionName = FieldGetList.replace("%", value.fieldKey)
+    let functionName = FieldGetList.replace("%", field.fieldKey)
 
     let listdata: FieldGetList_ReturnType
     let fn = resolvePath(actions.custom, namespace)
@@ -515,7 +511,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
       listdata = fn[functionName](<FieldGetList_Type>{ row })
       let filteredKeys = Object.keys(listdata.data)
       if (listdata) {
-        functionName = FieldGetFilteredList.replace("%", value.fieldKey)
+        functionName = FieldGetFilteredList.replace("%", field.fieldKey)
         if (fn[functionName]) {
           filteredKeys = fn[functionName](<FieldGetFilteredList_Type>{
             list: listdata,
@@ -528,12 +524,12 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
         filteredKeys.filter((rowKey) => {
           return (
             listdata.data[rowKey][field.list.valueField].toString() ===
-            value.newVal.toString()
+            field.value.toString()
           )
         }).length < 1
       ) {
         AddValidationFromBuiltinValidation({
-          isGrouped: v.isGrouped,
+          customGroup: v._validationGroup,
           field: {
             field,
             displayCond: v.field.displayType,
@@ -572,42 +568,30 @@ export const ValidateForm: OvlAction<OvlFormState> = (
     actions.ovl.internal.TouchField({ fieldId: k, formState: value })
 
     actions.ovl.internal.ValidateDataType({
-      fieldKey: k,
-      oldVal: val,
-      newVal: val,
+      field,
       formState: value,
-      validationResult: field.validationResult,
     } as ValidateFieldType)
 
     let fn = resolvePath(actions.custom, namespace)
 
     if (field.validationResult.errors.length === 0) {
       actions.ovl.internal.ValidateSchema({
-        fieldKey: k,
-        oldVal: val,
-        newVal: val,
+        field,
         formState: value,
-        validationResult: field.validationResult,
       } as ValidateFieldType)
 
       if (field.validationResult.errors.length === 0) {
         if (field.list) {
           actions.ovl.internal.ValidateList({
-            fieldKey: k,
-            oldVal: val,
-            newVal: val,
+            field,
             formState: value,
-            validationResult: field.validationResult,
           } as ValidateFieldType)
         }
         if (field.validationResult.errors.length === 0) {
           if (fn && fn[validationFnName]) {
             fn[validationFnName](<FormValidate_Type>{
-              fieldKey: k,
-              oldVal: field.previousConvertedValue,
-              newVal: field.convertedValue,
+              field,
               formState: value,
-              validationResult: field.validationResult,
               isInnerEvent: false,
             })
           }
@@ -631,11 +615,14 @@ export const ValidateForm: OvlAction<OvlFormState> = (
 }
 const applyValidationSettings = (
   source: ValidationSettingsType,
-  dest: ValidationSettingsType
+  dest: ValidationSettingsType,
+  validationType: string
 ) => {
   if (source) {
     if (source.isGrouped !== undefined) {
-      dest.isGrouped = source.isGrouped
+      if (source.isGrouped) {
+        dest._validationGroup = validationType
+      }
     }
     dest.field.displayType = source.field.displayType
     if (source.summary) {
@@ -745,13 +732,13 @@ export const InitForm: OvlAction<InitForm> = (
     if (value.builtInValidationDisplay) {
       let source = value.builtInValidationDisplay.listValidation
       let dest = formState.builtInValidationDisplay.listValidation
-      applyValidationSettings(source, dest)
+      applyValidationSettings(source, dest, "list")
       source = value.builtInValidationDisplay.dataTypeValidation
       dest = formState.builtInValidationDisplay.dataTypeValidation
-      applyValidationSettings(source, dest)
+      applyValidationSettings(source, dest, "dataType")
       source = value.builtInValidationDisplay.schemaValidation
       dest = formState.builtInValidationDisplay.schemaValidation
-      applyValidationSettings(source, dest)
+      applyValidationSettings(source, dest, "schema")
 
       let csource = value.builtInValidationDisplay.customValidationDefaults
       let cdest = formState.builtInValidationDisplay.customValidationDefaults
@@ -769,45 +756,31 @@ export const InitForm: OvlAction<InitForm> = (
     // initial validation of all fields
     let fn = resolvePath(actions.custom, namespace)
     Object.keys(formState.fields).forEach((k) => {
-      let fieldValue = formState.fields[k]
-      fieldValue.validationResult = {
+      let field = formState.fields[k]
+      field.validationResult = {
         errors: [],
       }
-      let newVal = fieldValue.value
-      let oldVal = fieldValue.value
       actions.ovl.internal.ValidateDataType({
-        fieldKey: k,
-        oldVal: oldVal,
-        newVal: newVal,
+        field,
         formState,
-        validationResult: fieldValue.validationResult,
       } as ValidateFieldType)
-      if (fieldValue.validationResult.errors.length === 0) {
+      if (field.validationResult.errors.length === 0) {
         actions.ovl.internal.ValidateSchema({
-          fieldKey: k,
-          oldVal: oldVal,
-          newVal: newVal,
+          field,
           formState,
-          validationResult: fieldValue.validationResult,
         } as ValidateFieldType)
-        if (fieldValue.validationResult.errors.length === 0) {
-          if (fieldValue.list) {
+        if (field.validationResult.errors.length === 0) {
+          if (field.list) {
             actions.ovl.internal.ValidateList({
-              fieldKey: k,
-              oldVal: oldVal,
-              newVal: newVal,
+              field,
               formState,
-              validationResult: fieldValue.validationResult,
             } as ValidateFieldType)
           }
-          if (fieldValue.validationResult.errors.length === 0) {
+          if (field.validationResult.errors.length === 0) {
             if (fn && fn[FormValidate]) {
               fn[FormValidate](<FormValidate_Type>{
-                fieldKey: k,
+                field,
                 formState,
-                newVal: fieldValue.convertedValue,
-                oldVal: fieldValue.previousConvertedValue,
-                validationResult: fieldValue.validationResult,
                 isInnerEvent: false,
               })
             }
@@ -843,10 +816,7 @@ export const InitForm: OvlAction<InitForm> = (
 // }
 
 export type ValidateFieldType = {
-  fieldKey: string
-  validationResult: ValidateResult
-  oldVal: any
-  newVal: any
+  field: Field
   correctedValue: any
   formState: OvlFormState
   isInnerEvent: boolean
@@ -997,53 +967,42 @@ export const ChangeField: OvlAction<ChangeField> = (
     field.watched = !value.isInit
   }
   let oldConvertedVal = field.convertedValue
-  let newVal = value.value
   let namespace = value.formState.namespace
-  field.value = newVal
+  field.value = value.value
   let fn = resolvePath(actions.custom, namespace)
 
   actions.ovl.internal.ValidateDataType({
-    fieldKey: value.fieldKey,
-    oldVal: newVal,
-    newVal: field.value,
+    field,
     formState: value.formState,
-    validationResult: field.validationResult,
-    isInnerEvent: value.isInnerEvent,
   } as ValidateFieldType)
 
   if (field.validationResult.errors.length === 0) {
     actions.ovl.internal.ValidateSchema({
-      fieldKey: value.fieldKey,
-      oldVal: newVal,
-      newVal: field.value,
+      field,
       formState: value.formState,
-      validationResult: field.validationResult,
     } as ValidateFieldType)
 
     if (field.validationResult.errors.length === 0) {
       if (field.list) {
         actions.ovl.internal.ValidateList({
-          fieldKey: value.fieldKey,
-          oldVal: newVal,
-          newVal: field.value,
+          field,
           formState: value.formState,
-          validationResult: field.validationResult,
         } as ValidateFieldType)
       }
       if (field.validationResult.errors.length === 0) {
         let validationFnName = "FormValidate"
         if (fn && fn[validationFnName]) {
           let val: FormValidate_Type = {
-            fieldKey: value.fieldKey,
-            oldVal: field.previousConvertedValue,
-            newVal: value.isInnerEvent ? field.value : field.convertedValue,
+            field,
             formState: value.formState,
-            validationResult: field.validationResult,
             isInnerEvent: value.isInnerEvent,
             correctedValue: undefined,
           }
           fn[validationFnName](val)
-          if (val.validationResult.errors.length === 0 && val.correctedValue) {
+          if (
+            field.validationResult.errors.length === 0 &&
+            val.correctedValue
+          ) {
             field.convertedValue = val.correctedValue
           }
         }
