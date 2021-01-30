@@ -21,6 +21,9 @@ const _validatorHelper = (
   let summary: SummaryType
   let summaryDisplayType: SummaryValidationDisplayType
   let fieldDisplayType: FieldValidationDisplayType
+  let fieldTranslationReps
+  let summaryTranslationReps
+
   if (def) {
     if (def.fieldTranslationKey) {
       translationKey = def.fieldTranslationKey
@@ -28,31 +31,49 @@ const _validatorHelper = (
     if (def.summaryTranslationKey) {
       summaryTranslationKey = def.summaryTranslationKey
     }
+    // @@todo: refactor potential down here...
     if (def.useFieldNamesPlaceholder) {
       if (def.useFieldNamesPlaceholder === "AtTheStartOfMessage") {
         if (!def.useFieldNamesOnlyInSummary) {
-          translationKey = "{0} " + translationKey
+          if (!def.fieldTranslationKey) {
+            translationKey = "{0} " + translationKey
+          }
         }
-        summaryTranslationKey = "{0} " + summaryTranslationKey
+        if (!def.summaryTranslationKey) {
+          summaryTranslationKey = "{0} " + summaryTranslationKey
+        }
       } else {
         if (!def.useFieldNamesOnlyInSummary) {
-          translationKey = translationKey + " {0}"
+          if (!def.fieldTranslationKey) {
+            translationKey = translationKey + " {0}"
+          }
         }
-        summaryTranslationKey = summaryTranslationKey + " {0}"
+        if (!def.summaryTranslationKey) {
+          summaryTranslationKey = summaryTranslationKey + " {0}"
+        }
       }
     }
     fieldDisplayType = def.fieldDisplayType
     isGrouped = def.isGrouped
+    if (def.fieldTranslationReps) {
+      fieldTranslationReps = def.fieldTranslationReps
+    }
+    if (def.summaryTranslationReps) {
+      summaryTranslationReps = def.summaryTranslationReps
+    }
   }
   if (isGrouped) {
     summary = {
       displayCond: summaryDisplayType,
-      msg: { translationKey: summaryTranslationKey },
+      msg: {
+        translationKey: summaryTranslationKey,
+        translationReps: summaryTranslationReps,
+      },
     }
   }
   AddValidationFromValidator({
     field: { field, displayCond: fieldDisplayType },
-    msg: { translationKey },
+    msg: { translationKey, translationReps: fieldTranslationReps },
     isGrouped,
     summary,
   })
@@ -63,9 +84,11 @@ type ValidatorDefType = {
   useFieldNamesOnlyInSummary?: boolean
   fieldDisplayType?: FieldValidationDisplayType
   fieldTranslationKey?: string
+  fieldTranslationReps?: string[]
   isGrouped?: boolean
   summaryDisplayType?: SummaryValidationDisplayType
   summaryTranslationKey?: string
+  summaryTranslationReps?: string[]
 }
 export const Mandatory = (field: Field, def?: ValidatorDefType) => {
   if (!field.value) _validatorHelper("Mandatory", field, def)
@@ -170,11 +193,15 @@ const _addValidation = (
     key = v.msg.translationKey + v.field.field.fieldKey
   }
 
-  let reps = v.msg.translationReps
+  let reps = []
   if (type === "BuiltIn" || type === "Validators") {
+    // so fieldname translations will always be in {0} for validators which are builtin (listvalidate, schemavalidate,... and Validators (mandatory, email))
     reps = [T(v.field.field.ui.labelTranslationKey)]
   }
-
+  // always push custom reps
+  if (v.msg.translationReps) {
+    reps = reps.concat(v.msg.translationReps)
+  }
   // handle field
   let fieldIdx = v.field.field.validationResult.errors.findIndex(
     (f) => f.key === key
@@ -205,7 +232,7 @@ const _addValidation = (
     } else {
       let err = formState.validationResult.errors[idx]
       errToAdjust = err
-      err.translationReps = v.msg.translationReps
+      err.translationReps = []
       err.displayType = v.summary.displayCond
 
       if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
@@ -219,6 +246,13 @@ const _addValidation = (
           .join(", "),
       ]
     }
+    if (v.field.field.fieldKey === "mandatory1") {
+      debugger
+    }
+    if (v.summary && v.summary.msg && v.summary.msg.translationReps)
+      errToAdjust.translationReps = errToAdjust.translationReps.concat(
+        v.summary.msg.translationReps
+      )
   }
 
   SetVisibleSummaryErrorKeys(formState)
