@@ -41,7 +41,7 @@ const _validatorHelper = (
       msg: { translationKey: translationKey + "Summary" },
     }
   }
-  AddValidation({
+  AddValidationFromValidator({
     field: { field, displayCond: fieldDisplayType },
     msg: { translationKey },
     isGrouped,
@@ -155,15 +155,22 @@ export const AddValidationFromBuiltinValidation = (v: AddValidationType) => {
   _addValidation(v, "BuiltIn")
 }
 
+export const AddValidationFromValidator = (v: AddValidationType) => {
+  _addValidation(v, "Validators")
+}
+
 export const AddValidation = (v: AddValidationType) => {
   _addValidation(v, "Custom")
 }
 
-const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
+const _addValidation = (
+  v: AddValidationType,
+  type: "BuiltIn" | "Custom" | "Validators"
+) => {
   let formState: OvlFormState =
     ovl.state.ovl.forms[v.field.field.formType][v.field.field.formId]
-  let fieldDisplayCond = v.field.displayCond
-  if (type === "Custom") {
+
+  if (type === "Custom" || type === "Validators") {
     // <set defaults>
     if (v.field.displayCond === undefined) {
       if (v.summary) {
@@ -196,7 +203,7 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
   }
 
   let reps = v.msg.translationReps
-  if (type === "BuiltIn") {
+  if (type === "BuiltIn" || type === "Validators") {
     reps = [T(v.field.field.ui.labelTranslationKey)]
   }
 
@@ -209,7 +216,7 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
       key,
       translationKey: v.msg.translationKey,
       translationReps: reps,
-      displayType: fieldDisplayCond,
+      displayType: v.field.displayCond,
     })
   }
   // handle summary
@@ -237,7 +244,7 @@ const _addValidation = (v: AddValidationType, type: "BuiltIn" | "Custom") => {
         err.fieldKeys.push(v.field.field.fieldKey)
       }
     }
-    if (type === "BuiltIn") {
+    if (type === "BuiltIn" || type === "Validators") {
       errToAdjust.translationReps = [
         errToAdjust.fieldKeys
           .map((k) => T(formState.fields[k].ui.labelTranslationKey))
