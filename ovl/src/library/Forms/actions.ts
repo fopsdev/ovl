@@ -687,34 +687,41 @@ export const InitForm: OvlAction<InitForm> = (
       formState.builtInValidationDisplay = {
         dataTypeValidation: {
           field: { displayType: "WhenTouched" },
+          summary: { displayType: "Always" },
         },
         schemaValidation: {
           field: { displayType: "WhenTouched" },
+          summary: { displayType: "Always" },
         },
         listValidation: {
           field: { displayType: "WhenTouched" },
+          summary: { displayType: "Always" },
         },
         customValidationDefaults: {
           field: {
             displayType: "WhenTouched",
             displayTypeIfSummary: "OnlyOutline",
           },
+          summary: { displayType: "Always" },
         },
       }
     }
     if (formState.builtInValidationDisplay.dataTypeValidation === undefined) {
       formState.builtInValidationDisplay.dataTypeValidation = {
         field: { displayType: "WhenTouched" },
+        summary: { displayType: "Always" },
       }
     }
     if (formState.builtInValidationDisplay.schemaValidation === undefined) {
       formState.builtInValidationDisplay.schemaValidation = {
         field: { displayType: "WhenTouched" },
+        summary: { displayType: "Always" },
       }
     }
     if (formState.builtInValidationDisplay.listValidation === undefined) {
       formState.builtInValidationDisplay.listValidation = {
         field: { displayType: "WhenTouched" },
+        summary: { displayType: "Always" },
       }
     }
     if (
@@ -725,6 +732,7 @@ export const InitForm: OvlAction<InitForm> = (
           displayType: "WhenTouched",
           displayTypeIfSummary: "OnlyOutline",
         },
+        summary: { displayType: "Always" },
       }
     }
     //</defaults>

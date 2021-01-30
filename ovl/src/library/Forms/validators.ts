@@ -13,112 +13,81 @@ import { forms } from "../../state"
 const _validatorHelper = (
   translationKey: string,
   field: Field,
-  def?: {
-    fieldDisplayType?: FieldValidationDisplayType
-    isGrouped?: boolean
-    summaryDisplayType?: SummaryValidationDisplayType
-  }
+  def?: ValidatorDefType
 ) => {
   translationKey = "OvlValidator" + translationKey
+  let summaryTranslationKey = translationKey + "Summary"
   let isGrouped: boolean
   let summary: SummaryType
   let summaryDisplayType: SummaryValidationDisplayType
   let fieldDisplayType: FieldValidationDisplayType
   if (def) {
-    if (!def.summaryDisplayType && def.isGrouped) {
-      let formState: OvlFormState =
-        ovl.state.ovl.forms[field.formType][field.formId]
-      summaryDisplayType =
-        formState.builtInValidationDisplay.customValidationDefaults.summary
-          .displayType
+    if (def.fieldTranslationKey) {
+      translationKey = def.fieldTranslationKey
+    }
+    if (def.summaryTranslationKey) {
+      summaryTranslationKey = def.summaryTranslationKey
+    }
+    if (def.useFieldNamesPlaceholder) {
+      if (def.useFieldNamesPlaceholder === "AtTheStartOfMessage") {
+        if (!def.useFieldNamesOnlyInSummary) {
+          translationKey = "{0} " + translationKey
+        }
+        summaryTranslationKey = "{0} " + summaryTranslationKey
+      } else {
+        if (!def.useFieldNamesOnlyInSummary) {
+          translationKey = translationKey + " {0}"
+        }
+        summaryTranslationKey = summaryTranslationKey + " {0}"
+      }
     }
     fieldDisplayType = def.fieldDisplayType
     isGrouped = def.isGrouped
   }
-  if (summaryDisplayType) {
+  if (isGrouped) {
     summary = {
       displayCond: summaryDisplayType,
-      msg: { translationKey: translationKey + "Summary" },
+      msg: { translationKey: summaryTranslationKey },
     }
   }
   AddValidationFromValidator({
     field: { field, displayCond: fieldDisplayType },
     msg: { translationKey },
     isGrouped,
+    summary,
   })
 }
 
-export const Mandatory = (
-  field: Field,
-  def?: {
-    fieldDisplayType?: FieldValidationDisplayType
-    isGrouped?: boolean
-    summaryDisplayType?: SummaryValidationDisplayType
-  }
-) => {
+type ValidatorDefType = {
+  useFieldNamesPlaceholder?: "AtTheStartOfMessage" | "AtTheEndOfMessage"
+  useFieldNamesOnlyInSummary?: boolean
+  fieldDisplayType?: FieldValidationDisplayType
+  fieldTranslationKey?: string
+  isGrouped?: boolean
+  summaryDisplayType?: SummaryValidationDisplayType
+  summaryTranslationKey?: string
+}
+export const Mandatory = (field: Field, def?: ValidatorDefType) => {
   if (!field.value) _validatorHelper("Mandatory", field, def)
 }
 
 export const MinLength = (
-  displayFieldName: string,
-  val: String,
+  field: Field,
   minLength: number,
-  res: ValidateResult,
-  displayType?: FieldValidationDisplayType
+  def?: ValidatorDefType
 ) => {
-  if (!displayType) {
-    displayType = "WhenTouched"
-  }
-
-  if (!val || (val && val.length < minLength)) {
-    res.errors.push({
-      key: "MinLength",
-      translationKey: "AppValidationMinLength",
-      translationReps: [displayFieldName, minLength.toString()],
-      displayType,
-    })
-  }
-}
-
-export const MinLengthOrEmpty = (
-  displayFieldName: string,
-  val: String,
-  minLength: number,
-  res: ValidateResult,
-  displayType?: FieldValidationDisplayType
-) => {
-  if (!displayType) {
-    displayType = "WhenTouched"
-  }
-
-  if (val && val.length < minLength) {
-    res.errors.push({
-      key: "MinLenOrEmpty",
-      translationKey: "AppValidationMinLengthOrEmpty",
-      translationReps: [displayFieldName, minLength.toString()],
-      displayType,
-    })
-  }
+  if (!field.value || (field.value && field.value.length < minLength))
+    _validatorHelper("MinLength", field, def)
 }
 
 export const Email = (
-  displayFieldName: string,
-  val: String,
-  res: ValidateResult,
-  displayType?: FieldValidationDisplayType
+  field: Field,
+  minLength: number,
+  def?: ValidatorDefType
 ) => {
-  if (!displayType) {
-    displayType = "WhenTouched"
-  }
-
-  if (!val || (val && !validateEmail(val))) {
-    res.errors.push({
-      key: "Email",
-      translationKey: "AppValidationEmail",
-      translationReps: [displayFieldName],
-      displayType,
-    })
-  }
+  let val = field.value
+  if (!val || (val && !validateEmail(val)))
+    _validatorHelper("MinLength", field, def)
 }
 
 function validateEmail(email) {
@@ -181,7 +150,6 @@ const _addValidation = (
           formState.builtInValidationDisplay.customValidationDefaults.field.displayType
       }
     }
-
     if (v.summary) {
       if (v.summary.displayCond === undefined) {
         v.summary.displayCond =
