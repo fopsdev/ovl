@@ -3,7 +3,6 @@ import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 
 import {
   resolvePath,
-  getDecimalValue,
   enableBodyScroll,
   disableBodyScroll,
 } from "../../../global/globals"
@@ -13,19 +12,14 @@ import {
   FieldGetList_ReturnType,
 } from "../../../global/hooks"
 import { SnackAdd } from "../../helpers"
-import { OvlBaseElement } from "../../OvlBaseElement"
 import {
-  ControlState,
   FilterHitList,
   GetCustomInfo,
   GetListDisplayValue,
   GetRowFromFormState,
   GetOutlineValidationHint,
 } from "./helpers"
-
-import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
-import { OvlState } from "../../.."
 import {
   ChangeValueEventHelper,
   RemoveFocusEventHelper,
@@ -455,8 +449,7 @@ export class OvlListControl extends OvlControlBase {
             class="ovl-formcontrol-container ovl-container-listbox ovl-container__${field.fieldKey} ${this
               .customInfo.customRowClassContainerName}"
           >
-            <ovl-controllabel .props=${() => this.controlState}>
-            </ovl-controllabel>
+            <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
             <div
               class="fd-input-group ${GetOutlineValidationHint(field)} ${this
                 .customInfo.customRowClassName} ovl-formcontrol-input"
@@ -497,9 +490,9 @@ export class OvlListControl extends OvlControlBase {
             </div>
 
             ${this.localList}
-            <ovl-controlcustomhint .props=${() => this.controlState}>
+            <ovl-controlcustomhint .props=${() => this.field}>
             </ovl-controlcustomhint>
-            <ovl-controlvalidationhint .props=${() => this.controlState}>
+            <ovl-controlvalidationhint .props=${() => this.field}>
             </ovl-controlvalidationhint>
           </div>
         </div>

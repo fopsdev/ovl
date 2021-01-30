@@ -1,14 +1,11 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
-import {
-  ControlState,
-  GetRowFromFormState,
-  GetValueFromCustomFunction,
-} from "../helpers"
+import { GetValueFromCustomFunction } from "../helpers"
+import { Field } from "../../actions"
 
 export class OvlCustomValueHint extends OvlBaseElement {
   props: any
-  field: ControlState
+  field: Field
   init() {
     this.field = this.props(this.state)
   }
@@ -16,7 +13,7 @@ export class OvlCustomValueHint extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
       let customValue
-      let field = this.field.field
+      let field = this.field
       if (field.validationResult.errors.length === 0) {
         let align = ""
         if (field.ui && field.ui.align) {

@@ -1,17 +1,18 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
-import { ControlState, GetValueFromCustomFunction } from "../helpers"
+
 import { T } from "../../../../global/globals"
+import { Field } from "../../actions"
 
 export class OvlValidationHint extends OvlBaseElement {
   props: any
-  field: ControlState
+  field: Field
   init() {
     this.field = this.props(this.state)
   }
   async getUI() {
     return this.track(() => {
-      let field = this.field.field
+      let field = this.field
       let errors = field.validationResult.errors
         .filter(
           (f) =>

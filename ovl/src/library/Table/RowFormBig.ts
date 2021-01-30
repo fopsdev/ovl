@@ -316,11 +316,7 @@ export class TableRowFormBig extends OvlFormElement {
                   <ovl-textbox
                     id="${id}"
                     class="fd-form__item "
-                    .props=${() => {
-                      return {
-                        field: fields[k],
-                      }
-                    }}
+                    .props=${() => fields[k]}
                   >
                   </ovl-textbox>
                 `
@@ -331,11 +327,7 @@ export class TableRowFormBig extends OvlFormElement {
                   <ovl-datebox
                     id="${id}"
                     class="fd-form__item "
-                    .props=${() => {
-                      return {
-                        field: fields[k],
-                      }
-                    }}
+                    .props=${() => fields[k]}
                   >
                   </ovl-datebox>
                 `
@@ -346,11 +338,7 @@ export class TableRowFormBig extends OvlFormElement {
                   <ovl-timebox
                     id="${id}"
                     class="fd-form__item "
-                    .props=${() => {
-                      return {
-                        field: fields[k],
-                      }
-                    }}
+                    .props=${() => fields[k]}
                   >
                   </ovl-timebox>
                 `
@@ -361,11 +349,7 @@ export class TableRowFormBig extends OvlFormElement {
                   <ovl-textarea
                     id="${id}"
                     class="fd-form__item "
-                    .props=${() => {
-                      return {
-                        field: fields[k],
-                      }
-                    }}
+                    .props=${() => fields[k]}
                   >
                   </ovl-textarea>
                 `
@@ -377,11 +361,7 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-listcontrol
                       id="${id}"
                       class="fd-form__item "
-                      .props=${() => {
-                        return {
-                          field: fields[k],
-                        }
-                      }}
+                      .props=${() => fields[k]}
                     >
                     </ovl-listcontrol>
                   `
@@ -393,11 +373,7 @@ export class TableRowFormBig extends OvlFormElement {
                     <ovl-checkbox
                       id="${id}"
                       class="fd-form__item "
-                      .props=${() => {
-                        return {
-                          field: fields[k],
-                        }
-                      }}
+                      .props=${() => fields[k]}
                     >
                     </ovl-checkbox>
                   `

@@ -1,10 +1,9 @@
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { Field, OvlFormState } from "../actions"
-import { ControlState, GetCustomInfo } from "./helpers"
+import { GetCustomInfo } from "./helpers"
 
 export class OvlControlBase extends OvlBaseElement {
   props: any
-  controlState: ControlState
   field: Field
   inputElement: any
   formState: OvlFormState
@@ -24,9 +23,7 @@ export class OvlControlBase extends OvlBaseElement {
   }
 
   InitControl() {
-    this.controlState = this.props(this.state)
-
-    this.field = this.controlState.field
+    this.field = this.props(this.state)
 
     this.formState = this.state.ovl.forms[this.field.formType][
       this.field.formId

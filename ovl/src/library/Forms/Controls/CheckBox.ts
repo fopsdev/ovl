@@ -1,24 +1,12 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
-import { OvlBaseElement } from "../../OvlBaseElement"
-import {
-  ControlState,
-  GetContainerClass,
-  GetCustomInfo,
-  GetInputClass,
-  GetOutlineValidationHint,
-} from "./helpers"
-import { OvlFormState } from "../actions"
-import { OvlState } from "../../.."
+import { GetContainerClass, GetInputClass } from "./helpers"
 import {
   ChangeValueEventHelper,
   RemoveFocusEventHelper,
   SetFocusEventHelper,
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
-
-type TextBoxType = "text" | "password" | "text-security"
-
 export class OvlCheckbox extends OvlControlBase {
   handleChange(e: Event) {
     e.stopPropagation()
@@ -53,8 +41,7 @@ export class OvlCheckbox extends OvlControlBase {
             this.customInfo.customRowClassContainerName
           )}"
         >
-          <ovl-controllabel .props=${() => this.controlState}>
-          </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <div class="fd-form-item">
             <input
               tabindex="${ifDefined(
@@ -81,9 +68,9 @@ export class OvlCheckbox extends OvlControlBase {
             >
             </label>
           </div>
-          <ovl-controlcustomhint .props=${() => this.controlState}>
+          <ovl-controlcustomhint .props=${() => this.field}>
           </ovl-controlcustomhint>
-          <ovl-controlvalidationhint .props=${() => this.controlState}>
+          <ovl-controlvalidationhint .props=${() => this.field}>
           </ovl-controlvalidationhint>
         </div>
       `

@@ -1,13 +1,6 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
-import { OvlBaseElement } from "../../OvlBaseElement"
-import {
-  ControlState,
-  GetContainerClass,
-  GetCustomInfo,
-  GetInputClass,
-  GetOutlineValidationHint,
-} from "./helpers"
+import { GetContainerClass, GetInputClass } from "./helpers"
 
 import { OvlFormState } from "../actions"
 import {
@@ -48,8 +41,7 @@ export class OvlTime extends OvlControlBase {
             this.customInfo.customRowClassContainerName
           )}"
         >
-          <ovl-controllabel .props=${() => this.controlState}>
-          </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
 
           <input
             tabindex="${ifDefined(
@@ -71,9 +63,9 @@ export class OvlTime extends OvlControlBase {
             value="${field.value}"
           />
         </div>
-        <ovl-controlcustomhint .props=${() => this.controlState}>
+        <ovl-controlcustomhint .props=${() => this.field}>
         </ovl-controlcustomhint>
-        <ovl-controlvalidationhint .props=${() => this.controlState}>
+        <ovl-controlvalidationhint .props=${() => this.field}>
         </ovl-controlvalidationhint>
       `
     })

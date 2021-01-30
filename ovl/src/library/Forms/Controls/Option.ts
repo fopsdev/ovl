@@ -1,6 +1,5 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
-import { ovl } from "../../.."
 import { resolvePath } from "../../../global/globals"
 import {
   FieldGetList,
@@ -9,8 +8,6 @@ import {
 } from "../../../global/hooks"
 import { OvlBaseElement } from "../../OvlBaseElement"
 import {
-  ControlState,
-  GetCustomInfo,
   GetRowFromFormState,
   GetOutlineValidationHint,
   GetInputClass,
@@ -52,8 +49,7 @@ export class OvlOption extends OvlControlBase {
             this.customInfo.customRowClassContainerName
           )}"
         >
-          <ovl-controllabel .props=${() => this.controlState}>
-          </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
 
           <div
             tabindex="${this.nonFocusable() ? "-1" : "0"}"
@@ -102,9 +98,9 @@ export class OvlOption extends OvlControlBase {
             })}
           </div>
         </div>
-        <ovl-controlcustomhint .props=${() => this.controlState}>
+        <ovl-controlcustomhint .props=${() => this.field}>
         </ovl-controlcustomhint>
-        <ovl-controlvalidationhint .props=${() => this.controlState}>
+        <ovl-controlvalidationhint .props=${() => this.field}>
         </ovl-controlvalidationhint>
       `
     })

@@ -1,10 +1,6 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
-import {
-  cachedRendererFn,
-  ControlState,
-  GetValueFromCustomFunction,
-} from "../helpers"
+import { cachedRendererFn } from "../helpers"
 import { ovl } from "../../../.."
 import { T } from "../../../../global/globals"
 import {
@@ -14,18 +10,18 @@ import {
 import { ifDefined } from "../../../../tracker/litdirectives/if-defined"
 import { GetRendererFn } from "../../../Table/helpers"
 import { DisplayMode } from "../../../Table/Table"
-import { OvlFormState } from "../../actions"
+import { Field, OvlFormState } from "../../actions"
 
 export class OvlControlLabel extends OvlBaseElement {
   props: any
-  field: ControlState
+  field: Field
   init() {
     this.field = this.props(this.state)
   }
 
   async getUI() {
     return this.track(() => {
-      let field = this.field.field
+      let field = this.field
       let formState: OvlFormState = this.state.ovl.forms[field.formType][
         field.formId
       ]

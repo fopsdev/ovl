@@ -42,10 +42,6 @@ export type LookupListPostData = {
   paramList?: { [key: string]: {} }
 }
 
-export type ControlState = {
-  field: Field
-}
-
 export const KeyValueListFromServerFn = async (
   state: OvlState,
   list: ListState,

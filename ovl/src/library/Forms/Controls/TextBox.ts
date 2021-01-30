@@ -1,15 +1,8 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
-import { OvlBaseElement } from "../../../library/OvlBaseElement"
-import {
-  ControlState,
-  GetContainerClass,
-  GetCustomInfo,
-  GetInputClass,
-  GetOutlineValidationHint,
-} from "./helpers"
 
-import { OvlFormState } from "../actions"
+import { GetContainerClass, GetInputClass } from "./helpers"
+
 import {
   ChangeValueEventHelper,
   RemoveFocusEventHelper,
@@ -62,8 +55,7 @@ export class OvlTextbox extends OvlControlBase {
             this.customInfo.customRowClassContainerName
           )}"
         >
-          <ovl-controllabel .props=${() => this.controlState}>
-          </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <input
             tabindex="${ifDefined(
               this.nonFocusable() ? "-1" : undefined,
@@ -87,9 +79,9 @@ export class OvlTextbox extends OvlControlBase {
             id="${field.id}"
             value="${field.value}"
           />
-          <ovl-controlcustomhint .props=${() => this.controlState}>
+          <ovl-controlcustomhint .props=${() => this.field}>
           </ovl-controlcustomhint>
-          <ovl-controlvalidationhint .props=${() => this.controlState}>
+          <ovl-controlvalidationhint .props=${() => this.field}>
           </ovl-controlvalidationhint>
         </div>
       `

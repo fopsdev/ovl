@@ -1,12 +1,6 @@
-import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { html } from "lit-html"
-import { OvlFormState } from "../actions"
 
-import {
-  GetContainerClass,
-  GetInputClass,
-  GetOutlineValidationHint,
-} from "./helpers"
+import { GetContainerClass, GetInputClass } from "./helpers"
 import { ifDefined } from "../../../tracker/litdirectives/if-defined"
 import {
   ChangeValueEventHelper,
@@ -34,8 +28,7 @@ export class OvlTextArea extends OvlControlBase {
             this.customInfo.customRowClassContainerName
           )}"
         >
-          <ovl-controllabel .props=${() => this.controlState}>
-          </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <textarea
             tabindex="${ifDefined(
               this.nonFocusable() ? "-1" : undefined,
@@ -55,9 +48,9 @@ export class OvlTextArea extends OvlControlBase {
 ${field.value}</textarea
           >
         </div>
-        <ovl-controlcustomhint .props=${() => this.controlState}>
+        <ovl-controlcustomhint .props=${() => this.field}>
         </ovl-controlcustomhint>
-        <ovl-controlvalidationhint .props=${() => this.controlState}>
+        <ovl-controlvalidationhint .props=${() => this.field}>
         </ovl-controlvalidationhint>
       `
     })

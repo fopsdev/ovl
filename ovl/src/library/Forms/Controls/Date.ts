@@ -57,8 +57,7 @@ export class OvlDate extends OvlControlBase {
             this.customInfo.customRowClassContainerName
           )}"
         >
-          <ovl-controllabel .props=${() => this.controlState}>
-          </ovl-controllabel>
+          <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <input
             tabindex="${ifDefined(
               this.nonFocusable() ? "-1" : undefined,
@@ -80,9 +79,9 @@ export class OvlDate extends OvlControlBase {
             spellcheck="false"
           />
 
-          <ovl-controlcustomhint .props=${() => this.controlState}>
+          <ovl-controlcustomhint .props=${() => this.field}>
           </ovl-controlcustomhint>
-          <ovl-controlvalidationhint .props=${() => this.controlState}>
+          <ovl-controlvalidationhint .props=${() => this.field}>
           </ovl-controlvalidationhint>
         </div>
       `
