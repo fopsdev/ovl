@@ -312,7 +312,12 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           if (!resp) {
             field.convertedValue = ""
             field.value = field.value
-            AddValidation(field, value.formState.validation.dataType.Date)
+            AddValidation(
+              field,
+              JSON.parse(
+                JSON.stringify(value.formState.validation.dataType.Date)
+              )
+            )
           } else {
             field.convertedValue = newDate
             field.value = getDateValue(newDate, format)
@@ -333,7 +338,12 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           field.convertedValue = parsedVal
           //RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
-          AddValidation(field, value.formState.validation.dataType.Number)
+          AddValidation(
+            field,
+            JSON.parse(
+              JSON.stringify(value.formState.validation.dataType.Number)
+            )
+          )
         }
       } else {
         field.convertedValue = null
@@ -360,7 +370,12 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           field.convertedValue = parsedVal
           //RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
-          AddValidation(field, value.formState.validation.dataType.Number)
+          AddValidation(
+            field,
+            JSON.parse(
+              JSON.stringify(value.formState.validation.dataType.Number)
+            )
+          )
         }
       } else {
         field.convertedValue = null
@@ -381,7 +396,9 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
       if (type === "text") {
         if (field.value) {
           if (field.value.length > schema.maxLength) {
-            let validation = value.formState.validation.schema.NrOfChars
+            let validation = JSON.parse(
+              JSON.stringify(value.formState.validation.schema.NrOfChars)
+            )
             validation.summary.additionalTranslationReps = [
               schema.maxLength.toString(),
             ]
@@ -414,8 +431,10 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   }
 
   if (!list.acceptEmpty && !field.value) {
-    debugger
-    AddValidation(field, value.formState.validation.list.NotEmpty)
+    AddValidation(
+      field,
+      JSON.parse(JSON.stringify(value.formState.validation.list.NotEmpty))
+    )
     return
   }
   if (list.acceptOnlyListValues && field.value) {
@@ -451,7 +470,10 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
           )
         }).length < 1
       ) {
-        AddValidation(field, value.formState.validation.list.ListValue)
+        AddValidation(
+          field,
+          JSON.parse(JSON.stringify(value.formState.validation.list.ListValue))
+        )
         return
       }
     }

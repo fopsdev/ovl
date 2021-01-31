@@ -171,7 +171,7 @@ export const UseValidator = (
   }
 }
 
-export const GetCustomValidation = (
+export const GetCustomValidationDefaults = (
   formState: OvlFormState
 ): FormValidationField => {
   return JSON.parse(JSON.stringify(formState.validation.custom))
@@ -234,17 +234,16 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
       if (err.fieldKeys.indexOf(field.fieldKey) < 0) {
         err.fieldKeys.push(field.fieldKey)
       }
-
-      errToAdjust.translationReps = [
-        errToAdjust.fieldKeys
-          .map((k) => T(formState.fields[k].ui.labelTranslationKey))
-          .join(", "),
-      ]
-      if (v.summary.additionalTranslationReps)
-        errToAdjust.translationReps = errToAdjust.translationReps.concat(
-          v.summary.additionalTranslationReps
-        )
     }
+    errToAdjust.translationReps = [
+      errToAdjust.fieldKeys
+        .map((k) => T(formState.fields[k].ui.labelTranslationKey))
+        .join(", "),
+    ]
+    if (v.summary.additionalTranslationReps)
+      errToAdjust.translationReps = errToAdjust.translationReps.concat(
+        v.summary.additionalTranslationReps
+      )
   }
   SetVisibleSummaryErrorKeys(formState)
   formState.valid = false
