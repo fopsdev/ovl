@@ -141,6 +141,9 @@ export type ValidationSettingsType = {
     displayType: SummaryValidationDisplayType
     msg?: { translationKey: string }
   }
+  // defaultTranslationKeys: {
+
+  // }
 }
 
 export type OvlFormState = {
@@ -492,8 +495,6 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     })
 
     return
-  } else {
-    RemoveFieldValidation(field, "AppValidationListNotEmpty")
   }
   if (list.acceptOnlyListValues && field.value) {
     // get a handy row object for FieldChanged hooks
@@ -539,8 +540,6 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
         })
 
         return
-      } else {
-        RemoveFieldValidation(field, "AppValidationListNeedsToBeEntry")
       }
     }
   }

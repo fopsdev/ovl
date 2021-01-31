@@ -194,11 +194,8 @@ const _addValidation = (
   }
 
   let reps = []
-  //if (type === "BuiltIn" || type === "Validators") {
   // so fieldname translations will always be in {0} for validators which are builtin (listvalidate, schemavalidate,... and Validators (mandatory, email))
   reps = [T(v.field.field.ui.labelTranslationKey)]
-  //}
-  // always push custom reps
   if (v.msg.translationReps) {
     reps = reps.concat(v.msg.translationReps)
   }
@@ -239,22 +236,17 @@ const _addValidation = (
         err.fieldKeys.push(v.field.field.fieldKey)
       }
     }
-    //if (type === "BuiltIn" || type === "Validators") {
+
     errToAdjust.translationReps = [
       errToAdjust.fieldKeys
         .map((k) => T(formState.fields[k].ui.labelTranslationKey))
         .join(", "),
     ]
-    //}
-    if (v.field.field.fieldKey === "mandatory1") {
-      debugger
-    }
     if (v.summary && v.summary.msg && v.summary.msg.translationReps)
       errToAdjust.translationReps = errToAdjust.translationReps.concat(
         v.summary.msg.translationReps
       )
   }
-
   SetVisibleSummaryErrorKeys(formState)
   formState.valid = false
 }
@@ -298,9 +290,6 @@ const _removeSummaryValidation = (formState: OvlFormState, key: string) => {
     formState.validationResult.errors.splice(errorIndex, 1)
   }
   SetFormValid(formState)
-  // if (!formState.valid) {
-  //   SetVisibleSummaryErrorKeys(formState)
-  // }
 }
 
 export const RemoveFieldValidation = (field: Field, key: string) => {
