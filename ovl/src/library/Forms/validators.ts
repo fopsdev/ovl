@@ -6,246 +6,245 @@ import {
   ValidateSummaryResult,
 } from "./actions"
 import { logState, T } from "../../global/globals"
-import { ovl, OvlForm } from "../.."
+import { ovl, OvlForm, OvlFormValidationValidators } from "../.."
 import { form } from "../../actions"
 import { forms } from "../../state"
+import { OvlConfig } from "../../config"
 
-const _validatorHelper = (
-  translationKey: string,
-  field: Field,
-  def?: ValidatorDefType
-) => {
-  translationKey = "OvlValidator" + translationKey
-  let summaryTranslationKey = translationKey + "Summary"
-  let isGrouped: boolean
-  let summary: SummaryType
-  let summaryDisplayType: SummaryValidationDisplayType
-  let fieldDisplayType: FieldValidationDisplayType
-  let fieldTranslationReps
-  let summaryTranslationReps
-
-  if (def) {
-    if (def.fieldTranslationKey) {
-      translationKey = def.fieldTranslationKey
-    }
-    if (def.summaryTranslationKey) {
-      summaryTranslationKey = def.summaryTranslationKey
-    }
-    // @@todo: refactor potential down here...
-    if (def.useFieldNamesPlaceholder) {
-      if (def.useFieldNamesPlaceholder === "AtTheStartOfMessage") {
-        if (!def.useFieldNamesOnlyInSummary) {
-          if (!def.fieldTranslationKey) {
-            translationKey = "{0} " + translationKey
-          }
-        }
-        if (!def.summaryTranslationKey) {
-          summaryTranslationKey = "{0} " + summaryTranslationKey
-        }
-      } else {
-        if (!def.useFieldNamesOnlyInSummary) {
-          if (!def.fieldTranslationKey) {
-            translationKey = translationKey + " {0}"
-          }
-        }
-        if (!def.summaryTranslationKey) {
-          summaryTranslationKey = summaryTranslationKey + " {0}"
-        }
-      }
-    }
-    fieldDisplayType = def.fieldDisplayType
-    isGrouped = def.isGrouped
-    if (def.fieldTranslationReps) {
-      fieldTranslationReps = def.fieldTranslationReps
-    }
-    if (def.summaryTranslationReps) {
-      summaryTranslationReps = def.summaryTranslationReps
-    }
-  }
-  if (isGrouped) {
-    summary = {
-      displayCond: summaryDisplayType,
-      msg: {
-        translationKey: summaryTranslationKey,
-        translationReps: summaryTranslationReps,
-      },
-    }
-  }
-  AddValidationFromValidator({
-    field: { field, displayCond: fieldDisplayType },
-    msg: { translationKey, translationReps: fieldTranslationReps },
-    isGrouped,
-    summary,
-  })
+export type FormValidation = {
+  dataType?: FormValidationDataTypeSettings
+  schema?: FormValidationSchemaSettings
+  list?: FormValidationListSettings
+  validators?: FormValidationValidatorSettings
+  custom?: FormValidationField
 }
 
-type ValidatorDefType = {
-  useFieldNamesPlaceholder?: "AtTheStartOfMessage" | "AtTheEndOfMessage"
-  useFieldNamesOnlyInSummary?: boolean
-  fieldDisplayType?: FieldValidationDisplayType
-  fieldTranslationKey?: string
-  fieldTranslationReps?: string[]
-  isGrouped?: boolean
-  summaryDisplayType?: SummaryValidationDisplayType
-  summaryTranslationKey?: string
-  summaryTranslationReps?: string[]
-}
-export const Mandatory = (field: Field, def?: ValidatorDefType) => {
-  if (!field.value) _validatorHelper("Mandatory", field, def)
+export type FormValidationDataTypeSettings = {
+  Date: FormValidationField
+  Number: FormValidationField
 }
 
-export const MinLength = (
-  field: Field,
-  minLength: number,
-  def?: ValidatorDefType
-) => {
-  if (!field.value || (field.value && field.value.length < minLength))
-    _validatorHelper("MinLength", field, def)
+export type FormValidationSchemaSettings = {
+  NotNull: FormValidationField
+  NrOfChars: FormValidationField
 }
 
-export const Email = (
-  field: Field,
-  minLength: number,
-  def?: ValidatorDefType
-) => {
-  let val = field.value
-  if (!val || (val && !validateEmail(val)))
-    _validatorHelper("MinLength", field, def)
+export type FormValidationListSettings = {
+  ListValue: FormValidationField
+  NotEmpty: FormValidationField
 }
 
-function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return re.test(String(email).toLowerCase())
+export type FormValidationValidatorSettings = {
+  [key in OvlFormValidationValidators]: FormValidationField
 }
 
-export type FieldValidationType = "error"
-export type FieldValidationDisplayType =
-  | "WhenTouched"
-  | "Always"
-  | "OnlyOutline"
-export type SummaryValidationDisplayType =
+export type FormValidationField = {
+  displayType: FormValidationDisplayType
+  translationKey: string
+  additionalTranslationReps?: string[]
+  summary: FormValidationSummary
+}
+
+export type FormValidationSummary = {
+  isUsed: boolean
+  groupedBy:
+    | "FieldTranslationAndFieldKey"
+    | "FieldTranslationKey"
+    | "CustomGroupKey"
+  displayType: FormValidationSummaryDisplayType
+  translationKey?: string
+  additionalTranslationReps?: string[]
+  customGroupKey?: string
+}
+
+export type FormValidationDisplayType = "WhenTouched" | "Always" | "OnlyOutline"
+export type FormValidationSummaryDisplayType =
   | "WhenFirstFieldTouched"
   | "WhenAllRelatedFieldsTouched"
   | "Always"
 
-export type SummaryType = {
-  displayCond?: SummaryValidationDisplayType
-  msg?: { translationKey: string; translationReps?: any[] }
-}
-export type AddValidationType = {
-  isGrouped?: boolean
-  customGroup?: string
-  msg: { translationKey: string; translationReps?: any[] }
-  field: {
-    field: Field
-    displayCond?: FieldValidationDisplayType
-  }
-  summary?: SummaryType
-}
+// const _validatorHelper = (
+//   translationKey: string,
+//   field: Field,
+//   def?: ValidatorDefType
+// ) => {
+//   translationKey = "OvlValidator" + translationKey
+//   let summaryTranslationKey = translationKey + "Summary"
+//   let isGrouped: boolean
+//   let summary: SummaryType
+//   let summaryDisplayType: FormValidationSummaryDisplayType
+//   let fieldDisplayType: FormValidationDisplayType
+//   let fieldTranslationReps
+//   let summaryTranslationReps
 
-export const AddValidationFromBuiltinValidation = (v: AddValidationType) => {
-  _addValidation(v, "BuiltIn")
-}
+//   if (def) {
+//     if (def.fieldTranslationKey) {
+//       translationKey = def.fieldTranslationKey
+//     }
+//     if (def.summaryTranslationKey) {
+//       summaryTranslationKey = def.summaryTranslationKey
+//     }
+//     // @@todo: refactor potential down here...
+//     if (def.useFieldNamesPlaceholder) {
+//       if (def.useFieldNamesPlaceholder === "AtTheStartOfMessage") {
+//         if (!def.useFieldNamesOnlyInSummary) {
+//           if (!def.fieldTranslationKey) {
+//             translationKey = "{0} " + translationKey
+//           }
+//         }
+//         if (!def.summaryTranslationKey) {
+//           summaryTranslationKey = "{0} " + summaryTranslationKey
+//         }
+//       } else {
+//         if (!def.useFieldNamesOnlyInSummary) {
+//           if (!def.fieldTranslationKey) {
+//             translationKey = translationKey + " {0}"
+//           }
+//         }
+//         if (!def.summaryTranslationKey) {
+//           summaryTranslationKey = summaryTranslationKey + " {0}"
+//         }
+//       }
+//     }
+//     fieldDisplayType = def.fieldDisplayType
+//     isGrouped = def.isGrouped
+//     if (def.fieldTranslationReps) {
+//       fieldTranslationReps = def.fieldTranslationReps
+//     }
+//     if (def.summaryTranslationReps) {
+//       summaryTranslationReps = def.summaryTranslationReps
+//     }
+//   }
+//   if (isGrouped) {
+//     summary = {
+//       displayCond: summaryDisplayType,
+//       msg: {
+//         translationKey: summaryTranslationKey,
+//         translationReps: summaryTranslationReps,
+//       },
+//     }
+//   }
+//   AddValidationFromValidator({
+//     field: { field, displayCond: fieldDisplayType },
+//     msg: { translationKey, translationReps: fieldTranslationReps },
+//     isGrouped,
+//     summary,
+//   })
+// }
 
-export const AddValidationFromValidator = (v: AddValidationType) => {
-  _addValidation(v, "Validators")
-}
+// type ValidatorDefType = {
+//   useFieldNamesPlaceholder?: "AtTheStartOfMessage" | "AtTheEndOfMessage"
+//   useFieldNamesOnlyInSummary?: boolean
+//   fieldDisplayType?: FormValidationDisplayType
+//   fieldTranslationKey?: string
+//   fieldTranslationReps?: string[]
+//   isGrouped?: boolean
+//   summaryDisplayType?: FormValidationSummaryDisplayType
+//   summaryTranslationKey?: string
+//   summaryTranslationReps?: string[]
+// }
+// export const Mandatory = (field: Field, def?: ValidatorDefType) => {
+//   if (!field.value) _validatorHelper("Mandatory", field, def)
+// }
 
-export const AddValidation = (v: AddValidationType) => {
-  _addValidation(v, "Custom")
-}
+// export const MinLength = (
+//   field: Field,
+//   minLength: number,
+//   def?: ValidatorDefType
+// ) => {
+//   if (!field.value || (field.value && field.value.length < minLength))
+//     _validatorHelper("MinLength", field, def)
+// }
 
-const _addValidation = (
-  v: AddValidationType,
-  type: "BuiltIn" | "Custom" | "Validators"
+export const UseValidator = (
+  field: Field,
+  validator: OvlFormValidationValidators,
+  val?: any
 ) => {
   let formState: OvlFormState =
-    ovl.state.ovl.forms[v.field.field.formType][v.field.field.formId]
-
-  if (type === "Custom" || type === "Validators") {
-    // <set defaults>
-    if (v.field.displayCond === undefined) {
-      if (v.summary) {
-        v.field.displayCond =
-          formState.builtInValidationDisplay.customValidationDefaults.field.displayTypeIfSummary
-      } else {
-        v.field.displayCond =
-          formState.builtInValidationDisplay.customValidationDefaults.field.displayType
-      }
-    }
-    if (v.summary) {
-      if (v.summary.displayCond === undefined) {
-        v.summary.displayCond =
-          formState.builtInValidationDisplay.customValidationDefaults.summary.displayType
-      }
-      if (!v.summary.msg) {
-        v.summary.msg = v.msg
-      }
-    }
+    ovl.state.ovl.forms[field.formType][field.formId]
+  let validation = JSON.parse(
+    JSON.stringify(formState.validation.validators[validator])
+  )
+  if (OvlConfig.validatorsFunctions[validator](field, validation, val)) {
+    AddValidation(field, validation)
   }
-  // </set defaults>
+}
+
+export const GetCustomValidation = (
+  formState: OvlFormState
+): FormValidationField => {
+  return JSON.parse(JSON.stringify(formState.validation.custom))
+}
+
+export const AddValidation = (field: Field, v: FormValidationField) => {
+  let formState: OvlFormState =
+    ovl.state.ovl.forms[field.formType][field.formId]
+
   let key
-  if (v.customGroup) {
-    key = v.customGroup
-  } else if (v.isGrouped) {
-    key = v.msg.translationKey
-  } else {
-    key = v.msg.translationKey + v.field.field.fieldKey
-  }
 
-  let reps = []
+  switch (v.summary.groupedBy) {
+    case "CustomGroupKey":
+      key = v.summary.customGroupKey
+      break
+    case "FieldTranslationKey":
+      key = v.translationKey
+      break
+    case "FieldTranslationAndFieldKey":
+      key = v.translationKey + field.fieldKey
+  }
+  let reps: string[] = []
   // so fieldname translations will always be in {0} for validators which are builtin (listvalidate, schemavalidate,... and Validators (mandatory, email))
-  reps = [T(v.field.field.ui.labelTranslationKey)]
-  if (v.msg.translationReps) {
-    reps = reps.concat(v.msg.translationReps)
+  reps = [T(field.ui.labelTranslationKey)]
+  if (v.additionalTranslationReps) {
+    reps = reps.concat(v.additionalTranslationReps)
   }
   // handle field
-  let fieldIdx = v.field.field.validationResult.errors.findIndex(
-    (f) => f.key === key
-  )
+  let fieldIdx = field.validationResult.errors.findIndex((f) => f.key === key)
   if (fieldIdx < 0) {
-    v.field.field.validationResult.errors.push({
+    field.validationResult.errors.push({
       key,
-      translationKey: v.msg.translationKey,
+      translationKey: v.translationKey,
       translationReps: reps,
-      displayType: v.field.displayCond,
+      displayType: v.displayType,
     })
   }
   // handle summary
-  if (v.summary) {
+  if (v.summary.isUsed) {
     let summaryErrors = formState.validationResult.errors
     let idx = summaryErrors.findIndex((f) => f.key === key)
-
     let errToAdjust: ValidateResultSummaryErrors
     if (idx < 0) {
       summaryErrors.push({
         key,
-        translationKey: v.summary.msg.translationKey,
-        translationReps: v.summary.msg.translationReps,
-        displayType: v.summary.displayCond,
-        fieldKeys: [v.field.field.fieldKey],
+        translationKey: v.summary.translationKey
+          ? v.summary.translationKey
+          : v.translationKey,
+        translationReps: v.summary.additionalTranslationReps,
+        displayType: v.summary.displayType,
+        fieldKeys: [field.fieldKey],
       })
       errToAdjust = summaryErrors[summaryErrors.length - 1]
     } else {
       let err = formState.validationResult.errors[idx]
       errToAdjust = err
       err.translationReps = []
-      err.displayType = v.summary.displayCond
+      err.displayType = v.summary.displayType
 
-      if (err.fieldKeys.indexOf(v.field.field.fieldKey) < 0) {
-        err.fieldKeys.push(v.field.field.fieldKey)
+      if (err.fieldKeys.indexOf(field.fieldKey) < 0) {
+        err.fieldKeys.push(field.fieldKey)
       }
-    }
 
-    errToAdjust.translationReps = [
-      errToAdjust.fieldKeys
-        .map((k) => T(formState.fields[k].ui.labelTranslationKey))
-        .join(", "),
-    ]
-    if (v.summary && v.summary.msg && v.summary.msg.translationReps)
-      errToAdjust.translationReps = errToAdjust.translationReps.concat(
-        v.summary.msg.translationReps
-      )
+      errToAdjust.translationReps = [
+        errToAdjust.fieldKeys
+          .map((k) => T(formState.fields[k].ui.labelTranslationKey))
+          .join(", "),
+      ]
+      if (v.summary.additionalTranslationReps)
+        errToAdjust.translationReps = errToAdjust.translationReps.concat(
+          v.summary.additionalTranslationReps
+        )
+    }
   }
   SetVisibleSummaryErrorKeys(formState)
   formState.valid = false

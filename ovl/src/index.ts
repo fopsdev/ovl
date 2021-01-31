@@ -7,10 +7,12 @@ import {
   OvlAppScreens,
   OvlAppTableDefIds,
   OvlConfig,
+  OvlFormValidationValidators,
 } from "../../../app/src/appDef"
 import * as appState from "../../../app/src/state"
 import * as appActions from "../../../app/src/actions"
 import * as customActions from "../../../app/src/customActions"
+export { OvlFormValidationValidators }
 // </app setup>
 
 // // <test setup>

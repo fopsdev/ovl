@@ -107,13 +107,13 @@ export const ovlFetch = async (
     } else {
       if (data) {
         // always send a def object if configured
-        if (OvlConfig.fetchDefaultParams.clientId) {
+        if (OvlConfig.useFetchDefaultParams.clientId) {
           if (!data.ovl) {
             data.ovl = {}
           }
           data.ovl.clientId = ovl.state.ovl.user.clientId
         }
-        if (OvlConfig.fetchDefaultParams.lang) {
+        if (OvlConfig.useFetchDefaultParams.lang) {
           if (!data.ovl) {
             data.ovl = {}
           }
@@ -150,14 +150,14 @@ export const ovlFetch = async (
           "v",
           ovl.state.ovl.app.discCacheVersion.toString()
         )
-        if (OvlConfig.fetchDefaultParams.clientId) {
+        if (OvlConfig.useFetchDefaultParams.clientId) {
           urlWithParams.searchParams.append(
             "clientId",
             ovl.state.ovl.user.clientId
           )
         }
 
-        if (OvlConfig.fetchDefaultParams.lang) {
+        if (OvlConfig.useFetchDefaultParams.lang) {
           urlWithParams.searchParams.append(
             "lang",
             ovl.state.ovl.language.language

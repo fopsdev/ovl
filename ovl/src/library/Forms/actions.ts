@@ -42,14 +42,14 @@ import { OvlAction } from "../../index"
 import { getDisplayValue, getFormFieldsFromColumns } from "../Table/helpers"
 import { OvlTableDefIds } from "../../index"
 import {
-  AddValidation,
-  AddValidationFromBuiltinValidation,
-  FieldValidationDisplayType,
-  FieldValidationType,
+  FormValidationDisplayType,
   RemoveFieldValidation,
   SetFormValid,
-  SummaryValidationDisplayType,
+  FormValidationSummaryDisplayType,
+  FormValidation,
+  AddValidation,
 } from "./validators"
+import { OvlConfig } from "../../config"
 export { FillListControl }
 
 export type Field = {
@@ -87,7 +87,7 @@ export type ValidateResultErrors = {
   key: string
   translationKey: string
   translationReps?: string[]
-  displayType: FieldValidationDisplayType
+  displayType: FormValidationDisplayType
 }
 
 export type ValidateResultSummaryErrors = {
@@ -95,8 +95,7 @@ export type ValidateResultSummaryErrors = {
   translationKey: string
   translationReps?: string[]
   fieldKeys: string[]
-  displayType: SummaryValidationDisplayType
-  isBuiltIn?: boolean
+  displayType: FormValidationSummaryDisplayType
   standalone?: boolean
 }
 export type ValidateResult = {
@@ -123,11 +122,11 @@ export type BuiltInValidationDisplayType = {
 
 export type CustomValidationSettingsType = {
   field: {
-    displayType: FieldValidationDisplayType
-    displayTypeIfSummary: FieldValidationDisplayType
+    displayType: FormValidationDisplayType
+    displayTypeIfSummary: FormValidationDisplayType
   }
   summary?: {
-    displayType: SummaryValidationDisplayType
+    displayType: FormValidationSummaryDisplayType
   }
 }
 
@@ -135,10 +134,10 @@ export type ValidationSettingsType = {
   isGrouped?: boolean
   _validationGroup?: string
   field: {
-    displayType: FieldValidationDisplayType
+    displayType: FormValidationDisplayType
   }
   summary?: {
-    displayType: SummaryValidationDisplayType
+    displayType: FormValidationSummaryDisplayType
     msg?: { translationKey: string }
   }
   // defaultTranslationKeys: {
@@ -163,7 +162,7 @@ export type OvlFormState = {
   viewHeaderCell?: ViewRowClassContent
   isInline?: boolean
   row?: any
-  builtInValidationDisplay?: BuiltInValidationDisplayType
+  validation?: FormValidation
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
@@ -181,7 +180,7 @@ export type InitForm = {
   tableDefId?: OvlTableDefIds
   isInline?: boolean
   row?: any
-  builtInValidationDisplay?: BuiltInValidationDisplayType
+  validation?: FormValidation
 }
 
 export type FormsState = { [key in OvlForm]: FormStatePerInstance }
@@ -221,13 +220,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
 
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
-  let v = value.formState.builtInValidationDisplay.dataTypeValidation
-  let summary
-  if (v.summary) {
-    summary = {
-      displayCond: v.summary.displayType,
-    }
-  }
+  let validation = value.formState.validation.dataType
   switch (type) {
     case "text":
       field.convertedValue = val
@@ -319,16 +312,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           if (!resp) {
             field.convertedValue = ""
             field.value = field.value
-
-            AddValidationFromBuiltinValidation({
-              customGroup: v._validationGroup,
-              field: {
-                field,
-                displayCond: v.field.displayType,
-              },
-              summary,
-              msg: { translationKey: "AppValidationInvalidDateFormat" },
-            })
+            AddValidation(field, value.formState.validation.dataType.Date)
           } else {
             field.convertedValue = newDate
             field.value = getDateValue(newDate, format)
@@ -349,15 +333,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           field.convertedValue = parsedVal
           //RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
-          AddValidationFromBuiltinValidation({
-            customGroup: v._validationGroup,
-            field: {
-              field,
-              displayCond: v.field.displayType,
-            },
-            summary,
-            msg: { translationKey: "AppValidationInvalidNumberFormat" },
-          })
+          AddValidation(field, value.formState.validation.dataType.Number)
         }
       } else {
         field.convertedValue = null
@@ -384,20 +360,11 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           field.convertedValue = parsedVal
           //RemoveFieldValidation(field, "AppValidationInvalidNumberFormat")
         } else {
-          AddValidationFromBuiltinValidation({
-            customGroup: v._validationGroup,
-            field: {
-              field,
-              displayCond: v.field.displayType,
-            },
-            summary,
-            msg: { translationKey: "AppValidationInvalidNumberFormat" },
-          })
+          AddValidation(field, value.formState.validation.dataType.Number)
         }
       } else {
         field.convertedValue = null
         field.value = ""
-        //field.value = ""
       }
       break
     }
@@ -411,51 +378,24 @@ export const ValidateSchema: OvlAction<ValidateFieldType> = (value) => {
     let type = field.type
     // check for size
     if (schema) {
-      let v = value.formState.builtInValidationDisplay.schemaValidation
-      let summary
-      if (v.summary) {
-        summary = {
-          displayCond: v.summary.displayType,
-        }
-      }
-
       if (type === "text") {
         if (field.value) {
           if (field.value.length > schema.maxLength) {
-            AddValidationFromBuiltinValidation({
-              customGroup: v._validationGroup,
-              field: {
-                field,
-                displayCond: v.field.displayType,
-              },
-              summary,
-              msg: {
-                translationKey: "AppValidationSchemaMaxChars",
-                translationReps: [schema.maxLength.toString()],
-              },
-            })
+            let validation = value.formState.validation.schema.NrOfChars
+            validation.summary.additionalTranslationReps = [
+              schema.maxLength.toString(),
+            ]
+            AddValidation(field, validation)
             return
           }
         }
-        //RemoveFieldValidation(field, "AppValidationSchemaMaxChars")
       } else {
         if (!field.value) {
           if (!schema.nullable) {
-            AddValidationFromBuiltinValidation({
-              customGroup: v._validationGroup,
-              field: {
-                field,
-                displayCond: v.field.displayType,
-              },
-              summary,
-              msg: {
-                translationKey: "AppValidationSchemaNotNull",
-              },
-            })
+            AddValidation(field, value.formState.validation.schema.NotNull)
             return
           }
         }
-        //RemoveFieldValidation(field, "AppValidationSchemaNotNull")
       }
     }
   }
@@ -472,28 +412,10 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   if (list.acceptEmpty && !list.acceptOnlyListValues) {
     return
   }
-  let v = value.formState.builtInValidationDisplay.listValidation
-  let summary
-  if (v.summary) {
-    summary = {
-      displayCond: v.summary.displayType,
-    }
-    if (v.summary.msg) {
-      summary.msg = { translationKey: v.summary.msg.translationKey }
-    }
-  }
 
   if (!list.acceptEmpty && !field.value) {
-    AddValidationFromBuiltinValidation({
-      customGroup: v._validationGroup,
-      field: {
-        field,
-        displayCond: v.field.displayType,
-      },
-      summary,
-      msg: { translationKey: "AppValidationListNotEmpty" },
-    })
-
+    debugger
+    AddValidation(field, value.formState.validation.list.NotEmpty)
     return
   }
   if (list.acceptOnlyListValues && field.value) {
@@ -529,16 +451,7 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
           )
         }).length < 1
       ) {
-        AddValidationFromBuiltinValidation({
-          customGroup: v._validationGroup,
-          field: {
-            field,
-            displayCond: v.field.displayType,
-          },
-          summary,
-          msg: { translationKey: "AppValidationListNeedsToBeEntry" },
-        })
-
+        AddValidation(field, value.formState.validation.list.ListValue)
         return
       }
     }
@@ -612,26 +525,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
   SetFormValid(value)
   //actions.ovl.internal.SetFormValid(value)
 }
-const applyValidationSettings = (
-  source: ValidationSettingsType,
-  dest: ValidationSettingsType,
-  validationType: string
-) => {
-  if (source) {
-    if (source.isGrouped !== undefined) {
-      if (source.isGrouped) {
-        dest._validationGroup = validationType
-      }
-    }
-    dest.field.displayType = source.field.displayType
-    if (source.summary) {
-      dest.summary = { displayType: source.summary.displayType }
-      if (source.summary.msg) {
-        dest.summary.msg = { translationKey: source.summary.msg.translationKey }
-      }
-    }
-  }
-}
+
 export const InitForm: OvlAction<InitForm> = (
   value,
   { state, actions, effects }
@@ -678,86 +572,16 @@ export const InitForm: OvlAction<InitForm> = (
 
     let formState = formInstanceList[instanceId]
     //<defaults>
-    if (formState.validationResult === undefined) {
-      formState.validationResult = { errors: [], visibleErrors: [] }
+    //    if (formState.validationResult === undefined) {
+    formState.validationResult = { errors: [], visibleErrors: [] }
+    //    }
+    if (value.validation === undefined) {
+      formState.validation = OvlConfig.validationDefaults(value.tableDefId)
+    } else {
+      formState.validation = value.validation
     }
 
-    if (formState.builtInValidationDisplay === undefined) {
-      formState.builtInValidationDisplay = {
-        dataTypeValidation: {
-          field: { displayType: "WhenTouched" },
-          summary: { displayType: "Always" },
-        },
-        schemaValidation: {
-          field: { displayType: "WhenTouched" },
-          summary: { displayType: "Always" },
-        },
-        listValidation: {
-          field: { displayType: "WhenTouched" },
-          summary: { displayType: "Always" },
-        },
-        customValidationDefaults: {
-          field: {
-            displayType: "WhenTouched",
-            displayTypeIfSummary: "OnlyOutline",
-          },
-          summary: { displayType: "Always" },
-        },
-      }
-    }
-    if (formState.builtInValidationDisplay.dataTypeValidation === undefined) {
-      formState.builtInValidationDisplay.dataTypeValidation = {
-        field: { displayType: "WhenTouched" },
-        summary: { displayType: "Always" },
-      }
-    }
-    if (formState.builtInValidationDisplay.schemaValidation === undefined) {
-      formState.builtInValidationDisplay.schemaValidation = {
-        field: { displayType: "WhenTouched" },
-        summary: { displayType: "Always" },
-      }
-    }
-    if (formState.builtInValidationDisplay.listValidation === undefined) {
-      formState.builtInValidationDisplay.listValidation = {
-        field: { displayType: "WhenTouched" },
-        summary: { displayType: "Always" },
-      }
-    }
-    if (
-      formState.builtInValidationDisplay.customValidationDefaults === undefined
-    ) {
-      formState.builtInValidationDisplay.customValidationDefaults = {
-        field: {
-          displayType: "WhenTouched",
-          displayTypeIfSummary: "OnlyOutline",
-        },
-        summary: { displayType: "Always" },
-      }
-    }
     //</defaults>
-
-    if (value.builtInValidationDisplay) {
-      let source = value.builtInValidationDisplay.listValidation
-      let dest = formState.builtInValidationDisplay.listValidation
-      applyValidationSettings(source, dest, "list")
-      source = value.builtInValidationDisplay.dataTypeValidation
-      dest = formState.builtInValidationDisplay.dataTypeValidation
-      applyValidationSettings(source, dest, "dataType")
-      source = value.builtInValidationDisplay.schemaValidation
-      dest = formState.builtInValidationDisplay.schemaValidation
-      applyValidationSettings(source, dest, "schema")
-
-      let csource = value.builtInValidationDisplay.customValidationDefaults
-      let cdest = formState.builtInValidationDisplay.customValidationDefaults
-
-      if (csource) {
-        cdest.field.displayType = csource.field.displayType
-        cdest.field.displayTypeIfSummary = csource.field.displayTypeIfSummary
-        if (csource.summary) {
-          cdest.summary = { displayType: csource.summary.displayType }
-        }
-      }
-    }
 
     //formState.lastTouchedField = value.initialFocusElementId
     // initial validation of all fields

@@ -375,8 +375,8 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     }
   })
 
-  if (OvlConfig.fetchDefaultParams === undefined) {
-    OvlConfig.fetchDefaultParams = { clientId: false, lang: false }
+  if (OvlConfig.useFetchDefaultParams === undefined) {
+    OvlConfig.useFetchDefaultParams = { clientId: false, lang: false }
   }
 
   ResetT()

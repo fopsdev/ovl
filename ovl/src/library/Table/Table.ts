@@ -34,8 +34,8 @@ import { NavDef } from "./NavControl"
 import { CellClass } from "./Row"
 import { TableRowDef } from "./RowWrapper"
 import {
-  FieldValidationDisplayType,
-  SummaryValidationDisplayType,
+  FormValidationDisplayType,
+  FormValidationSummaryDisplayType,
 } from "../Forms/validators"
 import { BuiltInValidationDisplayType } from "../Forms/actions"
 

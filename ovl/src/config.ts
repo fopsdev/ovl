@@ -1,8 +1,16 @@
 // ######## manage global config stuff here ###################################################################################################
 //@ts-ignore
-import { OvlScreen, OvlState, OvlConfig, OvlActions } from "./index"
+import {
+  OvlScreen,
+  OvlState,
+  OvlConfig,
+  OvlActions,
+  OvlFormValidationValidators,
+} from "./index"
 export { OvlConfig }
 import { OvlAction } from "./index"
+import { Field } from "./library/Forms/actions"
+import { FormValidation, FormValidationField } from "./library/Forms/validators"
 
 export type Init = {
   customerTestUrlMatch: string
@@ -35,7 +43,16 @@ export type OvlConfigType = {
     screens: {}
   }
   // makes handling of server error message and sync stuff easier
-  fetchDefaultParams?: {
+  validators?: { [key in OvlFormValidationValidators]: FormValidationField }
+  validationDefaults: (tableDefId?: string) => FormValidation
+  validatorsFunctions: {
+    [key in OvlFormValidationValidators]: (
+      field: Field,
+      validation: FormValidationField,
+      val?: any
+    ) => boolean
+  }
+  useFetchDefaultParams?: {
     lang: boolean
     clientId: boolean
   }
