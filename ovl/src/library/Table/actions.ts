@@ -1336,7 +1336,6 @@ export const TableEditRow: OvlAction<{
     tableDefId: def.id,
     isInline: def.options.edit.editType === "inline",
     row: value.data[value.key],
-    builtInValidationDisplay: def.options.edit.builtInValidationDisplay,
   }
 
   actions.ovl.form.InitForm(initForm)
