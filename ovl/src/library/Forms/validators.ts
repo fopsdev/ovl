@@ -50,7 +50,7 @@ export type FormValidationSummary = {
   groupedBy:
     | "FieldTranslationAndFieldKey"
     | "FieldTranslationKey"
-    | "CustomGroupKey"
+    | "SummaryTranslationKey"
   displayType: FormValidationSummaryDisplayType
   translationKey?: string
   additionalTranslationReps?: string[]
@@ -184,8 +184,8 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
   let key
 
   switch (v.summary.groupedBy) {
-    case "CustomGroupKey":
-      key = v.summary.customGroupKey
+    case "SummaryTranslationKey":
+      key = v.summary.translationKey
       break
     case "FieldTranslationKey":
       key = v.translationKey
