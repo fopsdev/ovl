@@ -63,24 +63,18 @@ export const _getValidationText = (errors: ValidateResultErrors[]) => {
     let templateRes
     if (link) {
       if (!linkText) {
-        templateRes = html`${sep}<span
-            ><a target="_blank" href="${link}"
-              >${T(m.translationKey, m.translationReps)}</a
-            >
-          </span>`
+        templateRes = html`${sep}<a target="_blank" href="${link}"
+            >${T(m.translationKey, m.translationReps)}</a
+          > `
       } else {
         linkText = T(linkText)
         let parts = T(m.translationKey, m.translationReps).split("@@OvlLink")
-        templateRes = html`${sep}<span>
-            ${parts[0]}
-            <a target="_blank" href="${link}">${linkText}</a>
-            ${parts.length > 0 ? parts[1] : ""}</span
-          >`
+        templateRes = html`${sep} ${parts[0]}
+          <a target="_blank" href="${link}">${linkText}</a>
+          ${parts.length > 0 ? parts[1] : ""}`
       }
     } else {
-      templateRes = html`${sep}<span
-          >${T(m.translationKey, m.translationReps)}</span
-        >`
+      templateRes = html`${sep}${T(m.translationKey, m.translationReps)}`
     }
     return templateRes
   })
