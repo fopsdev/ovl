@@ -1,7 +1,8 @@
 import { OvlBaseElement } from "../../OvlBaseElement"
 import { html } from "lit-html"
 import { logState, T } from "../../../global/globals"
-import { OvlFormState } from "../actions"
+import { OvlFormState, ValidateResultErrors } from "../actions"
+import { _getValidationText } from "./helpers"
 
 export class OvlFormValidationHint extends OvlBaseElement {
   props: any
@@ -15,12 +16,8 @@ export class OvlFormValidationHint extends OvlBaseElement {
       if (res.length === 0) {
         return null
       }
-      let msgs = res
-        .map((m) => {
-          return T(m.translationKey, m.translationReps)
-        })
-        .join(", ")
 
+      let msgs = _getValidationText(<ValidateResultErrors[]>res)
       return html`
         <div
           class="fadeInControl fd-form-message fd-form-message--error ovl-formcontrol-formvalidation"

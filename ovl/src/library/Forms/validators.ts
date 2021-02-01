@@ -178,6 +178,13 @@ export const GetCustomValidationDefaults = (
   return JSON.parse(JSON.stringify(formState.validation.custom))
 }
 
+export const AddCustomValidationUsingDefault = (field: Field) => {
+  let formState: OvlFormState =
+    ovl.state.ovl.forms[field.formType][field.formId]
+  let v: FormValidationField = formState.validation.custom
+  AddValidation(field, v)
+}
+
 export const AddValidation = (field: Field, v: FormValidationField) => {
   let formState: OvlFormState =
     ovl.state.ovl.forms[field.formType][field.formId]
@@ -221,7 +228,7 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
         translationKey: v.summary.translationKey
           ? v.summary.translationKey
           : v.translationKey,
-        translationReps: v.summary.additionalTranslationReps,
+
         displayType: v.summary.displayType,
         fieldKeys: [field.fieldKey],
       })
@@ -241,9 +248,13 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
         .map((k) => T(formState.fields[k].ui.labelTranslationKey))
         .join(", "),
     ]
-    if (v.summary.additionalTranslationReps)
+    let additionalReps = v.summary.additionalTranslationReps
+    if (!additionalReps) {
+      additionalReps = v.additionalTranslationReps
+    }
+    if (additionalReps)
       errToAdjust.translationReps = errToAdjust.translationReps.concat(
-        v.summary.additionalTranslationReps
+        additionalReps
       )
   }
   SetVisibleSummaryErrorKeys(formState)

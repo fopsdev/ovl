@@ -3,6 +3,7 @@ import { html } from "lit-html"
 
 import { T } from "../../../../global/globals"
 import { Field } from "../../actions"
+import { _getValidationText } from "../helpers"
 
 export class OvlValidationHint extends OvlBaseElement {
   props: any
@@ -13,14 +14,17 @@ export class OvlValidationHint extends OvlBaseElement {
   async getUI() {
     return this.track(() => {
       let field = this.field
-      let errors = field.validationResult.errors
-        .filter(
-          (f) =>
-            f.displayType === "Always" ||
-            (f.displayType === "WhenTouched" && field.watched)
-        )
-        .map((m) => T(m.translationKey, m.translationReps))
-        .join(", ")
+      let errors = field.validationResult.errors.filter(
+        (f) =>
+          f.displayType === "Always" ||
+          (f.displayType === "WhenTouched" && field.watched)
+      )
+      if (errors.length === 0) {
+        return null
+      }
+      let msgs = _getValidationText(errors)
+      // .map((m) => T(m.translationKey, m.translationReps))
+      // .join(", ")
       return html`
         <div
           class="fadeInControl fd-form-message fd-form-message--error ovl-formcontrol-validation ovl-formcontrol-validation__${field.fieldKey} ${errors &&
@@ -29,7 +33,7 @@ export class OvlValidationHint extends OvlBaseElement {
             ? ""
             : "hide"}"
         >
-          ${errors}
+          ${msgs}
         </div>
       `
     })
