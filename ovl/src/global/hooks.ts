@@ -31,11 +31,17 @@ import { ViewRendererResult } from "../library/Table/RowDetailView"
 import { OvlLanguage, OvlTableDefIds } from "../index"
 
 // gets called when user navigates into a screen
-export type ScreenNavigateIn_ReturnType = Promise<string> | string
+export type ScreenNavigateIn_ReturnType =
+  | Promise<string>
+  | string
+  | Promise<void>
 export const ScreenNavigateIn = "ScreenNavigateIn"
 
 // gets called when user navigates out of a screen
-export type ScreenNavigateOut_ReturnType = Promise<string> | string
+export type ScreenNavigateOut_ReturnType =
+  | Promise<string>
+  | string
+  | Promise<void>
 export const ScreenNavigateOut = "ScreenNavigateOut"
 
 // gets called when screen first time gets shown
