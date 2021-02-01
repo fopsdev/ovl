@@ -299,11 +299,14 @@ export const logEffects = () => {
 
 export const SetFocus = (id: string) => {
   let el: any = document.getElementById(id)
+
   if (el) {
     el.focus()
     if (el.value && el.setSelectionRange) {
-      let val = el.value
-      el.setSelectionRange(val.length, val.length)
+      try {
+        let val = el.value
+        el.setSelectionRange(val.length, val.length)
+      } catch {}
     }
   }
 }

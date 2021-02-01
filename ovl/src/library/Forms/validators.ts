@@ -5,7 +5,7 @@ import {
   ValidateResultSummaryErrors,
   ValidateSummaryResult,
 } from "./actions"
-import { logState, T } from "../../global/globals"
+import { logState, SetFocus, T } from "../../global/globals"
 import { ovl, OvlForm, OvlFormValidationValidators } from "../.."
 import { form } from "../../actions"
 import { forms } from "../../state"
@@ -42,6 +42,7 @@ export type FormValidationField = {
   displayType: FormValidationDisplayType
   translationKey: string
   additionalTranslationReps?: string[]
+  setFocus?: boolean
   summary: FormValidationSummary
 }
 
@@ -247,6 +248,14 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
   }
   SetVisibleSummaryErrorKeys(formState)
   formState.valid = false
+  if (field.ui.visible !== "fadeIn" && field.ui.visible !== "true") {
+    field.ui.visible = "fadeIn"
+  }
+  if (v.setFocus) {
+    setTimeout(() => {
+      SetFocus(formState.formType + field.fieldKey)
+    }, 500)
+  }
 }
 
 export const AddSummaryValidation = (
