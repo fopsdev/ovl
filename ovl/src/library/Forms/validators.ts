@@ -285,6 +285,7 @@ export const AddSummaryValidation = (
       (f) => f.translationKey.indexOf(translationKey) > -1
     )
   ) {
+    translationReps = [""].concat(translationReps)
     formState.validationResult.errors.push({
       standalone: true,
       key: translationKey,
