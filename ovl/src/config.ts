@@ -43,14 +43,16 @@ export type OvlConfigType = {
     screens: {}
   }
   // makes handling of server error message and sync stuff easier
-  validators?: { [key in OvlFormValidationValidators]: FormValidationField }
-  validationDefaults: (tableDefId?: string) => FormValidation
-  validatorsFunctions: {
-    [key in OvlFormValidationValidators]: (
-      field: Field,
-      validation: FormValidationField,
-      val?: any
-    ) => boolean
+  formValidation: {
+    validators?: { [key in OvlFormValidationValidators]: FormValidationField }
+    validationDefaults: (tableDefId?: string) => FormValidation
+    validatorsFunctions: {
+      [key in OvlFormValidationValidators]: (
+        field: Field,
+        validation: FormValidationField,
+        val?: any
+      ) => boolean
+    }
   }
   useFetchDefaultParams?: {
     lang: boolean

@@ -2,7 +2,7 @@ import { OvlBaseElement } from "../../OvlBaseElement"
 import { html } from "lit-html"
 import { logState, T } from "../../../global/globals"
 import { OvlFormState, ValidateResultErrors } from "../actions"
-import { _getValidationText } from "./helpers"
+import { getValidationText } from "../../../../../../app/src/appDefFormValidation"
 
 export class OvlFormValidationHint extends OvlBaseElement {
   props: any
@@ -17,7 +17,7 @@ export class OvlFormValidationHint extends OvlBaseElement {
         return null
       }
 
-      let msgs = _getValidationText(<ValidateResultErrors[]>res)
+      let msgs = getValidationText(<ValidateResultErrors[]>res, this.formState)
       return html`
         <div
           class="fadeInControl fd-form-message fd-form-message--error ovl-formcontrol-formvalidation"

@@ -42,44 +42,6 @@ export type LookupListPostData = {
   paramList?: { [key: string]: {} }
 }
 
-export const _getValidationText = (errors: ValidateResultErrors[]) => {
-  return errors.map((m, resIndex) => {
-    let link
-    let linkText
-    let sep
-    if (resIndex > 0) {
-      sep = html`, `
-    }
-    if (m.translationReps.length > 1) {
-      // check if link
-      let chk = m.translationReps[1]
-      if (chk && chk.startsWith("http")) {
-        link = chk
-      }
-    }
-    if (link && m.translationReps.length > 2) {
-      linkText = m.translationReps[2]
-    }
-    let templateRes
-    if (link) {
-      if (!linkText) {
-        templateRes = html`${sep}<a target="_blank" href="${link}"
-            >${T(m.translationKey, m.translationReps)}</a
-          > `
-      } else {
-        linkText = T(linkText)
-        let parts = T(m.translationKey, m.translationReps).split("@@OvlLink")
-        templateRes = html`${sep} ${parts[0]}
-          <a target="_blank" href="${link}">${linkText}</a>
-          ${parts.length > 0 ? parts[1] : ""}`
-      }
-    } else {
-      templateRes = html`${sep}${T(m.translationKey, m.translationReps)}`
-    }
-    return templateRes
-  })
-}
-
 export const KeyValueListFromServerFn = async (
   state: OvlState,
   list: ListState,

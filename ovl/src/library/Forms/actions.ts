@@ -599,7 +599,9 @@ export const InitForm: OvlAction<InitForm> = (
     formState.validationResult = { errors: [], visibleErrors: [] }
     //    }
     if (value.validation === undefined) {
-      formState.validation = OvlConfig.validationDefaults(value.tableDefId)
+      formState.validation = OvlConfig.formValidation.validationDefaults(
+        value.tableDefId
+      )
     } else {
       formState.validation = value.validation
     }

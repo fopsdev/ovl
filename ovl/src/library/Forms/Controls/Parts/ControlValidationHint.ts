@@ -3,7 +3,7 @@ import { html } from "lit-html"
 
 import { T } from "../../../../global/globals"
 import { Field } from "../../actions"
-import { _getValidationText } from "../helpers"
+import { getValidationText } from "../../../../../../../app/src/appDefFormValidation"
 
 export class OvlValidationHint extends OvlBaseElement {
   props: any
@@ -22,7 +22,10 @@ export class OvlValidationHint extends OvlBaseElement {
       if (errors.length === 0) {
         return null
       }
-      let msgs = _getValidationText(errors)
+      let msgs = getValidationText(
+        errors,
+        this.state.ovl.forms[field.formType][field.formId]
+      )
       // .map((m) => T(m.translationKey, m.translationReps))
       // .join(", ")
       return html`

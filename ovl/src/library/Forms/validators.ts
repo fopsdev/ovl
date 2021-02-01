@@ -167,7 +167,13 @@ export const UseValidator = (
   let validation = JSON.parse(
     JSON.stringify(formState.validation.validators[validator])
   )
-  if (OvlConfig.validatorsFunctions[validator](field, validation, val)) {
+  if (
+    OvlConfig.formValidation.validatorsFunctions[validator](
+      field,
+      validation,
+      val
+    )
+  ) {
     AddValidation(field, validation)
   }
 }
