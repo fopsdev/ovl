@@ -316,7 +316,10 @@ const _removeSummaryValidation = (formState: OvlFormState, key: string) => {
   SetFormValid(formState)
 }
 
-export const RemoveFieldValidation = (field: Field, key: string) => {
+export const RemoveFieldValidation = (field: Field, key?: string) => {
+  if (!key) {
+    key = field.ui.labelTranslationKey
+  }
   _removeFieldValidation(field, key)
 }
 const _removeFieldValidation = (
