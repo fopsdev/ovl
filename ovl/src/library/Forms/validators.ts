@@ -251,18 +251,17 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
 
 export const AddSummaryValidation = (
   formState: OvlFormState,
-  key: string,
   translationKey: string,
   translationReps?: any[]
 ) => {
   if (
     !formState.validationResult.errors.some(
-      (f) => f.translationKey.indexOf(key) > -1
+      (f) => f.translationKey.indexOf(translationKey) > -1
     )
   ) {
     formState.validationResult.errors.push({
       standalone: true,
-      key,
+      key: translationKey,
       translationKey,
       translationReps,
       displayType: "Always",
