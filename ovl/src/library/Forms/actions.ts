@@ -365,6 +365,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
         if (parsedVal || parsedVal == 0) {
           if (!value.isInnerEvent) {
             // as long as we are entering the value digit by digit we don't like formatting
+
             field.value = getDecimalValue(parsedVal, format) //parsedVal.toString()
           }
           field.convertedValue = parsedVal
@@ -794,7 +795,6 @@ export const ChangeField: OvlAction<ChangeField> = (
   { actions, state, effects }
 ) => {
   let field = value.formState.fields[value.fieldKey]
-
   field.validationResult.errors.forEach((f) => {
     RemoveFieldValidation(field, f.key)
   })
@@ -827,12 +827,14 @@ export const ChangeField: OvlAction<ChangeField> = (
   actions.ovl.internal.ValidateDataType({
     field,
     formState: value.formState,
+    isInnerEvent: value.isInnerEvent,
   } as ValidateFieldType)
 
   if (field.validationResult.errors.length === 0) {
     actions.ovl.internal.ValidateSchema({
       field,
       formState: value.formState,
+      isInnerEvent: value.isInnerEvent,
     } as ValidateFieldType)
 
     if (field.validationResult.errors.length === 0) {
@@ -840,6 +842,7 @@ export const ChangeField: OvlAction<ChangeField> = (
         actions.ovl.internal.ValidateList({
           field,
           formState: value.formState,
+          isInnerEvent: value.isInnerEvent,
         } as ValidateFieldType)
       }
       if (field.validationResult.errors.length === 0) {
