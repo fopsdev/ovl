@@ -30,8 +30,14 @@ import {
   DisplayMode,
   ListDefinition,
   ColumnDisplayDef,
+  FieldVisibility,
 } from "../../Table/Table"
-import { Field, OvlFormState, ValidateResultErrors } from "../actions"
+import {
+  ControlVisiblity,
+  Field,
+  OvlFormState,
+  ValidateResultErrors,
+} from "../actions"
 import { ListState } from "./ListControl"
 
 export type LookupListPostData = {
@@ -121,7 +127,19 @@ export const KeyValueListFromServerFn = async (
     //listData.lookupDef = res.data.lookupDef
   }
 }
-
+export const SetControlVisibility = (
+  field: Field,
+  visible: ControlVisiblity
+) => {
+  if (
+    (visible === "fadeIn" && field.ui.visible === "true") ||
+    (visible === "fadeOut" &&
+      field.ui.visible === "false")
+  ) {
+    return
+  }
+  field.ui.visible = visible
+}
 export const FilterHitList = (
   list: ListState,
   filterValue: string,

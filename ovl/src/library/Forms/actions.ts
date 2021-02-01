@@ -76,11 +76,16 @@ export type Field = {
     checkedValue?: string | boolean
     useSpellcheck?: boolean
     autocomplete?: boolean
-    visible?: "true" | "false" | "fadeIn" | "fadeOut" | "fadeOutHide"
+    visible?: ControlVisiblity
   }
   previousConvertedValue: any
 }
-
+export type ControlVisiblity =
+  | "true"
+  | "false"
+  | "fadeIn"
+  | "fadeOut"
+  | "fadeOutHide"
 export type FieldValueMap = { [key: string]: Field }
 
 export type ValidateResultErrors = {
@@ -220,8 +225,11 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
 
   // only do type validation if there is a value
   // other scenarios should be handled in the custom validation
-  let validation = value.formState.validation.dataType
   switch (type) {
+    case "bool": {
+      field.convertedValue = val
+      break
+    }
     case "text":
       field.convertedValue = val
       //field.value = val
@@ -797,6 +805,7 @@ export const ChangeField: OvlAction<ChangeField> = (
   { actions, state, effects }
 ) => {
   let field = value.formState.fields[value.fieldKey]
+
   field.validationResult.errors.forEach((f) => {
     RemoveFieldValidation(field, f.key)
   })

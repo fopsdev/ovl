@@ -13,6 +13,7 @@ export class OvlCheckbox extends OvlControlBase {
     e.preventDefault()
     let field = this.field
     let val: string | boolean = field.value
+
     if (val === field.ui.checkedValue) {
       if (typeof val === "string") {
         val = "N"
@@ -33,6 +34,7 @@ export class OvlCheckbox extends OvlControlBase {
     this.InitControl()
     return this.track(() => {
       let field = this.field
+      console.log(field.value === field.ui.checkedValue)
       return html`
         <div
           class="${GetContainerClass(
@@ -78,7 +80,7 @@ export class OvlCheckbox extends OvlControlBase {
   }
   afterRender() {
     this.inputElement = document.getElementById(this.field.id)
-    this.inputElement.value = this.field.value
+    //this.inputElement.value = this.field.value
     this.inputElement.checked = this.field.value === this.field.ui.checkedValue
     super.afterRender()
   }

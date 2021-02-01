@@ -98,6 +98,12 @@ export const getFormFields = (
     if (ui.visible === undefined) {
       ui.visible = "true"
     }
+    if (ui.visible === "fadeOut") {
+      ui.visible = "false"
+    }
+    if (ui.checkedValue === undefined) {
+      ui.checkedValue = true
+    }
   })
   return fields
 }

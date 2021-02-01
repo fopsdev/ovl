@@ -1,5 +1,5 @@
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
-import { Field, OvlFormState } from "../actions"
+import { ControlVisiblity, Field, OvlFormState } from "../actions"
 import { GetCustomInfo } from "./helpers"
 
 export class OvlControlBase extends OvlBaseElement {
@@ -14,11 +14,10 @@ export class OvlControlBase extends OvlBaseElement {
   }
 
   handleAnimationEnd = (e) => {
-    if (
-      this.field.ui.visible.indexOf("Hide") > -1 &&
-      e.animationName === "fadeOutControl"
-    ) {
-      this.classList.add("hide")
+    if (e.animationName === "fadeOutControl") {
+      if (this.field.ui.visible.indexOf("Hide") > -1) {
+        this.classList.add("hide")
+      }
     }
   }
 
@@ -98,4 +97,19 @@ export class OvlControlBase extends OvlBaseElement {
       this.removeAttribute("title")
     }
   }
+}
+export const SetControlVisibility = (
+  field: Field,
+  visible: ControlVisiblity
+) => {
+  if (
+    (visible === "fadeIn" && field.ui.visible === "true") ||
+    (visible.indexOf("fadeOut") > -1 && field.ui.visible === "false")
+  ) {
+    return
+  }
+  field.ui.visible = visible
+}
+export const IsControlVisible = (field: Field, visible: ControlVisiblity) => {
+  return field.ui.visible === "fadeIn" || field.ui.visible === "true"
 }
