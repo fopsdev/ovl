@@ -23,7 +23,7 @@ export class OvlFormValidationHint extends OvlBaseElement {
 
       return html`
         <div
-          class="fd-form-message fd-form-message--error ovl-formcontrol-formvalidation"
+          class="fadeInControl fd-form-message fd-form-message--error ovl-formcontrol-formvalidation"
         >
           ${msgs}
         </div>
