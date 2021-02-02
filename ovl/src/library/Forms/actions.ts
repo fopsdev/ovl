@@ -810,6 +810,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     RemoveFieldValidation(field, f.key)
   })
 
+  field.validationResult.errors = []
   if (value.isConvertedValue) {
     //field.previousConvertedValue = field.convertedValue
     field.convertedValue = value.value

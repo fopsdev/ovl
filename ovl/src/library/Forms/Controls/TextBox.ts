@@ -19,7 +19,7 @@ export class OvlTextbox extends OvlControlBase {
     ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
   }
 
-  handleKeyUp(e: KeyboardEvent) {
+  handleInput(e: KeyboardEvent) {
     //if (e.key === "Enter") {
     let event = new CustomEvent("ovlchange", {
       bubbles: true,
@@ -61,10 +61,10 @@ export class OvlTextbox extends OvlControlBase {
               this.nonFocusable() ? "-1" : undefined,
               this
             )}"
-            @change=${(e) => this.handleChange(e)}
             @focusout=${() => RemoveFocusEventHelper(this, field.id)}
             @focus=${() => SetFocusEventHelper(this.inputElement, field.id)}
-            @keyup=${(e) => this.handleKeyUp(e)}
+            @change=${(e) => this.handleChange(e)}
+            @input=${(e) => this.handleInput(e)}
             style="${field.ui.align ? field.ui.align : ""}"
             autocomplete="${field.ui.autocomplete ? "on" : "new-password"}"
             spellcheck="${field.ui.useSpellcheck ? "true" : "false"}"

@@ -184,10 +184,14 @@ export const GetCustomValidationDefaults = (
   return JSON.parse(JSON.stringify(formState.validation.custom))
 }
 
-export const AddCustomValidationUsingDefault = (field: Field) => {
+export const AddCustomValidationUsingDefault = (
+  field: Field,
+  translationKey: string
+) => {
   let formState: OvlFormState =
     ovl.state.ovl.forms[field.formType][field.formId]
   let v: FormValidationField = formState.validation.custom
+  v.translationKey = translationKey
   AddValidation(field, v)
 }
 

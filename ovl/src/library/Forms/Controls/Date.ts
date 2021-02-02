@@ -30,15 +30,10 @@ export class OvlDate extends OvlControlBase {
     ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
   }
 
-  handleKeyUp(e: KeyboardEvent) {
-    ChangeValueEventHelper(this, this.inputElement.value, this.field.id, true)
-  }
-
   handleFocusOut() {
-    ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
+    //ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
     RemoveFocusEventHelper(this, this.field.id)
   }
-
   async getUI() {
     super.InitControl()
     return this.track(() => {
@@ -65,7 +60,6 @@ export class OvlDate extends OvlControlBase {
             )}"
             @focus=${() => SetFocusEventHelper(this, field.id)}
             @focusout=${() => this.handleFocusOut()}
-            @keyup=${(e) => this.handleKeyUp(e)}
             style="${field.ui.align ? field.ui.align : ""}"
             autocomplete="off"
             class="fd-input ${GetInputClass(
