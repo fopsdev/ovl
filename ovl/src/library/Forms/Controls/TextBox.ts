@@ -89,7 +89,8 @@ export class OvlTextbox extends OvlControlBase {
   }
   afterRender() {
     this.inputElement = document.getElementById(this.field.id)
-    if (this.inputElement) {
+    // don't set if focus (in editing) because safari has troubles with it (cursor jumping)
+    if (this.inputElement && !this.field.hasFocus) {
       this.inputElement.value = this.field.value
     }
     super.afterRender()
