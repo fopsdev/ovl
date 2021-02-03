@@ -3,6 +3,7 @@
 Todos:
 - Changing Value in ChangeValue rerenders input (Which is fine because we need it as well for validation display on every key and eventually set the tooltip and class)
 - Idea: USe a new Field in FieldState named FieldToValidate (But then the class and ttoltip thingy wont work maybe...)
+-> tried to remove this.inputElement.value = this.field.value from TextBox...Then the cursor jumping was solved but the value doesn'g get showed everytime..
 Because of an ovl overhaul following checks needs to be done:
 - Initform now takes convertedvalue and uses getDisplayValue(..) for value
 - we now have an previousConvertedValue on every field
