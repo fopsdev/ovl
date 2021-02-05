@@ -34,7 +34,6 @@ export class OvlCheckbox extends OvlControlBase {
     this.InitControl()
     return this.track(() => {
       let field = this.field
-      console.log(field.value === field.ui.checkedValue)
       return html`
         <div
           class="${GetContainerClass(

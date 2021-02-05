@@ -4,6 +4,7 @@ import { stringifyReplacer } from "../global/globals"
 import { OvlConfig } from "../index"
 import { ovl } from ".."
 export let actionTracking = { actionRunning: false, lastActionName: undefined }
+let frameCounter = 0
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
   let callbacksToCall = new Set()
@@ -141,21 +142,33 @@ export function createDeepProxy(target) {
     let cbs = paths.get(path)
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0
-      if (OvlConfig._system.debugTracking) {
-        console.log(
-          "action: " + actionTracking.lastActionName + " mutated: " + path
-        )
-        console.log("affected components:")
-      }
       let debugInfo = []
-      cbs.forEach((key) => {
-        debugInfo.push(key)
-        callbacksToCall.add(key)
-      })
       if (OvlConfig._system.debugTracking) {
-        debugInfo.forEach((d) => {
-          console.log(d)
+        cbs.forEach((key) => {
+          if (!callbacksToCall.has(key)) {
+            debugInfo.push(key)
+          }
+          callbacksToCall.add(key)
         })
+      } else {
+        cbs.forEach((key) => {
+          callbacksToCall.add(key)
+        })
+      }
+      if (OvlConfig._system.debugTracking) {
+        if (debugInfo.length > 0) {
+          console.log(
+            "action: " +
+              actionTracking.lastActionName +
+              " mutated: " +
+              path +
+              "   affected comps:"
+          )
+          debugInfo.forEach((d) => {
+            console.log(d.name + ":")
+            console.log(d)
+          })
+        }
       }
       if (freshQueueToRender) {
         window.requestAnimationFrame(callCallbacks)
@@ -165,7 +178,9 @@ export function createDeepProxy(target) {
   function callCallbacks() {
     // call onUpdate method of affected component
     // but only when actions are finished (currentAction)
-    if (!actionTracking.actionRunning) {
+    // use frameCounter to throttle rerender batching
+    frameCounter++
+    if (!actionTracking.actionRunning && frameCounter % 2 === 0) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
         if (OvlConfig._system.debugTracking) {

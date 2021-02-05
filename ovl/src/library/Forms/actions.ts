@@ -773,7 +773,6 @@ export const SetRowCellInformation = (
 
   let isMobile = state.ovl.uiState.isMobile
   let displayMode: DisplayMode = formState.isInline ? "EditInline" : "Edit"
-
   let resolveFn = resolvePath(actions.custom, formState.namespace)
   if (resolveFn && resolveFn["ViewRowCellClass"]) {
     let viewRowCellParams: ViewRowCellClass_Type = {
@@ -784,7 +783,12 @@ export const SetRowCellInformation = (
       namespace: formState.namespace,
       tableDefId: formState.tableDefId,
     }
-    formState.viewRowCell = resolveFn["ViewRowCellClass"](viewRowCellParams)
+    let res = resolveFn["ViewRowCellClass"](viewRowCellParams)
+    // only set it if different
+    // elsewise a lot of rerendering could happen
+    if (JSON.stringify(res) !== JSON.stringify(formState.viewRowCell)) {
+      formState.viewRowCell = res
+    }
   }
   if (resolveFn && resolveFn["ViewHeaderCellClass"]) {
     let viewHeaderCellParams: ViewHeaderCellClass_Type = {
@@ -794,9 +798,10 @@ export const SetRowCellInformation = (
       namespace: formState.namespace,
       tableDefId: formState.tableDefId,
     }
-    formState.viewHeaderCell = resolveFn["ViewHeaderCellClass"](
-      viewHeaderCellParams
-    )
+    let res = resolveFn["ViewHeaderCellClass"](viewHeaderCellParams)
+    if (JSON.stringify(res) !== JSON.stringify(formState.viewHeaderCell)) {
+      formState.viewHeaderCell = res
+    }
   }
 }
 
@@ -890,7 +895,6 @@ export const ChangeField: OvlAction<ChangeField> = (
     oldConvertedVal !== field.convertedValue &&
     field.validationResult.errors.length === 0
   ) {
-    SetRowCellInformation(value.formState, actions, state)
     if (fn && fn[FormChanged]) {
       fn[FormChanged](<FormChanged_Type>{
         fieldId: value.fieldKey,
@@ -901,7 +905,7 @@ export const ChangeField: OvlAction<ChangeField> = (
       })
     }
   }
-
+  SetRowCellInformation(value.formState, actions, state)
   //actions.ovl.internal.SetFormValid(value.formState)
 }
 

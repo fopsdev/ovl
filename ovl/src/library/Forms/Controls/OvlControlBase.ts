@@ -20,18 +20,24 @@ export class OvlControlBase extends OvlBaseElement {
       }
     }
   }
-
-  InitControl() {
+  init() {
     this.field = this.props(this.state)
 
     this.formState = this.state.ovl.forms[this.field.formType][
       this.field.formId
     ]
-
+  }
+  InitControl() {
     this.customInfo = GetCustomInfo(
       this.formState.viewRowCell,
       this.field.fieldKey
     )
+
+    if (this.customInfo.customRowTooltip) {
+      this.setAttribute("title", this.customInfo.customRowTooltip)
+    } else {
+      this.removeAttribute("title")
+    }
 
     if (this.field.ui.readonly) {
       this.classList.add("ovl-disabled__cursor-not-allowed")
@@ -75,27 +81,15 @@ export class OvlControlBase extends OvlBaseElement {
   }
   connectedCallback() {
     super.connectedCallback()
+    this.setAttribute("title", "")
     this.addEventListener("animationend", this.handleAnimationEnd, true)
+
     //this.addEventListener("animationstart", this.handleAnimationStart, true)
   }
   disconnectedCallback() {
     super.disconnectedCallback()
     this.removeEventListener("animationend", this.handleAnimationEnd, true)
     //this.removeEventListener("animationstart", this.handleAnimationStart, true)
-  }
-
-  afterRender() {
-    // title="${ifDefined(
-    //     this.customInfo.customRowTooltip
-    //       ? this.customInfo.customRowTooltip
-    //       : undefined,
-    //     this
-    //   )}"
-    if (this.customInfo.customRowTooltip) {
-      this.setAttribute("title", this.customInfo.customRowTooltip)
-    } else {
-      this.removeAttribute("title")
-    }
   }
 }
 export const SetControlVisibility = (
