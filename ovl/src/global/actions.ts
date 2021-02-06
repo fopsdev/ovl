@@ -259,7 +259,7 @@ export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
 }
 
 export const Logout: OvlAction = async (_, { state, actions }) => {
-  if (state.ovl.app.offline && OvlConfig._system.offlineMode) {
+  if (state.ovl.app.offline && OvlConfig.offline.offlineMode) {
     SnackAdd(
       "Abmelden und Neuinitialisierung nur im Onlinemodus möglich!",
       "Error"
@@ -363,7 +363,7 @@ export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
   _,
   { state }
 ) => {
-  if (OvlConfig._system.offlineMode) {
+  if (OvlConfig.offline.offlineMode) {
     try {
       let persistedState = await stateStore.get(
         OvlConfig._system.persistStateId
@@ -489,7 +489,7 @@ let lastUpdateCheck: number = undefined
 export const UpdateCheck = async () => {
   let now = Date.now()
   if (
-    OvlConfig._system.offlineMode &&
+    OvlConfig.offline.offlineMode &&
     /* updatecheck every ~3 minutes */
     (lastUpdateCheck === undefined || now - lastUpdateCheck > 60000 * 3)
   ) {

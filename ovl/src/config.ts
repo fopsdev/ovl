@@ -28,10 +28,10 @@ type FileOpenFnType = (anchor: HTMLAnchorElement, fileName: string) => void
 export type OvlConfigType = {
   _system: {
     debugTracking: boolean
-    fetchTimeout: number
+
     version: string
     isDev: boolean
-    offlineMode: boolean
+
     showSaveOrigin: boolean
     persistStateId: string
     persistTimestampId: string
@@ -62,6 +62,7 @@ export type OvlConfigType = {
     }
     apiUrl: ApiUrlResolve
     fileOpenMode?: FileOpenFnType
+    fetchTimeout: number
   }
   screen: {
     initialScreen: OvlScreen
@@ -80,6 +81,7 @@ export type OvlConfigType = {
     customInitActionPath?: (actions: OvlActions) => OvlAction
   }
   offline?: {
+    offlineMode: boolean
     customRehydrateActionPath?: (actions: OvlActions) => OvlAction
     saveStateCallback?: (stateToPersist: OvlState) => void
     offlineFirstOnReload?: boolean

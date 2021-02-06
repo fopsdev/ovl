@@ -268,7 +268,9 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
       )
   }
   SetVisibleSummaryErrorKeys(formState)
-  formState.valid = false
+  if (formState.valid) {
+    formState.valid = false
+  }
   if (field.ui.visible !== "fadeIn" && field.ui.visible !== "true") {
     field.ui.visible = "fadeIn"
   }
@@ -299,7 +301,9 @@ export const AddSummaryValidation = (
       fieldKeys: [],
     })
   }
-  formState.valid = false
+  if (formState.valid) {
+    formState.valid = false
+  }
   SetVisibleSummaryErrorKeys(formState)
 }
 
@@ -424,8 +428,14 @@ export const SetVisibleSummaryErrorKeys = (formState: OvlFormState) => {
       f.displayType === "WhenFirstFieldTouched" &&
       allWatchedFieldsErrorKeys.has(f.key)
   )
-  let res3 = errors.filter((f) => f.displayType === "Always")
-  formState.validationResult.visibleErrors = res1.concat(res2).concat(res3)
+  let res3 = res1
+    .concat(res2)
+    .concat(errors.filter((f) => f.displayType === "Always"))
+  if (
+    JSON.stringify(res3) !==
+    JSON.stringify(formState.validationResult.visibleErrors)
+  )
+    formState.validationResult.visibleErrors = res3
 }
 
 const _isFormValid = (formState: OvlFormState) => {
@@ -442,7 +452,10 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   if (!formState) {
     formState = ovl.state.ovl.forms[field.formType][field.formId]
   }
-  formState.valid = _isFormValid(formState)
+  let valid = _isFormValid(formState)
+  if (formState.valid !== valid) {
+    formState.valid = valid
+  }
   SetVisibleSummaryErrorKeys(formState)
 }
 

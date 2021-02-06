@@ -24,7 +24,7 @@ export const postFormDataRequest = async (url, data) => {
     "POST",
     false,
     false,
-    OvlConfig._system.fetchTimeout,
+    OvlConfig.fetch.fetchTimeout,
     true
   )
 }
@@ -171,10 +171,10 @@ export const ovlFetch = async (
 
     // forced timeout only in offline mode...timeouts are normally handled by the browser itself
     // but we need to rely on a timeout in offline mode which works the same across browsers, hence the forced timeout
-    if (OvlConfig._system.offlineMode) {
+    if (OvlConfig.offline.offlineMode) {
       const controller = new AbortController()
       const { signal } = controller
-      let timeOutMs = OvlConfig._system.fetchTimeout
+      let timeOutMs = OvlConfig.fetch.fetchTimeout
       if (customTimeoutMs) {
         timeOutMs = customTimeoutMs
       }
@@ -186,7 +186,7 @@ export const ovlFetch = async (
     }
 
     const req = await fetch(url, reqOptions)
-    if (OvlConfig._system.offlineMode) {
+    if (OvlConfig.offline.offlineMode) {
       clearTimeout(timer)
     }
     if (method === "POST") {
@@ -307,7 +307,7 @@ export const ovlFetch = async (
     // well...  go to offline mode
     ovl.state.ovl.app.offline = true
     let now = Date.now()
-    //if (!OvlConfig._system.OfflineMode) {
+    //if (!OvlConfig.offline.offlineMode) {
     if (!lastNoServerConnectionMsg || now - lastNoServerConnectionMsg > 4000) {
       lastNoServerConnectionMsg = now
       SnackAdd(T("AppNoServerConnection"), "Warning")

@@ -144,13 +144,13 @@ export const addGlobalPersistEventListeners = () => {
 
 // export const pageHide = async event => {
 //   event.preventDefault()
-//   if (OvlConfig._system.OfflineMode) {
+//   if (OvlConfig.offline.offlineMode) {
 //     await saveState(false, "pageHide")
 //   }
 // }
 
 export const focusOut = async (event) => {
-  if (OvlConfig._system.offlineMode) {
+  if (OvlConfig.offline.offlineMode) {
     if (!event.relatedTarget) {
       await saveState(false, "FocusOut")
     }
@@ -160,7 +160,7 @@ export const focusOut = async (event) => {
 // export const beforeUnload = async (event) => {
 //   if (
 //     !OvlConfig._system.IsDev &&
-//     OvlConfig._system.OfflineMode &&
+//     OvlConfig.offline.offlineMode &&
 //     !logoutAndClearFlag &&
 //     !gotoFileFlag
 //   ) {
@@ -177,7 +177,7 @@ export const focusOut = async (event) => {
 export const stringifyReplacer = (key, value) =>
   typeof value === "undefined" ? null : value
 export const visibilityChange = async (event) => {
-  if (OvlConfig._system.offlineMode) {
+  if (OvlConfig.offline.offlineMode) {
     // console.log(document.visibilityState)
     // fires when user switches tabs, apps, goes to homescreen, etc.
     //@ts-ignore
@@ -203,7 +203,7 @@ export const visibilityChange = async (event) => {
 
 export const saveState = async (force: boolean, reason: string) => {
   if (
-    OvlConfig._system.offlineMode &&
+    OvlConfig.offline.offlineMode &&
     !logoutAndClearFlag &&
     ovl.state.ovl.uiState.isReady
   ) {
@@ -252,7 +252,7 @@ export let gotoFileFlag = false
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
   ovl.actions.ovl.indicator.SetIndicatorOpen()
-  if (OvlConfig._system.offlineMode) {
+  if (OvlConfig.offline.offlineMode) {
     //window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))

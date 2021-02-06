@@ -494,7 +494,6 @@ export const ValidateForm: OvlAction<OvlFormState> = (
   { actions, state, effects }
 ) => {
   // re do validations with boolean watched set to true
-  value.valid = true
   value.validationResult.errors = value.validationResult.errors.filter(
     (f) => f.standalone
   )
