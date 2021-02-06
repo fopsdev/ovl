@@ -359,6 +359,7 @@ export class OvlListControl extends OvlControlBase {
               }}
             ></ovl-hitlist>
           `
+
           await this.doRender()
         }
 
@@ -381,7 +382,6 @@ export class OvlListControl extends OvlControlBase {
       let displayValue = ""
       let getListFnName = FieldGetList.replace("%", field.fieldKey)
       displayValue = this.overrideDisplayValue
-
       if (displayValue === undefined && !this.localList) {
         displayValue = GetListDisplayValue(
           field.list,

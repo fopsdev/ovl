@@ -4,7 +4,7 @@ import { stringifyReplacer } from "../global/globals"
 import { OvlConfig } from "../index"
 import { ovl } from ".."
 export let actionTracking = { actionRunning: false, lastActionName: undefined }
-let frameCounter = 0
+
 export function createDeepProxy(target) {
   const preproxy = new WeakMap()
   let callbacksToCall = new Set()
@@ -136,9 +136,6 @@ export function createDeepProxy(target) {
   }
 
   function checkForCallbacks(path) {
-    // if (path.indexOf("viewRow") > -1) {
-    //   debugger
-    // }
     let cbs = paths.get(path)
     if (cbs) {
       let freshQueueToRender = callbacksToCall.size === 0
@@ -158,15 +155,18 @@ export function createDeepProxy(target) {
       if (OvlConfig._system.debugTracking) {
         if (debugInfo.length > 0) {
           console.log(
-            "action: " +
+            "last action: %c" +
               actionTracking.lastActionName +
-              " mutated: " +
+              "%c accessed tracked path: %c" +
               path +
-              "   affected comps:"
+              " %cwhich affects component:",
+            "color: blue",
+            "color:black",
+            "color:blue",
+            "color:black"
           )
           debugInfo.forEach((d) => {
-            console.log(d.name + ":")
-            console.log(d)
+            console.log(d.name + ": %O %o", d, d)
           })
         }
       }
@@ -179,11 +179,8 @@ export function createDeepProxy(target) {
     // call onUpdate method of affected component
     // but only when actions are finished (currentAction)
     // use frameCounter to throttle rerender batching
-    frameCounter++
-    if (
-      !actionTracking.actionRunning &&
-      frameCounter % globalThis.ovlScreenBatching === 0
-    ) {
+
+    if (!actionTracking.actionRunning) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
         if (OvlConfig._system.debugTracking) {

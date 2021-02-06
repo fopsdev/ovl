@@ -66,7 +66,6 @@ export type OvlConfigType = {
   }
   screen: {
     initialScreen: OvlScreen
-    defaultScreenBatching?: () => OvlScreenBatchingOption
   }
 
   /*actions that will be used from base but needs to be defined per app*/

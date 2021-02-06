@@ -54,10 +54,6 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
       }
     }
 
-    state.ovl.screens.screens[value].batchingOption = OvlConfig.screen
-      .defaultScreenBatching
-      ? OvlConfig.screen.defaultScreenBatching()
-      : "medium"
     if (fn[value] && fn[value][ScreenNavigateIn]) {
       let fn2 = fn[value][ScreenNavigateIn]
       let navErrorMessage = await fn2()
@@ -68,7 +64,7 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
         return
       }
     }
-    setScreenBatching(state.ovl.screens.screens[value].batchingOption)
+
     state.ovl.screens.nav.nextScreen = value
 
     let foundIndex = -1
@@ -94,20 +90,6 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
     } else {
       SetClosingScreen(actions, state, state.ovl.screens.nav.currentScreen)
     }
-  }
-}
-
-export const setScreenBatching = (screenBatching: OvlScreenBatchingOption) => {
-  //@@todo set a global var for fast batching check
-  switch (screenBatching) {
-    case "fast":
-      globalThis.ovlScreenBatching = 1
-      break
-    case "medium":
-      globalThis.ovlScreenBatching = 10
-      break
-    case "energysave":
-      globalThis.ovlScreenBatching = 20
   }
 }
 
