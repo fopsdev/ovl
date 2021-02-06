@@ -11,8 +11,9 @@ export { OvlConfig }
 import { OvlAction } from "./index"
 import { Field } from "./library/Forms/actions"
 import { FormValidation, FormValidationField } from "./library/Forms/validators"
+import { OvlScreenBatchingOption } from "./library/OvlBaseElement"
 
-export type Init = {
+export type ApiUrlResolve = {
   customerTestUrlMatch: string
   customerTestUrl: string
   customerRealUrlMatch: string
@@ -54,29 +55,43 @@ export type OvlConfigType = {
       ) => boolean
     }
   }
-  useFetchDefaultParams?: {
-    lang: boolean
-    clientId: boolean
+  fetch: {
+    useFetchDefaultParams?: {
+      lang: boolean
+      clientId: boolean
+    }
+    apiUrl: ApiUrlResolve
+    fileOpenMode?: FileOpenFnType
   }
-  initialScreen?: OvlScreen
-  apiUrl: Init
+  screen: {
+    initialScreen: OvlScreen
+    defaultScreenBatching?: () => OvlScreenBatchingOption
+  }
+
   /*actions that will be used from base but needs to be defined per app*/
-  hookInActions: {
-    customInitActionPath?: (actions: OvlActions) => OvlAction
-    customRehydrateActionPath?: (actions: OvlActions) => OvlAction
+  translation?: {
+    ignoreLanguages?: boolean
     handleAdditionalTranslationResultActionPath?: (
       actions: OvlActions
     ) => OvlAction
-    handleGlobalRefreshActionPath?: (actions: OvlActions) => OvlAction
+  }
+
+  init: {
+    customInitActionPath?: (actions: OvlActions) => OvlAction
+  }
+  offline?: {
+    customRehydrateActionPath?: (actions: OvlActions) => OvlAction
+    saveStateCallback?: (stateToPersist: OvlState) => void
+    offlineFirstOnReload?: boolean
   }
   /*check stateCleaner in ovl global to see the possibilities of this fn*/
-  saveStateCallback?: (stateToPersist: OvlState) => void
+
   /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
      thats why we have a check function to check if they should be enabled
   */
-  stickyHeaderEnabled?: (state: OvlState) => {}
-  fileOpenMode?: FileOpenFnType
-  defaultDialogTitle?: string
-  offlineFirstOnReload?: boolean
-  ignoreLanguages?: boolean
+  global: {
+    stickyHeaderEnabled?: (state: OvlState) => {}
+    defaultDialogTitle: string
+    handleGlobalRefreshActionPath?: (actions: OvlActions) => OvlAction
+  }
 }

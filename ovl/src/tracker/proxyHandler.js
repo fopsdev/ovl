@@ -180,7 +180,10 @@ export function createDeepProxy(target) {
     // but only when actions are finished (currentAction)
     // use frameCounter to throttle rerender batching
     frameCounter++
-    if (!actionTracking.actionRunning && frameCounter % 2 === 0) {
+    if (
+      !actionTracking.actionRunning &&
+      frameCounter % globalThis.ovlScreenBatching === 0
+    ) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
         if (OvlConfig._system.debugTracking) {

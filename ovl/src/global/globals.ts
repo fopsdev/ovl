@@ -237,8 +237,10 @@ export const saveState = async (force: boolean, reason: string) => {
       // let t = JSON.stringify(refstate)
       // dtEnd = Date.now()
       // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
-      if (OvlConfig.saveStateCallback) {
-        OvlConfig.saveStateCallback(newObj)
+      if (OvlConfig.offline) {
+        if (OvlConfig.offline.saveStateCallback) {
+          OvlConfig.offline.saveStateCallback(newObj)
+        }
       }
       return stateStore.set(OvlConfig._system.persistStateId, newObj)
     }
@@ -324,8 +326,8 @@ export const ShowFile = (blob, type, fileName) => {
   anchor.textContent = "dummy"
   anchor.style.display = "none"
   anchor.target = "_blank"
-  if (OvlConfig.fileOpenMode) {
-    OvlConfig.fileOpenMode(anchor, fileName)
+  if (OvlConfig.fetch.fileOpenMode) {
+    OvlConfig.fetch.fileOpenMode(anchor, fileName)
   }
 
   document.body.appendChild(anchor)

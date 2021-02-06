@@ -1,5 +1,6 @@
 import { actionTracking, createDeepProxy } from "./tracker/proxyHandler"
-import { ovl, OvlState, OvlActions } from "."
+import { ovl, OvlState, OvlActions, OvlConfig } from "."
+import { setScreenBatching } from "./global/actions"
 
 const interceptorAsyncFn = (originalFn, key) => {
   return async (value) => {
@@ -92,6 +93,12 @@ export const init = (
   }
   // find the functions in actions and inject our own action caller
   injectActions(_actions)
+
+  setScreenBatching(
+    OvlConfig.screen.defaultScreenBatching
+      ? OvlConfig.screen.defaultScreenBatching()
+      : "medium"
+  )
 
   return {
     state: <OvlState>createDeepProxy(_state),

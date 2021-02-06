@@ -697,7 +697,7 @@ export class TableHeader extends OvlBaseElement {
           //caption = GetLabelText(caption, k, def.namespace, this.state)
 
           let stickyTableHeader
-          if (OvlConfig.stickyHeaderEnabled(this.state)) {
+          if (OvlConfig.global.stickyHeaderEnabled(this.state)) {
             stickyTableHeader = "stickyTableHeader"
           }
 

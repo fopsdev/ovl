@@ -18,12 +18,15 @@ import {
 
 type ScreensHistory = OvlScreen[]
 
+export type OvlScreenBatchingOption = "fast" | "medium" | "energysave"
+
 export type ScreensState = {
   screens: {
     [key in OvlScreen]: {
       visible: boolean
       closing: boolean
       lastScrollTop: number
+      batchingOption: OvlScreenBatchingOption
     }
   }
   nav: NavState
@@ -99,6 +102,7 @@ export class OvlBaseElement extends HTMLElement {
   name: string
   _id: number = 0
   screen: OvlScreen
+
   screenCloseBehaviour: "remove" | "hide"
   static _counter: number = 0
   screenClosing(): boolean {

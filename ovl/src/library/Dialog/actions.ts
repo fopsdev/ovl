@@ -114,8 +114,8 @@ export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   }
   let title = T("AppTitle")
 
-  if (OvlConfig.defaultDialogTitle) {
-    title = T(OvlConfig.defaultDialogTitle)
+  if (OvlConfig.global.defaultDialogTitle) {
+    title = T(OvlConfig.global.defaultDialogTitle)
   }
   if (value.title) {
     title = value.title
@@ -146,8 +146,8 @@ export const OkDialog: OvlAction<OkDialog> = async (value, { actions }) => {
   }
 
   let title = T("AppTitle")
-  if (OvlConfig.defaultDialogTitle) {
-    title = T(OvlConfig.defaultDialogTitle)
+  if (OvlConfig.global.defaultDialogTitle) {
+    title = T(OvlConfig.global.defaultDialogTitle)
   }
   if (value.title) {
     title = value.title
