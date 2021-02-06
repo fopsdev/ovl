@@ -36,6 +36,11 @@ import { init } from "./prepare"
 import { baseScreens, baseDialogs } from "./screensAndDialogs"
 import { defineElements } from "./registerComponents"
 import { startRender } from "../../../app/src"
+import { logActions, logState } from "./global/globals"
+import { logTrackingList } from "./tracker/tracker"
+globalThis.OvlLogActions = logActions
+globalThis.OvlLogState = logState
+globalThis.OvlLogTrackingList = logTrackingList
 
 export type OvlState = { ovl: typeof ovlState; app: typeof appState }
 export type OvlActions = {
