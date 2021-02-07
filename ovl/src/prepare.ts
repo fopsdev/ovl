@@ -55,7 +55,8 @@ export const init = (
   ovlActions,
   ovlEffects,
   baseScreens,
-  baseDialogs
+  baseDialogs,
+  forms
 ) => {
   let _state: any = {}
   _state.ovl = ovlState
@@ -69,6 +70,13 @@ export const init = (
         closing: false,
         lastScrollTop: undefined,
       }
+    })
+
+  _state.ovl.forms = {}
+  Object.keys(forms)
+    .concat("TableRowEdit")
+    .forEach((k) => {
+      _state.ovl.forms[k] = {}
     })
 
   // prepare dialogs state

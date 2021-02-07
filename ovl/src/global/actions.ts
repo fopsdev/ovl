@@ -458,8 +458,9 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
       fn()
     }
   }
+
   if (OvlConfig.screen.initialScreen) {
-    actions.ovl.navigation.NavigateTo("NewService")
+    actions.ovl.navigation.NavigateTo(OvlConfig.screen.initialScreen)
   }
 }
 let lastUpdateCheck: number = undefined

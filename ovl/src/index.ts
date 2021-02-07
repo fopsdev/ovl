@@ -64,7 +64,8 @@ export let ovl: {
   ovlActions,
   ovlEffects,
   baseScreens,
-  baseDialogs
+  baseDialogs,
+  OvlConfig.app.forms
 )
 defineElements()
 startRender()

@@ -75,7 +75,12 @@ export class OvlFormElement extends OvlBaseElement {
   formState: OvlFormState
   formAfterRenderFn: any
   formShowFn: any
+  forms: typeof ovl.state.ovl.forms
   //formShowed: boolean
+  constructor() {
+    super()
+    this.forms = this.state.ovl.forms
+  }
   handleOvlFocusOut = async (e) => {
     let id = e.detail.id.replace(this.formId, "")
     if (id && this.formState.fields[id]) {
@@ -151,7 +156,7 @@ export class OvlFormElement extends OvlBaseElement {
   async doRender() {
     if (this.screenClosing()) {
       //whilst screenclosing reset all the formShowed to false so they can show again...
-      let formsState = this.state.ovl.forms
+      let formsState = this.forms
       let formShowedToReset: FormShowed[] = this.state.ovl.screens
         .formShowedToReset
       formShowedToReset.forEach((formInfo: FormShowed) => {
@@ -161,8 +166,8 @@ export class OvlFormElement extends OvlBaseElement {
     }
 
     if (!this.screen || this.screenVisible()) {
-      let forms = this.state.ovl.forms
-      if (!forms[this.formType] || !forms[this.formType][this.formId]) {
+      let forms = this.forms
+      if (!forms[this.formType][this.formId]) {
         throw Error(
           "ovl forms: formstate not initialised: formtype:" +
             this.formType +

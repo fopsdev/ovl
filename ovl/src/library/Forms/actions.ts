@@ -561,6 +561,7 @@ export const InitForm: OvlAction<InitForm> = (
   value,
   { state, actions, effects }
 ) => {
+  debugger
   if (!state.ovl.forms) {
     //@ts-ignore
     state.ovl.forms = {}

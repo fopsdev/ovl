@@ -46,58 +46,66 @@ export const ClearSnack: OvlAction<string> = (value, { state, actions }) => {
 }
 
 export const PlaceSnack: OvlAction = (_, { state }) => {
-  let snacks = state.ovl.libState.snacks
-  if (snacks) {
-    Object.keys(snacks)
-      .filter((f) => snacks[f].status === "queued")
-      .sort((a, b) => snacks[a].id - snacks[b].id)
-      .forEach((k) => {
-        //if (filteredAndSortedSnacks.length > 0) {
-        let snackToAdd = snacks[k]
-        let ovlSnackEl = document.getElementById("ovlsnack")
-        let lastOccupiedSlot = 0
-        let lastFreeSlot = 0
-        let lastFreeSlotEl
-        let firstFreeSlotEl
-        let parentEl = ovlSnackEl.lastElementChild
-        let z = 0
-        do {
-          let slotEl = parentEl.firstElementChild
-          if (slotEl) {
-            lastOccupiedSlot = z
-          } else {
-            lastFreeSlot = z
-            lastFreeSlotEl = parentEl
-            if (!firstFreeSlotEl) {
-              firstFreeSlotEl = parentEl
+  let ovlSnackEl = document.getElementById("ovlsnack")
+  let wait = 0
+  if (!ovlSnackEl) {
+    wait = 500
+  }
+  setTimeout(() => {
+    ovlSnackEl = document.getElementById("ovlsnack")
+    let snacks = state.ovl.libState.snacks
+    if (snacks) {
+      Object.keys(snacks)
+        .filter((f) => snacks[f].status === "queued")
+        .sort((a, b) => snacks[a].id - snacks[b].id)
+        .forEach((k) => {
+          //if (filteredAndSortedSnacks.length > 0) {
+          let snackToAdd = snacks[k]
+
+          let lastOccupiedSlot = 0
+          let lastFreeSlot = 0
+          let lastFreeSlotEl
+          let firstFreeSlotEl
+          let parentEl = ovlSnackEl.lastElementChild
+          let z = 0
+          do {
+            let slotEl = parentEl.firstElementChild
+            if (slotEl) {
+              lastOccupiedSlot = z
+            } else {
+              lastFreeSlot = z
+              lastFreeSlotEl = parentEl
+              if (!firstFreeSlotEl) {
+                firstFreeSlotEl = parentEl
+              }
+            }
+            parentEl = parentEl.previousElementSibling
+            z++
+          } while (parentEl)
+          if (lastOccupiedSlot === 0 || lastOccupiedSlot < lastFreeSlot) {
+            if (lastOccupiedSlot === 0) {
+              lastFreeSlotEl = firstFreeSlotEl
+            }
+            snackToAdd.status = "running"
+            let div = document.createElement("div")
+            div.id = k
+            div.setAttribute("role", "alert")
+            div.innerText = snackToAdd.text
+            div.classList.add("fd-message-strip")
+            div.classList.add("ovl-snack")
+            let type = "fd-message-strip--" + snackToAdd.type.toLowerCase()
+            div.classList.add(type)
+            div.classList.add("fadeInSnack")
+            lastFreeSlotEl.appendChild(div)
+            if (snackToAdd.durationMs != 999999) {
+              setTimeout((e) => {
+                StartRemoveSnack(div)
+              }, snackToAdd.durationMs)
             }
           }
-          parentEl = parentEl.previousElementSibling
-          z++
-        } while (parentEl)
-        if (lastOccupiedSlot === 0 || lastOccupiedSlot < lastFreeSlot) {
-          if (lastOccupiedSlot === 0) {
-            lastFreeSlotEl = firstFreeSlotEl
-          }
-          snackToAdd.status = "running"
-          let div = document.createElement("div")
-          div.id = k
-          div.setAttribute("role", "alert")
-          div.innerText = snackToAdd.text
-          div.classList.add("fd-message-strip")
-          div.classList.add("ovl-snack")
-          let type = "fd-message-strip--" + snackToAdd.type.toLowerCase()
-          div.classList.add(type)
-          div.classList.add("fadeInSnack")
-          lastFreeSlotEl.appendChild(div)
-          if (snackToAdd.durationMs != 999999) {
-            setTimeout((e) => {
-              StartRemoveSnack(div)
-            }, snackToAdd.durationMs)
-          }
-        }
-      })
-  }
+        })
+    }
+  }, wait)
 }
 
 export const AddSnack: OvlAction<SnackAddState> = (
