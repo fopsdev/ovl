@@ -1,3 +1,4 @@
+import { hasOSReducedMotion } from "../../../global/globals"
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { ControlVisiblity, Field, OvlFormState } from "../actions"
 import { GetCustomInfo } from "./helpers"
@@ -47,14 +48,12 @@ export class OvlControlBase extends OvlBaseElement {
 
     if (
       this.field.ui.visible === "true" ||
-      (this.field.ui.visible === "fadeIn" &&
-        this.state.ovl.uiState.hasOSReducedMotion)
+      (this.field.ui.visible === "fadeIn" && hasOSReducedMotion())
     ) {
       this.classList.remove("hide")
     } else if (
       this.field.ui.visible === "false" ||
-      (this.field.ui.visible === "fadeOut" &&
-        this.state.ovl.uiState.hasOSReducedMotion)
+      (this.field.ui.visible === "fadeOut" && hasOSReducedMotion())
     ) {
       this.classList.add("hide")
     } else if (this.field.ui.visible === "fadeIn") {

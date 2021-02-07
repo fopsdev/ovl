@@ -59,7 +59,6 @@ export class OvlSnack extends OvlBaseElement {
       if (isMobile()) {
         width = "width: 100vw;"
       }
-      debugger
       return html`
         <div style="${width}" id="ovlsnack" class="ovl-snacks">
           ${res.map((m) => m)}

@@ -1,7 +1,12 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { TemplateResult, html } from "lit-html"
-import { OvlDialog, OvlForm } from "../.."
-import { enableBodyScroll, isMobile, SetFocus } from "../../global/globals"
+import { ovl, OvlDialog, OvlForm } from "../.."
+import {
+  enableBodyScroll,
+  hasOSReducedMotion,
+  isMobile,
+  SetFocus,
+} from "../../global/globals"
 
 export type DialogsState = {
   elementIdToFocusAfterOpen?: string
@@ -37,9 +42,15 @@ export class OvlBaseDialog extends OvlBaseElement {
   dialogType: OvlDialog
   zIndex: number
   opened: boolean
+  dialogs: typeof ovl.state.ovl.dialogs
 
   closedCallbackFn: any
   dismissCallbackFn: any
+
+  constructor() {
+    super()
+    this.dialogs = this.state.ovl.dialogs
+  }
 
   getDialogTemplate = (dialogParts: DialogParts): TemplateResult => {
     if (!this.closedCallbackFn && dialogParts.closedCallbackFn) {
@@ -54,7 +65,7 @@ export class OvlBaseDialog extends OvlBaseElement {
       }
     }
 
-    let dialogState = this.state.ovl.dialogs[this.dialogType]
+    let dialogState = this.dialogs[this.dialogType]
     if (!this.opened) {
       dialogState.elementIdToFocusAfterClose = document.activeElement.id
       // else {
@@ -172,7 +183,7 @@ export class OvlBaseDialog extends OvlBaseElement {
   }
 
   closeDialog = () => {
-    if (this.state.ovl.uiState.hasOSReducedMotion) {
+    if (hasOSReducedMotion()) {
       this.removeDialog()
     } else {
       //this.state.ovl.dialogs[this.dialogType].isClosing = true
@@ -192,7 +203,7 @@ export class OvlBaseDialog extends OvlBaseElement {
   }
   removeDialog = () => {
     this.opened = false
-    let dlg = this.state.ovl.dialogs[this.dialogType]
+    let dlg = this.dialogs[this.dialogType]
     if (this.closedCallbackFn) {
       this.closedCallbackFn()
     }
@@ -219,14 +230,14 @@ export class OvlBaseDialog extends OvlBaseElement {
     }
   }
   checkDialog = (): TemplateResult | null | "go on" => {
-    if (!this.state.ovl.dialogs[this.dialogType]) {
+    if (!this.dialogs[this.dialogType]) {
       return null
     }
-    if (!this.state.ovl.dialogs[this.dialogType].visible) {
+    if (!this.dialogs[this.dialogType].visible) {
       return null
     }
 
-    if (this.state.ovl.dialogs[this.dialogType].closing) {
+    if (this.dialogs[this.dialogType].closing) {
       this.closeDialog()
       return undefined
     }
@@ -234,8 +245,8 @@ export class OvlBaseDialog extends OvlBaseElement {
   }
 
   connectedCallback() {
-    if (!this.state.ovl.dialogs[this.dialogType]) {
-      this.state.ovl.dialogs[this.dialogType] = {
+    if (!this.dialogs[this.dialogType]) {
+      this.dialogs[this.dialogType] = {
         visible: false,
         closing: false,
       }

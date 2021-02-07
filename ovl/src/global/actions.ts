@@ -9,6 +9,7 @@ import {
   stateStore,
 } from "../offlineStorage"
 import {
+  hasOSReducedMotion,
   isIOS,
   isMobile,
   isTouch,
@@ -164,7 +165,7 @@ const SetClosingScreen = (
   value: OvlScreen
 ) => {
   if (value !== undefined) {
-    if (!state.ovl.uiState.hasOSReducedMotion) {
+    if (!hasOSReducedMotion()) {
       state.ovl.screens.screens[value].closing = true
     } else {
       actions.ovl.internal.SetVisibleFalse(value)
@@ -449,8 +450,6 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
   // prepare login form
-  const query = "(prefers-reduced-motion: reduce)"
-  state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches
 
   if (OvlConfig.init.customInitActionPath) {
     let fn = OvlConfig.init.customInitActionPath(actions)

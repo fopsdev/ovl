@@ -561,11 +561,6 @@ export const InitForm: OvlAction<InitForm> = (
   value,
   { state, actions, effects }
 ) => {
-  debugger
-  if (!state.ovl.forms) {
-    //@ts-ignore
-    state.ovl.forms = {}
-  }
   let instanceId = value.instanceId
   if (!instanceId) {
     instanceId = value.formType

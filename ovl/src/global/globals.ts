@@ -73,6 +73,14 @@ export function isIOS() {
   }
   return _isIOS
 }
+let _hasOSReducedMotion
+export function hasOSReducedMotion() {
+  if (_hasOSReducedMotion === undefined) {
+    const query = "(prefers-reduced-motion: reduce)"
+    _hasOSReducedMotion = window.matchMedia(query).matches
+  }
+  return _hasOSReducedMotion
+}
 
 export const getDateValue = (value: string, format?: FieldFormat) => {
   if (!value) {

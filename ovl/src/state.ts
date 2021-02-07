@@ -52,7 +52,6 @@ let language = {
 }
 
 let uiState = {
-  hasOSReducedMotion: false,
   isDemo: false,
   isReady: false,
   stateSavedReason: "",
