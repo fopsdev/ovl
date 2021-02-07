@@ -20,14 +20,16 @@ type ScreensHistory = OvlScreen[]
 
 export type OvlScreenBatchingOption = "fast" | "medium" | "energysave"
 
+type ScreenState = {
+  visible: boolean
+  closing: boolean
+  lastScrollTop: number
+  batchingOption: OvlScreenBatchingOption
+}
+
 export type ScreensState = {
   screens: {
-    [key in OvlScreen]: {
-      visible: boolean
-      closing: boolean
-      lastScrollTop: number
-      batchingOption: OvlScreenBatchingOption
-    }
+    [key in OvlScreen]: ScreenState
   }
   nav: NavState
   formShowedToReset: FormShowed[]
@@ -41,13 +43,16 @@ export type NavState = {
   formIdToReset: string
 }
 
-export const setLastScrollPosition = (state: OvlState) => {
-  let currentScreen = state.ovl.screens.nav.currentScreen
+export const setLastScrollPosition = (
+  uiState: typeof ovl.state.ovl.uiState,
+  screens: typeof ovl.state.ovl.screens
+) => {
+  let currentScreen = screens.nav.currentScreen
   if (currentScreen) {
     // get the first scrollable class of the doc
-    let o = state.ovl.screens.screens[currentScreen]
+    let o = screens.screens[currentScreen]
     let scrollable
-    if (state.ovl.uiState.isMobile) {
+    if (uiState.isMobile) {
       scrollable = document.querySelector(".scrollableMobile")
     } else {
       scrollable = document.querySelector(".scrollable")
@@ -62,16 +67,22 @@ export const setLastScrollPosition = (state: OvlState) => {
   }
 }
 
-export const scrollToLastPosition = (state: OvlState) => {
-  let screen = state.ovl.screens.nav.currentScreen
-  if (!state.ovl.screens.screens || !state.ovl.screens.screens[screen]) {
+export const scrollToLastPosition = (
+  uiState: typeof ovl.state.ovl.uiState,
+  screens: typeof ovl.state.ovl.screens
+) => {
+  if (!screens.nav) {
     return
   }
-  let lastScrollTop = state.ovl.screens.screens[screen].lastScrollTop
+  let screen = screens.nav.currentScreen
+  if (!screens.screens || !screens.screens[screen]) {
+    return
+  }
+  let lastScrollTop = screens.screens[screen].lastScrollTop
 
   // set scroll to remembered pos
   let scrollable
-  if (state.ovl.uiState.isMobile) {
+  if (uiState.isMobile) {
     scrollable = document.querySelector(".scrollableMobile")
   } else {
     scrollable = document.querySelector(".scrollable")
@@ -98,7 +109,8 @@ export class OvlBaseElement extends HTMLElement {
   state: OvlState
   actions: OvlActions
   effects: OvlEffects
-
+  screens: { [key in OvlScreen]: ScreenState }
+  uiState: typeof ovl.state.ovl.uiState
   name: string
   _id: number = 0
   screen: OvlScreen
@@ -111,7 +123,7 @@ export class OvlBaseElement extends HTMLElement {
     }
     let res
     startTrack(this)
-    res = this.state.ovl.screens.screens[this.screen].closing
+    res = this.screens[this.screen].closing
     stopTrack()
     return res
   }
@@ -123,7 +135,7 @@ export class OvlBaseElement extends HTMLElement {
     let res
     startTrack(this)
 
-    res = this.state.ovl.screens.screens[this.screen].visible
+    res = this.screens[this.screen].visible
     stopTrack()
     return res
   }
@@ -132,7 +144,7 @@ export class OvlBaseElement extends HTMLElement {
     if (e.animationName === "fadeInScreen") {
       //this.track(() => {
       // if there is a screen show function call it
-      scrollToLastPosition(this.state)
+      scrollToLastPosition(this.state.ovl.uiState, this.state.ovl.screens)
       if (this.actions.custom.screens) {
         let screen = this.state.ovl.screens.nav.currentScreen
         let screensFunctions = this.actions.custom.screens
@@ -181,6 +193,8 @@ export class OvlBaseElement extends HTMLElement {
     this.state = ovl.state
     this.actions = ovl.actions
     this.effects = ovl.effects
+    this.screens = ovl.state.ovl.screens.screens
+    this.uiState = ovl.state.ovl.uiState
   }
 
   async doRender() {
@@ -209,9 +223,9 @@ export class OvlBaseElement extends HTMLElement {
     if (checkScreen) {
       // this ensures that labguage change always refreshes components
       // its used as well for the refresh button which should always refresh
-      startTrack(this)
-      this.state.ovl.language.language
-      stopTrack()
+      // startTrack(this)
+      // this.state.ovl.language.language
+      // stopTrack()
 
       res = await this.getUI()
       if (res !== undefined) {
@@ -242,6 +256,11 @@ export class OvlBaseElement extends HTMLElement {
 
   connectedCallback() {
     //this.style.display = "block"
+    //this.language = this.state.ovl.language
+    // startTrack(this)
+    // this.language.language
+    // this.language.translations
+    // stopTrack()
 
     this.init()
     if (OvlConfig._system.debugTracking) {

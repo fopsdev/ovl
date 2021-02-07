@@ -29,7 +29,7 @@ import { createDeepProxy } from "../tracker/proxyHandler"
 import { OvlAction } from "../index"
 
 export const SetLastScrollPosition: OvlAction = (_, { state }) => {
-  setLastScrollPosition(state)
+  setLastScrollPosition(state.ovl.uiState, state.ovl.screens)
 }
 
 export const NavigateTo: OvlAction<OvlScreen> = async (
@@ -40,7 +40,7 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
     let fn = actions.custom.screens
     if (fn) {
       let currentScreen: OvlScreen = state.ovl.screens.nav.currentScreen
-      setLastScrollPosition(state)
+      setLastScrollPosition(state.ovl.uiState, state.ovl.screens)
       if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
         let navErrorMessage = <string>(
           await fn[currentScreen][ScreenNavigateOut]()

@@ -6,12 +6,16 @@ import { ovl, OvlState, OvlConfig } from ".."
 import { TemplateResult } from "lit-html"
 
 // export let api = { url: "" }
-export let translations: Translations = { t: {} }
+//export let translations: Translations = { t: {} }
 
 export let modalDialog: GlobalModalDialogState = { text: undefined }
 export let translationData = {}
 export const ovltemp = "_ovltmp"
 export const ovloffline = "_ovloff"
+
+// we keep in those a shortcut to ovl.state.ovl.language...
+// to simplify tracking
+export let languageRef: typeof ovl.state.ovl.language
 
 type GlobalModalDialogState = {
   text: string | TemplateResult
@@ -345,12 +349,16 @@ export const ResetT = () => {
   TCache = new Map()
 }
 export const T = (key: string, reps?: string[]): string => {
+  if (!languageRef) {
+    languageRef = ovl.state.ovl.language
+  }
+  languageRef.translations
+
   // check for mobile key and use translation for mobile users to get shorter translations if applicable (key_M)
-  //@ts-ignore
   let uiState = ovl.state.ovl.uiState
   if (uiState.isMobile) {
     let mobileKey = key + "_M"
-    if (ovl.state.ovl.language.translations[mobileKey]) {
+    if (languageRef.translations[mobileKey]) {
       key = mobileKey
     }
   }
@@ -362,7 +370,7 @@ export const T = (key: string, reps?: string[]): string => {
   if (cacheRes !== undefined) {
     return cacheRes
   }
-  let str = ovl.state.ovl.language.translations[key]
+  let str = languageRef.translations[key]
   if (str === undefined || str === null) {
     str = key
     //   // if (uiState.isReady) {

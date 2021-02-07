@@ -23,11 +23,7 @@ import {
   Schema,
 } from "../Forms/OvlFormElement"
 import { SnackAdd } from "../helpers"
-import {
-  OvlBaseElement,
-  scrollToLastPosition,
-  setLastScrollPosition,
-} from "../OvlBaseElement"
+import { OvlBaseElement, scrollToLastPosition } from "../OvlBaseElement"
 import { HeaderMenuDef } from "./HeaderMenu"
 import { CachedRendererData, GetRendererFn } from "./helpers"
 import { NavDef } from "./NavControl"
@@ -1017,7 +1013,7 @@ export class TableHeader extends OvlBaseElement {
       setTimeout(() => {
         this.actions.ovl.internal.SetTableNeedsRebuild(false)
         setTimeout(() => {
-          scrollToLastPosition(this.state)
+          scrollToLastPosition(this.state.ovl.uiState, this.state.ovl.screens)
         }, 300)
       }, 1)
       return true
