@@ -1,5 +1,12 @@
 import { html } from "lit-html"
-import { ovltemp, resolvePath, T, SetFocus } from "../../global/globals"
+import {
+  ovltemp,
+  resolvePath,
+  T,
+  SetFocus,
+  isTouch,
+  isMobile,
+} from "../../global/globals"
 import {
   EditGetCaptionRender,
   EditGetLabelAndValueRender,
@@ -83,7 +90,7 @@ export class TableRowFormBig extends OvlFormElement {
 
   handleLongPress = (e) => {
     // if on touch device also display row status message as a snack
-    if (this.state.ovl.uiState.isTouch) {
+    if (isTouch()) {
       let mobileTooltip
 
       let searchDataCol = e.target
@@ -209,7 +216,7 @@ export class TableRowFormBig extends OvlFormElement {
       customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
         columns: def.columns,
         row: this.rowData.row,
-        isMobile: this.state.ovl.uiState.isMobile,
+        isMobile: isMobile(),
         displayMode: <DisplayMode>"Edit",
         namespace: def.namespace,
         tableDefId: def.id,
@@ -226,7 +233,7 @@ export class TableRowFormBig extends OvlFormElement {
     if (fn2 && fn[functionName2]) {
       customHeaderCellClasses = fn2[functionName2](<ViewHeaderCellClass_Type>{
         columns: def.columns,
-        isMobile: this.state.ovl.uiState.isMobile,
+        isMobile: isMobile(),
         displayMode: <DisplayMode>"Edit",
         namespace: def.namespace,
         tableDefId: def.id,

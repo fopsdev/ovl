@@ -129,7 +129,7 @@ export class CompShellbar extends OvlBaseElement {
     return this.track(() => {
       let app
       let scrollable = "scrollable"
-      if (this.state.ovl.uiState.isMobile) {
+      if (isMobile()) {
         scrollable = "scrollableMobile"
       }
       let appTitle: TemplateResult | string = ""

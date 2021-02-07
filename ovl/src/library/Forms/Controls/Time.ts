@@ -9,10 +9,11 @@ import {
   SetFocusEventHelper,
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
+import { isMobile } from "../../../global/globals"
 
 export class OvlTime extends OvlControlBase {
   init() {
-    if (this.state.ovl.uiState.isMobile) {
+    if (isMobile()) {
       this.addEventListener("input", this.handleChange)
     } else {
       this.addEventListener("change", this.handleChange)
@@ -30,7 +31,7 @@ export class OvlTime extends OvlControlBase {
       let field = this.field
       type TimeBoxType = "text" | "time"
       let type: TimeBoxType = "text"
-      if (this.state.ovl.uiState.isMobile) {
+      if (isMobile()) {
         type = "time"
       }
       return html`
@@ -78,7 +79,7 @@ export class OvlTime extends OvlControlBase {
     super.afterRender()
   }
   disconnectedCallback() {
-    if (this.state.ovl.uiState.isMobile) {
+    if (isMobile()) {
       this.removeEventListener("input", this.handleChange)
     } else {
       this.removeEventListener("change", this.handleChange)

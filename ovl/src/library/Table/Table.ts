@@ -1,7 +1,13 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../tracker/litdirectives/if-defined"
 import { repeat } from "../../tracker/litdirectives/repeat"
-import { ovltemp, resolvePath, T } from "../../global/globals"
+import {
+  isTouch,
+  ovltemp,
+  resolvePath,
+  T,
+  isMobile,
+} from "../../global/globals"
 import {
   FieldGetLabelRender,
   FieldHeaderCellSelectedHandler,
@@ -495,7 +501,7 @@ export class TableHeader extends OvlBaseElement {
 
   handleLongPress = (e) => {
     // if on touch device also display row status message as a snack
-    if (this.state.ovl.uiState.isTouch) {
+    if (isTouch()) {
       let mobileTooltip
       if (e.target.title) {
         mobileTooltip = e.target.title
@@ -577,14 +583,14 @@ export class TableHeader extends OvlBaseElement {
       let columnsAlign = {}
       let columnsVisible = {}
       let columnsCount = 0
-      let isMobile = this.state.ovl.uiState.isMobile
+      let isMob = isMobile()
       let customHeaderCellClasses: ViewHeaderCellClass_ReturnType
       let functionName = ViewHeaderCellClass
       let fn = resolvePath(this.actions.custom, def.namespace)
       if (fn && fn[functionName]) {
         customHeaderCellClasses = fn[functionName](<ViewHeaderCellClass_Type>{
           columns: def.columns,
-          isMobile,
+          isMobile: isMob,
           displayMode: <DisplayMode>"Table",
           namespace: def.namespace,
           tableDefId: def.id,
@@ -620,7 +626,7 @@ export class TableHeader extends OvlBaseElement {
           }
 
           columnsVisible[k] = visible
-          if (isMobile) {
+          if (isMob) {
             if (visible.indexOf("TableNotMobile") > -1) {
               return null
             }
@@ -1013,7 +1019,7 @@ export class TableHeader extends OvlBaseElement {
       setTimeout(() => {
         this.actions.ovl.internal.SetTableNeedsRebuild(false)
         setTimeout(() => {
-          scrollToLastPosition(this.state.ovl.uiState, this.state.ovl.screens)
+          scrollToLastPosition(this.state.ovl.screens)
         }, 300)
       }, 1)
       return true

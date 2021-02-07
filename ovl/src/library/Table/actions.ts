@@ -7,6 +7,7 @@ import {
   ovloffline,
   saveState,
   stringifyReplacer,
+  isMobile,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -431,7 +432,7 @@ export const TableInit: OvlAction<{
   let dataAndState = value.data
   let def = dataAndState.tableDef[value.defId]
 
-  initTableState(def, dataAndState, value.defId, state.ovl.uiState.isMobile)
+  initTableState(def, dataAndState, value.defId, isMobile())
   def.initialised = true
   let rs = value.resetStrategy
   let clearData = false
@@ -497,7 +498,7 @@ export const TableRefresh: OvlAction<{
   let dataAndState = value.data
   let def = dataAndState.tableDef[value.defId]
 
-  initTableState(def, dataAndState, value.defId, state.ovl.uiState.isMobile)
+  initTableState(def, dataAndState, value.defId, isMobile())
   // if (!value.localData && !def.server.endpoint) {
   //   def.initialised = true
   //   return
@@ -713,7 +714,7 @@ export const TableDirectSaveRow: OvlAction<{
       rowToSave[def.database.dataIdField]
   }
   if (!def.initialised) {
-    initTableState(def, data, value.defId, state.ovl.uiState.isMobile)
+    initTableState(def, data, value.defId, isMobile())
   }
   if (rowId.indexOf(ovltemp) > -1) {
     data.data[key] = JSON.parse(JSON.stringify(rowToSave), stringifyReplacer)

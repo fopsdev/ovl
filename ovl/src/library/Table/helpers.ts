@@ -8,6 +8,7 @@ import {
   ovloffline,
   stringifyReplacer,
   D,
+  isMobile,
 } from "../../global/globals"
 import {
   FieldGetList,
@@ -956,8 +957,7 @@ export const createDynamicRowFunctions = async (
   if (!isDetailView) {
     if (
       def.features.detailView === "Enabled" ||
-      (ovl.state.ovl.uiState.isMobile &&
-        def.features.detailView === "EnabledOnlyMobile")
+      (isMobile() && def.features.detailView === "EnabledOnlyMobile")
     ) {
       let detailDisabled = false
       let detailTitle = ""

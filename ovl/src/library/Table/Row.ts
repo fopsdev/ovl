@@ -1,6 +1,6 @@
 import { html } from "lit-html"
 import { ifDefined } from "../../tracker/litdirectives/if-defined"
-import { resolvePath } from "../../global/globals"
+import { isMobile, resolvePath } from "../../global/globals"
 import {
   FieldGetValueRender,
   ViewRowCellClass,
@@ -44,7 +44,7 @@ export class TableRow extends OvlBaseElement {
       let columns = def.columns
       let align = this.row.columnsAlign
       let columnsVisible = this.row.columnsVisible
-      let isMobile = this.state.ovl.uiState.isMobile
+      let isMob = isMobile()
 
       // see if we can gbet custom class names for the row columns
       // eg. to color a cell
@@ -56,7 +56,7 @@ export class TableRow extends OvlBaseElement {
         customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
           columns: def.columns,
           row,
-          isMobile,
+          isMobile: isMob,
           displayMode: <DisplayMode>"Table",
           namespace: def.namespace,
           tableDefId: def.id,
@@ -76,7 +76,7 @@ export class TableRow extends OvlBaseElement {
           }
           let col = columns[k]
           let visible = columnsVisible[k]
-          if (isMobile) {
+          if (isMob) {
             if (visible.indexOf("TableNotMobile") > -1) {
               return null
             }

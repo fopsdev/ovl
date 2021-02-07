@@ -1,7 +1,7 @@
 import { html, TemplateResult } from "lit-html"
 import { ifDefined } from "../../tracker/litdirectives/if-defined"
 import { ovl } from "../.."
-import { resolvePath, T } from "../../global/globals"
+import { isMobile, isTouch, resolvePath, T } from "../../global/globals"
 import {
   FieldGetLabelRender,
   FieldGetValueRender,
@@ -136,7 +136,7 @@ export class TableRowDetailView extends OvlBaseElement {
 
   handleLongPress = (e) => {
     // if on touch device also display row status message as a snack
-    if (this.state.ovl.uiState.isTouch) {
+    if (isTouch()) {
       let mobileTooltip
       if (e.target.title) {
         mobileTooltip = e.target.title
@@ -176,7 +176,7 @@ export class TableRowDetailView extends OvlBaseElement {
       customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
         columns: def.columns,
         row: this.rowData.row,
-        isMobile: this.state.ovl.uiState.isMobile,
+        isMobile: isMobile(),
         displayMode: <DisplayMode>"DetailView",
         namespace: def.namespace,
         tableDefId: def.id,
@@ -192,7 +192,7 @@ export class TableRowDetailView extends OvlBaseElement {
     if (fn && fn[functionName2]) {
       customHeaderCellClasses = fn[functionName2](
         def,
-        this.state.ovl.uiState.isMobile,
+        isMobile(),
         <DisplayMode>"Detailview",
         this.state
       )

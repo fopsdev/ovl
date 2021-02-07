@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { resolvePath, SetFocus } from "../../global/globals"
+import { isMobile, resolvePath, SetFocus } from "../../global/globals"
 import {
   FieldIsReadOnly,
   FieldRowCellSelectedHandler,
@@ -141,7 +141,7 @@ export class TableRowForm extends OvlFormElement {
         customRowCellClasses = fn[functionName](<ViewRowCellClass_Type>{
           columns: def.columns,
           row: this.rowData.row,
-          isMobile: this.state.ovl.uiState.isMobile,
+          isMobile: isMobile(),
           displayMode: <DisplayMode>"EditInline",
           namespace: def.namespace,
           tableDefId: def.id,
@@ -158,7 +158,7 @@ export class TableRowForm extends OvlFormElement {
       if (fn2 && fn[functionName2]) {
         customHeaderCellClasses = fn2[functionName2](<ViewHeaderCellClass_Type>{
           columns: def.columns,
-          isMobile: this.state.ovl.uiState.isMobile,
+          isMobile: isMobile(),
           displayMode: <DisplayMode>"EditInline",
           namespace: def.namespace,
           tableDefId: def.id,

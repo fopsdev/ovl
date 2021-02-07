@@ -44,7 +44,6 @@ export type NavState = {
 }
 
 export const setLastScrollPosition = (
-  uiState: typeof ovl.state.ovl.uiState,
   screens: typeof ovl.state.ovl.screens
 ) => {
   let currentScreen = screens.nav.currentScreen
@@ -52,7 +51,7 @@ export const setLastScrollPosition = (
     // get the first scrollable class of the doc
     let o = screens.screens[currentScreen]
     let scrollable
-    if (uiState.isMobile) {
+    if (isMobile()) {
       scrollable = document.querySelector(".scrollableMobile")
     } else {
       scrollable = document.querySelector(".scrollable")
@@ -67,10 +66,7 @@ export const setLastScrollPosition = (
   }
 }
 
-export const scrollToLastPosition = (
-  uiState: typeof ovl.state.ovl.uiState,
-  screens: typeof ovl.state.ovl.screens
-) => {
+export const scrollToLastPosition = (screens: typeof ovl.state.ovl.screens) => {
   if (!screens.nav) {
     return
   }
@@ -82,7 +78,7 @@ export const scrollToLastPosition = (
 
   // set scroll to remembered pos
   let scrollable
-  if (uiState.isMobile) {
+  if (isMobile()) {
     scrollable = document.querySelector(".scrollableMobile")
   } else {
     scrollable = document.querySelector(".scrollable")
@@ -104,6 +100,7 @@ import { render, TemplateResult, html } from "lit-html"
 import { actionTracking } from "../tracker/proxyHandler"
 
 import { FormShowed } from "./forms/OvlFormElement"
+import { isMobile } from "../global/globals"
 
 export class OvlBaseElement extends HTMLElement {
   state: OvlState
@@ -144,7 +141,7 @@ export class OvlBaseElement extends HTMLElement {
     if (e.animationName === "fadeInScreen") {
       //this.track(() => {
       // if there is a screen show function call it
-      scrollToLastPosition(this.state.ovl.uiState, this.state.ovl.screens)
+      scrollToLastPosition(this.state.ovl.screens)
       if (this.actions.custom.screens) {
         let screen = this.state.ovl.screens.nav.currentScreen
         let screensFunctions = this.actions.custom.screens

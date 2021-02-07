@@ -54,11 +54,7 @@ let language = {
 let uiState = {
   hasOSReducedMotion: false,
   isDemo: false,
-  isMobile: false,
-  isTouch: false,
-  isIOS: false,
   isReady: false,
-
   stateSavedReason: "",
   tableNeedsRebuild: false,
 }

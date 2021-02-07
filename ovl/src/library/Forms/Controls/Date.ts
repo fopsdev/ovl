@@ -12,13 +12,13 @@ import {
   RemoveFocusEventHelper,
   SetFocusEventHelper,
 } from "../helper"
-import { getDateValue } from "../../../global/globals"
+import { getDateValue, isMobile } from "../../../global/globals"
 import { OvlControlBase } from "./OvlControlBase"
 
 export class OvlDate extends OvlControlBase {
   displayValue: string
   init() {
-    if (this.state.ovl.uiState.isMobile) {
+    if (isMobile()) {
       this.addEventListener("input", this.handleChange)
     } else {
       this.addEventListener("change", this.handleChange)
@@ -39,7 +39,7 @@ export class OvlDate extends OvlControlBase {
     return this.track(() => {
       let field = this.field
       let type: "date" | "text" = "text"
-      if (this.state.ovl.uiState.isMobile) {
+      if (isMobile()) {
         type = "date"
       }
 
@@ -88,7 +88,7 @@ export class OvlDate extends OvlControlBase {
       this.inputElement.value = this.field.value
     }
     // if (this.inputElement && this.field.field.convertedValue) {
-    //   if (this.state.ovl.uiState.isMobile) {
+    //   if (isMobile()) {
     //     this.inputElement.value = this.field.field.convertedValue.substring(
     //       0,
     //       10
@@ -100,7 +100,7 @@ export class OvlDate extends OvlControlBase {
     super.afterRender()
   }
   disconnectedCallback() {
-    if (this.state.ovl.uiState.isMobile) {
+    if (isMobile()) {
       this.removeEventListener("input", this.handleChange)
     } else {
       this.removeEventListener("change", this.handleChange)

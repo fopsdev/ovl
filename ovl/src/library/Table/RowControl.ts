@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { ovltemp } from "../../global/globals"
+import { isTouch, ovltemp } from "../../global/globals"
 import { SnackAdd } from "../helpers"
 import { OvlBaseElement } from "../OvlBaseElement"
 import { createDynamicRowFunctions, rowControlActionsHandler } from "./helpers"
@@ -29,7 +29,7 @@ export class TableRowControl extends OvlBaseElement {
 
   handleRowLongPress = (e: Event, msg: string) => {
     // fallback for touch devices which can't display tooltips (title attribute)
-    if (this.state.ovl.uiState.isTouch && msg) {
+    if (isTouch() && msg) {
       SnackAdd(msg, "Information")
     }
   }

@@ -1,6 +1,7 @@
 import {
   getDateValue,
   getDecimalValue,
+  isMobile,
   logState,
   resolvePath,
   stringifyReplacer,
@@ -770,14 +771,14 @@ export const SetRowCellInformation = (
   //   return val[k]
   // }, {})
 
-  let isMobile = state.ovl.uiState.isMobile
+  let isMob = isMobile()
   let displayMode: DisplayMode = formState.isInline ? "EditInline" : "Edit"
   let resolveFn = resolvePath(actions.custom, formState.namespace)
   if (resolveFn && resolveFn["ViewRowCellClass"]) {
     let viewRowCellParams: ViewRowCellClass_Type = {
       columns,
       displayMode,
-      isMobile,
+      isMobile: isMob,
       row: GetRowFromFormState(formState),
       namespace: formState.namespace,
       tableDefId: formState.tableDefId,
@@ -793,7 +794,7 @@ export const SetRowCellInformation = (
     let viewHeaderCellParams: ViewHeaderCellClass_Type = {
       columns,
       displayMode,
-      isMobile,
+      isMobile: isMob,
       namespace: formState.namespace,
       tableDefId: formState.tableDefId,
     }

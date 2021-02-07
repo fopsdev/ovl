@@ -1,5 +1,6 @@
 import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
+import { isMobile } from "../../global/globals"
 
 export type SnackType = "Information" | "Warning" | "Success" | "Error"
 
@@ -55,7 +56,7 @@ export class OvlSnack extends OvlBaseElement {
       }
 
       let width = ""
-      if (this.state.ovl.uiState.isMobile) {
+      if (isMobile()) {
         width = "width: 100vw;"
       }
 

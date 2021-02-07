@@ -1,5 +1,5 @@
 import { html } from "lit-html"
-import { resolvePath } from "../../global/globals"
+import { isMobile, isTouch, resolvePath } from "../../global/globals"
 import {
   FieldRowCellSelectedHandler,
   ViewRowClass,
@@ -54,7 +54,7 @@ export class TableRowWrapper extends OvlBaseElement {
 
   handleRowLongPress = (e) => {
     // if on touch device also display row status message as a snack
-    if (this.state.ovl.uiState.isTouch) {
+    if (isTouch()) {
       let mobileTooltip
       if (e.target.title) {
         mobileTooltip = e.target.title
@@ -127,7 +127,7 @@ export class TableRowWrapper extends OvlBaseElement {
   handleKeyDown = (e: KeyboardEvent) => {
     e.stopPropagation()
 
-    if (!this.state.ovl.uiState.isMobile) {
+    if (!isMobile()) {
       if (e.key === "ArrowDown") {
         //@ts-ignore
         let node = e.target.parentNode

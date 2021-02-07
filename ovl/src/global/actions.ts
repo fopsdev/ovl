@@ -9,6 +9,7 @@ import {
   stateStore,
 } from "../offlineStorage"
 import {
+  isIOS,
   isMobile,
   isTouch,
   logout,
@@ -29,7 +30,7 @@ import { createDeepProxy } from "../tracker/proxyHandler"
 import { OvlAction } from "../index"
 
 export const SetLastScrollPosition: OvlAction = (_, { state }) => {
-  setLastScrollPosition(state.ovl.uiState, state.ovl.screens)
+  setLastScrollPosition(state.ovl.screens)
 }
 
 export const NavigateTo: OvlAction<OvlScreen> = async (
@@ -40,7 +41,7 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
     let fn = actions.custom.screens
     if (fn) {
       let currentScreen: OvlScreen = state.ovl.screens.nav.currentScreen
-      setLastScrollPosition(state.ovl.uiState, state.ovl.screens)
+      setLastScrollPosition(state.ovl.screens)
       if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
         let navErrorMessage = <string>(
           await fn[currentScreen][ScreenNavigateOut]()
@@ -107,7 +108,7 @@ export const NavigateBack: OvlAction = async (
 
         let scrollable
 
-        if (state.ovl.uiState.isMobile) {
+        if (isMobile()) {
           scrollable = document.querySelector(".scrollableMobile")
         } else {
           scrollable = document.querySelector(".scrollable")
@@ -303,7 +304,7 @@ export const GetFile: OvlAction<{
   }
 
   //  let id = docNum + fileType + fileName
-  if (state.ovl.uiState.isIOS === true) {
+  if (isIOS() === true) {
     // saving state here fixes a ios handling issue when file gets opened and navigated back the page on ios safari (in standalone) reloads
     // that way it reloads to current state...
     saveState(true, "GetFile")
@@ -326,7 +327,7 @@ export const GetFile: OvlAction<{
     //get file from store
     //let fo: FileStore = await fileStore.get(id)
     // if (fo) {
-    //   if (state.ovl.uiState.isIOS === true) {
+    //   if (isIOS() === true) {
     //     ShowFile(fo.content, fo.mimeType, fileName)
     //   } else {
     //     let blob = new Blob([fo.content], { type: fo.mimeType })
@@ -447,12 +448,6 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
 
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
-  // @ts-ignore
-  state.ovl.uiState.isMobile = isMobile()
-  state.ovl.uiState.isTouch = isTouch()
-  state.ovl.uiState.isIOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-
   // prepare login form
   const query = "(prefers-reduced-motion: reduce)"
   state.ovl.uiState.hasOSReducedMotion = window.matchMedia(query).matches

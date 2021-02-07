@@ -1,10 +1,7 @@
 
 
-Todos:
-- Changing Value in ChangeValue rerenders input (Which is fine because we need it as well for validation display on every key and eventually set the tooltip and class)
-- Idea: USe a new Field in FieldState named FieldToValidate (But then the class and ttoltip thingy wont work maybe...)
--> tried to remove this.inputElement.value = this.field.value from TextBox...Then the cursor jumping was solved but the value doesn'g get showed everytime..
-OK LAST MINUTE IDEA: No time to check now but could really solve it: Move InnerEvent also to field state and just do the inputElement.value if its not an innerevent or even better try with the existing hasFocuse prop
+- test ScreenNavigate because of ne BasClass Screen state handling
+- use IsMobile, isOS, isTablet not from State but make a cached function
 
 Because of an ovl overhaul following checks needs to be done:
 - Initform now takes convertedvalue and uses getDisplayValue(..) for value
