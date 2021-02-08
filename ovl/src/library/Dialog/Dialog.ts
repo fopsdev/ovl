@@ -34,37 +34,47 @@ export type ModalDialogState = {
 
 import { DialogHolderParams } from "./OvlDialogHolder"
 import { DialogType } from "./OvlDialogBase"
+import { ovl } from "../.."
 
 export type LoginFormState = {}
 
 export type FieldId = "pw" | "user"
 
 export class OvlDialog extends OvlBaseElement {
+  dialog: typeof ovl.state.ovl.libState.dialog
+  dialogs: typeof ovl.state.ovl.dialogs
+
+  constructor() {
+    super()
+    this.dialog = this.state.ovl.libState.dialog
+    this.dialogs = this.state.ovl.dialogs
+  }
+
   handleResult(result: ResultType) {
     this.actions.ovl.internal.DialogChanged({
-      dialogState: this.state.ovl.libState.dialog,
+      dialogState: this.dialog,
       result: result,
     })
   }
 
   handleOkClick = () => {
     this.actions.ovl.internal.DialogChanged({
-      dialogState: this.state.ovl.libState.dialog,
+      dialogState: this.dialog,
       result: 1,
     })
   }
 
   handleCancelClick = () => {
     this.actions.ovl.internal.DialogChanged({
-      dialogState: this.state.ovl.libState.dialog,
+      dialogState: this.dialog,
       result: 2,
     })
   }
 
   handleDefault(def: ResultType) {
     if (
-      (def == 1 && this.state.ovl.libState.dialog.okText == "") ||
-      (def == 2 && this.state.ovl.libState.dialog.cancelText == "")
+      (def == 1 && this.dialog.okText == "") ||
+      (def == 2 && this.dialog.cancelText == "")
     ) {
       return
     }
@@ -76,27 +86,27 @@ export class OvlDialog extends OvlBaseElement {
     e.stopPropagation()
     console.log(e.key)
     if (e.key == "Enter") {
-      if (this.state.ovl.libState.dialog.default == 1) {
+      if (this.dialog.default == 1) {
         this.handleResult(1)
       } else {
         this.handleResult(2)
       }
     } else if (e.key == "ArrowRight") {
-      if (this.state.ovl.libState.dialog.default == 1) {
+      if (this.dialog.default == 1) {
         this.handleDefault(2)
       }
     } else if (e.key == "ArrowLeft") {
-      if (this.state.ovl.libState.dialog.default == 2) {
+      if (this.dialog.default == 2) {
         this.handleDefault(1)
       }
     } else if (e.key == "Tab") {
-      if (this.state.ovl.libState.dialog.default == 2) {
+      if (this.dialog.default == 2) {
         this.handleDefault(1)
       } else {
         this.handleDefault(2)
       }
     } else if (e.key === "Escape") {
-      if (this.state.ovl.libState.dialog.cancelText !== "NoButton") {
+      if (this.dialog.cancelText !== "NoButton") {
         this.handleDefault(2)
         setTimeout(() => {
           this.handleResult(2)
@@ -119,7 +129,7 @@ export class OvlDialog extends OvlBaseElement {
   getFooter = () => {
     let okButton = null
     let cancelButton = null
-    if (this.state.ovl.libState.dialog.okText) {
+    if (this.dialog.okText) {
       okButton = html`<div class="fd-bar__element">
         <button
           @click=${this.handleOkClick}
@@ -127,15 +137,15 @@ export class OvlDialog extends OvlBaseElement {
             .dialog.okText == ""
             ? " hide"
             : ""}"
-          aria-selected="${this.state.ovl.libState.dialog.default == 1}"
+          aria-selected="${this.dialog.default == 1}"
           id="ovldialogok"
         >
-          ${this.state.ovl.libState.dialog.okText}
+          ${this.dialog.okText}
         </button>
       </div> `
     }
 
-    if (this.state.ovl.libState.dialog.cancelText) {
+    if (this.dialog.cancelText) {
       cancelButton = html`
         <div class="fd-bar__element">
           <button
@@ -144,10 +154,10 @@ export class OvlDialog extends OvlBaseElement {
               .libState.dialog.cancelText == ""
               ? " hide"
               : ""}"
-            aria-selected="${this.state.ovl.libState.dialog.default == 2}"
+            aria-selected="${this.dialog.default == 2}"
             id="ovldialogcancel"
           >
-            ${this.state.ovl.libState.dialog.cancelText}
+            ${this.dialog.cancelText}
           </button>
         </div>
       `
@@ -157,7 +167,7 @@ export class OvlDialog extends OvlBaseElement {
 
   async getUI() {
     return this.track(() => {
-      let dependsOn = this.state.ovl.dialogs.Modal.visible
+      let dependsOn = this.dialogs.Modal.visible
 
       if (!dependsOn) {
         return null
@@ -169,13 +179,13 @@ export class OvlDialog extends OvlBaseElement {
 
       dialogHolderParams = {
         dialogParts: {
-          title: () => this.state.ovl.libState.dialog.title,
+          title: () => this.dialog.title,
           body: () => this.getBody(),
           footer: () => this.getFooter(),
           keyHandlerFn: this.keyHandler,
           dismissedCallbackFn: this.handleCancelClick,
-          type: this.state.ovl.libState.dialog.type,
-          customClass: () => this.state.ovl.libState.dialog.customClass,
+          type: this.dialog.type,
+          customClass: () => this.dialog.customClass,
         },
         zIndex: 1001,
         dialogType: "Modal",

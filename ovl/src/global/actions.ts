@@ -243,7 +243,7 @@ export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
 }
 
 export const Logout: OvlAction = async (_, { state, actions }) => {
-  if (state.ovl.app.offline && OvlConfig.offline.offlineMode) {
+  if (state.ovl.app.offline && OvlConfig.offline.enabled) {
     SnackAdd(
       "Abmelden und Neuinitialisierung nur im Onlinemodus möglich!",
       "Error"
@@ -347,7 +347,7 @@ export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
   _,
   { state }
 ) => {
-  if (OvlConfig.offline.offlineMode) {
+  if (OvlConfig.offline.enabled) {
     try {
       let persistedState = await stateStore.get(
         OvlConfig._system.persistStateId
@@ -382,8 +382,8 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     }
   })
 
-  if (OvlConfig.fetch.useFetchDefaultParams === undefined) {
-    OvlConfig.fetch.useFetchDefaultParams = { clientId: false, lang: false }
+  if (OvlConfig.fetch.useDefaultParams === undefined) {
+    OvlConfig.fetch.useDefaultParams = { clientId: false, lang: false }
   }
 
   ResetT()
@@ -412,7 +412,7 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     }
   }
 
-  if (OvlConfig.translation && !OvlConfig.translation.ignoreLanguages) {
+  if (OvlConfig.translation && !OvlConfig.translation.doNotUse) {
     let lang = localStorage.getItem("PortalLanguage")
     let res = await effects.ovl.postRequest(
       state.ovl.apiUrl + "users/translations",
@@ -458,15 +458,15 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     }
   }
 
-  if (OvlConfig.screen.initialScreen) {
-    actions.ovl.navigation.NavigateTo(OvlConfig.screen.initialScreen)
+  if (OvlConfig.screen.initial) {
+    actions.ovl.navigation.NavigateTo(OvlConfig.screen.initial)
   }
 }
 let lastUpdateCheck: number = undefined
 export const UpdateCheck = async () => {
   let now = Date.now()
   if (
-    OvlConfig.offline.offlineMode &&
+    OvlConfig.offline.enabled &&
     /* updatecheck every ~3 minutes */
     (lastUpdateCheck === undefined || now - lastUpdateCheck > 60000 * 3)
   ) {

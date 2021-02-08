@@ -173,7 +173,7 @@ export const addGlobalPersistEventListeners = () => {
 // }
 
 export const focusOut = async (event) => {
-  if (OvlConfig.offline.offlineMode) {
+  if (OvlConfig.offline.enabled) {
     if (!event.relatedTarget) {
       await saveState(false, "FocusOut")
     }
@@ -200,7 +200,7 @@ export const focusOut = async (event) => {
 export const stringifyReplacer = (key, value) =>
   typeof value === "undefined" ? null : value
 export const visibilityChange = async (event) => {
-  if (OvlConfig.offline.offlineMode) {
+  if (OvlConfig.offline.enabled) {
     // console.log(document.visibilityState)
     // fires when user switches tabs, apps, goes to homescreen, etc.
     //@ts-ignore
@@ -226,7 +226,7 @@ export const visibilityChange = async (event) => {
 
 export const saveState = async (force: boolean, reason: string) => {
   if (
-    OvlConfig.offline.offlineMode &&
+    OvlConfig.offline.enabled &&
     !logoutAndClearFlag &&
     ovl.state.ovl.uiState.isReady
   ) {
@@ -275,7 +275,7 @@ export let gotoFileFlag = false
 export const logout = async () => {
   // window.removeEventListener("unload", e => unload(e))
   ovl.actions.ovl.indicator.SetIndicatorOpen()
-  if (OvlConfig.offline.offlineMode) {
+  if (OvlConfig.offline.enabled) {
     //window.removeEventListener("beforeunload", (e) => beforeUnload(e))
     // window.removeEventListener("pagehide", e => pageHide(e))
     // window.removeEventListener("unload", e => pageHide(e))
@@ -307,6 +307,18 @@ export const logout = async () => {
   //}, 5000)
 
   //window.location.reload(true)
+}
+
+export const toggleDebugTracking = () => {
+  if (OvlConfig._system.debugTracking) {
+    OvlConfig._system.debugTracking = false
+    console.log("Disabled Debug Tracking")
+  }
+  else
+  {
+    OvlConfig._system.debugTracking = true
+    console.log("Enabled Debug Tracking")
+  }
 }
 
 export const logState = () => {
@@ -371,7 +383,10 @@ export const T = (key: string, reps?: string[]): string => {
   if (!languageRef) {
     languageRef = ovl.state.ovl.language
   }
+  // for tracking
+  // because when used cached T we still need tracking
   languageRef.translations
+  languageRef.language
 
   // check for mobile key and use translation for mobile users to get shorter translations if applicable (key_M)
   if (isMobile()) {

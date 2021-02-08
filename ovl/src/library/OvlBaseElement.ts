@@ -218,12 +218,6 @@ export class OvlBaseElement extends HTMLElement {
 
     let res
     if (checkScreen) {
-      // this ensures that labguage change always refreshes components
-      // its used as well for the refresh button which should always refresh
-      // startTrack(this)
-      // this.state.ovl.language.language
-      // stopTrack()
-
       res = await this.getUI()
       if (res !== undefined) {
         if (this.screen) {
@@ -252,16 +246,9 @@ export class OvlBaseElement extends HTMLElement {
   }
 
   connectedCallback() {
-    //this.style.display = "block"
-    //this.language = this.state.ovl.language
-    // startTrack(this)
-    // this.language.language
-    // this.language.translations
-    // stopTrack()
-
     this.init()
     if (OvlConfig._system.debugTracking) {
-      console.log("render " + this.name)
+      console.log("render %c" + this.name, "color:green")
     }
     this.doRender()
     if (this.screen) {

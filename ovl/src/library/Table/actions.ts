@@ -251,11 +251,7 @@ export const TableRefreshDataFromServer: OvlAction<{
   // offline flag is handled separately
   // so as long as we are offline there will be no refresh
   // thats a good idea because there could be offline data which first needs to be persisted back before refreshing data
-  if (
-    !value.localData &&
-    state.ovl.app.offline &&
-    OvlConfig.offline.offlineMode
-  ) {
+  if (!value.localData && state.ovl.app.offline && OvlConfig.offline.enabled) {
     return
   }
 
@@ -916,7 +912,7 @@ const TableEditSaveRowHelper = async (
         })
         offlineHandled = true
         if (
-          OvlConfig.offline.offlineMode &&
+          OvlConfig.offline.enabled &&
           !isOfflineRetry &&
           data.offline &&
           !state.ovl.app.offline
@@ -939,7 +935,7 @@ const TableEditSaveRowHelper = async (
         let rowCopy = JSON.parse(JSON.stringify(newData), stringifyReplacer)
         if (
           state.ovl.app.offline &&
-          OvlConfig.offline.offlineMode &&
+          OvlConfig.offline.enabled &&
           !isOfflineRetry
         ) {
           EditSaveRowOfflineHelper(
@@ -991,7 +987,7 @@ const TableEditSaveRowHelper = async (
             // 449 means offline in our context
             if (res.status === 449) {
               // handle offline
-              if (OvlConfig.offline.offlineMode) {
+              if (OvlConfig.offline.enabled) {
                 if (!isOfflineRetry) {
                   EditSaveRowOfflineHelper(
                     def,
@@ -1560,7 +1556,7 @@ export const TableDeleteRow: OvlAction<
     let res = { data: undefined, status: undefined, type: undefined }
     if (!offlineHandled) {
       if (
-        OvlConfig.offline.offlineMode &&
+        OvlConfig.offline.enabled &&
         !value.isOfflineRetry &&
         state.ovl.app.offline
       ) {
@@ -1582,7 +1578,7 @@ export const TableDeleteRow: OvlAction<
         if (!res.data && res.type !== "RecordNotFound") {
           // 449 means offline in our context
           if (res.status === 449) {
-            if (OvlConfig.offline.offlineMode) {
+            if (OvlConfig.offline.enabled) {
               if (!value.isOfflineRetry) {
                 DeleteRowOfflineHelper(value.data, idValue, key)
               } else {

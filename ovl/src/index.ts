@@ -36,11 +36,15 @@ import { init } from "./prepare"
 import { baseScreens, baseDialogs } from "./screensAndDialogs"
 import { defineElements } from "./registerComponents"
 import { startRender } from "../../../app/src"
-import { logActions, logState } from "./global/globals"
+import { logActions, logState, toggleDebugTracking } from "./global/globals"
 import { logTrackingList } from "./tracker/tracker"
+
+// some global vars which help debugging as well in live environment in Desktop Browsers (F12)
 globalThis.OvlLogActions = logActions
 globalThis.OvlLogState = logState
+globalThis.OvlToggleDebugTracking = toggleDebugTracking
 globalThis.OvlLogTrackingList = logTrackingList
+globalThis.OvlConfig = OvlConfig
 
 export type OvlState = { ovl: typeof ovlState; app: typeof appState }
 export type OvlActions = {

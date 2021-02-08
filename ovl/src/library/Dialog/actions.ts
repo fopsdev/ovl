@@ -51,10 +51,6 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
   value,
   { state, actions }
 ) => {
-  if (!state.ovl.libState.dialog) {
-    //@ts-ignore
-    state.ovl.libState.dialog = {}
-  }
   state.ovl.libState.dialog.type = value.type
   state.ovl.libState.dialog.customClass = value.customClass
   state.ovl.libState.dialog.title = value.title

@@ -155,18 +155,20 @@ export function createDeepProxy(target) {
       if (OvlConfig._system.debugTracking) {
         if (debugInfo.length > 0) {
           console.log(
-            "last action: %c" +
+            "%cAction: " +
               actionTracking.lastActionName +
-              "%c accessed tracked path: %c" +
+              "%c accessed tracked %cPath: " +
               path +
-              " %cwhich affects component:",
-            "color: blue",
+              " %cwhich affects %cComponent(s):",
+            "color: orange",
+
             "color:black",
             "color:blue",
-            "color:black"
+            "color:black",
+            "color:green"
           )
           debugInfo.forEach((d) => {
-            console.log(d.name + ": %O %o", d, d)
+            console.log("%c" + d.name + ": %O %o", "color:green", d, d)
           })
         }
       }
@@ -184,7 +186,7 @@ export function createDeepProxy(target) {
       callbacksToCall.forEach(async (k) => {
         disposeTrack(k)
         if (OvlConfig._system.debugTracking) {
-          console.log("rerender: " + k.name)
+          console.log("rerender: %c" + k.name, "color:green")
         }
         k.doRender()
         callbacksToCall.delete(k)

@@ -28,10 +28,8 @@ type FileOpenFnType = (anchor: HTMLAnchorElement, fileName: string) => void
 export type OvlConfigType = {
   _system: {
     debugTracking: boolean
-
     version: string
     isDev: boolean
-
     showSaveOrigin: boolean
     persistStateId: string
     persistTimestampId: string
@@ -43,7 +41,6 @@ export type OvlConfigType = {
     languages: {}
     screens: {}
   }
-  // makes handling of server error message and sync stuff easier
   formValidation: {
     validators?: { [key in OvlFormValidationValidators]: FormValidationField }
     validationDefaults: (tableDefId?: string) => FormValidation
@@ -56,21 +53,21 @@ export type OvlConfigType = {
     }
   }
   fetch: {
-    useFetchDefaultParams?: {
+    useDefaultParams?: {
       lang: boolean
       clientId: boolean
     }
     apiUrl: ApiUrlResolve
     fileOpenMode?: FileOpenFnType
-    fetchTimeout: number
+    timeout: number
   }
   screen: {
-    initialScreen: OvlScreen
+    initial: OvlScreen
   }
 
   /*actions that will be used from base but needs to be defined per app*/
   translation?: {
-    ignoreLanguages?: boolean
+    doNotUse?: boolean
     handleAdditionalTranslationResultActionPath?: (
       actions: OvlActions
     ) => OvlAction
@@ -80,17 +77,16 @@ export type OvlConfigType = {
     customInitActionPath?: (actions: OvlActions) => OvlAction
   }
   offline?: {
-    offlineMode: boolean
+    enabled: boolean
     customRehydrateActionPath?: (actions: OvlActions) => OvlAction
+    /*if there is state which shouldnt be persisted just delete it off here*/
     saveStateCallback?: (stateToPersist: OvlState) => void
     offlineFirstOnReload?: boolean
   }
-  /*check stateCleaner in ovl global to see the possibilities of this fn*/
-
-  /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
+  global: {
+    /* sticky headers (used eg. in tableheader) are tricky. they will overlap eg. the mainmenu popup or they don't work as expected currently on ios mobile 
      thats why we have a check function to check if they should be enabled
   */
-  global: {
     stickyHeaderEnabled?: (state: OvlState) => {}
     defaultDialogTitle: string
     handleGlobalRefreshActionPath?: (actions: OvlActions) => OvlAction

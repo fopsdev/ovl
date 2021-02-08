@@ -24,7 +24,7 @@ export const postFormDataRequest = async (url, data) => {
     "POST",
     false,
     false,
-    OvlConfig.fetch.fetchTimeout,
+    OvlConfig.fetch.timeout,
     true
   )
 }
@@ -107,13 +107,13 @@ export const ovlFetch = async (
     } else {
       if (data) {
         // always send a def object if configured
-        if (OvlConfig.fetch.useFetchDefaultParams.clientId) {
+        if (OvlConfig.fetch.useDefaultParams.clientId) {
           if (!data.ovl) {
             data.ovl = {}
           }
           data.ovl.clientId = ovl.state.ovl.user.clientId
         }
-        if (OvlConfig.fetch.useFetchDefaultParams.lang) {
+        if (OvlConfig.fetch.useDefaultParams.lang) {
           if (!data.ovl) {
             data.ovl = {}
           }
@@ -150,14 +150,14 @@ export const ovlFetch = async (
           "v",
           ovl.state.ovl.app.discCacheVersion.toString()
         )
-        if (OvlConfig.fetch.useFetchDefaultParams.clientId) {
+        if (OvlConfig.fetch.useDefaultParams.clientId) {
           urlWithParams.searchParams.append(
             "clientId",
             ovl.state.ovl.user.clientId
           )
         }
 
-        if (OvlConfig.fetch.useFetchDefaultParams.lang) {
+        if (OvlConfig.fetch.useDefaultParams.lang) {
           urlWithParams.searchParams.append(
             "lang",
             ovl.state.ovl.language.language
@@ -171,10 +171,10 @@ export const ovlFetch = async (
 
     // forced timeout only in offline mode...timeouts are normally handled by the browser itself
     // but we need to rely on a timeout in offline mode which works the same across browsers, hence the forced timeout
-    if (OvlConfig.offline.offlineMode) {
+    if (OvlConfig.offline.enabled) {
       const controller = new AbortController()
       const { signal } = controller
-      let timeOutMs = OvlConfig.fetch.fetchTimeout
+      let timeOutMs = OvlConfig.fetch.timeout
       if (customTimeoutMs) {
         timeOutMs = customTimeoutMs
       }
@@ -186,7 +186,7 @@ export const ovlFetch = async (
     }
 
     const req = await fetch(url, reqOptions)
-    if (OvlConfig.offline.offlineMode) {
+    if (OvlConfig.offline.enabled) {
       clearTimeout(timer)
     }
     if (method === "POST") {

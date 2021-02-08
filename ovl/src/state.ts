@@ -17,7 +17,8 @@ let indicator = {
 
 let snacks: { [key: string]: SnackState } = {}
 
-let dialog: ModalDialogState = undefined
+//@ts-ignore
+let dialog: ModalDialogState = {}
 
 let translations: Translation = {}
 let apiUrl = ""
