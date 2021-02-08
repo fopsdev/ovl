@@ -343,23 +343,27 @@ export const GetFile: OvlAction<{
   }
 }
 
-export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
-  _,
+export const RehydrateApp: OvlAction<string, Promise<boolean>> = async (
+  debugId,
   { state }
 ) => {
-  if (OvlConfig.offline.enabled) {
+  if (debugId !== undefined || OvlConfig.offline.enabled) {
     try {
-      let persistedState = await stateStore.get(
-        OvlConfig._system.persistStateId
-      )
+      let stateStoreId = OvlConfig._system.persistStateId
+      if (debugId !== undefined) {
+        stateStoreId = "Testing" + debugId
+      }
+      let persistedState = await stateStore.get(stateStoreId)
       if (!persistedState) {
         // clear also maybe old versions lingering around...
         stateStore.clear()
       } else {
         // go through 1st level keys and assign them
-        Object.keys(persistedState).forEach((k) => {
-          state[k] = persistedState[k]
-        })
+
+        // Object.keys(persistedState).forEach((k) => {
+        //   state[k] = persistedState[k]
+        // })
+        mergeDeep(state, persistedState)
         state.ovl.libState.indicator.open = false
         state.ovl.libState.indicator.refCounter = 0
         return true
@@ -370,6 +374,33 @@ export const RehydrateApp: OvlAction<any, Promise<boolean>> = async (
       return false
     }
   }
+}
+
+function isObject(item) {
+  return item && typeof item === "object" && !Array.isArray(item)
+}
+
+/**
+ * Deep merge two objects.
+ * @param target
+ * @param ...sources
+ */
+function mergeDeep(target, ...sources) {
+  if (!sources.length) return target
+  const source = sources.shift()
+
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} })
+        mergeDeep(target[key], source[key])
+      } else {
+        Object.assign(target, { [key]: source[key] })
+      }
+    }
+  }
+
+  return mergeDeep(target, ...sources)
 }
 
 export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
@@ -487,9 +518,12 @@ export const UpdateCheck = async () => {
   }
 }
 
-export const Rehydrate = async (actions: OvlActions): Promise<boolean> => {
+export const Rehydrate = async (
+  actions: OvlActions,
+  id?: string
+): Promise<boolean> => {
   try {
-    if (await ovl.actions.ovl.internal.RehydrateApp()) {
+    if (await ovl.actions.ovl.internal.RehydrateApp(id)) {
       if (OvlConfig.offline) {
         let fn = OvlConfig.offline.customRehydrateActionPath
         if (fn) {

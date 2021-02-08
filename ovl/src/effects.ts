@@ -46,25 +46,6 @@ export const getRequest = async (
   return ovlFetch(url, data, "GET", isBlob, noSnack)
 }
 
-// export const ovlFetchUpload = async (url, data) => {
-//   try {
-//     ovl.actions.ovl.indicator.SetIndicatorOpen()
-//     let headers = {}
-//     let user = ovl.state.ovl.user
-//     if (user && user.token) {
-//       headers["Authorization"] = "Bearer " + ovl.state.ovl.user.token
-//     }
-//     let reqOptions = {
-//       method: "POST",
-//       headers,
-//       signal: undefined,
-//     }
-//   } catch (e) {
-//   } finally {
-//     ovl.actions.ovl.indicator.SetIndicatorClose()
-//   }
-// }
-
 export const ovlFetch = async (
   url,
   data,

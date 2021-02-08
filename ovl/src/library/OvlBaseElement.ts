@@ -178,6 +178,8 @@ export class OvlBaseElement extends HTMLElement {
 
   track(fn: () => any) {
     startTrack(this)
+    // // always track ovl. its useful for rehydration easyness
+    // this.state.ovl
     let res = fn()
     stopTrack()
     return res

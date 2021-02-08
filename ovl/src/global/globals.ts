@@ -4,6 +4,7 @@ import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
 import { ovl, OvlState, OvlConfig } from ".."
 import { TemplateResult } from "lit-html"
+import { Rehydrate } from "./actions"
 
 // export let api = { url: "" }
 //export let translations: Translations = { t: {} }
@@ -224,15 +225,38 @@ export const visibilityChange = async (event) => {
 
 //export let ovlstatetimestamp: number = 0
 
-export const saveState = async (force: boolean, reason: string) => {
+export const rehydrateTestState = (id?: string) => {
+  if (id === undefined) {
+    id = ""
+  }
+  Rehydrate(ovl.actions, id)
+}
+
+export const saveTestState = (id?: string) => {
+  if (id === undefined) {
+    id = ""
+  }
+  saveState(true, "test", id)
+}
+
+export const saveState = async (
+  force: boolean,
+  reason: string,
+  testId?: string
+) => {
   if (
-    OvlConfig.offline.enabled &&
-    !logoutAndClearFlag &&
-    ovl.state.ovl.uiState.isReady
+    testId !== undefined ||
+    (OvlConfig.offline.enabled &&
+      !logoutAndClearFlag &&
+      ovl.state.ovl.uiState.isReady)
   ) {
-    console.log("save state")
     //@ts-ignore
 
+    let stateStoreId = OvlConfig._system.persistStateId
+    if (testId !== undefined) {
+      stateStoreId = "Testing" + testId
+    }
+    console.log("save state to: " + stateStoreId)
     let diff = 0
     let dt = Date.now()
     if (!force) {
@@ -252,20 +276,12 @@ export const saveState = async (force: boolean, reason: string) => {
         stringifyReplacer
       )
       newObj.ovl.uiState.stateSavedReason = reason
-      // // let dtStart = Date.now()
-      // stateCleaner(ovl.state, newObj, "state")
-      // let dtEnd = Date.now()
-      // console.log("stateCleaner " + ((dtEnd - dtStart) / 1000).toString())
-      // dtStart = Date.now()
-      // let t = JSON.stringify(refstate)
-      // dtEnd = Date.now()
-      // console.log("stringify " + ((dtEnd - dtStart) / 1000).toString())
       if (OvlConfig.offline) {
         if (OvlConfig.offline.saveStateCallback) {
           OvlConfig.offline.saveStateCallback(newObj)
         }
       }
-      return stateStore.set(OvlConfig._system.persistStateId, newObj)
+      return stateStore.set(stateStoreId, newObj)
     }
   }
 }
@@ -313,9 +329,7 @@ export const toggleDebugTracking = () => {
   if (OvlConfig._system.debugTracking) {
     OvlConfig._system.debugTracking = false
     console.log("Disabled Debug Tracking")
-  }
-  else
-  {
+  } else {
     OvlConfig._system.debugTracking = true
     console.log("Enabled Debug Tracking")
   }
