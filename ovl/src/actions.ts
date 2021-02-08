@@ -24,7 +24,7 @@ import {
   GetFile,
   AfterRehydrateApp,
   SetLanguage,
-  SetVisibleFalse,
+  SetVisible,
   SetTableNeedsRebuild,
   SetLastScrollPosition,
 } from "./global/actions"
@@ -164,7 +164,7 @@ let internal = {
   GetFile,
   AfterRehydrateApp,
   SetLanguage,
-  SetVisibleFalse,
+  SetVisible,
   ChangeField,
   SetField,
   TouchField,

@@ -7,14 +7,7 @@ import {
   OvlConfig,
 } from "../index"
 import { ovl } from "../index"
-import {
-  startTrack,
-  stopTrack,
-  disposeTrack,
-  logTrackingList,
-  paths,
-  callbacks,
-} from "../tracker/tracker"
+import { startTrack, stopTrack, disposeTrack } from "../tracker/tracker"
 
 type ScreensHistory = OvlScreen[]
 
@@ -157,7 +150,7 @@ export class OvlBaseElement extends HTMLElement {
 
   handleAnimationEnd = (e) => {
     if (e.animationName === "fadeOutScreen") {
-      this.actions.ovl.internal.SetVisibleFalse(this.screen)
+      this.actions.ovl.internal.SetVisible(this.screen)
     }
   }
 

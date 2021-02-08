@@ -168,7 +168,7 @@ const SetClosingScreen = (
     if (!hasOSReducedMotion()) {
       state.ovl.screens.screens[value].closing = true
     } else {
-      actions.ovl.internal.SetVisibleFalse(value)
+      actions.ovl.internal.SetVisible(value)
     }
   }
 }
@@ -178,10 +178,7 @@ const SetVisibleScreen = async (state: OvlState, value: OvlScreen) => {
   state.ovl.screens.screens[value].closing = false
 }
 
-export const SetVisibleFalse: OvlAction<OvlScreen> = (
-  value,
-  { state, actions }
-) => {
+export const SetVisible: OvlAction<OvlScreen> = (value, { state, actions }) => {
   state.ovl.screens.screens[value].visible = false
   state.ovl.screens.screens[value].closing = false
   state.ovl.screens.nav.currentScreen = state.ovl.screens.nav.nextScreen
