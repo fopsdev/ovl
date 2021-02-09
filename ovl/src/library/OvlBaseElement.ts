@@ -192,7 +192,7 @@ export class OvlBaseElement extends HTMLElement {
   async doRender() {
     //console.log("render " + this.name)
     let checkScreen
-    actionTracking.lastActionName = "Component " + this.name
+    actionTracking.lastActionName = "Component: " + document.activeElement.id
     if (this.screen) {
       if (this.screenClosing()) {
         // no complete rerender is necessary

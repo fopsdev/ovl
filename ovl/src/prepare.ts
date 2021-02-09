@@ -58,6 +58,14 @@ export const init = (
   baseDialogs,
   forms
 ) => {
+  // sanitize OvlConfig
+  if (OvlConfig.offline === undefined) {
+    OvlConfig.offline = { enabled: false }
+  }
+  if (OvlConfig.translation === undefined) {
+    OvlConfig.translation = { doNotUse: false }
+  }
+
   let _state: any = {}
   _state.ovl = ovlState
   _state.app = appState

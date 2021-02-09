@@ -1,7 +1,7 @@
 
 
-- test ScreenNavigate because of ne BasClass Screen state handling
-- use IsMobile, isOS, isTablet not from State but make a cached function
+
+- refactor savestate rehydrate to be also usable from non offline scenarios
 
 Because of an ovl overhaul following checks needs to be done:
 - Initform now takes convertedvalue and uses getDisplayValue(..) for value

@@ -279,7 +279,7 @@ export const AfterRehydrateApp: OvlAction = async (
   // state.ovl.screens.nav.currentScreen = screenToGo
   // state.ovl.screens.nav.nextScreen = undefined
   //actions.ovl.navigation.NavigateTo(screenToGo)
-  if (OvlConfig.offline && OvlConfig.offline.customRehydrateActionPath) {
+  if (OvlConfig.offline.customRehydrateActionPath) {
     OvlConfig.offline.customRehydrateActionPath(undefined)
   }
 }
@@ -432,7 +432,7 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     state.ovl.apiUrl = value.devServer
   }
 
-  if (OvlConfig.offline && OvlConfig.offline.offlineFirstOnReload) {
+  if (OvlConfig.offline.offlineFirstOnReload) {
     console.log("Try Offline first...")
     if (await Rehydrate(actions)) {
       console.log("Offline first. Got offline data...")
@@ -449,7 +449,7 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
       }
     )
     if (!res || !res.data) {
-      if (OvlConfig.offline && !OvlConfig.offline.offlineFirstOnReload) {
+      if (!OvlConfig.offline.offlineFirstOnReload) {
         if (!(await Rehydrate(actions))) {
           //SnackAdd("No Api-Connection and no Offline data found!", "Error")
           return
@@ -482,7 +482,7 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
   if (OvlConfig.init.customInitActionPath) {
     let fn = OvlConfig.init.customInitActionPath(actions)
     if (fn) {
-      fn()
+      await fn()
     }
   }
 
@@ -521,12 +521,11 @@ export const Rehydrate = async (
 ): Promise<boolean> => {
   try {
     if (await ovl.actions.ovl.internal.RehydrateApp(id)) {
-      if (OvlConfig.offline) {
-        let fn = OvlConfig.offline.customRehydrateActionPath
-        if (fn) {
-          await fn(actions)()
-        }
+      let fn = OvlConfig.offline.customRehydrateActionPath
+      if (fn) {
+        await fn(actions)()
       }
+
       return true
     }
   } catch (e) {

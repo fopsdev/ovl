@@ -276,11 +276,11 @@ export const saveState = async (
         stringifyReplacer
       )
       newObj.ovl.uiState.stateSavedReason = reason
-      if (OvlConfig.offline) {
-        if (OvlConfig.offline.saveStateCallback) {
-          OvlConfig.offline.saveStateCallback(newObj)
-        }
+
+      if (OvlConfig.offline.saveStateCallback) {
+        OvlConfig.offline.saveStateCallback(newObj)
       }
+
       return stateStore.set(stateStoreId, newObj)
     }
   }
