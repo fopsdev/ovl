@@ -80,8 +80,10 @@ export let ovl: {
   OvlConfig.app.forms
 )
 defineElements()
-startRender()
-ovl.actions.ovl.internal.InitApp()
+setTimeout(async () => {
+  await ovl.actions.ovl.internal.InitApp()
+  startRender()
+}, 0)
 
 export type OvlForm = OvlAppForms | "TableRowEdit"
 export type OvlDialog = OvlAppDialogs | keyof typeof baseDialogs
