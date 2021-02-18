@@ -693,7 +693,7 @@ export type ChangeField = {
   isInnerEvent?: boolean
   // the submitted value is already the finished converted and user checked value
   // so no validation will happen and eventually the form valid will be set to true
-  isConvertedValue?: boolean
+  ignoreCustomValidation?: boolean
 }
 
 export type SetField = {
@@ -743,7 +743,8 @@ export const SetField: OvlAction<SetField> = (value, { actions }) => {
     fieldKey: value.fieldKey,
     formState: value.formState,
     value: value.convertedValue,
-    isConvertedValue: true,
+    isInnerEvent: true,
+    ignoreCustomValidation: true,
   })
 }
 
@@ -812,22 +813,29 @@ export const ChangeField: OvlAction<ChangeField> = (
   })
 
   field.validationResult.errors = []
-  if (value.isConvertedValue) {
-    //field.previousConvertedValue = field.convertedValue
-    field.convertedValue = value.value
-    field.value = getDisplayValue(
-      field.fieldKey,
-      { list: field.list, type: field.type, ui: field.ui },
-      GetRowFromFormState(value.formState),
-      value.formState.namespace
-    )
-    field.validationResult.errors = []
-    field.dirty = true
-    field.watched = true
-    SetRowCellInformation(value.formState, actions, state)
+  // if (value.isConvertedValue) {
+  //   //field.previousConvertedValue = field.convertedValue
+  //   field.value = value.value
+  //   // this is a short path (SetField - Action uses this part and should be fast. So Scripter needs to make sure the value is correct)
+  //   // but at least check/correct the data type (common error elsewise)
+  //   actions.ovl.internal.ValidateDataType({
+  //     field,
+  //     formState: value.formState,
+  //     isInnerEvent: true,
+  //   } as ValidateFieldType)
+  //   field.value = getDisplayValue(
+  //     field.fieldKey,
+  //     { list: field.list, type: field.type, ui: field.ui },
+  //     GetRowFromFormState(value.formState),
+  //     value.formState.namespace
+  //   )
+  //   field.validationResult.errors = []
+  //   field.dirty = true
+  //   field.watched = true
+  //   SetRowCellInformation(value.formState, actions, state)
 
-    return
-  }
+  //   return
+  // }
 
   if (!field.ui.readonly) {
     field.watched = !value.isInit
@@ -885,20 +893,16 @@ export const ChangeField: OvlAction<ChangeField> = (
     if (!value.formState.dirty) {
       value.formState.dirty = !value.isInit
     }
-  }
-
-  if (
-    oldConvertedVal !== field.convertedValue &&
-    field.validationResult.errors.length === 0
-  ) {
-    if (fn && fn[FormChanged]) {
-      fn[FormChanged](<FormChanged_Type>{
-        fieldId: value.fieldKey,
-        formState: value.formState,
-        oldConvertedVal: field.previousConvertedValue,
-        newConvertedVal: field.convertedValue,
-        row: GetRowFromFormState(value.formState),
-      })
+    if (field.validationResult.errors.length === 0) {
+      if (fn && fn[FormChanged]) {
+        fn[FormChanged](<FormChanged_Type>{
+          fieldId: value.fieldKey,
+          formState: value.formState,
+          oldConvertedVal: field.previousConvertedValue,
+          newConvertedVal: field.convertedValue,
+          row: GetRowFromFormState(value.formState),
+        })
+      }
     }
   }
   SetRowCellInformation(value.formState, actions, state)

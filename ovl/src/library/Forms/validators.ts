@@ -456,6 +456,7 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   if (formState.valid !== valid) {
     formState.valid = valid
   }
+
   SetVisibleSummaryErrorKeys(formState)
 }
 

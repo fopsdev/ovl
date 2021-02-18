@@ -12,6 +12,7 @@ import {
 import * as appState from "../../../app/src/state"
 import * as appActions from "../../../app/src/actions"
 import * as customActions from "../../../app/src/customActions"
+import { defineElements as defineAppElements } from "../../../app/src/registerComponents"
 export { OvlFormValidationValidators }
 // </app setup>
 
@@ -80,6 +81,7 @@ export let ovl: {
   OvlConfig.app.forms
 )
 defineElements()
+defineAppElements()
 setTimeout(async () => {
   await ovl.actions.ovl.internal.InitApp()
   startRender()
