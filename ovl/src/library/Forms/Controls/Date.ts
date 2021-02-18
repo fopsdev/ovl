@@ -58,7 +58,6 @@ export class OvlDate extends OvlControlBase {
         let dval = new Date(pickerVal)
         this.inputElement.value = getDateValue(dval.toISOString())
       }
-      //this.inputElement.focus()
     }
     ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
     //@ts-ignore
