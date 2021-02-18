@@ -44,6 +44,7 @@ export type FormField = {
     autocomplete?: boolean
     checkedValue?: string | boolean
     visible?: "true" | "false" | "fadeIn" | "fadeOut" | "fadeOutHide"
+    useBrowserDatePicker?: boolean
   }
   asset?: {
     validFileExtensions: string[]

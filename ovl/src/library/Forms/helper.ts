@@ -104,6 +104,9 @@ export const getFormFields = (
     if (ui.checkedValue === undefined) {
       ui.checkedValue = true
     }
+    if (ui.useBrowserDatePicker === undefined) {
+      ui.useBrowserDatePicker = false
+    }
   })
   return fields
 }

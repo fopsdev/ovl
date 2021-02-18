@@ -78,6 +78,7 @@ export type Field = {
     useSpellcheck?: boolean
     autocomplete?: boolean
     visible?: ControlVisiblity
+    useBrowserDatePicker?: boolean
   }
   previousConvertedValue: any
 }
