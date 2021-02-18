@@ -74,6 +74,26 @@ export function isIOS() {
   }
   return _isIOS
 }
+
+let _isSafari = undefined
+
+export const isSafari = () => {
+  if (_isSafari === undefined) {
+    _isSafari =
+      navigator.userAgent.indexOf("Safari") != -1 &&
+      navigator.userAgent.indexOf("Chrome") == -1
+  }
+  return _isSafari
+}
+
+let _isFirefox = undefined
+export const isFirefox = () => {
+  if (_isFirefox === undefined) {
+    _isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1
+  }
+  return _isFirefox
+}
+
 let _hasOSReducedMotion
 export function hasOSReducedMotion() {
   if (_hasOSReducedMotion === undefined) {

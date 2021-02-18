@@ -7,7 +7,6 @@ export class OvlControlBase extends OvlBaseElement {
   props: any
   field: Field
   inputElement: any
-
   formState: OvlFormState
   customInfo: {
     customRowClassName: string
