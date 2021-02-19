@@ -86,16 +86,18 @@ export class OvlDate extends OvlControlBase {
   }
 
   updatePickerElement() {
-    let dval = new Date(this.field.convertedValue)
-    if (!isNaN(dval.getDate())) {
-      this.inputPickerElement.value =
-        dval.getFullYear().toString() +
-        "-" +
-        (dval.getMonth() + 1).toString().padStart(2, "0") +
-        "-" +
-        dval.getDate().toString().padStart(2, "0")
-    } else {
-      this.inputPickerElement.value = ""
+    if (this.inputPickerElement) {
+      let dval = new Date(this.field.convertedValue)
+      if (!isNaN(dval.getDate())) {
+        this.inputPickerElement.value =
+          dval.getFullYear().toString() +
+          "-" +
+          (dval.getMonth() + 1).toString().padStart(2, "0") +
+          "-" +
+          dval.getDate().toString().padStart(2, "0")
+      } else {
+        this.inputPickerElement.value = ""
+      }
     }
   }
   async getUI() {
@@ -134,6 +136,16 @@ export class OvlDate extends OvlControlBase {
       }
 
       //this.displayValue = getDateValue(field.convertedValue, field.ui.format)
+      let fieldValue = field.value
+      if (type === "date") {
+        let dval = new Date(field.convertedValue)
+        fieldValue =
+          dval.getFullYear().toString() +
+          "-" +
+          (dval.getMonth() + 1).toString().padStart(2, "0") +
+          "-" +
+          dval.getDate().toString().padStart(2, "0")
+      }
       return html`
         <div
           class="${GetContainerClass(
@@ -144,7 +156,7 @@ export class OvlDate extends OvlControlBase {
         >
           <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
           <div
-            class="ovl-inputcontainer-datebox fd-input-group ${GetOutlineValidationHint(
+            class="ovl-inputcontainer-datebox  fd-input-group ${GetOutlineValidationHint(
               field
             )}"
           >
@@ -166,7 +178,7 @@ export class OvlDate extends OvlControlBase {
               )}"
               type="${type}"
               id="${field.id}"
-              value="${field.value}"
+              value="${fieldValue}"
               spellcheck="false"
             />
           </div>
@@ -182,7 +194,7 @@ export class OvlDate extends OvlControlBase {
   afterRender() {
     // place picker under date with picker on the right just visible
     this.inputElement = document.getElementById(this.field.id)
-    if (this.inputElement) {
+    if (this.inputElement && this.inputElement.type !== "date") {
       this.inputElement.value = this.field.value
     }
     if (this.inputPickerElement === undefined) {

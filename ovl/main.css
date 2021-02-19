@@ -423,7 +423,7 @@ ovl-table {
 
 .fadeInControl {
   opacity: 1;
-  animation-name: fadeInDialog;
+  animation-name: fadeInControl;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   animation-duration: 0.25s;
@@ -484,7 +484,7 @@ ovl-table {
   animation-name: fadeInScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.25s;
+  animation-duration: 10s;
 }
 
 @keyframes fadeInScreen {
