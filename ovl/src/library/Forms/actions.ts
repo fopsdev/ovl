@@ -189,6 +189,7 @@ export type InitForm = {
   isInline?: boolean
   row?: any
   validation?: FormValidation
+  manualValidationInit?: boolean
 }
 
 export type FormsState = { [key in OvlForm]: FormStatePerInstance }
@@ -601,9 +602,6 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
 
     let formState = formInstanceList[instanceId]
     //<defaults>
-    //    if (formState.validationResult === undefined) {
-    formState.validationResult = { errors: [], visibleErrors: [] }
-    //    }
     if (value.validation === undefined) {
       formState.validation = OvlConfig.formValidation.validationDefaults(
         value.tableDefId
@@ -611,50 +609,11 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
     } else {
       formState.validation = value.validation
     }
-
     //</defaults>
+    if (!value.manualValidationInit) {
+      actions.ovl.form.InitValidateForm(formState)
+    }
 
-    //formState.lastTouchedField = value.initialFocusElementId
-    // initial validation of all fields
-    let fn = resolvePath(actions.custom, namespace)
-    Object.keys(formState.fields).forEach((k) => {
-      let field = formState.fields[k]
-      field.validationResult = {
-        errors: [],
-      }
-      actions.ovl.internal.ValidateDataType({
-        field,
-        formState,
-      } as ValidateFieldType)
-      if (field.validationResult.errors.length === 0) {
-        actions.ovl.internal.ValidateSchema({
-          field,
-          formState,
-        } as ValidateFieldType)
-        if (field.validationResult.errors.length === 0) {
-          if (field.list) {
-            actions.ovl.internal.ValidateList({
-              field,
-              formState,
-            } as ValidateFieldType)
-          }
-          if (field.validationResult.errors.length === 0) {
-            if (fn && fn[FormValidate]) {
-              fn[FormValidate](<FormValidate_Type>{
-                field,
-                formState,
-                isInnerEvent: false,
-              })
-            }
-          }
-        }
-      }
-    })
-    SetFormValid(formState)
-    SetRowCellInformation(formState, actions, state)
-    //actions.ovl.internal.SetFormValid(formState)
-    // save a copy of validationresults (as well of fields, see json(..) above)
-    // because when resetting the form, this should be inital state and there will be no re-initing
     formState.initFields = JSON.parse(JSON.stringify(fields), stringifyReplacer)
   }
   formInstanceList[instanceId].formShowed = false
@@ -662,6 +621,50 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
     formInstanceList[instanceId].fieldToFocus = value.initialFocusFieldKey
   }
   return formInstanceList[instanceId]
+}
+export const InitValidateForm: OvlAction<OvlFormState> = (
+  value,
+  { state, actions, effects }
+) => {
+  let formState = value
+  formState.validationResult = { errors: [], visibleErrors: [] }
+  //    }
+  let fn = resolvePath(actions.custom, formState.namespace)
+  Object.keys(formState.fields).forEach((k) => {
+    let field = formState.fields[k]
+    field.validationResult = {
+      errors: [],
+    }
+    actions.ovl.internal.ValidateDataType({
+      field,
+      formState,
+    } as ValidateFieldType)
+    if (field.validationResult.errors.length === 0) {
+      actions.ovl.internal.ValidateSchema({
+        field,
+        formState,
+      } as ValidateFieldType)
+      if (field.validationResult.errors.length === 0) {
+        if (field.list) {
+          actions.ovl.internal.ValidateList({
+            field,
+            formState,
+          } as ValidateFieldType)
+        }
+        if (field.validationResult.errors.length === 0) {
+          if (fn && fn[FormValidate]) {
+            fn[FormValidate](<FormValidate_Type>{
+              field,
+              formState,
+              isInnerEvent: false,
+            })
+          }
+        }
+      }
+    }
+  })
+  SetFormValid(formState)
+  SetRowCellInformation(formState, actions, state)
 }
 
 // remove not used yet. think its better to always  call ResetForm so state can be reused

@@ -133,8 +133,7 @@ export const SetControlVisibility = (
 ) => {
   if (
     (visible === "fadeIn" && field.ui.visible === "true") ||
-    (visible === "fadeOut" &&
-      field.ui.visible === "false")
+    (visible === "fadeOut" && field.ui.visible === "false")
   ) {
     return
   }
@@ -310,11 +309,14 @@ export const GetContainerClass = (
 export const GetInputClass = (
   type: string,
   field: Field,
-  customRowClassName
+  customRowClassName,
+  ignoreOutline?: boolean
 ): string => {
-  return `${GetOutlineValidationHint(
-    field
-  )} ${customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-${type} ovl-value__${
+  let outlineClass = ""
+  if (!ignoreOutline) {
+    outlineClass = GetOutlineValidationHint(field)
+  }
+  return `${outlineClass} ${customRowClassName} ovl-focusable ovl-formcontrol-input ovl-value-${type} ovl-value__${
     field.fieldKey
   } ${field.ui.readonly ? "ovl-disabled" : ""}`
 }

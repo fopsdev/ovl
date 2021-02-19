@@ -143,7 +143,11 @@ export class OvlDate extends OvlControlBase {
           )}"
         >
           <ovl-controllabel .props=${() => this.field}> </ovl-controllabel>
-          <div class="ovl-inputcontainer-datebox">
+          <div
+            class="ovl-inputcontainer-datebox fd-input-group ${GetOutlineValidationHint(
+              field
+            )}"
+          >
             ${browserDatePicker} ${browserDatePickerButton}
             <input
               tabindex="${ifDefined(
@@ -157,7 +161,8 @@ export class OvlDate extends OvlControlBase {
               class="fd-input ${browserDatePickerClass} ${GetInputClass(
                 "date",
                 field,
-                this.customInfo.customRowClassName
+                this.customInfo.customRowClassName,
+                true
               )}"
               type="${type}"
               id="${field.id}"
