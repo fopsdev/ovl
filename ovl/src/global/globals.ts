@@ -5,6 +5,7 @@ import { displayFormats } from "./displayFormats"
 import { ovl, OvlState, OvlConfig } from ".."
 import { TemplateResult } from "lit-html"
 import { Rehydrate } from "./actions"
+import { OvlFormState, ValidateResultErrors } from "../library/Forms/actions"
 
 // export let api = { url: "" }
 //export let translations: Translations = { t: {} }
@@ -359,6 +360,40 @@ export const logState = () => {
   console.log("ovl state:")
   console.log(JSON.parse(JSON.stringify(ovl.state), stringifyReplacer))
 }
+
+export const logFormValidationErrors = () => {
+  console.log("ovl forms having validation errors:")
+  let forms = ovl.state.ovl.forms
+  let res = []
+  Object.keys(forms).forEach((f) => {
+    let formInstance = forms[f]
+    Object.keys(formInstance).forEach((fi) => {
+      let formState: OvlFormState = forms[f][fi]
+
+      let fieldValidation = Object.keys(formState.fields)
+        .filter((f) => formState.fields[f].validationResult.errors.length > 0)
+        .map((m) => {
+          let res: { errors: ValidateResultErrors[] } = { errors: [] }
+          res[formState.fields[m].fieldKey] = formState.fields[m]
+          res["errors"] = formState.fields[m].validationResult.errors
+          return res
+        })
+      if (
+        formState.validationResult.errors.length > 0 ||
+        fieldValidation.some((s) => s.errors.length > 0)
+      ) {
+        res.push({
+          formtype: formState.formType,
+          formId: formState.formId,
+          formErrors: formState.validationResult.errors,
+          fieldErrors: fieldValidation,
+        })
+      }
+    })
+  })
+  console.log(JSON.parse(JSON.stringify(res, stringifyReplacer)))
+}
+
 export const logActions = () => {
   console.log("ovl actions:")
   console.log(ovl.actions)

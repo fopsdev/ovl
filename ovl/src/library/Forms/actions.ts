@@ -61,6 +61,7 @@ export type Field = {
   dirty: boolean
   watched: boolean
   hasFocus?: boolean
+  notUsed?: boolean
   validationResult: ValidateResult
   id: string
   formType: string
@@ -558,7 +559,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
   //actions.ovl.internal.SetFormValid(value)
 }
 
-export const InitForm: OvlAction<InitForm> = (
+export const InitForm: OvlAction<InitForm, OvlFormState> = (
   value,
   { state, actions, effects }
 ) => {
@@ -660,6 +661,7 @@ export const InitForm: OvlAction<InitForm> = (
   if (!formInstanceList[instanceId].fieldToFocus) {
     formInstanceList[instanceId].fieldToFocus = value.initialFocusFieldKey
   }
+  return formInstanceList[instanceId]
 }
 
 // remove not used yet. think its better to always  call ResetForm so state can be reused
@@ -887,7 +889,6 @@ export const ChangeField: OvlAction<ChangeField> = (
       }
     }
   }
-
   if (field.convertedValue !== oldConvertedVal) {
     SetFormValid(value.formState)
     field.dirty = !value.isInit

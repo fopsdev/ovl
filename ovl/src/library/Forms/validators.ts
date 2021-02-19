@@ -196,6 +196,9 @@ export const AddCustomValidationUsingDefault = (
 }
 
 export const AddValidation = (field: Field, v: FormValidationField) => {
+  if (field.notUsed) {
+    return
+  }
   let formState: OvlFormState =
     ovl.state.ovl.forms[field.formType][field.formId]
 

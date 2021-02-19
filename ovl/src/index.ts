@@ -39,6 +39,7 @@ import { defineElements } from "./registerComponents"
 import { startRender } from "../../../app/src"
 import {
   logActions,
+  logFormValidationErrors,
   logState,
   rehydrateTestState,
   saveTestState,
@@ -53,6 +54,7 @@ globalThis.OvlToggleDebugTracking = toggleDebugTracking
 globalThis.OvlLogTrackingList = logTrackingList
 globalThis.OvlSaveTestState = saveTestState
 globalThis.OvlRehydrateTestState = rehydrateTestState
+globalThis.OvlLogFormValidationErrors = logFormValidationErrors
 globalThis.OvlConfig = OvlConfig
 
 export type OvlState = { ovl: typeof ovlState; app: typeof appState }

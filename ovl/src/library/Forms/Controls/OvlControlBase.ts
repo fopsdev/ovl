@@ -104,5 +104,8 @@ export const SetControlVisibility = (
   field.ui.visible = visible
 }
 export const IsControlVisible = (field: Field, visible: ControlVisiblity) => {
-  return field.ui.visible === "fadeIn" || field.ui.visible === "true"
+  return (
+    (field.ui.visible === "fadeIn" || field.ui.visible === "true") &&
+    !field.notUsed
+  )
 }

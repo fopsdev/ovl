@@ -69,7 +69,6 @@ export const getFormFields = (
         namespace
       ),
       convertedValue: value,
-
       type: type,
       dirty: false,
       watched: false,
@@ -81,6 +80,7 @@ export const getFormFields = (
       fieldKey: k,
       ui: formFields[k].ui,
       previousConvertedValue: value,
+      notUsed: false,
     }
     if (!formFields[k].ui) {
       formFields[k].ui = {}
