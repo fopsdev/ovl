@@ -122,12 +122,12 @@ export class OvlDate extends OvlControlBase {
             id="picker${field.id}"
           />
         `
-        // console.log(
-        //   "is Firefox: " +
-        //     isFirefox().toString() +
-        //     ", field value: " +
-        //     field.value
-        // )
+        console.log(
+          "is Firefox: " +
+            isFirefox().toString() +
+            ", field value: " +
+            field.value
+        )
         if (isFirefox() && !field.value) {
           browserDatePickerButton = html` <span
             class="sap-icon sap-icon--calendar ovl-input-datepickerffbutton"

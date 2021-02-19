@@ -484,7 +484,7 @@ ovl-table {
   animation-name: fadeInScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 10s;
+  animation-duration: 0.25s;
 }
 
 @keyframes fadeInScreen {
