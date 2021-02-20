@@ -81,11 +81,13 @@ export const getFormFields = (
       ui: formFields[k].ui,
       previousConvertedValue: value,
       notUsed: false,
+      _state: { closing: false, visible: true },
     }
     if (!formFields[k].ui) {
       formFields[k].ui = {}
     }
     let ui = formFields[k].ui
+
     if (ui.readonly === undefined) {
       ui.readonly = false
     }
@@ -98,8 +100,8 @@ export const getFormFields = (
     if (ui.visible === undefined) {
       ui.visible = "true"
     }
-    if (ui.visible === "fadeOut") {
-      ui.visible = "false"
+    if (ui.visible === "fadeOut" || ui.visible === "false") {
+      fields[k]._state.visible = false
     }
     if (ui.checkedValue === undefined) {
       ui.checkedValue = true

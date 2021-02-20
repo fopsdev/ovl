@@ -37,6 +37,7 @@ import {
   TableDataAndDef,
   OvlTableDef,
   EditMode,
+  FieldVisibility,
 } from "./Table"
 import { TableRowDetailView } from "./RowDetailView"
 
@@ -797,6 +798,18 @@ export const getFormFieldsFromColumns = (
       formFields[k].ui = {}
     }
     formFields[k].ui.noLabel = !!noLabel
+    let visible: FieldVisibility
+    if (
+      col.ui.language &&
+      col.ui.language !== ovl.state.ovl.language.language
+    ) {
+      visible = col.ui.translationVisibility
+    } else {
+      visible = col.ui.visibility
+    }
+    if (visible && visible.indexOf("Edit") < 0) {
+      formFields[k].notUsed = true
+    }
   })
   return formFields
 }

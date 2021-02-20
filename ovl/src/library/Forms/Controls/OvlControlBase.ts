@@ -1,3 +1,4 @@
+import { Field_objectBuildingType_GetList } from "../../../../../../app/src/screens/NewServiceStep2/formActions"
 import { hasOSReducedMotion } from "../../../global/globals"
 import { OvlBaseElement } from "../../../library/OvlBaseElement"
 import { ControlVisiblity, Field, OvlFormState } from "../actions"
@@ -16,9 +17,13 @@ export class OvlControlBase extends OvlBaseElement {
 
   handleAnimationEnd = (e) => {
     if (e.animationName === "fadeOutControl") {
-      if (this.field.ui.visible.indexOf("Hide") > -1) {
-        this.classList.add("hide")
-      }
+      this.classList.add("hideControl")
+      this.field._state.closing = false
+      this.field._state.visible = false
+    }
+    if (e.animationName === "fadeInControl") {
+      this.field._state.closing = false
+      this.field._state.visible = true
     }
   }
   init() {
@@ -45,29 +50,10 @@ export class OvlControlBase extends OvlBaseElement {
     } else {
       this.classList.remove("ovl-disabled__cursor-not-allowed")
     }
-
-    if (
-      this.field.ui.visible === "true" ||
-      (this.field.ui.visible === "fadeIn" && hasOSReducedMotion())
-    ) {
-      this.classList.remove("hide")
-    } else if (
-      this.field.ui.visible === "false" ||
-      (this.field.ui.visible === "fadeOut" && hasOSReducedMotion())
-    ) {
-      this.classList.add("hide")
-    } else if (this.field.ui.visible === "fadeIn") {
-      this.classList.add("fadeInControl")
-      this.classList.remove("fadeOutControl")
-
-      this.classList.remove("hide")
-    } else if (
-      this.field.ui.visible === "fadeOut" ||
-      this.field.ui.visible === "fadeOutHide"
-    ) {
-      this.classList.add("fadeOutControl")
-      this.classList.remove("fadeInControl")
+    if (!this.field._state.visible && this.field.ui.visible !== "fadeIn") {
+      this.classList.add("hideControl")
     }
+    this.id = "ovl_" + this.field.id
   }
 
   // this is needed because other methods still allow to tab into the control
@@ -95,17 +81,46 @@ export const SetControlVisibility = (
   field: Field,
   visible: ControlVisiblity
 ) => {
-  if (
-    (visible === "fadeIn" && field.ui.visible === "true") ||
-    (visible.indexOf("fadeOut") > -1 && field.ui.visible === "false")
-  ) {
-    return
+  if (!field._state.closing) {
+    field.ui.visible = visible
+    if (field.fieldKey === "objectLocationCity") {
+      debugger
+    }
+
+    // get the parent (<ovl-control>)
+    let el = document.getElementById("ovl_" + field.id)
+    if (el && !field._state.visible && visible === "fadeIn") {
+      el.classList.remove("fadeOutControl")
+      el.classList.remove("hideControl")
+      el.classList.add("fadeInControl")
+    } else if (visible === "true") {
+      if (el) {
+        el.classList.remove("fadeInControl")
+        el.classList.remove("fadeOutControl")
+        el.classList.remove("hideControl")
+      }
+      field._state.visible = true
+    } else if (el && field._state.visible && visible === "fadeOut") {
+      el.classList.remove("fadeInControl")
+      el.classList.add("fadeOutControl")
+    } else if (visible === "false") {
+      if (el) {
+        el.classList.remove("fadeInControl")
+        el.classList.remove("fadeOutControl")
+
+        el.classList.add("hideControl")
+      }
+      field._state.visible = false
+    }
   }
-  field.ui.visible = visible
+  // if (
+  //   (visible === "fadeIn" && field.ui.visible === "true") ||
+  //   (visible.indexOf("fadeOut") > -1 && field.ui.visible === "false")
+  // ) {
+  //   return
+  // }
+  // field.ui.visible = visible
 }
-export const IsControlVisible = (field: Field, visible: ControlVisiblity) => {
-  return (
-    (field.ui.visible === "fadeIn" || field.ui.visible === "true") &&
-    !field.notUsed
-  )
+export const IsControlVisible = (field: Field) => {
+  return field._state.visible
 }

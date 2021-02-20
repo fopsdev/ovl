@@ -31,6 +31,7 @@ export type FormField = {
   value: any
   type?: DataType
   list?: ListState
+  notUsed?: boolean
   ui?: {
     labelTranslationKey?: string
     noLabel?: boolean
@@ -43,7 +44,7 @@ export type FormField = {
     useSpellcheck?: boolean
     autocomplete?: boolean
     checkedValue?: string | boolean
-    visible?: "true" | "false" | "fadeIn" | "fadeOut" | "fadeOutHide"
+    visible?: "true" | "false" | "fadeIn" | "fadeOut"
     useBrowserDatePicker?: boolean
   }
   asset?: {
@@ -51,6 +52,7 @@ export type FormField = {
     validCategories: string[]
     idColumns: string[]
   }
+  _state?
 }
 
 export type DataType = "text" | "date" | "decimal" | "int" | "bool" | "time"

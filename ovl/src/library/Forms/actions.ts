@@ -82,13 +82,10 @@ export type Field = {
     useBrowserDatePicker?: boolean
   }
   previousConvertedValue: any
+  _state?: { visible: boolean; closing: boolean }
 }
-export type ControlVisiblity =
-  | "true"
-  | "false"
-  | "fadeIn"
-  | "fadeOut"
-  | "fadeOutHide"
+export type ControlVisiblity = "true" | "false" | "fadeIn" | "fadeOut"
+
 export type FieldValueMap = { [key: string]: Field }
 
 export type ValidateResultErrors = {
@@ -872,7 +869,10 @@ export const ChangeField: OvlAction<ChangeField> = (
           isInnerEvent: value.isInnerEvent,
         } as ValidateFieldType)
       }
-      if (field.validationResult.errors.length === 0) {
+      if (
+        !value.ignoreCustomValidation &&
+        field.validationResult.errors.length === 0
+      ) {
         let validationFnName = "FormValidate"
         if (fn && fn[validationFnName]) {
           let val: FormValidate_Type = {
@@ -898,7 +898,10 @@ export const ChangeField: OvlAction<ChangeField> = (
     if (!value.formState.dirty) {
       value.formState.dirty = !value.isInit
     }
-    if (field.validationResult.errors.length === 0) {
+    if (
+      !value.ignoreCustomValidation &&
+      field.validationResult.errors.length === 0
+    ) {
       if (fn && fn[FormChanged]) {
         fn[FormChanged](<FormChanged_Type>{
           fieldId: value.fieldKey,

@@ -358,7 +358,7 @@ ovl-table {
   animation-name: fadeOutScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.25s;
+  animation-duration: 0.3s;
 }
 
 @keyframes fadeOutScreen {
@@ -409,7 +409,7 @@ ovl-table {
   animation-name: fadeOutControl;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.25s;
+  animation-duration: 0.2s;
 }
 
 @keyframes fadeOutControl {
@@ -426,7 +426,7 @@ ovl-table {
   animation-name: fadeInControl;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.25s;
+  animation-duration: 0.2s;
 }
 
 @keyframes fadeInControl {
@@ -484,7 +484,7 @@ ovl-table {
   animation-name: fadeInScreen;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.25s;
+  animation-duration: 0.3s;
 }
 
 @keyframes fadeInScreen {
@@ -613,4 +613,7 @@ ovl-table {
 }
 .hide {
   display: none !important;
+}
+.hideControl {
+  visibility: hidden !important;
 }
