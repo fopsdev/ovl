@@ -186,7 +186,11 @@ export type InitForm = {
   isInline?: boolean
   row?: any
   validation?: FormValidation
-  manualValidationInit?: boolean
+  additionalInitialisationFn?: (
+    formState: OvlFormState,
+    state: OvlState,
+    actions: OvlActions
+  ) => void
 }
 
 export type FormsState = { [key in OvlForm]: FormStatePerInstance }
@@ -598,6 +602,11 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
     }
 
     let formState = formInstanceList[instanceId]
+
+    if (value.additionalInitialisationFn) {
+      value.additionalInitialisationFn(formState, state, actions)
+    }
+
     //<defaults>
     if (value.validation === undefined) {
       formState.validation = OvlConfig.formValidation.validationDefaults(
@@ -607,9 +616,46 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
       formState.validation = value.validation
     }
     //</defaults>
-    if (!value.manualValidationInit) {
-      actions.ovl.form.InitValidateForm(formState)
-    }
+
+    formState.validationResult = { errors: [], visibleErrors: [] }
+    //    }
+    let fn = resolvePath(actions.custom, formState.namespace)
+    Object.keys(formState.fields).forEach((k) => {
+      let field = formState.fields[k]
+      field.validationResult = {
+        errors: [],
+      }
+      actions.ovl.internal.ValidateDataType({
+        field,
+        formState,
+      } as ValidateFieldType)
+      if (field.validationResult.errors.length === 0) {
+        actions.ovl.internal.ValidateSchema({
+          field,
+          formState,
+        } as ValidateFieldType)
+        if (field.validationResult.errors.length === 0) {
+          if (field.list) {
+            actions.ovl.internal.ValidateList({
+              field,
+              formState,
+            } as ValidateFieldType)
+          }
+          if (field.validationResult.errors.length === 0) {
+            if (fn && fn[FormValidate]) {
+              fn[FormValidate](<FormValidate_Type>{
+                field,
+                formState,
+                isInnerEvent: false,
+              })
+            }
+          }
+        }
+      }
+    })
+
+    SetFormValid(formState)
+    SetRowCellInformation(formState, actions, state)
 
     formState.initFields = JSON.parse(JSON.stringify(fields), stringifyReplacer)
   }
@@ -618,50 +664,6 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
     formInstanceList[instanceId].fieldToFocus = value.initialFocusFieldKey
   }
   return formInstanceList[instanceId]
-}
-export const InitValidateForm: OvlAction<OvlFormState> = (
-  value,
-  { state, actions, effects }
-) => {
-  let formState = value
-  formState.validationResult = { errors: [], visibleErrors: [] }
-  //    }
-  let fn = resolvePath(actions.custom, formState.namespace)
-  Object.keys(formState.fields).forEach((k) => {
-    let field = formState.fields[k]
-    field.validationResult = {
-      errors: [],
-    }
-    actions.ovl.internal.ValidateDataType({
-      field,
-      formState,
-    } as ValidateFieldType)
-    if (field.validationResult.errors.length === 0) {
-      actions.ovl.internal.ValidateSchema({
-        field,
-        formState,
-      } as ValidateFieldType)
-      if (field.validationResult.errors.length === 0) {
-        if (field.list) {
-          actions.ovl.internal.ValidateList({
-            field,
-            formState,
-          } as ValidateFieldType)
-        }
-        if (field.validationResult.errors.length === 0) {
-          if (fn && fn[FormValidate]) {
-            fn[FormValidate](<FormValidate_Type>{
-              field,
-              formState,
-              isInnerEvent: false,
-            })
-          }
-        }
-      }
-    }
-  })
-  SetFormValid(formState)
-  SetRowCellInformation(formState, actions, state)
 }
 
 // remove not used yet. think its better to always  call ResetForm so state can be reused
@@ -898,10 +900,7 @@ export const ChangeField: OvlAction<ChangeField> = (
     if (!value.formState.dirty) {
       value.formState.dirty = !value.isInit
     }
-    if (
-      !value.ignoreCustomValidation &&
-      field.validationResult.errors.length === 0
-    ) {
+    if (field.validationResult.errors.length === 0) {
       if (fn && fn[FormChanged]) {
         fn[FormChanged](<FormChanged_Type>{
           fieldId: value.fieldKey,

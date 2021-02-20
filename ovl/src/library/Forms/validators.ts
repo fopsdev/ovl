@@ -274,9 +274,9 @@ export const AddValidation = (field: Field, v: FormValidationField) => {
   if (formState.valid) {
     formState.valid = false
   }
-  if (field.ui.visible !== "fadeIn" && field.ui.visible !== "true") {
-    field.ui.visible = "fadeIn"
-  }
+  // if (field.ui.visible !== "fadeIn" && field.ui.visible !== "true") {
+  //   field.ui.visible = "fadeIn"
+  // }
   if (v.setFocus) {
     setTimeout(() => {
       SetFocus(formState.formType + field.fieldKey)

@@ -83,10 +83,6 @@ export const SetControlVisibility = (
 ) => {
   if (!field._state.closing) {
     field.ui.visible = visible
-    if (field.fieldKey === "objectLocationCity") {
-      debugger
-    }
-
     // get the parent (<ovl-control>)
     let el = document.getElementById("ovl_" + field.id)
     if (el && !field._state.visible && visible === "fadeIn") {

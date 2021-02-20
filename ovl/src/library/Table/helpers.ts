@@ -101,6 +101,8 @@ export const getDisplayValue = (
         return ""
       }
       return getDecimalValue(value, format)
+    case "bool":
+      return value
     default:
       if (!value && value !== 0) {
         value = ""

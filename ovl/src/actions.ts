@@ -1,6 +1,5 @@
 import {
   InitForm,
-  InitValidateForm,
   ChangeField,
   SetField,
   //SetFormValid,
@@ -54,7 +53,7 @@ let dialog = {
 
 let form = {
   InitForm,
-  InitValidateForm,
+
   ResetForm,
   ResetFormAfterNavigation,
   ValidateForm,
