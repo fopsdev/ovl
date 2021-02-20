@@ -611,9 +611,58 @@ ovl-table {
     transition: none !important;
   }
 }
-.hide {
+.ovl-hide {
   display: none !important;
 }
-.hideControl {
+.ovl-hideControl {
   visibility: hidden !important;
+}
+
+.ovl-inputcontainer-datebox {
+  position: relative;
+}
+
+.ovl-input-datepicker {
+  position: absolute;
+}
+
+.ovl-input-datepickerffbutton {
+  pointer-events: none;
+  position: absolute;
+
+  margin-left: 97%;
+  font-size: 1.6em;
+  z-index: 9;
+}
+
+.ovl-input-datepickertarget {
+  position: inherit;
+  width: 95%;
+  z-index: 2;
+
+  margin: 0;
+  border: 0;
+}
+.ovl-input-datepickertarget:focus {
+  outline: none !important;
+}
+
+.ovl-input-datepicker:focus {
+  outline: none !important;
+}
+
+.ovl-input-datepicker {
+  margin: 0;
+  border: 0;
+}
+
+.ovl-input-date {
+  margin: 0;
+  position: inherit;
+  border: 0 !important;
+}
+
+.ovl-inputcontainer-datebox {
+  height: 95%;
+  height: 2.25rem;
 }
