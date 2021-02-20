@@ -105,7 +105,7 @@ export class OvlBaseElement extends HTMLElement {
   _id: number = 0
   screen: OvlScreen
 
-  screenCloseBehaviour: "remove" | "hide"
+  screenCloseBehaviour: "remove" | "ovl-hide"
   static _counter: number = 0
   screenClosing(): boolean {
     if (!this.screen) {
@@ -209,18 +209,18 @@ export class OvlBaseElement extends HTMLElement {
     checkScreen =
       !this.screen ||
       this.screenVisible() ||
-      this.screenCloseBehaviour === "hide"
+      this.screenCloseBehaviour === "ovl-hide"
 
     let res
     if (checkScreen) {
       res = await this.getUI()
       if (res !== undefined) {
         if (this.screen) {
-          let screenHide = !this.screenVisible() ? "hide" : ""
+          let screenHide = !this.screenVisible() ? "ovl-hide" : ""
           if (screenHide) {
             this.classList.add(screenHide)
           } else {
-            this.classList.remove("hide")
+            this.classList.remove("ovl-hide")
           }
           if (!this.screenClosing()) {
             this.classList.add("fadeInScreen")

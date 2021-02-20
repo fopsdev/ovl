@@ -133,7 +133,7 @@ export class CompShellbar extends OvlBaseElement {
         scrollable = "scrollableMobile"
       }
       let appTitle: TemplateResult | string = ""
-      let hideAllMenus = "hide"
+      let hideAllMenus = "ovl-hide"
       let login
 
       let feedbackForm = null

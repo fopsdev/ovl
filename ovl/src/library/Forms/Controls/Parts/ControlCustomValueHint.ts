@@ -32,7 +32,7 @@ export class OvlCustomValueHint extends OvlBaseElement {
         <div
           class="fadeInControl fd-form-message  ovl-formcontrol-custom ovl-formcontrol-listcontrol-custom ovl-formcontrol-custom__${field.fieldKey} ${customValue
             ? ""
-            : "hide"}"
+            : "ovl-hide"}"
         >
           ${customValue}
         </div>

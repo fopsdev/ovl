@@ -17,7 +17,7 @@ export class OvlControlBase extends OvlBaseElement {
 
   handleAnimationEnd = (e) => {
     if (e.animationName === "fadeOutControl") {
-      this.classList.add("hideControl")
+      this.classList.add("ovl-hideControl")
       this.field._state.closing = false
       this.field._state.visible = false
     }
@@ -51,7 +51,7 @@ export class OvlControlBase extends OvlBaseElement {
       this.classList.remove("ovl-disabled__cursor-not-allowed")
     }
     if (!this.field._state.visible && this.field.ui.visible !== "fadeIn") {
-      this.classList.add("hideControl")
+      this.classList.add("ovl-hideControl")
     }
     this.id = "ovl_" + this.field.id
   }
@@ -87,13 +87,13 @@ export const SetControlVisibility = (
     let el = document.getElementById("ovl_" + field.id)
     if (el && !field._state.visible && visible === "fadeIn") {
       el.classList.remove("fadeOutControl")
-      el.classList.remove("hideControl")
+      el.classList.remove("ovl-hideControl")
       el.classList.add("fadeInControl")
     } else if (visible === "true") {
       if (el) {
         el.classList.remove("fadeInControl")
         el.classList.remove("fadeOutControl")
-        el.classList.remove("hideControl")
+        el.classList.remove("ovl-hideControl")
       }
       field._state.visible = true
     } else if (el && field._state.visible && visible === "fadeOut") {
@@ -104,7 +104,7 @@ export const SetControlVisibility = (
         el.classList.remove("fadeInControl")
         el.classList.remove("fadeOutControl")
 
-        el.classList.add("hideControl")
+        el.classList.add("ovl-hideControl")
       }
       field._state.visible = false
     }

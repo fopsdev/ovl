@@ -34,7 +34,7 @@ export class OvlValidationHint extends OvlBaseElement {
           !field.hasFocus &&
           !field.ui.readonly
             ? ""
-            : "hide"}"
+            : "ovl-hide"}"
         >
           ${msgs}
         </div>
