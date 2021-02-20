@@ -1,5 +1,7 @@
 import { actionTracking, createDeepProxy } from "./tracker/proxyHandler"
-import { ovl, OvlState, OvlActions, OvlConfig } from "."
+import { ovl, OvlState, OvlActions, OvlConfig, defineAppElements } from "."
+import { defineElements } from "./registerComponents"
+import { _customElementList } from "./global/globals"
 
 const interceptorAsyncFn = (originalFn, key) => {
   return async (value) => {
@@ -114,4 +116,20 @@ export const init = (
     actions: <OvlActions>_actions,
     effects,
   }
+}
+export const defineOvlElements = () => {
+  defineElements()
+  defineAppElements()
+
+  // now we can create our  default styles for all our elements
+  var sheet = document.createElement("style")
+
+  sheet.innerHTML =
+    _customElementList
+      .map((m, i) => {
+        customElements.define(m.tagName, m.comp)
+        return m.tagName + (i < _customElementList.length - 1 ? "," : " ")
+      })
+      .join("") + "{display: block;}"
+  document.body.appendChild(sheet)
 }

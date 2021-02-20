@@ -13,7 +13,7 @@ import * as appState from "../../../app/src/state"
 import * as appActions from "../../../app/src/actions"
 import * as customActions from "../../../app/src/customActions"
 import { defineElements as defineAppElements } from "../../../app/src/registerComponents"
-export { OvlFormValidationValidators }
+export { defineAppElements, OvlFormValidationValidators }
 // </app setup>
 
 // // <test setup>
@@ -33,7 +33,7 @@ export { OvlFormValidationValidators }
 import * as ovlState from "./state"
 import * as ovlActions from "./actions"
 import * as ovlEffects from "./effects"
-import { init } from "./prepare"
+import { defineOvlElements, init } from "./prepare"
 import { baseScreens, baseDialogs } from "./screensAndDialogs"
 import { defineElements } from "./registerComponents"
 import { startRender } from "../../../app/src"
@@ -82,8 +82,7 @@ export let ovl: {
   baseDialogs,
   OvlConfig.app.forms
 )
-defineElements()
-defineAppElements()
+defineOvlElements()
 setTimeout(async () => {
   await ovl.actions.ovl.internal.InitApp()
   startRender()

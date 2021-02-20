@@ -6,6 +6,7 @@ import { ovl, OvlState, OvlConfig } from ".."
 import { TemplateResult } from "lit-html"
 import { Rehydrate } from "./actions"
 import { OvlFormState, ValidateResultErrors } from "../library/Forms/actions"
+import { OvlCustomValueHint } from "../library/Forms/Controls/Parts/ControlCustomValueHint"
 
 // export let api = { url: "" }
 //export let translations: Translations = { t: {} }
@@ -14,7 +15,11 @@ export let modalDialog: GlobalModalDialogState = { text: undefined }
 export let translationData = {}
 export const ovltemp = "_ovltmp"
 export const ovloffline = "_ovloff"
-
+export type OvlCustomElementListEntry = { tagName: string; comp: any }
+export let _customElementList: OvlCustomElementListEntry[] = []
+export const AddOvlCustomElement = (tagName: string, comp: any) => {
+  _customElementList.push({ tagName, comp })
+}
 // we keep in those a shortcut to ovl.state.ovl.language...
 // to simplify tracking
 export let languageRef: typeof ovl.state.ovl.language
