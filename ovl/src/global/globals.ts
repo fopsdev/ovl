@@ -481,10 +481,6 @@ export const T = (key: string, reps?: string[]): string => {
   let str = languageRef.translations[key]
   if (str === undefined || str === null) {
     str = key
-    //   // if (uiState.isReady) {
-    //   //   console.warn("Ovl Translations: key " + key + " not found")
-    //   // }
-    //   return key
   }
   if (str.split("{").length !== str.split("}").length) {
     return str + " invalid{}"
@@ -505,12 +501,31 @@ export const T = (key: string, reps?: string[]): string => {
         key = s.substring(2)
         //console.log("found translation key: " + key)
         str = str.split("{" + s + "}").join(T(key, reps))
-      } else if (s.startsWith("V.")) {
-        // its a data point in state.sub.subscription - tree....eg. {V.OCRD.CardName, or V.DS_OSUB.U_YearFee}
+      } else if (s.startsWith("L.")) {
+        // its a link, so treat it as such
         key = s.substring(2)
-        //console.log("found variable key: " + key)
-        let data = resolvePath(translationData, key, " not found ")
-        str = str.split("{" + s + "}").join(data)
+        let start_l = key.indexOf("T.")
+        let key_l_res
+        if (start_l > -1) {
+          // it also has a text replacement for the link itself
+          let key_l = key.substring(start_l + 2)
+          key_l_res = T(key_l, reps)
+          key = key.replace("T." + key_l, "")
+        }
+        let l_res = key
+        let link = `<a target="_blank" href="${l_res}">${
+          key_l_res ? key_l_res : l_res
+        }</a>`
+        str = str.split("{" + s + "}").join(link)
+
+        // uncommented for now because this needs testing with caching 8does caching of those even make sense?
+        // maybe keep placeholder and this rep at the end with the cached result
+        // } else if (s.startsWith("V.")) {
+        //   // its a data point in state.sub.subscription - tree....eg. {V.OCRD.CardName, or V.DS_OSUB.U_YearFee}
+        //   key = s.substring(2)
+        //   //console.log("found variable key: " + key)
+        //   let data = resolvePath(translationData, key, " not found ")
+        //   str = str.split("{" + s + "}").join(data)
       } else {
         // needs to be a {0}, or {1}, ....
         // so use the replaces array parameter
