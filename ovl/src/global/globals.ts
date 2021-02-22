@@ -3,7 +3,7 @@ import { SnackAdd } from "../library/helpers"
 import { stateStore } from "../offlineStorage"
 import { displayFormats } from "./displayFormats"
 import { ovl, OvlState, OvlConfig } from ".."
-import { TemplateResult } from "lit-html"
+import { html, TemplateResult } from "lit-html"
 import { Rehydrate } from "./actions"
 import { OvlFormState, ValidateResultErrors } from "../library/Forms/actions"
 import { OvlCustomValueHint } from "../library/Forms/Controls/Parts/ControlCustomValueHint"
@@ -454,7 +454,69 @@ let TCache = new Map()
 export const ResetT = () => {
   TCache = new Map()
 }
-export const T = (key: string, reps?: string[]): string => {
+
+export const T = (key: string, reps?: string[]): any => {
+  try {
+    let cacheKey = key
+    if (reps) {
+      cacheKey += reps.join()
+    }
+    let cacheRes = TCache.get(cacheKey)
+    if (cacheRes !== undefined) {
+      return cacheRes
+    }
+
+    // 1st pass
+    let res = _T(key, reps)
+    // 2nd pass for links and eventually DataPoints {V.} later
+    let hashRes = new Set()
+    res
+      .split("{")
+      .filter((f) => f.indexOf("}") > -1)
+      .map((m) => m.substring(0, m.indexOf("}")))
+      .map((s) => {
+        hashRes.add(s)
+      })
+
+    let tres = [...hashRes].map((s: string) => {
+      let key: string = ""
+      if (s.startsWith("L.")) {
+        key = s.substring(2)
+        let link = key.split("@@Ovl")
+        let link1 = link[0]
+        let linkDesc = link1
+        if (link.length > 1) {
+          linkDesc = link[1]
+        }
+        let linkTemplate = html`<a href=${link[0]} target="_blank"
+          >${linkDesc}</a
+        >`
+
+        return res.split("{" + s + "}").map((m, i) => {
+          if ((i + 1) % 2 === 0) {
+            return html`${m}`
+          } else {
+            return html`${m}${linkTemplate}`
+          }
+        })
+      } else if (s.startsWith("V.")) {
+        //   return res.split("{" + s + "}").map((m, i) => {
+        //     return html`${m}${resolvePath(ovl.state, s.substring(2))}`
+        //   })
+      }
+    })
+
+    if (tres.length > 0) {
+      TCache.set(cacheKey, tres)
+      return tres
+    }
+
+    return res
+  } catch (e) {
+    return e.toString().replace('"Error:', "")
+  }
+}
+const _T = (key: string, reps?: string[]): any => {
   if (!languageRef) {
     languageRef = ovl.state.ovl.language
   }
@@ -500,43 +562,27 @@ export const T = (key: string, reps?: string[]): string => {
         // its a translation itself eg. {T.AppMandatoryHint}
         key = s.substring(2)
         //console.log("found translation key: " + key)
-        str = str.split("{" + s + "}").join(T(key, reps))
-      } else if (s.startsWith("L.")) {
-        // its a link, so treat it as such
-        key = s.substring(2)
-        let start_l = key.indexOf("T.")
-        let key_l_res
-        if (start_l > -1) {
-          // it also has a text replacement for the link itself
-          let key_l = key.substring(start_l + 2)
-          key_l_res = T(key_l, reps)
-          key = key.replace("T." + key_l, "")
-        }
-        let l_res = key
-        let link = `<a target="_blank" href="${l_res}">${
-          key_l_res ? key_l_res : l_res
-        }</a>`
-        str = str.split("{" + s + "}").join(link)
-
-        // uncommented for now because this needs testing with caching 8does caching of those even make sense?
-        // maybe keep placeholder and this rep at the end with the cached result
-        // } else if (s.startsWith("V.")) {
-        //   // its a data point in state.sub.subscription - tree....eg. {V.OCRD.CardName, or V.DS_OSUB.U_YearFee}
-        //   key = s.substring(2)
-        //   //console.log("found variable key: " + key)
-        //   let data = resolvePath(translationData, key, " not found ")
-        //   str = str.split("{" + s + "}").join(data)
+        str = str.split("{" + s + "}").join(_T(key, reps))
+      } /* skip V and L, they are handled in second pass */ else if (
+        s.startsWith("L.") ||
+        s.startsWith("V.")
+      ) {
       } else {
         // needs to be a {0}, or {1}, ....
         // so use the replaces array parameter
-        str = str.split("{" + s + "}").join(reps[parseInt(s)])
+        let idx = parseInt(s)
+        if (!reps || reps.length - 1 < idx) {
+          throw Error(`Replacement with index ${idx} not found`)
+        }
+        str = str.split("{" + s + "}").join(reps[idx])
       }
     })
     TCache.set(cacheKey, str)
     return str
+    //}
   } catch (e) {
     console.error(e)
-    return "error in translation string: " + str
+    throw Error(`"${e} in translation string: ${str}`)
   }
 }
 

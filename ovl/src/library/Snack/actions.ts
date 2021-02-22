@@ -4,6 +4,7 @@ import {
   SnackId,
 } from "./Snack"
 import { OvlAction } from "../../index"
+import { render } from "lit-html"
 
 export const RemoveSnack: OvlAction<string> = (value, { state }) => {
   // if not already got added just remove from state (there are max. 3 snacks display so it could be that its not even displayed)
@@ -90,7 +91,7 @@ export const PlaceSnack: OvlAction = (_, { state }) => {
             let div = document.createElement("div")
             div.id = k
             div.setAttribute("role", "alert")
-            div.innerText = snackToAdd.text
+            render(snackToAdd.text, div)
             div.classList.add("fd-message-strip")
             div.classList.add("ovl-snack")
             let type = "fd-message-strip--" + snackToAdd.type.toLowerCase()
