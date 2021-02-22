@@ -200,7 +200,7 @@ export const SetVisible: OvlAction<OvlScreen> = (value, { state, actions }) => {
   // saveState()
 }
 
-export const SetLanguage: OvlAction<string> = async (
+export const SetLanguage: OvlAction<string, Promise<boolean>> = async (
   value,
   { state, actions, effects }
 ) => {
@@ -211,28 +211,32 @@ export const SetLanguage: OvlAction<string> = async (
       language: lang,
     }
   )
-  ResetT()
-  state.ovl.language.translations = res.data.translations
-  state.ovl.language.language = res.data.lang
-  // also set body lang fro screenreaders, spellcheck, etc
-  let body = document.getElementsByTagName("body")[0]
-  let langCode
-  switch (res.data.lang) {
-    case "DE":
-      langCode = "de-CH"
-      break
-    case "FR":
-      langCode = "fr-CH"
-      break
-  }
-  body.setAttribute("lang", langCode)
-  if (OvlConfig.translation) {
-    let fn = OvlConfig.translation.handleAdditionalTranslationResultActionPath
-    if (fn) {
-      fn(actions)(res.data)
+  if (res.data) {
+    ResetT()
+    state.ovl.language.translations = res.data.translations
+    state.ovl.language.language = res.data.lang
+    // also set body lang fro screenreaders, spellcheck, etc
+    let body = document.getElementsByTagName("body")[0]
+    let langCode
+    switch (res.data.lang) {
+      case "DE":
+        langCode = "de-CH"
+        break
+      case "FR":
+        langCode = "fr-CH"
+        break
     }
+    body.setAttribute("lang", langCode)
+    if (OvlConfig.translation) {
+      let fn = OvlConfig.translation.handleAdditionalTranslationResultActionPath
+      if (fn) {
+        fn(actions)(res.data)
+      }
+    }
+    localStorage.setItem("PortalLanguage", res.data.lang)
+    return true
   }
-  localStorage.setItem("PortalLanguage", res.data.lang)
+  return false
 }
 
 export const SetTableNeedsRebuild: OvlAction<boolean> = (value, { state }) => {
@@ -400,6 +404,27 @@ function mergeDeep(target, ...sources) {
   return mergeDeep(target, ...sources)
 }
 
+export const Rehydrate = async (
+  actions: OvlActions,
+  id?: string
+): Promise<boolean> => {
+  try {
+    if (await ovl.actions.ovl.internal.RehydrateApp(id)) {
+      let fn = OvlConfig.offline.customRehydrateActionPath
+      if (fn) {
+        await fn(actions)()
+      }
+
+      return true
+    }
+  } catch (e) {
+    console.log("Rehydrate Error:")
+    console.log(e)
+    return false
+  }
+  return false
+}
+
 export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
   let value = OvlConfig.fetch.apiUrl
   history.pushState(null, null, document.URL)
@@ -414,7 +439,7 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     OvlConfig.fetch.useDefaultParams = { clientId: false, lang: false }
   }
 
-  ResetT()
+  //ResetT()
   let currentLocation =
     window.location.hostname.toLowerCase() +
     ":" +
@@ -440,40 +465,52 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     }
   }
 
-  if (OvlConfig.translation && !OvlConfig.translation.doNotUse) {
-    let lang = localStorage.getItem("PortalLanguage")
-    let res = await effects.ovl.postRequest(
-      state.ovl.apiUrl + "users/translations",
-      {
-        language: lang,
-      }
-    )
-    if (!res || !res.data) {
-      if (!OvlConfig.offline.offlineFirstOnReload) {
-        if (!(await Rehydrate(actions))) {
-          //SnackAdd("No Api-Connection and no Offline data found!", "Error")
-          return
-        }
-        console.log("Network start failed. Got offline data...")
-        return
-      } else {
-        SnackAdd("No Api-Connection!", "Error")
+  let lang = localStorage.getItem("PortalLanguage")
+  if (!(await actions.ovl.internal.SetLanguage(lang))) {
+    if (!OvlConfig.offline.offlineFirstOnReload) {
+      if (!(await Rehydrate(actions))) {
+        //SnackAdd("No Api-Connection and no Offline data found!", "Error")
         return
       }
-    }
-
-    state.ovl.language.language = res.data.lang
-
-    localStorage.setItem("PortalLanguage", res.data.lang)
-    state.ovl.language.translations = res.data.translations
-    state.ovl.language.isReady = true
-    if (OvlConfig.translation) {
-      let fn = OvlConfig.translation.handleAdditionalTranslationResultActionPath
-      if (fn) {
-        fn(actions)(res.data)
-      }
+      console.log("Network start failed. Got offline data...")
+      return
     }
   }
+
+  // if (OvlConfig.translation && !OvlConfig.translation.doNotUse) {
+  //   let lang = localStorage.getItem("PortalLanguage")
+  //   let res = await effects.ovl.postRequest(
+  //     state.ovl.apiUrl + "users/translations",
+  //     {
+  //       language: lang,
+  //     }
+  //   )
+  //   if (!res || !res.data) {
+  //     if (!OvlConfig.offline.offlineFirstOnReload) {
+  //       if (!(await Rehydrate(actions))) {
+  //         //SnackAdd("No Api-Connection and no Offline data found!", "Error")
+  //         return
+  //       }
+  //       console.log("Network start failed. Got offline data...")
+  //       return
+  //     } else {
+  //       SnackAdd("No Api-Connection!", "Error")
+  //       return
+  //     }
+  //   }
+
+  //   state.ovl.language.language = res.data.lang
+
+  //   localStorage.setItem("PortalLanguage", res.data.lang)
+  //   state.ovl.language.translations = res.data.translations
+  //   state.ovl.language.isReady = true
+  //   if (OvlConfig.translation) {
+  //     let fn = OvlConfig.translation.handleAdditionalTranslationResultActionPath
+  //     if (fn) {
+  //       fn(actions)(res.data)
+  //     }
+  //   }
+  //}
 
   state.ovl.libState.indicator.open = false
   state.ovl.libState.indicator.refCounter = 0
@@ -490,6 +527,7 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     actions.ovl.navigation.NavigateTo(OvlConfig.screen.initial)
   }
 }
+
 let lastUpdateCheck: number = undefined
 export const UpdateCheck = async () => {
   let now = Date.now()
@@ -513,25 +551,4 @@ export const UpdateCheck = async () => {
       }
     } catch (e) {}
   }
-}
-
-export const Rehydrate = async (
-  actions: OvlActions,
-  id?: string
-): Promise<boolean> => {
-  try {
-    if (await ovl.actions.ovl.internal.RehydrateApp(id)) {
-      let fn = OvlConfig.offline.customRehydrateActionPath
-      if (fn) {
-        await fn(actions)()
-      }
-
-      return true
-    }
-  } catch (e) {
-    console.log("Rehydrate Error:")
-    console.log(e)
-    return false
-  }
-  return false
 }
