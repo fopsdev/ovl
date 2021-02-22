@@ -32,6 +32,12 @@ export class OvlControlBase extends OvlBaseElement {
     this.formState = this.state.ovl.forms[this.field.formType][
       this.field.formId
     ]
+
+    // if (this.field.fieldKey === "objectLocationConfirmed") {
+    //   debugger
+    //   console.log("init field confirmation " + this.field.ui.visible)
+    // }
+    // SetControlVisibility(this.field, this.field.ui.visible)
   }
   InitControl() {
     this.customInfo = GetCustomInfo(

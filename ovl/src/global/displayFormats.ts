@@ -7,6 +7,7 @@ if (mostPreferedLanguage === "de") {
 if (mostPreferedLanguage.indexOf("-") < 0) {
   mostPreferedLanguage = mostPreferedLanguage + "-" + mostPreferedLanguage
 }
+console.log(mostPreferedLanguage)
 export let displayFormats = {
   mostPreferedLanguage,
   decimal: {

@@ -516,15 +516,19 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
   state.ovl.libState.indicator.refCounter = 0
   // prepare login form
 
+  let initialised = false
   if (OvlConfig.init.customInitActionPath) {
     let fn = OvlConfig.init.customInitActionPath(actions)
+
     if (fn) {
-      await fn()
+      //@ts-ignore
+      initialised = await fn()
     }
   }
-
-  if (OvlConfig.screen.initial) {
-    actions.ovl.navigation.NavigateTo(OvlConfig.screen.initial)
+  if (!initialised) {
+    if (OvlConfig.screen.initial) {
+      actions.ovl.navigation.NavigateTo(OvlConfig.screen.initial)
+    }
   }
 }
 

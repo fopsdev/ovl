@@ -282,9 +282,17 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
         field.value = val
       } else {
         if (val) {
+          val = val.replace("/", "-")
           if (val.length === 10 && val.indexOf("-") > -1) {
             // looks like the well formed date select format
-            field.convertedValue = val + "T00:00:00"
+            let newDate: Date = new Date(Date.parse(val))
+            field.convertedValue =
+              newDate.getFullYear().toString() +
+              "-" +
+              (newDate.getMonth() + 1).toString().padStart(2, "0") +
+              "-" +
+              newDate.getDate().toString().padStart(2, "0") +
+              "T00:00:00"
             field.value = getDateValue(field.convertedValue, format)
             return
           }

@@ -115,6 +115,7 @@ export const getDateValue = (value: string, format?: FieldFormat) => {
   if (!value) {
     return ""
   }
+  value = value.split("/").join("-")
   let fmt
   if (format) {
     switch (format) {
@@ -470,7 +471,6 @@ export const T = (key: string, reps?: string[]): any => {
     // 1st pass
     let res = _T(key, reps)
     // 2nd pass for links and eventually DataPoints {V.} later
-
     let tres = _SecondPassPlaceholders(res)
 
     if (tres.length > 0) {
