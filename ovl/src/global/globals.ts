@@ -7,6 +7,7 @@ import { html, TemplateResult } from "lit-html"
 import { Rehydrate } from "./actions"
 import { OvlFormState, ValidateResultErrors } from "../library/Forms/actions"
 import { OvlCustomValueHint } from "../library/Forms/Controls/Parts/ControlCustomValueHint"
+import { IsControlVisible } from "../library/Forms/Controls/OvlControlBase"
 
 // export let api = { url: "" }
 //export let translations: Translations = { t: {} }
@@ -469,42 +470,8 @@ export const T = (key: string, reps?: string[]): any => {
     // 1st pass
     let res = _T(key, reps)
     // 2nd pass for links and eventually DataPoints {V.} later
-    let hashRes = new Set()
-    res
-      .split("{")
-      .filter((f) => f.indexOf("}") > -1)
-      .map((m) => m.substring(0, m.indexOf("}")))
-      .map((s) => {
-        hashRes.add(s)
-      })
 
-    let tres = [...hashRes].map((s: string) => {
-      let key: string = ""
-      if (s.startsWith("L.")) {
-        key = s.substring(2)
-        let link = key.split("@@Ovl")
-        let link1 = link[0]
-        let linkDesc = link1
-        if (link.length > 1) {
-          linkDesc = link[1]
-        }
-        let linkTemplate = html`<a href=${link[0]} target="_blank"
-          >${linkDesc}</a
-        >`
-
-        return res.split("{" + s + "}").map((m, i) => {
-          if ((i + 1) % 2 === 0) {
-            return html`${m}`
-          } else {
-            return html`${m}${linkTemplate}`
-          }
-        })
-      } else if (s.startsWith("V.")) {
-        //   return res.split("{" + s + "}").map((m, i) => {
-        //     return html`${m}${resolvePath(ovl.state, s.substring(2))}`
-        //   })
-      }
-    })
+    let tres = _SecondPassPlaceholders(res)
 
     if (tres.length > 0) {
       TCache.set(cacheKey, tres)
@@ -516,6 +483,110 @@ export const T = (key: string, reps?: string[]): any => {
     return e.toString().replace('"Error:', "")
   }
 }
+
+const _SecondPassPlaceholders = (res: string) => {
+  let templates: TemplateResult[] = []
+  if (res.indexOf("{L.") > -1 || res.indexOf("{V.") > -1) {
+    // we need to return html templates for this because it contains V. or L. - Codes
+    // just work through the res string from left to right and build up an array of Templates
+    let startCharPos = 0
+
+    while (true) {
+      let endCharPos = res.indexOf("{", startCharPos)
+      if (endCharPos < 0) {
+        break
+      }
+      templates.push(html`${res.substring(startCharPos, endCharPos)}`)
+      startCharPos = endCharPos + 1
+      endCharPos = res.indexOf("}", startCharPos)
+      let dynamicPart = res.substring(startCharPos, endCharPos)
+
+      if (dynamicPart.startsWith("L.")) {
+        let key = dynamicPart.substring(2)
+        let link = key.split("@@Ovl")
+        let link1 = link[0]
+        let linkDesc = link1
+        if (link.length > 1) {
+          linkDesc = link[1]
+        }
+        let linkTemplate = html`<a href=${link[0]} target="_blank"
+          >${linkDesc}</a
+        >`
+        templates.push(html`${linkTemplate}`)
+      } else if (dynamicPart.startsWith("V.")) {
+        let key = dynamicPart.substring(2)
+        templates.push(html`${resolvePath(ovl.state, key)}`)
+      }
+      startCharPos = endCharPos + 1
+    }
+
+    // let hashRes = new Set()
+    // res
+    //   .split("{")
+    //   .filter((f) => f.indexOf("}") > -1)
+    //   .map((m) => m.substring(0, m.indexOf("}")))
+    //   .map((s) => {
+    //     hashRes.add(s)
+    //   })
+    // let LRes = [...hashRes].map((s: string) => {
+    //   let key: string = ""
+    //   if (s.startsWith("L.")) {
+    //     debugger
+    //     key = s.substring(2)
+    //     let link = key.split("@@Ovl")
+    //     let link1 = link[0]
+    //     let linkDesc = link1
+    //     if (link.length > 1) {
+    //       linkDesc = link[1]
+    //     }
+    //     let linkTemplate = html`<a href=${link[0]} target="_blank"
+    //       >${linkDesc}</a
+    //     >`
+
+    //     return res.split("{" + s + "}").map((m, i) => {
+    //       if ((i + 1) % 2 === 0) {
+    //         return html`${m}`
+    //       } else {
+    //         return html`${m}${linkTemplate}`
+    //       }
+    //     })
+    // })
+
+    // hashRes = new Set()
+    // res
+    //   .split("{")
+    //   .filter((f) => f.indexOf("}") > -1)
+    //   .map((m) => m.substring(0, m.indexOf("}")))
+    //   .map((s) => {
+    //     hashRes.add(s)
+    //   })
+
+    // let VRes = [...hashRes].map((s: string) => {
+    //   let key: string = ""
+    //   if (s.startsWith("V.")) {
+    //     // @todo make this recursive...not working properly for now
+    //     let tres = res.split("{" + s + "}").map((m, i) => {
+    //       if ((i + 1) % 2 !== 0) {
+    //         return html`${m}`
+    //       } else {
+    //         return html`${resolvePath(ovl.state, s.substring(2))}`
+    //       }
+
+    //       // res = res.replace("{" + s + "}", "").replace(m, "")
+
+    //       // return html`${m}${resolvePath(ovl.state, s.substring(2))}`
+    //     })
+    //     let lastIndexOf = res.lastIndexOf("{" + s + "}")
+    //     let lastIndexOf2 = res.indexOf("}", lastIndexOf)
+    //     debugger
+    //     res = res.substring(lastIndexOf2 + 1)
+    //     return tres
+    //   }
+    // })
+  }
+  return templates
+}
+
 const _T = (key: string, reps?: string[]): any => {
   if (!languageRef) {
     languageRef = ovl.state.ovl.language
