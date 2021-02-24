@@ -15,7 +15,11 @@ import {
 } from "./helpers"
 
 import { OvlFormState } from "../actions"
-import { ChangeValueEventHelper, SetFocusEventHelper } from "../helper"
+import {
+  ChangeValueEventHelper,
+  RemoveFocusEventHelper,
+  SetFocusEventHelper,
+} from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 
 export class OvlOption extends OvlControlBase {
@@ -56,6 +60,7 @@ export class OvlOption extends OvlControlBase {
             class="fd-form-group ${inline} ${this.customInfo
               .customRowClassName}"
             id="${field.id}"
+            @focusout=${() => RemoveFocusEventHelper(this, field.id)}
           >
             ${Object.keys(listData).map((rowKey) => {
               return html`

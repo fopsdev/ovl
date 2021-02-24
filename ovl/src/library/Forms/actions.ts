@@ -512,14 +512,14 @@ export const ValidateForm: OvlAction<OvlFormState> = (
   Object.keys(value.fields).map((k) => {
     let field = value.fields[k]
     field.validationResult.errors = []
-    let oldValid = field.validationResult.errors.length === 0
+
     let oldConvertedValue = field.convertedValue
     let validationFnName = FormValidate
     let namespace = value.namespace
     // field.validationResult.valid = true
     // field.validationResult.validationMsg = ""
 
-    actions.ovl.internal.TouchField({ fieldId: k, formState: value })
+    //actions.ovl.internal.TouchField({ fieldId: k, formState: value })
 
     actions.ovl.internal.ValidateDataType({
       field,
@@ -715,6 +715,7 @@ export type SetField = {
   formState: OvlFormState
   fieldKey: string
   convertedValue: any
+  isInit?: boolean
 }
 
 export type FieldChanged = {
@@ -759,6 +760,7 @@ export const SetField: OvlAction<SetField> = (value, { actions }) => {
     value: value.convertedValue,
     isInnerEvent: true,
     ignoreCustomValidation: true,
+    isInit: value.isInit,
   })
 }
 
