@@ -90,6 +90,7 @@ export const SetControlVisibility = (
 ) => {
   if (!field._state.closing) {
     field.ui.visible = visible
+    field.watched = false
     // get the parent (<ovl-control>)
     let el = document.getElementById("ovl_" + field.id)
     if (!field._state.visible && visible === "fadeIn") {

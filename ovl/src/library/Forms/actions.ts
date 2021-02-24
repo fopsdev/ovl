@@ -758,9 +758,8 @@ export const SetField: OvlAction<SetField> = (value, { actions }) => {
     fieldKey: value.fieldKey,
     formState: value.formState,
     value: value.convertedValue,
-    isInnerEvent: true,
+    isInnerEvent: false,
     ignoreCustomValidation: true,
-    isInit: value.isInit,
   })
 }
 
@@ -853,9 +852,9 @@ export const ChangeField: OvlAction<ChangeField> = (
   //   return
   // }
 
-  if (!field.ui.readonly) {
-    field.watched = !value.isInit
-  }
+  // if (!field.ui.readonly) {
+  //   field.watched = !value.isInit
+  // }
   let namespace = value.formState.namespace
   field.value = value.value
   let oldConvertedValue = field.convertedValue
@@ -907,11 +906,12 @@ export const ChangeField: OvlAction<ChangeField> = (
     }
   }
   //if (field.convertedValue !== oldConvertedValue) {
-  SetFormValid(value.formState)
-  field.dirty = !value.isInit
-  if (!value.formState.dirty) {
-    value.formState.dirty = !value.isInit
+  if (!value.isInnerEvent) {
+    field.dirty = false
+  } else {
+    field.dirty = !value.isInit
   }
+  SetFormValid(value.formState)
   //}
   if (
     (!value.isInnerEvent &&

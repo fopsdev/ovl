@@ -460,8 +460,19 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   if (formState.valid !== valid) {
     formState.valid = valid
   }
-
+  SetFormDirty(formState)
   SetVisibleSummaryErrorKeys(formState)
+}
+
+export const SetFieldDirty = (field: Field) => {
+  field.dirty = true
+  SetFormDirty(ovl.state.ovl.forms[field.formType][field.formId])
+}
+
+export const SetFormDirty = (formState: OvlFormState) => {
+  formState.dirty = Object.keys(formState.fields).some(
+    (s) => formState.fields[s].dirty
+  )
 }
 
 // export const SetFormValidFromNoValidate = (formState: OvlFormState) => {

@@ -30,6 +30,7 @@ export class OvlTextbox extends OvlControlBase {
       },
     })
     this.inputElement.dispatchEvent(event)
+    this.field.dirty = true
     //}
   }
 

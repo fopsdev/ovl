@@ -10,6 +10,7 @@ import {
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 import { isMobile } from "../../../global/globals"
+import { SetFieldDirty } from "../validators"
 
 export class OvlTime extends OvlControlBase {
   init() {
@@ -49,6 +50,9 @@ export class OvlTime extends OvlControlBase {
               this.nonFocusable() ? "-1" : undefined,
               this
             )}"
+            @input=${(e) => {
+              SetFieldDirty(this.field)
+            }}
             @focusout=${() => RemoveFocusEventHelper(this, field.id)}
             @focus=${() => SetFocusEventHelper(this, field.id)}
             style="${field.ui.align ? field.ui.align : ""}"

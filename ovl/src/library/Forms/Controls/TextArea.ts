@@ -34,6 +34,9 @@ export class OvlTextArea extends OvlControlBase {
               this.nonFocusable() ? "-1" : undefined,
               this
             )}"
+            @input=${(e) => {
+              this.field.dirty = true
+            }}
             @change=${(e) => this.handleChange(e)}
             @focusout=${() => RemoveFocusEventHelper(this, field.id)}
             @focus=${() => SetFocusEventHelper(this, field.id)}

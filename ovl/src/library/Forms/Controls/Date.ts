@@ -21,6 +21,7 @@ import {
 } from "../../../global/globals"
 import { OvlControlBase } from "./OvlControlBase"
 import { SnackAdd } from "../../helpers"
+import { SetFieldDirty } from "../validators"
 
 export class OvlDate extends OvlControlBase {
   //displayValue: string
@@ -163,6 +164,9 @@ export class OvlDate extends OvlControlBase {
                 this.nonFocusable() ? "-1" : undefined,
                 this
               )}"
+              @input=${(e) => {
+                SetFieldDirty(this.field)
+              }}
               @focus=${() => SetFocusEventHelper(this, field.id)}
               @focusout=${() => this.handleFocusOut()}
               style="${field.ui.align ? field.ui.align : ""}"

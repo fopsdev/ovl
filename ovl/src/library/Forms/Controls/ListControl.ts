@@ -276,6 +276,7 @@ export class OvlListControl extends OvlControlBase {
     //   this.forceCloseLocalHitList()
     // }
 
+    this.field.dirty = true
     let waitTime = 500
 
     clearTimeout(this.timer)

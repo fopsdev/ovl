@@ -669,4 +669,5 @@ ovl-table {
 
 .ovl-input-datepicker::-webkit-calendar-picker-indicator {
   padding-right: 0;
+  outline: none;
 }
