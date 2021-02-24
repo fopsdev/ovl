@@ -32,6 +32,7 @@ export type FormValidationSchemaSettings = {
 export type FormValidationListSettings = {
   ListValue: FormValidationField
   NotEmpty: FormValidationField
+  NotEmptyOption: FormValidationField
 }
 
 export type FormValidationValidatorSettings = {

@@ -76,12 +76,10 @@ export class OvlDate extends OvlControlBase {
     if (e.key === "Tab") {
       this.handleChange(e)
       document.getElementById("focusafter" + this.field.id).focus()
-      //this.inputElement.focus()
     }
   }
 
   handlePickerFieldFocusOut(e: Event) {
-    console.log("pickerFuield Lostfocus")
     let pickerVal = this.inputPickerElement.value
     if (pickerVal.length < 10) {
       this.inputElement.value = ""

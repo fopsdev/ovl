@@ -41,7 +41,6 @@ export class OvlOption extends OvlControlBase {
         inline = "fd-form-group--inline"
       }
 
-      console.log(`field converted value ${field.convertedValue}`)
       return html`
         <div
           class="${GetContainerClass(
@@ -59,8 +58,6 @@ export class OvlOption extends OvlControlBase {
             id="${field.id}"
           >
             ${Object.keys(listData).map((rowKey) => {
-              console.log(listData[rowKey][list.valueField])
-
               return html`
                 <input
                   tabindex="${ifDefined(

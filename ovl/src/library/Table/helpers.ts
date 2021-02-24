@@ -812,6 +812,13 @@ export const getFormFieldsFromColumns = (
     if (visible && visible.indexOf("Edit") < 0) {
       formFields[k].notUsed = true
     }
+    if (col.list && col.control === "option") {
+      formFields[k].list.isOption = true
+      formFields[k].list.isSelect = true
+    }
+    if (col.list && col.control === "select") {
+      formFields[k].list.isSelect = true
+    }
   })
   return formFields
 }

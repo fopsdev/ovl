@@ -37,6 +37,7 @@ export type ListState = {
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
   isSelect?: boolean
+  isOption?: boolean
 }
 
 export class OvlListControl extends OvlControlBase {

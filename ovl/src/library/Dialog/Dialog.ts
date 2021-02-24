@@ -84,7 +84,7 @@ export class OvlDialog extends OvlBaseElement {
   keyHandler = (e: KeyboardEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log(e.key)
+
     if (e.key == "Enter") {
       if (this.dialog.default == 1) {
         this.handleResult(1)

@@ -291,6 +291,7 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
             field.value = getDateValue(field.convertedValue, format)
             return
           }
+
           let vals = val.split(".")
           // there should be 3 entries (dd,mm,yyyy) for a complete date as supported for now
           let cDate = new Date()
@@ -335,14 +336,14 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
               )
             )
           } else {
+            let dval = new Date(resp)
+            newDate = getDateISOString(dval)
             field.convertedValue = newDate
             field.value = getDateValue(newDate, format)
-            //RemoveFieldValidation(field, "AppValidationInvalidDateFormat")
           }
         } else {
           field.convertedValue = null
           field.value = ""
-          //field.value = ""
         }
       }
       break
@@ -448,10 +449,13 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
   }
 
   if (!list.acceptEmpty && !field.value) {
-    AddValidation(
-      field,
-      JSON.parse(JSON.stringify(value.formState.validation.list.NotEmpty))
-    )
+    let validate
+    if (list.isOption) {
+      validate = value.formState.validation.list.NotEmptyOption
+    } else {
+      validate = value.formState.validation.list.NotEmpty
+    }
+    AddValidation(field, JSON.parse(JSON.stringify(validate)))
     return
   }
   if (list.acceptOnlyListValues && field.value) {
@@ -913,9 +917,9 @@ export const ChangeField: OvlAction<ChangeField> = (
       field.previousConvertedValue !== field.convertedValue) ||
       (value.isInnerEvent && oldConvertedValue !== field.convertedValue))
   ) {
-    console.log(
-      `field changed ${value.fieldKey} isInnerEvent: ${value.isInnerEvent} convertedValue: ${field.convertedValue} previousConvertedValue: ${field.previousConvertedValue} oldConvertedValue ${oldConvertedValue}`
-    )
+    // console.log(
+    //   `field changed ${value.fieldKey} isInnerEvent: ${value.isInnerEvent} convertedValue: ${field.convertedValue} previousConvertedValue: ${field.previousConvertedValue} oldConvertedValue ${oldConvertedValue}`
+    // )
 
     if (fn && fn[FormChanged]) {
       fn[FormChanged](<FormChanged_Type>{
