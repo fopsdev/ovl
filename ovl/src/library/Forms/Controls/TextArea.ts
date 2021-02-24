@@ -8,6 +8,7 @@ import {
   SetFocusEventHelper,
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
+import { SetFieldDirty } from "../validators"
 
 export class OvlTextArea extends OvlControlBase {
   handleChange(e: Event) {
@@ -35,7 +36,7 @@ export class OvlTextArea extends OvlControlBase {
               this
             )}"
             @input=${(e) => {
-              this.field.dirty = true
+              SetFieldDirty(this.field, true)
             }}
             @change=${(e) => this.handleChange(e)}
             @focusout=${() => RemoveFocusEventHelper(this, field.id)}

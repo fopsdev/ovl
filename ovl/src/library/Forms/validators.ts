@@ -5,11 +5,12 @@ import {
   ValidateResultSummaryErrors,
   ValidateSummaryResult,
 } from "./actions"
-import { logState, SetFocus, T } from "../../global/globals"
+import { logState, resolvePath, SetFocus, T } from "../../global/globals"
 import { ovl, OvlForm, OvlFormValidationValidators } from "../.."
 import { form } from "../../actions"
 import { forms } from "../../state"
 import { OvlConfig } from "../../config"
+import { FormDirtyChanged } from "../../global/hooks"
 
 export type FormValidation = {
   dataType?: FormValidationDataTypeSettings
@@ -464,15 +465,25 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   SetVisibleSummaryErrorKeys(formState)
 }
 
-export const SetFieldDirty = (field: Field) => {
-  field.dirty = true
-  SetFormDirty(ovl.state.ovl.forms[field.formType][field.formId])
+export const SetFieldDirty = (field: Field, dirty: boolean) => {
+  if (field.dirty !== dirty) {
+    field.dirty = dirty
+    SetFormDirty(ovl.state.ovl.forms[field.formType][field.formId])
+  }
 }
 
 export const SetFormDirty = (formState: OvlFormState) => {
-  formState.dirty = Object.keys(formState.fields).some(
+  let newDirty = Object.keys(formState.fields).some(
     (s) => formState.fields[s].dirty
   )
+  if (newDirty !== formState.dirty) {
+    formState.dirty = newDirty
+    let formDirtyChangedFnName = FormDirtyChanged
+    let fn = resolvePath(ovl.actions.custom, formState.namespace)
+    if (fn && fn[formDirtyChangedFnName]) {
+      fn[formDirtyChangedFnName]({ formState })
+    }
+  }
 }
 
 // export const SetFormValidFromNoValidate = (formState: OvlFormState) => {

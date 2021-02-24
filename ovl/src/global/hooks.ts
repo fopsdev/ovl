@@ -70,6 +70,11 @@ export type FormAfterRender_Type = {
 }
 export const FormAfterRender = "FormAfterRender"
 
+export type FormDirtyChangedType = {
+  formState: OvlFormState
+}
+export const FormDirtyChanged = "FormDirtyChanged"
+
 // gets called when a form field is changed
 export type FormValidate_Type = ValidateFieldType
 export const FormValidate = "FormValidate"

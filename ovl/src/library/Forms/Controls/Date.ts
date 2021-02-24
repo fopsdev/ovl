@@ -165,7 +165,7 @@ export class OvlDate extends OvlControlBase {
                 this
               )}"
               @input=${(e) => {
-                SetFieldDirty(this.field)
+                SetFieldDirty(this.field, true)
               }}
               @focus=${() => SetFocusEventHelper(this, field.id)}
               @focusout=${() => this.handleFocusOut()}

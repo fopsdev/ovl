@@ -50,6 +50,7 @@ import {
   FormValidationSummaryDisplayType,
   FormValidation,
   AddValidation,
+  SetFieldDirty,
 } from "./validators"
 import { OvlConfig } from "../../config"
 export { FillListControl }
@@ -826,7 +827,6 @@ export const ChangeField: OvlAction<ChangeField> = (
   field.validationResult.errors.forEach((f) => {
     RemoveFieldValidation(field, f.key)
   })
-
   field.validationResult.errors = []
   // if (value.isConvertedValue) {
   //   //field.previousConvertedValue = field.convertedValue
@@ -907,9 +907,9 @@ export const ChangeField: OvlAction<ChangeField> = (
   }
   //if (field.convertedValue !== oldConvertedValue) {
   if (!value.isInnerEvent) {
-    field.dirty = false
+    SetFieldDirty(field, false)
   } else {
-    field.dirty = !value.isInit
+    SetFieldDirty(field, !value.isInit)
   }
   SetFormValid(value.formState)
   //}

@@ -26,6 +26,7 @@ import {
   SetFocusEventHelper,
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
+import { SetFieldDirty } from "../validators"
 
 export type ListState = {
   serverEndpoint?: string
@@ -276,7 +277,7 @@ export class OvlListControl extends OvlControlBase {
     //   this.forceCloseLocalHitList()
     // }
 
-    this.field.dirty = true
+    SetFieldDirty(this.field, true)
     let waitTime = 500
 
     clearTimeout(this.timer)

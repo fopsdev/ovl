@@ -9,6 +9,7 @@ import {
   SetFocusEventHelper,
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
+import { SetFieldDirty } from "../validators"
 
 type TextBoxType = "text" | "password" | "text-security"
 
@@ -30,7 +31,7 @@ export class OvlTextbox extends OvlControlBase {
       },
     })
     this.inputElement.dispatchEvent(event)
-    this.field.dirty = true
+    SetFieldDirty(this.field, true)
     //}
   }
 
