@@ -13,6 +13,7 @@ import {
   SetFocusEventHelper,
 } from "../helper"
 import {
+  getDateISOString,
   getDateValue,
   isFirefox,
   isMobile,
@@ -56,18 +57,19 @@ export class OvlDate extends OvlControlBase {
         this.inputElement.value = ""
       } else {
         let dval = new Date(pickerVal)
-        this.inputElement.value = getDateValue(dval.toISOString())
+        this.inputElement.value = getDateValue(getDateISOString(dval))
       }
     }
-    ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
+    ChangeValueEventHelper(this, this.inputElement.value, this.field.id, true)
     //@ts-ignore
-    if (e.target.id == this.field.id) {
+    if (e.target.id === this.field.id) {
       this.updatePickerElement()
     }
   }
 
   handleFocusOut() {
-    //ChangeValueEventHelper(this, this.inputElement.value, this.field.id)
+    ChangeValueEventHelper(this, this.field.value, this.field.id, false)
+    this.updatePickerElement()
     RemoveFocusEventHelper(this, this.field.id)
   }
   handlePickerFieldKeyUp(e: KeyboardEvent) {
@@ -83,18 +85,18 @@ export class OvlDate extends OvlControlBase {
       this.inputElement.value = ""
       this.inputPickerElement.value = ""
     }
+    ChangeValueEventHelper(this, this.field.value, this.field.id, true)
   }
 
   updatePickerElement() {
     if (this.inputPickerElement) {
       let dval = new Date(this.field.convertedValue)
       if (!isNaN(dval.getDate())) {
-        this.inputPickerElement.value =
-          dval.getFullYear().toString() +
-          "-" +
-          (dval.getMonth() + 1).toString().padStart(2, "0") +
-          "-" +
-          dval.getDate().toString().padStart(2, "0")
+        console.log(getDateISOString(dval).replace("T00:00:00", ""))
+        this.inputPickerElement.value = getDateISOString(dval).replace(
+          "T00:00:00",
+          ""
+        )
       } else {
         this.inputPickerElement.value = ""
       }
@@ -160,7 +162,6 @@ export class OvlDate extends OvlControlBase {
               field
             )}"
           >
-            ${browserDatePicker} ${browserDatePickerButton}
             <input
               tabindex="${ifDefined(
                 this.nonFocusable() ? "-1" : undefined,
@@ -181,6 +182,8 @@ export class OvlDate extends OvlControlBase {
               value="${fieldValue}"
               spellcheck="false"
             />
+
+            ${browserDatePicker} ${browserDatePickerButton}
           </div>
 
           <ovl-controlcustomhint .props=${() => this.field}>

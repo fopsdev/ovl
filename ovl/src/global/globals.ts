@@ -34,6 +34,16 @@ export const getLocalTimestampString = (): string => {
   return new Date(Date.now() - tzoffset).toISOString().slice(0, -1)
 }
 
+export const getDateISOString = (date: Date): string => {
+  return (
+    date.getFullYear().toString() +
+    "-" +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    date.getDate().toString().padStart(2, "0") +
+    "T00:00:00"
+  )
+}
 //@ts-ignore
 export let OvlTimestamp = 0
 export const uuidv4 = () => {

@@ -2,6 +2,8 @@
 
 
 - refactor savestate rehydrate to be also usable from non offline scenarios
+- simple date entry should also cope with 02/26/2021 - values (take the / for check maybe)
+
 
 Because of an ovl overhaul following checks needs to be done:
 - Initform now takes convertedvalue and uses getDisplayValue(..) for value

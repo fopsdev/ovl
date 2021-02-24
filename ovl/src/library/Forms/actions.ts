@@ -1,4 +1,5 @@
 import {
+  getDateISOString,
   getDateValue,
   getDecimalValue,
   isMobile,
@@ -285,14 +286,8 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
           val = val.replace("/", "-")
           if (val.length === 10 && val.indexOf("-") > -1) {
             // looks like the well formed date select format
-            let newDate: Date = new Date(Date.parse(val))
-            field.convertedValue =
-              newDate.getFullYear().toString() +
-              "-" +
-              (newDate.getMonth() + 1).toString().padStart(2, "0") +
-              "-" +
-              newDate.getDate().toString().padStart(2, "0") +
-              "T00:00:00"
+            let newDate: Date = new Date(val)
+            field.convertedValue = getDateISOString(newDate)
             field.value = getDateValue(field.convertedValue, format)
             return
           }
@@ -329,10 +324,10 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
               ? day.toString().padStart(2, "0")
               : cDay.toString().padStart(2, "0")) +
             "T00:00:00"
-          let resp = Date.parse(newDate)
+          let resp = new Date(newDate).getTime()
           if (!resp) {
-            field.convertedValue = ""
-            field.value = field.value
+            // field.convertedValue = ""
+            // field.value = field.value
             AddValidation(
               field,
               JSON.parse(
@@ -514,7 +509,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
     let field = value.fields[k]
     field.validationResult.errors = []
     let oldValid = field.validationResult.errors.length === 0
-    let val = field.convertedValue
+    let oldConvertedValue = field.convertedValue
     let validationFnName = FormValidate
     let namespace = value.namespace
     // field.validationResult.valid = true
@@ -553,16 +548,19 @@ export const ValidateForm: OvlAction<OvlFormState> = (
         }
       }
     }
-    if (!oldValid && field.validationResult.errors.length === 0) {
+    if (
+      field.convertedValue !== oldConvertedValue &&
+      field.validationResult.errors.length === 0
+    ) {
       if (fn && fn[FormChanged]) {
         fn[FormChanged](<FormChanged_Type>{
-          fieldId: k,
+          field,
           formState: value,
-          oldConvertedVal: field.previousConvertedValue,
-          newConvertedVal: field.convertedValue,
+          currentConvertedValue: oldConvertedValue,
           isInnerEvent: false,
         })
       }
+      field.previousConvertedValue = field.convertedValue
     }
   })
   SetFormValid(value)
@@ -717,9 +715,8 @@ export type SetField = {
 
 export type FieldChanged = {
   formState: OvlFormState
-  fieldId: string
-  newConvertedVal: string
-  oldConvertedVal: string
+  field: Field
+  currentConvertedValue: any
   row: any
   isInnerEvent?: boolean
 }
@@ -853,9 +850,9 @@ export const ChangeField: OvlAction<ChangeField> = (
   if (!field.ui.readonly) {
     field.watched = !value.isInit
   }
-  let oldConvertedVal = field.convertedValue
   let namespace = value.formState.namespace
   field.value = value.value
+  let oldConvertedValue = field.convertedValue
   let fn = resolvePath(actions.custom, namespace)
 
   actions.ovl.internal.ValidateDataType({
@@ -897,29 +894,43 @@ export const ChangeField: OvlAction<ChangeField> = (
             val.correctedValue
           ) {
             field.convertedValue = val.correctedValue
+            field.value = getDateValue(field.convertedValue, field.ui.format)
           }
         }
       }
     }
   }
-  if (field.convertedValue !== oldConvertedVal) {
+  if (field.convertedValue !== oldConvertedValue) {
     SetFormValid(value.formState)
     field.dirty = !value.isInit
     if (!value.formState.dirty) {
       value.formState.dirty = !value.isInit
     }
-    if (field.validationResult.errors.length === 0) {
-      if (fn && fn[FormChanged]) {
-        fn[FormChanged](<FormChanged_Type>{
-          fieldId: value.fieldKey,
-          formState: value.formState,
-          oldConvertedVal: field.previousConvertedValue,
-          newConvertedVal: field.convertedValue,
-          row: GetRowFromFormState(value.formState),
-        })
-      }
+  }
+  if (
+    field.validationResult.errors.length === 0 &&
+    ((!value.isInnerEvent &&
+      field.previousConvertedValue !== field.convertedValue) ||
+      (value.isInnerEvent && oldConvertedValue !== field.convertedValue))
+  ) {
+    console.log(
+      `field changed ${value.fieldKey} isInnerEvent: ${value.isInnerEvent} convertedValue: ${field.convertedValue} previousConvertedValue: ${field.previousConvertedValue} oldConvertedValue ${oldConvertedValue}`
+    )
+
+    if (fn && fn[FormChanged]) {
+      fn[FormChanged](<FormChanged_Type>{
+        field,
+        formState: value.formState,
+        currentConvertedValue: oldConvertedValue,
+        row: GetRowFromFormState(value.formState),
+        isInnerEvent: value.isInnerEvent,
+      })
+    }
+    if (!value.isInnerEvent) {
+      field.previousConvertedValue = field.convertedValue
     }
   }
+
   SetRowCellInformation(value.formState, actions, state)
   //actions.ovl.internal.SetFormValid(value.formState)
 }

@@ -36,11 +36,12 @@ export class OvlOption extends OvlControlBase {
       )[listFn](<FieldGetList_Type>{ row: GetRowFromFormState(this.formState) })
         .data
 
-      let inline
+      let inline = ""
       if (field.ui.inline) {
         inline = "fd-form-group--inline"
       }
 
+      console.log(`field converted value ${field.convertedValue}`)
       return html`
         <div
           class="${GetContainerClass(
@@ -58,6 +59,8 @@ export class OvlOption extends OvlControlBase {
             id="${field.id}"
           >
             ${Object.keys(listData).map((rowKey) => {
+              console.log(listData[rowKey][list.valueField])
+
               return html`
                 <input
                   tabindex="${ifDefined(
@@ -69,6 +72,13 @@ export class OvlOption extends OvlControlBase {
                     field,
                     this.customInfo.customRowClassName
                   )}"
+                  type="radio"
+                  id="${field.id + rowKey}"
+                  name="${rowKey}"
+                  ?checked=${field.convertedValue ===
+                  listData[rowKey][list.valueField]}
+                  .checked=${field.convertedValue ===
+                  listData[rowKey][list.valueField]}
                   @click=${(e) => e.stopPropagation()}
                   @focus=${() => SetFocusEventHelper(this, field.id)}
                   @change=${(e) =>
@@ -79,14 +89,6 @@ export class OvlOption extends OvlControlBase {
                     )}
                   @focusout=${(e) =>
                     SetFocusEventHelper(this, field.id + rowKey)}
-                  type="radio"
-                  class="fd-radio ${GetOutlineValidationHint(field)}"
-                  id="${field.id + rowKey}"
-                  name="${rowKey}"
-                  ?checked=${field.convertedValue ===
-                  listData[rowKey][list.valueField]}
-                  .checked=${field.convertedValue ===
-                  listData[rowKey][list.valueField]}
                 />
                 <label
                   class="fd-radio__label ovl-formcontrol-optionlabel ovl-formcontrol-optionlabel__${field.fieldKey}"

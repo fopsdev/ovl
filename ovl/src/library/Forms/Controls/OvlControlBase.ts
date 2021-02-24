@@ -83,6 +83,7 @@ export class OvlControlBase extends OvlBaseElement {
     //this.removeEventListener("animationstart", this.handleAnimationStart, true)
   }
 }
+
 export const SetControlVisibility = (
   field: Field,
   visible: ControlVisiblity
