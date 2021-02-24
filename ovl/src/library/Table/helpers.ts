@@ -810,7 +810,7 @@ export const getFormFieldsFromColumns = (
       visible = col.ui.visibility
     }
     if (visible && visible.indexOf("Edit") < 0) {
-      formFields[k].notUsed = true
+      formFields[k].inactive = true
     }
     if (col.list && col.control === "option") {
       formFields[k].list.isOption = true

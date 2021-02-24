@@ -31,7 +31,7 @@ export type FormField = {
   value: any
   type?: DataType
   list?: ListState
-  notUsed?: boolean
+  inactive?: boolean
   ui?: {
     labelTranslationKey?: string
     noLabel?: boolean

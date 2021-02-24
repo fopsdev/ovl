@@ -80,7 +80,7 @@ export const getFormFields = (
       fieldKey: k,
       ui: formFields[k].ui,
       previousConvertedValue: value,
-      notUsed: false,
+      inactive: false,
       _state: { closing: false, visible: true },
     }
     if (!formFields[k].ui) {

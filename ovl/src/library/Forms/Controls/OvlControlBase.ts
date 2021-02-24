@@ -92,10 +92,16 @@ export const SetControlVisibility = (
     field.ui.visible = visible
     // get the parent (<ovl-control>)
     let el = document.getElementById("ovl_" + field.id)
-    if (el && !field._state.visible && visible === "fadeIn") {
-      el.classList.remove("fadeOutControl")
-      el.classList.remove("ovl-hideControl")
-      el.classList.add("fadeInControl")
+    if (!field._state.visible && visible === "fadeIn") {
+      if (el) {
+        el.classList.remove("fadeOutControl")
+        el.classList.remove("ovl-hideControl")
+        el.classList.add("fadeInControl")
+      } else {
+        // we are accessing the el from another screen probably. so el is not defined...no fadeIn required just set to true
+        // same bwlow for fadeOzt from another screen...
+        field._state.visible = true
+      }
     } else if (visible === "true") {
       if (el) {
         el.classList.remove("fadeInControl")
@@ -103,9 +109,13 @@ export const SetControlVisibility = (
         el.classList.remove("ovl-hideControl")
       }
       field._state.visible = true
-    } else if (el && field._state.visible && visible === "fadeOut") {
-      el.classList.remove("fadeInControl")
-      el.classList.add("fadeOutControl")
+    } else if (field._state.visible && visible === "fadeOut") {
+      if (el) {
+        el.classList.remove("fadeInControl")
+        el.classList.add("fadeOutControl")
+      } else {
+        field._state.visible = false
+      }
     } else if (visible === "false") {
       if (el) {
         el.classList.remove("fadeInControl")

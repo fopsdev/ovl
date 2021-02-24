@@ -62,7 +62,7 @@ export type Field = {
   dirty: boolean
   watched: boolean
   hasFocus?: boolean
-  notUsed?: boolean
+  inactive?: boolean
   validationResult: ValidateResult
   id: string
   formType: string
