@@ -556,7 +556,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
         fn[FormChanged](<FormChanged_Type>{
           field,
           formState: value,
-          currentConvertedValue: oldConvertedValue,
+          unconfirmedConvertedValue: oldConvertedValue,
           isInnerEvent: false,
         })
       }
@@ -716,7 +716,7 @@ export type SetField = {
 export type FieldChanged = {
   formState: OvlFormState
   field: Field
-  currentConvertedValue: any
+  unconfirmedConvertedValue: any
   row: any
   isInnerEvent?: boolean
 }
@@ -921,7 +921,7 @@ export const ChangeField: OvlAction<ChangeField> = (
       fn[FormChanged](<FormChanged_Type>{
         field,
         formState: value.formState,
-        currentConvertedValue: oldConvertedValue,
+        unconfirmedConvertedValue: oldConvertedValue,
         row: GetRowFromFormState(value.formState),
         isInnerEvent: value.isInnerEvent,
       })
