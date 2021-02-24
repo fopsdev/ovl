@@ -50,17 +50,24 @@ export class OvlDate extends OvlControlBase {
     e.stopPropagation()
     e.preventDefault()
     //@ts-ignore
+    let isInnerEvent = true
     if (e.target.id == "picker" + this.field.id) {
       let pickerVal = this.inputPickerElement.value
 
       if (pickerVal.length < 10) {
         this.inputElement.value = ""
+        isInnerEvent = false
       } else {
         let dval = new Date(pickerVal)
         this.inputElement.value = getDateValue(getDateISOString(dval))
       }
     }
-    ChangeValueEventHelper(this, this.inputElement.value, this.field.id, true)
+    ChangeValueEventHelper(
+      this,
+      this.inputElement.value,
+      this.field.id,
+      isInnerEvent
+    )
     //@ts-ignore
     if (e.target.id === this.field.id) {
       this.updatePickerElement()

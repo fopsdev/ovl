@@ -117,7 +117,6 @@ export function hasOSReducedMotion() {
     const query = "(prefers-reduced-motion: reduce)"
     _hasOSReducedMotion = window.matchMedia(query).matches
   }
-  console.log(_hasOSReducedMotion)
   return _hasOSReducedMotion
 }
 

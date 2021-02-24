@@ -904,18 +904,17 @@ export const ChangeField: OvlAction<ChangeField> = (
       }
     }
   }
-  if (field.convertedValue !== oldConvertedValue) {
-    SetFormValid(value.formState)
-    field.dirty = !value.isInit
-    if (!value.formState.dirty) {
-      value.formState.dirty = !value.isInit
-    }
+  //if (field.convertedValue !== oldConvertedValue) {
+  SetFormValid(value.formState)
+  field.dirty = !value.isInit
+  if (!value.formState.dirty) {
+    value.formState.dirty = !value.isInit
   }
+  //}
   if (
-    field.validationResult.errors.length === 0 &&
-    ((!value.isInnerEvent &&
+    (!value.isInnerEvent &&
       field.previousConvertedValue !== field.convertedValue) ||
-      (value.isInnerEvent && oldConvertedValue !== field.convertedValue))
+    (value.isInnerEvent && oldConvertedValue !== field.convertedValue)
   ) {
     // console.log(
     //   `field changed ${value.fieldKey} isInnerEvent: ${value.isInnerEvent} convertedValue: ${field.convertedValue} previousConvertedValue: ${field.previousConvertedValue} oldConvertedValue ${oldConvertedValue}`
