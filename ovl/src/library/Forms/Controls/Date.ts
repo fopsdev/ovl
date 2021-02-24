@@ -75,24 +75,25 @@ export class OvlDate extends OvlControlBase {
   handlePickerFieldKeyUp(e: KeyboardEvent) {
     if (e.key === "Tab") {
       this.handleChange(e)
-      this.inputElement.focus()
+      document.getElementById("focusafter" + this.field.id).focus()
+      //this.inputElement.focus()
     }
   }
 
   handlePickerFieldFocusOut(e: Event) {
+    console.log("pickerFuield Lostfocus")
     let pickerVal = this.inputPickerElement.value
     if (pickerVal.length < 10) {
       this.inputElement.value = ""
       this.inputPickerElement.value = ""
     }
-    ChangeValueEventHelper(this, this.field.value, this.field.id, true)
+    ChangeValueEventHelper(this, this.field.value, this.field.id, false)
   }
 
   updatePickerElement() {
     if (this.inputPickerElement) {
       let dval = new Date(this.field.convertedValue)
       if (!isNaN(dval.getDate())) {
-        console.log(getDateISOString(dval).replace("T00:00:00", ""))
         this.inputPickerElement.value = getDateISOString(dval).replace(
           "T00:00:00",
           ""
@@ -124,12 +125,6 @@ export class OvlDate extends OvlControlBase {
             id="picker${field.id}"
           />
         `
-        console.log(
-          "is Firefox: " +
-            isFirefox().toString() +
-            ", field value: " +
-            field.value
-        )
         if (isFirefox() && !field.value) {
           browserDatePickerButton = html` <span
             class="sap-icon sap-icon--calendar ovl-input-datepickerffbutton"
@@ -141,12 +136,7 @@ export class OvlDate extends OvlControlBase {
       let fieldValue = field.value
       if (type === "date") {
         let dval = new Date(field.convertedValue)
-        fieldValue =
-          dval.getFullYear().toString() +
-          "-" +
-          (dval.getMonth() + 1).toString().padStart(2, "0") +
-          "-" +
-          dval.getDate().toString().padStart(2, "0")
+        fieldValue = getDateISOString(dval).replace("T00:00:00", "")
       }
       return html`
         <div
@@ -185,7 +175,7 @@ export class OvlDate extends OvlControlBase {
 
             ${browserDatePicker} ${browserDatePickerButton}
           </div>
-
+          <div id="focusafter${field.id}" tabindex="-1"></div>
           <ovl-controlcustomhint .props=${() => this.field}>
           </ovl-controlcustomhint>
           <ovl-controlvalidationhint .props=${() => this.field}>
