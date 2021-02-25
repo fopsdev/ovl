@@ -239,7 +239,6 @@ export const ValidateDataType: OvlAction<ValidateFieldType> = (value) => {
     }
     case "text":
       field.convertedValue = val
-      //field.value = val
       break
 
     case "time":
@@ -635,6 +634,9 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
       let field = formState.fields[k]
       field.validationResult = {
         errors: [],
+      }
+      if (field.fieldKey === "planningSlots") {
+        debugger
       }
       actions.ovl.internal.ValidateDataType({
         field,

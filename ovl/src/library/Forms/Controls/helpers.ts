@@ -249,7 +249,7 @@ export const GetListDisplayValue = (
   listdata: ListDefinition
 ) => {
   if (value === undefined || value === null) {
-    return ""
+    return value
   }
   // if we are operating on a regular table the use the index to get the correct row index
   if (listdata.index) {

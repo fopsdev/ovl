@@ -1,5 +1,5 @@
 import { getDisplayValue } from "../Table/helpers"
-import { FieldValueMap, ValidateResult } from "./actions"
+import { Field, FieldValueMap, ValidateResult } from "./actions"
 import { GetListDisplayValue, GetRowFromFormState } from "./Controls/helpers"
 import { Schema, FormField } from "./OvlFormElement"
 
@@ -36,6 +36,17 @@ export const RemoveFocusEventHelper = (
     detail: { id: fieldId },
   })
   dispatchEl.dispatchEvent(event)
+}
+export const IsFieldNothing = (field: Field) => {
+  return field.convertedValue === undefined || field.convertedValue === null
+}
+
+export const IsFieldEmpty = (field: Field) => {
+  return (
+    field.convertedValue === undefined ||
+    field.convertedValue === null ||
+    field.convertedValue === ""
+  )
 }
 
 export const getFormFields = (
