@@ -2,9 +2,10 @@ import {
   SnackAddState,
   RemoveSnack as StartRemoveSnack,
   SnackId,
+  SnackType,
 } from "./Snack"
 import { OvlAction } from "../../index"
-import { render } from "lit-html"
+import { html, render } from "lit-html"
 
 export const RemoveSnack: OvlAction<string> = (value, { state }) => {
   // if not already got added just remove from state (there are max. 3 snacks display so it could be that its not even displayed)
@@ -87,14 +88,32 @@ export const PlaceSnack: OvlAction = (_, { state }) => {
             if (lastOccupiedSlot === 0) {
               lastFreeSlotEl = firstFreeSlotEl
             }
+
             snackToAdd.status = "running"
+            let snackType
+            let busyIndicator
+            if (snackToAdd.type === "BusyIndicator") {
+              snackType = "Information".toLowerCase() as SnackType
+              busyIndicator = html`<div
+                class="fd-busy-indicator--s"
+                aria-hidden="false"
+                aria-label="Loading"
+              >
+                <div class="fd-busy-indicator--circle-0"></div>
+                <div class="fd-busy-indicator--circle-1"></div>
+                <div class="fd-busy-indicator--circle-2"></div>
+              </div>`
+            }
+
+            snackType = snackToAdd.type.toLowerCase()
             let div = document.createElement("div")
             div.id = k
             div.setAttribute("role", "alert")
-            render(snackToAdd.text, div)
+            let tpl = html`${snackToAdd.text} &nbsp; &nbsp; ${busyIndicator}`
+            render(tpl, div)
             div.classList.add("fd-message-strip")
             div.classList.add("ovl-snack")
-            let type = "fd-message-strip--" + snackToAdd.type.toLowerCase()
+            let type = "fd-message-strip--" + snackType
             div.classList.add(type)
             div.classList.add("fadeInSnack")
             lastFreeSlotEl.appendChild(div)

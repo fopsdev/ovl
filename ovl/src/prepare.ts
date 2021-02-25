@@ -2,6 +2,7 @@ import { actionTracking, createDeepProxy } from "./tracker/proxyHandler"
 import { ovl, OvlState, OvlActions, OvlConfig, defineAppElements } from "."
 import { defineElements } from "./registerComponents"
 import { _customElementList } from "./global/globals"
+import { ScreenState } from "./library/OvlBaseElement"
 
 const interceptorAsyncFn = (originalFn, key) => {
   return async (value) => {
@@ -79,7 +80,9 @@ export const init = (
         visible: false,
         closing: false,
         lastScrollTop: undefined,
-      }
+        screenCloseBehaviour: appScreens[k].screenCloseBehaviour,
+        screenFetchRequestBehaviour: appScreens[k].screenFetchRequestBehaviour,
+      } as ScreenState
     })
 
   _state.ovl.forms = {}

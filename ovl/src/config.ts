@@ -11,7 +11,6 @@ export { OvlConfig }
 import { OvlAction } from "./index"
 import { Field } from "./library/Forms/actions"
 import { FormValidation, FormValidationField } from "./library/Forms/validators"
-import { OvlScreenBatchingOption } from "./library/OvlBaseElement"
 
 export type ApiUrlResolve = {
   customerTestUrlMatch: string

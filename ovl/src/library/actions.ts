@@ -36,7 +36,7 @@ import {
   TableOfflineRetrySaveRow,
   TableOfflineHandler,
 } from "./Table/actions"
-import { OvlAction } from "../index"
+import { OvlAction, OvlState } from "../index"
 //import { dialogAfterClose } from "./Dialog/actions"
 
 export {
@@ -110,11 +110,30 @@ export const DialogResult = () => {
 export const SetIndicatorOpen: OvlAction = (_, { state }) => {
   state.ovl.libState.indicator.refCounter++
   state.ovl.libState.indicator.open = true
+  DisableScreen(state, true)
 }
 
 export const SetIndicatorClose: OvlAction = (_, { state }) => {
   state.ovl.libState.indicator.refCounter--
   if (state.ovl.libState.indicator.refCounter < 1) {
     state.ovl.libState.indicator.open = false
+    DisableScreen(state, false)
+  }
+}
+
+const DisableScreen = (state: OvlState, disable: boolean) => {
+  let screensState = state.ovl.screens
+  let currentScreen = screensState.nav.currentScreen
+  if (currentScreen) {
+    let screenState = screensState.screens[currentScreen]
+    if (screenState.screenFetchRequestBehaviour === "disable") {
+      let screenId = "ovlscreen_" + currentScreen
+      let el = document.getElementById(screenId)
+      if (disable) {
+        el.classList.add("ovl-disabled")
+      } else {
+        el.classList.remove("ovl-disabled")
+      }
+    }
   }
 }

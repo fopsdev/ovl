@@ -2,7 +2,12 @@ import { OvlBaseElement } from "../OvlBaseElement"
 import { html } from "lit-html"
 import { isMobile } from "../../global/globals"
 
-export type SnackType = "Information" | "Warning" | "Success" | "Error"
+export type SnackType =
+  | "Information"
+  | "Warning"
+  | "Success"
+  | "Error"
+  | "BusyIndicator"
 
 export let SnackId = { id: 0 }
 

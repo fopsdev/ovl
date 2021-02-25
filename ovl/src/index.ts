@@ -46,6 +46,7 @@ import {
   toggleDebugTracking,
 } from "./global/globals"
 import { logTrackingList } from "./tracker/tracker"
+import { ScreenState } from "./library/OvlBaseElement"
 
 // some global vars which help debugging as well in live environment in Desktop Browsers (F12)
 globalThis.OvlLogActions = logActions
@@ -106,3 +107,12 @@ export type OvlAction<T = {}, R = void> = (
   value?: T,
   context?: OvlActionContext
 ) => R
+
+// export type OvlApp = {
+//   dialogs: {}
+//   forms: { [key: string]: {} }
+//   tableDefIds: { [key: string]: {} }
+//   languages: { [key: string]: {} }
+//   screens: { [key: string]: ScreenState }
+//   validatorsValidation: {}
+// }

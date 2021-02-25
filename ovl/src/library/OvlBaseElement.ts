@@ -11,13 +11,12 @@ import { startTrack, stopTrack, disposeTrack } from "../tracker/tracker"
 
 type ScreensHistory = OvlScreen[]
 
-export type OvlScreenBatchingOption = "fast" | "medium" | "energysave"
-
-type ScreenState = {
-  visible: boolean
-  closing: boolean
-  lastScrollTop: number
-  batchingOption: OvlScreenBatchingOption
+export type ScreenState = {
+  visible?: boolean
+  closing?: boolean
+  lastScrollTop?: number
+  screenCloseBehaviour?: ScreenCloseBehaviour
+  screenFetchRequestBehaviour?: ScreenFetchRequestBehaviour
 }
 
 export type ScreensState = {
@@ -35,7 +34,8 @@ export type NavState = {
   formTypeToReset: OvlForm
   formIdToReset: string
 }
-
+export type ScreenCloseBehaviour = "remove" | "ovl-hide"
+export type ScreenFetchRequestBehaviour = "disable" | "none"
 export const setLastScrollPosition = (
   screens: typeof ovl.state.ovl.screens
 ) => {
@@ -105,7 +105,7 @@ export class OvlBaseElement extends HTMLElement {
   _id: number = 0
   screen: OvlScreen
 
-  screenCloseBehaviour: "remove" | "ovl-hide"
+  screenCloseBehaviour: ScreenCloseBehaviour
   static _counter: number = 0
   screenClosing(): boolean {
     if (!this.screen) {
@@ -194,6 +194,10 @@ export class OvlBaseElement extends HTMLElement {
     let checkScreen
     actionTracking.lastActionName = "Component: " + document.activeElement.id
     if (this.screen) {
+      if (!this.id) {
+        this.id = "ovlscreen_" + this.screen
+      }
+
       if (this.screenClosing()) {
         // no complete rerender is necessary
         // just set the animation class accordingly

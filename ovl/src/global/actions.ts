@@ -23,10 +23,7 @@ import {
   ScreenNavigateIn_ReturnType,
   ScreenNavigateOut,
 } from "./hooks"
-import {
-  OvlScreenBatchingOption,
-  setLastScrollPosition,
-} from "../library/OvlBaseElement"
+import { setLastScrollPosition } from "../library/OvlBaseElement"
 import { createDeepProxy } from "../tracker/proxyHandler"
 import { OvlAction } from "../index"
 
