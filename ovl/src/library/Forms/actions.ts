@@ -906,6 +906,7 @@ export const ChangeField: OvlAction<ChangeField> = (
   }
   //if (field.convertedValue !== oldConvertedValue) {
   if (!value.isInnerEvent) {
+    field.watched = true
     SetFieldDirty(field, false)
   } else {
     SetFieldDirty(field, !value.isInit)

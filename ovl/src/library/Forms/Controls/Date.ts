@@ -28,9 +28,9 @@ export class OvlDate extends OvlControlBase {
   inputPickerElement: any
   init() {
     if (isMobile()) {
-      this.addEventListener("input", this.handleChange)
+      this.addEventListener("input", (e) => this.handleChange(e, true))
     } else {
-      this.addEventListener("change", this.handleChange)
+      this.addEventListener("change", (e) => this.handleChange(e, false))
     }
 
     super.init()
@@ -47,7 +47,7 @@ export class OvlDate extends OvlControlBase {
   //   }
   //   e.stopPropagation()
   // }
-  handleChange(e: Event) {
+  handleChange(e: Event, isMobile: boolean) {
     e.stopPropagation()
     e.preventDefault()
 
@@ -64,6 +64,9 @@ export class OvlDate extends OvlControlBase {
         let dval = new Date(pickerVal)
         this.inputElement.value = getDateValue(getDateISOString(dval))
       }
+    } else if (isMobile) {
+      isInnerEvent = false
+      SetFieldDirty(this.field, true)
     }
     ChangeValueEventHelper(
       this,
@@ -84,7 +87,7 @@ export class OvlDate extends OvlControlBase {
   }
   handlePickerFieldKeyUp(e: KeyboardEvent) {
     if (e.key === "Tab") {
-      this.handleChange(e)
+      this.handleChange(e, false)
       document.getElementById("focusafter" + this.field.id).focus()
     }
   }
@@ -198,8 +201,17 @@ export class OvlDate extends OvlControlBase {
   afterRender() {
     // place picker under date with picker on the right just visible
     this.inputElement = document.getElementById(this.field.id)
-    if (this.inputElement && this.inputElement.type !== "date") {
-      this.inputElement.value = this.field.value
+    if (
+      this.inputElement &&
+      (this.inputElement.type !== "date" || isMobile())
+    ) {
+      if (isMobile()) {
+        this.inputElement.value = getDateISOString(
+          new Date(this.field.convertedValue)
+        ).replace("T00:00:00", "")
+      } else {
+        this.inputElement.value = this.field.value
+      }
     }
     if (this.inputPickerElement === undefined) {
       this.inputPickerElement = document.getElementById(
@@ -211,9 +223,9 @@ export class OvlDate extends OvlControlBase {
   }
   disconnectedCallback() {
     if (isMobile()) {
-      this.removeEventListener("input", this.handleChange)
+      this.removeEventListener("input", (e) => this.handleChange(e, true))
     } else {
-      this.removeEventListener("change", this.handleChange)
+      this.removeEventListener("change", (e) => this.handleChange(e, false))
     }
     super.disconnectedCallback()
   }

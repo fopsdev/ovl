@@ -1,7 +1,7 @@
 import { OvlBaseElement } from "../../../OvlBaseElement"
 import { html } from "lit-html"
 
-import { T } from "../../../../global/globals"
+import { isMobile, T } from "../../../../global/globals"
 import { Field } from "../../actions"
 import { getValidationText } from "../../../../../../../app/src/appDefFormValidation"
 
@@ -31,7 +31,7 @@ export class OvlValidationHint extends OvlBaseElement {
       return html`
         <div
           class="fadeInControl fd-form-message fd-form-message--error ovl-formcontrol-validation ovl-formcontrol-validation__${field.fieldKey} ${errors &&
-          !field.hasFocus &&
+          (!field.hasFocus || isMobile()) &&
           !field.ui.readonly
             ? ""
             : "ovl-hide"}"
