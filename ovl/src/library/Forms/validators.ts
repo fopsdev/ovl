@@ -465,6 +465,14 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   SetVisibleSummaryErrorKeys(formState)
 }
 
+export const SetFieldInactive = (field: Field, inactive: boolean) => {
+  field.inactive = inactive
+}
+
+export const IsFieldInactive = (field: Field) => {
+  return field.inactive
+}
+
 export const SetFieldDirty = (field: Field, dirty: boolean) => {
   if (field.dirty !== dirty) {
     field.dirty = dirty

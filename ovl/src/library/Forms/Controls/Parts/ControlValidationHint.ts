@@ -31,8 +31,10 @@ export class OvlValidationHint extends OvlBaseElement {
       return html`
         <div
           class="fadeInControl fd-form-message fd-form-message--error ovl-formcontrol-validation ovl-formcontrol-validation__${field.fieldKey} ${errors &&
-          (!field.hasFocus || isMobile()) &&
-          !field.ui.readonly
+          (!field.hasFocus ||
+            (isMobile() &&
+              (field.type === "date" || field.type === "time") &&
+              !field.ui.readonly))
             ? ""
             : "ovl-hide"}"
         >

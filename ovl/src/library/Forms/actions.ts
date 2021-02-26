@@ -589,7 +589,9 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
     formInstanceList = state.ovl.forms[value.formType]
   }
   // if there is already a formstate -> do nothing (except its forceOverwrite)
+  let formStateCreated = false
   if (!formInstanceList[instanceId] || value.forceOverwrite === true) {
+    formStateCreated = true
     let fields: FieldValueMap = getFormFields(
       value.schema,
       value.fields,
@@ -611,22 +613,27 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
       tableDefId: value.tableDefId,
     }
 
-    let formState = formInstanceList[instanceId]
-
-    if (value.additionalInitialisationFn) {
-      value.additionalInitialisationFn(formState, state, actions)
-    }
-
     //<defaults>
     if (value.validation === undefined) {
-      formState.validation = OvlConfig.formValidation.validationDefaults(
+      formInstanceList[
+        instanceId
+      ].validation = OvlConfig.formValidation.validationDefaults(
         value.tableDefId
       )
     } else {
-      formState.validation = value.validation
+      formInstanceList[instanceId].validation = value.validation
     }
-    //</defaults>
 
+    //</defaults>
+  }
+  let formState = formInstanceList[instanceId]
+  let fnCalled = false
+  if (value.additionalInitialisationFn) {
+    value.additionalInitialisationFn(formState, state, actions)
+    fnCalled = true
+  }
+
+  if (formStateCreated || fnCalled) {
     formState.validationResult = { errors: [], visibleErrors: [] }
     //    }
     let fn = resolvePath(actions.custom, formState.namespace)
@@ -667,13 +674,19 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
     SetFormValid(formState)
     SetRowCellInformation(formState, actions, state)
 
-    formState.initFields = JSON.parse(JSON.stringify(fields), stringifyReplacer)
+    formState.formShowed = false
+    if (!formState.fieldToFocus) {
+      formState.fieldToFocus = value.initialFocusFieldKey
+    }
+    if (formStateCreated) {
+      formState.initFields = JSON.parse(
+        JSON.stringify(formState.fields),
+        stringifyReplacer
+      )
+    }
   }
-  formInstanceList[instanceId].formShowed = false
-  if (!formInstanceList[instanceId].fieldToFocus) {
-    formInstanceList[instanceId].fieldToFocus = value.initialFocusFieldKey
-  }
-  return formInstanceList[instanceId]
+
+  return formState
 }
 
 // remove not used yet. think its better to always  call ResetForm so state can be reused

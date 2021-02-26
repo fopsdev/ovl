@@ -83,6 +83,7 @@ export let ovl: {
   baseDialogs,
   OvlConfig.app.forms
 )
+globalThis.Ovl = ovl
 defineOvlElements()
 setTimeout(async () => {
   await ovl.actions.ovl.internal.InitApp()

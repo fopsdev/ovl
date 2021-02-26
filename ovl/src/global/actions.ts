@@ -424,6 +424,7 @@ export const Rehydrate = async (
 
 export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
   let value = OvlConfig.fetch.apiUrl
+
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function (e) {
     if (!document.getElementById("ovl-dialog")) {
