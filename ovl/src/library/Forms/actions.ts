@@ -635,9 +635,6 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
       field.validationResult = {
         errors: [],
       }
-      if (field.fieldKey === "planningSlots") {
-        debugger
-      }
       actions.ovl.internal.ValidateDataType({
         field,
         formState,

@@ -59,6 +59,7 @@ export class OvlDate extends OvlControlBase {
       if (pickerVal.length < 10) {
         this.inputElement.value = ""
         isInnerEvent = false
+        SetFieldDirty(this.field, true)
       } else {
         let dval = new Date(pickerVal)
         this.inputElement.value = getDateValue(getDateISOString(dval))
