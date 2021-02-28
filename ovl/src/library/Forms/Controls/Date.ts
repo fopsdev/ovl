@@ -25,6 +25,7 @@ import { SetFieldDirty } from "../validators"
 
 export class OvlDate extends OvlControlBase {
   //displayValue: string
+  valueChangedCheck: any
   inputPickerElement: any
   init() {
     if (isMobile()) {
@@ -80,8 +81,15 @@ export class OvlDate extends OvlControlBase {
     }
   }
 
+  handleFocus() {
+    this.valueChangedCheck = this.field.value
+    SetFocusEventHelper(this, this.field.id)
+  }
+
   handleFocusOut() {
-    ChangeValueEventHelper(this, this.field.value, this.field.id, false)
+    if (this.valueChangedCheck !== this.field.value) {
+      ChangeValueEventHelper(this, this.field.value, this.field.id, false)
+    }
     this.updatePickerElement()
     RemoveFocusEventHelper(this, this.field.id)
   }
@@ -171,7 +179,7 @@ export class OvlDate extends OvlControlBase {
               @input=${(e) => {
                 SetFieldDirty(this.field, true)
               }}
-              @focus=${() => SetFocusEventHelper(this, field.id)}
+              @focus=${() => this.handleFocus()}
               @focusout=${() => this.handleFocusOut()}
               style="${field.ui.align ? field.ui.align : ""}"
               autocomplete="off"
