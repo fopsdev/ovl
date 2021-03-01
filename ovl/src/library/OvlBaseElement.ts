@@ -220,6 +220,7 @@ export class OvlBaseElement extends HTMLElement {
       res = await this.getUI()
       if (res !== undefined) {
         if (this.screen) {
+          this.classList.add("ovl-screen")
           let screenHide = !this.screenVisible() ? "ovl-hide" : ""
           if (screenHide) {
             this.classList.add(screenHide)

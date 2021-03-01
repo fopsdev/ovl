@@ -666,25 +666,30 @@ const _T = (key: string, reps?: string[]): any => {
   }
 }
 
-export const enableBodyScroll = (state: OvlState) => {
+export const enableBodyScroll = () => {
   let el = document.getElementsByTagName("body")[0]
-  if (isMobile()) {
-    el.classList.remove("ovl-body-noscroll-mobile")
-  } else {
-    el.classList.remove("ovl-body-noscroll")
-  }
+  if (el.scrollHeight > window.innerHeight) {
+    if (isMobile()) {
+      el.classList.remove("ovl-body-noscroll-mobile")
+    } else {
+      el.classList.remove("ovl-body-noscroll")
+    }
 
-  el.classList.add("ovl-body-scroll")
+    el.classList.add("ovl-body-scroll")
+  }
 }
 
-export const disableBodyScroll = (state: OvlState) => {
+export const disableBodyScroll = () => {
   let el = document.getElementsByTagName("body")[0]
-  el.classList.remove("ovl-body-scroll")
 
-  if (isMobile()) {
-    el.classList.add("ovl-body-noscroll-mobile")
-  } else {
-    el.classList.add("ovl-body-noscroll")
+  if (el.scrollHeight > window.innerHeight) {
+    el.classList.remove("ovl-body-scroll")
+
+    if (isMobile()) {
+      el.classList.add("ovl-body-noscroll-mobile")
+    } else {
+      el.classList.add("ovl-body-noscroll")
+    }
   }
 }
 

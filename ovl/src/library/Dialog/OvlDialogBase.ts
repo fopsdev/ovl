@@ -213,7 +213,7 @@ export class OvlBaseDialog extends OvlBaseElement {
         el.focus()
       }
     }
-    enableBodyScroll(this.state)
+    enableBodyScroll()
     dlg.visible = false
     dlg.closing = false
 

@@ -138,3 +138,7 @@ export const SetControlVisibility = (
 export const IsControlVisible = (field: Field) => {
   return field._state.visible
 }
+
+export const IsDirty = (field: Field) => {
+  return field.dirty
+}
