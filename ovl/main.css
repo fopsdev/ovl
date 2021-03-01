@@ -46,9 +46,15 @@ ovl-controlvalidationhint {
 .ovl-body-noscroll-mobile {
   overflow: hidden;
 }
-
-ovl-trow:focus {
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
   outline: none;
+}
+
+.fd-table__row:focus {
+  outline: none !important;
   border-bottom: none !important;
   /* because default outline on rdp session chrome is always over controbuttons */
   /*border-top: 1.5px solid rgba(34, 180, 247, 0.568) !important;*/
@@ -241,30 +247,6 @@ ovl-table {
   box-shadow: 0px 24px 24px 0px #f5f3f3 inset;
 }
 
-.scrollableMobileOverlay {
-  overflow-y: auto;
-  max-height: calc(100vh - 60px);
-  -webkit-overflow-scrolling: touch;
-}
-
-.scrollableOverlay {
-  overflow-y: auto;
-  max-height: calc(100vh - 60px);
-  -webkit-overflow-scrolling: touch;
-}
-
-.scrollableMobile {
-  overflow-y: auto;
-  max-height: calc(100vh - 50px);
-  -webkit-overflow-scrolling: touch;
-}
-
-.scrollable {
-  overflow-y: auto;
-  max-height: calc(100vh - 50px);
-  -webkit-overflow-scrolling: touch;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -284,7 +266,7 @@ ovl-table {
   }
 }
 
-.obl-snack {
+.ovl-snack {
   z-index: 1005 !important;
 }
 
@@ -642,9 +624,6 @@ ovl-table {
 
   margin: 0;
   border: 0;
-}
-.ovl-input-datepickertarget:focus {
-  outline: none !important;
 }
 
 .ovl-input-datepicker:focus {
