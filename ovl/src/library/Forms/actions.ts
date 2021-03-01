@@ -46,13 +46,13 @@ import { OvlTableDefIds } from "../../index"
 import {
   FormValidationDisplayType,
   RemoveFieldValidation,
-  SetFormValid,
+  setFormValid,
   FormValidationSummaryDisplayType,
   FormValidation,
   AddValidation,
-  SetFieldDirty,
 } from "./validators"
 import { OvlConfig } from "../../config"
+import { SetFieldDirty } from "./FieldAPI"
 export { FillListControl }
 
 export type Field = {
@@ -567,7 +567,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
       field.previousConvertedValue = field.convertedValue
     }
   })
-  SetFormValid(value)
+  setFormValid(value)
   //actions.ovl.internal.SetFormValid(value)
 }
 
@@ -671,7 +671,7 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
       }
     })
 
-    SetFormValid(formState)
+    setFormValid(formState)
     SetRowCellInformation(formState, actions, state)
 
     formState.formShowed = false
@@ -924,7 +924,7 @@ export const ChangeField: OvlAction<ChangeField> = (
   } else {
     SetFieldDirty(field, !value.isInit)
   }
-  SetFormValid(value.formState)
+  setFormValid(value.formState)
   //}
   if (
     (!value.isInnerEvent &&

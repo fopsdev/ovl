@@ -42,7 +42,7 @@ export const DialogOpen: OvlAction<OpenDialogOptions> = async (
     dlgState.elementIdToFocusAfterOpen = elFocusId
     dlgState.elementIdToFocusAfterClose = value.elementIdToFocusAfterClose
     dlgState.visible = true
-    disableBodyScroll(state)
+    disableBodyScroll()
     dlgState.closing = false
   }, wait)
 }

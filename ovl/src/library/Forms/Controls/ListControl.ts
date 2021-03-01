@@ -26,7 +26,7 @@ import {
   SetFocusEventHelper,
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
-import { SetFieldDirty } from "../validators"
+import { SetFieldDirty } from "../FieldAPI"
 
 export type ListState = {
   serverEndpoint?: string
@@ -161,7 +161,7 @@ export class OvlListControl extends OvlControlBase {
       this.forceCloseLocalHitList()
     } else {
       if (this.localList) {
-        enableBodyScroll(this.state)
+        enableBodyScroll()
       }
 
       this.localList = null
@@ -336,7 +336,7 @@ export class OvlListControl extends OvlControlBase {
         }
         //we have a list so present it to the user
         if (document.activeElement === this.inputElement) {
-          disableBodyScroll(this.state)
+          disableBodyScroll()
           this.localList = html`
             <ovl-hitlist
               id="ovl-hitlist"
@@ -508,7 +508,7 @@ export class OvlListControl extends OvlControlBase {
   }
   forceCloseLocalHitList() {
     if (this.localList) {
-      enableBodyScroll(this.state)
+      enableBodyScroll()
     }
     this.localList = null
     this.doRender()

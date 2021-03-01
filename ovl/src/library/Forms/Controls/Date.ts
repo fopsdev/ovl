@@ -21,7 +21,7 @@ import {
 } from "../../../global/globals"
 import { OvlControlBase } from "./OvlControlBase"
 import { SnackAdd } from "../../helpers"
-import { SetFieldDirty } from "../validators"
+import { SetFieldDirty } from "../FieldAPI"
 
 export class OvlDate extends OvlControlBase {
   //displayValue: string

@@ -127,18 +127,7 @@ export const KeyValueListFromServerFn = async (
     //listData.lookupDef = res.data.lookupDef
   }
 }
-export const SetControlVisibility = (
-  field: Field,
-  visible: ControlVisiblity
-) => {
-  if (
-    (visible === "fadeIn" && field.ui.visible === "true") ||
-    (visible === "fadeOut" && field.ui.visible === "false")
-  ) {
-    return
-  }
-  field.ui.visible = visible
-}
+
 export const FilterHitList = (
   list: ListState,
   filterValue: string,

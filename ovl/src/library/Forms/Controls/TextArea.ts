@@ -8,7 +8,7 @@ import {
   SetFocusEventHelper,
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
-import { SetFieldDirty } from "../validators"
+import { SetFieldDirty } from "../FieldAPI"
 
 export class OvlTextArea extends OvlControlBase {
   handleChange(e: Event) {

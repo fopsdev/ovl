@@ -326,7 +326,7 @@ const _removeSummaryValidation = (formState: OvlFormState, key: string) => {
   if (errorIndex > -1) {
     formState.validationResult.errors.splice(errorIndex, 1)
   }
-  SetFormValid(formState)
+  setFormValid(formState)
 }
 
 export const RemoveFieldValidation = (field: Field, key?: string) => {
@@ -453,7 +453,11 @@ const _isFormValid = (formState: OvlFormState) => {
   )
 }
 
-export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
+export const IsFormValid = (formState: OvlFormState) => {
+  return formState.valid
+}
+
+export const setFormValid = (formState?: OvlFormState, field?: Field) => {
   if (!formState) {
     formState = ovl.state.ovl.forms[field.formType][field.formId]
   }
@@ -461,26 +465,11 @@ export const SetFormValid = (formState?: OvlFormState, field?: Field) => {
   if (formState.valid !== valid) {
     formState.valid = valid
   }
-  SetFormDirty(formState)
+  setFormDirty(formState)
   SetVisibleSummaryErrorKeys(formState)
 }
 
-export const SetFieldInactive = (field: Field, inactive: boolean) => {
-  field.inactive = inactive
-}
-
-export const IsFieldInactive = (field: Field) => {
-  return field.inactive
-}
-
-export const SetFieldDirty = (field: Field, dirty: boolean) => {
-  if (field.dirty !== dirty) {
-    field.dirty = dirty
-    SetFormDirty(ovl.state.ovl.forms[field.formType][field.formId])
-  }
-}
-
-export const SetFormDirty = (formState: OvlFormState) => {
+export const setFormDirty = (formState: OvlFormState) => {
   let newDirty = Object.keys(formState.fields).some(
     (s) => formState.fields[s].dirty
   )

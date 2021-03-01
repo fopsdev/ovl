@@ -10,7 +10,7 @@ import {
 } from "../helper"
 import { OvlControlBase } from "./OvlControlBase"
 import { isMobile } from "../../../global/globals"
-import { SetFieldDirty } from "../validators"
+import { SetFieldDirty } from "../FieldAPI"
 
 export class OvlTime extends OvlControlBase {
   init() {

@@ -7,7 +7,6 @@ import { html, TemplateResult } from "lit-html"
 import { Rehydrate } from "./actions"
 import { OvlFormState, ValidateResultErrors } from "../library/Forms/actions"
 import { OvlCustomValueHint } from "../library/Forms/Controls/Parts/ControlCustomValueHint"
-import { IsControlVisible } from "../library/Forms/Controls/OvlControlBase"
 
 // export let api = { url: "" }
 //export let translations: Translations = { t: {} }

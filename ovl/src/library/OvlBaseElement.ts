@@ -247,6 +247,9 @@ export class OvlBaseElement extends HTMLElement {
 
   connectedCallback() {
     this.init()
+    if (this.screen) {
+      this.screenCloseBehaviour = this.screens[this.screen].screenCloseBehaviour
+    }
     if (OvlConfig._system.debugTracking) {
       console.log("render %c" + this.name, "color:green")
     }

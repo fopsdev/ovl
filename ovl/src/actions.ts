@@ -53,11 +53,11 @@ let dialog = {
 
 let form = {
   InitForm,
-
   ResetForm,
   ResetFormAfterNavigation,
   ValidateForm,
   SetField,
+  ChangeField,
 }
 
 import {

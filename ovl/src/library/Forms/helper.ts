@@ -37,17 +37,6 @@ export const RemoveFocusEventHelper = (
   })
   dispatchEl.dispatchEvent(event)
 }
-export const IsFieldNothing = (field: Field) => {
-  return field.convertedValue === undefined || field.convertedValue === null
-}
-
-export const IsFieldEmpty = (field: Field) => {
-  return (
-    field.convertedValue === undefined ||
-    field.convertedValue === null ||
-    field.convertedValue === ""
-  )
-}
 
 export const getFormFields = (
   schema: { [key: string]: Schema },
