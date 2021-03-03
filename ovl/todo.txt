@@ -1,5 +1,8 @@
 
+- table visibility "Table..." 
+-> check with usecase kaltag paketierung
 
+- table column code should not appear in headermenu
 
 - refactor savestate rehydrate to be also usable from non offline scenarios
 - simple date entry should also cope with 02/26/2021 - values (take the / for check maybe)
