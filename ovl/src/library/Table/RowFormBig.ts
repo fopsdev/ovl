@@ -420,11 +420,11 @@ export class TableRowFormBig extends OvlFormElement {
             uiItem = html`<div
               class="ovl-formcontrol-container ovl-container-textbox ovl-container__${k} "
             >
-              <div
-                class="fd-form-label  ovl-formcontrol-label ovl-label-text ovl-label__${k}"
+              <label
+                class="ovl-formcontrol-label ovl-label-text ovl-label__${k}"
               >
                 ${T(fields[k].ui.labelTranslationKey)}
-              </div>
+              </label>
 
               <div
                 class="ovl-formcontrol-input ovl-value-textbox ovl-value__${k}"
