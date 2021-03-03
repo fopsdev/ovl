@@ -47,7 +47,7 @@ export const ScreenNavigateOut: OvlAction<
   {},
   ScreenNavigateOut_ReturnType
 > = async (_) => {
-  if ((await DialogOkCancel("Test: Wirklich raus hier?", 1)) === 2) {
+  if ((await DialogOkCancel({ text: "Test: Wirklich raus hier?" })) === 2) {
     return Promise.resolve("Navigation abgebrochen durch User")
   }
 }

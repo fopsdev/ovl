@@ -8,6 +8,7 @@ import { OvlRefresh } from "./components/Refresh/Refresh"
 
 import { CompFileList } from "./components/FileList/FileList"
 import { CompDashboard } from "./screens/Dashboard/Dashboard"
+import { CompOccasionsDashboard } from "./screens/OccasionsDashboard/Dashboard"
 import { CompSettingsForm } from "./screens/Settings/SettingsForm"
 import { CompOrderOverview } from "./screens/Order/OrderOverview"
 import { CompQuotationOverview } from "./screens/Quotation/QuotationOverview"
@@ -19,6 +20,10 @@ import { CompOrderDetailLayout } from "./screens/Order/OrderDetailLayout"
 import { CompOrderDetail } from "./screens/Order/OrderDetail"
 import { CompOrderTimeLine } from "./screens/Order/OrderTimeLine"
 import { CompFeedbackForm } from "./screens/Feedback/FeedbackForm"
+
+import { CompTacho } from "./components/tacho/tacho"
+
+import { CompAutoQuotation } from "./screens/AutoQuotation/AutoQuotation"
 
 import { CompTableTesting } from "./screens/TableTesting/TableTesting"
 import { CompMobileTimeEntry } from "./screens/MobileTimeRecording/MobileTimeRecordingMainForm"
@@ -32,10 +37,13 @@ export const defineElements = () => {
 
   customElements.define("ovl-backbutton", OvlBackButton)
   customElements.define("ovl-refresh", OvlRefresh)
+  customElements.define("comp-tacho", CompTacho)
   customElements.define("comp-tabletesting", CompTableTesting)
   customElements.define("comp-mobiletimeentry", CompMobileTimeEntry)
   customElements.define("comp-mobiletimeentryform", CompMobileTimeEntryForm)
   customElements.define("comp-dashboard", CompDashboard)
+  customElements.define("comp-occasionsdashboard", CompOccasionsDashboard)
+  customElements.define("comp-autoquotation", CompAutoQuotation)
   customElements.define("comp-settingsform", CompSettingsForm)
   customElements.define("comp-orderoverview", CompOrderOverview)
   customElements.define("comp-quotationoverview", CompQuotationOverview)

@@ -32,7 +32,7 @@ export const DialogOpen: OvlAction<OpenDialogOptions> = async (
     if (!elFocusId && value.formType) {
       elFocusId =
         value.formId +
-        state.ovl.forms[value.formType][value.formId].lastTouchedField
+        state.ovl.forms[value.formType][value.formId].fieldToFocus
     }
     dlgState.elementIdToFocusAfterOpen = elFocusId
     dlgState.elementIdToFocusAfterClose = value.elementIdToFocusAfterClose
@@ -57,7 +57,7 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
     state.ovl.libState.dialog.cancelText =
       state.ovl.language.translations[value.cancel]
     if (!state.ovl.libState.dialog.cancelText) {
-      state.ovl.libState.dialog.cancelText = "Cancel"
+      state.ovl.libState.dialog.cancelText = value.cancel
     }
   } else {
     state.ovl.libState.dialog.cancelText = ""
@@ -65,7 +65,7 @@ export const ModalDialogOpen: OvlAction<OpenModalDialogState> = async (
   if (value.ok !== "NoButton") {
     state.ovl.libState.dialog.okText = state.ovl.language.translations[value.ok]
     if (!state.ovl.libState.dialog.okText) {
-      state.ovl.libState.dialog.okText = "Ok"
+      state.ovl.libState.dialog.okText = value.ok
     }
   } else {
     state.ovl.libState.dialog.okText = ""
@@ -88,12 +88,15 @@ type OkCancelDialog = {
   type?: DialogType
   customClass?: string
   title?: string
+  okText?: string
+  cancelText?: string
 }
 type OkDialog = {
   text: string | TemplateResult
   type?: DialogType
   customClass?: string
   title?: string
+  okText?: string
 }
 export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
   value,
@@ -119,8 +122,8 @@ export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
     title,
     customClass,
     type,
-    cancel: "AppCancel",
-    ok: "AppOk",
+    cancel: value.cancelText || "AppCancel",
+    ok: value.okText || "AppOk",
     text: value.text,
     default: value.default,
   })

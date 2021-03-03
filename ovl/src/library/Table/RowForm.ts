@@ -91,21 +91,33 @@ export class TableRowForm extends OvlFormElement {
   }
   setFocus() {
     if (
-      this.rowData.tableDef.features.focusToFirstEditableField &&
+      (this.rowData.tableDef.features.focusToFirstEditableField ||
+        this.formState.fieldToFocus) &&
       !this.focusInit
     ) {
       this.focusInit = true
 
-      let el = document.getElementById(this.rowData.key + "ovlRFNFocus_focus")
+      let el
       let target
-      if (el) {
-        let focusEl: HTMLCollection = el.getElementsByClassName("ovl-focusable")
-        if (focusEl.length > 0) {
-          target = focusEl[0]
+      if (!this.formState.fieldToFocus) {
+        el = document.getElementById(this.rowData.key + "ovlRFNFocus_focus")
+        if (el) {
+          let focusEl: HTMLCollection = el.getElementsByClassName(
+            "ovl-focusable"
+          )
+          if (focusEl.length > 0) {
+            target = focusEl[0]
+          }
         }
+      } else {
+        target = document.getElementById(
+          this.formState.fields[this.formState.fieldToFocus].id
+        )
       }
 
-      SetFocus(target)
+      if (target) {
+        SetFocus(target)
+      }
 
       var rect = target.getBoundingClientRect()
       if (rect.bottom > window.innerHeight) {

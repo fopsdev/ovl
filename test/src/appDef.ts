@@ -5,6 +5,7 @@ export let appScreens = {
   Translation: {},
   Settings: {},
   Dashboard: {},
+  OccasionsDashboard: {},
   Quotation: {},
   Order: {},
   Orderdetail: {},
@@ -13,6 +14,7 @@ export let appScreens = {
   TableTesting: {},
   MobileTimeEntry: {},
   MobileTimeEntryForm: {},
+  AutoQuotation: {},
 }
 
 export let appDialogs = {
@@ -26,6 +28,7 @@ export type appForms =
   | "OvlLanguage"
   | "MobileTimeEntry"
   | "MobileTimeEntryMain"
+  | "AutoQuotation"
 
 export type OvlTableDefIds =
   | "translation"
@@ -34,5 +37,7 @@ export type OvlTableDefIds =
   | "tab2"
   | "tab3"
   | "mobiletimerecording1"
+  | "Vehicles"
+  | "autoQuotation"
 
 export type OvlLanguage = "DE" | "FR"

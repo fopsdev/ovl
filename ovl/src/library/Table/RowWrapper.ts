@@ -2,10 +2,10 @@ import { html } from "lit-html"
 import { resolvePath } from "../../global/globals"
 import {
   FieldRowCellSelectedHandler,
-  FormStatus,
+  ViewRowClass,
   FieldRowCellSelectedHandler_Type,
-  FormStatus_Type,
-  FormStatus_ReturnType,
+  ViewRowClass_Type,
+  ViewRowClass_ReturnType,
 } from "../../global/hooks"
 import { ovl } from "../../index"
 import { SnackAdd } from "../helpers"
@@ -22,6 +22,7 @@ import {
   OvlTableData,
   OvlTableDef,
   ViewRowDef,
+  ViewRowClassContent,
 } from "./Table"
 
 export type TableRowDef = {
@@ -119,7 +120,6 @@ export class TableRowWrapper extends OvlBaseElement {
     let val: SelectRowDef = {
       def,
       key: rowKey,
-      data: this.row.data,
     }
     this.actions.ovl.table.TableSelectRow(val)
   }
@@ -163,7 +163,6 @@ export class TableRowWrapper extends OvlBaseElement {
           let val: SelectRowDef = {
             def: toSelectElement.row.tableDef,
             key,
-            data: toSelectElement.row.TableData,
           }
           this.actions.ovl.table.TableSelectRow(val)
         }
@@ -209,6 +208,12 @@ export class TableRowWrapper extends OvlBaseElement {
 
       if (editSelected && editSelected.selected) {
         if (def.options.edit.editType === "inline") {
+          if (this.state.ovl.dialogs.DetailView.visible) {
+            def.uiState.viewRow[key].selected = false
+            this.state.ovl.dialogs.DetailView.visible = false
+            this.state.ovl.dialogs.DetailView.closing = false
+          }
+
           let editRowSC = html`
             <ovl-trowsc
               class="fd-table__row"
@@ -292,28 +297,30 @@ export class TableRowWrapper extends OvlBaseElement {
           `
         }
       }
-      let rowStatus = ""
-      let rowStatusMsg = ""
+      let rowClass = ""
+      let rowTooltipMsg = ""
       let fn = resolvePath(this.actions.custom, def.namespace)
-      let fnName = FormStatus
+      let fnName = ViewRowClass
       // also display offline save errors in rowstatus
       if (data.offline && data.offline.errors[key]) {
         let msgSet = data.offline.errors[key]
 
-        rowStatus = "fd-table__row--error"
+        rowClass = "ovl-row-offline--error"
         msgSet.forEach((m) => {
-          rowStatusMsg += " " + m
+          rowTooltipMsg += " " + m
         })
       } else {
         if (fn && fn[fnName]) {
-          let status = await fn[fnName](<FormStatus_Type>{
+          let status: ViewRowClassContent = await fn[fnName](<
+            ViewRowClass_Type
+          >{
             rowKey: key,
             tableDef: this.row.tableDef,
             tableData: data,
           })
           if (status) {
-            rowStatus = "fd-table__row--" + status.status
-            rowStatusMsg = status.msg
+            rowClass = status.className
+            rowTooltipMsg = status.tooltip
           }
         }
       }
@@ -322,8 +329,8 @@ export class TableRowWrapper extends OvlBaseElement {
         <ovl-trow
           @keydown=${(e) => this.handleKeyDown(e)}
           tabindex="0"
-          class="fd-table__row ${rowStatus} ovl-table-row ${selectedClass}  animated fadeIn faster"
-          title="${rowStatusMsg}"
+          class="fd-table__row ${rowClass} ovl-table-row ${selectedClass}  animated fadeIn faster"
+          title="${rowTooltipMsg}"
           data-rowkey="${key}"
           @click="${this.handleRowClick}"
           @long-press="${this.handleRowLongPress}"

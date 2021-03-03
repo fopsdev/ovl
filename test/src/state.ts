@@ -1,4 +1,3 @@
-import { LookupDef } from "../../ovl/src/library/forms/OvlFormElement"
 import {
   ListFnReturnValue,
   OvlTableData,
@@ -23,6 +22,9 @@ import { FeedbackFormState } from "./screens/Feedback/FeedbackForm"
 import { MobileTimeEntryFormState } from "./screens/MobileTimeRecording/MobileTimeRecordingDetail/MobileTimeRecordingForm"
 import { DashboardState } from "./screens/Dashboard/Dashboard"
 import { ShellbarState } from "./screens/Shellbar/Shellbar"
+import { tblVehicles } from "./screens/OccasionsDashboard/state"
+import { OvlTableDefIds } from "."
+import { tblAutoQuotation } from "./screens/AutoQuotation/state"
 
 let shellbar: ShellbarState = {
   mainMenuExpanded: false,
@@ -248,6 +250,11 @@ let pics: PicsState = {
 }
 let quotationDetail: QuotationDetailState
 let tables = {
+  autoQuotation: {
+    index: {},
+    data: {},
+    tableDef: { autoQuotation: tblAutoQuotation },
+  },
   translation: {
     data: {},
     schema: {},
@@ -263,7 +270,7 @@ let tables = {
     },
   },
 }
-
+let autoQuotation = { okMessage: "", errorMessage: "", bvxFileName: "" }
 let screens = {
   /* base screens */
   shellbar: shellbar,
@@ -279,6 +286,50 @@ let screens = {
   tableTesting: {},
   mobileTimeEntry: mobileTimeEntry,
   mobileTimeEntryForm: mobileTimeEntryFormState,
+  autoQuotation: autoQuotation,
+}
+
+let vehicles: OvlTableData = {
+  tableDef: {
+    Vehicles: tblVehicles,
+  },
+}
+let selectedLocation = ""
+let selectedInterval = 0
+
+let calculated_values = {
+  total: {
+    nrOfMediumLines: 0,
+    nrOfBadLines: 0,
+    nrOfGoodLines: 0,
+    totalLines: 0,
+    goodPerc: 0.0,
+  },
+  quarter: {
+    nrOfGoodClosed: 0,
+    nrOfMediumClosed: 0,
+    nrOfBadClosed: 0,
+    nrOfGoodLines: 0,
+    nrOfMediumLines: 0,
+    nrOfBadLines: 0,
+    totalInProcessLines: 0,
+    goodPerc: 0.0,
+  },
+  currentQuarter: 0,
+}
+let occasionProcessDashboard = {
+  selectedLocation,
+  selectedInterval,
+  calculated_values,
+  vehicles,
+  settings: {
+    days1: 13,
+    days2: 21,
+    smileyPerc1: 20,
+    smileyPerc2: 40,
+    smileyPerc1_2: 20,
+    smileyPerc2_2: 40,
+  },
 }
 
 export {
@@ -293,4 +344,5 @@ export {
   quotationDetail,
   tables,
   testtables,
+  occasionProcessDashboard,
 }

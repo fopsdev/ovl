@@ -124,6 +124,8 @@ export const deleteTableRow = (
   if (data.data[key]) {
     let rowId = data.data[key][tableDataAndDef.def.database.dataIdField]
     delete index[rowId]
+    // data.data[key] = undefined
+    // console.log("deleteRow")
     delete data.data[key]
   }
 }
@@ -315,6 +317,11 @@ export const initTableState = (
     //   def.translationGroup =
     //     firstGroup.charAt(0).toUpperCase() + firstGroup.slice(1)
     // }
+
+    if (options.rowDensity === undefined) {
+      // everything bigger than 20 is high
+      options.rowDensity = { low: 10, medium: 20 }
+    }
 
     if (options.addedRowsPosition === undefined) {
       options.addedRowsPosition = "bottom"
@@ -1058,12 +1065,16 @@ export const rowControlActionsHandler = async (
     }
   } else {
     let actionName = "Table" + key + "Row"
-    if (isDetailView && key !== "Edit") {
+    if (
+      isDetailView &&
+      (key !== "Edit" ||
+        (key === "Edit" && def.options.edit.editType !== "big"))
+    ) {
+      ovl.actions.ovl.dialog.DialogClose("DetailView")
       // await ovl.actions.ovl.internal.TableCloseViewRow({
       //   key: rowKey,
       //   def,
       // })
-      ovl.actions.ovl.dialog.DialogClose("DetailView")
     }
     await ovl.actions.ovl.internal[actionName]({
       key: rowKey,

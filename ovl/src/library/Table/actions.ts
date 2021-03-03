@@ -190,10 +190,11 @@ export const TableSelectRow: OvlAction<SelectRowDef> = (selectRow) => {
   let selRows = selectRow.def.uiState.selectedRow
   let sel = selRows[selectRow.key]
   // toggle selected state
-  if (sel.selected && !sel.showNav) {
+  if (!sel.selected) {
     Object.keys(selRows).forEach((f) => {
       selRows[f].showNav = false
     })
+    sel.selected = true
     sel.showNav = true
     return
   } else if (sel.selected) {
@@ -344,7 +345,9 @@ export const TableRefreshDataFromServer: OvlAction<{
     localData[dataKey]["_ovl" + idfield] = sd[idfield]
     value.data.index[sd[idfield] as string] = dataKey
     Object.keys(sd).forEach(async (c) => {
-      localData[dataKey][c] = serverData[i][c]
+      if (localData[dataKey][c] !== serverData[i][c]) {
+        localData[dataKey][c] = serverData[i][c]
+      }
       // check for lookups which needs to be refreshed/reloaded
       if (dataFieldsToLookups[c]) {
         // its a lookup column, also check if lookup description is available
@@ -1325,6 +1328,7 @@ export const TableEditRow: OvlAction<{
     namespace: def.namespace,
     schema: value.data.schema,
     forceOverwrite: true,
+    tableDefId: def.id,
   }
 
   actions.ovl.form.InitForm(initForm)
@@ -1369,6 +1373,7 @@ export const TableCopyRow: OvlAction<{
   key: string
   def: OvlTableDef
   data: OvlTableData
+  manual?: boolean
 }> = async (value, { state, actions, effects }) => {
   let def = value.def
   let key = value.key
@@ -1405,7 +1410,9 @@ export const TableCopyRow: OvlAction<{
   value.data.data[newId] = newRow
 
   addRowDefInit(value.data.tableDef, newId, "copy")
-  actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  if (!value.manual) {
+    actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  }
   addRowPage(def)
 }
 
@@ -1454,7 +1461,9 @@ export const TableAddRow: OvlAction<TableDataAndDef> = async (
   value.data.data[newId] = newRow
 
   addRowDefInit(value.data.tableDef, newId, "add")
-  actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  if (value.internal && value.internal === true) {
+    actions.ovl.internal.TableEditRow({ key: newId, def, data: value.data })
+  }
   addRowPage(def)
   def.uiState.currentlyAddingKey = newId
 }
@@ -2049,7 +2058,7 @@ export const TableMultipleCustomFunction: OvlAction<{
     }
 
     if (result) {
-      await DialogOk(result)
+      await DialogOk({ text: result })
     }
   }
 }

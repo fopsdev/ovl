@@ -9,7 +9,6 @@ import {
 } from "../../../global/hooks"
 import { SnackAdd } from "../../helpers"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { ListFnReturnValue } from "../../Table/Table"
 import {
   ControlState,
   FilterHitList,
@@ -19,10 +18,8 @@ import {
   GetValueFromCustomFunction,
 } from "./helpers"
 import { getUIValidationObject } from "./uiValidationHelper"
-import { OvlFormState } from "../actions"
-import { OvlState, OvlActions, OvlEffects, ovl } from "../../.."
+import { ChangeField, OvlFormState } from "../actions"
 import { DialogHolderParams } from "../../Dialog/OvlDialogHolder"
-import { logTrackingList } from "../../../tracker/tracker"
 
 export type ListState = {
   serverEndpoint?: string
@@ -30,6 +27,7 @@ export type ListState = {
   // please bear in mind that valueField will always be unique key of object. but we have it here so we can assign a type to it if its displayed at all in the selectlist
   valueField: string
   displayValueField?: boolean
+
   acceptEmpty?: boolean
   acceptOnlyListValues?: boolean
   isSelect?: boolean
@@ -43,8 +41,9 @@ export class OvlListControl extends OvlBaseElement {
   hitListDialogBody: TemplateResult
   hitListDialogFooter: TemplateResult
   timer: any
-
+  lastExactHitValue: any
   formState: OvlFormState
+
   // handleClearFilter(e: Event) {}
   handleCancel = (e: Event) => {
     this.actions.ovl.dialog.DialogClose("HitListDialog")
@@ -53,7 +52,7 @@ export class OvlListControl extends OvlBaseElement {
   async handleListPopup(e: Event) {
     e.stopPropagation()
     e.preventDefault()
-
+    this.forceCloseLocalHitList()
     let field = this.field.field
     let formState = this.state.ovl.forms[field.formType][field.formId]
 
@@ -87,7 +86,7 @@ export class OvlListControl extends OvlBaseElement {
       formState,
       this.state,
       field.fieldKey
-    )
+    ).filteredKeys
     if (filteredKeys.length < 1) {
       SnackAdd("Keine passenden Einträge gefunden", "Warning", 3000)
       return
@@ -142,6 +141,9 @@ export class OvlListControl extends OvlBaseElement {
         let val = this.inputElement.value
         this.inputElement.setSelectionRange(val.length, val.length)
       }, 0)
+    } else {
+      this.state.ovl.dialogs.HitListDialog.elementIdToFocusAfterClose =
+        "search" + this.field.field.id
     }
 
     if (selectedKey === "@@ovlcanceled" || selectedKey === "@@ovlescape") {
@@ -173,6 +175,16 @@ export class OvlListControl extends OvlBaseElement {
     this.forceCloseLocalHitList()
   }
   // // same here
+
+  handleOnFocus(e: Event) {
+    debugger
+    let event = new CustomEvent("ovlfocusin", {
+      bubbles: true,
+      detail: { id: this.field.field.id },
+    })
+    e.target.dispatchEvent(event)
+  }
+
   async handleFocusOut(e: Event) {
     let field = this.field.field
     let fieldId = field.id
@@ -182,6 +194,7 @@ export class OvlListControl extends OvlBaseElement {
     // ... and we need to trigger our change event if needed
     let movedOut: boolean = false
     let idToCheck
+
     if (relatedTarget) {
       idToCheck = relatedTarget.id
     }
@@ -193,14 +206,56 @@ export class OvlListControl extends OvlBaseElement {
         movedOut = true
       }
     }
+    //@ts-ignore
+    if (e.target.id === field.id) {
+      //@ts-ignore
+      let filterValue = e.target.value
+      let writeBackValue = filterValue
+
+      let filteredRes = FilterHitList(
+        field.list,
+        filterValue,
+        this.formState,
+        this.state,
+        field.fieldKey,
+        10
+      )
+
+      let filteredKeys = filteredRes.filteredKeys
+      if (filterValue !== "" && filteredKeys.length === 1) {
+        let listData: FieldGetList_ReturnType = resolvePath(
+          this.actions.custom,
+          this.formState.namespace
+        )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
+          row: GetRowFromFormState(this.formState),
+        })
+        let hit = filteredKeys[0]
+        writeBackValue = hit
+        this.inputElement.value = listData.data[hit][field.list.displayField]
+        if (relatedTarget && relatedTarget.id.indexOf("ovlhl_") > -1) {
+          this.inputElement.focus()
+          this.forceCloseLocalHitList()
+        }
+      }
+      // always as well write back value here
+      if (!(filteredRes.isExactKey && filteredKeys.length > 1)) {
+        let event = new CustomEvent("ovlchange", {
+          bubbles: true,
+          detail: { val: writeBackValue, id: field.id },
+        })
+        await this.inputElement.dispatchEvent(event)
+      }
+    }
     if (movedOut) {
+      //SnackAdd("Moved Out...")
       let event = new CustomEvent("ovlfocusout", {
         bubbles: true,
         detail: { id: fieldId },
       })
       await this.inputElement.dispatchEvent(event)
-
       this.forceCloseLocalHitList()
+
+      //@ts-ignore
     }
   }
   handleDelete(e: Event) {
@@ -208,7 +263,6 @@ export class OvlListControl extends OvlBaseElement {
       fieldId: this.field.field.fieldKey,
       value: "",
       formState: this.formState,
-      isInit: true,
     })
     this.inputElement.focus()
   }
@@ -239,7 +293,6 @@ export class OvlListControl extends OvlBaseElement {
 
     let field = this.field.field
 
-    let filterValue = this.inputElement.value
     if (!openLocalList) {
       if (e.key === "Escape") {
         this.forceCloseLocalHitList()
@@ -248,9 +301,15 @@ export class OvlListControl extends OvlBaseElement {
     }
 
     this.timer = setTimeout(async () => {
+      // just do all the stuff if it still has focus
+      if (document.activeElement.id !== field.id) {
+        return
+      }
+
       //@ts-ignore
-      filterValue = document.getElementById(field.id).value
-      let filteredKeys = FilterHitList(
+      let filterValue = document.getElementById(field.id).value
+
+      let filteredRes = FilterHitList(
         field.list,
         filterValue,
         this.formState,
@@ -258,34 +317,19 @@ export class OvlListControl extends OvlBaseElement {
         field.fieldKey,
         10
       )
+      let filteredKeys = filteredRes.filteredKeys
 
       if (!openLocalList) {
         let writeBackValue = filterValue
-        let hit
-        if (filteredKeys.length === 1 && writeBackValue) {
-          let listData: FieldGetList_ReturnType = resolvePath(
-            this.actions.custom,
-            this.formState.namespace
-          )[FieldGetList.replace("%", field.fieldKey)](<FieldGetList_Type>{
-            row: GetRowFromFormState(this.formState),
+        this.lastExactHitValue = undefined
+        if (!filteredRes.isExactKey) {
+          let event = new CustomEvent("ovlchange", {
+            bubbles: true,
+            detail: { val: writeBackValue, id: field.id },
           })
-
-          hit = filteredKeys[0]
-          writeBackValue = hit
-          if (listData.index) {
-            writeBackValue = listData.data[hit][field.list.valueField]
-          }
-          this.inputElement.value = listData.data[hit][field.list.displayField]
-        }
-
-        let event = new CustomEvent("ovlchange", {
-          bubbles: true,
-          detail: { val: writeBackValue, id: field.id },
-        })
-        await this.inputElement.dispatchEvent(event)
-        if (hit) {
-          this.forceCloseLocalHitList()
-          return
+          await this.inputElement.dispatchEvent(event)
+        } else {
+          this.lastExactHitValue = writeBackValue
         }
       }
       if (filteredKeys.length > 0) {
@@ -338,6 +382,7 @@ export class OvlListControl extends OvlBaseElement {
     }, waitTime)
   }
   async getUI() {
+    //SnackAdd("Rerender...")
     return this.track(() => {
       this.field = this.props(this.state)
       let field = this.field.field
@@ -351,9 +396,6 @@ export class OvlListControl extends OvlBaseElement {
         customRowClassContainerName = customRowClassName + "Container"
         customRowTooltip = customRowCell.tooltip
       }
-      // if (field.fieldKey === "U_ParentCode") {
-      //   debugger
-      // }
 
       let res = getUIValidationObject(field)
 
@@ -439,13 +481,18 @@ export class OvlListControl extends OvlBaseElement {
       }
       let validationHide = res.validationHide
 
-      // if (document.activeElement.id.indexOf(field.id) > -1) {
-      //   validationHide = "hide"
-      // }
-      // logTrackingList()
-      if (this.localList) {
+      if (field.focused) {
         validationHide = "hide"
       }
+
+      // if (
+      //   this.localList ||
+      //   document.activeElement.id.indexOf(this.field.field.id) > -1 ||
+      //   this.state.ovl.dialogs.HitListDialog.visible
+      // ) {
+      //   console.log("hhhhh")
+      //   validationHide = "hide"
+      // }
 
       return html`
         ${hitListDialog}
@@ -475,6 +522,7 @@ export class OvlListControl extends OvlBaseElement {
                 value="${displayValue}"
                 .value="${displayValue}"
                 @keydown=${(e) => this.handleKey(e)}
+                @focus=${(e) => this.handleOnFocus(e)}
               />
 
               ${deleteButton}

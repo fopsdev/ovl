@@ -36,7 +36,7 @@ import { Field, OvlFormState } from "../actions"
 import { ListState } from "./ListControl"
 import { UIValidationObject } from "./uiValidationHelper"
 import { OvlBaseElement } from "../../OvlBaseElement"
-import { OvlConfig } from "../../../config"
+
 import { SnackAdd } from "../../helpers"
 
 export type LookupListPostData = {
@@ -142,7 +142,7 @@ export const FilterHitList = (
   state: OvlState,
   fieldId: string,
   top?: number
-) => {
+): { filteredKeys: string[]; isExactKey: boolean } => {
   let hitLength = {}
   let functionName = FieldGetFilteredList.replace("%", fieldId)
   let dataList: FieldGetList_ReturnType = resolvePath(
@@ -151,7 +151,9 @@ export const FilterHitList = (
   )[FieldGetList.replace("%", fieldId)](<FieldGetList_Type>{
     row: GetRowFromFormState(formState),
   })
+
   if (dataList.data) {
+    let isExactKey = false
     let res = Object.keys(dataList.data)
     let fn = resolvePath(ovl.actions.custom, formState.namespace)
     if (fn && fn[functionName]) {
@@ -171,6 +173,10 @@ export const FilterHitList = (
     if (!filterValue) {
       filterValue = ""
     }
+
+    isExactKey = Object.keys(dataList.data).some(
+      (k) => dataList.data[k][list.valueField] == filterValue
+    )
 
     if (
       list.displayValueField !== undefined &&
@@ -220,9 +226,9 @@ export const FilterHitList = (
     //     return dataList.data[m][list.valueField]
     //   })
     // }
-    return res
+    return { filteredKeys: res, isExactKey }
   }
-  return []
+  return { filteredKeys: [], isExactKey: false }
 }
 
 export const GetListDisplayValue = (
@@ -292,6 +298,7 @@ export const GetValueFromCustomFunction = (
       columnsDef: getColumnDefsFromFormState(formState),
       align,
       displayMode: isInline ? <DisplayMode>"EditInline" : <DisplayMode>"Edit",
+      formState,
     })
     let d = field.value
     if (val !== undefined) {

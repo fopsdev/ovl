@@ -23,6 +23,7 @@ import {
   FieldHeaderCellSelectedHandler_ReturnType,
 } from "../../../../../ovl/src/global/hooks"
 import { OvlAction } from "../../../../../ovl/src/ovlTypes"
+import { form } from "../../../../../ovl/src/actions"
 
 export const Edit_U_Memo_GetLabelAndValueRender: OvlAction<
   EditGetLabelAndValueRenderer_Type,
@@ -82,7 +83,15 @@ export const Field_U_ItemCode_GetValueRender: OvlAction<
   FieldGetValueRender_Type,
   FieldGetValueRender_ReturnType
 > = (
-  { columnKey, row, namespace, columnsDef, align: string, displayMode },
+  {
+    columnKey,
+    row,
+    namespace,
+    columnsDef,
+    align: string,
+    displayMode,
+    formState,
+  },
   { state }
 ) => {
   let itemCodeValue = getDisplayValue(
@@ -91,6 +100,13 @@ export const Field_U_ItemCode_GetValueRender: OvlAction<
     row,
     namespace
   )
+
+  if (
+    formState &&
+    formState.fields["U_ItemCode"].validationResult.errors.length > 0
+  ) {
+    return undefined
+  }
 
   if (displayMode.startsWith("Edit")) {
     return html`(${row.U_ItemCode})`
@@ -200,7 +216,7 @@ export const Field_U_Decimal_RowCellSelectedHandler: OvlAction<
         data.data[rowKey],
         def.namespace
       )
-      await DialogOk("U_Decimal selected! Value:" + val)
+      await DialogOk({ text: "U_Decimal selected! Value:" + val })
     }
 
     // do not use default event (select row in cas called from table)
@@ -226,7 +242,7 @@ export const Field_U_ItemCode_HeaderCellSelectedHandler: OvlAction<
   FieldHeaderCellSelectedHandler_ReturnType
 > = async ({ classList, def, displayMode }, { state }) => {
   if (classList.contains("testheadercell")) {
-    await DialogOk("Header U_ItemCode selected!")
+    await DialogOk({ text: "Header U_ItemCode selected!" })
     // do not use default event (open tableheader menu)
     return false
   }

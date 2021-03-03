@@ -1,4 +1,4 @@
-export const OvlVersion = "1.00.081101"
+export const OvlVersion = "1.00.112401"
 const RUNTIME = "ovl" + OvlVersion
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener("install", (event) => {

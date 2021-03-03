@@ -106,7 +106,9 @@ export const ForgotPw: OvlAction<OvlFormState> = async (
   value,
   { state, actions, effects }
 ) => {
-  if ((await DialogOkCancel(T("AppLoginForgotPasswordConfirm"), 2)) === 1) {
+  if (
+    (await DialogOkCancel({ text: T("AppLoginForgotPasswordConfirm") })) === 1
+  ) {
     let user = value.fields["user"].value
     let res = await effects.ovl.postRequest(
       state.ovl.apiUrl + "users/requestresetpw",

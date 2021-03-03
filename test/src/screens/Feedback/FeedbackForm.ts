@@ -41,7 +41,7 @@ export class CompFeedbackForm extends OvlFormElement {
         if (!this.state.ovl.libState.indicator.open) {
           let cancel: boolean = true
           if (this.formState.dirty) {
-            if ((await DialogOkCancel(T("AppCancelForm"), 1)) === 2) {
+            if ((await DialogOkCancel({ text: T("AppCancelForm") })) === 2) {
               cancel = false
             }
           }

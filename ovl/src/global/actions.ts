@@ -16,7 +16,11 @@ import {
   saveState,
   ShowFile,
 } from "./globals"
-import { ScreenNavigateIn, ScreenNavigateOut } from "./hooks"
+import {
+  ScreenNavigateIn,
+  ScreenNavigateIn_ReturnType,
+  ScreenNavigateOut,
+} from "./hooks"
 import { setLastScrollPosition } from "../library/OvlBaseElement"
 import { createDeepProxy } from "../tracker/proxyHandler"
 import { OvlAction } from "../ovlTypes"
@@ -32,24 +36,26 @@ export const NavigateTo: OvlAction<OvlScreen> = async (
   if (state.ovl.screens.nav.currentScreen !== value) {
     let fn = actions.custom.screens
     if (fn) {
-      let currentScreen = state.ovl.screens.nav.currentScreen
+      let currentScreen: OvlScreen = state.ovl.screens.nav.currentScreen
       setLastScrollPosition(state)
       if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
         let navErrorMessage = <string>(
           await fn[currentScreen][ScreenNavigateOut]()
         )
         if (navErrorMessage) {
-          if (navErrorMessage.toLowerCase() !== "error") {
+          if (navErrorMessage.toLowerCase() === "error") {
             SnackAdd(navErrorMessage, "Error")
           }
           return
         }
       }
     }
+
     if (fn[value] && fn[value][ScreenNavigateIn]) {
-      let navErrorMessage = await fn[value][ScreenNavigateIn]()
+      let fn2: () => ScreenNavigateIn_ReturnType = fn[value][ScreenNavigateIn]
+      let navErrorMessage = await fn2()
       if (navErrorMessage) {
-        if (navErrorMessage.toLowerCase() !== "error") {
+        if (navErrorMessage.toLowerCase() === "error") {
           SnackAdd(navErrorMessage, "Error")
         }
         return
@@ -112,7 +118,7 @@ export const NavigateBack: OvlAction = async (
         if (fn[currentScreen] && fn[currentScreen][ScreenNavigateOut]) {
           let navErrorMessage = await fn[currentScreen][ScreenNavigateOut]()
           if (navErrorMessage) {
-            if (navErrorMessage.toLowerCase() !== "error") {
+            if (navErrorMessage.toLowerCase() === "error") {
               SnackAdd(navErrorMessage, "Error")
             }
             return
@@ -125,13 +131,9 @@ export const NavigateBack: OvlAction = async (
         ]
       if (nextScreen) {
         if (fn[nextScreen] && fn[nextScreen][ScreenNavigateIn]) {
-          let navErrorMessage = await fn[nextScreen][ScreenNavigateIn](
-            state,
-            actions,
-            effects
-          )
+          let navErrorMessage = <string>await fn[nextScreen][ScreenNavigateIn]()
           if (navErrorMessage) {
-            if (navErrorMessage.toLowerCase() !== "error") {
+            if (navErrorMessage.toLowerCase() === "error") {
               SnackAdd(navErrorMessage, "Error")
             }
             return
@@ -231,7 +233,9 @@ export const Logout: OvlAction = async (_, { state, actions }) => {
     )
     return
   }
-  if ((await DialogOkCancel("Wollen Sie sich wirklich abmelden?", 1)) === 1) {
+  if (
+    (await DialogOkCancel({ text: "Wollen Sie sich wirklich abmelden?" })) === 1
+  ) {
     logout()
   }
 }
@@ -357,8 +361,10 @@ export const InitApp: OvlAction<Init> = async (
 ) => {
   history.pushState(null, null, document.URL)
   window.addEventListener("popstate", function (e) {
-    ovl.actions.ovl.navigation.NavigateBack()
-    history.pushState(null, null, document.URL)
+    if (!document.getElementById("ovl-dialog")) {
+      ovl.actions.ovl.navigation.NavigateBack()
+      history.pushState(null, null, document.URL)
+    }
   })
   ResetT()
   let currentLocation =
@@ -385,38 +391,40 @@ export const InitApp: OvlAction<Init> = async (
       return
     }
   }
-  let lang = localStorage.getItem("PortalLanguage")
-  let res = await effects.ovl.postRequest(
-    state.ovl.apiUrl + "users/translations",
-    {
-      language: lang,
-    }
-  )
 
-  if (!res || !res.data) {
-    if (!OvlConfig.offlineFirstOnReload) {
-      if (!(await Rehydrate())) {
-        //SnackAdd("No Api-Connection and no Offline data found!", "Error")
+  if (!OvlConfig.ignoreLanguages) {
+    let lang = localStorage.getItem("PortalLanguage")
+    let res = await effects.ovl.postRequest(
+      state.ovl.apiUrl + "users/translations",
+      {
+        language: lang,
+      }
+    )
+    if (!res || !res.data) {
+      if (!OvlConfig.offlineFirstOnReload) {
+        if (!(await Rehydrate())) {
+          //SnackAdd("No Api-Connection and no Offline data found!", "Error")
+          return
+        }
+        console.log("Network start failed. Got offline data...")
+        return
+      } else {
+        SnackAdd("No Api-Connection!", "Error")
         return
       }
-      console.log("Network start failed. Got offline data...")
-      return
-    } else {
-      SnackAdd("No Api-Connection!", "Error")
-      return
     }
-  }
 
-  state.ovl.language.language = res.data.lang
+    state.ovl.language.language = res.data.lang
 
-  localStorage.setItem("PortalLanguage", res.data.lang)
-  state.ovl.language.translations = res.data.translations
-  state.ovl.language.isReady = true
+    localStorage.setItem("PortalLanguage", res.data.lang)
+    state.ovl.language.translations = res.data.translations
+    state.ovl.language.isReady = true
 
-  if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
-    OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
-      res.data
-    )
+    if (OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath) {
+      OvlConfig.requiredActions.handleAdditionalTranslationResultActionPath(
+        res.data
+      )
+    }
   }
 
   state.ovl.libState.indicator.open = false
@@ -453,7 +461,7 @@ export const UpdateCheck = async () => {
       )
       if (updateCheck.status === 404) {
         // we need an update
-        await DialogOk("Update erforderlich!\n Bitte neu anmelden!")
+        await DialogOk({ text: "Update erforderlich!\n Bitte neu anmelden!" })
         logout()
       }
     } catch (e) {}

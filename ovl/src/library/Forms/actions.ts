@@ -13,6 +13,8 @@ import {
   FieldGetList_Type,
   FormValidate_Type,
   FormChanged_Type,
+  FieldGetFilteredList_Type,
+  FieldGetFilteredList,
 } from "../../global/hooks"
 import { OvlForm } from "../../index"
 import { ColumnAlign, ListFnReturnValue } from "../Table/Table"
@@ -23,6 +25,7 @@ import { DataType, FieldFormat, FormFields, Schema } from "./OvlFormElement"
 import { GetRowFromFormState } from "./Controls/helpers"
 import { OvlAction } from "../../ovlTypes"
 import { getDisplayValue } from "../Table/helpers"
+import { OvlTableDefIds } from "../../index"
 export { FillListControl }
 
 export type Field = {
@@ -32,6 +35,7 @@ export type Field = {
   list?: ListState
   dirty: boolean
   watched: boolean
+  focused: boolean
   validationResult: ValidateFieldResult
   id: string
   formType: string
@@ -74,7 +78,9 @@ export type OvlFormState = {
   initFields: FieldValueMap
   namespace: string
   schema: { [key: string]: Schema }
-  lastTouchedField: string
+  fieldToFocus: string
+  formShowed?: boolean
+  tableDefId?: OvlTableDefIds
 }
 type FormStatePerInstance = {
   // key corresponds here to instanceId of form
@@ -89,6 +95,7 @@ export type InitForm = {
   schema?: { [key: string]: Schema }
   forceOverwrite?: boolean
   initialFocusElementId?: string
+  tableDefId?: OvlTableDefIds
 }
 
 export type FormsState = { [key in OvlForm]: FormStatePerInstance }
@@ -97,7 +104,7 @@ export const ResetForm: OvlAction<OvlFormState> = (value) => {
   value.dirty = false
   value.fields = JSON.parse(JSON.stringify(value.initFields, stringifyReplacer))
   value.valid = true
-  value.lastTouchedField = undefined
+  value.fieldToFocus = undefined
 }
 
 export const SetFormUndirty: OvlAction<OvlFormState> = (value) => {
@@ -340,8 +347,19 @@ export const ValidateList: OvlAction<ValidateFieldType> = (
     let fn = resolvePath(actions.custom, namespace)
     if (fn && fn[functionName]) {
       listdata = fn[functionName](<FieldGetList_Type>{ row })
+      let filteredKeys = Object.keys(listdata.data)
+      if (listdata) {
+        functionName = FieldGetFilteredList.replace("%", value.fieldId)
+        if (fn[functionName]) {
+          filteredKeys = fn[functionName](<FieldGetFilteredList_Type>{
+            list: listdata,
+            formState: value.formState,
+          })
+        }
+      }
+
       if (
-        Object.keys(listdata.data).filter((rowKey) => {
+        filteredKeys.filter((rowKey) => {
           return (
             listdata.data[rowKey][field.list.valueField].toString() ===
             value.newVal.toString()
@@ -407,7 +425,7 @@ export const ValidateForm: OvlAction<OvlFormState> = (
             fn[validationFnName](<FormValidate_Type>{
               fieldId: k,
               oldVal: val,
-              newVal: field.value,
+              newVal: field.convertedValue,
               formState: value,
               validationResult: field.validationResult,
             })
@@ -460,11 +478,13 @@ export const InitForm: OvlAction<InitForm> = (
       formType: value.formType,
       namespace: value.namespace,
       schema: value.schema,
-      lastTouchedField: undefined,
+      fieldToFocus: value.initialFocusElementId,
+      tableDefId: value.tableDefId,
     }
+
     let formState = formInstanceList[value.instanceId]
 
-    formState.lastTouchedField = value.initialFocusElementId
+    //formState.lastTouchedField = value.initialFocusElementId
     // initial validation of all fields
     let fn = resolvePath(actions.custom, formState.namespace)
     Object.keys(formState.fields).forEach((k) => {
@@ -518,6 +538,11 @@ export const InitForm: OvlAction<InitForm> = (
     // because when resetting the form, this should be inital state and there will be no re-initing
     formState.initFields = JSON.parse(JSON.stringify(fields), stringifyReplacer)
   }
+  formInstanceList[value.instanceId].formShowed = false
+  if (!formInstanceList[value.instanceId].fieldToFocus) {
+    formInstanceList[value.instanceId].fieldToFocus =
+      value.initialFocusElementId
+  }
 }
 
 // remove not used yet. think its better to always  call ResetForm so state can be reused
@@ -537,8 +562,8 @@ export const InitForm: OvlAction<InitForm> = (
 export type ValidateFieldType = {
   fieldId: string
   validationResult: ValidateFieldResult
-  oldVal: string
-  newVal: string
+  oldVal: any
+  newVal: any
   correctedValue: any
   formState: OvlFormState
   isInnerEvent: boolean
@@ -569,15 +594,27 @@ export type TouchField = {
 export const TouchField: OvlAction<TouchField> = (value) => {
   let field = value.formState.fields[value.fieldId]
 
-  field.value = getDisplayValue(
-    field.fieldKey,
-    { ui: field.ui, list: field.list, type: field.type },
-    GetRowFromFormState(value.formState),
-    value.formState.namespace
-  )
+  // field.value = getDisplayValue(
+  //   field.fieldKey,
+  //   { ui: field.ui, list: field.list, type: field.type },
+  //   GetRowFromFormState(value.formState),
+  //   value.formState.namespace
+  // )
 
   field.watched = true
-  value.formState.lastTouchedField = value.fieldId
+  value.formState.fieldToFocus = value.fieldId
+}
+
+export type FocusField = {
+  formState: OvlFormState
+  fieldId: string
+  hasFocus: boolean
+}
+
+export const FocusField: OvlAction<FocusField> = (value) => {
+  let field = value.formState.fields[value.fieldId]
+
+  field.focused = value.hasFocus
 }
 
 export const SetField: OvlAction<ChangeField> = (value, { actions }) => {

@@ -6,31 +6,40 @@ import { TemplateResult } from "lit-html"
 import { DialogType } from "./Dialog/OvlDialogBase"
 import { uuidv4 } from "../global/globals"
 
-export const DialogOkCancel = async (
-  text: TemplateResult | string,
-  defaultButton: ResultType = 1,
-  type: DialogType = "confirmation",
+type DialogOkCancelHelper = {
+  text: TemplateResult | string
+  defaultButton?: ResultType
+  type?: DialogType
   customClass?: string
-) => {
+  okText?: string
+  cancelText?: string
+}
+
+export const DialogOkCancel = async (options: DialogOkCancelHelper) => {
   ovl.actions.ovl.dialog.OkCancelDialog({
-    text,
-    default: defaultButton,
-    type,
-    customClass,
+    text: options.text,
+    default: options.defaultButton || 1,
+    type: options.type || "confirmation",
+    customClass: options.customClass,
+    okText: options.okText,
+    cancelText: options.cancelText,
   })
   return await DialogResult()
 }
 
-export const DialogOk = async (
-  text: TemplateResult | string,
-
-  type: DialogType = "information",
+type DialogOkHelper = {
+  text: TemplateResult | string
+  type?: DialogType
   customClass?: string
-) => {
+  okText?: string
+}
+
+export const DialogOk = async (options: DialogOkHelper) => {
   ovl.actions.ovl.dialog.OkDialog({
-    text,
-    type,
-    customClass,
+    text: options.text,
+    type: options.type || "information",
+    customClass: options.customClass,
+    okText: options.okText,
   })
   return await DialogResult()
 }

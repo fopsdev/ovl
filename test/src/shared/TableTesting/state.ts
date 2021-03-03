@@ -267,7 +267,7 @@ export let tblTableTesting2: OvlTableDef = {
         valueField: "ItmsGrpCod",
         displayField: "ItmsGrpNam",
         serverEndpoint: "itemGroup",
-        acceptEmpty: false,
+        acceptEmpty: true,
         acceptOnlyListValues: true,
       },
       ui: { visibility: "TableNotMobile_Edit_View" },

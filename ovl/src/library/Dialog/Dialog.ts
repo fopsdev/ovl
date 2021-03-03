@@ -6,8 +6,8 @@ export type DialogChangedParam = {
   dialogState: ModalDialogState
   result: ResultType
 }
-type OkType = "AppOk" | "AppYes" | "NoButton"
-type CancelType = "AppCancel" | "AppNo" | "NoButton"
+type OkType = "AppOk" | "AppYes" | "NoButton" | string
+type CancelType = "AppCancel" | "AppNo" | "NoButton" | string
 
 export type ResultType = undefined | 1 | 2
 
@@ -74,7 +74,7 @@ export class OvlDialog extends OvlBaseElement {
   keyHandler = (e: KeyboardEvent) => {
     e.preventDefault()
     e.stopPropagation()
-
+    console.log(e.key)
     if (e.key == "Enter") {
       if (this.state.ovl.libState.dialog.default == 1) {
         this.handleResult(1)
@@ -94,6 +94,15 @@ export class OvlDialog extends OvlBaseElement {
         this.handleDefault(1)
       } else {
         this.handleDefault(2)
+      }
+    } else if (e.key === "Escape") {
+      if (this.state.ovl.libState.dialog.cancelText !== "NoButton") {
+        this.handleDefault(2)
+        setTimeout(() => {
+          this.handleResult(2)
+        }, 100)
+      } else {
+        this.handleResult(1)
       }
     }
   }
@@ -121,7 +130,7 @@ export class OvlDialog extends OvlBaseElement {
           aria-selected="${this.state.ovl.libState.dialog.default == 1}"
           id="ovldialogok"
         >
-          ${T("AppOk")}
+          ${this.state.ovl.libState.dialog.okText}
         </button>
       </div> `
     }
@@ -138,7 +147,7 @@ export class OvlDialog extends OvlBaseElement {
             aria-selected="${this.state.ovl.libState.dialog.default == 2}"
             id="ovldialogcancel"
           >
-            ${T("AppCancel")}
+            ${this.state.ovl.libState.dialog.cancelText}
           </button>
         </div>
       `

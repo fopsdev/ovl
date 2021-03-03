@@ -20,6 +20,7 @@ export type ScreensState = {
     }
   }
   nav: NavState
+  formShowedToReset: FormShowed[]
 }
 
 export type NavState = {
@@ -81,11 +82,13 @@ export const scrollToLastPosition = (state: OvlState) => {
 import { render, TemplateResult, html } from "lit-html"
 import { actionTracking } from "../tracker/proxyHandler"
 import { OvlConfig } from "../config"
+import { FormShowed } from "./forms/OvlFormElement"
 
 export class OvlBaseElement extends HTMLElement {
   state: OvlState
   actions: OvlActions
   effects: OvlEffects
+
   name: string
   _id: number = 0
   screen: OvlScreen
@@ -108,6 +111,7 @@ export class OvlBaseElement extends HTMLElement {
     }
     let res
     startTrack(this)
+
     res = this.state.ovl.screens.screens[this.screen].visible
     stopTrack()
     return res
@@ -176,7 +180,7 @@ export class OvlBaseElement extends HTMLElement {
       if (this.screenClosing()) {
         // no complete rerender is necessary
         // just set the animation class accordingly
-        let el = this.firstElementChild
+        let el = this
         if (el) {
           el.classList.remove("fadeInScreen")
           el.classList.add("ovl-disabled")
@@ -202,27 +206,31 @@ export class OvlBaseElement extends HTMLElement {
       if (res !== undefined) {
         if (this.screen) {
           let screenHide = !this.screenVisible() ? "hide" : ""
-          if (!this.screenClosing()) {
-            // wrap screen always in a div
-            // because animations didn't work on custom element top level
-            res = html`<div class="fadeInScreen ${screenHide}">${res}</div>`
+          if (screenHide) {
+            this.classList.add(screenHide)
           } else {
-            res = html`<div>${res}</div>`
+            this.classList.remove("hide")
+          }
+          if (!this.screenClosing()) {
+            this.classList.add("fadeInScreen")
+
+            this.classList.remove("fadeOutScreen")
+            this.classList.remove("ovl-disabled")
           }
         }
         await render(res, this)
-
-        await this.afterRender()
-        setTimeout(() => {
-          this.updated()
-        }, 50)
       }
+      await this.afterRender()
+      setTimeout(() => {
+        this.updated()
+      }, 50)
     } else {
       render(res, this)
     }
   }
 
   connectedCallback() {
+    this.style.display = "block"
     this.init()
     if (OvlConfig._system.debugTracking) {
       console.log("render " + this.name)

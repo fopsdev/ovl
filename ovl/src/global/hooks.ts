@@ -10,7 +10,7 @@ import {
   EditMode,
   DisplayMode,
   ColumnDisplayDef,
-  RowStatus,
+  ViewRowClassContent,
   SelectedCustomFunctionResult,
   BeforeSaveParam,
   FieldVisibility,
@@ -29,10 +29,11 @@ import { ViewRendererResult } from "../library/Table/RowDetailView"
 import { OvlLanguage } from "../index"
 
 // gets called when user navigates into a screen
+export type ScreenNavigateIn_ReturnType = Promise<string> | string
 export const ScreenNavigateIn = "ScreenNavigateIn"
 
 // gets called when user navigates out of a screen
-export type ScreenNavigateOut_ReturnType = Promise<string>
+export type ScreenNavigateOut_ReturnType = Promise<string> | string
 export const ScreenNavigateOut = "ScreenNavigateOut"
 
 // gets called when screen first time gets shown
@@ -85,15 +86,6 @@ export type FormAdd_Type = {
   tableData: OvlTableData
 }
 export const FormAdd = "FormAdd"
-
-// gets called for displaying row hints/status (warning,...)
-export type FormStatus_Type = {
-  rowKey: string
-  tableDef: OvlTableDef
-  tableData: OvlTableData
-}
-export type FormStatus_ReturnType = Promise<RowStatus>
-export const FormStatus = "FormStatus"
 
 // if it returns false no generic success snack will be displayed
 export type FormCustomFn_ReturnType = Promise<boolean> | boolean
@@ -205,6 +197,7 @@ export type FieldGetValueRender_Type = {
   columnsDef: { [key: string]: ColumnDisplayDef }
   align: string
   displayMode: DisplayMode
+  formState?: OvlFormState
 }
 export type FieldGetValueRender_ReturnType = TemplateResult
 export const FieldGetValueRender = "Field_%_GetValueRender"
@@ -245,6 +238,16 @@ export type EditGetLabelAndValueRenderer_Type = {
 }
 export type EditGetLabelAndValueRenderer_ReturnType = TemplateResult
 export const EditGetLabelAndValueRender = "Edit_%_GetLabelAndValueRender"
+
+// gets called for displaying row hints/status (warning,...)
+export type ViewRowClass_Type = {
+  rowKey: string
+  tableDef: OvlTableDef
+  tableData: OvlTableData
+}
+export type ViewRowClass_ReturnType = Promise<ViewRowClassContent>
+
+export const ViewRowClass = "ViewRowClass"
 
 // to style the header and row cells in tableview
 // this functions must return a object whose key is the fieldKey and the value is the custom classname to set

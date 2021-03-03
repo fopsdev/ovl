@@ -6,6 +6,7 @@ import { ScreensState } from "./library/OvlBaseElement"
 import { SnackState } from "./library/Snack/Snack"
 import { OvlDialog } from "./index"
 import { DialogsState } from "./library/Dialog/OvlDialogBase"
+import { OvlConfig } from "./config"
 
 let forms: FormsState = undefined
 
@@ -31,6 +32,7 @@ let screens: ScreensState = {
     formTypeToReset: undefined,
     formIdToReset: undefined,
   },
+  formShowedToReset: [],
 }
 
 type User = {
