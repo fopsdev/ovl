@@ -417,7 +417,24 @@ export class TableRowFormBig extends OvlFormElement {
                 break
             }
           } else {
-            uiItem = fields[k].value
+            uiItem = html`<div
+              class="ovl-formcontrol-container ovl-container-textbox ovl-container__${k} "
+            >
+              <div
+                class="fd-form-label  ovl-formcontrol-label ovl-label-text ovl-label__${k}"
+              >
+                ${T(fields[k].ui.labelTranslationKey)}
+              </div>
+
+              <div
+                class="ovl-formcontrol-input ovl-value-textbox ovl-value__${k}"
+              >
+                ${fields[k].value}
+              </div>
+              <span> </span>
+
+              <span> </span>
+            </div>`
           }
         }
 
