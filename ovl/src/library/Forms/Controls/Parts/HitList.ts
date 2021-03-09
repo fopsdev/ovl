@@ -4,8 +4,10 @@ import { getDisplayValue } from "../../../Table/helpers"
 import { ListDefinition } from "../../../Table/Table"
 import { ListState } from "../ListControl"
 import { T, stringifyReplacer } from "../../../../global/globals"
+import { SnackAdd } from "../../../helpers"
 
 export type HitListState = {
+  selectedFieldKey: string
   fieldId: string
   list: ListState
   listData: ListDefinition
@@ -19,44 +21,39 @@ export type HitListState = {
 export class OvlHitList extends OvlBaseElement {
   props: any
   controlState: HitListState
-  selectedRow: number
   focusSet: boolean
   maxRow: number
+
   init() {
     this.focusSet = false
     this.controlState = this.props(this.state)
-    this.selectedRow = 1
   }
 
   handleKeyDown(e: KeyboardEvent, rowKey: string) {
-    let oldSelected = this.selectedRow
+    if (e.key === "Tab") {
+      e.preventDefault()
+    }
     if (e.key === "Enter") {
       this.controlState.selectedCallback(rowKey)
       this.click()
     } else if (e.key === "ArrowUp" || (e.key === "Tab" && e.shiftKey)) {
-      if (this.selectedRow > 1) {
-        this.selectedRow--
+      //@ts-ignore
+      let previousEl = document.getElementById(e.target.id)
+        .previousElementSibling
+      if (previousEl) {
+        //@ts-ignore
+        previousEl.focus()
       } else {
         if (this.controlState.type === "inline") {
           this.controlState.selectedCallback("@@ovlcanceled")
         }
       }
     } else if (e.key === "ArrowDown" || e.key === "Tab") {
-      if (this.selectedRow < this.maxRow) {
-        this.selectedRow++
-      }
-    }
-    if (oldSelected !== this.selectedRow) {
-      let target = document.getElementById(
-        this.controlState.fieldId +
-          this.controlState.type +
-          "ovlhl_" +
-          this.selectedRow
-      )
-      if (target) {
-        e.preventDefault()
-        target.focus()
-        return false
+      //@ts-ignore
+      let nextEl = document.getElementById(e.target.id).nextElementSibling
+      if (nextEl) {
+        //@ts-ignore
+        nextEl.focus()
       }
     }
   }
@@ -166,9 +163,9 @@ export class OvlHitList extends OvlBaseElement {
                   <tr
                     @click=${(e) => this.handleClick(e, rowKey)}
                     id="${this.controlState.fieldId}${this.controlState
-                      .type}ovlhl_${rowNr}"
+                      .type}ovlhl_${rowKey}"
                     tabindex="0"
-                    class="fd-table__row "
+                    class="fd-table__row ovl-hitlist-row"
                     @keydown=${(e) => this.handleKeyDown(e, rowKey)}
                   >
                     ${lookupTypesKeys.map((c) => {
@@ -211,5 +208,25 @@ export class OvlHitList extends OvlBaseElement {
         </div>
       `
     })
+  }
+  updated() {
+    if (!this.focusSet) {
+      this.focusSet = true
+      let el
+      if (this.controlState.selectedFieldKey !== undefined) {
+        el = document.getElementById(
+          this.controlState.fieldId +
+            this.controlState.type +
+            "ovlhl_" +
+            this.controlState.selectedFieldKey
+        )
+      }
+      if (!el) {
+        el = <HTMLElement>document.getElementsByClassName("ovl-hitlist-row")[0]
+      }
+      if (el) {
+        el.focus()
+      }
+    }
   }
 }

@@ -126,6 +126,7 @@ export class OvlListControl extends OvlControlBase {
             filterValue,
             filteredKeys,
             type: "overlay",
+            selectedFieldKey: field.convertedValue,
             selectedCallback: this.selectedCallback,
           }
         }}
@@ -134,7 +135,6 @@ export class OvlListControl extends OvlControlBase {
 
     this.actions.ovl.dialog.DialogOpen({
       dialogType: "HitListDialog",
-      elementIdToFocusAfterOpen: this.field.id + "overlayovlhl_1",
     })
   }
 
@@ -350,6 +350,7 @@ export class OvlListControl extends OvlControlBase {
                   row: GetRowFromFormState(this.formState),
                 })
                 return {
+                  selectedFieldKey: undefined,
                   fieldId: field.id,
                   list: field.list,
                   listData,
@@ -366,12 +367,12 @@ export class OvlListControl extends OvlControlBase {
           await this.doRender()
         }
 
-        if (openLocalList) {
-          let focusEl = document.getElementById(this.field.id + "inlineovlhl_1")
-          if (focusEl) {
-            focusEl.focus()
-          }
-        }
+        // if (openLocalList) {
+        //   let focusEl = document.getElementById(this.field.id + "inlineovlhl_1")
+        //   if (focusEl) {
+        //     focusEl.focus()
+        //   }
+        // }
       } else {
         this.forceCloseLocalHitList()
       }

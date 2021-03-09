@@ -911,7 +911,12 @@ export const ChangeField: OvlAction<ChangeField> = (
             val.correctedValue
           ) {
             field.convertedValue = val.correctedValue
-            field.value = getDateValue(field.convertedValue, field.ui.format)
+            field.value = getDisplayValue(
+              field.fieldKey,
+              { list: field.list, type: field.type, ui: field.ui },
+              GetRowFromFormState(value.formState),
+              value.formState.namespace
+            )
           }
         }
       }
