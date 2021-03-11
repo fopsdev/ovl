@@ -165,7 +165,7 @@ export class TableRowFormBig extends OvlFormElement {
       let cancel: boolean = true
       if (this.formState.dirty) {
         this.actions.ovl.dialog.OkCancelDialog({
-          text: T("AppCancelForm"),
+          text: T("OvlCancelForm"),
           default: 1,
         })
         if ((await DialogResult()) === 2) {

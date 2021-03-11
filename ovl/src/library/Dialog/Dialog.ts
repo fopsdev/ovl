@@ -6,8 +6,8 @@ export type DialogChangedParam = {
   dialogState: ModalDialogState
   result: ResultType
 }
-type OkType = "AppOk" | "AppYes" | "NoButton" | string
-type CancelType = "AppCancel" | "AppNo" | "NoButton" | string
+type OkType = "OvlOk" | "OvlYes" | "NoButton" | string
+type CancelType = "OvlCancel" | "OvlNo" | "NoButton" | string
 
 export type ResultType = undefined | 1 | 2
 

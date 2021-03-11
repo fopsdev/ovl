@@ -442,7 +442,6 @@ export const InitApp: OvlAction = async (_, { actions, state, effects }) => {
     window.location.hostname.toLowerCase() +
     ":" +
     window.location.port.toLowerCase()
-
   if (currentLocation.indexOf(value.customerTestUrlMatch) > -1) {
     state.ovl.uiState.isDemo = true
     state.ovl.apiUrl = value.customerTestUrl

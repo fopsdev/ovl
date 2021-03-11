@@ -41,7 +41,7 @@ export class CompFeedbackForm extends OvlFormElement {
         if (!this.state.ovl.libState.indicator.open) {
           let cancel: boolean = true
           if (this.formState.dirty) {
-            if ((await DialogOkCancel({ text: T("AppCancelForm") })) === 2) {
+            if ((await DialogOkCancel({ text: T("OvlCancelForm") })) === 2) {
               cancel = false
             }
           }
@@ -103,7 +103,7 @@ export class CompFeedbackForm extends OvlFormElement {
               @click=${handleCancel}
               class="fd-button"
             >
-              ${T("AppCancel")}
+              ${T("OvlCancel")}
             </button>
           </div>
         </div>

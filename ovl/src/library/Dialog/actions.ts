@@ -124,8 +124,8 @@ export const OkCancelDialog: OvlAction<OkCancelDialog> = async (
     title,
     customClass,
     type,
-    cancel: value.cancelText || "AppCancel",
-    ok: value.okText || "AppOk",
+    cancel: value.cancelText || "OvlCancel",
+    ok: value.okText || "OvlOk",
     text: value.text,
     default: value.default,
   })
@@ -154,7 +154,7 @@ export const OkDialog: OvlAction<OkDialog> = async (value, { actions }) => {
     customClass,
     type,
     cancel: "NoButton",
-    ok: "AppOk",
+    ok: "OvlOk",
     text: value.text,
     default: 1,
   })
