@@ -542,12 +542,27 @@ export const ValidateForm: OvlAction<OvlFormState> = (
           } as ValidateFieldType)
         }
         if (field.validationResult.errors.length === 0) {
+          let val: FormValidate_Type
           if (fn && fn[validationFnName]) {
-            fn[validationFnName](<FormValidate_Type>{
+            val = {
               field,
               formState: value,
               isInnerEvent: false,
-            })
+              correctedValue: undefined,
+            }
+            fn[validationFnName](<FormValidate_Type>val)
+          }
+          if (
+            field.validationResult.errors.length === 0 &&
+            val.correctedValue
+          ) {
+            field.convertedValue = val.correctedValue
+            field.value = getDisplayValue(
+              field.fieldKey,
+              { list: field.list, type: field.type, ui: field.ui },
+              GetRowFromFormState(value),
+              value.namespace
+            )
           }
         }
       }
@@ -658,13 +673,29 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
               formState,
             } as ValidateFieldType)
           }
+          let validationFnName = FormValidate
           if (field.validationResult.errors.length === 0) {
-            if (fn && fn[FormValidate]) {
-              fn[FormValidate](<FormValidate_Type>{
+            let val: FormValidate_Type
+            if (fn && fn[validationFnName]) {
+              val = {
                 field,
                 formState,
                 isInnerEvent: false,
-              })
+                correctedValue: undefined,
+              }
+              fn[validationFnName](<FormValidate_Type>val)
+            }
+            if (
+              field.validationResult.errors.length === 0 &&
+              val.correctedValue
+            ) {
+              field.convertedValue = val.correctedValue
+              field.value = getDisplayValue(
+                field.fieldKey,
+                { list: field.list, type: field.type, ui: field.ui },
+                GetRowFromFormState(formState),
+                value.namespace
+              )
             }
           }
         }
@@ -834,6 +865,11 @@ export const ChangeField: OvlAction<ChangeField> = (
   value,
   { actions, state, effects }
 ) => {
+  if (!value.formState.validationResult) {
+    throw Error(
+      "SetField/ChangeField can only be used on an finished, initialised form"
+    )
+  }
   let field = value.formState.fields[value.fieldKey]
 
   field.validationResult.errors.forEach((f) => {
