@@ -239,7 +239,9 @@ export class OvlListControl extends OvlControlBase {
       this.directHitValue = undefined
     }
     if (movedOut) {
-      RemoveFocusEventHelper(this, field.id)
+      if (!this.state.ovl.dialogs.HitListDialog.visible) {
+        RemoveFocusEventHelper(this, field.id)
+      }
       this.forceCloseLocalHitList()
     }
   }
