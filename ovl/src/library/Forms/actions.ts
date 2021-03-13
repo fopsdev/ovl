@@ -633,7 +633,8 @@ export const InitForm: OvlAction<InitForm, OvlFormState> = (
       formInstanceList[
         instanceId
       ].validation = OvlConfig.formValidation.validationDefaults(
-        value.tableDefId
+        value.tableDefId,
+        value.formType
       )
     } else {
       formInstanceList[instanceId].validation = value.validation

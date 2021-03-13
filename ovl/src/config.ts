@@ -42,7 +42,10 @@ export type OvlConfigType = {
   }
   formValidation: {
     validators?: { [key in OvlFormValidationValidators]: FormValidationField }
-    validationDefaults: (tableDefId?: string) => FormValidation
+    validationDefaults: (
+      tableDefId?: string,
+      formType?: string
+    ) => FormValidation
     validatorsFunctions: {
       [key in OvlFormValidationValidators]: (
         field: Field,
